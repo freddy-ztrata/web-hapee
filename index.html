@@ -8,14 +8,14 @@
 <link rel="icon" href="https://hapee.ai/wp-content/uploads/2025/12/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --accent:#FA5000;
-  --accent-alt:#f2295b;
+  --accent-alt:#CD2349;
   --purple:#666AE5;
   --deep-purple:#4A26A7;
   --blue:#2fa5fb;
@@ -27,7 +27,7 @@
   --white:#fff;
   --pill:100px;
   --tr:.3s cubic-bezier(.4,0,.2,1);
-  --fd:'Syne',sans-serif;
+  --fd:'Bebas Neue',sans-serif;
   --fb:'Plus Jakarta Sans',sans-serif;
 }
 html{scroll-behavior:smooth}
@@ -635,11 +635,11 @@ document.addEventListener('DOMContentLoaded',()=>{
       particles=[];
       const num=Math.floor((W*H)/7000);
       const brandColors=[
-        'rgba(250,80,0,0.8)',   // orange
-        'rgba(242,41,91,0.7)',  // pink
-        'rgba(102,106,229,0.6)',// purple
-        'rgba(47,165,251,0.5)', // blue
-        'rgba(255,255,255,0.3)' // white subtle
+        'rgba(250,80,0,0.8)',   // #FA5000 orange primary
+        'rgba(205,35,73,0.7)',  // #CD2349 burdeo secondary
+        'rgba(250,80,0,0.5)',   // orange softer
+        'rgba(205,35,73,0.4)',  // burdeo softer
+        'rgba(255,255,255,0.25)' // white subtle
       ];
       for(let i=0;i<num;i++){
         const size=Math.random()*2+.8;
@@ -671,10 +671,10 @@ document.addEventListener('DOMContentLoaded',()=>{
               if(mouseDist<mouse.radius){
                 strokeColor=`rgba(255,255,255,${Math.min(opacity,.4)})`;
               }else{
-                strokeColor=`rgba(250,80,0,${Math.min(opacity*.5,.12)})`;
+                strokeColor=`rgba(205,35,73,${Math.min(opacity*.5,.12)})`;
               }
             }else{
-              strokeColor=`rgba(250,80,0,${Math.min(opacity*.5,.12)})`;
+              strokeColor=`rgba(205,35,73,${Math.min(opacity*.5,.12)})`;
             }
 
             ctx.strokeStyle=strokeColor;
@@ -693,7 +693,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       // Outer radial glow
       const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,mouse.radius);
       g.addColorStop(0,'rgba(250,80,0,.08)');
-      g.addColorStop(.4,'rgba(242,41,91,.03)');
+      g.addColorStop(.4,'rgba(205,35,73,.03)');
       g.addColorStop(1,'rgba(0,0,0,0)');
       ctx.fillStyle=g;
       ctx.beginPath();
@@ -739,7 +739,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         // Inner ring
         ctx.beginPath();
         ctx.arc(s.x,s.y,s.radius*.6,0,Math.PI*2);
-        ctx.strokeStyle=`rgba(242,41,91,${s.alpha*.2})`;
+        ctx.strokeStyle=`rgba(205,35,73,${s.alpha*.2})`;
         ctx.lineWidth=1;
         ctx.stroke();
       }
