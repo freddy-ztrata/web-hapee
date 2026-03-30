@@ -212,9 +212,8 @@ animation:shim 3s linear infinite;opacity:.5;filter:blur(2px)}
 .fsoc svg{width:15px;height:15px}
 @media(max-width:768px){.fgrid{grid-template-columns:1fr 1fr;gap:28px}.fbot{flex-direction:column;gap:14px;text-align:center}}
 
-/* Aurora Canvas */
-#auroraCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.hero-grid{z-index:1;opacity:.3}
+/* Constellation Canvas */
+#constellationCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 
 /* Scrollbar */
 ::-webkit-scrollbar{width:7px}
@@ -258,7 +257,7 @@ animation:shim 3s linear infinite;opacity:.5;filter:blur(2px)}
 
 <!-- HERO -->
 <section class="hero">
-  <canvas id="auroraCanvas"></canvas>
+  <canvas id="constellationCanvas"></canvas>
   <div class="hero-grid"></div>
   <div id="hp"></div>
   <div class="ctn">
@@ -579,117 +578,125 @@ animation:shim 3s linear infinite;opacity:.5;filter:blur(2px)}
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
   // ============================================
-  // AURORA WEBGL SHADER — Volumetric aurora borealis
+  // CONSTELLATION VORTEX — Interactive particle network
   // ============================================
   (function(){
-    const canvas=document.getElementById('auroraCanvas');
-    if(!canvas)return;
-    const gl=canvas.getContext('webgl');
-    if(!gl)return;
+    const c=document.getElementById('constellationCanvas');
+    if(!c)return;
+    const ctx=c.getContext('2d');
+    let W,H,mx,my,particles=[];
+    const COUNT=120,CONNECT_DIST=140,MOUSE_RADIUS=200;
 
-    const vSrc=`attribute vec2 aP;void main(){gl_Position=vec4(aP,0.,1.);}`;
-    const fSrc=`
-    precision highp float;
-    uniform vec2 iR;
-    uniform float iT;
-    uniform vec2 iM;
-
-    mat2 rot(float a){float s=sin(a),c=cos(a);return mat2(c,-s,s,c);}
-
-    float hash(vec2 p){
-      p=fract(p*vec2(123.34,456.21));
-      p+=dot(p,p+45.32);
-      return fract(p.x*p.y);
-    }
-
-    float fbm(vec3 p){
-      float f=0.,a=.5;
-      for(int i=0;i<5;i++){f+=a*hash(p.xy);p*=2.;a*=.5;}
-      return f;
-    }
-
-    float map(vec3 p){
-      vec3 q=p;
-      q.z+=iT*0.35;
-      vec2 mouse=(iM/iR-.5)*2.;
-      q.xy+=mouse*0.25;
-      float f=fbm(q*2.);
-      f*=sin(p.y*2.+iT)*.5+.5;
-      return clamp(f,0.,1.);
-    }
-
-    void main(){
-      vec2 uv=(gl_FragCoord.xy-.5*iR)/iR.y;
-      vec3 ro=vec3(0,-1,0),rd=normalize(vec3(uv,1.));
-      vec3 col=vec3(0);
-      float t=0.;
-      for(int i=0;i<28;i++){
-        vec3 p=ro+rd*t;
-        float d=map(p);
-        if(d>0.){
-          // Brand colors: orange #FA5000 -> pink #f2295b -> purple #666AE5
-          vec3 c1=vec3(.98,.31,0.);    // orange
-          vec3 c2=vec3(.95,.16,.36);   // pink-red
-          vec3 c3=vec3(.4,.41,.9);     // purple
-          float phase=iT*.3+p.y*1.5;
-          vec3 ac=c1*(sin(phase)*.5+.5)+c2*(sin(phase+2.)*.5+.5)+c3*(sin(phase+4.)*.5+.5);
-          ac=normalize(ac+.001)*length(ac)*.6;
-          col+=ac*d*.09;
-        }
-        t+=.12;
-      }
-      // Fade edges
-      float vig=1.-length(uv*vec2(.8,1.2))*.6;
-      col*=clamp(vig,0.,1.);
-      gl_FragColor=vec4(col,1.);
-    }`;
-
-    function compile(src,type){
-      const s=gl.createShader(type);
-      gl.shaderSource(s,src);gl.compileShader(s);
-      if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){console.error(gl.getShaderInfoLog(s));return null;}
-      return s;
-    }
-    const vs=compile(vSrc,gl.VERTEX_SHADER),fs=compile(fSrc,gl.FRAGMENT_SHADER);
-    if(!vs||!fs)return;
-    const pg=gl.createProgram();
-    gl.attachShader(pg,vs);gl.attachShader(pg,fs);gl.linkProgram(pg);
-    if(!gl.getProgramParameter(pg,gl.LINK_STATUS))return;
-    gl.useProgram(pg);
-
-    const verts=new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]);
-    const buf=gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-    gl.bufferData(gl.ARRAY_BUFFER,verts,gl.STATIC_DRAW);
-    const aP=gl.getAttribLocation(pg,'aP');
-    gl.enableVertexAttribArray(aP);
-    gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
-
-    const uR=gl.getUniformLocation(pg,'iR');
-    const uT=gl.getUniformLocation(pg,'iT');
-    const uM=gl.getUniformLocation(pg,'iM');
-
-    let mx=canvas.width*.5,my=canvas.height*.5;
-    window.addEventListener('mousemove',e=>{
-      const r=canvas.getBoundingClientRect();
-      mx=e.clientX-r.left;my=e.clientY-r.top;
-    });
-
-    const t0=performance.now();
-    function resize(){
-      canvas.width=canvas.clientWidth;canvas.height=canvas.clientHeight;
-      gl.viewport(0,0,canvas.width,canvas.height);
-      gl.uniform2f(uR,canvas.width,canvas.height);
-    }
+    function resize(){W=c.width=c.clientWidth;H=c.height=c.clientHeight;mx=W/2;my=H/2}
     window.addEventListener('resize',resize);resize();
+    window.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
 
-    (function loop(){
-      if(gl.isContextLost())return;
-      gl.uniform1f(uT,(performance.now()-t0)/1000);
-      gl.uniform2f(uM,mx,canvas.height-my);
-      gl.drawArrays(gl.TRIANGLES,0,6);
+    class Particle{
+      constructor(){this.reset()}
+      reset(){
+        this.x=Math.random()*W;this.y=Math.random()*H;
+        this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;
+        this.r=Math.random()*2+.5;
+        this.life=1;
+        // Brand color palette
+        const colors=['250,80,0','242,41,91','102,106,229','47,165,251'];
+        this.color=colors[Math.floor(Math.random()*colors.length)];
+        this.pulseSpeed=Math.random()*2+1;
+        this.pulseOffset=Math.random()*Math.PI*2;
+        this.orbitAngle=Math.random()*Math.PI*2;
+        this.orbitSpeed=(Math.random()-.5)*.008;
+      }
+      update(t){
+        // Subtle orbital drift
+        this.orbitAngle+=this.orbitSpeed;
+        this.x+=this.vx+Math.sin(this.orbitAngle)*.15;
+        this.y+=this.vy+Math.cos(this.orbitAngle)*.15;
+
+        // Mouse gravitational pull
+        const dx=mx-this.x,dy=my-this.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<MOUSE_RADIUS){
+          const force=(1-dist/MOUSE_RADIUS)*.02;
+          this.vx+=dx*force;this.vy+=dy*force;
+        }
+
+        // Damping
+        this.vx*=.99;this.vy*=.99;
+
+        // Pulse
+        this.life=.4+Math.sin(t*this.pulseSpeed+this.pulseOffset)*.35;
+
+        // Wrap
+        if(this.x<-10)this.x=W+10;if(this.x>W+10)this.x=-10;
+        if(this.y<-10)this.y=H+10;if(this.y>H+10)this.y=-10;
+      }
+      draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.r*this.life,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${this.color},${this.life*.7})`;
+        ctx.fill();
+        // Glow
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.r*3*this.life,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${this.color},${this.life*.08})`;
+        ctx.fill();
+      }
+    }
+
+    for(let i=0;i<COUNT;i++)particles.push(new Particle());
+
+    // Mouse trail ring
+    let mouseTrail=[];
+
+    function loop(){
+      const t=performance.now()/1000;
+      ctx.clearRect(0,0,W,H);
+
+      // Update & draw particles
+      for(const p of particles){p.update(t);p.draw()}
+
+      // Draw connections
+      for(let i=0;i<COUNT;i++){
+        for(let j=i+1;j<COUNT;j++){
+          const a=particles[i],b=particles[j];
+          const dx=a.x-b.x,dy=a.y-b.y;
+          const d=Math.sqrt(dx*dx+dy*dy);
+          if(d<CONNECT_DIST){
+            const alpha=(1-d/CONNECT_DIST)*.15;
+            ctx.beginPath();
+            ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle=`rgba(250,80,0,${alpha})`;
+            ctx.lineWidth=.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Mouse connections — lines from nearby particles to cursor
+      for(const p of particles){
+        const dx=mx-p.x,dy=my-p.y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MOUSE_RADIUS){
+          const alpha=(1-d/MOUSE_RADIUS)*.25;
+          ctx.beginPath();
+          ctx.moveTo(p.x,p.y);ctx.lineTo(mx,my);
+          ctx.strokeStyle=`rgba(242,41,91,${alpha})`;
+          ctx.lineWidth=.8;
+          ctx.stroke();
+        }
+      }
+
+      // Mouse glow orb
+      const grad=ctx.createRadialGradient(mx,my,0,mx,my,80);
+      grad.addColorStop(0,'rgba(250,80,0,.06)');
+      grad.addColorStop(.5,'rgba(242,41,91,.02)');
+      grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grad;
+      ctx.fillRect(mx-80,my-80,160,160);
+
       requestAnimationFrame(loop);
-    })();
+    }
+    loop();
   })();
 
   // Particles
