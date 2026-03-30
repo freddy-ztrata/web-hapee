@@ -103,11 +103,12 @@ html.dark .icon-moon{display:none}
 
 .mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px;transition:var(--tr)}
-.mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;transition:background var(--tr)}
 .mmenu.open{display:flex}
-.mmenu a{font-size:1.15rem;color:var(--heading);font-weight:600}
+.mmenu a{font-size:1.1rem;color:var(--heading);font-weight:600}
 .mmenu a:hover{color:var(--accent)}
-.mx{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--heading);font-size:2rem;cursor:pointer}
+.mmenu .btn{width:200px;justify-content:center}
+.mx{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--heading);font-size:2rem;cursor:pointer}
 @media(max-width:1024px){.nlinks,.nctas{display:none}.mbtn{display:block}}
 
 /* ===== HERO ===== */
@@ -240,7 +241,64 @@ html.dark .pc-ideal{border-color:rgba(255,255,255,.06)}
 .pc .btn{width:100%;margin-top:auto}
 .pricing-note{text-align:center;margin-top:36px;font-size:.95rem;color:var(--text)}
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
-@media(max-width:768px){#agentes .ctn > div:last-of-type{grid-template-columns:1fr !important}}
+/* ===== GLOBAL MOBILE FIXES ===== */
+@media(max-width:480px){
+  .ctn{padding:0 16px}
+  .hero{padding:110px 0 50px;min-height:auto}
+  .hero h1{font-size:2.2rem}
+  .hero-sub{font-size:1rem}
+  .hero-ctas .btn{width:100%;justify-content:center}
+  .hero-robot{max-width:180px}
+  .robot-glow{width:200px;height:200px}
+  .video-section{padding:40px 0}
+  .video-section .ctn > div{border-radius:12px !important}
+  .stats{padding:48px 0}
+  .stat-n{font-size:1.8rem !important}
+  .stat-l{font-size:.8rem}
+  .feat{padding:60px 0}
+  .feat-tabs{gap:6px}
+  .feat-tab{padding:8px 14px;font-size:.78rem}
+  .fpc h3{font-size:1.3rem}
+  .fpc>p{font-size:.9rem}
+  .flist li{font-size:.88rem}
+  .midcta{padding:60px 0}
+  .midcta h2{font-size:1.6rem !important}
+  .midcta .btns .btn{width:100%;justify-content:center}
+  .how{padding:60px 0}
+  .how-head{margin-bottom:40px}
+  .step-n{width:56px;height:56px;font-size:1.2rem}
+  .step h3{font-size:1.05rem}
+  .step p{font-size:.88rem}
+  .pricing{padding:60px 0}
+  .pgrid{max-width:100% !important}
+  .pc{padding:28px 20px}
+  .pc.pop .pc-inner{padding:28px 20px}
+  .pc-name{font-size:1.2rem}
+  .pc-val{font-size:2.8rem}
+  .pc-desc{font-size:.88rem;min-height:auto}
+  .pc-feats li{font-size:.88rem}
+  .ctaf{padding:60px 0}
+  .ctaf h2{font-size:1.6rem !important}
+  .ctaf-robot{width:100px}
+  .ctaf .btns .btn{width:100%;justify-content:center}
+  .footer{padding:40px 0 20px}
+  .fgrid{grid-template-columns:1fr !important;gap:24px}
+  .fb-brand p{max-width:100%}
+}
+
+@media(max-width:768px){
+  .nav{padding:12px 0}
+  .nav-logo{height:26px}
+  .hero-badge{font-size:.7rem;padding:6px 14px}
+  .hero-d{font-size:.82rem}
+  .feat-tabs{margin-bottom:32px}
+  .fpanel.on{gap:28px}
+  .fpc h3{font-size:1.4rem}
+  .midcta .btns{flex-direction:column;align-items:center}
+  .ctaf .btns{flex-direction:column;align-items:center}
+  .pricing-note{font-size:.85rem}
+  .pc-badge{font-size:.65rem;padding:4px 14px}
+}
 
 /* ===== CTA FINAL ===== */
 .ctaf{padding:100px 0;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#8b1a2e);position:relative;overflow:hidden;text-align:center}
@@ -315,9 +373,9 @@ html.dark .pc-ideal{border-color:rgba(255,255,255,.06)}
   <a href="#planes" onclick="this.parentElement.classList.remove('open')">Planes</a>
   <a href="https://academy.hapee.ai/login" target="_blank">Academy</a>
   <a href="https://app.hapee.ai/" target="_blank">Login</a>
-  <div style="display:flex;gap:12px;margin-top:16px">
-    <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" class="btn bo">Agendar Demo</a>
-    <a href="#planes" class="btn bs" onclick="this.closest('.mmenu').classList.remove('open')">Ver Planes</a>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
+    <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" class="btn bo" style="width:100%;justify-content:center">Agendar Demo</a>
+    <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open')">Ver Planes</a>
   </div>
 </div>
 
