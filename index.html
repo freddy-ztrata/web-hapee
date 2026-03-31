@@ -1010,15 +1010,21 @@ document.addEventListener('DOMContentLoaded',()=>{
   }));
 
   // Counters
+  // Counter animation — replays every time section scrolls into view
   function ac(el){
+    if(el._animating)return;
+    el._animating=true;
     const t=parseFloat(el.dataset.target),dc=parseInt(el.dataset.dec)||0,dur=2000,st=performance.now();
     (function u(now){
       const p=Math.min((now-st)/dur,1),ease=p===1?1:1-Math.pow(2,-10*p);
       el.textContent=dc>0?(t*ease).toFixed(dc):Math.floor(t*ease);
-      if(p<1)requestAnimationFrame(u);
+      if(p<1)requestAnimationFrame(u);else el._animating=false;
     })(performance.now());
   }
-  const co=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){ac(e.target);co.unobserve(e.target)}}),{threshold:.5});
+  const co=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ac(e.target)}
+    else{e.target.textContent='0';e.target._animating=false}
+  }),{threshold:.5});
   document.querySelectorAll('.ctr').forEach(el=>co.observe(el));
 
   // Feature tabs
