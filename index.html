@@ -179,7 +179,7 @@ html.dark .bo{border-color:rgba(250,80,0,.2);color:var(--heading)}
 html.dark .icon-sun{display:block}
 html.dark .icon-moon{display:none}
 
-.mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px;position:relative;z-index:1001}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px;transition:var(--tr)}
 .mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;transition:background var(--tr)}
 .mmenu.open{display:flex}
@@ -490,7 +490,7 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
       <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
       <a href="#planes" class="btn bs">Ver Planes</a>
     </div>
-    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="mbtn" onclick="document.getElementById('mm').classList.toggle('open')" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mmenu" id="mm">
