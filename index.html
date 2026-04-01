@@ -1185,323 +1185,202 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     // ============================================
     // CTA FINAL — Interactive particle nebula
-    // Uses: gsap-core (quickTo, function-based values), gsap-performance (transforms only),
-    //       gsap-timeline (sequenced entrance), gsap-scrolltrigger (trigger on scroll),
-    //       gsap-utils (random, mapRange, wrap), gsap-plugins (physics-like motion)
     // ============================================
     (function(){
       const section=document.getElementById('ctafSection');
       const canvas=document.getElementById('ctafCanvas');
       if(!canvas||!section)return;
       const ctx=canvas.getContext('2d');
-      let W,H,particles=[],mouse={x:null,y:null},sectionRect;
-      const PARTICLE_COUNT=80;
-      const MOUSE_RADIUS=220;
-      const CONNECT_DIST=140;
-
-      // Shape types: circle, ring, triangle, diamond, hexagon, cross, star
+      let W=0,H=0,particles=[],mouse={x:null,y:null};
+      const COUNT=90,MRAD=250,CDIST=160;
       const SHAPES=['circle','ring','triangle','diamond','hexagon','cross','star'];
 
       function resize(){
-        sectionRect=section.getBoundingClientRect();
-        W=canvas.width=canvas.clientWidth;
-        H=canvas.height=canvas.clientHeight;
+        const r=section.getBoundingClientRect();
+        W=canvas.width=Math.round(r.width);
+        H=canvas.height=Math.round(r.height);
         if(particles.length===0)initParticles();
+        else particles.forEach(p=>{
+          p.baseX=Math.random()*W;p.baseY=Math.random()*H;
+          p.x=p.baseX;p.y=p.baseY;
+        });
       }
 
-      function randomColor(alpha){
-        const colors=[
-          `rgba(250,80,0,${alpha})`,
-          `rgba(255,120,40,${alpha})`,
-          `rgba(205,35,73,${alpha})`,
-          `rgba(255,160,60,${alpha})`,
-          `rgba(232,69,124,${alpha})`,
-          `rgba(255,200,100,${alpha})`,
-          `rgba(255,255,255,${alpha*0.5})`
+      function rndColor(){
+        const c=[
+          'rgba(250,80,0,','rgba(255,120,40,','rgba(205,35,73,',
+          'rgba(255,160,60,','rgba(232,69,124,','rgba(255,200,100,',
+          'rgba(255,255,255,'
         ];
-        return colors[Math.floor(Math.random()*colors.length)];
+        return c[Math.floor(Math.random()*c.length)];
       }
 
-      class Particle{
+      class P{
         constructor(){
-          this.x=Math.random()*W;
-          this.y=Math.random()*H;
-          this.baseX=this.x;
-          this.baseY=this.y;
-          this.size=Math.random()*4+1.5;
+          this.x=Math.random()*W;this.y=Math.random()*H;
+          this.baseX=this.x;this.baseY=this.y;
+          this.sz=Math.random()*5+2;
           this.shape=SHAPES[Math.floor(Math.random()*SHAPES.length)];
-          this.vx=(Math.random()-0.5)*0.8;
-          this.vy=(Math.random()-0.5)*0.8;
-          this.baseAlpha=Math.random()*0.5+0.15;
-          this.alpha=this.baseAlpha;
-          this.color=randomColor(1);
-          this.rotation=Math.random()*360;
-          this.rotSpeed=(Math.random()-0.5)*2;
-          this.pulsePhase=Math.random()*Math.PI*2;
-          this.pulseSpeed=Math.random()*0.02+0.01;
-          this.orbitRadius=Math.random()*30;
-          this.orbitSpeed=(Math.random()-0.5)*0.008;
-          this.orbitAngle=Math.random()*Math.PI*2;
-          this.trail=[];
-          this.maxTrail=Math.floor(Math.random()*6)+3;
+          this.vx=(Math.random()-0.5)*1.2;
+          this.vy=(Math.random()-0.5)*1.2;
+          this.bAlpha=Math.random()*0.5+0.2;
+          this.alpha=this.bAlpha;
+          this.cp=rndColor();
+          this.rot=Math.random()*360;
+          this.rs=(Math.random()-0.5)*3;
+          this.pp=Math.random()*Math.PI*2;
+          this.ps=Math.random()*0.03+0.015;
+          this.oR=Math.random()*50+10;
+          this.oS=(Math.random()-0.5)*0.015;
+          this.oA=Math.random()*Math.PI*2;
+          this.trail=[];this.mt=Math.floor(Math.random()*8)+4;
         }
-
-        update(time){
-          // Orbit around base position
-          this.orbitAngle+=this.orbitSpeed;
-          const targetX=this.baseX+Math.cos(this.orbitAngle)*this.orbitRadius;
-          const targetY=this.baseY+Math.sin(this.orbitAngle)*this.orbitRadius;
-
-          // Gentle drift
-          this.baseX+=this.vx;
-          this.baseY+=this.vy;
-
-          // Wrap around edges
-          if(this.baseX<-20)this.baseX=W+20;
-          if(this.baseX>W+20)this.baseX=-20;
-          if(this.baseY<-20)this.baseY=H+20;
-          if(this.baseY>H+20)this.baseY=-20;
-
-          // Mouse interaction — magnetic repulsion + glow
+        update(){
+          this.oA+=this.oS;
+          const tx=this.baseX+Math.cos(this.oA)*this.oR;
+          const ty=this.baseY+Math.sin(this.oA)*this.oR;
+          this.baseX+=this.vx;this.baseY+=this.vy;
+          if(this.baseX<-30)this.baseX=W+30;
+          if(this.baseX>W+30)this.baseX=-30;
+          if(this.baseY<-30)this.baseY=H+30;
+          if(this.baseY>H+30)this.baseY=-30;
           if(mouse.x!==null){
-            const dx=this.x-mouse.x;
-            const dy=this.y-mouse.y;
-            const dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<MOUSE_RADIUS){
-              const force=(1-dist/MOUSE_RADIUS)*4;
-              const angle=Math.atan2(dy,dx);
-              this.x+=Math.cos(angle)*force*3;
-              this.y+=Math.sin(angle)*force*3;
-              this.alpha=Math.min(this.baseAlpha+force*0.3,1);
-              this.rotSpeed+=(Math.random()-0.5)*0.3;
-            }else{
-              this.alpha+=(this.baseAlpha-this.alpha)*0.05;
-            }
-          }else{
-            this.alpha+=(this.baseAlpha-this.alpha)*0.05;
-          }
-
-          // Smooth return to orbit target
-          this.x+=(targetX-this.x)*0.03;
-          this.y+=(targetY-this.y)*0.03;
-
-          // Pulse size
-          this.pulsePhase+=this.pulseSpeed;
-          const pulse=1+Math.sin(this.pulsePhase)*0.3;
-
-          // Rotation
-          this.rotation+=this.rotSpeed;
-
-          // Trail
-          this.trail.push({x:this.x,y:this.y,alpha:this.alpha*0.4});
-          if(this.trail.length>this.maxTrail)this.trail.shift();
-
-          return pulse;
+            const dx=this.x-mouse.x,dy=this.y-mouse.y;
+            const d=Math.sqrt(dx*dx+dy*dy);
+            if(d<MRAD&&d>0){
+              const f=(1-d/MRAD)*5;
+              this.x+=(dx/d)*f*4;this.y+=(dy/d)*f*4;
+              this.alpha=Math.min(this.bAlpha+f*0.35,1);
+              this.rs+=(Math.random()-0.5)*0.5;
+            }else this.alpha+=(this.bAlpha-this.alpha)*0.06;
+          }else this.alpha+=(this.bAlpha-this.alpha)*0.06;
+          this.x+=(tx-this.x)*0.04;this.y+=(ty-this.y)*0.04;
+          this.pp+=this.ps;
+          this.rot+=this.rs;
+          this.rs*=0.99;
+          this.trail.push({x:this.x,y:this.y,a:this.alpha*0.35});
+          if(this.trail.length>this.mt)this.trail.shift();
+          return 1+Math.sin(this.pp)*0.35;
         }
-
-        drawShape(cx,cy,sz,alpha){
-          ctx.save();
-          ctx.translate(cx,cy);
-          ctx.rotate(this.rotation*Math.PI/180);
-          ctx.globalAlpha=alpha;
-
-          const c=this.color;
-          ctx.fillStyle=c;
-          ctx.strokeStyle=c;
-          ctx.lineWidth=1;
-
+        drawS(cx,cy,s,a){
+          if(s<0.3||a<0.01)return;
+          ctx.save();ctx.translate(cx,cy);ctx.rotate(this.rot*Math.PI/180);ctx.globalAlpha=a;
+          ctx.fillStyle=this.cp+a+')';ctx.strokeStyle=this.cp+a+')';ctx.lineWidth=1.2;
           switch(this.shape){
-            case 'circle':
-              ctx.beginPath();
-              ctx.arc(0,0,sz,0,Math.PI*2);
-              ctx.fill();
-              break;
-            case 'ring':
-              ctx.beginPath();
-              ctx.arc(0,0,sz,0,Math.PI*2);
-              ctx.stroke();
-              break;
-            case 'triangle':
-              ctx.beginPath();
-              for(let i=0;i<3;i++){
-                const a=(i/3)*Math.PI*2-Math.PI/2;
-                i===0?ctx.moveTo(Math.cos(a)*sz,Math.sin(a)*sz):ctx.lineTo(Math.cos(a)*sz,Math.sin(a)*sz);
-              }
-              ctx.closePath();ctx.fill();
-              break;
-            case 'diamond':
-              ctx.beginPath();
-              ctx.moveTo(0,-sz);ctx.lineTo(sz*0.6,0);ctx.lineTo(0,sz);ctx.lineTo(-sz*0.6,0);
-              ctx.closePath();ctx.fill();
-              break;
-            case 'hexagon':
-              ctx.beginPath();
-              for(let i=0;i<6;i++){
-                const a=(i/6)*Math.PI*2;
-                i===0?ctx.moveTo(Math.cos(a)*sz,Math.sin(a)*sz):ctx.lineTo(Math.cos(a)*sz,Math.sin(a)*sz);
-              }
-              ctx.closePath();ctx.stroke();
-              break;
-            case 'cross':
-              const t=sz*0.3;
-              ctx.fillRect(-t,-sz,t*2,sz*2);
-              ctx.fillRect(-sz,-t,sz*2,t*2);
-              break;
-            case 'star':
-              ctx.beginPath();
-              for(let i=0;i<5;i++){
-                const outer=(i/5)*Math.PI*2-Math.PI/2;
-                const inner=((i+0.5)/5)*Math.PI*2-Math.PI/2;
-                ctx.lineTo(Math.cos(outer)*sz,Math.sin(outer)*sz);
-                ctx.lineTo(Math.cos(inner)*sz*0.4,Math.sin(inner)*sz*0.4);
-              }
-              ctx.closePath();ctx.fill();
-              break;
+            case'circle':ctx.beginPath();ctx.arc(0,0,s,0,Math.PI*2);ctx.fill();break;
+            case'ring':ctx.beginPath();ctx.arc(0,0,s,0,Math.PI*2);ctx.stroke();break;
+            case'triangle':{ctx.beginPath();for(let i=0;i<3;i++){const a2=(i/3)*Math.PI*2-Math.PI/2;i===0?ctx.moveTo(Math.cos(a2)*s,Math.sin(a2)*s):ctx.lineTo(Math.cos(a2)*s,Math.sin(a2)*s)}ctx.closePath();ctx.fill();break}
+            case'diamond':ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.6,0);ctx.lineTo(0,s);ctx.lineTo(-s*.6,0);ctx.closePath();ctx.fill();break;
+            case'hexagon':{ctx.beginPath();for(let i=0;i<6;i++){const a2=(i/6)*Math.PI*2;i===0?ctx.moveTo(Math.cos(a2)*s,Math.sin(a2)*s):ctx.lineTo(Math.cos(a2)*s,Math.sin(a2)*s)}ctx.closePath();ctx.stroke();break}
+            case'cross':{const t=s*0.3;ctx.fillRect(-t,-s,t*2,s*2);ctx.fillRect(-s,-t,s*2,t*2);break}
+            case'star':{ctx.beginPath();for(let i=0;i<5;i++){const o=(i/5)*Math.PI*2-Math.PI/2,n=((i+.5)/5)*Math.PI*2-Math.PI/2;ctx.lineTo(Math.cos(o)*s,Math.sin(o)*s);ctx.lineTo(Math.cos(n)*s*.4,Math.sin(n)*s*.4)}ctx.closePath();ctx.fill();break}
           }
           ctx.restore();
         }
-
         draw(pulse){
-          // Draw trail
           for(let i=0;i<this.trail.length;i++){
-            const t=this.trail[i];
-            const trailAlpha=t.alpha*(i/this.trail.length)*0.3;
-            const trailSize=this.size*pulse*(i/this.trail.length)*0.6;
-            this.drawShape(t.x,t.y,trailSize,trailAlpha);
+            const t=this.trail[i],r=i/this.trail.length;
+            this.drawS(t.x,t.y,this.sz*pulse*r*0.5,t.a*r*0.25);
           }
-
-          // Draw glow
-          const glowSize=this.size*pulse*3.5;
-          ctx.save();
-          ctx.globalAlpha=this.alpha*0.12;
-          ctx.fillStyle=this.color;
-          ctx.beginPath();
-          ctx.arc(this.x,this.y,glowSize,0,Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-
-          // Draw main shape
-          this.drawShape(this.x,this.y,this.size*pulse,this.alpha);
+          ctx.save();ctx.globalAlpha=this.alpha*0.1;ctx.fillStyle=this.cp+'0.3)';
+          ctx.beginPath();ctx.arc(this.x,this.y,this.sz*pulse*4,0,Math.PI*2);ctx.fill();ctx.restore();
+          this.drawS(this.x,this.y,this.sz*pulse,this.alpha);
         }
       }
 
-      function initParticles(){
-        particles=[];
-        for(let i=0;i<PARTICLE_COUNT;i++){
-          particles.push(new Particle());
-        }
-      }
+      function initParticles(){particles=[];for(let i=0;i<COUNT;i++)particles.push(new P())}
 
-      // Mouse cursor glow with energy rings
-      function drawCursorEffect(){
+      function drawCursor(){
         if(mouse.x===null)return;
-        // Outer glow
-        const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MOUSE_RADIUS);
-        g.addColorStop(0,'rgba(250,80,0,.08)');
-        g.addColorStop(0.3,'rgba(255,120,40,.04)');
-        g.addColorStop(0.6,'rgba(205,35,73,.02)');
-        g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=g;
-        ctx.beginPath();
-        ctx.arc(mouse.x,mouse.y,MOUSE_RADIUS,0,Math.PI*2);
-        ctx.fill();
-
-        // Inner energy core
-        const g2=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,25);
-        g2.addColorStop(0,'rgba(255,200,100,.12)');
-        g2.addColorStop(1,'rgba(250,80,0,0)');
-        ctx.fillStyle=g2;
-        ctx.beginPath();
-        ctx.arc(mouse.x,mouse.y,25,0,Math.PI*2);
-        ctx.fill();
+        const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MRAD);
+        g.addColorStop(0,'rgba(250,80,0,.1)');g.addColorStop(.3,'rgba(255,120,40,.05)');
+        g.addColorStop(.6,'rgba(205,35,73,.02)');g.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(mouse.x,mouse.y,MRAD,0,Math.PI*2);ctx.fill();
+        const g2=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,30);
+        g2.addColorStop(0,'rgba(255,200,100,.15)');g2.addColorStop(1,'rgba(250,80,0,0)');
+        ctx.fillStyle=g2;ctx.beginPath();ctx.arc(mouse.x,mouse.y,30,0,Math.PI*2);ctx.fill();
       }
 
-      // Connect nearby particles with gradient lines
-      function connectParticles(){
+      function connect(){
         for(let a=0;a<particles.length;a++){
           for(let b=a+1;b<particles.length;b++){
-            const dx=particles[a].x-particles[b].x;
-            const dy=particles[a].y-particles[b].y;
-            const dist=Math.sqrt(dx*dx+dy*dy);
-            if(dist<CONNECT_DIST){
-              let alpha=(1-dist/CONNECT_DIST)*0.15;
-              // Boost near mouse
+            const dx=particles[a].x-particles[b].x,dy=particles[a].y-particles[b].y;
+            const d=Math.sqrt(dx*dx+dy*dy);
+            if(d<CDIST){
+              let al=(1-d/CDIST)*0.18;
               if(mouse.x!==null){
                 const mx=(particles[a].x+particles[b].x)/2-mouse.x;
                 const my=(particles[a].y+particles[b].y)/2-mouse.y;
-                const mDist=Math.sqrt(mx*mx+my*my);
-                if(mDist<MOUSE_RADIUS)alpha+=(1-mDist/MOUSE_RADIUS)*0.2;
+                const md=Math.sqrt(mx*mx+my*my);
+                if(md<MRAD)al+=(1-md/MRAD)*0.25;
               }
-              ctx.strokeStyle=`rgba(255,160,80,${alpha})`;
-              ctx.lineWidth=0.6;
-              ctx.beginPath();
-              ctx.moveTo(particles[a].x,particles[a].y);
-              ctx.lineTo(particles[b].x,particles[b].y);
-              ctx.stroke();
+              ctx.strokeStyle=`rgba(255,160,80,${al})`;ctx.lineWidth=.7;
+              ctx.beginPath();ctx.moveTo(particles[a].x,particles[a].y);
+              ctx.lineTo(particles[b].x,particles[b].y);ctx.stroke();
             }
           }
         }
       }
 
-      let animId;
-      let time=0;
-      function animate(){
-        time++;
-        ctx.clearRect(0,0,W,H);
-        connectParticles();
-        drawCursorEffect();
-        for(const p of particles){
-          const pulse=p.update(time);
-          p.draw(pulse);
+      let shocks=[];
+      function drawShocks(){
+        for(let i=shocks.length-1;i>=0;i--){
+          const s=shocks[i];s.r+=5;s.a-=0.015;
+          if(s.a<=0){shocks.splice(i,1);continue}
+          ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+          ctx.strokeStyle=`rgba(250,80,0,${s.a*0.4})`;ctx.lineWidth=2;ctx.stroke();
+          ctx.beginPath();ctx.arc(s.x,s.y,s.r*0.6,0,Math.PI*2);
+          ctx.strokeStyle=`rgba(255,200,100,${s.a*0.2})`;ctx.lineWidth=1;ctx.stroke();
         }
-        animId=requestAnimationFrame(animate);
       }
 
-      // Track mouse relative to canvas
-      section.style.pointerEvents='auto';
+      let animId=null,running=false;
+      function animate(){
+        if(!running)return;
+        ctx.clearRect(0,0,W,H);
+        connect();drawCursor();drawShocks();
+        for(const p of particles){const pulse=p.update();p.draw(pulse)}
+        animId=requestAnimationFrame(animate);
+      }
+      function start(){if(!running){running=true;resize();animate()}}
+      function stop(){running=false;if(animId){cancelAnimationFrame(animId);animId=null}}
+
+      // Mouse tracking
       section.addEventListener('mousemove',e=>{
         const r=canvas.getBoundingClientRect();
-        mouse.x=e.clientX-r.left;
-        mouse.y=e.clientY-r.top;
+        mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
       });
       section.addEventListener('mouseleave',()=>{mouse.x=null;mouse.y=null});
 
-      // Click shockwave — burst particles outward
+      // Click shockwave
       section.addEventListener('click',e=>{
         const r=canvas.getBoundingClientRect();
         const cx=e.clientX-r.left,cy=e.clientY-r.top;
+        shocks.push({x:cx,y:cy,r:0,a:1});
         for(const p of particles){
-          const dx=p.x-cx,dy=p.y-cy;
-          const dist=Math.sqrt(dx*dx+dy*dy);
-          if(dist<300){
-            const force=(1-dist/300)*6;
-            p.x+=dx/dist*force*8;
-            p.y+=dy/dist*force*8;
-            p.rotSpeed+=(Math.random()-0.5)*5;
+          const dx=p.x-cx,dy=p.y-cy,d=Math.sqrt(dx*dx+dy*dy);
+          if(d<350&&d>0){
+            const f=(1-d/350)*8;
+            p.x+=(dx/d)*f*6;p.y+=(dy/d)*f*6;
+            p.rs+=(Math.random()-0.5)*8;
           }
         }
       });
 
-      // Only animate when section is visible (performance)
-      let isVisible=false;
-      ScrollTrigger.create({
-        trigger:section,
-        start:'top bottom',
-        end:'bottom top',
-        onEnter:()=>{isVisible=true;resize();animate()},
-        onLeave:()=>{isVisible=false;cancelAnimationFrame(animId)},
-        onEnterBack:()=>{isVisible=true;resize();animate()},
-        onLeaveBack:()=>{isVisible=false;cancelAnimationFrame(animId)}
-      });
+      // Visibility gating via IntersectionObserver (no ScrollTrigger dependency for the loop)
+      const obs=new IntersectionObserver(es=>{
+        es.forEach(e=>{if(e.isIntersecting)start();else stop()});
+      },{threshold:0.05});
+      obs.observe(section);
 
-      // Entrance animation for CTA content
+      // Entrance animation for CTA content (uses ScrollTrigger)
       const ctaTl=gsap.timeline({scrollTrigger:{trigger:section,start:'top 80%',once:true}});
       ctaTl.from('.ctaf-robot',{scale:0,rotation:-20,duration:0.8,ease:'elastic.out(1,0.6)'})
            .from('.ctaf h2',{y:40,opacity:0,duration:0.6,ease:'power3.out'},'<0.2')
            .from('.ctaf p',{y:30,opacity:0,duration:0.5,ease:'power2.out'},'<0.2')
            .from('.ctaf .btns',{y:20,opacity:0,duration:0.5,ease:'power2.out'},'<0.15');
 
-      window.addEventListener('resize',()=>{if(isVisible)resize()});
+      window.addEventListener('resize',()=>{if(running)resize()});
     })();
   }
   typeof gsap!=='undefined'?initG():window.addEventListener('load',initG);
