@@ -417,6 +417,9 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 /* ===== CTA FINAL ===== */
 .ctaf{padding:100px 0;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#8b1a2e);position:relative;overflow:hidden;text-align:center}
 .ctaf::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(255,255,255,.09),transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.05),transparent 40%)}
+#ctafCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.ctaf-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;will-change:transform,opacity}
+.ctaf-shape{position:absolute;pointer-events:none;z-index:0;will-change:transform,opacity}
 .ctaf .ctn{position:relative;z-index:2}
 .ctaf-robot{width:140px;margin:0 auto 28px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.25));animation:rf 4s ease-in-out infinite}
 .ctaf h2{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:14px;color:#fff}
@@ -789,7 +792,8 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 </section>
 
 <!-- CTA FINAL -->
-<section class="ctaf">
+<section class="ctaf" id="ctafSection">
+  <canvas id="ctafCanvas"></canvas>
   <div class="ctn">
     <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="ctaf-robot" loading="lazy">
     <h2>Unete a los vendedores mas<br>exitosos del planeta</h2>
@@ -1177,9 +1181,328 @@ document.addEventListener('DOMContentLoaded',()=>{
     gsap.from('.hero-vis',{opacity:0,scale:.85,duration:1,delay:.5,ease:'elastic.out(1,0.8)'});
     if(typeof ScrollTrigger==='undefined')return;
     gsap.registerPlugin(ScrollTrigger);
-    /* Stats animation handled by custom counter observer */
-    /* Steps animation handled by custom IntersectionObserver below */
     gsap.from('.midcta h2, .midcta p, .midcta .btns',{scrollTrigger:{trigger:'.midcta',start:'top 85%'},y:25,opacity:0,duration:.5,stagger:.1,ease:'power2.out'});
+
+    // ============================================
+    // CTA FINAL — Interactive particle nebula
+    // Uses: gsap-core (quickTo, function-based values), gsap-performance (transforms only),
+    //       gsap-timeline (sequenced entrance), gsap-scrolltrigger (trigger on scroll),
+    //       gsap-utils (random, mapRange, wrap), gsap-plugins (physics-like motion)
+    // ============================================
+    (function(){
+      const section=document.getElementById('ctafSection');
+      const canvas=document.getElementById('ctafCanvas');
+      if(!canvas||!section)return;
+      const ctx=canvas.getContext('2d');
+      let W,H,particles=[],mouse={x:null,y:null},sectionRect;
+      const PARTICLE_COUNT=80;
+      const MOUSE_RADIUS=220;
+      const CONNECT_DIST=140;
+
+      // Shape types: circle, ring, triangle, diamond, hexagon, cross, star
+      const SHAPES=['circle','ring','triangle','diamond','hexagon','cross','star'];
+
+      function resize(){
+        sectionRect=section.getBoundingClientRect();
+        W=canvas.width=canvas.clientWidth;
+        H=canvas.height=canvas.clientHeight;
+        if(particles.length===0)initParticles();
+      }
+
+      function randomColor(alpha){
+        const colors=[
+          `rgba(250,80,0,${alpha})`,
+          `rgba(255,120,40,${alpha})`,
+          `rgba(205,35,73,${alpha})`,
+          `rgba(255,160,60,${alpha})`,
+          `rgba(232,69,124,${alpha})`,
+          `rgba(255,200,100,${alpha})`,
+          `rgba(255,255,255,${alpha*0.5})`
+        ];
+        return colors[Math.floor(Math.random()*colors.length)];
+      }
+
+      class Particle{
+        constructor(){
+          this.x=Math.random()*W;
+          this.y=Math.random()*H;
+          this.baseX=this.x;
+          this.baseY=this.y;
+          this.size=Math.random()*4+1.5;
+          this.shape=SHAPES[Math.floor(Math.random()*SHAPES.length)];
+          this.vx=(Math.random()-0.5)*0.8;
+          this.vy=(Math.random()-0.5)*0.8;
+          this.baseAlpha=Math.random()*0.5+0.15;
+          this.alpha=this.baseAlpha;
+          this.color=randomColor(1);
+          this.rotation=Math.random()*360;
+          this.rotSpeed=(Math.random()-0.5)*2;
+          this.pulsePhase=Math.random()*Math.PI*2;
+          this.pulseSpeed=Math.random()*0.02+0.01;
+          this.orbitRadius=Math.random()*30;
+          this.orbitSpeed=(Math.random()-0.5)*0.008;
+          this.orbitAngle=Math.random()*Math.PI*2;
+          this.trail=[];
+          this.maxTrail=Math.floor(Math.random()*6)+3;
+        }
+
+        update(time){
+          // Orbit around base position
+          this.orbitAngle+=this.orbitSpeed;
+          const targetX=this.baseX+Math.cos(this.orbitAngle)*this.orbitRadius;
+          const targetY=this.baseY+Math.sin(this.orbitAngle)*this.orbitRadius;
+
+          // Gentle drift
+          this.baseX+=this.vx;
+          this.baseY+=this.vy;
+
+          // Wrap around edges
+          if(this.baseX<-20)this.baseX=W+20;
+          if(this.baseX>W+20)this.baseX=-20;
+          if(this.baseY<-20)this.baseY=H+20;
+          if(this.baseY>H+20)this.baseY=-20;
+
+          // Mouse interaction — magnetic repulsion + glow
+          if(mouse.x!==null){
+            const dx=this.x-mouse.x;
+            const dy=this.y-mouse.y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<MOUSE_RADIUS){
+              const force=(1-dist/MOUSE_RADIUS)*4;
+              const angle=Math.atan2(dy,dx);
+              this.x+=Math.cos(angle)*force*3;
+              this.y+=Math.sin(angle)*force*3;
+              this.alpha=Math.min(this.baseAlpha+force*0.3,1);
+              this.rotSpeed+=(Math.random()-0.5)*0.3;
+            }else{
+              this.alpha+=(this.baseAlpha-this.alpha)*0.05;
+            }
+          }else{
+            this.alpha+=(this.baseAlpha-this.alpha)*0.05;
+          }
+
+          // Smooth return to orbit target
+          this.x+=(targetX-this.x)*0.03;
+          this.y+=(targetY-this.y)*0.03;
+
+          // Pulse size
+          this.pulsePhase+=this.pulseSpeed;
+          const pulse=1+Math.sin(this.pulsePhase)*0.3;
+
+          // Rotation
+          this.rotation+=this.rotSpeed;
+
+          // Trail
+          this.trail.push({x:this.x,y:this.y,alpha:this.alpha*0.4});
+          if(this.trail.length>this.maxTrail)this.trail.shift();
+
+          return pulse;
+        }
+
+        drawShape(cx,cy,sz,alpha){
+          ctx.save();
+          ctx.translate(cx,cy);
+          ctx.rotate(this.rotation*Math.PI/180);
+          ctx.globalAlpha=alpha;
+
+          const c=this.color;
+          ctx.fillStyle=c;
+          ctx.strokeStyle=c;
+          ctx.lineWidth=1;
+
+          switch(this.shape){
+            case 'circle':
+              ctx.beginPath();
+              ctx.arc(0,0,sz,0,Math.PI*2);
+              ctx.fill();
+              break;
+            case 'ring':
+              ctx.beginPath();
+              ctx.arc(0,0,sz,0,Math.PI*2);
+              ctx.stroke();
+              break;
+            case 'triangle':
+              ctx.beginPath();
+              for(let i=0;i<3;i++){
+                const a=(i/3)*Math.PI*2-Math.PI/2;
+                i===0?ctx.moveTo(Math.cos(a)*sz,Math.sin(a)*sz):ctx.lineTo(Math.cos(a)*sz,Math.sin(a)*sz);
+              }
+              ctx.closePath();ctx.fill();
+              break;
+            case 'diamond':
+              ctx.beginPath();
+              ctx.moveTo(0,-sz);ctx.lineTo(sz*0.6,0);ctx.lineTo(0,sz);ctx.lineTo(-sz*0.6,0);
+              ctx.closePath();ctx.fill();
+              break;
+            case 'hexagon':
+              ctx.beginPath();
+              for(let i=0;i<6;i++){
+                const a=(i/6)*Math.PI*2;
+                i===0?ctx.moveTo(Math.cos(a)*sz,Math.sin(a)*sz):ctx.lineTo(Math.cos(a)*sz,Math.sin(a)*sz);
+              }
+              ctx.closePath();ctx.stroke();
+              break;
+            case 'cross':
+              const t=sz*0.3;
+              ctx.fillRect(-t,-sz,t*2,sz*2);
+              ctx.fillRect(-sz,-t,sz*2,t*2);
+              break;
+            case 'star':
+              ctx.beginPath();
+              for(let i=0;i<5;i++){
+                const outer=(i/5)*Math.PI*2-Math.PI/2;
+                const inner=((i+0.5)/5)*Math.PI*2-Math.PI/2;
+                ctx.lineTo(Math.cos(outer)*sz,Math.sin(outer)*sz);
+                ctx.lineTo(Math.cos(inner)*sz*0.4,Math.sin(inner)*sz*0.4);
+              }
+              ctx.closePath();ctx.fill();
+              break;
+          }
+          ctx.restore();
+        }
+
+        draw(pulse){
+          // Draw trail
+          for(let i=0;i<this.trail.length;i++){
+            const t=this.trail[i];
+            const trailAlpha=t.alpha*(i/this.trail.length)*0.3;
+            const trailSize=this.size*pulse*(i/this.trail.length)*0.6;
+            this.drawShape(t.x,t.y,trailSize,trailAlpha);
+          }
+
+          // Draw glow
+          const glowSize=this.size*pulse*3.5;
+          ctx.save();
+          ctx.globalAlpha=this.alpha*0.12;
+          ctx.fillStyle=this.color;
+          ctx.beginPath();
+          ctx.arc(this.x,this.y,glowSize,0,Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+
+          // Draw main shape
+          this.drawShape(this.x,this.y,this.size*pulse,this.alpha);
+        }
+      }
+
+      function initParticles(){
+        particles=[];
+        for(let i=0;i<PARTICLE_COUNT;i++){
+          particles.push(new Particle());
+        }
+      }
+
+      // Mouse cursor glow with energy rings
+      function drawCursorEffect(){
+        if(mouse.x===null)return;
+        // Outer glow
+        const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MOUSE_RADIUS);
+        g.addColorStop(0,'rgba(250,80,0,.08)');
+        g.addColorStop(0.3,'rgba(255,120,40,.04)');
+        g.addColorStop(0.6,'rgba(205,35,73,.02)');
+        g.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=g;
+        ctx.beginPath();
+        ctx.arc(mouse.x,mouse.y,MOUSE_RADIUS,0,Math.PI*2);
+        ctx.fill();
+
+        // Inner energy core
+        const g2=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,25);
+        g2.addColorStop(0,'rgba(255,200,100,.12)');
+        g2.addColorStop(1,'rgba(250,80,0,0)');
+        ctx.fillStyle=g2;
+        ctx.beginPath();
+        ctx.arc(mouse.x,mouse.y,25,0,Math.PI*2);
+        ctx.fill();
+      }
+
+      // Connect nearby particles with gradient lines
+      function connectParticles(){
+        for(let a=0;a<particles.length;a++){
+          for(let b=a+1;b<particles.length;b++){
+            const dx=particles[a].x-particles[b].x;
+            const dy=particles[a].y-particles[b].y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<CONNECT_DIST){
+              let alpha=(1-dist/CONNECT_DIST)*0.15;
+              // Boost near mouse
+              if(mouse.x!==null){
+                const mx=(particles[a].x+particles[b].x)/2-mouse.x;
+                const my=(particles[a].y+particles[b].y)/2-mouse.y;
+                const mDist=Math.sqrt(mx*mx+my*my);
+                if(mDist<MOUSE_RADIUS)alpha+=(1-mDist/MOUSE_RADIUS)*0.2;
+              }
+              ctx.strokeStyle=`rgba(255,160,80,${alpha})`;
+              ctx.lineWidth=0.6;
+              ctx.beginPath();
+              ctx.moveTo(particles[a].x,particles[a].y);
+              ctx.lineTo(particles[b].x,particles[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      let animId;
+      let time=0;
+      function animate(){
+        time++;
+        ctx.clearRect(0,0,W,H);
+        connectParticles();
+        drawCursorEffect();
+        for(const p of particles){
+          const pulse=p.update(time);
+          p.draw(pulse);
+        }
+        animId=requestAnimationFrame(animate);
+      }
+
+      // Track mouse relative to canvas
+      section.style.pointerEvents='auto';
+      section.addEventListener('mousemove',e=>{
+        const r=canvas.getBoundingClientRect();
+        mouse.x=e.clientX-r.left;
+        mouse.y=e.clientY-r.top;
+      });
+      section.addEventListener('mouseleave',()=>{mouse.x=null;mouse.y=null});
+
+      // Click shockwave — burst particles outward
+      section.addEventListener('click',e=>{
+        const r=canvas.getBoundingClientRect();
+        const cx=e.clientX-r.left,cy=e.clientY-r.top;
+        for(const p of particles){
+          const dx=p.x-cx,dy=p.y-cy;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<300){
+            const force=(1-dist/300)*6;
+            p.x+=dx/dist*force*8;
+            p.y+=dy/dist*force*8;
+            p.rotSpeed+=(Math.random()-0.5)*5;
+          }
+        }
+      });
+
+      // Only animate when section is visible (performance)
+      let isVisible=false;
+      ScrollTrigger.create({
+        trigger:section,
+        start:'top bottom',
+        end:'bottom top',
+        onEnter:()=>{isVisible=true;resize();animate()},
+        onLeave:()=>{isVisible=false;cancelAnimationFrame(animId)},
+        onEnterBack:()=>{isVisible=true;resize();animate()},
+        onLeaveBack:()=>{isVisible=false;cancelAnimationFrame(animId)}
+      });
+
+      // Entrance animation for CTA content
+      const ctaTl=gsap.timeline({scrollTrigger:{trigger:section,start:'top 80%',once:true}});
+      ctaTl.from('.ctaf-robot',{scale:0,rotation:-20,duration:0.8,ease:'elastic.out(1,0.6)'})
+           .from('.ctaf h2',{y:40,opacity:0,duration:0.6,ease:'power3.out'},'<0.2')
+           .from('.ctaf p',{y:30,opacity:0,duration:0.5,ease:'power2.out'},'<0.2')
+           .from('.ctaf .btns',{y:20,opacity:0,duration:0.5,ease:'power2.out'},'<0.15');
+
+      window.addEventListener('resize',()=>{if(isVisible)resize()});
+    })();
   }
   typeof gsap!=='undefined'?initG():window.addEventListener('load',initG);
 });
