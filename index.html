@@ -1184,7 +1184,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     gsap.from('.hero-vis',{opacity:0,scale:.85,duration:1,delay:.5,ease:'elastic.out(1,0.8)'});
     if(typeof ScrollTrigger==='undefined')return;
     gsap.registerPlugin(ScrollTrigger);
-    gsap.from('.midcta h2, .midcta p, .midcta .btns',{scrollTrigger:{trigger:'.midcta',start:'top 85%'},y:25,opacity:0,duration:.5,stagger:.1,ease:'power2.out'});
+    gsap.from('.midcta h2, .midcta p, .midcta .btns',{scrollTrigger:{trigger:'.midcta',start:'top 85%',once:true},y:25,autoAlpha:0,duration:.5,stagger:.1,ease:'power2.out'});
 
     // ============================================
     // CTA FINAL — Interactive particle nebula
@@ -1377,11 +1377,18 @@ document.addEventListener('DOMContentLoaded',()=>{
       obs.observe(section);
 
       // Entrance animation for CTA content (uses ScrollTrigger)
-      const ctaTl=gsap.timeline({scrollTrigger:{trigger:section,start:'top 80%',once:true}});
-      ctaTl.from('.ctaf-robot',{scale:0,rotation:-20,duration:0.8,ease:'elastic.out(1,0.6)'})
-           .from('.ctaf h2',{y:40,opacity:0,duration:0.6,ease:'power3.out'},'<0.2')
-           .from('.ctaf p',{y:30,opacity:0,duration:0.5,ease:'power2.out'},'<0.2')
-           .from('.ctaf .btns',{y:20,opacity:0,duration:0.5,ease:'power2.out'},'<0.15');
+      // Entrance — use ScrollTrigger only if section hasn't been scrolled past already
+      const ctaTl=gsap.timeline({
+        scrollTrigger:{trigger:section,start:'top 85%',once:true,
+          onEnter:()=>{/* plays automatically */},
+          // If user already scrolled past before GSAP loaded, play immediately
+          onRefresh:self=>{if(self.progress>0)ctaTl.progress(1)}
+        }
+      });
+      ctaTl.from('.ctaf-robot',{scale:0.8,autoAlpha:0,rotation:-10,duration:0.8,ease:'back.out(1.4)'})
+           .from('.ctaf h2',{y:30,autoAlpha:0,duration:0.6,ease:'power3.out'},'<0.2')
+           .from('.ctaf p',{y:20,autoAlpha:0,duration:0.5,ease:'power2.out'},'<0.2')
+           .from('.ctaf .btns',{y:15,autoAlpha:0,duration:0.5,ease:'power2.out'},'<0.15');
 
       window.addEventListener('resize',()=>{if(running)resize()});
     })();
