@@ -123,32 +123,14 @@ html.dark body{background:
   radial-gradient(ellipse 80% 40% at 80% 95%,rgba(250,80,0,.18),transparent 50%),
   #080808;
   background-attachment:fixed}
-/* Per-section overlays add extra depth on top of global mesh */
-html.dark .hero{background:
-  radial-gradient(ellipse 90% 60% at 25% 15%,rgba(250,80,0,.25),transparent 50%),
-  radial-gradient(ellipse 60% 50% at 75% 85%,rgba(205,35,73,.15),transparent 45%),
-  transparent}
-html.dark .feat{background:
-  radial-gradient(ellipse 70% 50% at 5% 30%,rgba(250,80,0,.18),transparent 50%),
-  radial-gradient(ellipse 50% 40% at 95% 70%,rgba(205,35,73,.12),transparent 45%),
-  transparent}
-html.dark .how{background:
-  radial-gradient(ellipse 60% 45% at 85% 35%,rgba(205,35,73,.2),transparent 50%),
-  radial-gradient(ellipse 50% 40% at 15% 65%,rgba(250,80,0,.12),transparent 45%),
-  transparent}
-html.dark .stats{background:
-  radial-gradient(ellipse 80% 60% at 50% 50%,rgba(250,80,0,.15),transparent 55%),
-  rgba(10,10,10,.5);border-color:rgba(250,80,0,.1)}
-html.dark .video-section{background:
-  radial-gradient(ellipse 60% 50% at 50% 50%,rgba(250,80,0,.1),transparent 50%),
-  rgba(10,10,10,.5)}
-html.dark .midcta{background:
-  radial-gradient(ellipse 70% 50% at 50% 50%,rgba(205,35,73,.18),transparent 50%),
-  rgba(10,10,10,.5);border-color:rgba(250,80,0,.1)}
-html.dark .pricing{background:
-  radial-gradient(ellipse 80% 60% at 25% 20%,rgba(250,80,0,.2),transparent 50%),
-  radial-gradient(ellipse 60% 45% at 75% 80%,rgba(205,35,73,.15),transparent 45%),
-  rgba(10,10,10,.3)}
+/* All sections transparent in dark mode — global mesh shows through */
+html.dark .hero,
+html.dark .feat,
+html.dark .how,
+html.dark .stats,
+html.dark .video-section,
+html.dark .midcta,
+html.dark .pricing{background:transparent !important;border-color:rgba(250,80,0,.06) !important}
 
 /* Dark mode card iridescent borders */
 html.dark .pc{background:linear-gradient(165deg,#111 0%,#0c0c0c 100%);border-color:rgba(250,80,0,.12);box-shadow:0 0 30px rgba(250,80,0,.05),0 4px 20px rgba(0,0,0,.4)}
