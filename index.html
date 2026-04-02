@@ -216,7 +216,7 @@ html.dark .icon-moon{display:none}
 #hp{position:absolute;inset:0;overflow:hidden}
 #hp .p{position:absolute;border-radius:50%;opacity:0;animation:pf 10s ease-in-out infinite}
 @keyframes pf{0%{opacity:0;transform:translateY(100vh) scale(0)}15%{opacity:.25}85%{opacity:.1}100%{opacity:0;transform:translateY(-10vh) scale(1)}}
-#constellationCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#constellationCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .hero .ctn{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(250,80,0,.07);border:1px solid rgba(250,80,0,.18);border-radius:var(--pill);padding:8px 18px;font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:24px}
 html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.15)}
@@ -483,7 +483,6 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 <body>
 
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
-<canvas id="constellationCanvas"></canvas>
 
 <!-- NAV -->
 <header>
@@ -533,6 +532,7 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 
 <!-- HERO -->
 <section class="hero" role="banner">
+  <canvas id="constellationCanvas"></canvas>
   <div class="hero-grid"></div>
   <div id="hp"></div>
   <div class="ctn">
@@ -905,7 +905,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     function isDark(){ return document.documentElement.classList.contains('dark'); }
 
     function resize(){
-      W=c.width=window.innerWidth;H=c.height=window.innerHeight;
+      W=c.width=c.clientWidth;H=c.height=c.clientHeight;
       init();
     }
 
@@ -1026,10 +1026,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     let shockwaves=[];
-    window.addEventListener('click',e=>{
-      shockwaves.push({x:e.clientX,y:e.clientY,radius:0,maxRadius:280,alpha:1});
+    c.addEventListener('click',e=>{
+      const r=c.getBoundingClientRect();
+      shockwaves.push({x:e.clientX-r.left,y:e.clientY-r.top,radius:0,maxRadius:280,alpha:1});
       for(const p of particles){
-        const dx=p.x-e.clientX,dy=p.y-e.clientY;
+        const dx=p.x-(e.clientX-r.left),dy=p.y-(e.clientY-r.top);
         const dist=Math.sqrt(dx*dx+dy*dy);
         if(dist<240){
           const force=(1-dist/240)*2.8;
@@ -1070,7 +1071,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
 
     window.addEventListener('mousemove',e=>{
-      mouse.x=e.clientX;mouse.y=e.clientY;
+      const r=c.getBoundingClientRect();
+      mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
     });
     window.addEventListener('mouseout',()=>{mouse.x=null;mouse.y=null});
     window.addEventListener('resize',resize);
