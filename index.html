@@ -125,14 +125,14 @@ html.dark body::before{
     radial-gradient(ellipse 55% 35% at 15% 85%,rgba(205,35,73,.16),transparent 45%),
     radial-gradient(ellipse 75% 45% at 85% 90%,rgba(250,80,0,.2),transparent 50%);
 }
-/* All sections transparent in dark mode — mesh shows through */
+/* All sections transparent + no borders in dark mode — zero cuts */
 html.dark .hero,
 html.dark .feat,
 html.dark .how,
 html.dark .stats,
 html.dark .video-section,
 html.dark .midcta,
-html.dark .pricing{background:transparent !important;border-color:rgba(250,80,0,.06) !important}
+html.dark .pricing{background:transparent !important;border:none !important;box-shadow:none !important}
 /* Ensure content sits above the mesh */
 html.dark header,html.dark main,html.dark .footer,html.dark .ctaf,html.dark .mmenu{position:relative;z-index:1}
 
@@ -238,7 +238,7 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 
 /* ===== STATS ===== */
 .stats{padding:80px 0;background:var(--bg);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
-html.dark .stats{border-color:rgba(250,80,0,.06)}
+html.dark .stats{border:none}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
 .stat-item{padding:24px 16px;border-radius:16px;transition:transform .4s,box-shadow .4s;position:relative;overflow:hidden}
 .stat-item:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(250,80,0,.1)}
@@ -282,7 +282,7 @@ html.dark .feat-tab{background:var(--bg-alt)}
 
 /* ===== MID CTA ===== */
 .midcta{padding:80px 0;text-align:center;background:var(--bg-alt);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
-html.dark .midcta{border-color:rgba(250,80,0,.06)}
+html.dark .midcta{border:none}
 .midcta h2{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:12px;color:var(--heading)}
 .midcta p{color:var(--text-2);margin-bottom:28px;font-size:.95rem}
 .midcta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
