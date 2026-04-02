@@ -114,33 +114,41 @@ html.dark{
 }
 
 /* Dark mode iridescent ambient glows */
-html.dark body{background:#080808}
+/* Dark mode: global orange/burdeo mesh gradient across entire page */
+html.dark body{background:
+  radial-gradient(ellipse 80% 40% at 15% 5%,rgba(250,80,0,.2),transparent 50%),
+  radial-gradient(ellipse 60% 35% at 85% 25%,rgba(205,35,73,.15),transparent 45%),
+  radial-gradient(ellipse 70% 40% at 50% 55%,rgba(250,80,0,.12),transparent 50%),
+  radial-gradient(ellipse 60% 35% at 20% 80%,rgba(205,35,73,.15),transparent 45%),
+  radial-gradient(ellipse 80% 40% at 80% 95%,rgba(250,80,0,.18),transparent 50%),
+  #080808;
+  background-attachment:fixed}
+/* Per-section overlays add extra depth on top of global mesh */
 html.dark .hero{background:
-  radial-gradient(ellipse 90% 60% at 20% 10%,rgba(250,80,0,.12),transparent 55%),
-  radial-gradient(ellipse 70% 50% at 80% 80%,rgba(205,35,73,.08),transparent 50%),
-  radial-gradient(ellipse 50% 50% at 50% 50%,rgba(250,80,0,.04),transparent 60%),
-  #080808}
+  radial-gradient(ellipse 90% 60% at 25% 15%,rgba(250,80,0,.25),transparent 50%),
+  radial-gradient(ellipse 60% 50% at 75% 85%,rgba(205,35,73,.15),transparent 45%),
+  transparent}
 html.dark .feat{background:
-  radial-gradient(ellipse 70% 50% at 10% 30%,rgba(250,80,0,.09),transparent 55%),
-  radial-gradient(ellipse 50% 40% at 90% 70%,rgba(205,35,73,.06),transparent 50%),
-  #080808}
+  radial-gradient(ellipse 70% 50% at 5% 30%,rgba(250,80,0,.18),transparent 50%),
+  radial-gradient(ellipse 50% 40% at 95% 70%,rgba(205,35,73,.12),transparent 45%),
+  transparent}
 html.dark .how{background:
-  radial-gradient(ellipse 60% 45% at 80% 40%,rgba(205,35,73,.1),transparent 55%),
-  radial-gradient(ellipse 50% 40% at 20% 60%,rgba(250,80,0,.06),transparent 50%),
-  #080808}
+  radial-gradient(ellipse 60% 45% at 85% 35%,rgba(205,35,73,.2),transparent 50%),
+  radial-gradient(ellipse 50% 40% at 15% 65%,rgba(250,80,0,.12),transparent 45%),
+  transparent}
 html.dark .stats{background:
-  radial-gradient(ellipse 80% 60% at 50% 50%,rgba(250,80,0,.07),transparent 60%),
-  #0a0a0a;border-color:rgba(250,80,0,.08)}
+  radial-gradient(ellipse 80% 60% at 50% 50%,rgba(250,80,0,.15),transparent 55%),
+  rgba(10,10,10,.5);border-color:rgba(250,80,0,.1)}
 html.dark .video-section{background:
-  radial-gradient(ellipse 60% 50% at 50% 50%,rgba(250,80,0,.05),transparent 55%),
-  #0a0a0a}
+  radial-gradient(ellipse 60% 50% at 50% 50%,rgba(250,80,0,.1),transparent 50%),
+  rgba(10,10,10,.5)}
 html.dark .midcta{background:
-  radial-gradient(ellipse 70% 50% at 50% 50%,rgba(205,35,73,.08),transparent 55%),
-  #0a0a0a;border-color:rgba(250,80,0,.08)}
+  radial-gradient(ellipse 70% 50% at 50% 50%,rgba(205,35,73,.18),transparent 50%),
+  rgba(10,10,10,.5);border-color:rgba(250,80,0,.1)}
 html.dark .pricing{background:
-  radial-gradient(ellipse 80% 60% at 30% 20%,rgba(250,80,0,.1),transparent 55%),
-  radial-gradient(ellipse 60% 45% at 70% 80%,rgba(205,35,73,.07),transparent 50%),
-  #0a0a0a}
+  radial-gradient(ellipse 80% 60% at 25% 20%,rgba(250,80,0,.2),transparent 50%),
+  radial-gradient(ellipse 60% 45% at 75% 80%,rgba(205,35,73,.15),transparent 45%),
+  rgba(10,10,10,.3)}
 
 /* Dark mode card iridescent borders */
 html.dark .pc{background:linear-gradient(165deg,#111 0%,#0c0c0c 100%);border-color:rgba(250,80,0,.12);box-shadow:0 0 30px rgba(250,80,0,.05),0 4px 20px rgba(0,0,0,.4)}
