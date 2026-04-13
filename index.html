@@ -264,6 +264,14 @@ html.dark .stats{border:none}
 .stat-l{font-size:.95rem;color:var(--text);margin-top:8px;font-weight:500;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
 .stat-item.counted .stat-l{opacity:1;transform:translateY(0)}
 @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:32px}}
+.partners{margin-top:64px;padding-top:40px;border-top:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;gap:24px}
+html.dark .partners{border-color:rgba(250,80,0,.1)}
+.partners-label{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);opacity:.7;font-weight:600}
+.partners-grid{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.partners-grid img{height:64px;width:auto;opacity:.85;transition:opacity .3s,transform .3s;filter:grayscale(.2)}
+.partners-grid img:hover{opacity:1;transform:translateY(-2px);filter:grayscale(0)}
+html.dark .partners-grid img{filter:brightness(1.1) grayscale(.1)}
+@media(max-width:640px){.partners-grid{gap:28px}.partners-grid img{height:48px}}
 
 /* ===== FEATURES TABBED ===== */
 .feat{padding:100px 0;background:var(--bg);transition:background var(--tr)}
@@ -378,6 +386,9 @@ html.dark .pc-feats{border-color:rgba(250,80,0,.08)}
 .pc-feats .inc{font-weight:600;color:var(--accent)}
 .pc-ideal{font-size:.95rem;color:var(--accent);font-weight:600;font-style:normal;margin-bottom:20px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
 html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
+.pc-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:10px 14px;border-radius:999px;background:linear-gradient(90deg,rgba(250,80,0,.08),rgba(205,35,73,.08));border:1px solid rgba(250,80,0,.25);font-size:.85rem;font-weight:600;color:var(--accent);text-align:center}
+.pc-guarantee svg{width:16px;height:16px;flex-shrink:0}
+html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba(205,35,73,.12));border-color:rgba(250,80,0,.35)}
 .pc .btn{width:100%;margin-top:auto}
 .pricing-note{text-align:center;margin-top:36px;font-size:.95rem;color:var(--text)}
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
@@ -472,22 +483,25 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 @media(max-width:768px){.fgrid{grid-template-columns:1fr 1fr;gap:28px}.fbot{flex-direction:column;gap:14px;text-align:center}}
 
 /* ===== FOMO NOTIFICATION ===== */
-.fomo{position:fixed;bottom:20px;left:20px;z-index:998;background:#fff;border-radius:14px;padding:12px 16px 12px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);max-width:320px;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;pointer-events:none}
+.fomo{position:fixed;bottom:20px;left:20px;z-index:998;background:#fff;border-radius:14px;padding:14px 16px 14px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);width:min(340px,calc(100vw - 40px));opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;pointer-events:none;box-sizing:border-box}
 .fomo.show{opacity:1;transform:translateY(0);pointer-events:auto}
 html.dark .fomo{background:#141414;box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 0 1px rgba(250,80,0,.15)}
 .fomo-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.95rem;flex-shrink:0;font-family:var(--fb)}
-.fomo-body{flex:1;min-width:0}
-.fomo-text{font-size:.82rem;color:#1a1a1a;line-height:1.4;font-weight:500}
+.fomo-body{flex:1;min-width:0;padding-right:24px}
+.fomo-text{font-size:.82rem;color:#1a1a1a;line-height:1.4;font-weight:500;word-wrap:break-word}
 html.dark .fomo-text{color:#e5e5e5}
 .fomo-text strong{font-weight:700}
 .fomo-text .flag{display:inline-block;vertical-align:middle;margin:0 3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.08);width:18px;height:13px;object-fit:cover}
-.fomo-time{font-size:.72rem;color:#888;margin-top:2px}
+.fomo-time{font-size:.72rem;color:#888;margin-top:3px}
 html.dark .fomo-time{color:#888}
-.fomo-close{position:absolute;top:6px;right:8px;background:none;border:none;color:#999;cursor:pointer;font-size:1rem;line-height:1;padding:4px;opacity:.6;transition:opacity .2s}
-.fomo-close:hover{opacity:1}
-.fomo-dot{position:absolute;top:10px;right:26px;width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite}
+.fomo-controls{position:absolute;top:8px;right:10px;display:flex;align-items:center;gap:8px}
+.fomo-close{background:none;border:none;color:#999;cursor:pointer;font-size:1.1rem;line-height:1;padding:2px 6px;opacity:.6;transition:opacity .2s;border-radius:4px}
+.fomo-close:hover{opacity:1;background:rgba(0,0,0,.05)}
+html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
+.fomo-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite;flex-shrink:0}
 @keyframes fomoPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-@media(max-width:600px){.fomo{bottom:14px;left:14px;right:14px;max-width:none}}
+@media(max-width:600px){.fomo{bottom:14px;left:14px;right:14px;width:auto;padding:12px 14px 12px 12px;gap:10px}.fomo-avatar{width:36px;height:36px;font-size:.88rem}.fomo-text{font-size:.78rem}.fomo-time{font-size:.68rem}}
+@media(max-width:380px){.fomo-body{padding-right:20px}.fomo-text{font-size:.75rem}}
 
 /* Scrollbar */
 ::-webkit-scrollbar{width:7px}
@@ -606,6 +620,13 @@ html.dark .fomo-time{color:#888}
       <div class="stat-item">
         <div class="stat-n"><span class="ctr" data-target="35">0</span><span class="sf">%</span></div>
         <div class="stat-l">Aumento en conversión con IA</div>
+      </div>
+    </div>
+    <div class="partners">
+      <div class="partners-label">Socios oficiales certificados</div>
+      <div class="partners-grid">
+        <img src="img/meta-partner.png" alt="Meta Business Partner" loading="lazy" width="220" height="64">
+        <img src="img/google-partner.png" alt="Google Premier Partner" loading="lazy" width="220" height="64">
       </div>
     </div>
   </div>
@@ -782,6 +803,7 @@ html.dark .fomo-time{color:#888}
         </ul>
         <div class="pc-ideal">Ideal para: Profesionales independientes y Startups.</div>
         <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bo">Seleccionar plan</a>
+        <div class="pc-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><polyline points="9 12 11 14 15 10"/></svg> 30 días de garantía de devolución</div>
       </article>
       <!-- PRO (Recomendado) — Animated border beam -->
       <article class="pc pop" aria-label="Plan Pro - Recomendado">
@@ -808,6 +830,7 @@ html.dark .fomo-time{color:#888}
           </ul>
           <div class="pc-ideal">Ideal para: Equipos de ventas y empresas en crecimiento.</div>
           <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bs">Seleccionar plan</a>
+          <div class="pc-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><polyline points="9 12 11 14 15 10"/></svg> 30 días de garantía de devolución</div>
         </div>
       </article>
       <!-- ELITE -->
@@ -829,6 +852,7 @@ html.dark .fomo-time{color:#888}
         </ul>
         <div class="pc-ideal">Ideal para: Grandes empresas con implementación experta.</div>
         <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bo">Seleccionar plan</a>
+        <div class="pc-guarantee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><polyline points="9 12 11 14 15 10"/></svg> 30 días de garantía de devolución</div>
       </article>
     </div>
     <p class="pricing-note">Sin compromiso, sin contratos, cancelas cuando quieras. Llamada de bienvenida (Kickoff) gratuita.</p>
@@ -895,8 +919,10 @@ html.dark .fomo-time{color:#888}
     <div class="fomo-text" id="fomoText"></div>
     <div class="fomo-time" id="fomoTime"></div>
   </div>
-  <span class="fomo-dot"></span>
-  <button class="fomo-close" onclick="document.getElementById('fomo').classList.remove('show')" aria-label="Cerrar">&times;</button>
+  <div class="fomo-controls">
+    <span class="fomo-dot"></span>
+    <button class="fomo-close" onclick="document.getElementById('fomo').classList.remove('show')" aria-label="Cerrar">&times;</button>
+  </div>
 </div>
 
 <script>
