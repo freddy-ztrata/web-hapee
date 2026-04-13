@@ -480,7 +480,7 @@ html.dark .fomo{background:#141414;box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 0 1
 .fomo-text{font-size:.82rem;color:#1a1a1a;line-height:1.4;font-weight:500}
 html.dark .fomo-text{color:#e5e5e5}
 .fomo-text strong{font-weight:700}
-.fomo-text .flag{margin:0 2px}
+.fomo-text .flag{display:inline-block;vertical-align:middle;margin:0 3px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.08);width:18px;height:13px;object-fit:cover}
 .fomo-time{font-size:.72rem;color:#888;margin-top:2px}
 html.dark .fomo-time{color:#888}
 .fomo-close{position:absolute;top:6px;right:8px;background:none;border:none;color:#999;cursor:pointer;font-size:1rem;line-height:1;padding:4px;opacity:.6;transition:opacity .2s}
@@ -937,19 +937,21 @@ html.dark .fomo-time{color:#888}
     "Joaquin B.","Eliana T.","Samuel D.","Romina P.","Cristian M.","Valeria O.","Andrea J.","Luciano E."
   ];
   const countries=[
-    {name:"Chile",flag:"🇨🇱"},
-    {name:"Mexico",flag:"🇲🇽"},
-    {name:"Argentina",flag:"🇦🇷"},
-    {name:"Colombia",flag:"🇨🇴"},
-    {name:"Peru",flag:"🇵🇪"},
-    {name:"Espana",flag:"🇪🇸"},
-    {name:"Uruguay",flag:"🇺🇾"},
-    {name:"Ecuador",flag:"🇪🇨"},
-    {name:"Venezuela",flag:"🇻🇪"},
-    {name:"Bolivia",flag:"🇧🇴"},
-    {name:"Paraguay",flag:"🇵🇾"},
-    {name:"Costa Rica",flag:"🇨🇷"},
-    {name:"Rep. Dominicana",flag:"🇩🇴"}
+    {name:"Chile",cc:"cl"},
+    {name:"Mexico",cc:"mx"},
+    {name:"Argentina",cc:"ar"},
+    {name:"Colombia",cc:"co"},
+    {name:"Peru",cc:"pe"},
+    {name:"Espana",cc:"es"},
+    {name:"Uruguay",cc:"uy"},
+    {name:"Ecuador",cc:"ec"},
+    {name:"Venezuela",cc:"ve"},
+    {name:"Bolivia",cc:"bo"},
+    {name:"Paraguay",cc:"py"},
+    {name:"Costa Rica",cc:"cr"},
+    {name:"Rep. Dominicana",cc:"do"},
+    {name:"Panama",cc:"pa"},
+    {name:"Guatemala",cc:"gt"}
   ];
   const actions=[
     "acaba de agendar un DEMO",
@@ -983,7 +985,7 @@ html.dark .fomo-time{color:#888}
     const time=pick(times);
 
     fAvatar.textContent=name.charAt(0);
-    fText.innerHTML=`<strong>${name}</strong> de <span class="flag">${country.flag}</span> ${country.name} ${action}`;
+    fText.innerHTML=`<strong>${name}</strong> de <img class="flag" src="img/flags/${country.cc}.png" width="20" height="15" alt="${country.name}"> ${country.name} ${action}`;
     fTime.textContent=time;
     fomo.classList.add('show');
 
