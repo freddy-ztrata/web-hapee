@@ -1514,24 +1514,31 @@ document.addEventListener('DOMContentLoaded',()=>{
       },{threshold:0.05});
       obs.observe(section);
 
-      // Entrance animation for CTA content (uses ScrollTrigger)
-      // Entrance — use ScrollTrigger only if section hasn't been scrolled past already
+      // Entrance animation for CTA content — use fromTo so elements
+      // always end up visible, even if animation never fires
       const ctaTl=gsap.timeline({
         scrollTrigger:{trigger:section,start:'top 85%',once:true,
-          onEnter:()=>{/* plays automatically */},
-          // If user already scrolled past before GSAP loaded, play immediately
           onRefresh:self=>{if(self.progress>0)ctaTl.progress(1)}
         }
       });
-      ctaTl.from('.ctaf-robot',{scale:0.8,autoAlpha:0,rotation:-10,duration:0.8,ease:'back.out(1.4)'})
-           .from('.ctaf h2',{y:30,autoAlpha:0,duration:0.6,ease:'power3.out'},'<0.2')
-           .from('.ctaf p',{y:20,autoAlpha:0,duration:0.5,ease:'power2.out'},'<0.2')
-           .from('.ctaf .btns',{y:15,autoAlpha:0,duration:0.5,ease:'power2.out'},'<0.15');
+      ctaTl.fromTo('.ctaf-robot',{scale:0.8,opacity:0,rotation:-10},{scale:1,opacity:1,rotation:0,duration:0.8,ease:'back.out(1.4)'})
+           .fromTo('.ctaf h2',{y:30,opacity:0},{y:0,opacity:1,duration:0.6,ease:'power3.out'},'<0.2')
+           .fromTo('.ctaf p',{y:20,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power2.out'},'<0.2')
+           .fromTo('.ctaf .btns',{y:15,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power2.out'},'<0.15');
 
       window.addEventListener('resize',()=>{if(running)resize()});
     })();
   }
   typeof gsap!=='undefined'?initG():window.addEventListener('load',initG);
+
+  // Safety fallback: if GSAP fails to load within 3s, force CTA content visible
+  setTimeout(()=>{
+    if(typeof gsap==='undefined'){
+      document.querySelectorAll('.ctaf-robot, .ctaf h2, .ctaf p, .ctaf .btns').forEach(el=>{
+        el.style.opacity='1';el.style.transform='none';el.style.visibility='visible';
+      });
+    }
+  },3000);
 });
 </script>
 </body>
