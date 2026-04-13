@@ -471,6 +471,24 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 .fsoc svg{width:15px;height:15px}
 @media(max-width:768px){.fgrid{grid-template-columns:1fr 1fr;gap:28px}.fbot{flex-direction:column;gap:14px;text-align:center}}
 
+/* ===== FOMO NOTIFICATION ===== */
+.fomo{position:fixed;bottom:20px;left:20px;z-index:998;background:#fff;border-radius:14px;padding:12px 16px 12px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);max-width:320px;opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;pointer-events:none}
+.fomo.show{opacity:1;transform:translateY(0);pointer-events:auto}
+html.dark .fomo{background:#141414;box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 0 1px rgba(250,80,0,.15)}
+.fomo-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.95rem;flex-shrink:0;font-family:var(--fb)}
+.fomo-body{flex:1;min-width:0}
+.fomo-text{font-size:.82rem;color:#1a1a1a;line-height:1.4;font-weight:500}
+html.dark .fomo-text{color:#e5e5e5}
+.fomo-text strong{font-weight:700}
+.fomo-text .flag{margin:0 2px}
+.fomo-time{font-size:.72rem;color:#888;margin-top:2px}
+html.dark .fomo-time{color:#888}
+.fomo-close{position:absolute;top:6px;right:8px;background:none;border:none;color:#999;cursor:pointer;font-size:1rem;line-height:1;padding:4px;opacity:.6;transition:opacity .2s}
+.fomo-close:hover{opacity:1}
+.fomo-dot{position:absolute;top:10px;right:26px;width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite}
+@keyframes fomoPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@media(max-width:600px){.fomo{bottom:14px;left:14px;right:14px;max-width:none}}
+
 /* Scrollbar */
 ::-webkit-scrollbar{width:7px}
 ::-webkit-scrollbar-track{background:var(--bg-alt)}
@@ -870,6 +888,16 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
   </div>
 </footer>
 
+<!-- FOMO Notification -->
+<div class="fomo" id="fomo" role="status" aria-live="polite">
+  <div class="fomo-avatar" id="fomoAvatar">C</div>
+  <div class="fomo-body">
+    <div class="fomo-text" id="fomoText"></div>
+    <div class="fomo-time" id="fomoTime"></div>
+  </div>
+  <span class="fomo-dot"></span>
+  <button class="fomo-close" onclick="document.getElementById('fomo').classList.remove('show')" aria-label="Cerrar">&times;</button>
+</div>
 
 <script>
 // ============================================
@@ -880,6 +908,94 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
   if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
     document.documentElement.classList.add('dark');
   }
+})();
+
+// ============================================
+// FOMO NOTIFICATIONS — Social proof popups
+// ============================================
+(function(){
+  const names=[
+    // Chile
+    "Carmen N.","Jose A.","Sofia M.","Felipe G.","Camila R.","Matias P.","Javiera S.","Benjamin C.",
+    "Catalina V.","Vicente O.","Martina L.","Cristobal H.","Antonia F.","Tomas M.","Isidora B.","Joaquin T.",
+    "Valentina E.","Diego R.","Constanza D.","Maximiliano A.",
+    // Mexico
+    "Maria G.","Luis F.","Ana L.","Carlos M.","Fernanda H.","Jorge R.","Paola S.","Alejandro V.",
+    "Daniela C.","Ricardo P.","Gabriela T.","Santiago M.","Regina O.","Emiliano B.","Ximena D.","Mauricio L.",
+    // Argentina
+    "Lucia F.","Martin G.","Florencia R.","Nicolas P.","Agustina M.","Tobias S.","Delfina A.","Bautista C.",
+    "Milagros O.","Lautaro V.","Guadalupe R.","Santino B.",
+    // Colombia
+    "Juliana R.","Andres M.","Manuela C.","Santiago G.","Valeria L.","Nicolas H.","Mariana P.","Juan D.",
+    "Isabella F.","Sebastian T.","Laura V.","Mateo S.",
+    // Peru
+    "Rodrigo C.","Alessia B.","Gabriel P.","Micaela R.","Fabrizio M.","Valeria S.","Matias G.",
+    // Espana
+    "Sergio M.","Laura P.","Alvaro R.","Marta G.","Pablo F.","Natalia S.","Adrian L.","Paula H.",
+    "Ivan C.","Elena T.","Ruben D.","Irene B.","Hugo V.","Claudia R.","Rafael A.","Alba S.",
+    // Uruguay / Ecuador / Venezuela / Otros
+    "Joaquin B.","Eliana T.","Samuel D.","Romina P.","Cristian M.","Valeria O.","Andrea J.","Luciano E."
+  ];
+  const countries=[
+    {name:"Chile",flag:"🇨🇱"},
+    {name:"Mexico",flag:"🇲🇽"},
+    {name:"Argentina",flag:"🇦🇷"},
+    {name:"Colombia",flag:"🇨🇴"},
+    {name:"Peru",flag:"🇵🇪"},
+    {name:"Espana",flag:"🇪🇸"},
+    {name:"Uruguay",flag:"🇺🇾"},
+    {name:"Ecuador",flag:"🇪🇨"},
+    {name:"Venezuela",flag:"🇻🇪"},
+    {name:"Bolivia",flag:"🇧🇴"},
+    {name:"Paraguay",flag:"🇵🇾"},
+    {name:"Costa Rica",flag:"🇨🇷"},
+    {name:"Rep. Dominicana",flag:"🇩🇴"}
+  ];
+  const actions=[
+    "acaba de agendar un DEMO",
+    "acaba de comenzar su prueba gratis",
+    "adquirio el plan PRO",
+    "adquirio el plan STARTER",
+    "agendo una llamada de kickoff",
+    "activo sus Agentes IA",
+    "conecto su WhatsApp Business",
+    "esta viendo los planes",
+    "automatizo su primer embudo"
+  ];
+  const times=["Hace 2 minutos","Hace 4 minutos","Hace 6 minutos","Hace 9 minutos","Hace 12 minutos","Hace 15 minutos","Hace 23 minutos","Hace 38 minutos","Hace 1 hora"];
+
+  const fomo=document.getElementById('fomo');
+  const fAvatar=document.getElementById('fomoAvatar');
+  const fText=document.getElementById('fomoText');
+  const fTime=document.getElementById('fomoTime');
+  let shownNames=new Set();
+
+  function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+  function showFomo(){
+    // Pick name that hasn't been shown recently
+    let name;let tries=0;
+    do{name=pick(names);tries++}while(shownNames.has(name)&&tries<15);
+    shownNames.add(name);
+    if(shownNames.size>20)shownNames=new Set(Array.from(shownNames).slice(-10));
+
+    const country=pick(countries);
+    const action=pick(actions);
+    const time=pick(times);
+
+    fAvatar.textContent=name.charAt(0);
+    fText.innerHTML=`<strong>${name}</strong> de <span class="flag">${country.flag}</span> ${country.name} ${action}`;
+    fTime.textContent=time;
+    fomo.classList.add('show');
+
+    // Auto hide after 6 seconds
+    setTimeout(()=>fomo.classList.remove('show'),6000);
+  }
+
+  // First popup after 15s, then every 25-45s
+  setTimeout(function loop(){
+    showFomo();
+    setTimeout(loop,25000+Math.random()*20000);
+  },15000);
 })();
 
 document.addEventListener('DOMContentLoaded',()=>{
