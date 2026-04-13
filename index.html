@@ -134,7 +134,8 @@ html.dark .video-section,
 html.dark .midcta,
 html.dark .pricing{background:transparent !important;border:none !important;box-shadow:none !important}
 /* Ensure content sits above the mesh */
-html.dark main,html.dark .footer,html.dark .ctaf,html.dark .mmenu{position:relative;z-index:1}
+html.dark main,html.dark .footer,html.dark .ctaf{position:relative;z-index:1}
+html.dark .mmenu{z-index:1100}
 /* Nav must stay above everything */
 html.dark .nav{z-index:1000}
 html.dark .nlinks a{color:#b0a89e}
@@ -202,8 +203,9 @@ html.dark .icon-moon{display:none}
 
 .mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px;transition:var(--tr)}
-.mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:1100;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;transition:background var(--tr)}
+.mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:1100;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;transition:background var(--tr);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mmenu.open{display:flex}
+html.menu-open{overflow:hidden}
 .mmenu a{font-size:1.1rem;color:var(--heading);font-weight:600}
 .mmenu a:hover{color:var(--accent)}
 .mmenu .btn{width:200px;justify-content:center}
@@ -551,14 +553,14 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
       <a href="#planes" class="btn bs">Ver Planes</a>
     </div>
-    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open')" aria-label="Menú"><span></span><span></span><span></span></button>
+    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open');document.documentElement.classList.add('menu-open')" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="mmenu" id="mm">
-  <button class="mx" onclick="this.parentElement.classList.remove('open')" aria-label="Cerrar menú">&times;</button>
-  <a href="#features" onclick="this.parentElement.classList.remove('open')">Funcionalidades</a>
-  <a href="#como" onclick="this.parentElement.classList.remove('open')">Cómo funciona</a>
-  <a href="#planes" onclick="this.parentElement.classList.remove('open')">Planes</a>
+  <button class="mx" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')" aria-label="Cerrar menú">&times;</button>
+  <a href="#features" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')">Funcionalidades</a>
+  <a href="#como" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')">Cómo funciona</a>
+  <a href="#planes" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')">Planes</a>
   <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Academy</a>
   <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
   <button class="dark-toggle" id="darkToggleMobile" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
@@ -571,7 +573,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
   </button>
   <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
     <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo" style="width:100%;justify-content:center">Agendar Demo</a>
-    <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open')">Ver Planes</a>
+    <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open');document.documentElement.classList.remove('menu-open')">Ver Planes</a>
   </div>
 </div>
 </header>
