@@ -1540,31 +1540,38 @@ document.addEventListener('DOMContentLoaded',()=>{
       },{threshold:0.05});
       obs.observe(section);
 
-      // Entrance animation for CTA content — use fromTo so elements
-      // always end up visible, even if animation never fires
-      const ctaTl=gsap.timeline({
-        scrollTrigger:{trigger:section,start:'top 85%',once:true,
-          onRefresh:self=>{if(self.progress>0)ctaTl.progress(1)}
-        }
-      });
-      ctaTl.fromTo('.ctaf-robot',{scale:0.8,opacity:0,rotation:-10},{scale:1,opacity:1,rotation:0,duration:0.8,ease:'back.out(1.4)'})
-           .fromTo('.ctaf h2',{y:30,opacity:0},{y:0,opacity:1,duration:0.6,ease:'power3.out'},'<0.2')
-           .fromTo('.ctaf p',{y:20,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power2.out'},'<0.2')
-           .fromTo('.ctaf .btns',{y:15,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power2.out'},'<0.15');
+      // Entrance animation for CTA content — use from() so final state is natural
+      // and set immediateRender:false so content stays visible until trigger fires
+      const ctaEls=document.querySelectorAll('.ctaf-robot, .ctaf h2, .ctaf p, .ctaf .btns');
+      const rect=section.getBoundingClientRect();
+      const alreadyVisible=rect.top<window.innerHeight*0.85 && rect.bottom>0;
+      if(alreadyVisible){
+        // Section is already in view on load — just show content, skip animation
+        ctaEls.forEach(el=>{el.style.opacity='1';el.style.transform='none'});
+      }else{
+        const ctaTl=gsap.timeline({
+          scrollTrigger:{trigger:section,start:'top 85%',once:true}
+        });
+        ctaTl.from('.ctaf-robot',{scale:0.8,opacity:0,rotation:-10,duration:0.8,ease:'back.out(1.4)'})
+             .from('.ctaf h2',{y:30,opacity:0,duration:0.6,ease:'power3.out'},'<0.2')
+             .from('.ctaf p',{y:20,opacity:0,duration:0.5,ease:'power2.out'},'<0.2')
+             .from('.ctaf .btns',{y:15,opacity:0,duration:0.5,ease:'power2.out'},'<0.15');
+      }
 
       window.addEventListener('resize',()=>{if(running)resize()});
     })();
   }
   typeof gsap!=='undefined'?initG():window.addEventListener('load',initG);
 
-  // Safety fallback: if GSAP fails to load within 3s, force CTA content visible
+  // Safety fallback: force CTA content visible after 2s no matter what
+  // (GSAP might fail to load, ScrollTrigger might not fire, etc.)
   setTimeout(()=>{
-    if(typeof gsap==='undefined'){
-      document.querySelectorAll('.ctaf-robot, .ctaf h2, .ctaf p, .ctaf .btns').forEach(el=>{
+    document.querySelectorAll('.ctaf-robot, .ctaf h2, .ctaf p, .ctaf .btns').forEach(el=>{
+      if(getComputedStyle(el).opacity==='0'){
         el.style.opacity='1';el.style.transform='none';el.style.visibility='visible';
-      });
-    }
-  },3000);
+      }
+    });
+  },2000);
 });
 </script>
 </body>
