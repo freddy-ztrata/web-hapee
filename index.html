@@ -211,7 +211,7 @@ html.dark .icon-moon{display:none}
 @media(max-width:1024px){.nlinks,.nctas{display:none}.mbtn{display:block}}
 
 /* ===== HERO ===== */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:130px 0 70px;overflow:hidden;background:var(--bg);transition:background var(--tr)}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:130px 0 100px;overflow:hidden;background:var(--bg);transition:background var(--tr)}
 .hero-grid{display:none}
 #hp{position:absolute;inset:0;overflow:hidden}
 #hp .p{position:absolute;border-radius:50%;opacity:0;animation:pf 10s ease-in-out infinite}
@@ -239,9 +239,8 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 }
 
 /* ===== VIDEO SECTION ===== */
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,transparent,var(--bg-alt));pointer-events:none;z-index:1}
-html.dark .hero::after{background:linear-gradient(to bottom,transparent,#080808)}
-.video-section{padding:60px 0;background:var(--bg-alt);text-align:center;transition:background var(--tr)}
+.video-section{padding:0 0 60px;text-align:center;transition:background var(--tr);background:transparent;margin-top:-40px;position:relative;z-index:2}
+html.dark .video-wrap{box-shadow:0 8px 40px rgba(250,80,0,.12),0 0 0 1px rgba(250,80,0,.1) !important}
 
 /* ===== STATS ===== */
 .stats{padding:80px 0;background:var(--bg);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
@@ -561,7 +560,7 @@ html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
 <!-- VIDEO SHOWCASE -->
 <section class="video-section">
   <div class="ctn">
-    <div style="max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)">
+    <div class="video-wrap" style="max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)">
       <video id="hapeeVideo" autoplay muted loop playsinline controls poster="img/video-poster.jpg" style="width:100%;display:block;border-radius:20px" aria-label="Video demostración de la plataforma Hapee">
         <source src="img/video-hapee.mp4" type="video/mp4">
       </video>
