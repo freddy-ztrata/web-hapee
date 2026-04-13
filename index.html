@@ -561,6 +561,14 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
   <a href="#planes" onclick="this.parentElement.classList.remove('open')">Planes</a>
   <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Academy</a>
   <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
+  <button class="dark-toggle" id="darkToggleMobile" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
   <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
     <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo" style="width:100%;justify-content:center">Agendar Demo</a>
     <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open')">Ver Planes</a>
@@ -1066,14 +1074,14 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
 
 document.addEventListener('DOMContentLoaded',()=>{
 
-  // Dark mode toggle
-  const darkToggle = document.getElementById('darkToggle');
-  if(darkToggle){
-    darkToggle.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('hapee-theme', isDark ? 'dark' : 'light');
-    });
+  // Dark mode toggle (desktop + mobile)
+  function toggleDark(){
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('hapee-theme', isDark ? 'dark' : 'light');
   }
+  document.querySelectorAll('#darkToggle, #darkToggleMobile').forEach(btn=>{
+    btn.addEventListener('click', toggleDark);
+  });
 
   // ============================================
   // AETHER FLOW — canvas background adapts to dark/light
