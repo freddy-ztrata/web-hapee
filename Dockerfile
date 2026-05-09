@@ -1,5 +1,6 @@
 FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
+COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY politica-privacidad.html /usr/share/nginx/html/politica-privacidad.html
 COPY terminos.html /usr/share/nginx/html/terminos.html
 COPY img/ /usr/share/nginx/html/img/
