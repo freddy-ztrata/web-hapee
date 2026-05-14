@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Render helper · noindex</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000;width:100%;height:100%;overflow:hidden}
+:root{
+  --accent:#FA5000;--accent-alt:#CD2349;
+  --fd:'Bebas Neue',sans-serif;
+  --fb:'Plus Jakarta Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+body{font-family:var(--fb)}
+
+/* GFX base — no scaling here */
+.gfx{position:absolute;overflow:hidden;color:#fff;font-family:var(--fb);top:0;left:0}
+.gfx.post{width:1080px;height:1080px}
+.gfx.story{width:1080px;height:1920px}
+.gfx.linkedin{width:1200px;height:627px}
+
+.gfx-inner{position:absolute;inset:0;padding:80px;display:flex;flex-direction:column}
+.gfx.story .gfx-inner{padding:120px 90px}
+.gfx.linkedin .gfx-inner{padding:60px 70px}
+
+.gfx-top{display:flex;justify-content:space-between;align-items:flex-start}
+.gfx-logo{display:flex;align-items:center;gap:14px}
+.gfx-logo-mark{width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,#FA5000,#CD2349);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:2rem;color:#fff;box-shadow:0 10px 25px rgba(250,80,0,.45)}
+.gfx-logo-text{font-family:var(--fd);font-size:1.5rem;color:#fff;letter-spacing:1px}
+.gfx-issue{font-family:var(--fm);font-size:.85rem;color:rgba(255,255,255,.55);letter-spacing:2px;text-transform:uppercase;text-align:right;line-height:1.4}
+.gfx-issue strong{display:block;color:var(--accent);font-weight:700;letter-spacing:2.5px}
+
+.gfx-cat{font-family:var(--fm);font-size:1rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:14px;margin-top:60px}
+.gfx-cat::before{content:'';width:60px;height:3px;background:var(--accent)}
+.gfx.story .gfx-cat{font-size:1.3rem;margin-top:120px}
+
+.gfx-title{font-family:var(--fd);color:#fff;letter-spacing:-1px;line-height:.94;margin-top:24px;font-weight:400}
+.gfx.post .gfx-title{font-size:5.6rem}
+.gfx.story .gfx-title{font-size:7rem}
+.gfx.linkedin .gfx-title{font-size:3.8rem}
+
+.gfx-sub{color:rgba(255,255,255,.78);font-size:1.3rem;margin-top:24px;max-width:80%;line-height:1.5;font-weight:400}
+.gfx.story .gfx-sub{font-size:1.6rem;max-width:90%}
+.gfx.linkedin .gfx-sub{font-size:1.1rem;margin-top:18px;max-width:70%}
+
+.gfx-spacer{flex:1}
+
+.gfx-bottom{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.95rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.gfx-hashtag{color:var(--accent);font-weight:700}
+.gfx-url{font-weight:600;color:#fff}
+.gfx.linkedin .gfx-bottom{font-size:.78rem}
+
+.gfx-corner{position:absolute;font-family:var(--fm);font-size:.78rem;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;font-weight:600}
+.cnr-bl{bottom:30px;left:30px}
+
+/* THEMES (same as rrss-templates) */
+.theme-mcp{background:radial-gradient(circle at 35% 45%,#2a1a14 0%,#0a0a0a 80%)}
+.theme-mcp .art-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.theme-voice{background:linear-gradient(135deg,#1a0d0d 0%,#0a0a0a 100%)}
+.theme-voice .v-wave{position:absolute;left:0;right:0;bottom:0;height:65%;display:flex;align-items:flex-end;justify-content:center;gap:8px;padding:0 80px 80px;pointer-events:none}
+.gfx.linkedin .theme-voice .v-wave{padding:0 60px 60px;gap:5px;height:75%}
+.theme-voice .v-bar{flex:1;background:linear-gradient(180deg,#FA5000,#CD2349);border-radius:8px;opacity:.85;min-width:6px}
+.theme-voice .v-bar:nth-child(1){height:22%}
+.theme-voice .v-bar:nth-child(2){height:45%}
+.theme-voice .v-bar:nth-child(3){height:78%}
+.theme-voice .v-bar:nth-child(4){height:60%}
+.theme-voice .v-bar:nth-child(5){height:92%}
+.theme-voice .v-bar:nth-child(6){height:35%}
+.theme-voice .v-bar:nth-child(7){height:88%}
+.theme-voice .v-bar:nth-child(8){height:50%}
+.theme-voice .v-bar:nth-child(9){height:75%}
+.theme-voice .v-bar:nth-child(10){height:42%}
+.theme-voice .v-bar:nth-child(11){height:68%}
+.theme-voice .v-bar:nth-child(12){height:30%}
+.theme-voice .v-bar:nth-child(13){height:55%}
+.theme-voice .v-bar:nth-child(14){height:82%}
+.theme-voice .v-bar:nth-child(15){height:48%}
+
+.theme-aws{background:linear-gradient(135deg,#0a0f1a 0%,#0a0a0a 100%);position:relative}
+.theme-aws::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(250,80,0,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(250,80,0,.18) 1px,transparent 1px);background-size:80px 80px;opacity:.5;mask:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
+.theme-aws .cloud{position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);width:60%;height:30%;background:radial-gradient(ellipse,rgba(255,153,0,.5) 0%,transparent 70%);border-radius:50%;filter:blur(40px)}
+
+.theme-aperol{background:radial-gradient(circle at 50% 55%,#ff6b1a 0%,#cd2349 50%,#1a0a0a 100%)}
+.theme-aperol .glow1{position:absolute;top:30%;left:50%;width:80%;height:60%;background:radial-gradient(circle,rgba(255,153,0,.5),transparent 60%);transform:translate(-50%,-50%);border-radius:50%;filter:blur(60px)}
+
+.theme-gpt{background:radial-gradient(circle at 50% 50%,#1a0a1a 0%,#0a0a0a 90%)}
+.theme-gpt .g-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:160px;height:160px;background:radial-gradient(circle,#FA5000,#CD2349);border-radius:50%;box-shadow:0 0 120px rgba(250,80,0,.6)}
+.gfx.story .theme-gpt .g-core{width:240px;height:240px;box-shadow:0 0 200px rgba(250,80,0,.7)}
+.theme-gpt .g-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid rgba(250,80,0,.25);border-radius:50%}
+.theme-gpt .g-r1{width:280px;height:280px}
+.theme-gpt .g-r2{width:440px;height:440px;border-color:rgba(250,80,0,.18)}
+.theme-gpt .g-r3{width:640px;height:640px;border-color:rgba(250,80,0,.12)}
+.gfx.story .theme-gpt .g-r1{width:400px;height:400px}
+.gfx.story .theme-gpt .g-r2{width:620px;height:620px}
+.gfx.story .theme-gpt .g-r3{width:880px;height:880px}
+
+.theme-rrss{background:radial-gradient(circle at 50% 50%,#1a1a0d 0%,#0a0a0a 90%)}
+.theme-rrss .hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;background:linear-gradient(135deg,#FA5000,#CD2349);border-radius:32px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:3.2rem;color:#fff;box-shadow:0 0 80px rgba(250,80,0,.5)}
+.gfx.story .theme-rrss .hub{width:200px;height:200px;font-size:4.5rem}
+.theme-rrss .orbit{position:absolute;top:50%;left:50%;border:1.5px dashed rgba(250,80,0,.2);border-radius:50%;transform:translate(-50%,-50%)}
+.theme-rrss .o1{width:420px;height:420px}
+.theme-rrss .o2{width:620px;height:620px;border-color:rgba(250,80,0,.12)}
+.gfx.story .theme-rrss .o1{width:600px;height:600px}
+.gfx.story .theme-rrss .o2{width:880px;height:880px}
+.theme-rrss .micon{position:absolute;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.5)}
+.theme-rrss .mi-ig{top:50%;left:calc(50% - 210px);transform:translateY(-50%);background:linear-gradient(135deg,#833AB4,#FD1D1D,#FCB045)}
+.theme-rrss .mi-fb{top:calc(50% - 210px);left:50%;transform:translateX(-50%);background:#1877F2}
+.theme-rrss .mi-wa{top:50%;left:calc(50% + 210px);transform:translate(-100%,-50%);background:#25D366}
+.theme-rrss .mi-tk{top:calc(50% + 210px);left:50%;transform:translateX(-50%);background:#000;border:2px solid #fff}
+.gfx.story .theme-rrss .mi-ig{left:calc(50% - 300px)}
+.gfx.story .theme-rrss .mi-fb{top:calc(50% - 300px)}
+.gfx.story .theme-rrss .mi-wa{left:calc(50% + 300px)}
+.gfx.story .theme-rrss .mi-tk{top:calc(50% + 300px)}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const PIECES={
+  // === MCP CLAUDE ===
+  'mcp-post':{type:'post',theme:'theme-mcp',content:`
+    <svg class="art-svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
+      <line x1="300" y1="300" x2="100" y2="120" stroke="#FA5000" stroke-width="2" opacity=".5"/>
+      <line x1="300" y1="300" x2="500" y2="120" stroke="#CD2349" stroke-width="2" opacity=".5"/>
+      <line x1="300" y1="300" x2="100" y2="480" stroke="#FA5000" stroke-width="2" opacity=".5"/>
+      <line x1="300" y1="300" x2="500" y2="480" stroke="#CD2349" stroke-width="2" opacity=".5"/>
+      <defs><radialGradient id="rg1"><stop offset="0%" stop-color="#FA5000"/><stop offset="100%" stop-color="#CD2349"/></radialGradient></defs>
+      <circle cx="300" cy="300" r="40" fill="url(#rg1)"/>
+      <circle cx="300" cy="300" r="55" fill="none" stroke="#FA5000" stroke-width="2" opacity=".4"/>
+      <circle cx="100" cy="120" r="18" fill="#fff"/>
+      <circle cx="500" cy="120" r="18" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+      <circle cx="100" cy="480" r="18" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+      <circle cx="500" cy="480" r="18" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+    </svg>
+    <div class="gfx-inner">
+      <div class="gfx-top">
+        <div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div>
+        <div class="gfx-issue"><strong>NEW</strong>2026.05.07</div>
+      </div>
+      <div class="gfx-cat">PRODUCTO · FEATURED</div>
+      <div class="gfx-title">CONEXIÓN<br>NATIVA CON<br>CLAUDE VÍA<br>MCP.</div>
+      <div class="gfx-sub">Somos la primera plataforma de IA conversacional en Latam en integrarse vía MCP de Anthropic.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#HapeeAI #MCP</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'mcp-story':{type:'story',theme:'theme-mcp',content:`
+    <svg class="art-svg" viewBox="0 0 540 960" preserveAspectRatio="xMidYMid slice">
+      <line x1="270" y1="480" x2="90" y2="200" stroke="#FA5000" stroke-width="2.5" opacity=".5"/>
+      <line x1="270" y1="480" x2="450" y2="200" stroke="#CD2349" stroke-width="2.5" opacity=".5"/>
+      <line x1="270" y1="480" x2="90" y2="760" stroke="#FA5000" stroke-width="2.5" opacity=".5"/>
+      <line x1="270" y1="480" x2="450" y2="760" stroke="#CD2349" stroke-width="2.5" opacity=".5"/>
+      <defs><radialGradient id="rg2"><stop offset="0%" stop-color="#FA5000"/><stop offset="100%" stop-color="#CD2349"/></radialGradient></defs>
+      <circle cx="270" cy="480" r="55" fill="url(#rg2)"/>
+      <circle cx="270" cy="480" r="75" fill="none" stroke="#FA5000" stroke-width="2.5" opacity=".4"/>
+      <circle cx="90" cy="200" r="24" fill="#fff"/>
+      <circle cx="450" cy="200" r="24" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+      <circle cx="90" cy="760" r="24" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+      <circle cx="450" cy="760" r="24" fill="rgba(250,80,0,.3)" stroke="#FA5000" stroke-width="2"/>
+    </svg>
+    <div class="gfx-inner">
+      <div class="gfx-top">
+        <div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div>
+        <div class="gfx-issue" style="font-size:1rem"><strong>NEW</strong>05.2026</div>
+      </div>
+      <div class="gfx-cat">PRODUCTO · FEATURED</div>
+      <div class="gfx-title">CONEXIÓN<br>NATIVA CON<br>CLAUDE VÍA<br>MCP.</div>
+      <div class="gfx-sub">Somos la primera plataforma de IA conversacional en Latam con integración nativa al Model Context Protocol de Anthropic.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom" style="font-size:1.1rem"><span class="gfx-hashtag">#HapeeAI #MCP #Claude</span></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.2);padding-top:30px">HAPEE.AI</div>
+    </div>
+  `},
+  'mcp-linkedin':{type:'linkedin',theme:'theme-mcp',content:`
+    <svg class="art-svg" viewBox="0 0 1200 627" preserveAspectRatio="xMidYMid slice" style="opacity:.4">
+      <line x1="900" y1="313" x2="700" y2="120" stroke="#FA5000" stroke-width="2" opacity=".7"/>
+      <line x1="900" y1="313" x2="1100" y2="120" stroke="#CD2349" stroke-width="2" opacity=".7"/>
+      <line x1="900" y1="313" x2="700" y2="500" stroke="#FA5000" stroke-width="2" opacity=".7"/>
+      <line x1="900" y1="313" x2="1100" y2="500" stroke="#CD2349" stroke-width="2" opacity=".7"/>
+      <defs><radialGradient id="rg3"><stop offset="0%" stop-color="#FA5000"/><stop offset="100%" stop-color="#CD2349"/></radialGradient></defs>
+      <circle cx="900" cy="313" r="35" fill="url(#rg3)"/>
+      <circle cx="700" cy="120" r="14" fill="#fff"/>
+      <circle cx="1100" cy="120" r="14" fill="rgba(250,80,0,.3)" stroke="#FA5000"/>
+      <circle cx="700" cy="500" r="14" fill="rgba(250,80,0,.3)" stroke="#FA5000"/>
+      <circle cx="1100" cy="500" r="14" fill="rgba(250,80,0,.3)" stroke="#FA5000"/>
+    </svg>
+    <div class="gfx-inner">
+      <div class="gfx-top">
+        <div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div>
+        <div class="gfx-issue" style="font-size:.75rem"><strong>NEW</strong>2026.05</div>
+      </div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px">PRODUCTO · ANUNCIO</div>
+      <div class="gfx-title">Conexión nativa con<br>Claude vía MCP.</div>
+      <div class="gfx-sub">La primera plataforma de IA conversacional de Latam integrada al protocolo de Anthropic.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#HapeeAI #AnthropicMCP</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  // === VOICE ===
+  'voz-post':{type:'post',theme:'theme-voice',content:`
+    <div class="v-wave"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div><div class="gfx-issue"><strong>NEW</strong>05.2026</div></div>
+      <div class="gfx-cat">PRODUCTO · VOICE IA</div>
+      <div class="gfx-title">CLONAMOS<br>TU VOZ.<br>Y SUENA<br>HUMANA.</div>
+      <div class="gfx-sub">Powered by ElevenLabs. Latencia sub-segundo. Tu marca habla con tu voz, 24/7.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#VoiceAI #Hapee</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'voz-story':{type:'story',theme:'theme-voice',content:`
+    <div class="v-wave" style="height:50%;padding:0 120px 200px"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:1rem"><strong>NEW</strong>05.2026</div></div>
+      <div class="gfx-cat">PRODUCTO · VOICE IA</div>
+      <div class="gfx-title">CLONAMOS<br>TU VOZ.<br>Y SUENA<br>HUMANA.</div>
+      <div class="gfx-sub">Powered by ElevenLabs. Latencia sub-segundo. Tu marca habla con tu voz, 24 horas, 7 días.</div>
+      <div class="gfx-spacer"></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.2);padding-top:30px">HAPEE.AI</div>
+    </div>
+  `},
+  'voz-linkedin':{type:'linkedin',theme:'theme-voice',content:`
+    <div class="v-wave" style="height:55%"><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:.75rem"><strong>VOICE AI</strong>2026</div></div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px">PRODUCTO · VOICE IA</div>
+      <div class="gfx-title">Tu marca habla<br>con tu voz.</div>
+      <div class="gfx-sub">Clonación de voz para agentes IA. Sub-segundo. 96.5% accuracy.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#VoiceAI #ElevenLabs</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  // === AWS ===
+  'aws-post':{type:'post',theme:'theme-aws',content:`
+    <div class="cloud"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div><div class="gfx-issue"><strong>EVENT</strong>05.2026</div></div>
+      <div class="gfx-cat">EVENTOS · PARTNERS</div>
+      <div class="gfx-title">EL TEAM<br>HAPEE<br>EN AWS<br>CHILE.</div>
+      <div class="gfx-sub">Reunión estratégica con AWS Chile: roadmap multi-región y entrada al Partner Network.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#AWSChile #HapeeAI</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'aws-story':{type:'story',theme:'theme-aws',content:`
+    <div class="cloud"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:1rem"><strong>EVENT</strong>05.26</div></div>
+      <div class="gfx-cat">EVENTOS · PARTNERSHIP</div>
+      <div class="gfx-title">HAPEE<br>VISITA<br>AWS<br>CHILE.</div>
+      <div class="gfx-sub">Jornada estratégica con el team regional. Deploy multi-región, Bedrock y co-selling. El cloud al servicio de los agentes IA.</div>
+      <div class="gfx-spacer"></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.2);padding-top:30px">HAPEE.AI</div>
+    </div>
+  `},
+  'aws-linkedin':{type:'linkedin',theme:'theme-aws',content:`
+    <div class="cloud"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:.75rem"><strong>EVENT</strong>2026.05</div></div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px">EVENTOS · AWS PARTNERSHIP</div>
+      <div class="gfx-title">El equipo Hapee<br>en AWS Chile.</div>
+      <div class="gfx-sub">Construyendo el futuro cloud de los agentes IA en Latinoamérica.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#AWS #Cloud #Hapee</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  // === APEROL ===
+  'aperol-post':{type:'post',theme:'theme-aperol',content:`
+    <div class="glow1"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div><div class="gfx-issue"><strong>EVENT</strong>04.2026</div></div>
+      <div class="gfx-cat" style="color:#fff">EVENTOS · NIGHT</div>
+      <div class="gfx-title">HAPEE<br>BY<br>APEROL.</div>
+      <div class="gfx-sub" style="color:rgba(255,255,255,.9)">La noche más naranja del año. Música, demos en vivo y networking de altísimo nivel.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag" style="color:#fff">#HapeeByAperol</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'aperol-story':{type:'story',theme:'theme-aperol',content:`
+    <div class="glow1"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:1rem"><strong>EVENT</strong>04.26</div></div>
+      <div class="gfx-cat" style="color:#fff">HAPEE × APEROL</div>
+      <div class="gfx-title" style="font-size:9rem">LA<br>NOCHE<br>MÁS<br>NARANJA.</div>
+      <div class="gfx-sub" style="color:rgba(255,255,255,.9)">Founders, partners y clientes top reunidos. Música, demos en vivo y networking.</div>
+      <div class="gfx-spacer"></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2.2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.3);padding-top:30px">RSVP · HAPEE.AI</div>
+    </div>
+  `},
+  'aperol-linkedin':{type:'linkedin',theme:'theme-aperol',content:`
+    <div class="glow1"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:.75rem"><strong>EVENT</strong>04.26</div></div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px;color:#fff">EVENTOS · CHILE</div>
+      <div class="gfx-title">Hapee × Aperol.</div>
+      <div class="gfx-sub" style="color:rgba(255,255,255,.9)">Una noche para celebrar el partnership y los próximos pasos de Hapee en Latam.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag" style="color:#fff">#HapeeByAperol</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  // === GPT 5.5 ===
+  'gpt-post':{type:'post',theme:'theme-gpt',content:`
+    <div class="g-ring g-r3"></div><div class="g-ring g-r2"></div><div class="g-ring g-r1"></div><div class="g-core"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div><div class="gfx-issue"><strong>NEW</strong>04.2026</div></div>
+      <div class="gfx-cat">PRODUCTO · MODELOS</div>
+      <div class="gfx-title">GPT 5.5<br>YA ESTÁ<br>EN HAPEE.</div>
+      <div class="gfx-sub">El modelo más reciente de OpenAI, integrado nativamente. 40% más preciso. Context window de 200K.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#GPT55 #Hapee</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'gpt-story':{type:'story',theme:'theme-gpt',content:`
+    <div class="g-ring g-r3"></div><div class="g-ring g-r2"></div><div class="g-ring g-r1"></div><div class="g-core"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:1rem"><strong>NEW</strong>04.26</div></div>
+      <div class="gfx-cat">PRODUCTO · OPENAI</div>
+      <div class="gfx-title">GPT 5.5<br>YA ESTÁ<br>EN HAPEE.</div>
+      <div class="gfx-sub">El modelo más avanzado de OpenAI ya está integrado en la plataforma. 40% más preciso. Memoria conversacional.</div>
+      <div class="gfx-spacer"></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.2);padding-top:30px">PRUEBA AHORA · HAPEE.AI</div>
+    </div>
+  `},
+  'gpt-linkedin':{type:'linkedin',theme:'theme-gpt',content:`
+    <div class="g-ring g-r3" style="width:380px;height:380px"></div><div class="g-ring g-r2" style="width:280px;height:280px"></div><div class="g-core" style="width:100px;height:100px"></div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:.75rem"><strong>NEW</strong>2026</div></div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px">PRODUCTO · OPENAI</div>
+      <div class="gfx-title">GPT 5.5 ya está<br>en Hapee.</div>
+      <div class="gfx-sub">El modelo más reciente de OpenAI, integrado de fábrica.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#GPT5 #OpenAI #Hapee</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  // === RRSS ===
+  'rrss-post':{type:'post',theme:'theme-rrss',content:`
+    <div class="orbit o2"></div><div class="orbit o1"></div>
+    <div class="hub">H</div>
+    <div class="micon mi-ig">IG</div><div class="micon mi-fb">f</div><div class="micon mi-wa">W</div><div class="micon mi-tk">tk</div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark">H</div><div class="gfx-logo-text">HAPEE</div></div><div class="gfx-issue"><strong>HOW-TO</strong>04.2026</div></div>
+      <div class="gfx-cat">HOW-TO · MARKETING</div>
+      <div class="gfx-title">AUTOMATIZA<br>TUS RRSS<br>EN UN SOLO<br>PANEL.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#SocialMedia #Hapee</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `},
+  'rrss-story':{type:'story',theme:'theme-rrss',content:`
+    <div class="orbit o2"></div><div class="orbit o1"></div>
+    <div class="hub">H</div>
+    <div class="micon mi-ig">IG</div><div class="micon mi-fb">f</div><div class="micon mi-wa">W</div><div class="micon mi-tk">tk</div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:80px;height:80px;font-size:2.6rem">H</div><div class="gfx-logo-text" style="font-size:2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:1rem"><strong>HOW-TO</strong>04.26</div></div>
+      <div class="gfx-cat">HOW-TO · MARKETING</div>
+      <div class="gfx-title">AUTOMATIZA<br>TUS RRSS<br>EN UN SOLO<br>PANEL.</div>
+      <div class="gfx-sub">Programa, publica y mide Instagram, Facebook, TikTok y WhatsApp desde Hapee. Agentes IA responden por ti.</div>
+      <div class="gfx-spacer"></div>
+      <div style="text-align:center;margin-top:40px;font-family:var(--fd);font-size:2rem;color:#fff;letter-spacing:2px;border-top:2px solid rgba(255,255,255,.2);padding-top:30px">SWIPE UP · HAPEE.AI</div>
+    </div>
+  `},
+  'rrss-linkedin':{type:'linkedin',theme:'theme-rrss',content:`
+    <div class="orbit o2" style="width:480px;height:480px"></div>
+    <div class="orbit o1" style="width:320px;height:320px"></div>
+    <div class="hub" style="width:100px;height:100px;font-size:2.4rem">H</div>
+    <div class="micon mi-ig" style="width:54px;height:54px;font-size:1rem;left:calc(50% - 160px)">IG</div>
+    <div class="micon mi-fb" style="width:54px;height:54px;font-size:1rem;top:calc(50% - 160px)">f</div>
+    <div class="micon mi-wa" style="width:54px;height:54px;font-size:1rem;left:calc(50% + 160px)">W</div>
+    <div class="micon mi-tk" style="width:54px;height:54px;font-size:1rem;top:calc(50% + 160px)">tk</div>
+    <div class="gfx-inner">
+      <div class="gfx-top"><div class="gfx-logo"><div class="gfx-logo-mark" style="width:50px;height:50px;font-size:1.7rem">H</div><div class="gfx-logo-text" style="font-size:1.2rem">HAPEE</div></div><div class="gfx-issue" style="font-size:.75rem"><strong>GUIDE</strong>2026</div></div>
+      <div class="gfx-cat" style="font-size:.78rem;margin-top:30px">HOW-TO · MARKETING</div>
+      <div class="gfx-title">Automatiza tus RRSS<br>desde un solo panel.</div>
+      <div class="gfx-sub">Programa, publica y deja que la IA responda comentarios y DMs por ti.</div>
+      <div class="gfx-spacer"></div>
+      <div class="gfx-bottom"><span class="gfx-hashtag">#SocialMedia #IA</span><span class="gfx-url">HAPEE.AI</span></div>
+    </div>
+  `}
+};
+
+const id=new URLSearchParams(location.search).get('id');
+const piece=PIECES[id];
+if(piece){
+  const div=document.createElement('div');
+  div.className=`gfx ${piece.type} ${piece.theme}`;
+  div.innerHTML=piece.content;
+  document.getElementById('root').appendChild(div);
+}
+</script>
+</body>
+</html>
