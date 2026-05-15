@@ -607,7 +607,11 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
 .fcol h4{font-family:var(--fd);font-size:.85rem;font-weight:700;color:#fff;margin-bottom:14px}
 .fcol a{display:block;font-size:.95rem;color:#7a7068;margin-bottom:9px;transition:var(--tr)}
 .fcol a:hover{color:var(--accent)}
-.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(250,80,0,.08);font-size:.95rem;color:#7a7068}
+.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(250,80,0,.08);font-size:.95rem;color:#7a7068;gap:18px;flex-wrap:wrap}
+.powered-by-foot{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fm);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7068;font-weight:600;text-decoration:none;padding:.4rem .75rem;border-radius:999px;border:1px solid rgba(250,80,0,.12);transition:all .25s}
+.powered-by-foot:hover{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.04)}
+.powered-by-foot img{height:18px;width:auto;display:block;filter:brightness(0) invert(1);opacity:.85;transition:opacity .25s}
+.powered-by-foot:hover img{opacity:1}
 .fsoc{display:flex;gap:12px}
 .fsoc a{width:34px;height:34px;border-radius:50%;background:rgba(250,80,0,.06);display:flex;align-items:center;justify-content:center;transition:var(--tr);color:#7a7068}
 .fsoc a:hover{background:var(--accent);color:#fff}
@@ -1151,7 +1155,11 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       </div>
     </div>
     <div class="fbot">
-      <span>&copy; 2026 Hapee (WM Digital, LLC). Todos los derechos reservados. Powered by Digitals.cl · <a href="/politica-privacidad.html" style="color:rgba(255,255,255,.4)">Privacidad</a> · <a href="/terminos.html" style="color:rgba(255,255,255,.4)">Términos</a></span>
+      <span>&copy; 2026 Hapee (WM Digital, LLC). Todos los derechos reservados. · <a href="/politica-privacidad.html" style="color:rgba(255,255,255,.4)">Privacidad</a> · <a href="/terminos.html" style="color:rgba(255,255,255,.4)">Términos</a></span>
+      <a class="powered-by-foot" href="https://digitals.cl" target="_blank" rel="noopener noreferrer" title="Grupo Digitals">
+        <span>Powered by</span>
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals" loading="lazy">
+      </a>
       <div class="fsoc">
         <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
       </div>

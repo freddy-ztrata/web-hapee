@@ -155,9 +155,14 @@ html.dark .dark-toggle .icon-moon{display:none}
 
 /* === FOOTER === */
 footer{padding:3rem 0 2rem;border-top:1px solid var(--line);background:var(--bg-alt);font-family:var(--fm);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
-footer .ctn{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.4rem}
+footer .ctn{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.4rem;align-items:center}
 footer a{color:inherit;transition:color .2s}
 footer a:hover{color:var(--accent)}
+.powered-by{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);font-weight:600;text-decoration:none;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--line);transition:all .25s}
+.powered-by:hover{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.05)}
+.powered-by img{height:16px;width:auto;display:block;opacity:.82;transition:opacity .25s}
+.powered-by:hover img{opacity:1}
+html.dark .powered-by img{filter:brightness(0) invert(1)}
 
 @media (max-width:780px){
   .post-title{font-size:clamp(2.2rem,8vw,3.4rem)}

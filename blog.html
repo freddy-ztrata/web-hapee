@@ -115,13 +115,13 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 .mast-meta .left{display:flex;gap:14px;align-items:center}
 .mast-meta .left span:first-child{padding:4px 10px;border:1px solid var(--accent);color:var(--accent);border-radius:4px;font-weight:700}
 .mast-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:end}
-.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,11vw,11rem);line-height:.85;font-weight:400;color:var(--heading);letter-spacing:-.025em;text-transform:uppercase;margin:0}
-.mast-title .word{display:inline-block;overflow:hidden;padding:.14em 0 .16em}
-.mast-title .word.w2{display:block;margin-top:-.24em;padding-top:.22em}
-.mast-title .word>span{display:inline-block;transform:translateY(120%);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards}
+.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,11vw,11rem);line-height:.95;font-weight:400;color:var(--heading);letter-spacing:-.025em;text-transform:uppercase;margin:0;padding:.18em 0 .25em}
+.mast-title .word{display:inline-block}
+.mast-title .word.w2{display:block;margin-top:-.12em}
+.mast-title .word>span{display:inline-block;opacity:0;transform:translateY(48px);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards}
 .mast-title .word.w2>span{animation-delay:.18s}
-.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.82em;letter-spacing:-.02em;vertical-align:baseline;text-transform:none;margin-left:0}
-@keyframes mastReveal{to{transform:translateY(0)}}
+.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.85em;letter-spacing:-.02em;vertical-align:baseline;text-transform:none;margin-left:0;padding:0 .08em .12em 0;display:inline-block}
+@keyframes mastReveal{to{opacity:1;transform:translateY(0)}}
 .mast-sub{margin-top:1.8rem;max-width:580px;color:var(--heading);font-size:1.18rem;line-height:1.55;font-weight:500;letter-spacing:-.005em;opacity:0;animation:mastFade .9s .6s cubic-bezier(.16,1,.3,1) forwards}
 .mast-sub strong{font-weight:700;color:var(--heading)}
 @keyframes mastFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -300,6 +300,10 @@ body.modal-open{overflow:hidden}
 .footer .ctn{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
 .footer-logo{height:26px;filter:brightness(0) invert(1)}
 .footer-cp{font-size:.85rem;color:#7a7068}
+.powered-by{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:#7a7068;font-weight:600;text-decoration:none;padding:.32rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,.08);transition:all .25s;margin-left:.5rem}
+.powered-by:hover{color:var(--accent);border-color:var(--accent)}
+.powered-by img{height:18px;width:auto;display:block;filter:brightness(0) invert(1);opacity:.78;transition:opacity .25s}
+.powered-by:hover img{opacity:1}
 .footer a{color:rgba(255,255,255,.4);font-size:.85rem;margin-left:14px;transition:var(--tr)}
 .footer a:hover{color:var(--accent)}
 
@@ -631,9 +635,13 @@ body.modal-open{overflow:hidden}
 <!-- FOOTER -->
 <footer class="footer">
   <div class="ctn">
-    <div style="display:flex;align-items:center;gap:14px">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <a href="/"><img src="img/logo-hapee.png" alt="Hapee" class="footer-logo"></a>
-      <span class="footer-cp">© 2026 Hapee · Powered by Digitals.cl</span>
+      <span class="footer-cp">© 2026 Hapee</span>
+      <a class="powered-by" href="https://digitals.cl" target="_blank" rel="noopener" title="Grupo Digitals">
+        <span>Powered by</span>
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals">
+      </a>
     </div>
     <div>
       <a href="/">Inicio</a>
