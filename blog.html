@@ -107,18 +107,53 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px}
 @media(max-width:1100px){.nlinks,.nctas{display:none}.mbtn{display:block}}
 
-/* MASTHEAD */
-.masthead{padding:140px 0 60px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.mast-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);margin-bottom:32px;flex-wrap:wrap;gap:12px}
+/* MASTHEAD · editorial magazine A · canvas particle network + featured */
+.masthead{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg)}
+.mast-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:auto;display:block}
+.mast-marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.9rem 0;display:flex;gap:0;white-space:nowrap;overflow:hidden;background:rgba(250,80,0,.04);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.mast-marquee .track{display:inline-flex;gap:2.4rem;animation:mastMarquee 26s linear infinite;font-family:var(--fd);font-size:1.55rem;letter-spacing:.14em;color:var(--heading);padding-right:2.4rem;will-change:transform}
+.mast-marquee .track .sep{color:var(--accent)}
+.mast-marquee .track .ghost{color:var(--text-2);opacity:.6}
+@keyframes mastMarquee{to{transform:translate3d(-50%,0,0)}}
+.masthead .ctn{position:relative;z-index:2;padding:5.5rem 24px 5rem;max-width:1480px;margin:0 auto}
+.mast-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);margin-bottom:2.2rem;flex-wrap:wrap;gap:12px}
 .mast-meta .left{display:flex;gap:14px;align-items:center}
 .mast-meta .left span:first-child{padding:4px 10px;border:1px solid var(--accent);color:var(--accent);border-radius:4px;font-weight:700}
-.mast-title{font-size:clamp(3.5rem,12vw,9rem);line-height:.85;font-weight:400;color:var(--heading);letter-spacing:-3px}
-.mast-title .em{font-family:var(--fb);font-weight:800;font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.4em;vertical-align:middle;margin-left:8px;letter-spacing:-1px;text-transform:none}
-.mast-sub{margin-top:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.mast-sub p{font-size:1.05rem;color:var(--text);max-width:560px;line-height:1.6}
-.mast-cats{display:flex;gap:8px;flex-wrap:wrap}
-.cat-chip{font-family:var(--fm);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);padding:6px 12px;border:1px solid var(--line);border-radius:var(--pill);transition:var(--tr);cursor:pointer;font-weight:600}
+.mast-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:end}
+.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,11vw,11rem);line-height:.78;font-weight:400;color:var(--heading);letter-spacing:-.025em;text-transform:uppercase;margin:0}
+.mast-title .word{display:inline-block;overflow:hidden;padding-bottom:.05em}
+.mast-title .word.w2{display:block;margin-top:-.18em}
+.mast-title .word>span{display:inline-block;transform:translateY(110%);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards}
+.mast-title .word.w2>span{animation-delay:.18s}
+.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.82em;letter-spacing:-.02em;vertical-align:baseline;text-transform:none;margin-left:0}
+@keyframes mastReveal{to{transform:translateY(0)}}
+.mast-sub{margin-top:1.8rem;max-width:580px;color:var(--heading);font-size:1.18rem;line-height:1.55;font-weight:500;letter-spacing:-.005em;opacity:0;animation:mastFade .9s .6s cubic-bezier(.16,1,.3,1) forwards}
+.mast-sub strong{font-weight:700;color:var(--heading)}
+@keyframes mastFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.mast-cats{margin-top:1.6rem;display:flex;gap:.55rem;flex-wrap:wrap;opacity:0;animation:mastFade .9s .75s cubic-bezier(.16,1,.3,1) forwards}
+.cat-chip{font-family:var(--fm);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);padding:6px 12px;border:1px solid var(--line);border-radius:var(--pill);transition:var(--tr);cursor:pointer;font-weight:600;background:transparent}
 .cat-chip:hover,.cat-chip.on{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.06)}
+.mast-art-wrap{position:relative;z-index:2;margin-left:-6%}
+.mast-art{position:relative;aspect-ratio:4/5;border-radius:16px 16px 80px 16px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(250,80,0,.45),0 0 0 1px var(--line);transform:translateY(40px);opacity:0;animation:mastFade 1.1s .35s cubic-bezier(.16,1,.3,1) forwards}
+.mast-art img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 8s linear;display:block}
+.masthead:hover .mast-art img{transform:scale(1.12)}
+.mast-art .overlay{position:absolute;inset:0;pointer-events:none;background:linear-gradient(200deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.7) 100%)}
+.mast-art .featured-tag{position:absolute;top:1.1rem;left:1.1rem;z-index:3;font-family:var(--fm);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;padding:.35rem .7rem;border:1px solid rgba(255,255,255,.4);border-radius:4px;backdrop-filter:blur(8px);background:rgba(0,0,0,.4);font-weight:700;color:#fff}
+.mast-art .caption{position:absolute;left:1.1rem;right:140px;bottom:1.1rem;z-index:3;font-family:var(--fb);font-size:.85rem;line-height:1.4;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.mast-art .caption .head{font-family:var(--fd);font-size:1.4rem;letter-spacing:-.005em;margin-bottom:.25rem;line-height:1}
+.mast-badge{position:absolute;right:-34px;bottom:-34px;z-index:5;width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 80%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fd);box-shadow:0 30px 60px -20px rgba(250,80,0,.6),0 0 0 6px var(--bg),0 0 0 7px rgba(250,80,0,.45),inset 0 1px 0 rgba(255,255,255,.18);animation:mastSpin 22s linear infinite}
+.mast-badge::before{content:'';position:absolute;inset:8px;border-radius:50%;border:1px dashed rgba(255,255,255,.35);pointer-events:none}
+.mast-badge .n{font-size:3.8rem;line-height:1;font-weight:400;letter-spacing:-.03em;color:#fff}
+.mast-badge .l{font-family:var(--fm);font-size:.58rem;letter-spacing:.36em;margin-top:.3rem;color:rgba(255,255,255,.85)}
+@keyframes mastSpin{to{transform:rotate(360deg)}}
+@media(max-width:980px){
+  .mast-grid{grid-template-columns:1fr;gap:2.2rem}
+  .mast-art{aspect-ratio:1/1;border-radius:16px}
+  .mast-badge{width:110px;height:110px;right:-22px;bottom:-22px}
+  .mast-badge .n{font-size:2.8rem}
+  .masthead .ctn{padding:4rem 20px 3rem}
+  .mast-art-wrap{margin-left:0}
+}
 
 /* ===== FEATURED ARTICLE ===== */
 .featured{padding:80px 0;border-bottom:1px solid var(--line)}
@@ -332,7 +367,28 @@ body.modal-open{overflow:hidden}
 <main>
 
 <!-- MASTHEAD -->
-<section class="masthead">
+<section class="masthead" id="masthead">
+  <canvas class="mast-canvas" id="mastCanvas"></canvas>
+
+  <div class="mast-marquee">
+    <div class="track">
+      <span>HAPEE NEWS</span><span class="sep">●</span>
+      <span>ISSUE 01</span><span class="sep">●</span>
+      <span>MAYO 2026</span><span class="sep">●</span>
+      <span class="ghost">SANTIAGO · CHILE</span><span class="sep">●</span>
+      <span>IA</span><span class="sep">●</span>
+      <span>PRODUCTO</span><span class="sep">●</span>
+      <span class="ghost">EVENTOS</span><span class="sep">●</span>
+      <span>HAPEE NEWS</span><span class="sep">●</span>
+      <span>ISSUE 01</span><span class="sep">●</span>
+      <span>MAYO 2026</span><span class="sep">●</span>
+      <span class="ghost">SANTIAGO · CHILE</span><span class="sep">●</span>
+      <span>IA</span><span class="sep">●</span>
+      <span>PRODUCTO</span><span class="sep">●</span>
+      <span class="ghost">EVENTOS</span><span class="sep">●</span>
+    </div>
+  </div>
+
   <div class="ctn">
     <div class="mast-meta">
       <div class="left">
@@ -341,15 +397,33 @@ body.modal-open{overflow:hidden}
       </div>
       <div class="right">Hapee.ai/Blog</div>
     </div>
-    <h1 class="mast-title">Hapee <span class="em">News!</span></h1>
-    <div class="mast-sub">
-      <p>Producto, IA y eventos por el equipo de Hapee. Noticias de la suite all-in-one de agentes IA, integraciones con los modelos más avanzados del mundo y casos reales.</p>
-      <div class="mast-cats">
-        <span class="cat-chip on" data-cat="all">Todos</span>
-        <span class="cat-chip" data-cat="producto">Producto</span>
-        <span class="cat-chip" data-cat="tech">Tech</span>
-        <span class="cat-chip" data-cat="eventos">Eventos</span>
-        <span class="cat-chip" data-cat="how-to">How-to</span>
+
+    <div class="mast-grid">
+      <div class="mast-text">
+        <h1 class="mast-title">
+          <span class="word w1"><span>Hapee</span></span>
+          <span class="word w2"><span class="em">News!</span></span>
+        </h1>
+        <p class="mast-sub">Producto, IA y eventos por el equipo de Hapee. Noticias de la suite all-in-one de agentes IA, integraciones con los modelos más avanzados del mundo y <strong>casos reales desde Latam</strong>.</p>
+        <div class="mast-cats">
+          <span class="cat-chip on" data-cat="all">Todos</span>
+          <span class="cat-chip" data-cat="producto">Producto</span>
+          <span class="cat-chip" data-cat="tech">Tech</span>
+          <span class="cat-chip" data-cat="eventos">Eventos</span>
+          <span class="cat-chip" data-cat="how-to">How-to</span>
+        </div>
+      </div>
+      <div class="mast-art-wrap">
+        <div class="mast-art">
+          <img src="img/rrss/hapee-mcp-post.png" alt="Featured · Hapee se conecta con Claude vía MCP">
+          <div class="overlay"></div>
+          <div class="featured-tag">★ Featured</div>
+          <div class="caption">
+            <div class="head">MCP × Claude</div>
+            <div>Hapee se conecta vía MCP nativo</div>
+          </div>
+        </div>
+        <div class="mast-badge"><span class="n">01</span><span class="l">ISSUE</span></div>
       </div>
     </div>
   </div>
@@ -463,7 +537,7 @@ body.modal-open{overflow:hidden}
       <!-- ART 2: AWS CHILE -->
       <article class="art art-2" data-art="aws" data-cat="eventos">
         <div class="art-art theme-aws">
-          <img class="hero-bg" src="img/rrss/hapee-aws-post.png" alt="">
+          <img class="hero-bg" src="img/eventos/aws-stgo-team.jpeg" alt="Equipo Hapee en oficinas AWS Santiago de Chile" style="object-position:50% 35%">
           <div class="cl-shape"></div>
           <span class="glyph tl">N°03 / Eventos</span>
           <span class="glyph tr">AWS Chile · Hapee</span>
@@ -475,7 +549,7 @@ body.modal-open{overflow:hidden}
         <div class="art-body">
           <div class="art-tag">Eventos · Partnerships</div>
           <h4>El equipo de Hapee visita las oficinas de AWS en Chile</h4>
-          <p class="art-exc">Reunión estratégica con el equipo regional de AWS para fortalecer nuestra infraestructura cloud y desplegar Hapee con mayor velocidad y resiliencia para toda Latinoamérica.</p>
+          <p class="art-exc">Reunión técnica con el equipo regional de AWS Santiago — alrededor de 50 founders, ingenieros y partners del ecosistema cloud chileno. Roadmap multi-región, Bedrock e ingreso al AWS Partner Network sobre la mesa.</p>
           <div class="art-meta">3 May 2026 · Eventos · 2 min</div>
         </div>
       </article>
@@ -483,7 +557,7 @@ body.modal-open{overflow:hidden}
       <!-- ART 3: APEROL EVENT -->
       <article class="art art-3" data-art="aperol" data-cat="eventos">
         <div class="art-art theme-aperol">
-          <img class="hero-bg" src="img/rrss/hapee-aperol-post.png" alt="">
+          <img class="hero-bg" src="img/eventos/hapee-podcast-launch.jpeg" alt="Lanzamiento Hapee SaaS · podcast en vivo" style="object-position:50% 40%">
           <span class="glyph tl">N°04 / Eventos</span>
           <span class="center-num">04</span>
           <div class="glass">
@@ -499,7 +573,7 @@ body.modal-open{overflow:hidden}
         <div class="art-body">
           <div class="art-tag">Eventos · Networking</div>
           <h4>Evento Hapee by Aperol: la noche más naranja del año</h4>
-          <p class="art-exc">Founders, partners y clientes de Hapee se reúnen en una velada exclusiva con Aperol. Música, demo en vivo y networking de alto nivel.</p>
+          <p class="art-exc">Lanzamiento oficial de Hapee SaaS con podcast en vivo y cocktail patrocinado por Aperol. Cerca de 50 asistentes entre clientes early, partners y founders del ecosistema IA chileno.</p>
           <div class="art-meta">28 Abr 2026 · Eventos · 1 min</div>
         </div>
       </article>
@@ -771,6 +845,177 @@ document.addEventListener('DOMContentLoaded',()=>{
   modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closePost()});
 });
+
+// === Masthead · Aether Flow particle network (cursor-aware, dark/light) ===
+(function(){
+  const c=document.getElementById('mastCanvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H;
+  const mouse={x:null,y:null,radius:180};
+  let particles=[];
+
+  function isDark(){return document.documentElement.classList.contains('dark');}
+
+  function resize(){
+    W=c.width=c.clientWidth;
+    H=c.height=c.clientHeight;
+    init();
+  }
+
+  class Particle{
+    constructor(x,y,dx,dy,size,lightColor,darkColor){
+      this.x=x;this.y=y;this.dx=dx;this.dy=dy;this.size=size;
+      this.lightColor=lightColor;this.darkColor=darkColor;
+    }
+    get color(){return isDark()?this.darkColor:this.lightColor;}
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fillStyle=this.color;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size*3.5,0,Math.PI*2);
+      ctx.fillStyle=this.color.replace(/[\d.]+\)$/,'0.04)');
+      ctx.fill();
+    }
+    update(){
+      if(this.x>W||this.x<0)this.dx=-this.dx;
+      if(this.y>H||this.y<0)this.dy=-this.dy;
+      if(mouse.x!==null&&mouse.y!==null){
+        const dx=mouse.x-this.x,dy=mouse.y-this.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<mouse.radius+this.size){
+          const fx=dx/dist,fy=dy/dist;
+          const force=(mouse.radius-dist)/mouse.radius;
+          this.x-=fx*force*7;
+          this.y-=fy*force*7;
+        }
+      }
+      this.x+=this.dx;this.y+=this.dy;
+      this.draw();
+    }
+  }
+
+  function init(){
+    particles=[];
+    const num=Math.floor((W*H)/7500);
+    const lightColors=[
+      'rgba(250,80,0,0.35)','rgba(205,35,73,0.30)',
+      'rgba(250,80,0,0.20)','rgba(205,35,73,0.18)','rgba(250,120,40,0.22)'
+    ];
+    const darkColors=[
+      'rgba(250,80,0,0.55)','rgba(205,35,73,0.50)',
+      'rgba(250,80,0,0.40)','rgba(205,35,73,0.35)','rgba(250,120,40,0.42)'
+    ];
+    for(let i=0;i<num;i++){
+      const size=Math.random()*2+.7;
+      const x=Math.random()*(W-size*4)+size*2;
+      const y=Math.random()*(H-size*4)+size*2;
+      const dx=(Math.random()-.5)*.45;
+      const dy=(Math.random()-.5)*.45;
+      const idx=Math.floor(Math.random()*lightColors.length);
+      particles.push(new Particle(x,y,dx,dy,size,lightColors[idx],darkColors[idx]));
+    }
+  }
+
+  function connect(){
+    const maxDist=(W/7)*(H/7);
+    for(let a=0;a<particles.length;a++){
+      for(let b=a+1;b<particles.length;b++){
+        const dx=particles[a].x-particles[b].x;
+        const dy=particles[a].y-particles[b].y;
+        const distSq=dx*dx+dy*dy;
+        if(distSq<maxDist){
+          const opacity=1-(distSq/20000);
+          if(opacity<=0)continue;
+          const dark=isDark();
+          let strokeColor;
+          if(mouse.x!==null){
+            const mx=particles[a].x-mouse.x,my=particles[a].y-mouse.y;
+            const mouseDist=Math.sqrt(mx*mx+my*my);
+            if(mouseDist<mouse.radius){
+              strokeColor=dark?`rgba(250,80,0,${Math.min(opacity*.55,.35)})`:`rgba(250,80,0,${Math.min(opacity*.35,.18)})`;
+            }else{
+              strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+            }
+          }else{
+            strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+          }
+          ctx.strokeStyle=strokeColor;
+          ctx.lineWidth=.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[a].x,particles[a].y);
+          ctx.lineTo(particles[b].x,particles[b].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawMouseGlow(){
+    if(mouse.x===null)return;
+    const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,mouse.radius);
+    g.addColorStop(0,'rgba(250,80,0,.06)');
+    g.addColorStop(.5,'rgba(205,35,73,.02)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.arc(mouse.x,mouse.y,mouse.radius,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  let shockwaves=[];
+  c.addEventListener('click',e=>{
+    const r=c.getBoundingClientRect();
+    shockwaves.push({x:e.clientX-r.left,y:e.clientY-r.top,radius:0,maxRadius:280,alpha:1});
+    for(const p of particles){
+      const dx=p.x-(e.clientX-r.left),dy=p.y-(e.clientY-r.top);
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<240){
+        const force=(1-dist/240)*2.8;
+        p.dx+=(dx/dist)*force;
+        p.dy+=(dy/dist)*force;
+      }
+    }
+  });
+
+  function drawShockwaves(){
+    for(let i=shockwaves.length-1;i>=0;i--){
+      const s=shockwaves[i];
+      s.radius+=3.5;s.alpha-=.014;
+      if(s.alpha<=0){shockwaves.splice(i,1);continue;}
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(250,80,0,${s.alpha*.25})`;
+      ctx.lineWidth=1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius*.55,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(205,35,73,${s.alpha*.15})`;
+      ctx.lineWidth=.8;
+      ctx.stroke();
+    }
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of particles)p.update();
+    connect();
+    drawMouseGlow();
+    drawShockwaves();
+    requestAnimationFrame(animate);
+  }
+
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
+  });
+  c.addEventListener('mouseleave',()=>{mouse.x=null;mouse.y=null;});
+  window.addEventListener('resize',resize);
+  resize();
+  animate();
+})();
 </script>
 </body>
 </html>
