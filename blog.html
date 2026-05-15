@@ -814,11 +814,19 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.body.classList.remove('modal-open');
   }
 
+  // data-art → URL real (sub-páginas con share buttons)
+  const POST_URLS={mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
-    el.addEventListener('click',()=>openPost(el.dataset.art));
+    el.style.cursor='pointer';
+    el.addEventListener('click',e=>{
+      const url=POST_URLS[el.dataset.art];
+      if(url) window.location.href=url;
+    });
   });
-  document.getElementById('modalClose').addEventListener('click',closePost);
-  modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
+  // (modal viejo queda como fallback dormido)
+  const _mc=document.getElementById('modalClose');
+  if(_mc) _mc.addEventListener('click',closePost);
+  if(modal) modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closePost()});
 });
 
