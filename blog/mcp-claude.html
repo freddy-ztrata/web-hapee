@@ -95,14 +95,14 @@
       <p>Antes: el agente llama una vez al modelo con un prompt fijo. Ahora: el modelo pide los datos que necesita cuando los necesita, razona, pide más, decide. <strong>Latencia menor, respuestas mejores.</strong></p>
     </div>
 
-    <h2 data-num="01">Qué es Hapee MCP Native</h2>
-    <p>Hapee MCP Native es la implementación del protocolo de Anthropic dentro de los agentes de Hapee. Cuando un agente está configurado en modo MCP, automáticamente expone los siguientes <em>contextos disponibles</em> a Claude:</p>
+    <h2 data-num="01">Qué es MCP Native</h2>
+    <p>MCP Native es la implementación del protocolo de Anthropic dentro de los agentes de Hapee. Cuando un agente está configurado en modo MCP, automáticamente expone los siguientes <em>contextos disponibles</em> a Claude:</p>
     <ul>
-      <li><strong>Hapee CRM</strong> — contacto, tags, historial, pipeline stage, valor estimado</li>
-      <li><strong>Hapee Conversations</strong> — toda la historia conversacional cross-canal de ese contacto</li>
-      <li><strong>Hapee Knowledge Base</strong> — documentos, FAQs y manuales subidos al espacio</li>
-      <li><strong>Hapee Calendar</strong> — disponibilidad real del equipo, no slots simulados</li>
-      <li><strong>Hapee Workflows</strong> — capacidad de disparar workflows desde la conversación</li>
+      <li><strong>el CRM</strong> — contacto, tags, historial, pipeline stage, valor estimado</li>
+      <li><strong>Conversations</strong> — toda la historia conversacional cross-canal de ese contacto</li>
+      <li><strong>la Knowledge Base</strong> — documentos, FAQs y manuales subidos al espacio</li>
+      <li><strong>Calendars</strong> — disponibilidad real del equipo, no slots simulados</li>
+      <li><strong>Workflows</strong> — capacidad de disparar workflows desde la conversación</li>
     </ul>
 
     <h2 data-num="02">Cómo se nota en la práctica</h2>
@@ -110,7 +110,7 @@
 
     <blockquote>
       "Hola Camila! Veo que tu pedido #4892 está saliendo de bodega hoy y debería llegarte mañana entre 10:00 y 14:00. ¿Es por eso que escribes o pasó algo más con el ticket que abriste ayer sobre la talla?"
-      <cite>— Respuesta generada con Hapee MCP Native</cite>
+      <cite>— Respuesta generada con MCP Native</cite>
     </blockquote>
 
     <p>La diferencia es que <strong>parece humano</strong>. Porque tiene <em>todo</em> el contexto, no un prompt recortado.</p>
@@ -129,8 +129,8 @@
     <ol class="step-list">
       <li><b>Settings → AI Models</b> En el selector de modelo de tu agente, eligís <code>Claude (MCP Native)</code> en vez de las opciones API tradicionales.</li>
       <li><b>Conecta los contextos</b> Por default Hapee expone CRM, Conversations, Knowledge Base y Calendar. Puedes desactivar individualmente si quieres que el modelo no acceda a algo.</li>
-      <li><b>Probá en sandbox</b> Conversación de prueba con tu propio número. Vas a ver la latencia menor inmediatamente.</li>
-      <li><b>Pasá a producción</b> Activas MCP para todos los agentes de un workspace con un toggle.</li>
+      <li><b>Prueba en sandbox</b> Conversación de prueba con tu propio número. Vas a ver la latencia menor inmediatamente.</li>
+      <li><b>Pasa a producción</b> Activas MCP para todos los agentes de un workspace con un toggle.</li>
     </ol>
 
     <h2 data-num="05">Lo que viene</h2>
@@ -142,7 +142,7 @@
     </ul>
     <p>Pero MCP es el más importante. Es el primer estándar real de la industria, y Anthropic lo liberó open-source para que cualquier plataforma lo adopte. Que Hapee sea la primera en LATAM en tenerlo nativo no es solo marketing: es <em>infraestructura</em>.</p>
     <div class="post-cta">
-      <h3>Probá Hapee con MCP Native.</h3>
+      <h3>Activa MCP Native en tu cuenta.</h3>
       <p>Agendamos una demo de 25 min · te lo mostramos con tu propio CRM conectado.</p>
       <a class="btn" href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener">Agendar demo →</a>
     </div>
