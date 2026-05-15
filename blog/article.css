@@ -24,9 +24,8 @@ img{display:block;max-width:100%;height:auto}
 .ctn{max-width:1200px;margin:0 auto;padding:0 24px}
 .ctn-narrow{max-width:780px;margin:0 auto;padding:0 24px}
 
-/* === NAV (idéntico al blog index) === */
-header{position:sticky;top:0;background:rgba(255,255,255,.85);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:80;border-bottom:1px solid var(--line);transition:background .3s,border-color .3s}
-html.dark header{background:rgba(8,8,8,.85)}
+/* === NAV (no sticky en las notas, queda más limpio para leer) === */
+header{background:var(--bg);border-bottom:1px solid var(--line);transition:background .3s,border-color .3s}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:24px}
 .nav-logo{height:28px}
 .nav-logo.dark-logo{display:none}
