@@ -93,7 +93,7 @@
 
     <div class="callout">
       <div class="label">TL;DR</div>
-      <p>Conectás Instagram, FB, TikTok, LinkedIn, X, YouTube, GMB y WhatsApp a Hapee. Programás contenido con IA. Cada comentario/DM dispara un workflow que califica, etiqueta y asigna. Tu equipo solo responde leads calientes. <strong>Caso real cliente Chile: −65% tiempo de respuesta, +28% conversión a venta.</strong></p>
+      <p>Conectás Instagram, FB, TikTok, LinkedIn, X, YouTube, GMB y WhatsApp al panel de Hapee. Generás contenido con IA usando Claude como motor (mismo modelo que tu agente conversacional). Cada comentario o DM puede disparar un workflow que califica, etiqueta y asigna automáticamente. <strong>Webhooks bidireccionales</strong> conectan todo con tu stack externo. Tu equipo solo responde leads ya calificados.</p>
     </div>
 
     <h2 data-num="01">El problema real</h2>
@@ -116,8 +116,16 @@
       <div class="row"><div class="lbl">Analytics</div><div class="desc">Métricas en tiempo real por red, post, hashtag y pilar de contenido. Atribución end-to-end: <b>post → DM → lead → cierre</b>. No solo "likes", también <em>ventas reales</em> asociadas.</div></div>
     </div>
 
-    <h2 data-num="03">Conectá tus canales en 5 minutos</h2>
-    <p>OAuth one-click. Vas a <code>Settings → Integrations → Social</code> y conectás cada cuenta con un botón. Hapee soporta:</p>
+    <h2 data-num="03">Conectá tus cuentas al panel · el paso que lo cambia todo</h2>
+
+    <div class="callout">
+      <div class="label">El "ah-ha" momento real</div>
+      <p>La mayoría de los negocios manejan sus redes con <strong>6 pestañas abiertas en paralelo</strong>: Meta Business Suite, TikTok Studio, LinkedIn Campaign Manager, X, YouTube, GMB. Conectar todo a Hapee no es "tener otro dashboard". Es el cambio de paradigma: <strong>una sola operación que afecta a las 6 redes</strong>, en vez de 6 operaciones repetidas.</p>
+    </div>
+
+    <p>OAuth one-click: vas a <code>Settings → Integrations → Social</code> y autorizás cada cuenta con un botón. Cuando una cuenta vive dentro del panel, todo lo que viene después — IA, programación, workflows, inbox unificado — funciona <em>encima de esa conexión</em>. Por eso esta es la primera piedra y la más importante.</p>
+
+    <p>Canales que conectás a Hapee:</p>
     <ul>
       <li><strong>Instagram</strong> (Business / Creator) — posts, reels, stories, carruseles</li>
       <li><strong>Facebook</strong> (Pages) — posts, stories, reels</li>
@@ -128,23 +136,26 @@
       <li><strong>Google Business Profile</strong> — posts de GMB para SEO local</li>
       <li><strong>WhatsApp Business API</strong> — broadcast con templates aprobados</li>
     </ul>
-    <p>Cada cuenta queda <strong>asignada a un workspace</strong>. Si manejás varias marcas o varios locales (típico en franquicias), cada uno tiene sus permisos y reportes independientes.</p>
+    <p>Cada cuenta queda <strong>asignada a un workspace</strong>. Si manejás varias marcas o locales (típico franquicias), cada uno tiene permisos y reportes independientes. <strong>Una autorización, todas las publicaciones desde el mismo lugar.</strong></p>
 
-    <h2 data-num="04">Crea contenido con Hapee AI</h2>
-    <p>Acá empieza la magia. El módulo <strong>Hapee AI</strong> está entrenado en el <em>brand voice</em> de tu marca: le subís 10 posts que representan cómo querés sonar, y aprende tu tono. Después generás:</p>
+    <h2 data-num="04">Generación de contenido · puente directo con Claude</h2>
 
+    <p>Una vez que las cuentas están conectadas al panel, <strong>Hapee AI corre por encima de esa data</strong>. Y el motor detrás no es un LLM genérico: es el mismo <a href="/blog/mcp-claude.html">Claude (vía MCP nativo)</a> que responde a tus clientes en el agente conversacional. <em>El tono que ya validaste en tu chat público se traslada idéntico al contenido orgánico</em>, sin entrenar dos sistemas distintos.</p>
+
+    <div class="feat-list">
+      <div class="row"><div class="lbl">Captions con IA</div><div class="desc">Le pasás el brief en lenguaje natural ("post sobre el lanzamiento del nuevo modelo") y la IA devuelve un caption listo. El tono se ajusta al brand voice configurado en el workspace.</div></div>
+      <div class="row"><div class="lbl">Hashtags</div><div class="desc">Con un click la IA sugiere hashtags relevantes al caption y al canal donde va a publicarse.</div></div>
+      <div class="row"><div class="lbl">Variantes por canal</div><div class="desc">El mismo concepto reescrito para que respete el formato y el largo de cada red sin que tengas que rehacerlo a mano.</div></div>
+      <div class="row"><div class="lbl">Generación de imágenes</div><div class="desc">Integración con generador IA para acompañar los posts cuando no tenés asset propio armado.</div></div>
+    </div>
+
+    <h3>Webhooks y API: integración con tu stack</h3>
+    <p>Acá es donde Hapee deja de ser "una tool más" y se convierte en infraestructura. Cada acción social (publicación, comentario, DM, mention) <strong>puede dispararse o capturarse por webhook</strong>, conectando Hapee con el resto de tu operación:</p>
     <ul>
-      <li><strong>Captions desde un brief</strong> — "post sobre el lanzamiento del modelo GPT-5.5", y Hapee escribe 3 variantes en tu voz</li>
-      <li><strong>Hashtags inteligentes</strong> — analiza el caption + el pilar + tu histórico de engagement y sugiere 8-12 hashtags rankeados</li>
-      <li><strong>Variantes por canal</strong> — el mismo concepto adaptado: largo y profesional para LinkedIn, corto y punzante para X, gancho visual para IG, hook agresivo para TikTok</li>
-      <li><strong>Carruseles desde 1 prompt</strong> — "carrusel de 7 slides sobre los 5 errores que cometen las pymes con IA". Hapee genera la estructura, los textos por slide y las imágenes con tu brand kit (paleta y fuentes aplicadas)</li>
-      <li><strong>Imágenes con tu brand kit</strong> — generación con DALL-E 3 / Nano Banana / Higgsfield (configurable) <strong>aplicando tu paleta y tu mascota</strong> automáticamente</li>
+      <li><strong>Hapee → tu stack</strong> · cuando pasa algo en redes, Hapee notifica a tu sistema. Ej: <em>comentario calificado como interesado → POST a tu CRM, Google Sheet, Slack o sistema propio</em>.</li>
+      <li><strong>Tu stack → Hapee</strong> · disparás acciones desde tu sistema. Ej: <em>se firma un contrato en tu plataforma → Hapee publica un post de "nuevo cliente" en LinkedIn</em>.</li>
+      <li><strong>Claude como puente directo</strong> · vía la integración MCP, tu agente IA conversacional puede generar y publicar contenido desde una conversación. <em>"Hey, postea un story con el descuento que cerramos con María"</em> y el agente arma el caption, sugiere el asset y lo programa. Sin pasar por el panel.</li>
     </ul>
-
-    <blockquote>
-      "Antes pasaba 3 horas armando un carrusel. Ahora con Hapee AI lo armo en 8 minutos: prompt, revisa, ajusta el tono, publica. Y queda mejor que cuando lo hacía a mano porque la IA ya sabe lo que funcionó antes."
-      <cite>— Comunidad Manager · cliente retail Santiago</cite>
-    </blockquote>
 
     <h2 data-num="05">Programación visual con el calendario Hapee</h2>
     <p>Con el contenido listo, programás en bulk:</p>
@@ -217,29 +228,21 @@
       </div>
     </div>
 
-    <h2 data-num="09">Caso real · cliente retail Chile</h2>
-    <p>Cadena de 4 tiendas físicas + e-commerce, equipo de 2 community managers gestionando IG, FB, TikTok y WhatsApp Business. Volumen: <strong>~300 mensajes entrantes por día</strong> entre las 4 plataformas.</p>
-    <p><strong>Antes de Hapee:</strong></p>
+    <h2 data-num="09">Qué cambia cuando todo vive en el panel</h2>
+    <p>El cambio operativo real lo notás en tres cosas concretas — no en los "likes":</p>
     <ul>
-      <li>Tiempo promedio de respuesta: 4h 12min</li>
-      <li>DMs sin responder al cierre del día: 18%</li>
-      <li>Conversión DM → venta: 11.4%</li>
-      <li>Comentarios sin contestar: 22%</li>
+      <li><strong>Tiempo de respuesta baja sustancialmente.</strong> Los DMs y comentarios dejan de quedarse en cola porque los workflows responden los frecuentes automáticamente y el inbox unificado agrupa los que necesitan humano.</li>
+      <li><strong>Conversión DM → venta sube.</strong> El lead llega al vendedor ya etiquetado por canal, pilar e intent. El vendedor entra con contexto en vez de preguntar lo básico.</li>
+      <li><strong>Comentarios sin responder tienden a cero.</strong> El workflow auto-responde los frecuentes ("¿precio?", "¿enviás?", "¿stock?") y libera al equipo para los conversacionales reales.</li>
     </ul>
-    <p><strong>Después de 60 días con Hapee:</strong></p>
-    <ul>
-      <li>Tiempo promedio de respuesta: <strong>1h 27min</strong> (−65%)</li>
-      <li>DMs sin responder: <strong>3%</strong> (los workflows responden el 79%)</li>
-      <li>Conversión DM → venta: <strong>14.6%</strong> (+28%)</li>
-      <li>Comentarios sin contestar: <strong>1%</strong></li>
-    </ul>
+    <p>Los números concretos varían por industria y volumen del negocio, pero el patrón se repite consistentemente: <em>menos trabajo manual, más leads calificados sin más esfuerzo del equipo.</em></p>
 
     <h2 data-num="10">Cómo arranco en 24 horas</h2>
     <p>Cualquier persona con acceso al panel puede dejarlo funcional el primer día. Esta es la secuencia exacta:</p>
 
     <ol class="step-list">
       <li><b>Conectar canales (30 min)</b> Vas a Settings → Integrations → Social y autorizás cada cuenta. Verificás que aparezcan los últimos 30 días de posts importados.</li>
-      <li><b>Entrenar brand voice (30 min)</b> Subís 10-15 posts representativos del tono. Hapee AI los analiza y te muestra ejemplos del "voice profile" que aprendió. Ajustás si algo no cuadra.</li>
+      <li><b>Configurar brand voice (15 min)</b> Describís cómo querés sonar en 1-2 párrafos (formal/casual, irónico/profesional, cercano/corporativo) y unas pocas reglas clave (qué palabras evitar, cómo cerrar los posts). La IA usa eso de base para toda la generación.</li>
       <li><b>Cargar 2 semanas de contenido (1 h)</b> Importás un CSV o pegás 10 captions en el composer. Hapee genera variantes por canal y los pone en el calendar a los best-time-to-post.</li>
       <li><b>Setear 3 workflows base (45 min)</b> (a) comentario con "precio/costo" → DM con calculadora · (b) DM con "demo" → agenda calendario · (c) mention en story → DM de agradecimiento + cupón.</li>
       <li><b>Dejar el inbox activo (15 min)</b> Asignás los vendedores, configurás SLA de 5 min, activás IA Assist. El primer mensaje que llegue ya pasa por todo el flujo.</li>
@@ -251,11 +254,11 @@
     <h2 data-num="11">Más allá del básico</h2>
     <p>Features que activás cuando ya tenés el flow base funcionando:</p>
     <ul>
-      <li><strong>A/B testing de captions</strong> — Hapee publica dos variantes a porcentajes de tu audiencia y declara ganadora la que mejor performa después de 24 h</li>
-      <li><strong>White-label completo</strong> — tu marca, tu dominio, tu logo. Tus clientes no ven "Hapee", ven tu agencia</li>
-      <li><strong>API + Webhooks</strong> — cada interacción social dispara tu stack (Sheets, Notion, Slack, sistema propio)</li>
-      <li><strong>UGC capture</strong> — cuando un cliente te mencione en una story, Hapee la guarda automáticamente con permiso pedido por DM. Cero trabajo manual</li>
-      <li><strong>Cross-channel campaigns</strong> — una campaña que se ejecuta coordinada: email + WhatsApp broadcast + post orgánico + ads, todo desde una sola línea de tiempo</li>
+      <li><strong>White-label completo</strong> — tu marca, tu dominio, tu logo. Tus clientes no ven "Hapee", ven tu agencia.</li>
+      <li><strong>API + Webhooks bidireccionales</strong> — cada interacción social puede disparar tu stack (Sheets, Notion, Slack, sistema propio) o ser disparada desde él.</li>
+      <li><strong>Multi-workspace</strong> — manejás varias marcas o locales con permisos separados, KPIs independientes, billing por workspace.</li>
+      <li><strong>Cross-channel campaigns</strong> — coordinás email + WhatsApp broadcast + post orgánico desde una sola línea de tiempo.</li>
+      <li><strong>Agente conversacional + contenido orgánico unificado</strong> — el mismo Claude responde a clientes <em>y</em> escribe los posts, garantizando coherencia de tono y mensaje en todos los touchpoints.</li>
     </ul>
 
     <h2 data-num="12">El stack completo</h2>
