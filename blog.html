@@ -110,12 +110,7 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 /* MASTHEAD · editorial magazine A · canvas particle network + featured */
 .masthead{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg)}
 .mast-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:auto;display:block}
-.mast-marquee{position:relative;z-index:2;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.9rem 0;display:flex;gap:0;white-space:nowrap;overflow:hidden;background:rgba(250,80,0,.04);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-.mast-marquee .track{display:inline-flex;gap:2.4rem;animation:mastMarquee 26s linear infinite;font-family:var(--fd);font-size:1.55rem;letter-spacing:.14em;color:var(--heading);padding-right:2.4rem;will-change:transform}
-.mast-marquee .track .sep{color:var(--accent)}
-.mast-marquee .track .ghost{color:var(--text-2);opacity:.6}
-@keyframes mastMarquee{to{transform:translate3d(-50%,0,0)}}
-.masthead .ctn{position:relative;z-index:2;padding:5.5rem 24px 5rem;max-width:1480px;margin:0 auto}
+.masthead .ctn{position:relative;z-index:2;padding:7rem 24px 5rem;max-width:1480px;margin:0 auto}
 .mast-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);margin-bottom:2.2rem;flex-wrap:wrap;gap:12px}
 .mast-meta .left{display:flex;gap:14px;align-items:center}
 .mast-meta .left span:first-child{padding:4px 10px;border:1px solid var(--accent);color:var(--accent);border-radius:4px;font-weight:700}
@@ -369,25 +364,6 @@ body.modal-open{overflow:hidden}
 <!-- MASTHEAD -->
 <section class="masthead" id="masthead">
   <canvas class="mast-canvas" id="mastCanvas"></canvas>
-
-  <div class="mast-marquee">
-    <div class="track">
-      <span>HAPEE NEWS</span><span class="sep">●</span>
-      <span>ISSUE 01</span><span class="sep">●</span>
-      <span>MAYO 2026</span><span class="sep">●</span>
-      <span class="ghost">SANTIAGO · CHILE</span><span class="sep">●</span>
-      <span>IA</span><span class="sep">●</span>
-      <span>PRODUCTO</span><span class="sep">●</span>
-      <span class="ghost">EVENTOS</span><span class="sep">●</span>
-      <span>HAPEE NEWS</span><span class="sep">●</span>
-      <span>ISSUE 01</span><span class="sep">●</span>
-      <span>MAYO 2026</span><span class="sep">●</span>
-      <span class="ghost">SANTIAGO · CHILE</span><span class="sep">●</span>
-      <span>IA</span><span class="sep">●</span>
-      <span>PRODUCTO</span><span class="sep">●</span>
-      <span class="ghost">EVENTOS</span><span class="sep">●</span>
-    </div>
-  </div>
 
   <div class="ctn">
     <div class="mast-meta">
