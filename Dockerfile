@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260520-01
+ARG CACHE_BUST=20260520-02
 COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
