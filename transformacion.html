@@ -193,19 +193,64 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
 .footer a:hover{color:var(--accent)}
 
 /* RESPONSIVE */
-@media(max-width:768px){
-  .intro{padding:120px 0 30px}
-  .split{height:auto;min-height:0;max-height:none;cursor:default}
-  /* On mobile: stack vertically, no slider */
-  .side.antes{position:relative;clip-path:none;width:100%;height:60vh;min-height:420px}
-  .side.despues{position:relative;width:100%;height:60vh;min-height:420px}
-  .divider,.handle{display:none}
-  .side .copy{max-width:100%;padding:0 24px;text-align:center !important;align-items:center !important}
-  .side.despues .copy{align-items:center !important;text-align:center !important}
-  .side ul li{justify-content:flex-start !important;text-align:left !important;flex-direction:row !important}
-  .benefits{padding:60px 16px}
-  .cta{padding:70px 16px}
+@media(max-width:900px){
+  .intro{padding:110px 0 24px}
+  .intro h1{font-size:clamp(2.4rem,9vw,3.5rem)}
+  .intro p{font-size:.95rem;padding:0 8px}
+  .intro-hint{font-size:.68rem;margin-top:24px}
+
+  /* Slider stays active on mobile — touch drag works */
+  .split{height:62vh;min-height:480px;max-height:680px;margin-top:24px}
+
+  /* Compact copy that fits inside half-width on mobile */
+  .side .copy{padding:0 5%;max-width:50%}
+  .side h2{font-size:clamp(1.4rem,4.6vw,2.4rem);margin-bottom:12px;line-height:1}
+  .side .badge{font-size:.6rem;padding:5px 10px;letter-spacing:1.8px;margin-bottom:12px}
+  .side ul{display:none}                /* hide bullets on mobile - too cramped */
+  .glyph{display:none}                  /* hide corner glyphs */
+
+  /* Larger handle for finger-friendly drag */
+  .handle{width:72px;height:72px}
+  .handle svg{width:26px;height:26px}
+  .handle::before,.handle::after{width:11px;height:2px}
+  .handle::before{left:-18px}
+  .handle::after{right:-18px}
+
+  /* Show the bullets below the slider as a 2-column summary */
+  .mobile-summary{display:block !important}
+
+  .benefits{padding:50px 16px}
+  .b-grid{gap:16px}
+  .b-card{padding:24px 22px}
+  .b-card .num{font-size:2.4rem}
+  .cta{padding:60px 16px}
 }
+
+@media(max-width:480px){
+  .intro{padding:100px 0 20px}
+  .intro .pill{font-size:.6rem;padding:6px 12px;letter-spacing:1.8px}
+  .split{height:55vh;min-height:420px}
+  .side .copy{padding:0 4%;max-width:48%}
+  .side h2{font-size:1.4rem;line-height:1.05;margin-bottom:10px}
+  .side .badge{font-size:.55rem;padding:4px 9px;letter-spacing:1.5px}
+  .handle{width:60px;height:60px}
+  .handle svg{width:22px;height:22px}
+  .handle::before,.handle::after{display:none}    /* hide arrow ticks on tiny screens */
+}
+
+/* MOBILE SUMMARY — bullets list shown below slider on mobile only */
+.mobile-summary{display:none;padding:32px 16px 0;background:#000}
+.mobile-summary .ms-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:600px;margin:0 auto}
+.mobile-summary .ms-col{padding:18px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.08)}
+.mobile-summary .ms-col.antes{background:linear-gradient(165deg,rgba(60,10,10,.4),rgba(20,5,5,.6));border-color:rgba(180,40,40,.25)}
+.mobile-summary .ms-col.despues{background:linear-gradient(165deg,rgba(60,30,5,.4),rgba(15,8,3,.6));border-color:rgba(250,80,0,.25)}
+.mobile-summary h4{font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-weight:700}
+.mobile-summary .antes h4{color:#ff8080}
+.mobile-summary .despues h4{color:var(--accent)}
+.mobile-summary ul{list-style:none}
+.mobile-summary li{font-size:.78rem;color:rgba(255,255,255,.78);margin-bottom:6px;line-height:1.4;display:flex;gap:6px;align-items:flex-start}
+.mobile-summary .antes li::before{content:'✕';color:#ff8080;flex-shrink:0;font-weight:700}
+.mobile-summary .despues li::before{content:'✓';color:var(--accent);flex-shrink:0;font-weight:700}
 </style>
 </head>
 <body>
@@ -293,6 +338,30 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 3 12 9 6"/><polyline points="15 6 21 12 15 18"/></svg>
   </div>
 
+</section>
+
+<!-- MOBILE SUMMARY — bullets shown below slider on mobile -->
+<section class="mobile-summary" aria-label="Resumen antes/después">
+  <div class="ms-grid">
+    <div class="ms-col antes">
+      <h4>Sin Hapee</h4>
+      <ul>
+        <li>Mensajes sin responder</li>
+        <li>Ventas perdidas de noche</li>
+        <li>Equipo apagando incendios</li>
+        <li>Decisiones a ciegas</li>
+      </ul>
+    </div>
+    <div class="ms-col despues">
+      <h4>Con Hapee</h4>
+      <ul>
+        <li>Agentes IA cerrando 24/7</li>
+        <li>CRM lleno de leads</li>
+        <li>Tu marca habla con tu voz</li>
+        <li>Equipo en estrategia</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <!-- BENEFITS -->
