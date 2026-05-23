@@ -4,6 +4,7 @@ COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
 COPY blog/ /usr/share/nginx/html/blog/
+COPY transformacion.html /usr/share/nginx/html/transformacion.html
 COPY rrss-templates.html /usr/share/nginx/html/rrss-templates.html
 COPY politica-privacidad.html /usr/share/nginx/html/politica-privacidad.html
 COPY terminos.html /usr/share/nginx/html/terminos.html

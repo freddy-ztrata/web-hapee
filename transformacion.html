@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La transformación Hapee · Antes y después</title>
+<meta name="description" content="Antes: caos operativo, mensajes sin responder, ventas perdidas. Después: agentes IA cerrando 24/7, CRM lleno, tu marca habla con tu voz. La transformación Hapee, en vivo.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://hapee.ai/transformacion.html">
+<meta name="theme-color" content="#FA5000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="La transformación Hapee · Antes y después">
+<meta property="og:description" content="Del caos al cierre automático. Desliza para ver la diferencia.">
+<meta property="og:image" content="https://hapee.ai/img/robot.png">
+<meta property="og:url" content="https://hapee.ai/transformacion.html">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#FA5000;
+  --accent-alt:#CD2349;
+  --bg:#080808;
+  --text:#b0a89e;
+  --heading:#f5f0eb;
+  --pill:100px;
+  --tr:.3s cubic-bezier(.4,0,.2,1);
+  --fd:'Bebas Neue',sans-serif;
+  --fb:'Plus Jakarta Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:#000;color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.55}
+img,video{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-spacing:-1px;font-weight:400}
+.ctn{max-width:1280px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:18px 0;background:linear-gradient(180deg,rgba(0,0,0,.85),transparent);backdrop-filter:blur(10px)}
+.nav .ctn{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-logo{height:30px;filter:brightness(0) invert(1)}
+.nlinks{display:flex;align-items:center;gap:18px}
+.nlinks a{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.65);transition:var(--tr);white-space:nowrap}
+.nlinks a:hover,.nlinks a.on{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-weight:600;font-size:.82rem;padding:8px 18px;border-radius:var(--pill);cursor:pointer;transition:var(--tr);border:1.5px solid transparent}
+.bs{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
+.bs:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(250,80,0,.35)}
+.bo{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.bo:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:900px){.nlinks{display:none}}
+
+/* HERO INTRO */
+.intro{padding:140px 0 40px;text-align:center;position:relative}
+.intro .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);padding:7px 16px;border:1px solid rgba(250,80,0,.4);border-radius:var(--pill);background:rgba(250,80,0,.05);font-weight:700;margin-bottom:24px}
+.intro .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:dotPulse 1.6s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.intro h1{font-size:clamp(3rem,8vw,6rem);color:#fff;margin-bottom:16px}
+.intro h1 .em{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.intro p{font-size:1.1rem;color:rgba(255,255,255,.6);max-width:580px;margin:0 auto;line-height:1.6}
+.intro-hint{font-family:var(--fm);font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-top:32px;display:inline-flex;align-items:center;gap:10px;animation:hintBob 2.5s ease-in-out infinite}
+@keyframes hintBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.intro-hint svg{width:18px;height:18px;color:var(--accent)}
+
+/* ============== SLIDER ANTES / DESPUES ============== */
+.split{position:relative;width:100%;height:78vh;min-height:560px;max-height:920px;overflow:hidden;cursor:ew-resize;user-select:none;-webkit-user-select:none;margin-top:40px}
+
+/* DESPUÉS layer (bottom) */
+.side{position:absolute;inset:0;overflow:hidden}
+.side video,.side .vid-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.side .tint{position:absolute;inset:0;pointer-events:none}
+.side .copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 8% 0 8%;max-width:50%;z-index:2}
+
+/* Fallback gradient backgrounds (when videos absent) */
+.vid-fallback.antes{background:linear-gradient(135deg,#1a0606 0%,#0a0a0a 100%);position:relative;overflow:hidden}
+.vid-fallback.antes::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(180,30,30,.25),transparent 50%),radial-gradient(circle at 75% 70%,rgba(120,20,20,.2),transparent 50%);animation:chaosFloat 14s ease-in-out infinite}
+.vid-fallback.antes::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 60px,rgba(255,80,80,.04) 60px,rgba(255,80,80,.04) 62px)}
+@keyframes chaosFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-20px) scale(1.1)}}
+
+.vid-fallback.despues{background:radial-gradient(circle at 50% 50%,#1a0d05 0%,#080808 80%);position:relative;overflow:hidden}
+.vid-fallback.despues::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(250,80,0,.25),transparent 55%),radial-gradient(circle at 75% 60%,rgba(205,35,73,.18),transparent 55%);animation:orderPulse 6s ease-in-out infinite alternate}
+@keyframes orderPulse{from{opacity:.7;transform:scale(1)}to{opacity:1;transform:scale(1.05)}}
+.vid-fallback.despues::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(250,80,0,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(250,80,0,.06) 1px,transparent 1px);background-size:60px 60px;mask:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+
+/* DESPUÉS layer */
+.side.despues{z-index:1}
+.side.despues .tint{background:linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.15) 50%,rgba(0,0,0,.45) 100%)}
+.side.despues .copy{right:0;left:auto;align-items:flex-end;text-align:right;margin-left:auto}
+
+/* ANTES layer (on top, clipped) */
+.side.antes{z-index:2;clip-path:polygon(0 0,50% 0,50% 100%,0 100%);transition:none}
+.side.antes .tint{background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(30,5,5,.35) 100%);mix-blend-mode:multiply}
+.side.antes .copy{align-items:flex-start;text-align:left}
+
+/* Copy styling */
+.side h2{font-size:clamp(2.5rem,6vw,5rem);color:#fff;margin-bottom:18px;text-shadow:0 4px 24px rgba(0,0,0,.7)}
+.side .badge{font-family:var(--fm);font-size:.72rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;padding:7px 14px;border-radius:var(--pill);margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;width:fit-content;backdrop-filter:blur(8px)}
+.side.antes .badge{background:rgba(150,20,20,.25);color:#ff6868;border:1px solid rgba(255,80,80,.3)}
+.side.despues .badge{background:rgba(250,80,0,.18);color:#FA5000;border:1px solid rgba(250,80,0,.5)}
+.side .badge .pulse{width:7px;height:7px;border-radius:50%;background:currentColor;animation:dotPulse 1.6s ease-in-out infinite}
+.side ul{list-style:none;margin-top:14px}
+.side ul li{font-size:1.02rem;color:rgba(255,255,255,.82);margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;line-height:1.5;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.side.antes ul li{justify-content:flex-start}
+.side.despues ul li{justify-content:flex-end;text-align:right;flex-direction:row-reverse}
+.side ul li .ico{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px;font-weight:700}
+.side.antes ul li .ico{background:rgba(180,40,40,.3);color:#ff8080;border:1px solid rgba(255,80,80,.4)}
+.side.despues ul li .ico{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
+.side.despues ul li .ico svg{width:11px;height:11px}
+
+/* Divider line + handle */
+.divider{position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent 0%,#FA5000 20%,#CD2349 80%,transparent 100%);left:50%;transform:translateX(-50%);z-index:5;pointer-events:none;box-shadow:0 0 32px rgba(250,80,0,.6)}
+.handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));z-index:6;display:flex;align-items:center;justify-content:center;cursor:ew-resize;box-shadow:0 0 0 6px rgba(0,0,0,.4),0 0 40px rgba(250,80,0,.6);transition:transform .25s var(--tr),box-shadow .25s}
+.handle:hover,.handle:active{transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 0 6px rgba(0,0,0,.5),0 0 60px rgba(250,80,0,.85)}
+.handle svg{width:24px;height:24px;color:#fff}
+.handle::before,.handle::after{content:'';position:absolute;top:50%;width:14px;height:2px;background:#fff;border-radius:1px}
+.handle::before{left:-22px;animation:arrowBob 1.6s ease-in-out infinite alternate}
+.handle::after{right:-22px;animation:arrowBob 1.6s ease-in-out infinite alternate reverse}
+@keyframes arrowBob{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(-4px)}}
+
+/* Corner glyphs on each side */
+.glyph{position:absolute;font-family:var(--fm);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;z-index:3}
+.glyph.tl{top:24px;left:24px}
+.glyph.br{bottom:24px;right:24px}
+.side.antes .glyph{color:rgba(255,150,150,.55)}
+.side.despues .glyph{color:rgba(250,80,0,.7)}
+
+/* ============== BENEFITS ============== */
+.benefits{padding:80px 24px;background:linear-gradient(180deg,#000 0%,#0a0a0a 100%);border-top:1px solid rgba(250,80,0,.08)}
+.b-head{text-align:center;margin-bottom:48px}
+.b-head .lbl{font-family:var(--fm);font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px;display:inline-block}
+.b-head h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:14px}
+.b-head p{color:rgba(255,255,255,.6);max-width:520px;margin:0 auto;font-size:.98rem}
+.b-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.b-card{background:linear-gradient(165deg,#111 0%,#0a0a0a 100%);border:1px solid rgba(250,80,0,.12);border-radius:20px;padding:32px 28px;transition:var(--tr);position:relative;overflow:hidden}
+.b-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--tr)}
+.b-card:hover{transform:translateY(-6px);border-color:rgba(250,80,0,.3);box-shadow:0 30px 60px rgba(250,80,0,.12)}
+.b-card:hover::before{transform:scaleX(1)}
+.b-card .num{font-family:var(--fd);font-size:3rem;color:var(--accent);line-height:1;margin-bottom:8px;display:inline-flex;align-items:baseline;gap:1px}
+.b-card .num .pfx,.b-card .num .sfx{display:inline-block}
+.b-card h3{font-size:1.5rem;color:#fff;margin-bottom:10px}
+.b-card p{font-size:.92rem;color:rgba(255,255,255,.6);line-height:1.55}
+@media(max-width:768px){.b-grid{grid-template-columns:1fr}}
+
+/* Reveal animations */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+/* Word-by-word title reveal */
+.split-title .w{display:inline-block;opacity:0;transform:translateY(40px) rotateX(20deg);transform-origin:bottom;transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.split-title.in .w{opacity:1;transform:translateY(0) rotateX(0)}
+
+/* Counter flash on complete */
+.num.counting{color:#fff;text-shadow:0 0 30px rgba(250,80,0,.7);transform:scale(1.06);transition:transform .4s,color .4s,text-shadow .4s}
+.num.done{animation:numFlash .5s ease}
+@keyframes numFlash{0%{transform:scale(1.08);text-shadow:0 0 30px rgba(250,80,0,.8)}50%{transform:scale(1.12);text-shadow:0 0 50px rgba(250,80,0,1)}100%{transform:scale(1);text-shadow:none}}
+
+/* Card glow on enter */
+.b-card.reveal::after{content:'';position:absolute;inset:0;border-radius:20px;background:radial-gradient(circle at 50% 0%,rgba(250,80,0,.18),transparent 60%);opacity:0;pointer-events:none;transition:opacity .8s}
+.b-card.reveal.in::after{opacity:1}
+
+/* Intro pill float */
+.intro .pill{animation:floatPill 4s ease-in-out infinite}
+@keyframes floatPill{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* Intro title floating gradient glow */
+.intro h1 .em{position:relative}
+.intro h1 .em::after{content:'';position:absolute;inset:-20px;background:radial-gradient(circle,rgba(250,80,0,.25),transparent 60%);z-index:-1;animation:emGlow 3.5s ease-in-out infinite alternate;border-radius:50%}
+@keyframes emGlow{from{opacity:.4;transform:scale(.9)}to{opacity:.9;transform:scale(1.1)}}
+
+/* Side parallax on slider drag */
+.side video{transform:scale(1.04);transition:transform .9s var(--tr)}
+.side.antes video{filter:contrast(1.05) saturate(.85) brightness(.85)}
+
+/* ============== CTA ============== */
+.cta{padding:90px 24px;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#8b1a2e);text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(255,255,255,.09),transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.05),transparent 40%)}
+.cta .ctn{position:relative}
+.cta h2{font-size:clamp(2.2rem,5vw,3.4rem);color:#fff;margin-bottom:14px}
+.cta p{color:rgba(255,255,255,.88);font-size:1.05rem;max-width:560px;margin:0 auto 32px}
+.cta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta .bs{background:#fff;color:var(--accent);padding:14px 32px;font-size:.95rem}
+.cta .bs:hover{background:transparent;color:#fff;border-color:#fff}
+.cta .bo{border-color:rgba(255,255,255,.5);color:#fff;padding:14px 32px;font-size:.95rem}
+.cta .bo:hover{background:#fff;color:var(--accent);border-color:#fff}
+
+/* FOOTER */
+.footer{padding:36px 24px;background:#080808;border-top:1px solid rgba(250,80,0,.06);text-align:center;font-size:.85rem;color:#7a7068}
+.footer a{color:rgba(255,255,255,.4);margin:0 10px;transition:var(--tr)}
+.footer a:hover{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .intro{padding:120px 0 30px}
+  .split{height:auto;min-height:0;max-height:none;cursor:default}
+  /* On mobile: stack vertically, no slider */
+  .side.antes{position:relative;clip-path:none;width:100%;height:60vh;min-height:420px}
+  .side.despues{position:relative;width:100%;height:60vh;min-height:420px}
+  .divider,.handle{display:none}
+  .side .copy{max-width:100%;padding:0 24px;text-align:center !important;align-items:center !important}
+  .side.despues .copy{align-items:center !important;text-align:center !important}
+  .side ul li{justify-content:flex-start !important;text-align:left !important;flex-direction:row !important}
+  .benefits{padding:60px 16px}
+  .cta{padding:70px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+<nav class="nav">
+  <div class="ctn">
+    <a href="/"><img src="img/logo-hapee.png" alt="Hapee" class="nav-logo"></a>
+    <div class="nlinks">
+      <a href="/#features">Funcionalidades</a>
+      <a href="/#hapee-chat">Hapee IA</a>
+      <a href="/comparativa.html">Comparativa</a>
+      <a href="/blog.html">News</a>
+      <a href="/transformacion.html" class="on">Transformación</a>
+      <a href="/#planes">Planes</a>
+    </div>
+    <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bs">Agendar Demo</a>
+  </div>
+</nav>
+</header>
+
+<main>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="ctn">
+    <div class="pill"><span class="dot"></span> Antes & Después</div>
+    <h1 class="split-title" id="introTitle">La transformación <span class="em">Hapee</span></h1>
+    <p>Del caos operativo a la operación en piloto automático. Desliza para ver cómo cambia tu negocio cuando los agentes IA hacen el trabajo pesado.</p>
+    <div class="intro-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Arrastra el centro
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SPLIT SLIDER ============== -->
+<section class="split" id="split" aria-label="Antes y después de Hapee">
+
+  <!-- DESPUÉS (bottom layer, full visible right) -->
+  <div class="side despues">
+    <video autoplay muted loop playsinline preload="auto" poster="img/robot.png">
+      <source src="img/transformacion-despues.mp4" type="video/mp4">
+    </video>
+    <div class="tint"></div>
+    <span class="glyph tl">02 · DESPUÉS · HAPEE</span>
+    <span class="glyph br">+35% conversión · 24/7</span>
+    <div class="copy">
+      <div class="badge"><span class="pulse"></span>Con Hapee</div>
+      <h2>Todo<br>automatizado.<br>Cero fricción.</h2>
+      <ul>
+        <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Agentes IA cerrando 24/7</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> CRM lleno de leads calificados</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Tu marca habla con tu voz</li>
+        <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Equipo enfocado en estrategia</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ANTES (top layer, clipped) -->
+  <div class="side antes" id="antesLayer">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="img/transformacion-antes.mp4" type="video/mp4">
+    </video>
+    <div class="tint"></div>
+    <span class="glyph tl">01 · ANTES · CAOS</span>
+    <span class="glyph br">Leads que se van · 0% IA</span>
+    <div class="copy">
+      <div class="badge"><span class="pulse"></span>Sin Hapee</div>
+      <h2>Puro caos<br>operativo.</h2>
+      <ul>
+        <li><span class="ico">✕</span> Mensajes sin responder</li>
+        <li><span class="ico">✕</span> Ventas que se pierden de noche</li>
+        <li><span class="ico">✕</span> Equipo apagando incendios</li>
+        <li><span class="ico">✕</span> Decisiones a ciegas, sin data</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Divider line -->
+  <div class="divider" id="divider"></div>
+  <!-- Handle -->
+  <div class="handle" id="handle" role="slider" aria-label="Slider antes y después" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 3 12 9 6"/><polyline points="15 6 21 12 15 18"/></svg>
+  </div>
+
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="b-head">
+    <span class="lbl reveal">Por qué transformar</span>
+    <h2 class="reveal d1">El verdadero cambio <span style="background:linear-gradient(135deg,#FA5000,#CD2349);-webkit-background-clip:text;-webkit-text-fill-color:transparent">no es la tecnología</span></h2>
+    <p class="reveal d2">Es cómo tu negocio opera cuando los agentes IA hacen el trabajo invisible.</p>
+  </div>
+  <div class="b-grid">
+    <div class="b-card reveal d1">
+      <div class="num"><span class="ctr" data-target="3" data-dec="0">0</span><span class="sfx">×</span></div>
+      <h3>Conversión</h3>
+      <p>Tres veces más leads convertidos con respuestas instantáneas y calificación automática.</p>
+    </div>
+    <div class="b-card reveal d2">
+      <div class="num"><span class="ctr" data-target="24" data-dec="0">0</span><span class="sfx">/7</span></div>
+      <h3>Sin pausas</h3>
+      <p>Los agentes IA atienden, califican y cierran mientras tu equipo duerme.</p>
+    </div>
+    <div class="b-card reveal d3">
+      <div class="num"><span class="pfx">−</span><span class="ctr" data-target="70" data-dec="0">0</span><span class="sfx">%</span></div>
+      <h3>Tiempo en tareas</h3>
+      <p>Setenta por ciento menos tiempo en gestión manual. El equipo se enfoca en estrategia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="ctn">
+    <h2>Sé la transformación.<br>Activa Hapee.</h2>
+    <p>14 días gratis. Sin tarjeta. Cancelas cuando quieras.</p>
+    <div class="btns">
+      <a href="/#planes" class="btn bs">Ver Planes</a>
+      <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  © 2026 Hapee · Powered by Digitals.cl
+  <span style="margin:0 6px;opacity:.3">|</span>
+  <a href="/">Inicio</a>
+  <a href="/comparativa.html">Comparativa</a>
+  <a href="/blog.html">News</a>
+  <a href="/politica-privacidad.html">Privacidad</a>
+</footer>
+
+<script>
+// ===== SLIDER DRAG LOGIC =====
+(function(){
+  const split=document.getElementById('split');
+  const antes=document.getElementById('antesLayer');
+  const divider=document.getElementById('divider');
+  const handle=document.getElementById('handle');
+  if(!split||!antes||!handle)return;
+
+  let dragging=false;
+  let currentPct=50;
+
+  function setPct(pct){
+    pct=Math.max(2,Math.min(98,pct));
+    currentPct=pct;
+    antes.style.clipPath=`polygon(0 0,${pct}% 0,${pct}% 100%,0 100%)`;
+    divider.style.left=`${pct}%`;
+    handle.style.left=`${pct}%`;
+    handle.setAttribute('aria-valuenow',Math.round(pct));
+  }
+  setPct(50);
+
+  function pctFromEvent(clientX){
+    const r=split.getBoundingClientRect();
+    return ((clientX-r.left)/r.width)*100;
+  }
+
+  // Pointer events (covers mouse + touch + pen)
+  function onDown(e){
+    dragging=true;
+    handle.style.transition='none';
+    divider.style.transition='none';
+    document.body.style.cursor='ew-resize';
+    onMove(e);
+  }
+  function onMove(e){
+    if(!dragging)return;
+    const x=e.touches?e.touches[0].clientX:e.clientX;
+    setPct(pctFromEvent(x));
+  }
+  function onUp(){
+    if(!dragging)return;
+    dragging=false;
+    handle.style.transition='';
+    divider.style.transition='';
+    document.body.style.cursor='';
+  }
+
+  split.addEventListener('mousedown',onDown);
+  document.addEventListener('mousemove',onMove);
+  document.addEventListener('mouseup',onUp);
+
+  split.addEventListener('touchstart',onDown,{passive:true});
+  document.addEventListener('touchmove',onMove,{passive:true});
+  document.addEventListener('touchend',onUp);
+
+  // Keyboard arrows
+  handle.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){setPct(currentPct-3);e.preventDefault()}
+    else if(e.key==='ArrowRight'){setPct(currentPct+3);e.preventDefault()}
+    else if(e.key==='Home'){setPct(5);e.preventDefault()}
+    else if(e.key==='End'){setPct(95);e.preventDefault()}
+  });
+
+  // Auto-demo: oscillate once on load to invite interaction
+  window.addEventListener('load',()=>{
+    setTimeout(()=>{
+      const dur=2200,start=performance.now();
+      function demo(now){
+        const p=Math.min((now-start)/dur,1);
+        const pct=50+Math.sin(p*Math.PI*2)*22;
+        antes.style.clipPath=`polygon(0 0,${pct}% 0,${pct}% 100%,0 100%)`;
+        divider.style.left=`${pct}%`;
+        handle.style.left=`${pct}%`;
+        if(p<1)requestAnimationFrame(demo);
+        else setPct(50);
+      }
+      requestAnimationFrame(demo);
+    },800);
+  });
+})();
+
+// ===== TITLE WORD-BY-WORD SPLIT + REVEAL =====
+(function(){
+  const t=document.getElementById('introTitle');
+  if(!t)return;
+  // Split top-level text nodes into <span class="w">word</span>
+  const walk=(node)=>{
+    Array.from(node.childNodes).forEach(child=>{
+      if(child.nodeType===3){ // text
+        const frag=document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(part=>{
+          if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part))}
+          else if(part){const s=document.createElement('span');s.className='w';s.textContent=part;frag.appendChild(s)}
+        });
+        node.replaceChild(frag,child);
+      }else if(child.nodeType===1&&!child.classList.contains('w')){
+        // recurse but treat .em as one word
+        if(child.classList.contains('em')){
+          child.classList.add('w');
+        }else walk(child);
+      }
+    });
+  };
+  walk(t);
+  // Stagger transition-delay
+  t.querySelectorAll('.w').forEach((w,i)=>{w.style.transitionDelay=(0.06*i+.15)+'s'});
+  setTimeout(()=>t.classList.add('in'),100);
+})();
+
+// ===== REVEAL ON SCROLL + COUNTERS =====
+(function(){
+  const revealEls=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        // Trigger counters inside this element
+        e.target.querySelectorAll('.ctr').forEach(animateCounter);
+      }
+    });
+  },{threshold:.2,rootMargin:'0px 0px -60px 0px'});
+  revealEls.forEach(el=>obs.observe(el));
+
+  function animateCounter(el){
+    if(el._done)return;
+    el._done=true;
+    const num=el.closest('.num');
+    if(num)num.classList.add('counting');
+    const target=parseFloat(el.dataset.target);
+    const dec=parseInt(el.dataset.dec)||0;
+    const dur=1800;
+    const start=performance.now();
+    function tick(now){
+      const p=Math.min((now-start)/dur,1);
+      // easeOutExpo
+      const ease=p===1?1:1-Math.pow(2,-10*p);
+      const val=target*ease;
+      el.textContent=dec>0?val.toFixed(dec):Math.floor(val);
+      if(p<1)requestAnimationFrame(tick);
+      else{
+        el.textContent=dec>0?target.toFixed(dec):target;
+        if(num){num.classList.remove('counting');num.classList.add('done');setTimeout(()=>num.classList.remove('done'),500)}
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+</body>
+</html>
