@@ -18,39 +18,77 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
+<!-- Dark mode init (must run before <body> to avoid flash) -->
+<script>(function(){const s=localStorage.getItem('hapee-theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');})();</script>
+
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* LIGHT MODE (default) */
 :root{
   --accent:#FA5000;
   --accent-alt:#CD2349;
-  --bg:#080808;
-  --text:#b0a89e;
-  --heading:#f5f0eb;
+  --bg:#FFFFFF;
+  --bg-alt:#F5F3F0;
+  --text:#4a4a4a;
+  --text-2:#777e8f;
+  --heading:#1a1a1a;
+  --card-bg:#FFFFFF;
+  --card-border:rgba(0,0,0,.09);
+  --benefits-bg:linear-gradient(180deg,#FFFFFF 0%,#F5F3F0 100%);
+  --nav-bg:linear-gradient(180deg,rgba(255,255,255,.92),transparent);
+  --nlinks-color:#777e8f;
   --pill:100px;
   --tr:.3s cubic-bezier(.4,0,.2,1);
   --fd:'Bebas Neue',sans-serif;
   --fb:'Plus Jakarta Sans',sans-serif;
   --fm:'JetBrains Mono',monospace;
 }
+/* DARK MODE */
+html.dark{
+  --bg:#080808;
+  --bg-alt:#0d0d0d;
+  --text:#b0a89e;
+  --text-2:#7a7068;
+  --heading:#f5f0eb;
+  --card-bg:#111;
+  --card-border:rgba(250,80,0,.12);
+  --benefits-bg:linear-gradient(180deg,#000 0%,#0a0a0a 100%);
+  --nav-bg:linear-gradient(180deg,rgba(0,0,0,.85),transparent);
+  --nlinks-color:rgba(255,255,255,.65);
+}
+
 html{scroll-behavior:smooth}
-body{font-family:var(--fb);background:#000;color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.55}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.55;transition:background var(--tr),color var(--tr)}
 img,video{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
-h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-spacing:-1px;font-weight:400}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-spacing:-1px;font-weight:400;transition:color var(--tr)}
 .ctn{max-width:1280px;margin:0 auto;padding:0 24px}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:18px 0;background:linear-gradient(180deg,rgba(0,0,0,.85),transparent);backdrop-filter:blur(10px)}
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:18px 0;background:var(--nav-bg);backdrop-filter:blur(10px);transition:background var(--tr)}
 .nav .ctn{display:flex;align-items:center;justify-content:space-between;gap:18px}
-.nav-logo{height:30px;filter:brightness(0) invert(1)}
+.nav-logo{height:30px;transition:filter var(--tr)}
+html.dark .nav-logo{filter:brightness(0) invert(1)}
 .nlinks{display:flex;align-items:center;gap:18px}
-.nlinks a{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.65);transition:var(--tr);white-space:nowrap}
+.nlinks a{font-size:.85rem;font-weight:500;color:var(--nlinks-color);transition:var(--tr);white-space:nowrap}
 .nlinks a:hover,.nlinks a.on{color:var(--accent)}
+.nctas{display:flex;gap:8px;align-items:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-weight:600;font-size:.82rem;padding:8px 18px;border-radius:var(--pill);cursor:pointer;transition:var(--tr);border:1.5px solid transparent}
 .bs{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
 .bs:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(250,80,0,.35)}
-.bo{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.bo{background:transparent;color:var(--heading);border-color:rgba(0,0,0,.2)}
+html.dark .bo{color:#fff;border-color:rgba(255,255,255,.3)}
 .bo:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Dark mode toggle */
+.dark-toggle{width:36px;height:36px;border-radius:50%;background:var(--bg-alt);border:1px solid var(--card-border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0;color:var(--text-2)}
+html.dark .dark-toggle{background:#111;border-color:rgba(250,80,0,.1)}
+.dark-toggle:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.08)}
+.dark-toggle svg{width:16px;height:16px}
+.icon-sun{display:none}.icon-moon{display:block}
+html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
+
 @media(max-width:900px){.nlinks{display:none}}
 
 /* HERO INTRO */
@@ -58,10 +96,10 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
 .intro .pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);padding:7px 16px;border:1px solid rgba(250,80,0,.4);border-radius:var(--pill);background:rgba(250,80,0,.05);font-weight:700;margin-bottom:24px}
 .intro .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:dotPulse 1.6s ease-in-out infinite}
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.3}}
-.intro h1{font-size:clamp(3rem,8vw,6rem);color:#fff;margin-bottom:16px}
+.intro h1{font-size:clamp(3rem,8vw,6rem);color:var(--heading);margin-bottom:16px;transition:color var(--tr)}
 .intro h1 .em{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.intro p{font-size:1.1rem;color:rgba(255,255,255,.6);max-width:580px;margin:0 auto;line-height:1.6}
-.intro-hint{font-family:var(--fm);font-size:.72rem;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-top:32px;display:inline-flex;align-items:center;gap:10px;animation:hintBob 2.5s ease-in-out infinite}
+.intro p{font-size:1.1rem;color:var(--text);max-width:580px;margin:0 auto;line-height:1.6;transition:color var(--tr)}
+.intro-hint{font-family:var(--fm);font-size:.72rem;color:var(--text-2);letter-spacing:2px;text-transform:uppercase;margin-top:32px;display:inline-flex;align-items:center;gap:10px;animation:hintBob 2.5s ease-in-out infinite}
 @keyframes hintBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .intro-hint svg{width:18px;height:18px;color:var(--accent)}
 
@@ -128,20 +166,21 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
 .side.despues .glyph{color:rgba(250,80,0,.7)}
 
 /* ============== BENEFITS ============== */
-.benefits{padding:80px 24px;background:linear-gradient(180deg,#000 0%,#0a0a0a 100%);border-top:1px solid rgba(250,80,0,.08)}
+.benefits{padding:80px 24px;background:var(--benefits-bg);border-top:1px solid var(--card-border);transition:background var(--tr)}
 .b-head{text-align:center;margin-bottom:48px}
 .b-head .lbl{font-family:var(--fm);font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px;display:inline-block}
-.b-head h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:14px}
-.b-head p{color:rgba(255,255,255,.6);max-width:520px;margin:0 auto;font-size:.98rem}
+.b-head h2{font-size:clamp(2rem,4.5vw,3rem);color:var(--heading);margin-bottom:14px;transition:color var(--tr)}
+.b-head p{color:var(--text);max-width:520px;margin:0 auto;font-size:.98rem;transition:color var(--tr)}
 .b-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.b-card{background:linear-gradient(165deg,#111 0%,#0a0a0a 100%);border:1px solid rgba(250,80,0,.12);border-radius:20px;padding:32px 28px;transition:var(--tr);position:relative;overflow:hidden}
+.b-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:32px 28px;transition:var(--tr);position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+html.dark .b-card{background:linear-gradient(165deg,#111 0%,#0a0a0a 100%);box-shadow:none}
 .b-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--tr)}
 .b-card:hover{transform:translateY(-6px);border-color:rgba(250,80,0,.3);box-shadow:0 30px 60px rgba(250,80,0,.12)}
 .b-card:hover::before{transform:scaleX(1)}
 .b-card .num{font-family:var(--fd);font-size:3rem;color:var(--accent);line-height:1;margin-bottom:8px;display:inline-flex;align-items:baseline;gap:1px}
 .b-card .num .pfx,.b-card .num .sfx{display:inline-block}
-.b-card h3{font-size:1.5rem;color:#fff;margin-bottom:10px}
-.b-card p{font-size:.92rem;color:rgba(255,255,255,.6);line-height:1.55}
+.b-card h3{font-size:1.5rem;color:var(--heading);margin-bottom:10px;transition:color var(--tr)}
+.b-card p{font-size:.92rem;color:var(--text);line-height:1.55;transition:color var(--tr)}
 @media(max-width:768px){.b-grid{grid-template-columns:1fr}}
 
 /* Reveal animations */
@@ -154,7 +193,7 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
 .split-title.in .w{opacity:1;transform:translateY(0) rotateX(0)}
 
 /* Counter flash on complete */
-.num.counting{color:#fff;text-shadow:0 0 30px rgba(250,80,0,.7);transform:scale(1.06);transition:transform .4s,color .4s,text-shadow .4s}
+.num.counting{color:var(--heading);text-shadow:0 0 30px rgba(250,80,0,.7);transform:scale(1.06);transition:transform .4s,color .4s,text-shadow .4s}
 .num.done{animation:numFlash .5s ease}
 @keyframes numFlash{0%{transform:scale(1.08);text-shadow:0 0 30px rgba(250,80,0,.8)}50%{transform:scale(1.12);text-shadow:0 0 50px rgba(250,80,0,1)}100%{transform:scale(1);text-shadow:none}}
 
@@ -267,7 +306,13 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
       <a href="/blog.html">News</a>
       <a href="/transformacion.html" class="on">Transformación</a>
     </div>
-    <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bs">Agendar Demo</a>
+    <div class="nctas">
+      <button class="dark-toggle" id="darkToggle" aria-label="Cambiar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bs">Agendar Demo</a>
+    </div>
   </div>
 </nav>
 </header>
@@ -415,6 +460,12 @@ h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:.95;letter-sp
 </footer>
 
 <script>
+// ===== DARK MODE TOGGLE =====
+document.getElementById('darkToggle')?.addEventListener('click',()=>{
+  const d=document.documentElement.classList.toggle('dark');
+  localStorage.setItem('hapee-theme',d?'dark':'light');
+});
+
 // ===== SLIDER DRAG LOGIC =====
 (function(){
   const split=document.getElementById('split');
