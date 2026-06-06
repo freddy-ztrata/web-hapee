@@ -803,6 +803,254 @@ html.dark .ps-notif-msg{color:#b0a89e}
   .ps-pulse-dot{width:10px;height:10px}
 }
 
+/* ============================================================ */
+/* MK-APP — Animated Hapee platform mockups (inbox + pipeline)  */
+/* Reemplazan los PNGs estáticos. 100% HTML/CSS + keyframes.    */
+/* ============================================================ */
+.mk-app{display:flex;background:#f7f7f8;color:#1a1a1a;font-family:var(--fb);font-size:13px;line-height:1.4;height:600px;overflow:hidden}
+html.dark .mk-app{background:#0a0a0a;color:#e5e5e5}
+@media(max-width:768px){.mk-app{height:520px;font-size:11px}}
+@media(max-width:480px){.mk-app{height:460px;font-size:10px}}
+
+/* Hapee sidebar nav (orange) */
+.mk-nav{width:64px;background:linear-gradient(180deg,#FA5000,#CD2349);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:1px;flex-shrink:0;overflow-y:auto}
+.mk-nav::-webkit-scrollbar{display:none}
+.mk-nav-logo{width:32px;height:32px;border-radius:8px;background:#fff;color:#FA5000;font-family:var(--fd);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:6px;flex-shrink:0}
+.mk-nav-i{width:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:rgba(255,255,255,.85);cursor:pointer;transition:all .2s;text-decoration:none;border-left:3px solid transparent;border-right:3px solid transparent;gap:2px}
+.mk-nav-i:hover{background:rgba(255,255,255,.1);color:#fff}
+.mk-nav-on{background:rgba(255,255,255,.16);color:#fff;border-left-color:#fff}
+.mk-nav-ico{font-size:1rem;line-height:1}
+.mk-nav-l{font-size:.5rem;font-weight:600;letter-spacing:.1px;line-height:1;opacity:.92}
+@media(max-width:768px){.mk-nav{width:54px}.mk-nav-i{width:46px}.mk-nav-ico{font-size:.88rem}.mk-nav-l{font-size:.46rem}}
+@media(max-width:480px){.mk-nav{display:none}}
+
+/* ===== INBOX MOCKUP ===== */
+.mk-inbox-app{display:flex}
+
+/* Conversations sidebar */
+.mk-conv-list{width:300px;background:#fff;border-right:1px solid rgba(0,0,0,.08);overflow:hidden;flex-shrink:0;display:flex;flex-direction:column}
+html.dark .mk-conv-list{background:#0f0f0f;border-right-color:rgba(255,255,255,.06)}
+.mk-conv-topbar{padding:12px 14px 8px;border-bottom:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;gap:2px}
+html.dark .mk-conv-topbar{border-bottom-color:rgba(255,255,255,.06)}
+.mk-conv-title{font-weight:700;font-size:.84rem;color:#0a0a0a}
+html.dark .mk-conv-title{color:#f5f5f5}
+.mk-conv-count{font-size:.66rem;color:#888}
+.mk-conv-search{padding:8px 12px;background:#f0f2f5;color:#666;font-size:.74rem;margin:8px 12px;border-radius:8px}
+html.dark .mk-conv-search{background:#1a1a1a;color:#999}
+.mk-conv-tabs{display:flex;gap:4px;padding:0 12px 8px;font-size:.66rem;overflow-x:auto}
+.mk-conv-tabs::-webkit-scrollbar{display:none}
+.mk-conv-tab{padding:4px 9px;color:#666;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid rgba(0,0,0,.08)}
+html.dark .mk-conv-tab{color:#999;border-color:rgba(255,255,255,.08)}
+.mk-conv-tab em{font-style:normal;opacity:.7;margin-left:3px}
+.mk-conv-tab-on{background:rgba(250,80,0,.1);color:#FA5000;border-color:rgba(250,80,0,.3)}
+.mk-conv-scroll{flex:1;overflow-y:auto}
+.mk-conv-scroll::-webkit-scrollbar{width:4px}
+.mk-conv-scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px}
+.mk-conv-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-left:3px solid transparent;transition:background .2s;border-bottom:1px solid rgba(0,0,0,.04)}
+html.dark .mk-conv-item{border-bottom-color:rgba(255,255,255,.03)}
+.mk-conv-item:hover{background:#f7f7f8}
+html.dark .mk-conv-item:hover{background:#1a1a1a}
+.mk-conv-active{background:#fef3ec;border-left-color:#FA5000}
+html.dark .mk-conv-active{background:rgba(250,80,0,.08)}
+.mk-conv-av{width:38px;height:38px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.mk-conv-body{flex:1;min-width:0}
+.mk-conv-name{display:flex;justify-content:space-between;align-items:baseline;font-weight:600;font-size:.82rem;color:#0a0a0a;margin-bottom:2px}
+html.dark .mk-conv-name{color:#f5f5f5}
+.mk-conv-time{font-weight:400;color:#999;font-size:.66rem}
+.mk-conv-snippet{font-size:.74rem;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.dark .mk-conv-snippet{color:#999}
+.mk-conv-ch{margin-right:3px}
+.mk-conv-unread{background:#25D366;color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;flex-shrink:0}
+.mk-conv-unread-blink{animation:unreadBlink 2s ease-in-out infinite}
+@keyframes unreadBlink{0%,100%{transform:scale(1)}50%{transform:scale(1.15);box-shadow:0 0 0 4px rgba(37,211,102,.25)}}
+.typing-snippet{color:#25D366;font-weight:600;display:flex;align-items:center;gap:2px}
+.typing-snippet span{width:4px;height:4px;border-radius:50%;background:#25D366;opacity:.4;animation:typDot 1.4s infinite}
+.typing-snippet span:nth-child(2){animation-delay:.2s}
+.typing-snippet span:nth-child(3){animation-delay:.4s}
+
+/* Active chat */
+.mk-chat{flex:1;display:flex;flex-direction:column;background:#f5f6f8;position:relative;min-width:0}
+html.dark .mk-chat{background:#0a0a0a}
+.mk-chat-head{background:#fff;color:#0a0a0a;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:2;position:relative;flex-shrink:0;border-bottom:1px solid rgba(0,0,0,.08)}
+html.dark .mk-chat-head{background:#0f0f0f;color:#f5f5f5;border-bottom-color:rgba(255,255,255,.06)}
+.mk-ch-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.74rem;flex-shrink:0}
+.mk-ch-info{flex:1;min-width:0;line-height:1.15}
+.mk-ch-name{font-weight:700;font-size:.86rem;color:#0a0a0a}
+html.dark .mk-ch-name{color:#f5f5f5}
+.mk-ch-status{font-size:.66rem;opacity:.7;display:flex;align-items:center;gap:5px;color:#666}
+html.dark .mk-ch-status{color:#999}
+.mk-online-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:fomoPulse 1.8s infinite}
+.mk-ch-meta{font-size:.62rem;color:#666;background:#f0f2f5;padding:4px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+html.dark .mk-ch-meta{background:#1a1a1a;color:#aaa}
+@media(max-width:1024px){.mk-ch-meta{display:none}}
+.mk-ch-ai{font-size:.62rem;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;padding:3px 8px;border-radius:6px;font-weight:700;letter-spacing:.3px}
+.mk-chat-body{flex:1;overflow:hidden;padding:14px 16px;display:flex;flex-direction:column;gap:10px;z-index:2;position:relative;justify-content:flex-end}
+.mk-bubble{padding:8px 12px 6px;border-radius:14px;font-size:.78rem;line-height:1.45;position:relative;max-width:78%;opacity:0;transform:translateY(8px);animation:bubAppear 12s ease-in-out infinite both;box-shadow:0 1px 2px rgba(0,0,0,.05);display:flex;flex-direction:column;gap:3px}
+.mk-bubble-bot{background:#fff;color:#0a0a0a;align-self:flex-start;border-top-left-radius:4px;border:1px solid rgba(0,0,0,.05)}
+html.dark .mk-bubble-bot{background:#1a1a1a;color:#e9e9e9;border-color:rgba(255,255,255,.06)}
+.mk-bubble-me{background:#FFE9DC;color:#0a0a0a;align-self:flex-end;border-top-right-radius:4px;border:1px solid rgba(250,80,0,.15)}
+html.dark .mk-bubble-me{background:rgba(250,80,0,.18);color:#fff;border-color:rgba(250,80,0,.3)}
+.mk-bub-label{font-size:.62rem;font-weight:700;color:#FA5000;letter-spacing:.2px;line-height:1}
+.mk-bubble-me .mk-bub-label{color:#CD2349;align-self:flex-end}
+html.dark .mk-bubble-me .mk-bub-label{color:#FFA77A}
+.mk-bub-time{font-size:.58rem;opacity:.55;align-self:flex-end;line-height:1;margin-top:2px;white-space:nowrap}
+.mk-bubble-typing{background:#fff;align-self:flex-start;padding:11px 14px;display:flex;gap:3px;border-top-left-radius:4px;min-width:auto;border:1px solid rgba(0,0,0,.05);flex-direction:row;border-radius:14px}
+html.dark .mk-bubble-typing{background:#1a1a1a;border-color:rgba(255,255,255,.06)}
+.mk-bubble-typing span{width:6px;height:6px;border-radius:50%;background:#999;opacity:.4;animation:typDot 1.4s infinite}
+.mk-bubble-typing span:nth-child(2){animation-delay:.2s}
+.mk-bubble-typing span:nth-child(3){animation-delay:.4s}
+/* Audio bubble (waveform) */
+.mk-bubble-audio{background:#fff;color:#0a0a0a;align-self:flex-end;border-top-right-radius:4px;border:1px solid rgba(0,0,0,.05);padding:8px 12px}
+html.dark .mk-bubble-audio{background:#1a1a1a;color:#e9e9e9;border-color:rgba(255,255,255,.06)}
+.mk-audio{display:flex;align-items:center;gap:8px;padding:2px 0}
+.mk-audio-play{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;padding-left:2px}
+.mk-audio-wave{flex:1;display:flex;align-items:center;gap:2px;height:22px}
+.mk-audio-wave span{width:2px;background:#FA5000;border-radius:1px;opacity:.6;animation:waveBar 1.2s ease-in-out infinite}
+.mk-audio-wave span:nth-child(odd){height:60%}
+.mk-audio-wave span:nth-child(3n){height:90%;animation-delay:.15s}
+.mk-audio-wave span:nth-child(4n){height:40%;animation-delay:.3s}
+.mk-audio-wave span:nth-child(5n){height:75%;animation-delay:.45s}
+.mk-audio-time{font-size:.66rem;color:#888;font-weight:600;flex-shrink:0}
+@keyframes waveBar{0%,100%{opacity:.4;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1.1)}}
+/* Stagger bubble appearance over 12s loop */
+.bub-1{animation-delay:0s}
+.bub-2{animation-delay:1.6s}
+.bub-3{animation-delay:3.2s}
+.bub-4{animation-delay:4.8s}
+.bub-5{animation-delay:6.5s}
+.bub-6{animation-delay:8.5s}
+@keyframes bubAppear{0%{opacity:0;transform:translateY(8px)}3%,82%{opacity:1;transform:translateY(0)}90%,100%{opacity:0;transform:translateY(-4px)}}
+.mk-chat-input{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;z-index:2;position:relative;flex-shrink:0;border-top:1px solid rgba(0,0,0,.06)}
+html.dark .mk-chat-input{background:#0f0f0f;border-top-color:rgba(255,255,255,.06)}
+.mk-ci-input{flex:1;background:#f5f6f8;color:#999;padding:9px 14px;border-radius:8px;font-size:.78rem;border:1px solid rgba(0,0,0,.06)}
+html.dark .mk-ci-input{background:#1a1a1a;color:#888;border-color:rgba(255,255,255,.06)}
+.mk-ci-attach,.mk-ci-mic,.mk-ci-emoji{color:#666;font-size:1rem;cursor:pointer}
+html.dark .mk-ci-attach,html.dark .mk-ci-mic,html.dark .mk-ci-emoji{color:#888}
+.mk-ci-send{background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+
+/* Details panel */
+.mk-details{width:260px;background:#fff;border-left:1px solid rgba(0,0,0,.08);padding:14px 16px;flex-shrink:0;display:flex;flex-direction:column;align-items:stretch;gap:8px;overflow-y:auto}
+html.dark .mk-details{background:#0f0f0f;border-left-color:rgba(255,255,255,.06)}
+.mk-details::-webkit-scrollbar{width:4px}
+.mk-details::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:2px}
+.mk-det-tabs{display:flex;gap:4px;padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:4px}
+html.dark .mk-det-tabs{border-bottom-color:rgba(255,255,255,.06)}
+.mk-det-tab{font-size:.7rem;font-weight:600;color:#888;padding:5px 10px;border-radius:6px;cursor:pointer}
+.mk-det-tab-on{background:rgba(250,80,0,.1);color:#FA5000}
+.mk-det-av{width:56px;height:56px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:700;margin:6px auto 4px}
+.mk-det-name{font-size:.95rem;font-weight:700;color:#0a0a0a;text-align:center;line-height:1.2}
+html.dark .mk-det-name{color:#f5f5f5}
+.mk-det-sub{font-size:.66rem;color:#888;text-align:center;margin-bottom:8px}
+.mk-det-section{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.mk-det-section-title{font-size:.62rem;font-weight:700;color:#888;letter-spacing:.4px;text-transform:uppercase;margin-bottom:3px;padding:0 2px}
+.mk-det-row{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;background:#f7f7f8;border-radius:6px;font-size:.72rem;color:#333}
+html.dark .mk-det-row{background:#1a1a1a;color:#ccc}
+.mk-det-row span{flex-shrink:0;font-size:.8rem}
+.mk-det-tag{background:rgba(250,80,0,.1);color:#FA5000;font-weight:600}
+html.dark .mk-det-tag{background:rgba(250,80,0,.15);color:#FA5000}
+.mk-det-pipe{background:rgba(34,197,94,.1);color:#16a34a;font-weight:700}
+html.dark .mk-det-pipe{background:rgba(34,197,94,.15);color:#22c55e}
+.mk-det-stage{justify-content:center;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;font-weight:700;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase}
+@media(max-width:1024px){.mk-details{display:none}}
+@media(max-width:768px){.mk-conv-list{width:240px}}
+@media(max-width:480px){.mk-conv-list{display:none}}
+
+/* ===== PIPELINE MOCKUP ===== */
+.mk-pipe-app .mk-pipe{flex:1;display:flex;flex-direction:column;background:#f7f7f8;min-width:0}
+html.dark .mk-pipe-app .mk-pipe{background:#0a0a0a}
+.mk-pipe-topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06);flex-shrink:0}
+html.dark .mk-pipe-topbar{background:#0f0f0f;border-bottom-color:rgba(255,255,255,.06)}
+.mk-tb-title{font-weight:700;font-size:.92rem;color:#0a0a0a}
+html.dark .mk-tb-title{color:#f5f5f5}
+.mk-tb-actions{display:flex;gap:8px}
+.mk-tb-filter,.mk-tb-new{padding:6px 12px;border-radius:8px;font-size:.74rem;font-weight:600;cursor:pointer}
+.mk-tb-filter{background:#f0f2f5;color:#333}
+html.dark .mk-tb-filter{background:#1a1a1a;color:#ccc}
+.mk-tb-new{background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;box-shadow:0 4px 12px rgba(250,80,0,.25)}
+
+/* Breadcrumb bar (tabs + filters) — second row of pipeline topbar */
+.mk-pipe-breadcrumb{display:flex;align-items:center;gap:8px;padding:8px 18px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06);font-size:.72rem;flex-shrink:0;flex-wrap:wrap}
+html.dark .mk-pipe-breadcrumb{background:#0f0f0f;border-bottom-color:rgba(255,255,255,.06)}
+.mk-bc-tab{padding:5px 10px;border-radius:6px;color:#666;font-weight:600;cursor:pointer;white-space:nowrap}
+html.dark .mk-bc-tab{color:#999}
+.mk-bc-on{background:rgba(250,80,0,.1);color:#FA5000;font-weight:700}
+.mk-bc-sep{width:1px;height:16px;background:rgba(0,0,0,.1);margin:0 4px}
+html.dark .mk-bc-sep{background:rgba(255,255,255,.1)}
+.mk-bc-filter{padding:5px 10px;border-radius:6px;color:#666;font-weight:600;border:1px solid rgba(0,0,0,.1);cursor:pointer;white-space:nowrap}
+html.dark .mk-bc-filter{color:#999;border-color:rgba(255,255,255,.1)}
+.mk-bc-chip{padding:5px 10px;border-radius:999px;background:rgba(250,80,0,.12);color:#FA5000;font-weight:700;border:1px solid rgba(250,80,0,.25);font-size:.68rem;white-space:nowrap}
+.mk-bc-spacer{flex:1}
+.mk-bc-search{padding:5px 12px;border-radius:6px;color:#888;background:#f0f2f5;font-weight:500;white-space:nowrap;font-size:.7rem}
+html.dark .mk-bc-search{background:#1a1a1a;color:#888}
+
+.mk-kanban{flex:1;display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:10px;padding:14px;overflow-x:auto;overflow-y:hidden;position:relative;align-content:start}
+.mk-kanban::-webkit-scrollbar{height:6px}
+.mk-kanban::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+@media(max-width:1100px){.mk-kanban{grid-template-columns:repeat(7,170px)}}
+@media(max-width:768px){.mk-kanban{grid-template-columns:repeat(7,155px);gap:8px;padding:10px}}
+@media(max-width:480px){.mk-kanban{grid-template-columns:repeat(7,140px);gap:6px}}
+
+.mk-col{background:#f0f2f5;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;min-width:0;border:1px solid rgba(0,0,0,.04);position:relative;max-height:100%}
+html.dark .mk-col{background:#141414;border-color:rgba(255,255,255,.04)}
+.mk-col-h{font-size:.68rem;font-weight:700;color:#333;letter-spacing:.2px;padding:2px 4px 4px;display:flex;align-items:center;gap:5px}
+html.dark .mk-col-h{color:#ddd}
+.mk-col-h em{font-style:normal;opacity:.55;font-weight:700;font-size:.68rem;margin-left:2px}
+.mk-col-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.mk-col-tot{font-size:.66rem;color:#888;font-weight:700;padding:0 4px 6px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:2px}
+html.dark .mk-col-tot{color:#999;border-bottom-color:rgba(255,255,255,.06)}
+.mk-col-tot-win{color:#16a34a}
+html.dark .mk-col-tot-win{color:#22c55e}
+.mk-col-win{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.2)}
+html.dark .mk-col-win{background:rgba(34,197,94,.08)}
+.mk-col-cards{display:flex;flex-direction:column;gap:5px;min-height:60px;position:relative;overflow:hidden}
+
+.mk-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-left:3px solid #FA5000;border-radius:6px;padding:7px 9px;font-size:.66rem;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:all .35s ease;will-change:transform,opacity;display:flex;flex-direction:column;gap:3px}
+html.dark .mk-card{background:#1a1a1a;border-color:rgba(255,255,255,.06);border-left-color:#FA5000}
+.mk-card-name{font-weight:700;color:#0a0a0a;font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+html.dark .mk-card-name{color:#f5f5f5}
+.mk-card-meta{font-size:.6rem;color:#999;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.dark .mk-card-meta{color:#888}
+.mk-card-val{font-family:var(--fd);font-size:.88rem;font-weight:800;color:#16a34a;line-height:1;letter-spacing:.2px;margin-top:1px}
+.mk-card-tag{font-size:.6rem;color:#888;line-height:1.3}
+html.dark .mk-card-tag{color:#999}
+.mk-card-warm{box-shadow:0 0 0 1.5px rgba(250,80,0,.4),0 4px 12px rgba(250,80,0,.15);animation:cardWarm 2.5s ease-in-out infinite}
+@keyframes cardWarm{0%,100%{box-shadow:0 0 0 1.5px rgba(250,80,0,.4),0 4px 12px rgba(250,80,0,.15)}50%{box-shadow:0 0 0 2px rgba(250,80,0,.6),0 6px 20px rgba(250,80,0,.3)}}
+.mk-card-new{animation:cardAppear 1.2s ease-out both;animation-delay:.5s;background:linear-gradient(135deg,rgba(34,197,94,.08),#fff)}
+html.dark .mk-card-new{background:linear-gradient(135deg,rgba(34,197,94,.12),#1a1a1a)}
+@keyframes cardAppear{0%{opacity:0;transform:translateY(-20px) scale(.9)}60%{opacity:1;transform:translateY(0) scale(1.03)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.mk-card-won{box-shadow:0 0 0 1.5px rgba(34,197,94,.45),0 4px 12px rgba(34,197,94,.2)}
+.mk-card-won .mk-card-tag{color:#16a34a;font-weight:700}
+
+/* === CARDS THAT FLOW BETWEEN COLUMNS === */
+/* Column widths approx (1/5 of kanban width minus gaps + padding) — using % of parent + translateX */
+.mk-flow-a{animation:flowA 14s ease-in-out infinite;animation-delay:0s}
+.mk-flow-b{animation:flowB 16s ease-in-out infinite;animation-delay:3s}
+.mk-flow-c{animation:flowC 18s ease-in-out infinite;animation-delay:6s}
+
+@keyframes flowA{
+  0%,15%{transform:translateX(0) translateY(0);opacity:1;z-index:5}
+  20%{transform:translateX(20px) translateY(-30px) rotate(-2deg);opacity:.9;z-index:10}
+  25%{transform:translateX(calc(100% + 30px)) translateY(-30px) rotate(-1deg);opacity:.85;z-index:10}
+  30%,40%{transform:translateX(calc(100% + 30px)) translateY(0);opacity:1;z-index:5;box-shadow:0 0 0 2px rgba(34,197,94,.3),0 6px 20px rgba(34,197,94,.15)}
+  100%{transform:translateX(calc(100% + 30px)) translateY(0);opacity:1;z-index:5}
+}
+@keyframes flowB{
+  0%,18%{transform:translateX(0) translateY(0);opacity:1}
+  23%{transform:translateX(20px) translateY(-30px) rotate(-2deg);opacity:.9;z-index:10}
+  28%{transform:translateX(calc(100% + 28px)) translateY(-30px) rotate(-1deg);opacity:.85;z-index:10}
+  33%,55%{transform:translateX(calc(100% + 28px)) translateY(0);opacity:1;box-shadow:0 0 0 2px rgba(250,80,0,.3),0 6px 20px rgba(250,80,0,.15)}
+  60%{transform:translateX(calc(200% + 56px)) translateY(-30px) rotate(-1deg);opacity:.85;z-index:10}
+  65%,100%{transform:translateX(calc(200% + 56px)) translateY(0);opacity:1}
+}
+@keyframes flowC{
+  0%,22%{transform:translateX(0) translateY(0);opacity:1}
+  27%{transform:translateX(20px) translateY(-30px) rotate(-2deg);opacity:.9;z-index:10}
+  32%{transform:translateX(calc(100% + 26px)) translateY(-30px) rotate(-1deg);opacity:.85;z-index:10}
+  37%,60%{transform:translateX(calc(100% + 26px)) translateY(0);opacity:1;box-shadow:0 0 0 2px rgba(205,35,73,.3),0 6px 20px rgba(205,35,73,.15)}
+  65%{transform:translateX(calc(200% + 52px)) translateY(-30px) rotate(-1deg);opacity:.85;z-index:10}
+  70%,100%{transform:translateX(calc(200% + 52px)) translateY(0);opacity:1;box-shadow:0 0 0 2px rgba(34,197,94,.4),0 6px 20px rgba(34,197,94,.2)}
+}
+
 /* ===== CUSTOM DIGITALS WIDGET (below pricing) ===== */
 .custom-widget{padding:80px 24px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#0a0a0a 100%);position:relative;overflow:hidden}
 .custom-widget::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(250,80,0,.12),transparent 50%),radial-gradient(circle at 80% 70%,rgba(205,35,73,.08),transparent 50%);pointer-events:none}
@@ -1291,7 +1539,158 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
           <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
           <div class="browser-url">app.hapee.ai · Conversaciones</div>
         </div>
-        <img src="img/plataforma-bandeja.png" alt="Hapee · Bandeja omnicanal" class="ps-img" loading="lazy">
+        <!-- INBOX MOCKUP — fully HTML/CSS animated -->
+        <div class="mk-app mk-inbox-app">
+          <!-- Hapee sidebar nav (left, orange) -->
+          <nav class="mk-nav">
+            <div class="mk-nav-logo">H</div>
+            <a class="mk-nav-i mk-nav-on"><span class="mk-nav-ico">💬</span><span class="mk-nav-l">Conv.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📅</span><span class="mk-nav-l">Calend.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">👥</span><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📊</span><span class="mk-nav-l">Pipeline</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📣</span><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">💳</span><span class="mk-nav-l">Pagos</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🎓</span><span class="mk-nav-l">Members</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🌐</span><span class="mk-nav-l">Sites</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">⚙️</span><span class="mk-nav-l">Auto</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">⭐</span><span class="mk-nav-l">Reputa.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📈</span><span class="mk-nav-l">Report.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🤖</span><span class="mk-nav-l">IA Apps</span></a>
+          </nav>
+          <!-- Conversations sidebar -->
+          <aside class="mk-conv-list">
+            <div class="mk-conv-topbar">
+              <span class="mk-conv-title">Bandeja de entrada del grupo</span>
+              <span class="mk-conv-count">12 · 4 sin leer</span>
+            </div>
+            <div class="mk-conv-search"><span>🔍</span> Buscar conversaciones</div>
+            <div class="mk-conv-tabs">
+              <span class="mk-conv-tab mk-conv-tab-on">Recientes</span>
+              <span class="mk-conv-tab">Sin leer <em>4</em></span>
+              <span class="mk-conv-tab">Mías</span>
+              <span class="mk-conv-tab">Hapee IA</span>
+            </div>
+            <div class="mk-conv-scroll">
+              <div class="mk-conv-item mk-conv-active">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#A855F7,#7E22CE)">XF</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Ximena Fernández</span> <span class="mk-conv-time">14:32</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">💚</span> Hola Ximena, le presentamos…</div>
+                </div>
+                <span class="mk-conv-unread">3</span>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#0EA5E9,#0369A1)">MD</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Marina Domínguez</span> <span class="mk-conv-time">14:28</span></div>
+                  <div class="mk-conv-snippet typing-snippet"><span></span><span></span><span></span> escribiendo…</div>
+                </div>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#FA5000,#CD2349)">SF</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Sebastián Figueroa</span> <span class="mk-conv-time">14:21</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch" style="color:#FA5000">🤖</span> Agente IA · Cotización enviada</div>
+                </div>
+                <span class="mk-conv-unread mk-conv-unread-blink">1</span>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#E1306C,#F77737)">AP</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Angela Pérez</span> <span class="mk-conv-time">14:15</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">📷</span> Quiero saber el precio del…</div>
+                </div>
+                <span class="mk-conv-unread">2</span>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#22c55e,#16a34a)">ST</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Sebastián Tapia</span> <span class="mk-conv-time">13:58</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">💚</span> Perfecto, agenden la visita</div>
+                </div>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#1877F2,#0866FF)">FJ</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Francisca Jacovic</span> <span class="mk-conv-time">13:42</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">📘</span> ¿Aceptan transferencia bancaria?</div>
+                </div>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#833AB4,#FD1D1D)">RA</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Rafael Andrade</span> <span class="mk-conv-time">12:55</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">💚</span> Excelente respuesta, gracias!</div>
+                </div>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#f59e0b,#dc2626)">AM</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Angela Marillan</span> <span class="mk-conv-time">12:30</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">💚</span> Hola, vi su publicación…</div>
+                </div>
+              </div>
+              <div class="mk-conv-item">
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">HH</span>
+                <div class="mk-conv-body">
+                  <div class="mk-conv-name"><span>Hannia Hernando</span> <span class="mk-conv-time">11:48</span></div>
+                  <div class="mk-conv-snippet"><span class="mk-conv-ch">📷</span> Me encanta su servicio</div>
+                </div>
+              </div>
+            </div>
+          </aside>
+          <!-- Active chat (Hapee platform style — light gray bubbles) -->
+          <main class="mk-chat">
+            <div class="mk-chat-head">
+              <span class="mk-ch-av" style="background:linear-gradient(135deg,#A855F7,#7E22CE)">XF</span>
+              <div class="mk-ch-info">
+                <div class="mk-ch-name">Ximena Fernández</div>
+                <div class="mk-ch-status"><span class="mk-online-dot"></span> En línea · WhatsApp Business</div>
+              </div>
+              <span class="mk-ch-meta">🏷️ Lead · 📞 +56 9 5234 8801</span>
+              <span class="mk-ch-ai">🤖 IA Hapee activa</span>
+            </div>
+            <div class="mk-chat-body">
+              <div class="mk-bubble mk-bubble-bot bub-1"><span class="mk-bub-label">Hapee · IA</span>Hola Ximena, le presentamos el sistema integral con IA que necesita su empresa. ¿Le interesa una demo?<span class="mk-bub-time">14:30</span></div>
+              <div class="mk-bubble mk-bubble-me bub-2"><span class="mk-bub-label">Ximena Fernández</span>Hola, ¿qué nivel de automatización ofrecen?<span class="mk-bub-time">14:31 ✓✓</span></div>
+              <div class="mk-bubble mk-bubble-bot bub-3"><span class="mk-bub-label">Hapee · IA</span>Automatizamos el 100% del flujo: respondemos, calificamos leads, agendamos citas y cerramos ventas. ¿Quieres una demo personalizada?<span class="mk-bub-time">14:31</span></div>
+              <div class="mk-bubble mk-bubble-typing bub-4"><span></span><span></span><span></span></div>
+              <div class="mk-bubble mk-bubble-audio bub-5"><span class="mk-bub-label">Ximena Fernández</span>
+                <div class="mk-audio"><span class="mk-audio-play">▶</span><div class="mk-audio-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="mk-audio-time">0:24</span></div>
+                <span class="mk-bub-time">14:32 ✓✓</span>
+              </div>
+              <div class="mk-bubble mk-bubble-bot bub-6"><span class="mk-bub-label">Hapee · IA</span>¡Perfecto! Tengo disponibilidad el jueves a las 16:00. Te envío el link de agendamiento.<span class="mk-bub-time">14:32</span></div>
+            </div>
+            <div class="mk-chat-input">
+              <span class="mk-ci-attach">📎</span>
+              <span class="mk-ci-emoji">😀</span>
+              <span class="mk-ci-input">Escribe un mensaje…</span>
+              <span class="mk-ci-mic">🎤</span>
+              <span class="mk-ci-send">▶</span>
+            </div>
+          </main>
+          <!-- Details panel -->
+          <aside class="mk-details">
+            <div class="mk-det-tabs"><span class="mk-det-tab mk-det-tab-on">Detalles</span><span class="mk-det-tab">Notas</span><span class="mk-det-tab">Tareas</span></div>
+            <div class="mk-det-av" style="background:linear-gradient(135deg,#A855F7,#7E22CE)">XF</div>
+            <div class="mk-det-name">Ximena Fernández</div>
+            <div class="mk-det-sub">Lead · creada hoy</div>
+            <div class="mk-det-section">
+              <div class="mk-det-section-title">Datos del contacto</div>
+              <div class="mk-det-row"><span>📞</span> +56 9 5234 8801</div>
+              <div class="mk-det-row"><span>✉️</span> ximena.f@empresa.cl</div>
+              <div class="mk-det-row"><span>📍</span> Providencia, Stgo.</div>
+            </div>
+            <div class="mk-det-section">
+              <div class="mk-det-section-title">Datos del campaña</div>
+              <div class="mk-det-row"><span>📣</span> Campaña: Q4 LATAM</div>
+              <div class="mk-det-row"><span>🔗</span> Fuente: Meta Ads</div>
+            </div>
+            <div class="mk-det-row mk-det-tag"><span>🔥</span> Lead caliente · IA</div>
+            <div class="mk-det-row mk-det-pipe"><span>💰</span> <strong>$2.450.000</strong></div>
+            <div class="mk-det-row mk-det-stage">Pipeline · Seguimiento 2</div>
+          </aside>
+        </div>
         <!-- Live activity dots over the conversations list -->
         <span class="ps-pulse-dot ps-pulse-1" aria-hidden="true"></span>
         <span class="ps-pulse-dot ps-pulse-2" aria-hidden="true"></span>
@@ -1327,7 +1726,120 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
           <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
           <div class="browser-url">app.hapee.ai · Pipeline</div>
         </div>
-        <img src="img/plataforma-pipeline.png" alt="Hapee · Pipeline de ventas" class="ps-img" loading="lazy">
+        <!-- PIPELINE MOCKUP — Kanban con cards moviéndose entre fases en vivo -->
+        <div class="mk-app mk-pipe-app">
+          <!-- Hapee sidebar nav -->
+          <nav class="mk-nav">
+            <div class="mk-nav-logo">H</div>
+            <a class="mk-nav-i"><span class="mk-nav-ico">💬</span><span class="mk-nav-l">Conv.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📅</span><span class="mk-nav-l">Calend.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">👥</span><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i mk-nav-on"><span class="mk-nav-ico">📊</span><span class="mk-nav-l">Pipeline</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📣</span><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">💳</span><span class="mk-nav-l">Pagos</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🎓</span><span class="mk-nav-l">Members</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🌐</span><span class="mk-nav-l">Sites</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">⚙️</span><span class="mk-nav-l">Auto</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">⭐</span><span class="mk-nav-l">Reputa.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">📈</span><span class="mk-nav-l">Report.</span></a>
+            <a class="mk-nav-i"><span class="mk-nav-ico">🤖</span><span class="mk-nav-l">IA Apps</span></a>
+          </nav>
+          <!-- Pipeline area -->
+          <div class="mk-pipe">
+            <div class="mk-pipe-topbar">
+              <div class="mk-tb-title">Clientes Potenciales</div>
+              <div class="mk-tb-actions">
+                <span class="mk-tb-new">+ Añadir oportunidad</span>
+              </div>
+            </div>
+            <div class="mk-pipe-breadcrumb">
+              <span class="mk-bc-tab mk-bc-on">Pipelines</span>
+              <span class="mk-bc-tab">Funnel Automation</span>
+              <span class="mk-bc-tab">Pipelines potenciales</span>
+              <span class="mk-bc-sep"></span>
+              <span class="mk-bc-filter">Filtros avanzados</span>
+              <span class="mk-bc-chip">1 Filtros aplicados</span>
+              <span class="mk-bc-spacer"></span>
+              <span class="mk-bc-search">🔍 Buscar Cliente Potencial</span>
+            </div>
+            <div class="mk-kanban">
+              <!-- Column 1: Lead Magnet Pagados -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#8b5cf6"></span> Lead Magnet · <em><span class="ctr-num" data-target="6">0</span></em></div>
+                <div class="mk-col-tot">$3.450.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Pablo S.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$845.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Rocío M.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$1.180.000</div></div>
+                  <div class="mk-card mk-card-new"><div class="mk-card-name">Negocio con Joaquín V.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$920.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Vianny T.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$0,00</div></div>
+                </div>
+              </div>
+              <!-- Column 2: Form Capture -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#3b82f6"></span> Form Capture · <em><span class="ctr-num" data-target="7">0</span></em></div>
+                <div class="mk-col-tot">$5.890.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card mk-flow-a"><div class="mk-card-name">Negocio con Marcelo M.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$1.560.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Ricardo P.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$2.100.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Yorelis B.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$890.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Camila M.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$1.340.000</div></div>
+                </div>
+              </div>
+              <!-- Column 3: Seguimiento 1 -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#f59e0b"></span> Seguimiento 1 · <em><span class="ctr-num" data-target="6">0</span></em></div>
+                <div class="mk-col-tot">$8.450.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card mk-flow-b"><div class="mk-card-name">Negocio con María M.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$2.450.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Diego S.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$1.560.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Valentina S.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$890.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Tomás T.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$1.230.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Bautista B.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$2.320.000</div></div>
+                </div>
+              </div>
+              <!-- Column 4: Seguimiento 2 -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#fb923c"></span> Seguimiento 2 · <em><span class="ctr-num" data-target="4">0</span></em></div>
+                <div class="mk-col-tot">$7.120.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card mk-flow-c"><div class="mk-card-name">Negocio con Carlos R.</div><div class="mk-card-meta">Llamada agendada · </div><div class="mk-card-val">$3.200.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Felipe T.</div><div class="mk-card-meta">Llamada agendada · </div><div class="mk-card-val">$1.890.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Andrea S.</div><div class="mk-card-meta">Llamada agendada · </div><div class="mk-card-val">$1.260.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Saco C.</div><div class="mk-card-meta">Llamada agendada · </div><div class="mk-card-val">$770.000</div></div>
+                </div>
+              </div>
+              <!-- Column 5: Seguimiento 3 -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#FA5000"></span> Seguimiento 3 · <em><span class="ctr-num" data-target="3">0</span></em></div>
+                <div class="mk-col-tot">$6.230.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Sofía H.</div><div class="mk-card-meta">Propuesta enviada · </div><div class="mk-card-val">$4.500.000</div></div>
+                  <div class="mk-card mk-card-warm"><div class="mk-card-name">Negocio con Juan L. 🔥</div><div class="mk-card-meta">Propuesta enviada · </div><div class="mk-card-val">$1.245.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Constanza F.</div><div class="mk-card-meta">Propuesta enviada · </div><div class="mk-card-val">$485.000</div></div>
+                </div>
+              </div>
+              <!-- Column 6: Cierre -->
+              <div class="mk-col">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#CD2349"></span> Cierre · <em><span class="ctr-num" data-target="2">0</span></em></div>
+                <div class="mk-col-tot">$5.180.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card mk-card-warm"><div class="mk-card-name">Negocio con Andrés M. 🔥</div><div class="mk-card-meta">Negociando · </div><div class="mk-card-val">$3.290.000</div></div>
+                  <div class="mk-card"><div class="mk-card-name">Negocio con Patricia L.</div><div class="mk-card-meta">Negociando · </div><div class="mk-card-val">$1.890.000</div></div>
+                </div>
+              </div>
+              <!-- Column 7: Ganado -->
+              <div class="mk-col mk-col-win">
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#22c55e"></span> Ganado · <em><span class="ctr-num" data-target="11">0</span></em></div>
+                <div class="mk-col-tot mk-col-tot-win">$24.890.000</div>
+                <div class="mk-col-cards">
+                  <div class="mk-card mk-card-won"><div class="mk-card-name">Negocio con Daniela R.</div><div class="mk-card-meta">✓ Cerrada · ayer</div><div class="mk-card-val">$5.890.000</div></div>
+                  <div class="mk-card mk-card-won"><div class="mk-card-name">Negocio con Esteban P.</div><div class="mk-card-meta">✓ Cerrada · 2d</div><div class="mk-card-val">$2.345.000</div></div>
+                  <div class="mk-card mk-card-won"><div class="mk-card-name">Negocio con Camilo F.</div><div class="mk-card-meta">✓ Cerrada · 3d</div><div class="mk-card-val">$1.780.000</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <span class="ps-pulse-dot ps-pulse-1" style="top:30%;left:40%" aria-hidden="true"></span>
         <span class="ps-pulse-dot ps-pulse-2" style="top:42%;left:62%" aria-hidden="true"></span>
         <span class="ps-live-badge">● Live · IA calificando</span>
