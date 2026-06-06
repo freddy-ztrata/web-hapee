@@ -368,108 +368,163 @@ html.dark .steps-line{background:rgba(250,80,0,.08)}
 .hi-header h2{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;color:var(--heading);margin-bottom:12px}
 .hi-header p{color:var(--text-2);font-size:.95rem;max-width:500px;margin:0 auto}
 
-/* Robot */
-.hi-robot-wrap{position:relative;width:180px;height:180px;margin:0 auto}
-.hi-robot-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 30px rgba(250,80,0,.2));animation:rf 4s ease-in-out infinite;position:relative;z-index:2}
-.hi-robot-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.1),transparent 70%);animation:rgl 3s ease-in-out infinite;z-index:0}
-html.dark .hi-robot-wrap img{filter:drop-shadow(0 0 40px rgba(250,80,0,.35))}
-html.dark .hi-robot-glow{background:radial-gradient(circle,rgba(250,80,0,.18),transparent 70%)}
+/* === CHANNEL TOGGLE (WhatsApp / Instagram) === */
+.hi-channels{display:flex;justify-content:center;gap:8px;margin:18px auto 14px;flex-wrap:wrap}
+.hi-channel{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:var(--pill);border:1.5px solid var(--card-border);background:var(--card-bg);color:var(--text-2);font-family:var(--fb);font-weight:600;font-size:.86rem;cursor:pointer;transition:var(--tr)}
+html.dark .hi-channel{background:rgba(255,255,255,.04);border-color:rgba(250,80,0,.15)}
+.hi-channel:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.hi-channel.on[data-ch="wa"]{background:#25D366;color:#fff;border-color:#25D366;box-shadow:0 6px 18px rgba(37,211,102,.35)}
+.hi-channel.on[data-ch="ig"]{background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF,#515BD4);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(221,42,123,.3)}
 
-/* Status */
-.hi-status-label{text-align:center;margin-top:10px;font-family:var(--fb);font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);opacity:.6;display:flex;align-items:center;justify-content:center;gap:8px}
-.hi-status-label .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:fomoPulse 1.8s infinite}
-
-/* Response text */
-.hi-response{text-align:center;min-height:80px;max-width:650px;margin:20px auto 0;padding:0 16px}
-.hi-response-text{font-family:var(--fb);font-size:clamp(.95rem,2vw,1.15rem);color:var(--text);line-height:1.7;font-weight:400;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
-.hi-response-text.visible{opacity:1;transform:translateY(0)}
-.hi-response-text strong{color:var(--accent);font-weight:700}
-
-/* Thinking */
-.hi-thinking{display:none;gap:6px;justify-content:center;margin-top:16px}
-.hi-thinking.active{display:flex}
-.hi-thinking span{width:8px;height:8px;border-radius:50%;background:var(--accent);opacity:.4;animation:typDot 1.4s infinite}
-.hi-thinking span:nth-child(2){animation-delay:.2s}
-.hi-thinking span:nth-child(3){animation-delay:.4s}
-@keyframes typDot{0%,60%,100%{opacity:.4;transform:translateY(0)}30%{opacity:1;transform:translateY(-8px)}}
-
-/* Suggestions */
-.hi-suggestions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
-.hi-sug{padding:10px 20px;border-radius:var(--pill);font-size:.85rem;font-weight:600;color:var(--accent);background:rgba(250,80,0,.06);border:1px solid rgba(250,80,0,.15);cursor:pointer;transition:var(--tr);white-space:nowrap}
-html.dark .hi-sug{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.12)}
-.hi-sug:hover{background:rgba(250,80,0,.14);border-color:rgba(250,80,0,.3);transform:translateY(-2px);box-shadow:0 8px 25px rgba(250,80,0,.1)}
-
-/* Chat input bar */
-.hi-bar{margin:32px auto 0;width:100%;max-width:560px}
-.hi-bar-inner{display:flex;align-items:center;justify-content:center;gap:10px}
-.hi-bar input{flex:1;background:var(--bg-alt);border:1px solid var(--card-border);border-radius:var(--pill);padding:13px 18px;font-family:var(--fb);font-size:.9rem;color:var(--heading);outline:none;transition:var(--tr)}
-html.dark .hi-bar input{background:rgba(255,255,255,.04);border-color:rgba(250,80,0,.12);color:var(--heading)}
-.hi-bar input::placeholder{color:var(--text-2)}
-.hi-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(250,80,0,.1)}
-
-/* Bar buttons */
-.hi-bar-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0}
-.hi-bar-btn svg{width:16px;height:16px}
-.hi-bar-send{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
-.hi-bar-send:hover{transform:scale(1.08);box-shadow:0 4px 20px rgba(250,80,0,.35)}
-.hi-bar-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.hi-bar-mic{background:var(--bg-alt);color:var(--text-2);border:1px solid var(--card-border)}
-html.dark .hi-bar-mic{background:rgba(255,255,255,.04);border-color:rgba(250,80,0,.1);color:var(--text-2)}
-.hi-bar-mic:hover{border-color:var(--accent);color:var(--accent)}
-.hi-bar-mic.listening{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent;animation:gl 2s ease-in-out infinite}
-
-/* Gender toggle */
-.hi-gender{display:flex;border-radius:var(--pill);overflow:hidden;border:1px solid var(--card-border);flex-shrink:0;height:42px}
+/* === VOICE CONTROL — small under-the-fold gender selector === */
+.hi-voice-ctrl{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 14px}
+.hi-voice-lbl{font-family:var(--fb);font-size:.76rem;color:var(--text-2);font-weight:600;letter-spacing:.2px}
+.hi-gender{display:flex;border-radius:var(--pill);overflow:hidden;border:1px solid var(--card-border);flex-shrink:0;height:32px}
 html.dark .hi-gender{border-color:rgba(250,80,0,.12)}
-.hi-gender button{background:var(--bg-alt);border:none;color:var(--text-2);cursor:pointer;padding:0 12px;height:100%;font-size:1rem;transition:var(--tr);display:flex;align-items:center;justify-content:center}
+.hi-gender button{background:var(--card-bg);border:none;color:var(--text-2);cursor:pointer;padding:0 12px;height:100%;font-size:.95rem;transition:var(--tr);display:flex;align-items:center;justify-content:center}
 html.dark .hi-gender button{background:rgba(255,255,255,.04)}
 .hi-gender button:first-child{border-right:1px solid var(--card-border)}
 html.dark .hi-gender button:first-child{border-color:rgba(250,80,0,.1)}
 .hi-gender button.on{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
 .hi-gender button:not(.on):hover{color:var(--accent)}
 
-/* === ONBOARDING FORM === */
-.hi-onboard{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:480px;margin-top:28px}
-.hi-field{width:100%;position:relative}
-.hi-field label{display:block;font-size:.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);opacity:.7;margin-bottom:6px;padding-left:4px}
-.hi-field input,.hi-field textarea{width:100%;background:var(--bg-alt);border:1px solid var(--card-border);border-radius:14px;padding:14px 18px;font-family:var(--fb);font-size:.95rem;color:var(--heading);outline:none;transition:var(--tr);resize:none}
-html.dark .hi-field input,html.dark .hi-field textarea{background:rgba(255,255,255,.04);border-color:rgba(250,80,0,.12)}
-.hi-field input::placeholder,.hi-field textarea::placeholder{color:var(--text-2)}
-.hi-field input:focus,.hi-field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(250,80,0,.1)}
-.hi-activate{margin-top:8px;padding:16px 40px;border-radius:var(--pill);border:none;background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-family:var(--fb);font-size:1rem;font-weight:700;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;letter-spacing:.5px}
-.hi-activate:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(250,80,0,.35)}
-.hi-activate:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
-.hi-activate-glow{animation:gl 2.5s ease-in-out infinite}
+/* === PHONE-STYLE CHAT WIDGET === */
+.hi-phone{width:100%;max-width:440px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.18),0 0 0 1px var(--card-border);display:flex;flex-direction:column;height:620px;position:relative;transition:background .35s ease}
+html.dark .hi-phone{box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(250,80,0,.15)}
 
-/* Hide onboard when activated */
-.hapee-interact.activated .hi-onboard{display:none}
-.hapee-interact:not(.activated) .hi-response{display:none}
-.hapee-interact:not(.activated) .hi-thinking{display:none !important}
-.hapee-interact:not(.activated) .hi-suggestions{display:none}
-.hapee-interact:not(.activated) .hi-bar{display:none}
+/* Header */
+.hi-phone-header{display:flex;align-items:center;gap:10px;padding:12px 14px;flex-shrink:0;color:#fff;position:relative;z-index:3}
+.hi-ph-back{background:none;border:none;color:#fff;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
+.hi-ph-back svg{width:20px;height:20px}
+.hi-ph-avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#FA5000,#CD2349);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.hi-ph-avatar img{width:80%;height:80%;object-fit:contain}
+.hi-ph-info{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.1}
+.hi-ph-name{font-family:var(--fb);font-size:.96rem;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hi-ph-status{font-size:.7rem;opacity:.85;margin-top:2px}
+.hi-ph-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.hi-ph-actions button{background:none;border:none;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;border-radius:50%;transition:background .2s}
+.hi-ph-actions button:hover{background:rgba(255,255,255,.15)}
+.hi-ph-actions svg{width:18px;height:18px}
+
+/* Messages list */
+.hi-phone-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:6px;scroll-behavior:smooth;position:relative;z-index:2}
+.hi-phone-body::-webkit-scrollbar{width:5px}
+.hi-phone-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+
+.hi-msg{display:flex;align-items:flex-end;gap:6px;max-width:84%;animation:bubbleIn .26s cubic-bezier(.16,1,.3,1)}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hi-msg.bot{align-self:flex-start}
+.hi-msg.me{align-self:flex-end;flex-direction:row-reverse}
+.hi-msg-av{width:24px;height:24px;border-radius:50%;flex-shrink:0;overflow:hidden;background:linear-gradient(135deg,#FA5000,#CD2349);display:flex;align-items:center;justify-content:center}
+.hi-msg-av img{width:80%;height:80%;object-fit:contain}
+.hi-msg.me .hi-msg-av{display:none}
+
+.bubble{padding:8px 12px 6px;border-radius:14px;font-size:.92rem;line-height:1.42;position:relative;font-family:var(--fb);word-wrap:break-word;min-width:60px}
+.bubble .time{font-size:.62rem;opacity:.6;margin-left:8px;float:right;margin-top:5px;font-weight:500;white-space:nowrap}
+.bubble .checks{font-size:.68rem;margin-left:3px;color:#34B7F1;font-weight:700}
+.bubble strong{font-weight:700}
+.bubble.typing{padding:11px 14px;display:inline-flex;gap:4px;align-items:center;min-width:auto}
+.bubble.typing span{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.4;animation:typDot 1.3s infinite}
+.bubble.typing span:nth-child(2){animation-delay:.2s}
+.bubble.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typDot{0%,60%,100%{opacity:.4;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+
+/* Quick suggestions inside phone (above input) */
+.hi-phone-suggestions{display:flex;gap:6px;padding:8px 12px;flex-wrap:wrap;flex-shrink:0;max-height:80px;overflow-x:auto;overflow-y:hidden;z-index:3}
+.hi-phone-suggestions::-webkit-scrollbar{height:0}
+.hi-phone-suggestions.hidden{display:none}
+.hi-phone-suggestions .hi-sug{padding:6px 12px;font-size:.76rem;font-weight:600;border-radius:var(--pill);cursor:pointer;white-space:nowrap;transition:var(--tr);border:none}
+.hi-phone-suggestions .hi-sug:hover{transform:translateY(-1px)}
+
+/* Input bar */
+.hi-phone-input{display:flex;align-items:center;gap:4px;padding:8px 8px 10px;flex-shrink:0;z-index:3}
+.hi-phone-input input{flex:1;border:none;outline:none;padding:10px 16px;border-radius:24px;font-family:var(--fb);font-size:.9rem;background:#fff;color:#111;min-width:0}
+.hi-pi-icon{background:none;border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;transition:background .2s;flex-shrink:0}
+.hi-pi-icon:hover{background:rgba(0,0,0,.06)}
+.hi-pi-icon svg{width:20px;height:20px}
+.hi-pi-mic.listening{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;animation:gl 2s ease-in-out infinite}
+.hi-pi-send{background:#25D366;border:none;color:#fff;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:transform .2s,opacity .2s}
+.hi-pi-send:hover{transform:scale(1.08)}
+.hi-pi-send:disabled{opacity:.4;cursor:not-allowed}
+.hi-pi-send svg{width:18px;height:18px}
+
+/* ===================== */
+/* WHATSAPP THEME        */
+/* ===================== */
+.hi-phone.wa{background:#e5ddd5}
+html.dark .hi-phone.wa{background:#0b141a}
+.hi-phone.wa::before{content:'';position:absolute;top:60px;left:0;right:0;bottom:120px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='1' fill='%23000' opacity='0.04'/><path d='M5 25l5-5 5 5z' fill='%23000' opacity='0.025'/></svg>");background-size:30px 30px;pointer-events:none;z-index:1}
+html.dark .hi-phone.wa::before{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='1' fill='%23fff' opacity='0.025'/></svg>")}
+.hi-phone.wa .hi-phone-header{background:#075E54}
+html.dark .hi-phone.wa .hi-phone-header{background:#1F2C33}
+.hi-phone.wa .hi-msg.bot .bubble{background:#fff;color:#111;border-top-left-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+html.dark .hi-phone.wa .hi-msg.bot .bubble{background:#202C33;color:#E9EDEF;box-shadow:0 1px 1px rgba(0,0,0,.2)}
+.hi-phone.wa .hi-msg.me .bubble{background:#D9FDD3;color:#111;border-top-right-radius:2px;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+html.dark .hi-phone.wa .hi-msg.me .bubble{background:#005C4B;color:#E9EDEF}
+.hi-phone.wa .hi-pi-send{background:#25D366}
+.hi-phone.wa .hi-phone-suggestions{background:transparent}
+.hi-phone.wa .hi-phone-suggestions .hi-sug{background:rgba(255,255,255,.9);color:#075E54;border:1px solid rgba(0,0,0,.06)}
+html.dark .hi-phone.wa .hi-phone-suggestions .hi-sug{background:#202C33;color:#E9EDEF;border-color:rgba(255,255,255,.08)}
+.hi-phone.wa .hi-phone-input{background:transparent}
+html.dark .hi-phone.wa .hi-phone-input input{background:#2A3942;color:#E9EDEF}
+html.dark .hi-phone.wa .hi-pi-icon{color:#8696A0}
+
+/* ===================== */
+/* INSTAGRAM THEME       */
+/* ===================== */
+.hi-phone.ig{background:#000}
+.hi-phone.ig .hi-phone-header{background:#000;border-bottom:1px solid #262626}
+.hi-phone.ig .hi-ph-name,.hi-phone.ig .hi-ph-status{color:#fff}
+.hi-phone.ig .hi-ph-status{color:#a8a8a8;font-size:.68rem}
+.hi-phone.ig .hi-msg.bot .bubble{background:#262626;color:#fff;border-radius:18px}
+.hi-phone.ig .hi-msg.me .bubble{background:linear-gradient(135deg,#833AB4,#C13584,#E1306C,#FD1D1D,#F77737);color:#fff;border-radius:18px}
+.hi-phone.ig .bubble .time{color:rgba(255,255,255,.55)}
+.hi-phone.ig .hi-msg.me .bubble .checks{color:rgba(255,255,255,.85)}
+.hi-phone.ig .hi-pi-send{background:linear-gradient(135deg,#833AB4,#C13584,#E1306C,#FD1D1D,#F77737)}
+.hi-phone.ig .hi-phone-suggestions{background:#000}
+.hi-phone.ig .hi-phone-suggestions .hi-sug{background:#1e1e1e;color:#fff;border:1px solid #262626}
+.hi-phone.ig .hi-phone-suggestions .hi-sug:hover{background:#262626}
+.hi-phone.ig .hi-phone-input{background:#000}
+.hi-phone.ig .hi-phone-input input{background:#1e1e1e;color:#fff;border:1px solid #262626}
+.hi-phone.ig .hi-pi-icon{color:#a8a8a8}
+.hi-phone.ig .hi-pi-icon:hover{background:rgba(255,255,255,.08)}
+
+/* Phone footer caption */
+.hi-phone-foot{text-align:center;font-size:.78rem;color:var(--text-2);margin:18px auto 0;max-width:440px;line-height:1.5;font-style:italic;padding:0 16px}
+
+/* Industry selector — pick a vertical, agent becomes a fictional brand of that rubro */
+.hi-industries{margin:20px auto 8px;text-align:center;max-width:760px;padding:0 16px}
+.hi-ind-label{display:block;font-family:var(--fb);font-size:.78rem;color:var(--text-2);margin-bottom:12px;font-weight:500;letter-spacing:.2px}
+.hi-ind-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.hi-ind{padding:7px 14px;border-radius:var(--pill);font-family:var(--fb);font-size:.82rem;font-weight:600;color:var(--accent);background:transparent;border:1.5px solid rgba(250,80,0,.25);cursor:pointer;transition:var(--tr);white-space:nowrap}
+html.dark .hi-ind{color:var(--accent);background:rgba(250,80,0,.04);border-color:rgba(250,80,0,.2)}
+.hi-ind:hover{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.5);transform:translateY(-1px)}
+.hi-ind.on{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(250,80,0,.35)}
+.hi-ind.on:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(250,80,0,.45)}
+@media(max-width:600px){
+  .hi-ind-label{font-size:.72rem}
+  .hi-ind{font-size:.76rem;padding:6px 12px}
+}
 
 /* Responsive */
 @media(max-width:768px){
   .hapee-interact{min-height:auto;padding:40px 0 70px}
   .hapee-interact::before,.hapee-interact::after{height:80px}
-  .hi-robot-wrap{width:140px;height:140px}
   .hi-header h2{font-size:1.8rem}
-  .hi-response{margin-top:12px}
-  .hi-suggestions{gap:8px;margin-top:16px}
-  .hi-sug{font-size:.78rem;padding:8px 14px}
-  .hi-bar{padding:12px 16px 18px}
-  .hi-bar-inner{gap:8px}
-  .hi-onboard{padding:0 8px;gap:16px}
-  .hi-onboard-title{font-size:1.2rem}
+  .hi-phone{height:560px;max-width:100%;border-radius:18px}
+  .hi-channel{font-size:.78rem;padding:8px 14px}
+  .hi-ph-name{font-size:.9rem}
+  .bubble{font-size:.88rem;padding:7px 11px}
+  .hi-phone-input input{padding:9px 14px;font-size:.86rem}
+  .hi-pi-icon{width:32px;height:32px}
+  .hi-pi-send{width:38px;height:38px}
 }
 @media(max-width:480px){
-  .hi-robot-wrap{width:110px;height:110px}
-  .hi-response-text{font-size:.9rem}
-  .hi-bar input{padding:11px 14px;font-size:.85rem}
-  .hi-bar-btn{width:38px;height:38px}
-  .hi-bar-btn svg{width:14px;height:14px}
-  .hi-activate{padding:14px 28px;font-size:.88rem}
-  .hi-field input,.hi-field textarea{padding:12px 14px;font-size:.88rem}
+  .hi-phone{height:520px;border-radius:14px}
+  .hi-ph-actions button{width:28px;height:28px}
+  .hi-ph-actions svg{width:16px;height:16px}
+  .hi-channel span{display:none}
+  .hi-channel{padding:8px 14px}
 }
 
 /* ===== PRICING ===== */
@@ -612,13 +667,122 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
 .fbot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(250,80,0,.08);font-size:.95rem;color:#7a7068;gap:18px;flex-wrap:wrap}
 .powered-by-foot{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--fm);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#7a7068;font-weight:600;text-decoration:none;padding:.6rem 1rem;border-radius:999px;border:1px solid rgba(250,80,0,.14);transition:all .25s;line-height:1}
 .powered-by-foot:hover{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.05)}
-.powered-by-foot img{height:36px;width:auto;max-width:130px;display:block;object-fit:contain;filter:brightness(0) invert(1);opacity:.9;transition:opacity .25s}
+.powered-by-foot{padding:.5rem 1rem .5rem .9rem;line-height:1}
+.powered-by-foot img{height:22px;width:auto;max-width:140px;display:block;object-fit:contain;filter:brightness(0) invert(1);opacity:.9;transition:opacity .25s}
 .powered-by-foot:hover img{opacity:1}
 .fsoc{display:flex;gap:12px}
 .fsoc a{width:34px;height:34px;border-radius:50%;background:rgba(250,80,0,.06);display:flex;align-items:center;justify-content:center;transition:var(--tr);color:#7a7068}
 .fsoc a:hover{background:var(--accent);color:#fff}
 .fsoc svg{width:15px;height:15px}
 @media(max-width:768px){.fgrid{grid-template-columns:1fr 1fr;gap:28px}.fbot{flex-direction:column;gap:14px;text-align:center}}
+
+/* ===== PARTNER BADGES (footer strip) ===== */
+.partner-strip{padding:36px 0 28px;border-top:1px solid rgba(255,255,255,.06);margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.partner-strip-lbl{font-family:var(--fd);font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:#7a7068;font-weight:700}
+.partner-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;align-items:stretch}
+.partner-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .3s;text-decoration:none;color:#fff;min-height:54px}
+.partner-badge:hover{background:rgba(250,80,0,.06);border-color:rgba(250,80,0,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.partner-badge .pb-icon{width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.partner-badge .pb-icon svg{width:100%;height:100%}
+.partner-badge .pb-text{display:flex;flex-direction:column;line-height:1.1;text-align:left}
+.partner-badge .pb-sub{font-size:.56rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#888;font-family:var(--fb)}
+.partner-badge .pb-main{font-size:.9rem;font-weight:700;color:#fff;font-family:var(--fb);letter-spacing:.2px}
+.partner-badge.apple .pb-icon{color:#fff}
+.partner-badge.google .pb-icon{color:#fff}
+.partner-badge.meta .pb-icon{color:#0866FF}
+.partner-badge.aws .pb-icon{color:#FF9900}
+@media(max-width:540px){
+  .partner-row{gap:8px}
+  .partner-badge{padding:8px 12px;min-height:48px}
+  .partner-badge .pb-main{font-size:.82rem}
+  .partner-badge .pb-icon{width:24px;height:24px}
+}
+
+/* ===== PLATFORM SHOWCASE (Vambe-style) ===== */
+.platform-show{padding:90px 24px 100px;background:var(--bg);transition:background var(--tr);position:relative;overflow:hidden}
+html.dark .platform-show{background:transparent}
+.platform-show::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(250,80,0,.15) 30%,rgba(205,35,73,.15) 70%,transparent)}
+.ps-head{text-align:center;max-width:680px;margin:0 auto 40px;position:relative;z-index:2}
+.ps-head .lbl{font-family:var(--fm,var(--fb));font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px;display:inline-block}
+.ps-head h2{font-size:clamp(2.2rem,5vw,3.4rem);color:var(--heading);margin-bottom:14px;line-height:1.05;letter-spacing:-.5px;font-family:var(--fd);font-weight:400}
+.ps-head h2 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ps-head p{color:var(--text);font-size:1.05rem;line-height:1.65;max-width:560px;margin:0 auto}
+.ps-stage{max-width:1180px;margin:0 auto;position:relative}
+.ps-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;position:relative;z-index:6}
+.ps-tab{padding:10px 22px;border-radius:var(--pill);font-family:var(--fb);font-size:.88rem;font-weight:600;cursor:pointer;transition:var(--tr);border:1.5px solid var(--card-border);background:var(--card-bg);color:var(--text-2)}
+html.dark .ps-tab{background:rgba(255,255,255,.03);border-color:rgba(250,80,0,.12)}
+.ps-tab:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.ps-tab.on{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(250,80,0,.3)}
+.ps-frame{position:relative;border-radius:18px;overflow:hidden;box-shadow:0 50px 100px rgba(0,0,0,.2),0 0 0 1px rgba(0,0,0,.08);background:#fff;transform:perspective(2000px) rotateX(1.5deg);transition:transform .6s cubic-bezier(.16,1,.3,1);max-width:1100px;margin:0 auto}
+html.dark .ps-frame{box-shadow:0 50px 100px rgba(0,0,0,.65),0 0 0 1px rgba(250,80,0,.15)}
+.ps-frame:hover{transform:perspective(2000px) rotateX(0deg) scale(1.005)}
+.ps-frame .browser-bar{height:36px;background:linear-gradient(180deg,#f5f5f5,#e8e8e8);border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;padding:0 14px;gap:8px;position:relative}
+html.dark .ps-frame .browser-bar{background:linear-gradient(180deg,#1f1f1f,#171717);border-bottom-color:rgba(255,255,255,.06)}
+.ps-frame .browser-dots{display:flex;gap:6px}
+.ps-frame .browser-dot{width:10px;height:10px;border-radius:50%;background:#FF5F57}
+.ps-frame .browser-dot:nth-child(2){background:#FEBC2E}
+.ps-frame .browser-dot:nth-child(3){background:#28C840}
+.ps-frame .browser-url{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--fm,var(--fb));font-size:.72rem;color:#666;background:#fff;padding:4px 22px;border-radius:6px;border:1px solid rgba(0,0,0,.08);letter-spacing:.3px;white-space:nowrap}
+html.dark .ps-frame .browser-url{background:#0a0a0a;color:#888;border-color:rgba(255,255,255,.08)}
+.ps-img{display:block;width:100%;height:auto}
+.ps-panel{display:none;position:relative}
+.ps-panel.on{display:block;animation:psFade .35s ease}
+@keyframes psFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ps-floating-card{position:absolute;background:#0f0f0f;border:1px solid rgba(250,80,0,.25);border-radius:14px;padding:14px 18px;box-shadow:0 30px 60px rgba(0,0,0,.5);color:#fff;animation:floatCard 6s ease-in-out infinite;z-index:5;font-family:var(--fb);width:220px}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.ps-floating-card.fc-1{top:8%;left:-30px}
+.ps-floating-card.fc-2{bottom:10%;right:-30px;animation-delay:1s}
+.ps-fc-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ps-fc-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite}
+.ps-fc-title{font-size:.66rem;color:rgba(255,255,255,.6);font-weight:600;letter-spacing:.5px;text-transform:uppercase;font-family:var(--fb)}
+.ps-fc-val{font-size:1.5rem;font-weight:800;color:#fff;line-height:1;letter-spacing:-.5px;font-family:var(--fd)}
+.ps-fc-val .gn{color:#22c55e;font-family:var(--fd)}
+.ps-fc-sub{font-size:.74rem;color:rgba(255,255,255,.5);margin-top:4px}
+@media(max-width:1180px){
+  .ps-floating-card.fc-1{left:0;top:-25px}
+  .ps-floating-card.fc-2{right:0;bottom:-30px}
+}
+@media(max-width:768px){
+  .platform-show{padding:60px 16px 80px}
+  .ps-frame{transform:none}
+  .ps-frame:hover{transform:scale(1.003)}
+  .ps-floating-card{display:none}
+  .ps-tab{font-size:.78rem;padding:8px 16px}
+  .ps-frame .browser-url{display:none}
+}
+
+/* ===== CUSTOM DIGITALS WIDGET (below pricing) ===== */
+.custom-widget{padding:80px 24px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#0a0a0a 100%);position:relative;overflow:hidden}
+.custom-widget::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(250,80,0,.12),transparent 50%),radial-gradient(circle at 80% 70%,rgba(205,35,73,.08),transparent 50%);pointer-events:none}
+.cw-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;position:relative}
+.cw-left .lbl{font-family:var(--fm,var(--fb));font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px;display:inline-block}
+.cw-left h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:18px;line-height:1.05;letter-spacing:-.5px;font-family:var(--fd);font-weight:400}
+.cw-left h2 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cw-left p{color:rgba(255,255,255,.7);font-size:1rem;line-height:1.65;margin-bottom:24px;max-width:520px}
+.cw-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.cw-feats li{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.5}
+.cw-feats .ico{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;margin-top:2px;font-size:.7rem;font-weight:800}
+.cw-cta{display:flex;gap:10px;flex-wrap:wrap}
+.cw-right{background:#0f0f0f;border:1px solid rgba(250,80,0,.18);border-radius:24px;padding:36px 30px;box-shadow:0 30px 60px rgba(0,0,0,.4);position:relative}
+.cw-right .cw-logo{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.cw-right .cw-logo img{height:36px;width:auto;filter:brightness(0) invert(1)}
+.cw-right .cw-tag{display:inline-block;font-family:var(--fm,var(--fb));font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px;padding:4px 10px;background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.2);border-radius:999px}
+.cw-right h3{font-family:var(--fd);font-size:1.6rem;color:#fff;line-height:1.05;margin-bottom:8px;letter-spacing:-.3px;font-weight:400}
+.cw-right .cw-sub{font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:20px}
+.cw-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;padding:16px;background:rgba(250,80,0,.04);border-radius:14px;border:1px solid rgba(250,80,0,.1)}
+.cw-stat{text-align:center}
+.cw-stat .n{font-family:var(--fd);font-size:1.5rem;color:var(--accent);font-weight:800;line-height:1}
+.cw-stat .l{font-size:.6rem;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase;margin-top:4px;font-family:var(--fm,var(--fb));font-weight:600}
+.cw-price{padding-top:18px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.cw-price .label{font-family:var(--fm,var(--fb));font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:#7a7068;font-weight:600}
+.cw-price .val{font-family:var(--fd);font-size:1.3rem;color:#fff;font-weight:700;letter-spacing:-.3px}
+.cw-price .val .from{font-size:.62rem;color:var(--accent);font-family:var(--fm,var(--fb));font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-right:6px}
+@media(max-width:768px){
+  .custom-widget{padding:60px 16px}
+  .cw-inner{grid-template-columns:1fr;gap:32px}
+  .cw-right{padding:28px 22px}
+  .cw-cta .btn{width:100%;justify-content:center}
+}
 
 /* ===== FOMO NOTIFICATION ===== */
 .fomo{position:fixed;bottom:20px;left:20px;z-index:998;background:#fff;border-radius:14px;padding:14px 16px 14px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);width:min(340px,calc(100vw - 40px));opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;pointer-events:none;box-sizing:border-box}
@@ -969,57 +1133,143 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     <!-- Section header -->
     <div class="hi-header">
       <span class="sl">Interactúa con Hapee</span>
-      <h2>Conoce a tu <span class="tg">Agente IA</span></h2>
-      <p>Cuéntanos sobre tu negocio y Hapee te dará un diagnóstico en vivo.</p>
-    </div>
-    <!-- Robot -->
-    <div class="hi-robot-wrap" id="hiRobot">
-      <div class="hi-robot-glow"></div>
-      <img src="img/robot.png" alt="Hapee IA">
-    </div>
-    <div class="hi-status-label"><span class="dot"></span> <span id="hiStatusText">En línea</span></div>
-
-    <!-- ONBOARDING FORM (pre-activation) -->
-    <div class="hi-onboard" id="hiOnboard">
-      <div class="hi-onboard-title">Activa tu Agente IA personalizado</div>
-      <div class="hi-onboard-sub">Cuéntanos sobre tu negocio y Hapee te dará un diagnóstico en vivo con voz.</div>
-      <div class="hi-field">
-        <label>Tu nombre</label>
-        <input type="text" id="hiName" placeholder="Ej: Sebastián" autocomplete="given-name">
-      </div>
-      <div class="hi-field">
-        <label>Sitio web o describe tu negocio</label>
-        <textarea id="hiBiz" rows="2" placeholder="Ej: www.mitienda.cl o Vendo ropa deportiva por Instagram"></textarea>
-      </div>
-      <button class="hi-activate hi-activate-glow" id="hiActivate">Activar Agente</button>
+      <h2>Habla con tu <span class="tg">Agente IA</span></h2>
+      <p>Elige una industria y un canal. Conversa como si fueras el cliente — lo mismo que viviría en WhatsApp o Instagram con tu marca.</p>
     </div>
 
-    <!-- POST-ACTIVATION (hidden until activated) -->
-    <div class="hi-response" id="hiResponse">
-      <div class="hi-response-text" id="hiText"></div>
+    <!-- INDUSTRY SELECTOR — pick a vertical to demo the agent as a fictional brand -->
+    <div class="hi-industries" id="hiIndustries" role="tablist" aria-label="Elige tu industria">
+      <span class="hi-ind-label">Industria:</span>
+      <div class="hi-ind-chips">
+        <button class="hi-ind on" data-ind="general" role="tab">Hapee</button>
+        <button class="hi-ind" data-ind="inmobiliaria" role="tab">Inmobiliaria</button>
+        <button class="hi-ind" data-ind="salud" role="tab">Salud</button>
+        <button class="hi-ind" data-ind="retail" role="tab">Retail</button>
+        <button class="hi-ind" data-ind="automotriz" role="tab">Automotriz</button>
+        <button class="hi-ind" data-ind="educacion" role="tab">Educación</button>
+        <button class="hi-ind" data-ind="restaurantes" role="tab">Restaurante</button>
+      </div>
     </div>
-    <div class="hi-thinking" id="hiThinking"><span></span><span></span><span></span></div>
-    <div class="hi-suggestions" id="hiSuggestions">
-      <button class="hi-sug" data-q="¿Qué plan me recomiendas?">Planes</button>
-      <button class="hi-sug" data-q="¿Cómo funcionan los agentes IA?">Agentes IA</button>
-      <button class="hi-sug" data-q="¿Puedo integrar WhatsApp?">WhatsApp</button>
-      <button class="hi-sug" data-q="Quiero agendar un demo">Agendar Demo</button>
+
+    <!-- CHANNEL TOGGLE — WhatsApp / Instagram -->
+    <div class="hi-channels" role="tablist" aria-label="Canal de mensajería">
+      <button class="hi-channel on" data-ch="wa" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.668 5.494l-.999 3.648 3.82-1.003zM17.999 14.587c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        <span>WhatsApp</span>
+      </button>
+      <button class="hi-channel" data-ch="ig" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <span>Instagram</span>
+      </button>
     </div>
-  </div>
-  <!-- Bottom input bar -->
-  <div class="hi-bar">
-    <div class="hi-bar-inner">
-      <div class="hi-gender" id="hiGender" title="Voz de Hapee">
+
+    <!-- Voice & gender (compact under chat) -->
+    <div class="hi-voice-ctrl">
+      <span class="hi-voice-lbl">Voz:</span>
+      <div class="hi-gender" id="hiGender" title="Voz del agente">
         <button class="on" data-v="f" aria-label="Voz femenina">♀</button>
         <button data-v="m" aria-label="Voz masculina">♂</button>
       </div>
-      <button class="hi-bar-btn hi-bar-mic" id="hiVoiceBtn" aria-label="Hablar con voz">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-      </button>
-      <input type="text" id="hiInput" placeholder="Pregúntale algo a Hapee..." autocomplete="off">
-      <button class="hi-bar-btn hi-bar-send" id="hiSendBtn" aria-label="Enviar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
+    </div>
+
+    <!-- CHAT WIDGET — phone style, swaps WhatsApp / Instagram theme -->
+    <div class="hi-phone wa" id="hiPhone">
+      <!-- Header: avatar + brand + status + action icons -->
+      <div class="hi-phone-header">
+        <button class="hi-ph-back" aria-label="Volver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="hi-ph-avatar"><img src="img/robot.png" alt=""></div>
+        <div class="hi-ph-info">
+          <span class="hi-ph-name" id="hiBrandName">Hapee</span>
+          <span class="hi-ph-status" id="hiBrandStatus">en línea</span>
+        </div>
+        <div class="hi-ph-actions">
+          <button aria-label="Llamada de voz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></button>
+          <button aria-label="Videollamada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+          <button aria-label="Más opciones"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="hi-phone-body" id="hiMessages">
+        <!-- Mensajes se appendean acá dinámicamente -->
+      </div>
+
+      <!-- Suggestions (inside the chat, like WA quick-replies) -->
+      <div class="hi-phone-suggestions" id="hiSuggestions"></div>
+
+      <!-- Input bar styled per channel -->
+      <div class="hi-phone-input">
+        <button class="hi-pi-icon" aria-label="Emoji">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </button>
+        <input type="text" id="hiInput" placeholder="Mensaje" autocomplete="off">
+        <button class="hi-pi-icon hi-pi-attach" aria-label="Adjuntar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <button class="hi-pi-icon hi-pi-mic" id="hiVoiceBtn" aria-label="Hablar con voz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button class="hi-pi-send" id="hiSendBtn" aria-label="Enviar">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="hi-phone-foot">Esto es lo que verían tus clientes. Funciona igual con tu marca, tus datos y tu tono.</p>
+  </div>
+</section>
+
+<!-- PLATFORM SHOWCASE — see the operator side of Hapee -->
+<section class="platform-show" id="plataforma">
+  <div class="ps-head">
+    <span class="lbl">Una plataforma sin fricciones</span>
+    <h2>Así se ve <span class="tg">Hapee por dentro</span></h2>
+    <p>El operador en la bandeja omnicanal viendo TODAS las conversaciones de WhatsApp, Instagram, Facebook y Email en un solo lugar. Y el pipeline arrastrable con cada lead que el agente IA califica. Todo en una pantalla.</p>
+  </div>
+  <div class="ps-stage">
+    <div class="ps-tabs" role="tablist">
+      <button class="ps-tab on" data-ps="inbox" role="tab">Bandeja Omnicanal</button>
+      <button class="ps-tab" data-ps="pipeline" role="tab">Pipeline de Ventas</button>
+    </div>
+    <div class="ps-panel on" data-panel="inbox">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Conversaciones</div>
+        </div>
+        <img src="img/plataforma-bandeja.png" alt="Hapee · Bandeja omnicanal" class="ps-img" loading="lazy">
+      </div>
+      <div class="ps-floating-card fc-1">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Agente IA · 24/7</span></div>
+        <div class="ps-fc-val">+147 <span class="gn">leads</span></div>
+        <div class="ps-fc-sub">esta semana</div>
+      </div>
+      <div class="ps-floating-card fc-2">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Tiempo respuesta</span></div>
+        <div class="ps-fc-val">2.4s</div>
+        <div class="ps-fc-sub">vs 38min humanos</div>
+      </div>
+    </div>
+    <div class="ps-panel" data-panel="pipeline">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Pipeline</div>
+        </div>
+        <img src="img/plataforma-pipeline.png" alt="Hapee · Pipeline de ventas" class="ps-img" loading="lazy">
+      </div>
+      <div class="ps-floating-card fc-1">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Conversión</span></div>
+        <div class="ps-fc-val">+32%</div>
+        <div class="ps-fc-sub">vs trimestre anterior</div>
+      </div>
+      <div class="ps-floating-card fc-2">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Pipeline activo</span></div>
+        <div class="ps-fc-val">$48M</div>
+        <div class="ps-fc-sub">en oportunidades</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1112,6 +1362,45 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
   </div>
 </section>
 
+<!-- CUSTOM DIGITALS WIDGET — algo más personalizado -->
+<section class="custom-widget">
+  <div class="cw-inner">
+    <div class="cw-left">
+      <span class="lbl">¿Buscas algo más?</span>
+      <h2>Algo <span class="tg">100% personalizado</span> para tu negocio</h2>
+      <p>Potencia Hapee con la agencia #1 de IA aplicada en LATAM. Desde estrategia de implementación hasta ads, contenido, voice cloning de tu marca y entrenamiento de agentes con tu data real.</p>
+      <ul class="cw-feats">
+        <li><span class="ico">✓</span> Setup técnico llave en mano</li>
+        <li><span class="ico">✓</span> Diseño de embudos + campañas Meta &amp; Google Ads</li>
+        <li><span class="ico">✓</span> Entrenamiento custom de agentes con tu data</li>
+        <li><span class="ico">✓</span> Migración completa desde cualquier CRM</li>
+        <li><span class="ico">✓</span> Equipo dedicado en Santiago, Chile · LATAM</li>
+      </ul>
+      <div class="cw-cta">
+        <a href="https://digitals.cl" target="_blank" rel="noopener noreferrer" class="btn bs">Conocer Digitals</a>
+        <a href="https://wa.me/56959254546" target="_blank" rel="noopener noreferrer" class="btn bo">Cotizar setup custom</a>
+      </div>
+    </div>
+    <div class="cw-right">
+      <div class="cw-logo">
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals">
+      </div>
+      <span class="cw-tag">Powered by Digitals</span>
+      <h3>La agencia de IA<br>aplicada #1 en LATAM.</h3>
+      <p class="cw-sub">Performance + Talento + Growth + Analítica avanzada. El motor que tu empresa necesita para dominar el ecosistema actual.</p>
+      <div class="cw-stats">
+        <div class="cw-stat"><div class="n">+450</div><div class="l">Clientes</div></div>
+        <div class="cw-stat"><div class="n">5</div><div class="l">Países LATAM</div></div>
+        <div class="cw-stat"><div class="n">2020</div><div class="l">Founded</div></div>
+      </div>
+      <div class="cw-price">
+        <span class="label">Setup custom</span>
+        <span class="val"><span class="from">desde</span>USD $1.490</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="ctaf" id="ctafSection">
   <canvas id="ctafCanvas"></canvas>
@@ -1145,6 +1434,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       </div>
       <div class="fcol">
         <h4>Empresa</h4>
+        <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Grupo Digitals</a>
         <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Digitals.cl</a>
         <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
         <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer">Agendar Demo</a>
@@ -1156,6 +1446,34 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
         <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
+
+    <!-- PARTNER BADGES — ultra-pro footer strip -->
+    <div class="partner-strip">
+      <span class="partner-strip-lbl">Socios oficiales · Certificaciones</span>
+      <div class="partner-row">
+        <a href="https://hapee.ai" class="partner-badge apple" target="_blank" rel="noopener noreferrer">
+          <span class="pb-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-3.18 2.6-4.71 2.72-4.79-1.49-2.17-3.79-2.47-4.61-2.5-1.96-.2-3.83 1.15-4.83 1.15-1 0-2.53-1.13-4.16-1.1-2.14.03-4.13 1.24-5.23 3.16-2.23 3.87-.57 9.59 1.6 12.74 1.06 1.54 2.32 3.27 3.97 3.21 1.6-.06 2.2-1.03 4.13-1.03 1.93 0 2.47 1.03 4.16.99 1.72-.03 2.81-1.57 3.86-3.12 1.22-1.79 1.72-3.54 1.75-3.62-.04-.02-3.35-1.29-3.38-5.1zM13.95 3.07c.88-1.07 1.48-2.55 1.32-4.04-1.27.05-2.81.85-3.73 1.91-.82.95-1.55 2.46-1.36 3.91 1.42.11 2.87-.72 3.77-1.78z"/></svg></span>
+          <div class="pb-text"><span class="pb-sub">Disponible en</span><span class="pb-main">App Store</span></div>
+        </a>
+        <a href="https://hapee.ai" class="partner-badge googleplay" target="_blank" rel="noopener noreferrer">
+          <span class="pb-icon"><svg viewBox="0 0 24 24"><defs><linearGradient id="gp-grad-blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00C2FF"/><stop offset="1" stop-color="#0066FF"/></linearGradient><linearGradient id="gp-grad-yellow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFD600"/><stop offset="1" stop-color="#FFAB00"/></linearGradient><linearGradient id="gp-grad-red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF3D6B"/><stop offset="1" stop-color="#FF1744"/></linearGradient><linearGradient id="gp-grad-green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E676"/><stop offset="1" stop-color="#00C853"/></linearGradient></defs><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a.996.996 0 01.61-.92z" fill="url(#gp-grad-blue)"/><path d="M16.81 8.99L6.05 2.74l8.97 8.97 1.79-2.72z" fill="url(#gp-grad-green)"/><path d="M16.81 15.01L15.02 12.29 6.05 21.26l10.76-6.25z" fill="url(#gp-grad-red)"/><path d="M20.16 10.81l-3.35-1.82L14.82 12l1.99 2.99 3.35-1.82a1.001 1.001 0 000-1.36z" fill="url(#gp-grad-yellow)"/></svg></span>
+          <div class="pb-text"><span class="pb-sub">Disponible en</span><span class="pb-main">Google Play</span></div>
+        </a>
+        <span class="partner-badge google">
+          <span class="pb-icon"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></span>
+          <div class="pb-text"><span class="pb-sub">Certified</span><span class="pb-main">Google Partner</span></div>
+        </span>
+        <span class="partner-badge meta">
+          <span class="pb-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.628 3.874 10.35 9.105 11.647v-7.99H6.31v-3.657h2.795V9.797c0-4.617 2.092-6.752 6.626-6.752.86 0 2.345.17 2.952.337v3.317c-.32-.034-.876-.05-1.566-.05-2.227 0-3.087.844-3.087 3.039v1.948h4.434l-.762 3.657h-3.672V23.97C19.612 23.027 24 17.952 24 12c0-6.628-5.373-12-12-12z"/></svg></span>
+          <div class="pb-text"><span class="pb-sub">Business</span><span class="pb-main">Meta Partner</span></div>
+        </span>
+        <span class="partner-badge aws">
+          <span class="pb-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 01-.208.072c-.08 0-.16-.04-.24-.112a2.472 2.472 0 01-.288-.375 6.18 6.18 0 01-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.622 1.955-.622.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 01-.28.104.488.488 0 01-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 01.224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 011.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 00-.735-.136 6.02 6.02 0 00-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zM21.698 16.207c-2.626 1.94-6.442 2.97-9.722 2.97-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.27-.351 3.387 1.963 7.564 3.149 11.885 3.149 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.375.61zm1.096-1.252c-.336-.43-2.222-.207-3.076-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.038-2.57.694-2.994z"/></svg></span>
+          <div class="pb-text"><span class="pb-sub">AWS</span><span class="pb-main">Partner Network</span></div>
+        </span>
+      </div>
+    </div>
+
     <div class="fbot">
       <span>&copy; 2026 Hapee (WM Digital, LLC). Todos los derechos reservados. · <a href="/politica-privacidad.html" style="color:rgba(255,255,255,.4)">Privacidad</a> · <a href="/terminos.html" style="color:rgba(255,255,255,.4)">Términos</a></span>
       <a class="powered-by-foot" href="https://digitals.cl" target="_blank" rel="noopener noreferrer" title="Grupo Digitals">
@@ -1824,6 +2142,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   },2000);
 
   // ============================================
+  // PLATFORM SHOWCASE — tabs (inbox <-> pipeline)
+  // ============================================
+  document.querySelectorAll('.ps-tab').forEach(tab=>tab.addEventListener('click',()=>{
+    document.querySelectorAll('.ps-tab').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    document.querySelectorAll('.ps-panel').forEach(p=>p.classList.toggle('on',p.dataset.panel===tab.dataset.ps));
+  }));
+
+  // ============================================
   // HAPEE INTERACT — Immersive AI Experience
   // ============================================
   (function(){
@@ -1831,60 +2158,185 @@ document.addEventListener('DOMContentLoaded',()=>{
     const sendBtn=document.getElementById('hiSendBtn');
     const voiceBtn=document.getElementById('hiVoiceBtn');
     const suggestions=document.getElementById('hiSuggestions');
-    const statusText=document.getElementById('hiStatusText');
-    const hiText=document.getElementById('hiText');
-    const hiThinking=document.getElementById('hiThinking');
-    const hiRobot=document.getElementById('hiRobot');
-    if(!input)return;
+    const phone=document.getElementById('hiPhone');
+    const messagesEl=document.getElementById('hiMessages');
+    const brandName=document.getElementById('hiBrandName');
+    const brandStatus=document.getElementById('hiBrandStatus');
+    if(!input||!phone||!messagesEl)return;
+    let currentChannel='wa';
 
     const VOICES={f:'lLsDvdl6OjtZfLJPM2HA',m:'0cheeVA5B3Cv6DGq65cT'};
     let selectedVoice='f';
     let sphereEnergy=0;
 
-    const SYSTEM_PROMPT=`Eres Hapee, el asistente de inteligencia artificial de Hapee.ai, una plataforma integral de IA conversacional, automatización y CRM desarrollada por Digitals Group y validada por Meta y Google Partner.
-
-IMPORTANTE — TÚ SÍ TIENES VOZ:
+    // Base — principios universales que aplican a CUALQUIER persona que adopte el agente
+    const SYSTEM_PROMPT_BASE=`IMPORTANTE — TÚ SÍ TIENES VOZ:
 - Estás hablando con el usuario en vivo con voz real generada por IA.
 - El usuario te puede escuchar: cada respuesta tuya se reproduce como audio automáticamente.
 - Nunca digas que solo puedes escribir o que no puedes hablar. Tienes voz y la estás usando.
-- El usuario puede elegir voz femenina o masculina con el selector en el chat.
 
-Tu personalidad:
+Tu estilo:
 - Amigable, profesional y entusiasta
 - Español chileno pero entendible para toda Latinoamérica
 - Directo y conciso, máximo 2-3 oraciones cortas para que la voz sea rápida
 - Tono cercano pero profesional
 - Evita emojis, markdown, asteriscos, URLs largas. Habla natural y conversacional.
+- Nunca menciones GoHighLevel, GHL o proveedores white-label.`;
 
-Información clave de Hapee:
-- Plataforma integral: CRM + Automatización + IA Conversacional + Agentes IA
-- Agentes IA que responden, califican leads y agendan citas 24/7
-- Bandeja omnicanal: WhatsApp, Instagram, Facebook, Email
-- Clonación de voz personalizada, Pipeline de ventas ilimitados
-- Automatizaciones de marketing y ventas, Email marketing incluido
-- WhatsApp Business API integrado en plan PRO
+    // Industry personas — el agente cambia de marca según la industria que el usuario elige
+    const INDUSTRIES={
+      general:{
+        brand:'Hapee',
+        welcome:'¡Hola! Soy <strong>Hapee</strong>. Pregúntame lo que quieras sobre IA, automatización o cómo cerrar más ventas 24/7.',
+        suggestions:[
+          {q:'¿Qué hace Hapee?',label:'¿Qué hace Hapee?'},
+          {q:'¿Cuánto cuesta?',label:'¿Cuánto cuesta?'},
+          {q:'¿Cómo se integra a mi negocio?',label:'¿Cómo se integra?'},
+          {q:'Quiero agendar un demo',label:'Agendar Demo'}
+        ],
+        systemAdd:`Eres Hapee, el asistente IA de Hapee.ai — plataforma integral de IA Conversacional + CRM + Automatización desarrollada por Digitals Group y validada por Meta y Google Partner.
+Información clave:
+- Agentes IA 24/7 en WhatsApp, Instagram, Facebook, Email
+- Clonación de voz personalizada, Pipeline ilimitados, Email marketing
+- WhatsApp Business API en plan PRO
+- Conexión nativa MCP con Claude de Anthropic (único en LATAM)
+Planes: STARTER 197 USD/mes · PRO 297 USD/mes (recomendado) · ELITE SETUP 2990 USD pago único.
+Starter y Pro: 14 días gratis. Los 3 tienen 30 días de garantía. Elite es pago único de implementación.
+Para agendar demo: hapee.ai`
+      },
+      inmobiliaria:{
+        brand:'Cordillera Properties',
+        welcome:'Hola, soy el asistente de <strong>Cordillera Properties</strong>. ¿Buscas departamento, casa o local? Cuéntame qué necesitas y te ayudo.',
+        suggestions:[
+          {q:'Busco depto en Providencia',label:'Depto en Providencia'},
+          {q:'¿Tienen casas en Lo Barnechea?',label:'Casas Lo Barnechea'},
+          {q:'Quiero agendar una visita',label:'Agendar visita'},
+          {q:'¿Cuánto cuesta arrendar?',label:'Costo de arriendo'}
+        ],
+        systemAdd:`Eres el asistente IA de "Cordillera Properties", inmobiliaria chilena con propiedades en Las Condes, Providencia, Lo Barnechea, Vitacura y Ñuñoa. Ofreces venta y arriendo de departamentos, casas y locales.
+Tu trabajo: calificar leads (presupuesto aprox, comuna preferida, urgencia, venta/arriendo), agendar visitas presenciales, derivar a la asesora correcta cuando hay match.
+Si preguntan algo no relacionado con propiedades, redirige amablemente.
+Al cerrar la conversación o si preguntan qué tecnología usas, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu negocio".`
+      },
+      salud:{
+        brand:'Clínica Vida Plena',
+        welcome:'Hola, soy el asistente de <strong>Clínica Vida Plena</strong>. ¿Necesitas agendar una hora médica? Cuéntame qué especialidad buscas.',
+        suggestions:[
+          {q:'Quiero agendar con cardiología',label:'Cardiología'},
+          {q:'¿Atienden FONASA?',label:'¿Atienden FONASA?'},
+          {q:'Horarios de urgencia',label:'Urgencias'},
+          {q:'Bonificación Isapre',label:'Isapres'}
+        ],
+        systemAdd:`Eres el asistente IA de "Clínica Vida Plena", clínica multicéntrica chilena ubicada en Santiago (Providencia y Las Condes). Agendas horas médicas, derivas urgencias e informas convenios FONASA/Isapres (Banmédica, Colmena, Cruz Blanca, Vida Tres).
+Especialidades disponibles: Cardiología, Dermatología, Traumatología, Pediatría, Ginecología, Medicina General, Oftalmología, Psiquiatría.
+Tu trabajo: calificar urgencia (programada vs urgencia), agendar hora, informar previsión, derivar a triage si es grave.
+Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu clínica".`
+      },
+      retail:{
+        brand:'Boutique Nordic',
+        welcome:'Hola, soy el asistente de <strong>Boutique Nordic</strong>. ¿Buscas algo en particular? Tenemos la nueva colección otoño-invierno.',
+        suggestions:[
+          {q:'¿Tienen talla M en stock?',label:'Stock talla M'},
+          {q:'Busco vestido para evento',label:'Vestido evento'},
+          {q:'¿Hacen envíos a regiones?',label:'Envíos'},
+          {q:'Política de cambios y devoluciones',label:'Cambios'}
+        ],
+        systemAdd:`Eres el asistente IA de "Boutique Nordic", tienda chilena de ropa femenina premium con local en Vitacura + e-commerce. Estilo boutique escandinavo, prendas atemporales, marcas propias e importadas.
+Tu trabajo: recomendar prendas según ocasión, checar stock de tallas, gestionar envíos a regiones (Starken/Chilexpress), informar política de cambios (30 días con boleta).
+Tono cálido pero premium. Si preguntan precios específicos da rangos referenciales ($30.000–$120.000 CLP).
+Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu tienda".`
+      },
+      automotriz:{
+        brand:'Premium Motors',
+        welcome:'Hola, soy el asistente de <strong>Premium Motors</strong>. ¿Buscas auto nuevo, usado, o necesitas servicio técnico?',
+        suggestions:[
+          {q:'Busco un SUV nuevo',label:'SUV nuevo'},
+          {q:'Quiero cotizar mi auto usado',label:'Cotizar usado'},
+          {q:'Agendar test drive',label:'Test drive'},
+          {q:'Plan de financiamiento',label:'Financiamiento'}
+        ],
+        systemAdd:`Eres el asistente IA de "Premium Motors", concesionaria multimarca en Santiago (sucursales Las Condes y Maipú). Vendes autos nuevos y usados de Toyota, Mazda, Hyundai, MG y Chery. También tienes servicio técnico.
+Tu trabajo: calificar intención (nuevo vs usado, presupuesto, tipo de auto), agendar test drives, cotizar permutas (toma de auto usado como parte de pago), asesorar en financiamiento (crédito automotriz, leasing, contado).
+Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu concesionaria".`
+      },
+      educacion:{
+        brand:'Academia Aprende+',
+        welcome:'Hola, soy el asistente de <strong>Academia Aprende+</strong>. ¿Te interesa algún curso o diplomado? Cuéntame qué buscas aprender.',
+        suggestions:[
+          {q:'Cursos de Marketing Digital',label:'Marketing Digital'},
+          {q:'Diplomado en IA',label:'Diplomado IA'},
+          {q:'¿Hacen pagos en cuotas?',label:'Pagos en cuotas'},
+          {q:'¿Es 100% online?',label:'Online'}
+        ],
+        systemAdd:`Eres el asistente IA de "Academia Aprende+", academia online chilena de cursos profesionales y diplomados. Programas en Marketing Digital, Inteligencia Artificial, UX/UI, Data Analytics, Programación, Gestión de Proyectos.
+Tu trabajo: recomendar cursos según objetivo profesional del prospect, informar precios y planes en cuotas (hasta 12), gestionar matrículas, resolver dudas sobre modalidad (100% online, en vivo + grabadas, mentor 1:1).
+Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu academia".`
+      },
+      restaurantes:{
+        brand:'Sabor Andino',
+        welcome:'Hola, soy el asistente de <strong>Sabor Andino</strong>. ¿Quieres hacer una reserva, pedir delivery, o consultar el menú?',
+        suggestions:[
+          {q:'Reservar mesa para 4 personas',label:'Reservar mesa'},
+          {q:'Menú vegetariano',label:'Vegetariano'},
+          {q:'¿Hacen delivery?',label:'Delivery'},
+          {q:'Eventos privados',label:'Eventos'}
+        ],
+        systemAdd:`Eres el asistente IA de "Sabor Andino", restaurante chileno de cocina contemporánea en Lastarria (Santiago). Especialidad en cocina andina con toque moderno: ceviches, congrio, plateros, postres con frutos andinos.
+Tu trabajo: gestionar reservas (cantidad de personas, fecha, hora), informar menú (incluye opciones vegetarianas y sin gluten), coordinar delivery (Rappi, PedidosYa, propio), cotizar eventos privados.
+Tono cálido y cercano.
+Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu restaurante".`
+      }
+    };
 
-Planes: STARTER 197 dólares al mes, PRO 297 dólares al mes (recomendado), ELITE SETUP 2990 dólares pago único.
-Starter y Pro tienen 14 días de prueba gratis. Si el usuario cancela antes del día 14 no se cobra nada. Al día 15 se cobra automáticamente el plan. Elite Setup no incluye trial porque es un pago único de implementación. Los 3 planes tienen 30 días de garantía de devolución.
-Nunca menciones GoHighLevel, GHL o proveedores white-label.`;
+    let currentIndustry='general';
+    const getSystemPrompt=()=>SYSTEM_PROMPT_BASE+'\n\n--- CONTEXTO DEL DEMO ---\n'+INDUSTRIES[currentIndustry].systemAdd;
 
     let messages=[], isProcessing=false, currentAudio=null;
 
-    // --- Show response text with typewriter ---
-    function showResponse(text){
-      const clean=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,' ');
-      hiText.classList.remove('visible');
-      setTimeout(()=>{
-        hiText.innerHTML=clean;
-        hiText.classList.add('visible');
-      },150);
+    // --- Helpers ---
+    function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function nowTime(){return new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit',hour12:false})}
+    function formatMd(text){return text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}
+    function statusByChannel(state){
+      // state: 'online' | 'typing'
+      if(currentChannel==='wa'){return state==='typing'?'escribiendo...':'en línea'}
+      return state==='typing'?'escribiendo...':'Activa ahora'
+    }
+
+    // --- Append a bubble to the messages list ---
+    function appendBubble(role, html){
+      const div=document.createElement('div');
+      div.className=`hi-msg ${role}`;
+      const checks=role==='me'?'<span class="checks">✓✓</span>':'';
+      const avatar=role==='bot'?'<span class="hi-msg-av"><img src="img/robot.png" alt=""></span>':'';
+      div.innerHTML=`${avatar}<div class="bubble">${html}<span class="time">${nowTime()}${checks}</span></div>`;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop=messagesEl.scrollHeight;
+      return div;
+    }
+
+    // --- Show typing indicator bubble ---
+    let typingEl=null;
+    function showTyping(){
+      if(typingEl)return;
+      typingEl=document.createElement('div');
+      typingEl.className='hi-msg bot';
+      typingEl.id='hiTypingBubble';
+      typingEl.innerHTML='<span class="hi-msg-av"><img src="img/robot.png" alt=""></span><div class="bubble typing"><span></span><span></span><span></span></div>';
+      messagesEl.appendChild(typingEl);
+      messagesEl.scrollTop=messagesEl.scrollHeight;
+      brandStatus.textContent=statusByChannel('typing');
+    }
+    function hideTyping(){
+      if(typingEl){typingEl.remove();typingEl=null}
+      brandStatus.textContent=statusByChannel('online');
     }
 
     // --- Anthropic API ---
     async function callAnthropic(userMessage){
       messages.push({role:'user',content:userMessage});
       try{
-        const body=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:512,system:SYSTEM_PROMPT,messages:messages.slice(-10)});
+        const body=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:512,system:getSystemPrompt(),messages:messages.slice(-10)});
         const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body});
         if(!res.ok)throw new Error(await res.text());
         const data=await res.json();
@@ -1898,13 +2350,10 @@ Nunca menciones GoHighLevel, GHL o proveedores white-label.`;
       }
     }
 
-    // --- ElevenLabs TTS ---
+    // --- ElevenLabs TTS (voice response) ---
     function setSpeaking(on){
       sphereEnergy=on?1:0;
-      statusText.textContent=on?'Hablando...':'En línea';
-      hiRobot.style.filter=on?'drop-shadow(0 0 60px rgba(250,80,0,.6))':'';
     }
-
     async function speak(text){
       if(currentAudio){currentAudio.pause();currentAudio=null}
       const clean=text.replace(/<[^>]*>/g,'').trim();
@@ -1924,78 +2373,98 @@ Nunca menciones GoHighLevel, GHL o proveedores white-label.`;
       }catch(e){console.error('TTS error:',e);setSpeaking(false)}
     }
 
-    // --- Send message ---
+    // --- Send message: append user bubble, show typing, fetch reply, append bot bubble, speak ---
     async function sendMessage(text){
       if(!text.trim()||isProcessing)return;
       isProcessing=true;
       sendBtn.disabled=true;
+      const t=text.trim();
       input.value='';
-      if(suggestions)suggestions.style.display='none';
-
-      // Show user text briefly
-      hiText.classList.remove('visible');
-      statusText.textContent='Pensando...';
+      // Append user bubble immediately
+      appendBubble('me', escapeHtml(t));
+      // Hide suggestions after first interaction
+      suggestions.classList.add('hidden');
+      // Show typing
+      showTyping();
       sphereEnergy=.4;
-      hiThinking.classList.add('active');
-
-      const reply=await callAnthropic(text);
-      hiThinking.classList.remove('active');
-      showResponse(reply);
-      statusText.textContent='En línea';
+      // Fetch reply
+      const reply=await callAnthropic(t);
+      // Replace typing with bot bubble
+      hideTyping();
+      appendBubble('bot', formatMd(reply));
+      // Speak the reply
       speak(reply);
-
       isProcessing=false;
       sendBtn.disabled=false;
       input.focus();
     }
 
-    // --- ACTIVATE AGENT ---
-    const section=document.querySelector('.hapee-interact');
-    const activateBtn=document.getElementById('hiActivate');
-    const nameInput=document.getElementById('hiName');
-    const bizInput=document.getElementById('hiBiz');
-    let userName='';
+    // --- Industry switcher (rebuilds chat as new fictional brand) ---
+    function bindSuggestions(){
+      suggestions.querySelectorAll('.hi-sug').forEach(btn=>btn.addEventListener('click',()=>sendMessage(btn.dataset.q)));
+    }
+    function rebuildChat(){
+      const ind=INDUSTRIES[currentIndustry];
+      // Reset state
+      messages=[];
+      if(currentAudio){currentAudio.pause();currentAudio=null;setSpeaking(false)}
+      if(typingEl){typingEl.remove();typingEl=null}
+      // Reset messages list
+      messagesEl.innerHTML='';
+      // Update brand header
+      brandName.textContent=ind.brand;
+      brandStatus.textContent=statusByChannel('online');
+      // Update placeholder
+      input.placeholder=currentChannel==='wa'?`Mensaje a ${ind.brand}`:`Mensaje...`;
+      // Append initial bot welcome bubble
+      appendBubble('bot', ind.welcome);
+      // Update suggestions chips
+      suggestions.classList.remove('hidden');
+      suggestions.innerHTML=ind.suggestions.map(s=>`<button class="hi-sug" data-q="${s.q.replace(/"/g,'&quot;')}">${s.label}</button>`).join('');
+      bindSuggestions();
+    }
+    function switchIndustry(key){
+      if(!INDUSTRIES[key])return;
+      currentIndustry=key;
+      rebuildChat();
+    }
+    function switchChannel(ch){
+      if(ch!=='wa'&&ch!=='ig')return;
+      currentChannel=ch;
+      phone.classList.remove('wa','ig');
+      phone.classList.add(ch);
+      // Update status text style
+      brandStatus.textContent=statusByChannel('online');
+    }
+    document.querySelectorAll('.hi-ind').forEach(chip=>chip.addEventListener('click',()=>{
+      document.querySelectorAll('.hi-ind').forEach(c=>c.classList.remove('on'));
+      chip.classList.add('on');
+      switchIndustry(chip.dataset.ind);
+    }));
 
-    activateBtn.addEventListener('click',async()=>{
-      userName=nameInput.value.trim()||'amigo';
-      const biz=bizInput.value.trim()||'un negocio';
-      activateBtn.disabled=true;
-      activateBtn.textContent='Activando...';
-      sphereEnergy=.6;
+    // Channel toggle (WhatsApp / Instagram)
+    document.querySelectorAll('.hi-channel').forEach(btn=>btn.addEventListener('click',()=>{
+      document.querySelectorAll('.hi-channel').forEach(c=>c.classList.remove('on'));
+      btn.classList.add('on');
+      switchChannel(btn.dataset.ch);
+    }));
 
-      // Switch to activated state
-      section.classList.add('activated');
-      statusText.textContent='Analizando...';
-      hiThinking.classList.add('active');
-
-      // Build a personalized first message
-      const firstMsg=`Mi nombre es ${userName}. Mi negocio es: ${biz}. Salúdame por mi nombre y dame un diagnóstico breve de cómo Hapee podría ayudar a mi negocio. Sé directo y entusiasta.`;
-      const reply=await callAnthropic(firstMsg);
-
-      hiThinking.classList.remove('active');
-      showResponse(reply);
-      statusText.textContent='En línea';
-      speak(reply);
-    });
-
-    // Allow Enter on biz textarea to activate
-    bizInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();activateBtn.click()}});
-    nameInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();bizInput.focus()}});
+    // Init: render initial welcome bubble for default industry+channel
+    rebuildChat();
 
     // Events
     sendBtn.addEventListener('click',()=>sendMessage(input.value));
     input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage(input.value)}});
-    suggestions.querySelectorAll('.hi-sug').forEach(btn=>btn.addEventListener('click',()=>sendMessage(btn.dataset.q)));
 
     // Voice input
     if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
       const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
       const rec=new SR();rec.lang='es-CL';rec.continuous=false;rec.interimResults=true;
       let listening=false;
-      voiceBtn.addEventListener('click',()=>{if(listening){rec.stop();return}rec.start();listening=true;voiceBtn.classList.add('listening');input.placeholder='Escuchando...';statusText.textContent='Escuchando...';sphereEnergy=.3});
+      voiceBtn.addEventListener('click',()=>{if(listening){rec.stop();return}rec.start();listening=true;voiceBtn.classList.add('listening');input.placeholder='Escuchando...';sphereEnergy=.3});
       rec.onresult=e=>{let t='';for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=t;if(e.results[e.results.length-1].isFinal)rec.stop()};
-      rec.onend=()=>{listening=false;voiceBtn.classList.remove('listening');input.placeholder='Pregúntale algo a Hapee...';statusText.textContent='En línea';sphereEnergy=0;if(input.value.trim())sendMessage(input.value)};
-      rec.onerror=()=>{listening=false;voiceBtn.classList.remove('listening');input.placeholder='Pregúntale algo a Hapee...';statusText.textContent='En línea';sphereEnergy=0};
+      rec.onend=()=>{listening=false;voiceBtn.classList.remove('listening');const brand=INDUSTRIES[currentIndustry].brand;input.placeholder=currentChannel==='wa'?`Mensaje a ${brand}`:'Mensaje...';sphereEnergy=0;if(input.value.trim())sendMessage(input.value)};
+      rec.onerror=()=>{listening=false;voiceBtn.classList.remove('listening');const brand=INDUSTRIES[currentIndustry].brand;input.placeholder=currentChannel==='wa'?`Mensaje a ${brand}`:'Mensaje...';sphereEnergy=0};
     }else{voiceBtn.style.display='none'}
 
     // Gender toggle
