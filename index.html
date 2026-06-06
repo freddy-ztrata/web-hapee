@@ -34,12 +34,28 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Hapee",
+  "alternateName": "Hapee AI",
   "url": "https://hapee.ai",
   "logo": "https://hapee.ai/img/logo-hapee.png",
-  "description": "Plataforma integral de IA conversacional, automatización y CRM",
+  "image": "https://hapee.ai/img/robot.png",
+  "description": "Plataforma integral de IA conversacional, automatización y CRM, desarrollada por Grupo Digitals y validada por Meta & Google Partner.",
   "foundingDate": "2024",
-  "founder": {"@type": "Organization", "name": "Digitals Group", "url": "https://digitals.cl"},
-  "sameAs": ["https://www.instagram.com/hapee.ai/"]
+  "founder": {"@type": "Organization", "name": "Grupo Digitals", "url": "https://digitals.cl"},
+  "parentOrganization": {"@type": "Organization", "name": "Grupo Digitals", "url": "https://digitals.cl"},
+  "areaServed": [{"@type":"Country","name":"Chile"},{"@type":"Country","name":"México"},{"@type":"Country","name":"Colombia"},{"@type":"Country","name":"Perú"},{"@type":"Country","name":"Argentina"}],
+  "contactPoint": {"@type":"ContactPoint","contactType":"sales","telephone":"+56-9-5925-4546","availableLanguage":["Spanish","English"],"areaServed":"LATAM"},
+  "sameAs": ["https://www.instagram.com/hapee.ai/","https://digitals.cl"]
+}
+</script>
+<!-- Structured Data: WebSite (sitelinks search box) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Hapee",
+  "url": "https://hapee.ai",
+  "inLanguage": "es",
+  "publisher": {"@type":"Organization","name":"Hapee","url":"https://hapee.ai"}
 }
 </script>
 <!-- Structured Data: SoftwareApplication -->
@@ -49,12 +65,45 @@
   "@type": "SoftwareApplication",
   "name": "Hapee",
   "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "CRM, Marketing Automation, AI Conversational",
   "operatingSystem": "Web",
-  "description": "Plataforma integral de IA conversacional + automatización + CRM simple",
+  "description": "Plataforma integral de IA conversacional + automatización + CRM simple, desarrollada por Grupo Digitals con tecnología validada Meta Business Partner y Google Partner.",
+  "url": "https://hapee.ai",
+  "image": "https://hapee.ai/img/robot.png",
+  "featureList": ["IA conversacional 24/7","CRM omnicanal (WhatsApp, Instagram, Web, Email)","Automatización de embudos","Pipeline visual","Reputación online","Funnels y landings","Calendarios + agendamiento","Marketing automation","Reportes en vivo"],
+  "softwareVersion": "2026",
   "offers": [
-    {"@type": "Offer", "name": "Starter", "price": "197", "priceCurrency": "USD", "billingPeriod": "P1M"},
-    {"@type": "Offer", "name": "Pro", "price": "297", "priceCurrency": "USD", "billingPeriod": "P1M"},
-    {"@type": "Offer", "name": "Elite Setup", "price": "2990", "priceCurrency": "USD"}
+    {"@type": "Offer", "name": "Starter", "price": "197", "priceCurrency": "USD", "category": "Mensual", "url":"https://hapee.ai/#planes", "availability":"https://schema.org/InStock", "seller":{"@type":"Organization","name":"Hapee"}},
+    {"@type": "Offer", "name": "Pro", "price": "297", "priceCurrency": "USD", "category": "Mensual", "url":"https://hapee.ai/#planes", "availability":"https://schema.org/InStock", "seller":{"@type":"Organization","name":"Hapee"}},
+    {"@type": "Offer", "name": "Elite Setup", "price": "2990", "priceCurrency": "USD", "category": "Setup", "url":"https://hapee.ai/#planes", "availability":"https://schema.org/InStock", "seller":{"@type":"Organization","name":"Hapee"}}
+  ],
+  "provider": {"@type":"Organization","name":"Hapee","url":"https://hapee.ai"}
+}
+</script>
+<!-- Structured Data: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"¿Qué es Hapee?","acceptedAnswer":{"@type":"Answer","text":"Hapee es la plataforma integral de IA conversacional, CRM y automatización desarrollada por Grupo Digitals, agencia validada Meta Business Partner y Google Partner. Centraliza WhatsApp, Instagram, Web, Email y SMS en un solo lugar con agentes IA 24/7."}},
+    {"@type":"Question","name":"¿En qué se diferencia Hapee de otras plataformas de CRM o chatbots?","acceptedAnswer":{"@type":"Answer","text":"Hapee es la única solución desarrollada por una agencia certificada Meta & Google Partner en LATAM. No solo provee software: integra estrategia de ads, contenido y CM con el setup. Esto la diferencia de plataformas como Vambe, Heat o GHL puro."}},
+    {"@type":"Question","name":"¿Cuánto cuesta Hapee?","acceptedAnswer":{"@type":"Answer","text":"Hapee tiene 3 planes principales: Starter desde USD 197/mes, Pro USD 297/mes, y Elite Setup desde USD 2.990 (one-time). Todos incluyen acceso completo a IA conversacional, CRM, automatización y pipeline. El Elite Setup además incluye onboarding completo y migración."}},
+    {"@type":"Question","name":"¿Funciona con WhatsApp Business?","acceptedAnswer":{"@type":"Answer","text":"Sí. Hapee integra WhatsApp Business API oficial (Meta Cloud API), Instagram DM, Facebook Messenger, Email, SMS y formularios web. Todo unificado en una bandeja omnicanal con agentes IA que responden 24/7."}},
+    {"@type":"Question","name":"¿Necesito un equipo técnico para usar Hapee?","acceptedAnswer":{"@type":"Answer","text":"No. Hapee se entrega configurado y listo para usar. El equipo de Grupo Digitals hace el setup, conecta tus canales, entrena los agentes IA con tu negocio y te capacita. Soporte ilimitado en español incluido."}},
+    {"@type":"Question","name":"¿Puedo combinar Hapee con servicios de Grupo Digitals?","acceptedAnswer":{"@type":"Answer","text":"Sí. Grupo Digitals ofrece un paquete personalizado: Hapee + Ads + Content + Community Management + Landings a medida. Una solución 360° para potenciar el ecosistema digital de tu marca."}}
+  ]
+}
+</script>
+<!-- Structured Data: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://hapee.ai/"},
+    {"@type": "ListItem", "position": 2, "name": "Plataforma", "item": "https://hapee.ai/#plataforma"},
+    {"@type": "ListItem", "position": 3, "name": "Planes", "item": "https://hapee.ai/#planes"}
   ]
 }
 </script>
@@ -812,13 +861,13 @@ html.dark .mk-app{background:#0a0a0a;color:#e5e5e5}
 @media(max-width:768px){.mk-app{height:520px;font-size:11px}}
 @media(max-width:480px){.mk-app{height:460px;font-size:10px}}
 
-/* Hapee sidebar nav (orange) */
-.mk-nav{width:64px;background:linear-gradient(180deg,#FA5000,#CD2349);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:1px;flex-shrink:0;overflow-y:auto}
+/* Hapee sidebar nav — dark navy (match real platform) */
+.mk-nav{width:64px;background:linear-gradient(180deg,#0d1117 0%,#161b22 100%);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:1px;flex-shrink:0;overflow-y:auto;border-right:1px solid rgba(255,255,255,.04)}
 .mk-nav::-webkit-scrollbar{display:none}
-.mk-nav-logo{width:32px;height:32px;border-radius:8px;background:#fff;color:#FA5000;font-family:var(--fd);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:6px;flex-shrink:0}
-.mk-nav-i{width:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:rgba(255,255,255,.85);cursor:pointer;transition:all .2s;text-decoration:none;border-left:3px solid transparent;border-right:3px solid transparent;gap:2px}
-.mk-nav-i:hover{background:rgba(255,255,255,.1);color:#fff}
-.mk-nav-on{background:rgba(255,255,255,.16);color:#fff;border-left-color:#fff}
+.mk-nav-logo{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;font-family:var(--fd);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:6px;flex-shrink:0;box-shadow:0 2px 8px rgba(250,80,0,.35)}
+.mk-nav-i{width:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 0;color:rgba(255,255,255,.65);cursor:pointer;transition:all .2s;text-decoration:none;border-left:3px solid transparent;border-right:3px solid transparent;gap:3px}
+.mk-nav-i:hover{background:rgba(255,255,255,.05);color:#fff}
+.mk-nav-on{background:rgba(250,80,0,.16);color:#FA5000;border-left-color:#FA5000}
 .mk-nav-ico{font-size:1rem;line-height:1}
 .mk-nav-l{font-size:.5rem;font-weight:600;letter-spacing:.1px;line-height:1;opacity:.92}
 @media(max-width:768px){.mk-nav{width:54px}.mk-nav-i{width:46px}.mk-nav-ico{font-size:.88rem}.mk-nav-l{font-size:.46rem}}
@@ -987,8 +1036,8 @@ html.dark .mk-bc-search{background:#1a1a1a;color:#888}
 .mk-kanban::-webkit-scrollbar{height:6px}
 .mk-kanban::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
 @media(max-width:1100px){.mk-kanban{grid-template-columns:repeat(7,170px)}}
-@media(max-width:768px){.mk-kanban{grid-template-columns:repeat(7,155px);gap:8px;padding:10px}}
-@media(max-width:480px){.mk-kanban{grid-template-columns:repeat(7,140px);gap:6px}}
+@media(max-width:768px){.mk-kanban{grid-template-columns:repeat(7,155px);gap:8px;padding:10px}.mk-pipe-breadcrumb{padding:6px 12px;gap:4px;font-size:.65rem}.mk-bc-tab,.mk-bc-filter{padding:4px 8px}.mk-bc-chip{font-size:.6rem}.mk-bc-spacer{display:none}.mk-bc-search{display:none}}
+@media(max-width:480px){.mk-kanban{grid-template-columns:repeat(7,140px);gap:6px}.mk-pipe-topbar{padding:10px 12px}.mk-tb-title{font-size:.78rem}.mk-tb-new{padding:5px 10px;font-size:.68rem}.mk-bc-filter{display:none}.mk-col-tot{font-size:.6rem}}
 
 .mk-col{background:#f0f2f5;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;min-width:0;border:1px solid rgba(0,0,0,.04);position:relative;max-height:100%}
 html.dark .mk-col{background:#141414;border-color:rgba(255,255,255,.04)}
@@ -1587,9 +1636,9 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
                 </div>
               </div>
               <div class="mk-conv-item">
-                <span class="mk-conv-av" style="background:linear-gradient(135deg,#FA5000,#CD2349)">SF</span>
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#FA5000,#CD2349)">JM</span>
                 <div class="mk-conv-body">
-                  <div class="mk-conv-name"><span>Sebastián Figueroa</span> <span class="mk-conv-time">14:21</span></div>
+                  <div class="mk-conv-name"><span>Joaquín Morales</span> <span class="mk-conv-time">14:21</span></div>
                   <div class="mk-conv-snippet"><span class="mk-conv-ch" style="color:#FA5000">🤖</span> Agente IA · Cotización enviada</div>
                 </div>
                 <span class="mk-conv-unread mk-conv-unread-blink">1</span>
@@ -1603,9 +1652,9 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
                 <span class="mk-conv-unread">2</span>
               </div>
               <div class="mk-conv-item">
-                <span class="mk-conv-av" style="background:linear-gradient(135deg,#22c55e,#16a34a)">ST</span>
+                <span class="mk-conv-av" style="background:linear-gradient(135deg,#22c55e,#16a34a)">DT</span>
                 <div class="mk-conv-body">
-                  <div class="mk-conv-name"><span>Sebastián Tapia</span> <span class="mk-conv-time">13:58</span></div>
+                  <div class="mk-conv-name"><span>Diego Tapia</span> <span class="mk-conv-time">13:58</span></div>
                   <div class="mk-conv-snippet"><span class="mk-conv-ch">💚</span> Perfecto, agenden la visita</div>
                 </div>
               </div>
