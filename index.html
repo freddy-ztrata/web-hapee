@@ -289,7 +289,65 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .hero-d{font-size:.95rem;color:var(--text-2);opacity:.8}
 .hero-vis{position:relative;display:flex;justify-content:center;align-items:center}
-.hero-robot{width:100%;max-width:350px;filter:drop-shadow(0 20px 50px rgba(250,80,0,.2));animation:rf 4s ease-in-out infinite}
+.hero-robot{width:100%;max-width:350px;filter:drop-shadow(0 20px 50px rgba(250,80,0,.2));animation:rf 4s ease-in-out infinite;position:relative;z-index:5}
+
+/* ===== ORBITAL ICONS AROUND ROBOT (Heat-inspired) ===== */
+.orbit-stage{position:relative;width:100%;max-width:540px;aspect-ratio:1/1;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1px solid rgba(250,80,0,.08);pointer-events:none}
+.orbit-ring-1{width:62%;height:62%;transform:translate(-50%,-50%);border-color:rgba(250,80,0,.12)}
+.orbit-ring-2{width:82%;height:82%;transform:translate(-50%,-50%);border-color:rgba(250,80,0,.07);border-style:dashed}
+.orbit-ring-3{width:100%;height:100%;transform:translate(-50%,-50%);border-color:rgba(250,80,0,.04)}
+html.dark .orbit-ring-1{border-color:rgba(250,80,0,.18)}
+html.dark .orbit-ring-2{border-color:rgba(250,80,0,.1)}
+html.dark .orbit-ring-3{border-color:rgba(250,80,0,.06)}
+
+.orb{position:absolute;top:50%;left:50%;width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);z-index:4;transform-origin:center;will-change:transform;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+html.dark .orb{background:rgba(20,20,20,.92);box-shadow:0 8px 24px rgba(0,0,0,.45),0 2px 6px rgba(250,80,0,.12),inset 0 1px 0 rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06)}
+.orb:hover{transform:translate(var(--tx),var(--ty)) scale(1.12) !important;box-shadow:0 14px 36px rgba(250,80,0,.3),0 4px 12px rgba(0,0,0,.18)}
+.orb svg{width:62%;height:62%}
+.orb::after{content:attr(data-label);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);font-family:var(--fb);font-size:.62rem;font-weight:700;color:var(--text);background:rgba(0,0,0,0);padding:2px 6px;white-space:nowrap;opacity:0;transition:opacity .25s;letter-spacing:.2px;pointer-events:none}
+html.dark .orb::after{color:#fff}
+.orb:hover::after{opacity:1}
+
+/* Hapee products (orange gradient pills) */
+.orb-product{background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:0 8px 24px rgba(250,80,0,.35),0 2px 6px rgba(205,35,73,.25),inset 0 1px 0 rgba(255,255,255,.2)}
+.orb-product .orb-hp-text{font-family:var(--fd);font-size:.78rem;color:#fff;font-weight:700;letter-spacing:.5px}
+
+/* Position each orb on the orbital rings (CSS custom props for tx/ty so hover keeps position) */
+/* Inner ring (62%) — 4 orbs */
+.orb-wa{--tx:-220%;--ty:-50%;transform:translate(var(--tx),var(--ty));animation:floatA 4s ease-in-out infinite}
+.orb-ig{--tx:140%;--ty:-180%;transform:translate(var(--tx),var(--ty));animation:floatB 4.5s ease-in-out infinite .3s}
+.orb-fb{--tx:140%;--ty:90%;transform:translate(var(--tx),var(--ty));animation:floatA 4.2s ease-in-out infinite .6s}
+.orb-tt{--tx:-220%;--ty:90%;transform:translate(var(--tx),var(--ty));animation:floatB 4.8s ease-in-out infinite .9s}
+
+/* Outer ring (top arc) */
+.orb-gm{--tx:-350%;--ty:-180%;transform:translate(var(--tx),var(--ty));animation:floatA 5s ease-in-out infinite .2s}
+.orb-gg{--tx:260%;--ty:-280%;transform:translate(var(--tx),var(--ty));animation:floatB 4.6s ease-in-out infinite .5s}
+.orb-mt{--tx:-400%;--ty:30%;transform:translate(var(--tx),var(--ty));animation:floatA 5.3s ease-in-out infinite .8s}
+.orb-sh{--tx:320%;--ty:30%;transform:translate(var(--tx),var(--ty));animation:floatB 4.7s ease-in-out infinite 1.1s}
+.orb-ml{--tx:-260%;--ty:200%;transform:translate(var(--tx),var(--ty));animation:floatA 5.1s ease-in-out infinite 1.3s}
+.orb-st{--tx:200%;--ty:200%;transform:translate(var(--tx),var(--ty));animation:floatB 4.4s ease-in-out infinite 1.5s}
+
+/* Hapee products on top corners */
+.orb-hp:nth-of-type(11){--tx:-360%;--ty:-300%;transform:translate(var(--tx),var(--ty));animation:floatA 4.9s ease-in-out infinite .4s;width:62px;height:62px}
+.orb-hp:nth-of-type(12){--tx:280%;--ty:-300%;transform:translate(var(--tx),var(--ty));animation:floatB 5s ease-in-out infinite .7s;width:62px;height:62px}
+
+@keyframes floatA{0%,100%{transform:translate(var(--tx),var(--ty)) translateY(0)}50%{transform:translate(var(--tx),var(--ty)) translateY(-8px)}}
+@keyframes floatB{0%,100%{transform:translate(var(--tx),var(--ty)) translateY(0)}50%{transform:translate(var(--tx),var(--ty)) translateY(6px)}}
+
+/* Slow rotation of inner ring (decorative) */
+.orbit-ring-1{animation:orbitRot 50s linear infinite}
+.orbit-ring-2{animation:orbitRot 70s linear infinite reverse}
+@keyframes orbitRot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Robot inside orbit stage */
+.orbit-stage .hero-robot{position:relative;width:44%;max-width:240px;z-index:5;margin:0;display:block}
+
+/* Responsive scaling */
+@media(max-width:1100px){.orbit-stage{max-width:480px}.orb{width:48px;height:48px;border-radius:12px}.orb-hp:nth-of-type(11),.orb-hp:nth-of-type(12){width:56px;height:56px}}
+@media(max-width:900px){.orbit-stage{max-width:420px}.orb{width:44px;height:44px}.orb-hp:nth-of-type(11),.orb-hp:nth-of-type(12){width:52px;height:52px}.orb-product .orb-hp-text{font-size:.7rem}}
+@media(max-width:600px){.orbit-stage{max-width:340px}.orb{width:38px;height:38px;border-radius:10px}.orb-hp:nth-of-type(11),.orb-hp:nth-of-type(12){width:46px;height:46px}.orb::after{display:none}.orb-product .orb-hp-text{font-size:.62rem}}
+@media(max-width:380px){.orbit-stage{max-width:300px}.orb{width:34px;height:34px}}
 @keyframes rf{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .robot-glow{position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(250,80,0,.1),transparent 70%);border-radius:50%;z-index:-1;animation:rgl 3s ease-in-out infinite}
 @keyframes rgl{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.2);opacity:1}}
@@ -1108,13 +1166,17 @@ html.dark .mk-card-new{background:linear-gradient(135deg,rgba(34,197,94,.12),#1a
 .cw-left h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;margin-bottom:18px;line-height:1.05;letter-spacing:-.5px;font-family:var(--fd);font-weight:400}
 .cw-left h2 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .cw-left p{color:rgba(255,255,255,.7);font-size:1rem;line-height:1.65;margin-bottom:24px;max-width:520px}
-.cw-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.cw-feats li{display:flex;align-items:flex-start;gap:10px;color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.5}
-.cw-feats .ico{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;margin-top:2px;font-size:.7rem;font-weight:800}
+.cw-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;padding:0}
+.cw-feats li{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;background:rgba(255,255,255,.025);border:1px solid rgba(250,80,0,.1);border-radius:12px;transition:all .25s}
+.cw-feats li:hover{background:rgba(250,80,0,.06);border-color:rgba(250,80,0,.25);transform:translateX(2px)}
+.cw-feats .ico{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:800;margin-top:1px;box-shadow:0 2px 8px rgba(250,80,0,.3)}
+.cw-feat-txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.cw-feat-txt strong{font-family:var(--fb);font-size:.95rem;color:#fff;font-weight:700;line-height:1.2}
+.cw-feat-txt span{font-size:.82rem;color:rgba(255,255,255,.62);line-height:1.4;font-weight:400}
 .cw-cta{display:flex;gap:10px;flex-wrap:wrap}
 .cw-right{background:#0f0f0f;border:1px solid rgba(250,80,0,.18);border-radius:24px;padding:36px 30px;box-shadow:0 30px 60px rgba(0,0,0,.4);position:relative}
-.cw-right .cw-logo{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.cw-right .cw-logo img{height:54px;width:auto}
+.cw-right .cw-logo{display:flex;align-items:center;gap:14px;margin-bottom:14px;min-height:60px}
+.cw-right .cw-logo img{height:auto;width:auto;max-height:64px;max-width:220px;object-fit:contain;display:block}
 .cw-right .cw-tag{display:inline-block;font-family:var(--fm,var(--fb));font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px;padding:4px 10px;background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.2);border-radius:999px}
 .cw-right h3{font-family:var(--fd);font-size:1.6rem;color:#fff;line-height:1.05;margin-bottom:8px;letter-spacing:-.3px;font-weight:400}
 .cw-right .cw-sub{font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:20px}
@@ -1248,7 +1310,26 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     </div>
     <div class="hero-vis">
       <div class="robot-glow"></div>
-      <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high">
+      <div class="orbit-stage">
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-ring orbit-ring-3"></div>
+        <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high">
+        <!-- Orbital integration icons -->
+        <div class="orb orb-wa" data-label="WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.4.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.2-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3c.1.2 2.1 3.3 5.2 4.6.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z M21 12C21 7 17 3 12 3S3 7 3 12c0 1.7.4 3.2 1.2 4.5L3 21l4.6-1.2C9 20.6 10.5 21 12 21c5 0 9-4 9-9z"/></svg></div>
+        <div class="orb orb-ig" data-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="url(#igGrad)"><defs><linearGradient id="igGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FEDA77"/><stop offset="50%" stop-color="#F58529"/><stop offset="100%" stop-color="#DD2A7B"/></linearGradient></defs><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.6-.1 4.8-.1zm0 5.3c-2.5 0-4.5 2-4.5 4.5s2 4.5 4.5 4.5 4.5-2 4.5-4.5-2-4.5-4.5-4.5zm0 7.4c-1.6 0-2.9-1.3-2.9-2.9s1.3-2.9 2.9-2.9 2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9zm4.7-7.6c-.6 0-1.1.5-1.1 1.1 0 .6.5 1.1 1.1 1.1.6 0 1.1-.5 1.1-1.1 0-.6-.5-1.1-1.1-1.1z"/></svg></div>
+        <div class="orb orb-fb" data-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12C24 5.4 18.6 0 12 0S0 5.4 0 12c0 6 4.4 10.9 10.1 11.9V15.5H7.1V12h3.1V9.4c0-3 1.8-4.7 4.6-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5H14V24c5.6-1 10-5.9 10-12z"/></svg></div>
+        <div class="orb orb-tt" data-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24" fill="#fff"><path d="M19.6 6.5c-1.5-.3-2.7-1.1-3.5-2.3-.4-.6-.6-1.4-.7-2.1V2h-3v12.7c0 .9-.3 1.8-1 2.4-.6.6-1.5 1-2.4.9-.9 0-1.8-.4-2.4-1-.6-.6-1-1.5-1-2.4 0-.9.4-1.8 1-2.4.6-.6 1.5-1 2.4-1 .3 0 .6 0 .9.1V8.1c-.3-.1-.6-.1-.9-.1-1.8 0-3.5.7-4.7 2C2.7 11.2 2 12.9 2 14.7c0 1.8.7 3.5 2 4.7 1.3 1.3 3 2 4.7 2 1.8 0 3.5-.7 4.7-2 1.3-1.3 2-3 2-4.7V9.2c1.4 1 3 1.5 4.7 1.5V7.6c-.2 0-.4-.1-.5-.1z M15.4 4.5c-.1.1-.1.1 0 0z"/></svg><circle cx="14.5" cy="10" r="3" fill="#FF0050" opacity=".7"/><circle cx="13" cy="10" r="3" fill="#00F2EA" opacity=".7"/></div>
+        <div class="orb orb-gm" data-label="Gmail" title="Gmail"><svg viewBox="0 0 24 24"><path fill="#fff" d="M2 6v12h2V8.5l8 6 8-6V18h2V6h-2L12 12 4 6z"/><path fill="#EA4335" d="M2 6h2l8 6V8L4 6z"/><path fill="#34A853" d="M20 6h2v12h-2z"/><path fill="#FBBC04" d="M2 18h2V8.5L2 7z"/><path fill="#4285F4" d="M20 6v12h-2V8.5z"/></svg></div>
+        <div class="orb orb-gg" data-label="Google" title="Google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h5.9c-.3 1.4-1 2.5-2.2 3.3v2.7h3.5c2-1.9 3.3-4.7 3.3-8.1z"/><path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.5-2.7c-1 .6-2.2 1-3.7 1-2.8 0-5.2-1.9-6.1-4.5H2.3v2.8C4.1 20.4 7.8 23 12 23z"/><path fill="#FBBC04" d="M5.9 14.1c-.2-.7-.4-1.4-.4-2.1s.1-1.4.4-2.1V7.1H2.3C1.5 8.6 1 10.2 1 12s.5 3.4 1.3 4.9l3.6-2.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .5 4.1 1.6l3.1-3.1C17.4 2.1 14.9 1 12 1 7.8 1 4.1 3.6 2.3 7.1l3.6 2.8C6.8 7.3 9.2 5.4 12 5.4z"/></svg></div>
+        <div class="orb orb-mt" data-label="Meta" title="Meta"><svg viewBox="0 0 24 24" fill="#0668E1"><path d="M6.6 4C3.1 4 .6 6.7.6 10c0 3.2 1.9 6.7 4.8 6.7 1.5 0 2.6-.7 4.3-3.4l1.4-2.4c.4.6.8 1.3 1.3 2 0 0 1.8 3 2.4 3.5.9.8 2.1 1.3 3.4 1.3 3.4 0 5.2-2.8 5.2-6 0-3.6-2.4-7.7-6-7.7-2.1 0-3.6 1.1-5.5 4 .1.1.4.7.5.9-1.1-1.6-2.5-3-4-3-1-.9-1.8-2-1.8-2zm.1 2.4c.7 0 1.5.6 2.4 1.7-1.9 2.9-3 4.5-4 4.5-1 0-1.6-1.1-1.6-2.7 0-2.1 1.3-3.5 3.2-3.5zm10.7.4c1.7 0 3.1 1.7 3.4 4.7-.8 0-1.5.3-2.3.7-1.4.7-2.4 1.7-3.5 3.4-.8-1.2-2-3.4-3-5.2 1.8-2.4 3.3-3.6 5.4-3.6z"/></svg></div>
+        <div class="orb orb-sh" data-label="Shopify" title="Shopify"><svg viewBox="0 0 24 24" fill="#96BF48"><path d="M15.3 4.4c-.1-.1-.2-.1-.3-.1l-1.2.1c-.1 0-.2 0-.3-.1-.6-.5-1.5-.4-2.1-.4-.4-.5-1-.8-1.7-.8h-.2c-.1-.3-.4-.6-.7-.7-.6-.2-1.5.4-2.1 1.6-.3.7-.6 1.5-.8 2.3l-1.6.5c-.5.1-.5.2-.6.6L2 18.5l9.5 1.8 5.2-1.1c-.1 0-1.4-14.7-1.4-14.8zM10.3 5.6h-.2c-.4 0-.7 0-1 .1.4-1.2.9-1.7 1.3-1.8.2.4.1 1.1-.1 1.7zm-2.1.7c.3-.1.5-.1.8-.1.4-.9.6-1.6.6-2.1 0-.2 0-.3-.1-.5.6.2.9 1.1.9 2.2v.1c.4-.1.7-.2 1.1-.2 0-1.1-.2-1.8-.5-2.3.4 0 .9 0 1.4.4l-3.6 1.1c-.2.4-.4.9-.6 1.4zm-2.4 8.9c0 .9 1.1 1.6 2.4 1.6.7 0 1.2-.2 1.5-.6.3-.3.5-.7.5-1.2 0-.8-.6-1.3-1.5-1.8-.7-.4-1.5-.7-1.5-1.2 0-.2.2-.4.5-.4.7 0 1.3.3 1.3.3l.3-.9s-.6-.4-1.6-.4c-1.4 0-2.3.8-2.3 1.8 0 .9.6 1.5 1.5 1.9.7.3 1.4.6 1.4 1.1 0 .3-.3.5-.7.5-.7 0-1.4-.3-1.8-.7z"/></svg></div>
+        <div class="orb orb-ml" data-label="Mercado Libre" title="Mercado Libre"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#FFE600"/><path fill="#2D3277" d="M5 12c0-1.5 1-2.5 2.5-2.5.5 0 1 .1 1.5.5.4-.3.9-.5 1.5-.5C12 9.5 13 10.5 13 12v3h-2v-3c0-.5-.3-.8-.8-.8s-.7.3-.7.8v3H7.5v-3c0-.5-.3-.8-.7-.8-.5 0-.8.3-.8.8v3H5z M16 9.5c1.5 0 2.5 1 2.5 2.5S17.5 14.5 16 14.5 13.5 13.5 13.5 12 14.5 9.5 16 9.5zm0 1.5c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z"/></svg></div>
+        <div class="orb orb-st" data-label="Stripe" title="Stripe"><svg viewBox="0 0 24 24" fill="#635BFF"><path d="M13.4 9.7c0-.7.6-1 1.5-1 1.4 0 3.1.4 4.5 1.1V6c-1.5-.6-3.1-.9-4.5-.9-3.7 0-6.2 1.9-6.2 5.2 0 5 6.9 4.3 6.9 6.4 0 .8-.7 1.1-1.7 1.1-1.5 0-3.5-.6-5-1.5v4c1.7.7 3.4 1 5 1 3.8 0 6.4-1.9 6.4-5.3 0-5.4-7-4.5-7-6.3z"/></svg></div>
+        <!-- Hapee products -->
+        <div class="orb orb-hp orb-product" data-label="Hapee CRM"><span class="orb-hp-text">CRM</span></div>
+        <div class="orb orb-hp orb-product" data-label="Hapee Ads"><span class="orb-hp-text">Ads</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2014,12 +2095,12 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       <h2>Una estrategia <span class="tg">100% custom</span> con la agencia #1 de IA en LATAM</h2>
       <p>Hapee es la plataforma. <strong style="color:#fff">Digitals</strong> es el equipo que la pone a producir. Ads, contenido, community management, landings a medida y voice cloning de tu marca — todo conectado a Hapee desde el día 1.</p>
       <ul class="cw-feats">
-        <li><span class="ico">✓</span> <strong style="color:#fff">Hapee Ads</strong> · Estrategia completa de Meta &amp; Google Ads con tracking nativo</li>
-        <li><span class="ico">✓</span> <strong style="color:#fff">Hapee Content</strong> · Creación de contenido + Community Management (CM)</li>
-        <li><span class="ico">✓</span> <strong style="color:#fff">Landings a medida</strong> · Diseño + copy + CRO 100% custom</li>
-        <li><span class="ico">✓</span> <strong style="color:#fff">Setup técnico llave en mano</strong> · Agentes entrenados con tu data real</li>
-        <li><span class="ico">✓</span> <strong style="color:#fff">Voice cloning</strong> · Tu marca habla con tu voz, 24/7</li>
-        <li><span class="ico">✓</span> Equipo dedicado en Santiago, Chile · LATAM + EEUU</li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Hapee Ads</strong><span>Estrategia completa de Meta &amp; Google Ads con tracking nativo</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Hapee Content</strong><span>Creación de contenido + Community Management (CM)</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Landings a medida</strong><span>Diseño + copy + CRO 100% custom</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Setup técnico llave en mano</strong><span>Agentes entrenados con tu data real</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Voice Cloning</strong><span>Tu marca habla con tu voz, 24/7</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Equipo dedicado</strong><span>Santiago, Chile · LATAM + EEUU</span></div></li>
       </ul>
       <div class="cw-cta">
         <a href="https://digitals.cl" target="_blank" rel="noopener noreferrer" class="btn bs">Conocer Digitals</a>
@@ -2028,9 +2109,9 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     </div>
     <div class="cw-right">
       <div class="cw-logo">
-        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals">
+        <img src="img/digitals-logo.png" alt="Digitals · Agencia de IA #1 en LATAM">
       </div>
-      <span class="cw-tag">Powered by Digitals</span>
+      <span class="cw-tag">Agencia certificada</span>
       <h3>La agencia de IA<br>aplicada #1 en LATAM.</h3>
       <p class="cw-sub">Performance · Talento · Growth · Analítica avanzada. El motor que tu empresa necesita para dominar el ecosistema digital.</p>
       <div class="cw-stats">
