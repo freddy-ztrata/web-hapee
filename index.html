@@ -318,8 +318,10 @@ html.dark .orb-product{background:linear-gradient(135deg,#FA5000,#CD2349);box-sh
 /* ChatGPT logo (white on black) keeps dark background in both modes */
 .orb-cg{background:#0d0d0d;padding:6px;border-color:rgba(255,255,255,.08)}
 html.dark .orb-cg{background:#000;border-color:rgba(255,255,255,.15)}
-/* ElevenLabs (black icon) — needs lighter bg in dark mode for separation */
-html.dark .orb-el{background:rgba(245,245,247,.95);border-color:rgba(0,0,0,.1)}
+/* ElevenLabs (black rounded icon — expand to fill bubble like ChatGPT) */
+.orb-el{padding:2px;background:#0a0a0a;border-color:rgba(255,255,255,.08)}
+html.dark .orb-el{background:#000;border-color:rgba(255,255,255,.15)}
+.orb-el img{border-radius:11px}
 
 /* === POSITIONS — polar layout (R measured from stage center, orb 54px wide) === */
 /* INNER RING (R=180px, 8 orbs every 45°) — main channels closest to robot */
