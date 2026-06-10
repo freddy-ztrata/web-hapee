@@ -200,10 +200,27 @@ html:not(.dark) .mk-side{background:#f8f8fa}
 
 /* Main: featured story */
 .mk-main{position:relative;overflow:hidden;display:flex;flex-direction:column}
-.mk-cover{position:relative;flex:1;min-height:0;overflow:hidden}
+.mk-cover{position:relative;flex:1;min-height:0;overflow:hidden;display:block}
 .mk-cover img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);animation:mkKenBurns 18s ease-in-out infinite alternate}
 @keyframes mkKenBurns{from{transform:scale(1.04) translate(0,0)}to{transform:scale(1.12) translate(-2%,1%)}}
-.mk-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,14,0) 0%,rgba(10,10,14,0) 35%,rgba(10,10,14,.7) 75%,rgba(10,10,14,.95) 100%);pointer-events:none}
+.mk-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,14,0) 0%,rgba(10,10,14,0) 35%,rgba(10,10,14,.7) 75%,rgba(10,10,14,.95) 100%);pointer-events:none;z-index:2}
+
+/* Fable Mythos constellation background */
+.mk-cover-fable{background:radial-gradient(circle at 50% 50%,#1a0a2e 0%,#080611 75%)}
+.mk-fable-bg{position:absolute;inset:0;overflow:hidden}
+.mk-fable-bg::before,.mk-fable-bg::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
+.mk-fable-bg::before{width:50%;aspect-ratio:1;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(250,80,0,.32) 0%,transparent 60%);filter:blur(20px)}
+.mk-fable-bg::after{width:80%;aspect-ratio:1;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,.18) 30%,transparent 70%);filter:blur(28px)}
+.mk-fable-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--accent) 40%,var(--accent-alt) 100%);box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);animation:fableCorePulse 3s ease-in-out infinite;z-index:3;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.7rem;color:#fff;letter-spacing:.1em;font-weight:400;text-shadow:0 0 8px rgba(0,0,0,.4)}
+.mk-fable-core::before{content:'FABLE';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);font-size:.7rem}
+.mk-fable-core::after{content:'MYTHOS';position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;opacity:.85}
+@keyframes fableCorePulse{0%,100%{box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 60px var(--accent),0 0 120px rgba(250,80,0,.7);transform:translate(-50%,-50%) scale(1.05)}}
+.mk-fable-orbit{position:absolute;top:50%;left:50%;border:1.5px solid;border-radius:50%;animation:fableOrbit 8s ease-in-out infinite alternate;z-index:2;pointer-events:none}
+.mk-fable-orbit-1{width:160px;height:160px;margin:-80px 0 0 -80px;border-color:rgba(250,80,0,.45)}
+.mk-fable-orbit-2{width:220px;height:220px;margin:-110px 0 0 -110px;border-color:rgba(205,35,73,.32)}
+@keyframes fableOrbit{0%{opacity:.7;transform:scale(1) rotate(0)}100%{opacity:.3;transform:scale(1.1) rotate(15deg)}}
+.mk-fable-node{position:absolute;top:var(--y);left:var(--x);transform:translate(-50%,-50%);font-family:var(--fm);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#fff;padding:5px 9px;background:rgba(10,8,16,.85);border:1px solid rgba(250,80,0,.45);border-radius:4px;backdrop-filter:blur(6px);z-index:3;animation:fableNodeIn .9s ease-out backwards;animation-delay:var(--d)}
+@keyframes fableNodeIn{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .mk-cover-glyph{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--fm);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;padding:5px 9px;border:1px solid rgba(255,255,255,.4);border-radius:4px;backdrop-filter:blur(8px);background:rgba(0,0,0,.4);font-weight:800;color:#fff;display:inline-flex;align-items:center;gap:.4rem}
 .mk-cover-glyph .star{color:var(--accent)}
 .mk-cover-glyph.r{left:auto;right:14px;color:#22c55e;border-color:#22c55e}
@@ -335,7 +352,12 @@ html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transpare
 .art-art .glyph.br{bottom:18px;right:20px;text-align:right}
 .art-art .center-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:8rem;font-weight:400;color:rgba(255,255,255,.06);letter-spacing:-4px;pointer-events:none;line-height:.85}
 
-/* THEME: MCP CLAUDE (featured) — connected nodes */
+/* THEME: FABLE MYTHOS (featured) — Anthropic constellation */
+.theme-fable{background:radial-gradient(circle at 50% 50%,#1a0a2e 0%,#080611 75%)}
+.theme-fable .fable-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.theme-fable::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 18% 22%,rgba(124,58,237,.18) 0%,transparent 30%),radial-gradient(circle at 82% 78%,rgba(250,80,0,.18) 0%,transparent 30%);pointer-events:none}
+
+/* THEME: MCP CLAUDE — connected nodes (kept for legacy) */
 .theme-mcp{background:radial-gradient(circle at 30% 40%,#2a1a14 0%,#0a0a0a 70%);}
 .theme-mcp .nodes-svg{position:absolute;inset:0;width:100%;height:100%}
 
@@ -465,6 +487,9 @@ body.modal-open{overflow:hidden}
 .feat-art::after,.art-art::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.45) 65%,rgba(0,0,0,.72) 100%)}
 .feat-art > .glyph,.feat-art > .center-num,.art-art > .glyph,.art-art > .center-num{z-index:2;position:absolute}
 .feat-art .nodes-svg,.art-art .waves,.art-art .cl-shape,.art-art .servers,.art-art .glass,.art-art .bubble,.art-art .ring,.art-art .core,.art-art .neural,.art-art .hub,.art-art .orbit,.art-art .micon{display:none!important}
+/* But the new fable-svg should remain visible — no hero-bg image on this card */
+.theme-fable .fable-svg{display:block!important}
+.theme-fable::after{display:none!important}
 
 </style>
 </head>
@@ -550,26 +575,35 @@ body.modal-open{overflow:hidden}
             <aside class="mk-side">
               <div class="mk-side-title">Newsroom · live</div>
               <ul>
-                <li class="active"><span class="mk-li-tag">Featured</span><span class="mk-li-text">MCP × Claude nativo</span></li>
+                <li class="active"><span class="mk-li-tag">Breaking</span><span class="mk-li-text">Fable Mythos × Hapee</span></li>
+                <li><span class="mk-li-tag" style="background:var(--accent)">Prod</span><span class="mk-li-text">MCP × Claude nativo</span></li>
                 <li><span class="mk-li-tag" style="background:#1e3a8a;color:#bfdbfe">Tech</span><span class="mk-li-text">ChatGPT 5.5 deploy</span></li>
                 <li><span class="mk-li-tag" style="background:#14532d;color:#bbf7d0">How</span><span class="mk-li-text">Automatiza tus RRSS</span></li>
                 <li><span class="mk-li-tag" style="background:var(--accent)">Prod</span><span class="mk-li-text">ElevenLabs voz ES-CL</span></li>
                 <li><span class="mk-li-tag" style="background:var(--accent-alt)">Event</span><span class="mk-li-text">Aperol · Santiago</span></li>
-                <li><span class="mk-li-tag" style="background:#1e3a8a;color:#bfdbfe">Tech</span><span class="mk-li-text">AWS Chile partner</span></li>
               </ul>
-              <div class="mk-side-foot"><span>Issue 01</span><span>Mayo 2026</span></div>
+              <div class="mk-side-foot"><span>Issue 01</span><span>Jun 2026</span></div>
             </aside>
 
             <!-- Main: featured story -->
             <main class="mk-main">
-              <a class="mk-cover" href="#mcp-claude" aria-label="Leer artículo destacado MCP × Claude">
-                <img src="img/rrss-jpg/hapee-mcp-post.jpg" alt="Hapee se conecta de forma nativa con Claude vía MCP">
-                <span class="mk-cover-glyph"><span class="star">★</span>Featured</span>
+              <a class="mk-cover mk-cover-fable" href="#fable-mythos" aria-label="Leer artículo destacado Fable Mythos × Hapee">
+                <!-- Animated constellation background -->
+                <div class="mk-fable-bg">
+                  <div class="mk-fable-core"></div>
+                  <div class="mk-fable-orbit mk-fable-orbit-1"></div>
+                  <div class="mk-fable-orbit mk-fable-orbit-2"></div>
+                  <span class="mk-fable-node" style="--x:18%;--y:22%;--d:0s">Claude</span>
+                  <span class="mk-fable-node" style="--x:78%;--y:18%;--d:.4s">Fable 5</span>
+                  <span class="mk-fable-node" style="--x:18%;--y:76%;--d:.8s">MCP</span>
+                  <span class="mk-fable-node" style="--x:80%;--y:78%;--d:1.2s">Claude Code</span>
+                </div>
+                <span class="mk-cover-glyph"><span class="star">★</span>Breaking</span>
                 <span class="mk-cover-glyph r">Now</span>
                 <div class="mk-cover-cta">
-                  <span class="mk-cover-tag">Producto</span>
-                  <h3 class="mk-cover-head">Hapee se conecta de forma nativa con Claude vía MCP</h3>
-                  <p class="mk-cover-exc">Primera plataforma de IA conversacional en LATAM con Model Context Protocol nativo de Anthropic.</p>
+                  <span class="mk-cover-tag">Anthropic · Producto</span>
+                  <h3 class="mk-cover-head">Fable Mythos × Hapee: el deal Anthropic más ambicioso de LATAM</h3>
+                  <p class="mk-cover-exc">Primera integración nativa con Fable Mythos vía Claude MCP. Stack construido con Claude Code.</p>
                   <span class="mk-cover-link">Leer artículo</span>
                 </div>
               </a>
@@ -628,65 +662,82 @@ body.modal-open{overflow:hidden}
 <!-- FEATURED -->
 <section class="featured">
   <div class="ctn">
-    <article class="feat-card" data-art="mcp" data-cat="producto">
-      <div class="feat-art theme-mcp">
-        <img class="hero-bg" loading="eager" decoding="async" fetchpriority="high" src="img/rrss-jpg/hapee-mcp-post.jpg" alt="">
-        <span class="glyph tl">Issue N°01 / Featured</span>
-        <span class="glyph tr">2026.05.07</span>
-        <span class="center-num">01</span>
-        <svg class="nodes-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+    <article class="feat-card" data-art="fable-mythos" data-cat="producto">
+      <div class="feat-art theme-fable">
+        <span class="glyph tl">Issue N°01 / Breaking</span>
+        <span class="glyph tr">2026.06.09</span>
+        <span class="center-num">F·M</span>
+        <!-- Fable Mythos animated nodes: Anthropic ↔ Hapee ↔ Claude Code -->
+        <svg class="fable-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
           <defs>
-            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="fg1" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#FA5000"/>
-              <stop offset="100%" stop-color="#CD2349"/>
+              <stop offset="50%" stop-color="#CD2349"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
             </linearGradient>
-            <radialGradient id="nodeg" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FA5000"/>
+            <radialGradient id="fcore" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="40%" stop-color="#FA5000"/>
               <stop offset="100%" stop-color="#CD2349"/>
             </radialGradient>
+            <filter id="fglow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
-          <line x1="300" y1="200" x2="120" y2="100" stroke="url(#g1)" stroke-width="1.5" opacity=".6">
-            <animate attributeName="opacity" values=".3;.9;.3" dur="3s" repeatCount="indefinite"/>
-          </line>
-          <line x1="300" y1="200" x2="480" y2="100" stroke="url(#g1)" stroke-width="1.5" opacity=".6">
-            <animate attributeName="opacity" values=".4;.9;.4" dur="3s" repeatCount="indefinite" begin=".5s"/>
-          </line>
-          <line x1="300" y1="200" x2="120" y2="300" stroke="url(#g1)" stroke-width="1.5" opacity=".6">
-            <animate attributeName="opacity" values=".3;.9;.3" dur="3s" repeatCount="indefinite" begin="1s"/>
-          </line>
-          <line x1="300" y1="200" x2="480" y2="300" stroke="url(#g1)" stroke-width="1.5" opacity=".6">
-            <animate attributeName="opacity" values=".4;.9;.4" dur="3s" repeatCount="indefinite" begin="1.5s"/>
-          </line>
-          <line x1="120" y1="100" x2="120" y2="300" stroke="url(#g1)" stroke-width="1" opacity=".3"/>
-          <line x1="480" y1="100" x2="480" y2="300" stroke="url(#g1)" stroke-width="1" opacity=".3"/>
-          <line x1="120" y1="100" x2="480" y2="100" stroke="url(#g1)" stroke-width="1" opacity=".2"/>
-          <line x1="120" y1="300" x2="480" y2="300" stroke="url(#g1)" stroke-width="1" opacity=".2"/>
-          <circle cx="300" cy="200" r="22" fill="url(#nodeg)"/>
-          <circle cx="300" cy="200" r="32" fill="none" stroke="#FA5000" stroke-width="1.5" opacity=".5">
-            <animate attributeName="r" values="22;42;22" dur="2.5s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values=".8;0;.8" dur="2.5s" repeatCount="indefinite"/>
-          </circle>
-          <text x="300" y="206" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#fff" letter-spacing="1">H</text>
-          <circle cx="120" cy="100" r="12" fill="#fff" opacity=".9"/>
-          <text x="120" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#000" font-weight="700">CLA</text>
-          <circle cx="480" cy="100" r="12" fill="rgba(250,80,0,.25)" stroke="#FA5000"/>
-          <text x="480" y="105" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" font-weight="700">API</text>
-          <circle cx="120" cy="300" r="12" fill="rgba(250,80,0,.25)" stroke="#FA5000"/>
-          <text x="120" y="305" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" font-weight="700">DB</text>
-          <circle cx="480" cy="300" r="12" fill="rgba(250,80,0,.25)" stroke="#FA5000"/>
-          <text x="480" y="305" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" font-weight="700">CRM</text>
+          <!-- Constellation -->
+          <g filter="url(#fglow)">
+            <!-- Central core: Fable Mythos -->
+            <circle cx="300" cy="200" r="38" fill="url(#fcore)"/>
+            <circle cx="300" cy="200" r="55" fill="none" stroke="#FA5000" stroke-width="1.5" opacity=".55">
+              <animate attributeName="r" values="38;75;38" dur="3.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".8;0;.8" dur="3.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="300" cy="200" r="80" fill="none" stroke="#CD2349" stroke-width="1" opacity=".35">
+              <animate attributeName="r" values="55;110;55" dur="4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".5;0;.5" dur="4s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Surrounding nodes -->
+            <line x1="300" y1="200" x2="115" y2="95" stroke="url(#fg1)" stroke-width="2" opacity=".7">
+              <animate attributeName="opacity" values=".3;1;.3" dur="2.4s" repeatCount="indefinite"/>
+            </line>
+            <line x1="300" y1="200" x2="485" y2="95" stroke="url(#fg1)" stroke-width="2" opacity=".7">
+              <animate attributeName="opacity" values=".4;1;.4" dur="2.4s" repeatCount="indefinite" begin=".4s"/>
+            </line>
+            <line x1="300" y1="200" x2="115" y2="305" stroke="url(#fg1)" stroke-width="2" opacity=".7">
+              <animate attributeName="opacity" values=".3;1;.3" dur="2.4s" repeatCount="indefinite" begin=".8s"/>
+            </line>
+            <line x1="300" y1="200" x2="485" y2="305" stroke="url(#fg1)" stroke-width="2" opacity=".7">
+              <animate attributeName="opacity" values=".4;1;.4" dur="2.4s" repeatCount="indefinite" begin="1.2s"/>
+            </line>
+            <line x1="300" y1="200" x2="300" y2="50" stroke="url(#fg1)" stroke-width="2" opacity=".5"/>
+            <line x1="300" y1="200" x2="300" y2="350" stroke="url(#fg1)" stroke-width="2" opacity=".5"/>
+            <!-- Node labels -->
+            <circle cx="115" cy="95" r="20" fill="#1a1a1a" stroke="#FA5000" stroke-width="1.5"/>
+            <text x="115" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#fff" font-weight="800">CLAUDE</text>
+            <circle cx="485" cy="95" r="20" fill="#1a1a1a" stroke="#CD2349" stroke-width="1.5"/>
+            <text x="485" y="100" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" font-weight="800">FABLE 5</text>
+            <circle cx="115" cy="305" r="20" fill="#1a1a1a" stroke="#FA5000" stroke-width="1.5"/>
+            <text x="115" y="309" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#fff" font-weight="800">MCP</text>
+            <circle cx="485" cy="305" r="20" fill="#1a1a1a" stroke="#FA5000" stroke-width="1.5"/>
+            <text x="485" y="309" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#fff" font-weight="800">CLA·CODE</text>
+            <circle cx="300" cy="50" r="14" fill="#1a1a1a" stroke="#FA5000"/>
+            <text x="300" y="54" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#fff" font-weight="800">ANTHROPIC</text>
+            <circle cx="300" cy="350" r="14" fill="#1a1a1a" stroke="#FA5000"/>
+            <text x="300" y="354" text-anchor="middle" font-family="JetBrains Mono" font-size="7" fill="#fff" font-weight="800">HAPEE</text>
+            <!-- Central label -->
+            <text x="300" y="195" text-anchor="middle" font-family="Bebas Neue" font-size="18" fill="#fff" letter-spacing="1.5" font-weight="400">FABLE</text>
+            <text x="300" y="213" text-anchor="middle" font-family="Bebas Neue" font-size="14" fill="#fff" letter-spacing="2" font-weight="400" opacity=".85">MYTHOS</text>
+          </g>
         </svg>
-        <span class="glyph bl">MCP / Native Integration</span>
-        <span class="glyph br">Anthropic Claude</span>
+        <span class="glyph bl">Anthropic × Hapee</span>
+        <span class="glyph br">Fable Mythos · Claude Code · MCP</span>
       </div>
       <div class="feat-body">
-        <div class="feat-tag">Producto · Featured</div>
-        <h2>Hapee se conecta de forma nativa con Claude vía MCP</h2>
-        <p class="feat-exc">Somos la primera plataforma de IA conversacional en Latam con conexión nativa al Model Context Protocol de Anthropic. Los agentes ahora razonan con Claude directamente, sin intermediarios.</p>
+        <div class="feat-tag">Producto · Breaking · Featured</div>
+        <h2>Fable Mythos × Hapee: la conexión Anthropic más ambiciosa de LATAM (vía Claude MCP + Claude Code)</h2>
+        <p class="feat-exc">Lanzamos la primera integración nativa con <strong>Fable Mythos</strong> — el nuevo modelo cinematográfico de Anthropic. Nuestros agentes razonan con Claude vía <strong>Model Context Protocol</strong>, y todo nuestro stack se construye y se itera en producción con <strong>Claude Code</strong>. Resultado: deploys en horas, no en semanas.</p>
         <div class="feat-meta">
-          <span>7 May 2026</span>
+          <span>9 Jun 2026</span>
           <span class="dot"></span>
-          <span>3 min de lectura</span>
+          <span>5 min de lectura</span>
           <span class="dot"></span>
           <span>Por Equipo Hapee</span>
         </div>

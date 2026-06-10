@@ -110,6 +110,17 @@ canvas.dragging{cursor:grabbing}
 
 .ov-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
 
+/* Mode select */
+.ov-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:520px;margin:0 auto 22px}
+.ov-mode{background:rgba(255,255,255,.04);border:1.5px solid var(--line);border-radius:12px;padding:18px 16px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;color:#fff;transition:.2s;font-family:var(--fb);position:relative;overflow:hidden}
+.ov-mode::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .25s}
+.ov-mode:hover{border-color:var(--accent);background:rgba(250,80,0,.06)}
+.ov-mode.selected{border-color:var(--accent);background:rgba(250,80,0,.1)}
+.ov-mode.selected::before{transform:scaleY(1);transform-origin:top}
+.ov-mode-icon{font-family:var(--fd);font-size:1.8rem;line-height:1;color:var(--accent)}
+.ov-mode-name{font-family:var(--fd);font-size:1.5rem;font-weight:400;letter-spacing:-.01em;color:#fff;line-height:1}
+.ov-mode-desc{font-family:var(--fm);font-size:.6rem;color:rgba(255,255,255,.65);letter-spacing:.15em;text-transform:uppercase;font-weight:600;line-height:1.4}
+
 .ov-best{display:inline-flex;align-items:center;gap:.5rem;margin-top:16px;font-family:var(--fm);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:#ffcc33;font-weight:800}
 .ov-best::before{content:'★';font-size:1.1em}
 
@@ -175,8 +186,20 @@ canvas.dragging{cursor:grabbing}
       <div class="ov-ctrl"><span class="keys"><kbd>Mouse</kbd></span><span class="desc">Apuntar / Click drag</span></div>
       <div class="ov-ctrl"><span class="keys"><kbd>Esc</kbd></span><span class="desc">Pausa</span></div>
     </div>
+    <div class="ov-modes">
+      <button class="ov-mode" data-mode="arena">
+        <span class="ov-mode-icon">▣</span>
+        <span class="ov-mode-name">Arena</span>
+        <span class="ov-mode-desc">Espacio abierto · 60s · clásico</span>
+      </button>
+      <button class="ov-mode" data-mode="funnel">
+        <span class="ov-mode-icon">▼</span>
+        <span class="ov-mode-name">Embudo Marketing</span>
+        <span class="ov-mode-desc">Awareness → Conversion · arena se achica por stages</span>
+      </button>
+    </div>
     <div class="ov-cta">
-      <button class="ov-btn" id="btnStart">▶ Empezar</button>
+      <button class="ov-btn" id="btnStart">▶ Empezar Arena</button>
     </div>
     <div class="ov-best" id="ovBest" style="display:none">Tu récord: <span id="ovBestScore">0</span> leads</div>
   </div>
@@ -243,6 +266,45 @@ const SPAM_RADIUS=0.85;
 const POWERUP_RADIUS=0.6;
 const GAME_TIME=60;
 
+/* Funnel mode config */
+const FUNNEL_STAGES=[
+  {name:'Awareness',  topHalf:ARENA_SIZE/2, botHalf:ARENA_SIZE/2,  duration:12, color:0x44ddff},
+  {name:'Interest',   topHalf:ARENA_SIZE/2, botHalf:16,            duration:12, color:0xfa5000},
+  {name:'Consider.',  topHalf:18,           botHalf:12,            duration:12, color:0xffcc33},
+  {name:'Intent',     topHalf:14,           botHalf:8,             duration:12, color:0xcd2349},
+  {name:'Conversion', topHalf:10,           botHalf:6,             duration:12, color:0x22c55e},
+];
+
+/* Game mode state */
+let gameMode='arena'; /* 'arena' | 'funnel' */
+let currentArenaHalf=ARENA_HALF;
+let currentTopHalf=ARENA_SIZE/2;
+let currentBotHalf=ARENA_SIZE/2;
+let funnelStageIdx=0;
+let funnelStageT=0;
+
+/* Helper: random arena point respecting current shape + margin */
+function arenaRandomPoint(margin=2){
+  const m=margin;
+  if(gameMode==='arena'){
+    return new THREE.Vector3((Math.random()-.5)*(currentArenaHalf*2-m*2),0.9,(Math.random()-.5)*(currentArenaHalf*2-m*2));
+  }
+  /* funnel: trapezoidal — narrow at bottom (positive Z), wide at top (negative Z) */
+  const tHalf=currentTopHalf-m;
+  const bHalf=currentBotHalf-m;
+  /* sample z in [-tHalf, +tHalf] proportional to trapezoid */
+  for(let i=0;i<8;i++){
+    const z=(Math.random()-.5)*ARENA_SIZE;
+    /* width at this z: lerp between top (z=-ARENA/2 → top width) and bottom (z=+ARENA/2 → bot width) */
+    const t=(z+ARENA_SIZE/2)/ARENA_SIZE; /* 0=top, 1=bot */
+    const wHalf=tHalf*(1-t)+bHalf*t;
+    if(wHalf<m)continue;
+    const x=(Math.random()-.5)*(wHalf*2);
+    return new THREE.Vector3(x,0.9,z);
+  }
+  return new THREE.Vector3(0,0.9,0);
+}
+
 /* ===== Scene ===== */
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x06060a);
@@ -308,7 +370,7 @@ grid.material.opacity=0.18;
 grid.material.transparent=true;
 scene.add(grid);
 
-/* Arena perimeter walls (glowing bars) */
+/* Arena perimeter walls (glowing bars) — dynamic for funnel mode */
 function makeWall(x,z,rotY,len){
   const g=new THREE.BoxGeometry(len,0.5,0.25);
   const m=new THREE.MeshStandardMaterial({color:0xfa5000,emissive:0xfa5000,emissiveIntensity:1.4,metalness:0.6,roughness:0.4});
@@ -319,10 +381,79 @@ function makeWall(x,z,rotY,len){
   scene.add(mesh);
   return mesh;
 }
-makeWall(0,-ARENA_SIZE/2,0,ARENA_SIZE);
-makeWall(0,ARENA_SIZE/2,0,ARENA_SIZE);
-makeWall(-ARENA_SIZE/2,0,Math.PI/2,ARENA_SIZE);
-makeWall(ARENA_SIZE/2,0,Math.PI/2,ARENA_SIZE);
+const wallTop=makeWall(0,-ARENA_SIZE/2,0,ARENA_SIZE);    /* far wall (z=-) */
+const wallBot=makeWall(0,ARENA_SIZE/2,0,ARENA_SIZE);     /* near wall (z=+) */
+const wallLeft=makeWall(-ARENA_SIZE/2,0,Math.PI/2,ARENA_SIZE);
+const wallRight=makeWall(ARENA_SIZE/2,0,Math.PI/2,ARENA_SIZE);
+
+/* Funnel-only side panels (triangle-shaped placeholder lines along trapezoid edges) */
+const funnelEdgeL=new THREE.Mesh(new THREE.BoxGeometry(0.18,0.4,ARENA_SIZE),new THREE.MeshStandardMaterial({color:0xfa5000,emissive:0xfa5000,emissiveIntensity:1.4,metalness:0.6,roughness:0.4}));
+funnelEdgeL.position.set(-ARENA_SIZE/2,0.2,0);
+funnelEdgeL.visible=false;
+scene.add(funnelEdgeL);
+const funnelEdgeR=funnelEdgeL.clone();
+funnelEdgeR.position.x=ARENA_SIZE/2;
+funnelEdgeR.visible=false;
+scene.add(funnelEdgeR);
+/* Floor-projected funnel guides */
+const funnelGuideL=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.02,ARENA_SIZE),new THREE.MeshBasicMaterial({color:0xfa5000,transparent:true,opacity:0.6}));
+funnelGuideL.position.set(-ARENA_SIZE/2,0.025,0);
+funnelGuideL.visible=false;
+scene.add(funnelGuideL);
+const funnelGuideR=funnelGuideL.clone();
+funnelGuideR.position.x=ARENA_SIZE/2;
+funnelGuideR.visible=false;
+scene.add(funnelGuideR);
+
+function updateArenaShape(){
+  if(gameMode==='arena'){
+    wallLeft.position.x=-ARENA_SIZE/2;
+    wallRight.position.x=ARENA_SIZE/2;
+    wallLeft.scale.y=1;wallRight.scale.y=1;
+    funnelEdgeL.visible=false;funnelEdgeR.visible=false;
+    funnelGuideL.visible=false;funnelGuideR.visible=false;
+    return;
+  }
+  /* funnel mode: tilt left+right walls into trapezoid */
+  /* hide straight side walls, show angled edges */
+  wallLeft.scale.y=0.001;wallRight.scale.y=0.001;
+  funnelEdgeL.visible=true;funnelEdgeR.visible=true;
+  funnelGuideL.visible=true;funnelGuideR.visible=true;
+  const tH=currentTopHalf, bH=currentBotHalf;
+  const dx=tH-bH; /* horizontal offset between top and bottom corners */
+  const len=Math.sqrt(ARENA_SIZE*ARENA_SIZE+dx*dx);
+  /* left edge: from (-tH, -ARENA/2) to (-bH, +ARENA/2) */
+  const lx=(-tH-bH)/2, lz=0;
+  const lAng=Math.atan2(dx,ARENA_SIZE); /* yaw */
+  funnelEdgeL.position.set(lx,0.2,lz);
+  funnelEdgeL.rotation.y=lAng;
+  funnelEdgeL.scale.z=len/ARENA_SIZE;
+  funnelGuideL.position.set(lx,0.025,lz);
+  funnelGuideL.rotation.y=lAng;
+  funnelGuideL.scale.z=len/ARENA_SIZE;
+  /* right edge mirrored */
+  const rx=(tH+bH)/2;
+  funnelEdgeR.position.set(rx,0.2,lz);
+  funnelEdgeR.rotation.y=-lAng;
+  funnelEdgeR.scale.z=len/ARENA_SIZE;
+  funnelGuideR.position.set(rx,0.025,lz);
+  funnelGuideR.rotation.y=-lAng;
+  funnelGuideR.scale.z=len/ARENA_SIZE;
+}
+
+/* Clamp position to current arena (handles funnel trapezoid) */
+function clampToArena(pos,margin=1){
+  if(gameMode==='arena'){
+    pos.x=Math.max(-currentArenaHalf+margin,Math.min(currentArenaHalf-margin,pos.x));
+    pos.z=Math.max(-currentArenaHalf+margin,Math.min(currentArenaHalf-margin,pos.z));
+    return;
+  }
+  /* funnel: width at this z */
+  pos.z=Math.max(-ARENA_SIZE/2+margin,Math.min(ARENA_SIZE/2-margin,pos.z));
+  const t=(pos.z+ARENA_SIZE/2)/ARENA_SIZE; /* 0=top wide, 1=bot narrow */
+  const wHalf=currentTopHalf*(1-t)+currentBotHalf*t;
+  pos.x=Math.max(-wHalf+margin,Math.min(wHalf-margin,pos.x));
+}
 
 /* Corner pillars */
 for(const [x,z] of [[-1,-1],[1,-1],[-1,1],[1,1]]){
@@ -347,38 +478,134 @@ for(let i=0;i<14;i++){
   tilePulses.push({mesh:tile,phase:Math.random()*Math.PI*2,speed:0.6+Math.random()*0.6,col});
 }
 
-/* ===== Player (robot billboard sprite) ===== */
-const texLoader=new THREE.TextureLoader();
-const robotTex=texLoader.load('img/robot.png',(t)=>{t.anisotropy=4;});
-robotTex.colorSpace=THREE.SRGBColorSpace;
-
+/* ===== Player · ROBOT 3D PROCEDURAL ===== */
 const playerGroup=new THREE.Group();
 playerGroup.position.set(0,1.1,0);
 scene.add(playerGroup);
 
-const robotMat=new THREE.MeshStandardMaterial({map:robotTex,transparent:true,alphaTest:0.08,emissiveMap:robotTex,emissive:0xfa5000,emissiveIntensity:0.55,side:THREE.DoubleSide,depthWrite:false});
-const robotMesh=new THREE.Mesh(new THREE.PlaneGeometry(2.2,2.2),robotMat);
-robotMesh.position.y=0;
-robotMesh.castShadow=true;
-playerGroup.add(robotMesh);
+/* Materials reused for the whole robot */
+const matShell=new THREE.MeshStandardMaterial({color:0xf5f5f8,metalness:0.35,roughness:0.32,emissive:0xfa5000,emissiveIntensity:0.06});
+const matDark=new THREE.MeshStandardMaterial({color:0x0a0a14,metalness:0.85,roughness:0.18});
+const matVisor=new THREE.MeshStandardMaterial({color:0x0a0a14,metalness:0.92,roughness:0.08,emissive:0xfa5000,emissiveIntensity:0.45});
+const matAccent=new THREE.MeshStandardMaterial({color:0xfa5000,metalness:0.55,roughness:0.28,emissive:0xfa5000,emissiveIntensity:1.2});
+const matEye=new THREE.MeshBasicMaterial({color:0x44ddff});
+const matChest=new THREE.MeshStandardMaterial({color:0xfa5000,metalness:0.5,roughness:0.3,emissive:0xfa5000,emissiveIntensity:1.6});
 
-/* Glow disc under robot */
+/* HEAD assembly (slightly larger, dome on top) */
+const head=new THREE.Group();
+head.position.y=0.95;
+playerGroup.add(head);
+
+const headSphere=new THREE.Mesh(new THREE.SphereGeometry(0.5,32,24),matShell);
+headSphere.castShadow=true;
+head.add(headSphere);
+
+/* Visor — curved cylinder section wrapping around the head */
+const visor=new THREE.Mesh(new THREE.SphereGeometry(0.52,32,16,0,Math.PI*2,Math.PI*0.30,Math.PI*0.32),matVisor);
+visor.rotation.x=Math.PI*0.04;
+head.add(visor);
+
+/* Eyes (two glowing dots inside visor) */
+const eyeL=new THREE.Mesh(new THREE.SphereGeometry(0.055,12,12),matEye);
+eyeL.position.set(-0.16,0.05,0.45);
+const eyeR=new THREE.Mesh(new THREE.SphereGeometry(0.055,12,12),matEye);
+eyeR.position.set(0.16,0.05,0.45);
+head.add(eyeL,eyeR);
+
+/* Ear/processor ports */
+const earL=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.12,12),matDark);
+earL.rotation.z=Math.PI/2;
+earL.position.set(-0.5,0,0);
+const earR=earL.clone();
+earR.position.x=0.5;
+head.add(earL,earR);
+
+/* Antenna */
+const antRod=new THREE.Mesh(new THREE.CylinderGeometry(0.035,0.035,0.4,10),matShell);
+antRod.position.y=0.7;
+head.add(antRod);
+const antBall=new THREE.Mesh(new THREE.SphereGeometry(0.09,16,16),matAccent);
+antBall.position.y=0.95;
+head.add(antBall);
+const antLight=new THREE.PointLight(0xfa5000,0.5,3,2);
+antLight.position.y=0.95;
+head.add(antLight);
+
+/* BODY — capsule */
+const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.45,0.55,12,20),matShell);
+body.position.y=0.2;
+body.castShadow=true;
+playerGroup.add(body);
+
+/* Chest insignia — Hapee glow + ring */
+const chestRing=new THREE.Mesh(new THREE.TorusGeometry(0.16,0.025,12,28),matAccent);
+chestRing.position.set(0,0.3,0.42);
+chestRing.rotation.x=-Math.PI*0.05;
+playerGroup.add(chestRing);
+const chestCore=new THREE.Mesh(new THREE.SphereGeometry(0.085,16,16),matChest);
+chestCore.position.set(0,0.3,0.43);
+playerGroup.add(chestCore);
+
+/* Belt */
+const belt=new THREE.Mesh(new THREE.TorusGeometry(0.48,0.045,12,28),matDark);
+belt.position.y=-0.15;
+belt.rotation.x=Math.PI/2;
+playerGroup.add(belt);
+
+/* ARMS — group so we can swing them */
+const armL=new THREE.Group();
+armL.position.set(-0.62,0.18,0);
+playerGroup.add(armL);
+const armLShoulder=new THREE.Mesh(new THREE.SphereGeometry(0.18,16,16),matShell);
+armLShoulder.castShadow=true;
+armL.add(armLShoulder);
+const armLForearm=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.1,0.35,12),matShell);
+armLForearm.position.y=-0.25;
+armL.add(armLForearm);
+const armLHand=new THREE.Mesh(new THREE.SphereGeometry(0.13,16,16),matAccent);
+armLHand.position.y=-0.48;
+armL.add(armLHand);
+
+const armR=armL.clone();
+armR.position.x=0.62;
+playerGroup.add(armR);
+
+/* BASE — hover ring instead of legs (robot floats) */
+const base=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.55,0.25,18),matDark);
+base.position.y=-0.55;
+base.castShadow=true;
+playerGroup.add(base);
+const baseEmit=new THREE.Mesh(new THREE.TorusGeometry(0.5,0.05,10,32),matAccent);
+baseEmit.position.y=-0.62;
+baseEmit.rotation.x=Math.PI/2;
+playerGroup.add(baseEmit);
+
+/* Aura disc under robot — colored by state */
 const playerDiscMat=new THREE.MeshBasicMaterial({color:0xfa5000,transparent:true,opacity:0.55,side:THREE.DoubleSide});
-const playerDisc=new THREE.Mesh(new THREE.RingGeometry(0.9,1.4,32),playerDiscMat);
+const playerDisc=new THREE.Mesh(new THREE.RingGeometry(0.65,1.2,40),playerDiscMat);
 playerDisc.rotation.x=-Math.PI/2;
 playerDisc.position.y=-1.05;
 playerGroup.add(playerDisc);
 
-/* Shadow disc (cheaper than real shadow on top of receiveShadow floor) */
-const shadowDisc=new THREE.Mesh(new THREE.CircleGeometry(1.1,24),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0.35}));
+/* Shadow disc */
+const shadowDisc=new THREE.Mesh(new THREE.CircleGeometry(0.95,28),new THREE.MeshBasicMaterial({color:0x000000,transparent:true,opacity:0.4}));
 shadowDisc.rotation.x=-Math.PI/2;
 shadowDisc.position.y=-1.085;
 playerGroup.add(shadowDisc);
+
+/* Hover boosters — two small particles below the robot */
+const boosterMat=new THREE.MeshBasicMaterial({color:0x44ddff,transparent:true,opacity:0.9});
+const boosterL=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),boosterMat);
+boosterL.position.set(-0.25,-0.7,0);
+const boosterR=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),boosterMat);
+boosterR.position.set(0.25,-0.7,0);
+playerGroup.add(boosterL,boosterR);
 
 const player={
   group:playerGroup,
   vel:new THREE.Vector3(0,0,0),
   speed:11,
+  baseSpeed:11,
   accel:55,
   decel:30,
   health:3,
@@ -387,30 +614,99 @@ const player={
   hasShield:false,
   hasMagnet:0,
   hasSlowmo:0,
+  hasBoost:0,
+  /* refs */
+  head, body, armL, armR, chestCore, chestRing, baseEmit, boosterL, boosterR, playerDisc, antBall, antLight, eyeL, eyeR,
+  facing:0, /* yaw angle in radians */
 };
 
-/* ===== Collectibles ===== */
+/* ===== Collectibles · LEADS (with decay) ===== */
 const leadGeom=new THREE.IcosahedronGeometry(LEAD_RADIUS,1);
+const LEAD_LIFETIME=10; /* seconds before lead "leaks" */
 function makeLead(){
   const mat=new THREE.MeshStandardMaterial({color:0xfa5000,emissive:0xfa5000,emissiveIntensity:1.8,metalness:0.3,roughness:0.2});
   const lead=new THREE.Mesh(leadGeom,mat);
   lead.castShadow=true;
-  // halo
+  /* halo ring */
   const halo=new THREE.Mesh(new THREE.RingGeometry(LEAD_RADIUS*1.2,LEAD_RADIUS*1.7,28),new THREE.MeshBasicMaterial({color:0xfa5000,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
   halo.rotation.x=-Math.PI/2;
-  lead.userData={type:'lead',halo,spin:1+Math.random()*2,phase:Math.random()*Math.PI*2};
+  /* decay ring (visual countdown — shrinks as lifetime burns) */
+  const decay=new THREE.Mesh(new THREE.RingGeometry(LEAD_RADIUS*1.85,LEAD_RADIUS*2.1,32,1,0,Math.PI*2),new THREE.MeshBasicMaterial({color:0xfa5000,transparent:true,opacity:0.45,side:THREE.DoubleSide}));
+  decay.rotation.x=-Math.PI/2;
+  lead.userData={type:'lead',halo,decay,spin:1+Math.random()*2,phase:Math.random()*Math.PI*2,life:LEAD_LIFETIME,beingDrained:null};
   return lead;
 }
 const leads=[];
 function spawnLead(){
   const lead=makeLead();
-  let p;
-  do{p=new THREE.Vector3((Math.random()-.5)*(ARENA_SIZE-4),0.9,(Math.random()-.5)*(ARENA_SIZE-4))}while(p.distanceTo(player.group.position)<4);
+  let p,tries=0;
+  do{p=arenaRandomPoint(2);tries++;if(tries>20)break}while(p.distanceTo(player.group.position)<4);
   lead.position.copy(p);
   lead.userData.halo.position.set(p.x,0.015,p.z);
+  lead.userData.decay.position.set(p.x,0.02,p.z);
   scene.add(lead);
   scene.add(lead.userData.halo);
+  scene.add(lead.userData.decay);
   leads.push(lead);
+}
+function removeLead(lead){
+  scene.remove(lead);
+  if(lead.userData.halo)scene.remove(lead.userData.halo);
+  if(lead.userData.decay)scene.remove(lead.userData.decay);
+  const i=leads.indexOf(lead);
+  if(i>=0)leads.splice(i,1);
+}
+
+/* ===== Ad Campaign vortexes (steal leads) ===== */
+function makeAdCampaign(){
+  const grp=new THREE.Group();
+  const platforms=[{c:0x1877f2,l:'META'},{c:0xea4335,l:'GOOG'},{c:0x000000,l:'TT'},{c:0x0a66c2,l:'LIN'}];
+  const pick=platforms[Math.floor(Math.random()*platforms.length)];
+  /* outer vortex ring */
+  const ringMat=new THREE.MeshBasicMaterial({color:pick.c,transparent:true,opacity:0.85,side:THREE.DoubleSide});
+  const ring1=new THREE.Mesh(new THREE.TorusGeometry(0.85,0.12,12,32),ringMat);
+  ring1.rotation.x=Math.PI/2;
+  grp.add(ring1);
+  const ring2=new THREE.Mesh(new THREE.TorusGeometry(1.1,0.05,10,28),new THREE.MeshBasicMaterial({color:pick.c,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
+  ring2.rotation.x=Math.PI/2;
+  grp.add(ring2);
+  /* inner core (dark gravity well) */
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.45,24,18),new THREE.MeshStandardMaterial({color:0x0a0a0a,metalness:0.95,roughness:0.1,emissive:pick.c,emissiveIntensity:0.55}));
+  grp.add(core);
+  /* "platform" disc on top */
+  const disc=new THREE.Mesh(new THREE.CircleGeometry(0.35,24),new THREE.MeshStandardMaterial({color:pick.c,emissive:pick.c,emissiveIntensity:1.3,side:THREE.DoubleSide}));
+  disc.rotation.x=-Math.PI/2;
+  disc.position.y=0.55;
+  grp.add(disc);
+  /* ground halo */
+  const halo=new THREE.Mesh(new THREE.RingGeometry(0.95,1.4,32),new THREE.MeshBasicMaterial({color:pick.c,transparent:true,opacity:0.45,side:THREE.DoubleSide}));
+  halo.rotation.x=-Math.PI/2;
+  /* danger pulse */
+  const danger=new THREE.Mesh(new THREE.RingGeometry(2.0,2.3,40),new THREE.MeshBasicMaterial({color:pick.c,transparent:true,opacity:0.18,side:THREE.DoubleSide}));
+  danger.rotation.x=-Math.PI/2;
+  grp.userData={type:'adcampaign',ring1,ring2,core,disc,halo,danger,platform:pick,life:14,drainCooldown:0,drainBeam:null};
+  return {grp,halo,danger};
+}
+const adCampaigns=[];
+function spawnAdCampaign(){
+  const obj=makeAdCampaign();
+  let p,tries=0;
+  do{p=arenaRandomPoint(6);tries++;if(tries>20)break}while(p.distanceTo(player.group.position)<8);
+  obj.grp.position.set(p.x,1.0,p.z);
+  obj.halo.position.set(p.x,0.025,p.z);
+  obj.danger.position.set(p.x,0.018,p.z);
+  scene.add(obj.grp);
+  scene.add(obj.halo);
+  scene.add(obj.danger);
+  adCampaigns.push(obj.grp);
+}
+function removeAdCampaign(ad){
+  scene.remove(ad);
+  if(ad.userData.halo)scene.remove(ad.userData.halo);
+  if(ad.userData.danger)scene.remove(ad.userData.danger);
+  if(ad.userData.drainBeam){scene.remove(ad.userData.drainBeam);ad.userData.drainBeam=null}
+  const i=adCampaigns.indexOf(ad);
+  if(i>=0)adCampaigns.splice(i,1);
 }
 
 /* ===== Obstacles (spam bugs) ===== */
@@ -434,19 +730,20 @@ function makeSpam(){
 const spams=[];
 function spawnSpam(){
   const s=makeSpam();
-  let p;
-  do{p=new THREE.Vector3((Math.random()-.5)*(ARENA_SIZE-6),0.9,(Math.random()-.5)*(ARENA_SIZE-6))}while(p.distanceTo(player.group.position)<6);
+  let p,tries=0;
+  do{p=arenaRandomPoint(3);tries++;if(tries>20)break}while(p.distanceTo(player.group.position)<6);
   s.position.copy(p);
   scene.add(s);
   spams.push(s);
 }
 
 /* ===== Powerups ===== */
-const PU_TYPES=['shield','magnet','slowmo','health'];
+const PU_TYPES=['shield','magnet','slowmo','health','boost'];
+const PU_COLORS={shield:0x44ddff,magnet:0xffcc33,slowmo:0xcc88ff,health:0x22c55e,boost:0xff8a3a};
+const PU_LABELS={shield:'SHIELD',magnet:'MAGNET',slowmo:'SLOW-MO',health:'+HEALTH',boost:'BOOST'};
 function makePowerup(type){
-  const colors={shield:0x44ddff,magnet:0xffcc33,slowmo:0xcc88ff,health:0x22c55e};
   const g=new THREE.OctahedronGeometry(POWERUP_RADIUS,0);
-  const col=colors[type];
+  const col=PU_COLORS[type];
   const m=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:2.0,metalness:0.6,roughness:0.15});
   const pu=new THREE.Mesh(g,m);
   pu.castShadow=true;
@@ -459,14 +756,13 @@ const powerups=[];
 function spawnPowerup(){
   const t=PU_TYPES[Math.floor(Math.random()*PU_TYPES.length)];
   const pu=makePowerup(t);
-  let p;
-  do{p=new THREE.Vector3((Math.random()-.5)*(ARENA_SIZE-8),1.0,(Math.random()-.5)*(ARENA_SIZE-8))}while(p.distanceTo(player.group.position)<5);
+  let p,tries=0;
+  do{p=arenaRandomPoint(4);tries++;if(tries>20)break}while(p.distanceTo(player.group.position)<5);
   pu.position.copy(p);
   pu.userData.halo.position.set(p.x,0.018,p.z);
   scene.add(pu);
   scene.add(pu.userData.halo);
   powerups.push(pu);
-  // auto-despawn after 10s
   setTimeout(()=>{
     const i=powerups.indexOf(pu);
     if(i>=0){scene.remove(pu);scene.remove(pu.userData.halo);powerups.splice(i,1);}
@@ -626,32 +922,48 @@ function updatePointerWorld(){
 
 /* ===== Reset / start ===== */
 function clearWorld(){
-  leads.slice().forEach(l=>{scene.remove(l);scene.remove(l.userData.halo)});
-  leads.length=0;
+  leads.slice().forEach(l=>removeLead(l));
   spams.slice().forEach(s=>scene.remove(s));
   spams.length=0;
   powerups.slice().forEach(p=>{scene.remove(p);scene.remove(p.userData.halo)});
   powerups.length=0;
+  adCampaigns.slice().forEach(ad=>removeAdCampaign(ad));
   burstPool.slice().forEach(p=>scene.remove(p));
   burstPool.length=0;
 }
 
-function startGame(){
+function startGame(mode){
+  if(mode)gameMode=mode;
   clearWorld();
   state='playing';
   score=0;combo=1;maxCombo=1;leadsCollected=0;attempts=0;leadsMissed=0;
   timeLeft=GAME_TIME;
   player.health=player.maxHealth;
   player.invulnUntil=0;
-  player.hasShield=false;player.hasMagnet=0;player.hasSlowmo=0;
+  player.hasShield=false;player.hasMagnet=0;player.hasSlowmo=0;player.hasBoost=0;
   player.group.position.set(0,1.1,0);
   player.vel.set(0,0,0);
+  player.facing=0;
+  spamSpawnTimer=0;powerupSpawnTimer=0;adSpawnTimer=0;
+  /* Arena/funnel reset */
+  if(gameMode==='funnel'){
+    funnelStageIdx=0;funnelStageT=0;
+    currentTopHalf=FUNNEL_STAGES[0].topHalf;
+    currentBotHalf=FUNNEL_STAGES[0].botHalf;
+    currentArenaHalf=ARENA_HALF;
+  }else{
+    currentTopHalf=ARENA_SIZE/2;
+    currentBotHalf=ARENA_SIZE/2;
+    currentArenaHalf=ARENA_HALF;
+  }
+  updateArenaShape();
   for(let i=0;i<7;i++)spawnLead();
   for(let i=0;i<3;i++)spawnSpam();
   updateHud();
   $ovStart.classList.add('hidden');
   $ovPause.classList.add('hidden');
   $ovEnd.classList.add('hidden');
+  if(gameMode==='funnel')floatCombo(FUNNEL_STAGES[0].name.toUpperCase());
   sfxStart();
 }
 
@@ -677,15 +989,30 @@ function togglePause(){
 }
 
 /* ===== Buttons ===== */
-document.getElementById('btnStart').addEventListener('click',startGame);
-document.getElementById('btnRetry').addEventListener('click',startGame);
+/* Mode selector */
+let selectedMode='arena';
+const modeBtns=document.querySelectorAll('.ov-mode');
+modeBtns.forEach(b=>{
+  b.addEventListener('click',()=>{
+    selectedMode=b.dataset.mode;
+    modeBtns.forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');
+    document.getElementById('btnStart').textContent=selectedMode==='funnel'?'▶ Empezar Embudo':'▶ Empezar Arena';
+  });
+});
+/* default arena selected */
+modeBtns[0].classList.add('selected');
+
+document.getElementById('btnStart').addEventListener('click',()=>startGame(selectedMode));
+document.getElementById('btnRetry').addEventListener('click',()=>startGame(gameMode));
 document.getElementById('btnResume').addEventListener('click',togglePause);
-document.getElementById('btnPauseRestart').addEventListener('click',startGame);
+document.getElementById('btnPauseRestart').addEventListener('click',()=>startGame(gameMode));
 
 /* ===== Spawning cadence ===== */
 let spamSpawnTimer=0;
 let powerupSpawnTimer=0;
 let powerupSpawnInterval=12;
+let adSpawnTimer=0;
 
 /* ===== Main loop ===== */
 function loop(now){
@@ -724,25 +1051,55 @@ function loop(now){
       if(to.length()>0.5){wish.copy(to.normalize())}
     }
 
-    /* Accel/decel */
-    const targetVel=wish.clone().multiplyScalar(player.speed);
+    /* Speed (boost gives +60%) */
+    const curSpeed=player.baseSpeed*(player.hasBoost>0?1.6:1);
+    const targetVel=wish.clone().multiplyScalar(curSpeed);
     const accel=wish.lengthSq()>0?player.accel:player.decel;
-    player.vel.x+=(targetVel.x-player.vel.x)*Math.min(1,accel*dts/player.speed);
-    player.vel.z+=(targetVel.z-player.vel.z)*Math.min(1,accel*dts/player.speed);
+    player.vel.x+=(targetVel.x-player.vel.x)*Math.min(1,accel*dts/curSpeed);
+    player.vel.z+=(targetVel.z-player.vel.z)*Math.min(1,accel*dts/curSpeed);
 
     player.group.position.x+=player.vel.x*dts;
     player.group.position.z+=player.vel.z*dts;
-    /* clamp */
-    player.group.position.x=Math.max(-ARENA_HALF,Math.min(ARENA_HALF,player.group.position.x));
-    player.group.position.z=Math.max(-ARENA_HALF,Math.min(ARENA_HALF,player.group.position.z));
+    clampToArena(player.group.position,1);
 
-    /* Bob */
-    robotMesh.position.y=Math.sin(now*0.005)*0.08;
+    /* Idle hover + bob */
+    playerGroup.position.y=1.1+Math.sin(now*0.003)*0.09;
 
-    /* Billboard robot toward camera (around Y axis only) */
-    const dx=camera.position.x-player.group.position.x;
-    const dz=camera.position.z-player.group.position.z;
-    robotMesh.rotation.y=Math.atan2(dx,dz);
+    /* Face movement direction (yaw, smoothed) */
+    if(player.vel.lengthSq()>0.5){
+      const targetFacing=Math.atan2(player.vel.x,player.vel.z);
+      /* shortest-path angle wrap */
+      let diff=targetFacing-player.facing;
+      while(diff>Math.PI)diff-=Math.PI*2;
+      while(diff<-Math.PI)diff+=Math.PI*2;
+      player.facing+=diff*0.18;
+    }
+    playerGroup.rotation.y=player.facing;
+
+    /* Animate robot parts */
+    const animT=now*0.005;
+    const moving=player.vel.lengthSq()>1;
+    const animSpd=moving?animT*2:animT;
+    player.head.rotation.z=Math.sin(animT*0.8)*0.05;
+    player.head.rotation.x=Math.sin(animT*0.6)*0.03;
+    player.armL.rotation.x=Math.sin(animSpd)*(moving?0.5:0.18);
+    player.armR.rotation.x=-Math.sin(animSpd)*(moving?0.5:0.18);
+    player.armL.rotation.z=Math.sin(animT*0.3)*0.08-0.06;
+    player.armR.rotation.z=-Math.sin(animT*0.3)*0.08+0.06;
+    player.chestCore.material.emissiveIntensity=1.4+Math.sin(animT*2)*0.6;
+    player.chestRing.rotation.z=animT*0.3;
+    player.baseEmit.rotation.y=-animT;
+    player.boosterL.material.opacity=0.7+Math.sin(animT*8)*0.3;
+    player.boosterR.material.opacity=0.7+Math.sin(animT*8+1)*0.3;
+    player.boosterL.scale.y=moving?(1.3+Math.sin(animT*12)*0.2):1;
+    player.boosterR.scale.y=moving?(1.3+Math.sin(animT*12+2)*0.2):1;
+    player.antBall.scale.setScalar(1+Math.sin(animT*3)*0.15);
+    player.antLight.intensity=0.4+Math.sin(animT*3)*0.3;
+    /* eyes blink occasionally */
+    const blink=(Math.sin(now*0.0008+1.4)*0.5+0.5);
+    const blinkY=blink>0.985?0.05:1;
+    player.eyeL.scale.y=blinkY;
+    player.eyeR.scale.y=blinkY;
 
     /* Camera follows player */
     const camTarget=new THREE.Vector3(player.group.position.x*0.6,CAM_BASE.y,player.group.position.z*0.6+CAM_BASE.z);
@@ -756,24 +1113,78 @@ function loop(now){
     }else{camera.position.y+=(CAM_BASE.y-camera.position.y)*0.1;}
     camera.lookAt(player.group.position.x*0.45,0,player.group.position.z*0.45);
 
-    /* Leads */
+    /* Leads — with lifetime decay + magnet + ad-campaign drain */
     for(let i=leads.length-1;i>=0;i--){
       const l=leads[i];
       l.rotation.x+=dts*l.userData.spin*0.7;
       l.rotation.y+=dts*l.userData.spin;
       const phase=l.userData.phase+now*0.003;
       l.position.y=0.9+Math.sin(phase)*0.25;
-      l.userData.halo.material.opacity=0.35+Math.sin(phase*1.3)*0.18;
+
+      /* decay timer */
+      l.userData.life-=dt;
+      const lifeRatio=Math.max(0,l.userData.life/LEAD_LIFETIME);
+      /* tint: orange → red as it expires */
+      const lcol=l.material.color;
+      lcol.setRGB(1,0.31*lifeRatio+0.16*(1-lifeRatio),lifeRatio*lifeRatio*0.3);
+      l.material.emissive.copy(lcol);
+      l.material.emissiveIntensity=0.8+lifeRatio*1.2;
+      /* decay ring shrinks via geometry swap — just scale via opacity + size hint */
+      l.userData.decay.material.opacity=0.45*lifeRatio+0.1*(1-lifeRatio);
+      l.userData.decay.scale.setScalar(lifeRatio*0.95+0.4);
+      if(l.userData.life<=0){
+        burst(l.position,0xff4444,10,5);
+        removeLead(l);
+        leadsMissed++;
+        if(combo>1){combo=1;updateHud();}
+        floatCombo('LEAK -');
+        spawnLead();
+        continue;
+      }
+
+      /* halo opacity pulse */
+      l.userData.halo.material.opacity=(0.3+Math.sin(phase*1.3)*0.18)*(0.6+lifeRatio*0.4);
+
       /* magnet pull */
       if(player.hasMagnet>0){
         const toP=player.group.position.clone().sub(l.position);
         toP.y=0;
         const d=toP.length();
-        if(d<10){toP.normalize().multiplyScalar(8*dts*(1-d/12));l.position.add(toP);l.userData.halo.position.x=l.position.x;l.userData.halo.position.z=l.position.z;}
+        if(d<10){toP.normalize().multiplyScalar(8*dts*(1-d/12));l.position.add(toP);l.userData.halo.position.x=l.position.x;l.userData.halo.position.z=l.position.z;l.userData.decay.position.x=l.position.x;l.userData.decay.position.z=l.position.z;}
       }
+
+      /* ad-campaign drain pull */
+      let nearestAd=null,nearestAdDist=999;
+      for(const ad of adCampaigns){
+        const d=ad.position.distanceTo(l.position);
+        if(d<6 && d<nearestAdDist){nearestAd=ad;nearestAdDist=d;}
+      }
+      if(nearestAd && nearestAd.userData.drainCooldown<=0){
+        const to=nearestAd.position.clone().sub(l.position);
+        to.y=0;
+        to.normalize().multiplyScalar(3.5*dts*(1-nearestAdDist/8));
+        l.position.add(to);
+        l.userData.halo.position.x=l.position.x;l.userData.halo.position.z=l.position.z;
+        l.userData.decay.position.x=l.position.x;l.userData.decay.position.z=l.position.z;
+        /* visual beam from ad to lead */
+        l.userData.beingDrained=nearestAd;
+        /* if it reaches the ad → leak */
+        if(nearestAdDist<1.2){
+          burst(l.position,0xff4444,14,7);
+          removeLead(l);
+          leadsMissed++;
+          if(combo>1){combo=1;updateHud();}
+          floatCombo('LEAK -');
+          nearestAd.userData.drainCooldown=1.5;
+          spawnLead();
+          continue;
+        }
+      }else{l.userData.beingDrained=null}
+
+      /* collect by player */
       const d2=l.position.distanceTo(player.group.position);
       if(d2<PLAYER_RADIUS+LEAD_RADIUS){
-        scene.remove(l);scene.remove(l.userData.halo);leads.splice(i,1);
+        removeLead(l);
         const gain=10*combo;
         score+=gain;
         comboTimer=2.6;
@@ -788,14 +1199,47 @@ function loop(now){
       }
     }
 
+    /* Ad campaigns */
+    for(let i=adCampaigns.length-1;i>=0;i--){
+      const ad=adCampaigns[i];
+      ad.userData.ring1.rotation.z+=dts*1.5;
+      ad.userData.ring2.rotation.z-=dts*2.2;
+      ad.userData.disc.rotation.z+=dts*0.6;
+      ad.userData.life-=dt;
+      if(ad.userData.drainCooldown>0)ad.userData.drainCooldown-=dt;
+      const pulse=Math.sin(now*0.005)*0.5+0.5;
+      ad.userData.danger.material.opacity=0.12+pulse*0.18;
+      ad.userData.danger.scale.setScalar(1+pulse*0.25);
+      ad.userData.halo.material.opacity=0.35+pulse*0.25;
+      /* despawn after life */
+      if(ad.userData.life<=0){
+        burst(ad.position,ad.userData.platform.c,18,9);
+        removeAdCampaign(ad);
+        continue;
+      }
+      /* player destroys ad campaign on touch */
+      const d=ad.position.distanceTo(player.group.position);
+      if(d<PLAYER_RADIUS+0.85){
+        burst(ad.position,ad.userData.platform.c,22,11);
+        score+=15*combo;
+        sfxPower();
+        floatCombo('AD KILL');
+        removeAdCampaign(ad);
+      }
+    }
+
     /* Spams */
     for(let i=spams.length-1;i>=0;i--){
       const s=spams[i];
+      const before=s.position.clone();
       s.position.add(s.userData.dir.clone().multiplyScalar(s.userData.speed*dts));
       s.rotation.x+=dts*s.userData.spinX;
       s.rotation.y+=dts*s.userData.spinY;
-      if(Math.abs(s.position.x)>ARENA_HALF-1){s.userData.dir.x*=-1;s.position.x=Math.sign(s.position.x)*(ARENA_HALF-1);}
-      if(Math.abs(s.position.z)>ARENA_HALF-1){s.userData.dir.z*=-1;s.position.z=Math.sign(s.position.z)*(ARENA_HALF-1);}
+      /* clamp + bounce on arena edges (works for funnel too) */
+      const clamped=s.position.clone();
+      clampToArena(clamped,1);
+      if(clamped.x!==s.position.x){s.userData.dir.x*=-1;s.position.x=clamped.x;}
+      if(clamped.z!==s.position.z){s.userData.dir.z*=-1;s.position.z=clamped.z;}
       const d2=s.position.distanceTo(player.group.position);
       if(d2<PLAYER_RADIUS+SPAM_RADIUS && now>player.invulnUntil){
         if(player.hasShield){
@@ -833,7 +1277,8 @@ function loop(now){
         else if(t==='magnet')player.hasMagnet=6;
         else if(t==='slowmo')player.hasSlowmo=4;
         else if(t==='health')player.health=Math.min(player.maxHealth,player.health+1);
-        floatCombo({shield:'SHIELD',magnet:'MAGNET',slowmo:'SLOW-MO',health:'+HEALTH'}[t]);
+        else if(t==='boost')player.hasBoost=5;
+        floatCombo(PU_LABELS[t]);
       }
     }
 
@@ -854,9 +1299,10 @@ function loop(now){
       if(comboTimer<=0){combo=1;}
     }
 
-    /* Powerup timers (use real dt — slowmo decays even during slowmo) */
+    /* Powerup timers (use real dt) */
     if(player.hasMagnet>0)player.hasMagnet=Math.max(0,player.hasMagnet-dt);
     if(player.hasSlowmo>0)player.hasSlowmo=Math.max(0,player.hasSlowmo-dt);
+    if(player.hasBoost>0)player.hasBoost=Math.max(0,player.hasBoost-dt);
 
     /* Spam spawn cadence (escalates) */
     spamSpawnTimer-=dt;
@@ -865,6 +1311,28 @@ function loop(now){
     /* Powerup cadence */
     powerupSpawnTimer+=dt;
     if(powerupSpawnTimer>powerupSpawnInterval && powerups.length<2){spawnPowerup();powerupSpawnTimer=0;powerupSpawnInterval=8+Math.random()*6}
+    /* Ad campaign cadence (escalates with time) */
+    adSpawnTimer+=dt;
+    const adInterval=Math.max(10,18-((GAME_TIME-timeLeft)/GAME_TIME)*9);
+    if(adSpawnTimer>adInterval && adCampaigns.length<3 && timeLeft<GAME_TIME-8){spawnAdCampaign();adSpawnTimer=0;floatCombo('AD CAMPAIGN');}
+
+    /* Funnel mode: stage progression */
+    if(gameMode==='funnel'){
+      funnelStageT+=dt;
+      const stage=FUNNEL_STAGES[funnelStageIdx];
+      if(funnelStageT>=stage.duration && funnelStageIdx<FUNNEL_STAGES.length-1){
+        funnelStageIdx++;
+        funnelStageT=0;
+        const ns=FUNNEL_STAGES[funnelStageIdx];
+        floatCombo(ns.name.toUpperCase());
+        sfxPower();
+      }
+      /* tween arena shape toward current stage targets */
+      const tgt=FUNNEL_STAGES[funnelStageIdx];
+      currentTopHalf+=(tgt.topHalf-currentTopHalf)*Math.min(1,dt*1.5);
+      currentBotHalf+=(tgt.botHalf-currentBotHalf)*Math.min(1,dt*1.5);
+      updateArenaShape();
+    }
 
     /* Time */
     timeLeft-=dt;
@@ -872,11 +1340,12 @@ function loop(now){
 
     /* Player disc tint by state */
     if(player.hasShield)playerDiscMat.color.set(0x44ddff);
+    else if(player.hasBoost>0)playerDiscMat.color.set(0xffcc33);
     else if(now<player.invulnUntil)playerDiscMat.color.set(0xff2828);
     else playerDiscMat.color.set(0xfa5000);
-    /* Invuln flicker */
-    if(now<player.invulnUntil){robotMesh.visible=(Math.floor(now/80)%2===0)}
-    else robotMesh.visible=true;
+    /* Invuln flicker — toggle whole body */
+    if(now<player.invulnUntil){const v=(Math.floor(now/80)%2===0);player.head.visible=v;player.body.visible=v;player.armL.visible=v;player.armR.visible=v;player.chestCore.visible=v;player.chestRing.visible=v;}
+    else{player.head.visible=true;player.body.visible=true;player.armL.visible=true;player.armR.visible=true;player.chestCore.visible=true;player.chestRing.visible=true;}
 
     updateHud();
   }
