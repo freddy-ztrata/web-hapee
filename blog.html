@@ -107,58 +107,152 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px}
 @media(max-width:1100px){.nlinks,.nctas{display:none}.mbtn{display:block}}
 
-/* MASTHEAD · editorial magazine A · canvas particle network + featured */
+/* ============================================
+   MASTHEAD · ULTRA-DISRUPTIVE EDITORIAL WIRE-FEED
+   Brutalist title · live newsroom · breaking ticker
+   ============================================ */
 .masthead{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg)}
 .mast-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:auto;display:block}
-.masthead .ctn{position:relative;z-index:2;padding:7rem 24px 5rem;max-width:1480px;margin:0 auto}
-.mast-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);margin-bottom:2.2rem;flex-wrap:wrap;gap:12px}
-.mast-meta .left{display:flex;gap:14px;align-items:center}
-.mast-meta .left span:first-child{padding:4px 10px;border:1px solid var(--accent);color:var(--accent);border-radius:4px;font-weight:700}
-.mast-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:end}
-.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,11vw,11rem);line-height:1.05;font-weight:400;color:var(--heading);letter-spacing:-.025em;text-transform:uppercase;margin:0;padding:.25em 0 .4em;overflow:visible;position:relative}
+.masthead .ctn{position:relative;z-index:2;padding:5.5rem 24px 0;max-width:1480px;margin:0 auto}
+
+/* Newspaper grid overlay decoration */
+.mast-gridlines{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:linear-gradient(to right,rgba(250,80,0,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(250,80,0,.045) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 30%,transparent 80%)}
+
+/* === Broadcast bar (top): live + counters + location === */
+.mast-broadcast{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 0;margin-bottom:3rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--fm);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2);flex-wrap:wrap}
+.bx-live{display:inline-flex;align-items:center;gap:.6rem;color:#ff2828;font-weight:800;letter-spacing:.26em;font-size:.7rem}
+.bx-live .dot{width:9px;height:9px;border-radius:50%;background:#ff2828;box-shadow:0 0 0 0 rgba(255,40,40,.55);animation:bxLivePulse 1.3s ease-out infinite}
+@keyframes bxLivePulse{0%{box-shadow:0 0 0 0 rgba(255,40,40,.6)}100%{box-shadow:0 0 0 14px rgba(255,40,40,0)}}
+.bx-counters{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.bx-counter{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
+.bx-counter .num{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.02em;color:var(--heading);line-height:1;font-weight:400;font-variant-numeric:tabular-nums}
+.bx-counter .lbl{font-size:.54rem;color:var(--text-2);letter-spacing:.22em;font-weight:600;opacity:.75}
+.bx-loc{font-weight:600;color:var(--text-2);opacity:.8}
+
+/* === Hero grid === */
+.mast-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:start;position:relative;padding-bottom:3rem}
+
+/* === Brutalist title === */
+.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,12vw,12rem);line-height:.92;font-weight:400;color:var(--heading);letter-spacing:-.035em;text-transform:uppercase;margin:0;padding:.05em 0 .15em;overflow:visible;position:relative}
 .mast-title .word{display:block;overflow:visible;position:relative}
-.mast-title .word.w2{margin-top:0;line-height:1.3;padding-bottom:.15em}
+.mast-title .word.w2{margin-top:0;line-height:1.05;padding-bottom:.18em}
 .mast-title .word>span{display:inline-block;opacity:0;transform:translateY(48px);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards;position:relative}
-.mast-title .word.w2>span{animation-delay:.18s;padding-right:.18em}
-.mast-title .word.w2>span::after{content:'';position:absolute;left:0;right:.18em;bottom:.18em;height:.06em;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-alt) 100%);transform-origin:left;transform:scaleX(0);animation:mastUnderline 1s 1.2s cubic-bezier(.85,0,.15,1) forwards;border-radius:.04em;opacity:.85}
+.mast-title .word.w2>span:not(.caret){animation-delay:.22s;padding-right:.06em}
+
+/* Chromatic glitch on "HAPEE" — RGB-split layered offset */
+.char-stack{display:inline-block;position:relative;color:var(--heading)}
+.char-stack::before,.char-stack::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;display:inline-block;pointer-events:none;text-transform:uppercase;letter-spacing:inherit;font-family:inherit;line-height:inherit}
+.char-stack::before{color:var(--accent);transform:translate(3px,2px);mix-blend-mode:screen;opacity:.55;animation:glitchA 5.5s steps(1) infinite}
+.char-stack::after{color:var(--accent-alt);transform:translate(-3px,-2px);mix-blend-mode:screen;opacity:.55;animation:glitchB 5.5s steps(1) infinite}
+@keyframes glitchA{0%,86%,100%{transform:translate(3px,2px);clip-path:inset(0)}88%{transform:translate(-10px,3px);clip-path:inset(15% 0 65% 0)}91%{transform:translate(12px,1px);clip-path:inset(55% 0 18% 0)}94%{transform:translate(-6px,2px);clip-path:inset(35% 0 40% 0)}}
+@keyframes glitchB{0%,86%,100%{transform:translate(-3px,-2px);clip-path:inset(0)}88%{transform:translate(10px,-3px);clip-path:inset(60% 0 12% 0)}91%{transform:translate(-12px,-1px);clip-path:inset(20% 0 60% 0)}94%{transform:translate(6px,-2px);clip-path:inset(40% 0 30% 0)}}
+
+/* "News." italic gradient + drawing underline */
+.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.96em;letter-spacing:-.025em;vertical-align:baseline;text-transform:none;padding:0 .04em .12em 0;display:inline-block;line-height:1.05;position:relative}
+.mast-title .em::after{content:'';position:absolute;left:0;right:.04em;bottom:.05em;height:.06em;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-alt) 100%);transform-origin:left;transform:scaleX(0);animation:mastUnderline 1.1s 1.4s cubic-bezier(.85,0,.15,1) forwards;border-radius:.04em;opacity:.85}
 @keyframes mastUnderline{to{transform:scaleX(1)}}
-.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.92em;letter-spacing:-.02em;vertical-align:baseline;text-transform:none;margin-left:0;padding:.1em .18em .35em 0;display:inline-block;line-height:1.18}
 @keyframes mastReveal{to{opacity:1;transform:translateY(0)}}
 
+/* Blinking cursor caret */
+.mast-title .caret{display:inline-block;width:.07em;height:.78em;background:var(--accent);margin-left:.04em;vertical-align:-.05em;animation:mastCaret 1s steps(1) infinite,mastFade .4s 1.6s cubic-bezier(.16,1,.3,1) forwards;opacity:0;box-shadow:0 0 18px rgba(250,80,0,.6)}
+@keyframes mastCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+
 /* === Editorial decor: kicker + giant outline number === */
-.mast-kicker{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--fm);font-size:.7rem;letter-spacing:.32em;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:1.6rem;padding:.4rem .85rem;border:1px solid var(--accent);border-radius:999px;background:rgba(250,80,0,.04)}
+.mast-kicker{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--fm);font-size:.7rem;letter-spacing:.32em;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:1.4rem;padding:.4rem .85rem;border:1px solid var(--accent);border-radius:999px;background:rgba(250,80,0,.04)}
 .mast-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:mastPulse 1.8s ease-in-out infinite}
 @keyframes mastPulse{50%{opacity:.35;transform:scale(.65)}}
-.mast-issue-num{position:absolute;font-family:var(--fd);font-weight:400;font-size:clamp(10rem,24vw,26rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-stroke:1.5px var(--accent);opacity:.16;pointer-events:none;z-index:1;right:-4%;top:-12%;animation:mastFloat 6s ease-in-out infinite alternate;user-select:none}
+.mast-issue-num{position:absolute;font-family:var(--fd);font-weight:400;font-size:clamp(10rem,22vw,22rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-stroke:1.5px var(--accent);opacity:.13;pointer-events:none;z-index:0;right:-2%;top:-8%;animation:mastFloat 6s ease-in-out infinite alternate;user-select:none}
 @keyframes mastFloat{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-18px) rotate(0deg)}}
-.mast-edition{font-family:var(--fs);font-style:italic;font-size:1.05rem;color:var(--accent);margin-top:.2rem;opacity:0;animation:mastFade 1.1s 1.4s cubic-bezier(.16,1,.3,1) forwards;display:inline-flex;align-items:center;gap:.5rem}
+.mast-edition{font-family:var(--fs);font-style:italic;font-size:1rem;color:var(--accent);margin-top:.1rem;opacity:0;animation:mastFade 1.1s 1.55s cubic-bezier(.16,1,.3,1) forwards;display:inline-flex;align-items:center;gap:.5rem}
 .mast-edition::before{content:'';width:24px;height:1px;background:var(--accent)}
-.mast-sub{margin-top:1.8rem;max-width:580px;color:var(--heading);font-size:1.18rem;line-height:1.55;font-weight:500;letter-spacing:-.005em;opacity:0;animation:mastFade .9s .6s cubic-bezier(.16,1,.3,1) forwards}
+.mast-sub{margin-top:1.6rem;max-width:560px;color:var(--heading);font-size:1.15rem;line-height:1.55;font-weight:500;letter-spacing:-.005em;opacity:0;animation:mastFade .9s .75s cubic-bezier(.16,1,.3,1) forwards}
 .mast-sub strong{font-weight:700;color:var(--heading)}
 @keyframes mastFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.mast-cats{margin-top:1.6rem;display:flex;gap:.55rem;flex-wrap:wrap;opacity:0;animation:mastFade .9s .75s cubic-bezier(.16,1,.3,1) forwards}
+.mast-cats{margin-top:1.5rem;display:flex;gap:.55rem;flex-wrap:wrap;opacity:0;animation:mastFade .9s .9s cubic-bezier(.16,1,.3,1) forwards}
 .cat-chip{font-family:var(--fm);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);padding:6px 12px;border:1px solid var(--line);border-radius:var(--pill);transition:var(--tr);cursor:pointer;font-weight:600;background:transparent}
 .cat-chip:hover,.cat-chip.on{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.06)}
-.mast-art-wrap{position:relative;z-index:2;margin-left:-6%}
-.mast-art{position:relative;aspect-ratio:4/5;border-radius:16px 16px 80px 16px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(250,80,0,.45),0 0 0 1px var(--line);transform:translateY(40px);opacity:0;animation:mastFade 1.1s .35s cubic-bezier(.16,1,.3,1) forwards}
-.mast-art img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 8s linear;display:block}
-.masthead:hover .mast-art img{transform:scale(1.12)}
-.mast-art .overlay{position:absolute;inset:0;pointer-events:none;background:linear-gradient(200deg,rgba(0,0,0,0) 35%,rgba(0,0,0,.7) 100%)}
-.mast-art .featured-tag{position:absolute;top:1.1rem;left:1.1rem;z-index:3;font-family:var(--fm);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;padding:.35rem .7rem;border:1px solid rgba(255,255,255,.4);border-radius:4px;backdrop-filter:blur(8px);background:rgba(0,0,0,.4);font-weight:700;color:#fff}
-.mast-art .caption{position:absolute;left:1.1rem;right:140px;bottom:1.1rem;z-index:3;font-family:var(--fb);font-size:.85rem;line-height:1.4;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-.mast-art .caption .head{font-family:var(--fd);font-size:1.4rem;letter-spacing:-.005em;margin-bottom:.25rem;line-height:1}
-.mast-badge{position:absolute;right:-34px;bottom:-34px;z-index:5;width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 80%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fd);box-shadow:0 30px 60px -20px rgba(250,80,0,.6),0 0 0 6px var(--bg),0 0 0 7px rgba(250,80,0,.45),inset 0 1px 0 rgba(255,255,255,.18);animation:mastSpin 22s linear infinite}
+
+/* === Live newsroom feed (replaces static image) === */
+.mast-art-wrap{position:relative;z-index:3;margin-left:-2%}
+.newsfeed{position:relative;background:var(--bg-alt,#0d0d0d);border:1px solid var(--line);border-radius:12px;box-shadow:0 50px 100px -40px rgba(250,80,0,.4),0 0 0 1px var(--line);font-family:var(--fb);overflow:hidden;height:560px;display:flex;flex-direction:column;opacity:0;transform:translateY(40px);animation:mastFade 1.1s .4s cubic-bezier(.16,1,.3,1) forwards;backdrop-filter:blur(20px)}
+html.dark .newsfeed{background:#0a0a0c}
+.newsfeed::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ff2828,var(--accent),var(--accent-alt),#ff2828);background-size:200% 100%;animation:newsfeedScan 4s linear infinite;z-index:5}
+@keyframes newsfeedScan{from{background-position:0 0}to{background-position:200% 0}}
+.nf-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,40,40,.04),transparent);flex-shrink:0}
+.nf-title{font-family:var(--fm);font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:#ff2828;font-weight:800;display:inline-flex;align-items:center;gap:.5rem}
+.nf-title .dot{width:7px;height:7px;border-radius:50%;background:#ff2828;animation:bxLivePulse 1.3s ease-out infinite}
+.nf-clock{font-family:var(--fm);font-size:.78rem;color:var(--text-2);letter-spacing:.1em;font-variant-numeric:tabular-nums;font-weight:600}
+.nf-stack{position:relative;flex:1;overflow:hidden;padding:14px}
+.nf-card{position:absolute;left:14px;right:14px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:6px;padding:14px 16px;transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .7s ease;will-change:transform,opacity;backdrop-filter:blur(6px)}
+html.dark .nf-card{background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.06);border-left-color:var(--accent)}
+html:not(.dark) .nf-card{background:#fff;border-color:rgba(0,0,0,.08);box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.nf-card[data-i="0"]{transform:translateY(0);opacity:1;z-index:5;border-left-color:#ff2828}
+.nf-card[data-i="1"]{transform:translateY(102px);opacity:.85;z-index:4}
+.nf-card[data-i="2"]{transform:translateY(204px);opacity:.65;z-index:3}
+.nf-card[data-i="3"]{transform:translateY(306px);opacity:.42;z-index:2}
+.nf-card[data-i="4"]{transform:translateY(408px) scale(.96);opacity:0;z-index:1}
+.nf-card.entering{animation:nfEnter .9s cubic-bezier(.16,1,.3,1) backwards}
+@keyframes nfEnter{from{transform:translateY(-120px);opacity:0;filter:blur(4px)}to{transform:translateY(0);opacity:1;filter:blur(0)}}
+.nf-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:.55rem;font-family:var(--fm);font-size:.58rem;text-transform:uppercase;letter-spacing:.2em}
+.nf-time{color:var(--text-2);font-variant-numeric:tabular-nums;font-weight:700}
+.nf-cat{padding:.18rem .55rem;border-radius:3px;color:#fff;font-weight:800;letter-spacing:.18em;font-size:.55rem}
+.nf-cat.cat-prod{background:var(--accent)}
+.nf-cat.cat-tech{background:#1e3a8a;color:#bfdbfe}
+.nf-cat.cat-how{background:#14532d;color:#bbf7d0}
+.nf-cat.cat-event{background:var(--accent-alt)}
+.nf-card h3{font-family:var(--fd);font-weight:400;font-size:1.12rem;line-height:1.16;letter-spacing:-.012em;color:var(--heading);margin:0 0 .55rem}
+.nf-foot{display:flex;justify-content:space-between;font-family:var(--fm);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2);margin-top:.5rem;opacity:.78}
+.nf-foot .breaking{color:#ff2828;font-weight:800;letter-spacing:.22em}
+
+.mast-badge{position:absolute;right:-30px;top:-30px;z-index:6;width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 80%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fd);box-shadow:0 30px 60px -20px rgba(250,80,0,.6),0 0 0 6px var(--bg),0 0 0 7px rgba(250,80,0,.45),inset 0 1px 0 rgba(255,255,255,.18);animation:mastSpin 22s linear infinite}
 .mast-badge::before{content:'';position:absolute;inset:8px;border-radius:50%;border:1px dashed rgba(255,255,255,.35);pointer-events:none}
-.mast-badge .n{font-size:3.8rem;line-height:1;font-weight:400;letter-spacing:-.03em;color:#fff}
-.mast-badge .l{font-family:var(--fm);font-size:.58rem;letter-spacing:.36em;margin-top:.3rem;color:rgba(255,255,255,.85)}
+.mast-badge .n{font-size:3.2rem;line-height:1;font-weight:400;letter-spacing:-.03em;color:#fff}
+.mast-badge .l{font-family:var(--fm);font-size:.54rem;letter-spacing:.36em;margin-top:.25rem;color:rgba(255,255,255,.85)}
 @keyframes mastSpin{to{transform:rotate(360deg)}}
+
+/* === Wire ticker (breaking news bar at bottom) === */
+.mast-wire{position:relative;z-index:3;display:flex;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-alt,#fafafa);margin:0 -24px;overflow:hidden}
+html.dark .mast-wire{background:#0a0a0c}
+.wire-tag{flex:0 0 auto;background:linear-gradient(135deg,#ff2828,#cd2349);color:#fff;font-family:var(--fm);font-size:.7rem;letter-spacing:.28em;font-weight:800;padding:16px 32px 16px 24px;display:inline-flex;align-items:center;gap:.7rem;text-transform:uppercase;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);position:relative;z-index:2}
+.wire-tag .dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:bxLivePulse 1s ease-out infinite}
+.wire-track{flex:1;overflow:hidden;display:flex;align-items:center;position:relative;font-family:var(--fb);font-size:.92rem;font-weight:600;color:var(--heading);min-width:0}
+.wire-track::before,.wire-track::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.wire-track::before{left:0;background:linear-gradient(90deg,var(--bg-alt,#fafafa),transparent)}
+.wire-track::after{right:0;background:linear-gradient(-90deg,var(--bg-alt,#fafafa),transparent)}
+html.dark .wire-track::before{background:linear-gradient(90deg,#0a0a0c,transparent)}
+html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transparent)}
+.wire-loop{display:inline-flex;align-items:center;gap:36px;white-space:nowrap;animation:wireRoll 45s linear infinite;padding-left:36px}
+.wire-track:hover .wire-loop{animation-play-state:paused}
+.wire-item{display:inline-flex;align-items:center;gap:.6rem}
+.wire-item .b{color:#ff2828;font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;font-weight:800;padding:2px 7px;border:1px solid #ff2828;border-radius:2px}
+.wire-sep{color:var(--accent);opacity:.45;font-weight:300;font-size:1.3rem}
+@keyframes wireRoll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
 @media(max-width:980px){
-  .mast-grid{grid-template-columns:1fr;gap:2.2rem}
-  .mast-art{aspect-ratio:1/1;border-radius:16px}
-  .mast-badge{width:110px;height:110px;right:-22px;bottom:-22px}
-  .mast-badge .n{font-size:2.8rem}
-  .masthead .ctn{padding:4rem 20px 3rem}
+  .mast-grid{grid-template-columns:1fr;gap:2.2rem;padding-bottom:2rem}
+  .masthead .ctn{padding:3.5rem 20px 0}
+  .mast-broadcast{margin-bottom:2rem;font-size:.6rem;gap:14px}
+  .bx-counter .num{font-size:1.1rem}
+  .bx-loc{display:none}
   .mast-art-wrap{margin-left:0}
+  .newsfeed{height:480px}
+  .mast-badge{width:96px;height:96px;right:-18px;top:-18px}
+  .mast-badge .n{font-size:2.4rem}
+  .mast-title{font-size:clamp(3.6rem,15vw,7rem);line-height:.95}
+}
+@media(max-width:640px){
+  .mast-broadcast{padding:10px 0}
+  .bx-counters{gap:16px}
+  .bx-counter .num{font-size:.95rem}
+  .bx-counter .lbl{font-size:.5rem}
+  .wire-tag{font-size:.6rem;padding:12px 22px 12px 18px;letter-spacing:.2em}
+  .wire-track{font-size:.78rem}
+  .newsfeed{height:420px}
+  .nf-card[data-i="1"]{transform:translateY(86px)}
+  .nf-card[data-i="2"]{transform:translateY(172px)}
+  .nf-card[data-i="3"]{transform:translateY(258px)}
+  .nf-card[data-i="4"]{transform:translateY(344px) scale(.96)}
+  .nf-card h3{font-size:1rem}
 }
 
 /* ===== FEATURED ARTICLE ===== */
@@ -375,28 +469,35 @@ body.modal-open{overflow:hidden}
 
 <main>
 
-<!-- MASTHEAD -->
+<!-- MASTHEAD · WIRE-FEED EDITORIAL -->
 <section class="masthead" id="masthead">
   <canvas class="mast-canvas" id="mastCanvas"></canvas>
+  <div class="mast-gridlines" aria-hidden="true"></div>
 
   <div class="ctn">
-    <div class="mast-meta">
-      <div class="left">
-        <span>Issue N°01</span>
-        <span>Mayo 2026 · Santiago, Chile</span>
+
+    <!-- Broadcast bar: live indicator + counters -->
+    <div class="mast-broadcast">
+      <div class="bx-live"><span class="dot"></span>● Live Editorial</div>
+      <div class="bx-counters">
+        <div class="bx-counter"><span class="num" id="liveReaders">12.847</span><span class="lbl">Lectores online</span></div>
+        <div class="bx-counter"><span class="num">04</span><span class="lbl">Issues filed</span></div>
+        <div class="bx-counter"><span class="num" id="liveUpdated">3s</span><span class="lbl">Last update ago</span></div>
+        <div class="bx-counter"><span class="num">N°01</span><span class="lbl">Mayo 2026</span></div>
       </div>
-      <div class="right">Hapee.ai/Blog</div>
+      <div class="bx-loc">Santiago · CL · Hapee.ai/Blog</div>
     </div>
 
+    <!-- Hero grid: brutalist title + live newsroom feed -->
     <div class="mast-grid">
       <div class="mast-text">
+        <span class="mast-issue-num" aria-hidden="true">01</span>
         <span class="mast-kicker"><span class="dot"></span>Issue 01 · en vivo</span>
         <h1 class="mast-title">
-          <span class="mast-issue-num" aria-hidden="true">01</span>
-          <span class="word w1"><span>Hapee</span></span>
-          <span class="word w2"><span class="em">News!</span></span>
+          <span class="word w1"><span class="char-stack" data-text="Hapee">Hapee</span></span>
+          <span class="word w2"><span class="em">News.</span><span class="caret"></span></span>
         </h1>
-        <span class="mast-edition">Édition Mayo 2026 · Santiago, Chile</span>
+        <span class="mast-edition">Édition Mayo 2026 · El primer wire-feed editorial de IA en LATAM</span>
         <p class="mast-sub">Producto, IA y eventos por el equipo de Hapee. Noticias de la suite all-in-one de agentes IA, integraciones con los modelos más avanzados del mundo y <strong>casos reales desde Latam</strong>.</p>
         <div class="mast-cats">
           <span class="cat-chip on" data-cat="all">Todos</span>
@@ -406,19 +507,79 @@ body.modal-open{overflow:hidden}
           <span class="cat-chip" data-cat="how-to">How-to</span>
         </div>
       </div>
+
       <div class="mast-art-wrap">
-        <div class="mast-art">
-          <img src="img/rrss-jpg/hapee-mcp-post.jpg" alt="Featured · Hapee se conecta con Claude vía MCP">
-          <div class="overlay"></div>
-          <div class="featured-tag">★ Featured</div>
-          <div class="caption">
-            <div class="head">MCP × Claude</div>
-            <div>Hapee se conecta vía MCP nativo</div>
+        <div class="newsfeed" aria-label="Newsroom feed en vivo">
+          <div class="nf-head">
+            <span class="nf-title"><span class="dot"></span>Newsroom feed · en vivo</span>
+            <span class="nf-clock" id="nfClock">14:32:08</span>
+          </div>
+          <div class="nf-stack" id="nfStack">
+            <article class="nf-card" data-i="0">
+              <div class="nf-meta"><span class="nf-time">14:32</span><span class="nf-cat cat-prod">Producto</span></div>
+              <h3>Hapee se conecta de forma nativa con Claude vía MCP</h3>
+              <div class="nf-foot"><span class="breaking">● Breaking</span><span>Hapee Wire</span></div>
+            </article>
+            <article class="nf-card" data-i="1">
+              <div class="nf-meta"><span class="nf-time">14:28</span><span class="nf-cat cat-tech">Tech</span></div>
+              <h3>ChatGPT 5.5 ya disponible en todos los agentes Hapee</h3>
+              <div class="nf-foot"><span class="breaking">● Breaking</span><span>Hapee Wire</span></div>
+            </article>
+            <article class="nf-card" data-i="2">
+              <div class="nf-meta"><span class="nf-time">14:21</span><span class="nf-cat cat-how">How-to</span></div>
+              <h3>Automatiza tus redes sociales con agentes IA</h3>
+              <div class="nf-foot"><span>En vivo</span><span>Hapee Wire</span></div>
+            </article>
+            <article class="nf-card" data-i="3">
+              <div class="nf-meta"><span class="nf-time">14:09</span><span class="nf-cat cat-prod">Producto</span></div>
+              <h3>Voz clonada en español: ElevenLabs × Hapee 24/7</h3>
+              <div class="nf-foot"><span>En vivo</span><span>Hapee Wire</span></div>
+            </article>
+            <article class="nf-card" data-i="4">
+              <div class="nf-meta"><span class="nf-time">13:58</span><span class="nf-cat cat-event">Evento</span></div>
+              <h3>Lanzamiento Hapee Aperol Spritz · Santiago</h3>
+              <div class="nf-foot"><span>En vivo</span><span>Hapee Wire</span></div>
+            </article>
           </div>
         </div>
-        <div class="mast-badge"><span class="n">01</span><span class="l">ISSUE</span></div>
+        <div class="mast-badge"><span class="n">01</span><span class="l">Issue</span></div>
       </div>
     </div>
+
+    <!-- Breaking news wire ticker -->
+    <div class="mast-wire" aria-label="Breaking news ticker">
+      <div class="wire-tag"><span class="dot"></span>Breaking</div>
+      <div class="wire-track">
+        <div class="wire-loop">
+          <span class="wire-item"><span class="b">14:32</span>Hapee × Claude · MCP nativo activado en producción</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:28</span>ChatGPT 5.5 desplegado en todos los agentes Hapee</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:21</span>Nueva integración ElevenLabs · voz clonada español-CL</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:09</span>Hapee Aperol Spritz · Lanzamiento oficial en Santiago</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:58</span>AWS Chile partnership confirmado · infra en LATAM</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:42</span>+90.000 clientes automatizados · récord histórico</span>
+          <span class="wire-sep">/</span>
+          <!-- duplicate set for seamless loop -->
+          <span class="wire-item"><span class="b">14:32</span>Hapee × Claude · MCP nativo activado en producción</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:28</span>ChatGPT 5.5 desplegado en todos los agentes Hapee</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:21</span>Nueva integración ElevenLabs · voz clonada español-CL</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:09</span>Hapee Aperol Spritz · Lanzamiento oficial en Santiago</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:58</span>AWS Chile partnership confirmado · infra en LATAM</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:42</span>+90.000 clientes automatizados · récord histórico</span>
+          <span class="wire-sep">/</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1020,6 +1181,68 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('resize',resize);
   resize();
   animate();
+})();
+
+/* === MASTHEAD WIRE-FEED · live counters + clock + newsroom rotator === */
+(function(){
+  // Live readers counter — gradual drift
+  const readers=document.getElementById('liveReaders');
+  if(readers){
+    let n=12000+Math.floor(Math.random()*1200);
+    const render=()=>readers.textContent=n.toLocaleString('es-CL');
+    render();
+    setInterval(()=>{
+      n+=Math.floor(Math.random()*9)-3;
+      if(n<11500)n=11500;if(n>14800)n=14800;
+      render();
+    },1900);
+  }
+
+  // Last update ticker
+  const upd=document.getElementById('liveUpdated');
+  if(upd){
+    let s=3;
+    setInterval(()=>{
+      s++;if(s>59)s=0;
+      upd.textContent=s+'s';
+    },1000);
+  }
+
+  // Newsroom clock HH:MM:SS
+  const clock=document.getElementById('nfClock');
+  if(clock){
+    const tick=()=>{
+      const d=new Date();
+      clock.textContent=[d.getHours(),d.getMinutes(),d.getSeconds()]
+        .map(x=>String(x).padStart(2,'0')).join(':');
+    };
+    tick();setInterval(tick,1000);
+  }
+
+  // Newsroom feed rotator — oldest becomes newest, slides in from top
+  const stack=document.getElementById('nfStack');
+  if(stack){
+    const cards=Array.from(stack.querySelectorAll('.nf-card'));
+    let order=cards.slice();
+    function rotate(){
+      const last=order.pop();
+      if(!last)return;
+      order.unshift(last);
+      // bump timestamp on the "new" lead card
+      const t=last.querySelector('.nf-time');
+      if(t){
+        const d=new Date();
+        t.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+      }
+      // reset entering state, then add it so animation re-fires
+      last.classList.remove('entering');
+      void last.offsetWidth; // reflow
+      order.forEach((c,i)=>c.dataset.i=i);
+      last.classList.add('entering');
+      setTimeout(()=>last.classList.remove('entering'),950);
+    }
+    setInterval(rotate,4500);
+  }
 })();
 </script>
 </body>
