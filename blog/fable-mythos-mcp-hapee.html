@@ -113,10 +113,10 @@
       <li><strong>Match con voz de marca</strong> (evaluación ciega por dueños de marca): 91% acierto vs 64% con Claude estándar</li>
       <li><strong>Conversión MOFU</strong> (lead → reunión): +18%</li>
     </ul>
-    <p>Lo que el número no muestra es lo cualitativo: los clientes finales empiezan a <em>volver a hablar con el bot</em>. Eso antes no pasaba. Antes el bot era una herramienta de transacción. Con Mythos se vuelve algo más parecido a una marca con la que querés conversar.</p>
+    <p>Lo que el número no muestra es lo cualitativo: los clientes finales empiezan a <em>volver a hablar con el bot</em>. Eso antes no pasaba. Antes el bot era una herramienta de transacción. Con Mythos se vuelve algo más parecido a una marca con la que quieres conversar.</p>
 
     <h2 data-num="03">La pieza técnica: cómo se conecta vía Hapee MCP</h2>
-    <p>Esta es la parte que técnicamente cuesta. Mythos no se expone como un endpoint REST que llamás con un prompt. Anthropic lo expone como un <strong>contexto disponible vía MCP</strong> — es decir, el modelo decide qué pedir y cuándo, no el cliente.</p>
+    <p>Esta es la parte que técnicamente cuesta. Mythos no se expone como un endpoint REST que llamas con un prompt. Anthropic lo expone como un <strong>contexto disponible vía MCP</strong> — es decir, el modelo decide qué pedir y cuándo, no el cliente.</p>
 
     <p>El servidor MCP de Hapee (que ya existe desde la integración con Claude nativo) ahora expone <em>narrative scopes</em> adicionales:</p>
 
@@ -166,10 +166,10 @@
 
     <h2 data-num="06">Cómo lo activo en mi agente</h2>
     <ol class="step-list">
-      <li><b>Settings → AI Models</b> Selectoná <code>Claude · Fable Mythos (MCP Native)</code> en el dropdown de modelo del agente. Aparece junto a los modelos Fable que ya tenías disponibles.</li>
-      <li><b>Configurá la voz de marca</b> Si todavía no lo hiciste, definí tono, vocabulario, frases prohibidas y referencias en <code>Brand Voice → Settings</code>. Mythos las usa automáticamente.</li>
-      <li><b>Sandbox primero</b> Hacé una conversación de prueba con un compañero o tu propio número. La diferencia se nota en el segundo turno.</li>
-      <li><b>Pasá a producción</b> Activá Mythos para todos los agentes de un workspace con un toggle. Si algo no cuadra, podés volver a Claude estándar en segundos.</li>
+      <li><b>Settings → AI Models</b> Selecciona <code>Claude · Fable Mythos (MCP Native)</code> en el dropdown de modelo del agente. Aparece junto a los modelos Fable que ya tenías disponibles.</li>
+      <li><b>Configura la voz de marca</b> Si todavía no lo hiciste, define tono, vocabulario, frases prohibidas y referencias en <code>Brand Voice → Settings</code>. Mythos las usa automáticamente.</li>
+      <li><b>Sandbox primero</b> Haz una conversación de prueba con un compañero o tu propio número. La diferencia se nota en el segundo turno.</li>
+      <li><b>Pasa a producción</b> Activa Mythos para todos los agentes de un workspace con un toggle. Si algo no cuadra, puedes volver a Claude estándar en segundos.</li>
     </ol>
 
     <h2 data-num="07">Lo que viene</h2>
@@ -177,7 +177,7 @@
     <ul>
       <li><strong>Multi-modelo por escena</strong> · que un mismo agente use Mythos para la voz, Claude estándar para el razonamiento técnico, y un modelo más liviano para la transacción simple — todo en la misma conversación, sin que el cliente final lo note.</li>
       <li><strong>Voice cloning con narrativa</strong> · ElevenLabs (ya integrado) + Mythos = la voz clonada de tu marca cuenta historias, no responde frío.</li>
-      <li><strong>Generador de campañas conversacionales</strong> · escribís un brief, Mythos diseña el flujo conversacional completo y lo deja listo para producción.</li>
+      <li><strong>Generador de campañas conversacionales</strong> · escribes un brief, Mythos diseña el flujo conversacional completo y lo deja listo para producción.</li>
     </ul>
 
     <p>La constante en todo esto es la dupla <strong>Hapee MCP + Claude Code</strong>. Uno te da los rieles de infraestructura; el otro te da la velocidad de iteración. Sin los dos, integrar Mythos en 11 días sería ciencia ficción.</p>
