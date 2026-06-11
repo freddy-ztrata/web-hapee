@@ -69,122 +69,60 @@
   <div class="post-back"><a href="/blog.html">Volver al blog</a></div>
 
   <header class="post-head">
-    <div class="post-meta">Producto · Tech · Breaking</div>
-    <h1 class="post-title">Fable Mythos × Hapee MCP: <em>construido con Claude Code</em></h1>
-    <p class="post-lede">Hoy lanzamos la primera integración nativa con <strong>Fable Mythos</strong> — el nuevo modelo cinematográfico de la familia Claude — vía el servidor MCP de Hapee. Tus agentes ya no solo razonan: <em>cuentan</em>. Y todo el stack que hace esto posible fue construido e iterado en producción con Claude Code.</p>
+    <div class="post-meta">Producto · Tech</div>
+    <h1 class="post-title">Fable Mythos llega a Hapee: <em>más poder a la conexión MCP</em></h1>
+    <p class="post-lede">Anthropic acaba de presentar <strong>Fable Mythos</strong>, una nueva incorporación a la familia de modelos Fable de Claude. En Hapee ya estamos preparando su integración para sumarla a la conexión nativa que tenemos con Claude vía Model Context Protocol — el mismo stack con el que hoy nuestros agentes razonan, recuperan contexto y resuelven conversaciones en producción.</p>
     <div class="post-byline">
       <span>10 Jun 2026</span><span class="dot"></span>
       <span>Producto · Tech</span><span class="dot"></span>
-      <span>6 min de lectura</span><span class="dot"></span>
+      <span>3 min de lectura</span><span class="dot"></span>
       <span>Por <strong>Equipo Hapee</strong></span>
     </div>
   </header>
 
   <figure class="post-hero">
-    <img src="/img/blog-mythos-portada.png" alt="Fable Mythos × Hapee MCP · portada">
-    <span class="cap">Fable Mythos × Hapee MCP · razonamiento cinematográfico embebido en agentes IA</span>
+    <img src="/img/blog-mythos-portada.png" alt="Fable Mythos × Hapee MCP">
+    <span class="cap">Fable Mythos llega para potenciar la conexión MCP de Hapee</span>
   </figure>
 
   <div class="post-body">
-    <p>Hace un mes anunciamos <a href="/blog/mcp-claude.html">la conexión nativa con Claude vía MCP</a>. Era el primer paso: que los agentes Hapee dejaran de llamar a Claude por API y empezaran a invocarlo como contexto directo. Latencia menor, razonamiento multi-paso real, menos tokens desperdiciados.</p>
+    <p>Hace un mes liberamos <a href="/blog/mcp-claude.html">la conexión nativa con Claude vía MCP</a>: los agentes Hapee dejaron de llamar a Claude por API y pasaron a invocarlo como contexto directo. Menor latencia, razonamiento multi-paso real, mejor uso del contexto del cliente. Esa base es la que hoy hace posible que sigamos sumando capacidades sin reescribir nada.</p>
 
-    <p>Hoy damos el segundo paso, que es mucho más grande: integramos <strong>Fable Mythos</strong>, el modelo cinematográfico de la familia Claude que Anthropic introdujo este trimestre, dentro de los agentes Hapee. La diferencia entre el Claude estándar y Mythos no es un benchmark más: es <em>cómo</em> razona. Mythos no resuelve problemas — los <strong>cuenta</strong>. Y eso, en marketing conversacional, cambia todo.</p>
+    <p>Esta semana Anthropic introdujo <strong>Fable Mythos</strong>, una nueva variante de su familia Fable. Es muy reciente — lleva apenas días disponible — y todavía estamos en proceso de probarla a fondo. Pero la dirección está clara: <em>se va a sumar al stack de modelos Fable que ya usamos en Hapee para potenciar el razonamiento de los agentes</em>.</p>
+
+    <h2 data-num="01">Qué es la familia Fable y cómo la usamos</h2>
+    <p>Hapee ya integra varios modelos Fable como parte de su capa de razonamiento. Cada cliente puede elegir el que mejor le acomoda a su caso de uso, y los agentes pueden alternar entre ellos según la tarea: clasificación rápida, conversación larga, razonamiento estructurado, recuperación de contexto desde el CRM, lectura de la base de conocimiento, etcétera.</p>
+
+    <p>La ventaja de tenerlos todos detrás del mismo servidor MCP de Hapee es que <strong>el cambio entre modelos es invisible para el cliente final</strong> y, para el equipo que opera el agente, es un toggle en la configuración. No hay que reescribir prompts ni mover datos.</p>
+
+    <h2 data-num="02">Qué suma Mythos al stack</h2>
+    <p>Mythos se está perfilando como una variante orientada a <strong>continuidad y razonamiento prolongado</strong> en conversaciones largas. En la práctica, eso significa agentes que mantienen mejor el hilo cuando el cliente cambia de tema, vuelve a una conversación anterior, o entra en un embudo de varios turnos.</p>
+
+    <p>No prometemos benchmarks específicos: el modelo es muy nuevo. Lo que sí podemos decir es que la arquitectura MCP de Hapee está diseñada para que, apenas Mythos esté listo para producción, los agentes existentes lo puedan adoptar sin migraciones complejas. Es la misma conexión, con un modelo más.</p>
 
     <div class="callout">
-      <div class="label">Qué cambia, en una línea</div>
-      <p>Antes: el agente respondía. Ahora: el agente narra. Cada conversación tiene <strong>arco, conflicto y resolución</strong>, no un turn-by-turn de información. Lo nota la latencia, lo nota el cliente final, lo nota la conversión.</p>
+      <div class="label">Lo importante</div>
+      <p>Hapee no depende de un solo modelo. La conexión nativa vía MCP nos permite incorporar cada nueva variante de Claude — incluido Fable Mythos — apenas Anthropic la libera, sin tocar la lógica de los agentes que ya operan en producción.</p>
     </div>
 
-    <h2 data-num="01">Qué es Fable Mythos</h2>
-    <p>Fable Mythos es la cuarta variante de la generación Fable de Claude (después de Fable 5 estándar, Fable Sage y Fable Atlas). Lo distintivo es su <em>entrenamiento orientado a narrativa de marca</em>: en vez de optimizar para precisión técnica o razonamiento abstracto, Mythos optimiza para <strong>continuidad narrativa multi-turno</strong>, voz consistente y arcos emocionales.</p>
+    <h2 data-num="03">El rol de Claude Code en el camino</h2>
+    <p>Internamente, el equipo de Hapee usa <a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Claude Code</a> para iterar sobre el servidor MCP, mantener integraciones, escribir documentación y probar nuevas variantes apenas salen. Es parte de lo que nos permite estar listos para incorporar modelos nuevos en cuestión de días, no semanas.</p>
 
-    <p>En la práctica, significa tres cosas distintas:</p>
-    <ul>
-      <li><strong>Memoria de tono</strong> · Mythos mantiene la "voz" de tu marca a lo largo de toda la conversación, incluso si el cliente cambia el tema 4 veces. No reseteo a "asistente neutral" cada turno.</li>
-      <li><strong>Continuidad emocional</strong> · si el cliente empieza frustrado y termina conforme, Mythos lo <em>nota</em> y referencia el arco. No empieza la siguiente conversación tabula rasa.</li>
-      <li><strong>Razonamiento por escena</strong> · Mythos descompone cada interacción en "escenas" internas (setup, conflicto, resolución, follow-up) y elige qué información priorizar en cada una. No es flujo lineal; es estructura dramática.</li>
-    </ul>
-
-    <h2 data-num="02">Por qué importa para marketing conversacional</h2>
-    <p>En las pruebas que corrimos durante mayo, las diferencias contra Claude estándar fueron consistentes:</p>
-    <ul>
-      <li><strong>Engagement por conversación</strong>: +47% turnos en promedio antes de que el cliente abandone</li>
-      <li><strong>NPS de bot</strong>: +29 puntos (en escala -100/+100, pasó de +18 a +47)</li>
-      <li><strong>Match con voz de marca</strong> (evaluación ciega por dueños de marca): 91% acierto vs 64% con Claude estándar</li>
-      <li><strong>Conversión MOFU</strong> (lead → reunión): +18%</li>
-    </ul>
-    <p>Lo que el número no muestra es lo cualitativo: los clientes finales empiezan a <em>volver a hablar con el bot</em>. Eso antes no pasaba. Antes el bot era una herramienta de transacción. Con Mythos se vuelve algo más parecido a una marca con la que quieres conversar.</p>
-
-    <h2 data-num="03">La pieza técnica: cómo se conecta vía Hapee MCP</h2>
-    <p>Esta es la parte que técnicamente cuesta. Mythos no se expone como un endpoint REST que llamas con un prompt. Anthropic lo expone como un <strong>contexto disponible vía MCP</strong> — es decir, el modelo decide qué pedir y cuándo, no el cliente.</p>
-
-    <p>El servidor MCP de Hapee (que ya existe desde la integración con Claude nativo) ahora expone <em>narrative scopes</em> adicionales:</p>
-
-    <ul>
-      <li><code>hapee.brand-voice</code> · el tono, voz y vocabulario configurado para la marca</li>
-      <li><code>hapee.conversation-arc</code> · estado emocional + intenciones cumplidas/pendientes de la conversación actual</li>
-      <li><code>hapee.customer-journey</code> · etapa del cliente en el embudo + historial de touchpoints</li>
-      <li><code>hapee.scene-state</code> · estado interno del razonamiento por escena (setup/conflicto/resolución)</li>
-    </ul>
-
-    <p>Mythos consulta esos scopes <strong>en tiempo real</strong> mientras responde. No los recibe en un system prompt fijo — los pide cuando los necesita. El cliente Hapee no tiene que configurar nada: si tu agente tiene MCP activo, Mythos ya tiene acceso.</p>
+    <p>Esto no es teoría: es el patrón con el que construimos la conexión MCP original, el que estamos usando ahora con Mythos, y el que vamos a seguir usando con cada variante que venga.</p>
 
     <figure class="post-hero">
-      <img src="/img/blog-mythos-2.png" alt="Hapee MCP · Fable Mythos · flujo de razonamiento por escena">
-      <span class="cap">Razonamiento por escena · cada turno tiene setup, conflicto, resolución, follow-up</span>
+      <img src="/img/blog-mythos-2.png" alt="Familia Fable + MCP Hapee">
+      <span class="cap">La familia Fable + MCP de Hapee · base flexible para incorporar cada variante nueva</span>
     </figure>
 
-    <h2 data-num="04">Construido — y se sigue construyendo — con Claude Code</h2>
-    <p>Acá viene la otra mitad de la historia que vale la pena contar: <strong>todo el stack Hapee se construye e itera con <a href="https://www.anthropic.com/claude-code" target="_blank" rel="noopener">Claude Code</a></strong>. No es una herramienta de soporte que usamos a veces; es nuestro patrón de trabajo principal.</p>
+    <h2 data-num="04">Qué cambia para los clientes Hapee hoy</h2>
+    <p>En lo inmediato: <strong>nada que tengas que hacer</strong>. Si ya operas tu agente Hapee con la conexión MCP nativa, estás en la misma infraestructura que recibirá Mythos cuando esté listo para uso general. Vamos a comunicarlo en este mismo blog y en el cambio de versión del producto.</p>
 
-    <p>Claude Code es el CLI de Anthropic para programar con Claude directamente en tu workstation. En el caso Hapee, lo usamos para:</p>
-
-    <ul>
-      <li><strong>Integraciones MCP</strong> · cada nuevo scope (como los 4 narrative scopes que listamos arriba) se diseña, prototipa y testea con Claude Code. Una integración que antes tomaba 2 semanas hoy toma 2 días.</li>
-      <li><strong>Mantenimiento del servidor MCP</strong> · cuando Anthropic libera una versión nueva de Mythos o ajusta el protocolo, Claude Code lee el changelog oficial, propone los diffs, y deja PRs listos.</li>
-      <li><strong>Iteración de prompts y system messages</strong> · ajustar tono, agregar guardrails, refinar la voz de marca. Esto antes era un trabajo iterativo manual; ahora es conversacional.</li>
-      <li><strong>QA en producción</strong> · Claude Code corre suites de regresión contra conversaciones reales (anonimizadas) y nos avisa cuando algún cambio afecta NPS o conversión.</li>
-      <li><strong>Documentación viva</strong> · este mismo artículo fue editado con Claude Code. La documentación técnica del MCP de Hapee también.</li>
-    </ul>
-
-    <p>El resultado es velocidad. <strong>Mythos llegó a producción en Hapee 11 días después</strong> de que Anthropic anunciara el modelo en beta. No es porque seamos los más rápidos del mundo: es porque el ciclo "leer protocolo nuevo → implementar scope MCP → testear con conversaciones reales → desplegar" pasó de semanas a días gracias a Claude Code en el medio.</p>
-
-    <blockquote>
-      "Antes diseñábamos integraciones IA con la lentitud de un equipo enterprise. Con Claude Code + Hapee MCP iteramos como un equipo de 3 personas con la ambición de un equipo de 30."
-      <cite>— Equipo de plataforma Hapee</cite>
-    </blockquote>
-
-    <h2 data-num="05">Casos de uso · qué pueden hacer hoy los clientes Hapee</h2>
-    <p>Mythos ya está activo para todos los clientes Hapee desde hoy. Algunos usos donde la diferencia es inmediata:</p>
-
-    <ul>
-      <li><strong>Atención post-venta de marcas premium</strong> · cuando la voz importa tanto como la respuesta. Ej: clientes Hapee del retail premium reportan que los compradores piden hablar específicamente con "el bot que escribe bonito".</li>
-      <li><strong>Embudos largos B2B</strong> · donde el lead tiene 8-15 turnos antes de calificar. Mythos mantiene continuidad y referencia conversaciones anteriores sin perder hilo.</li>
-      <li><strong>Sectores con storytelling fuerte</strong> · turismo, gastronomía, lifestyle, cultura. Donde el cliente final espera personalidad, no respuestas frías.</li>
-      <li><strong>Activación de campañas de marca</strong> · cuando una marca quiere que su bot suene como su última campaña creativa. Mythos pega el tono en 1-2 turnos de configuración.</li>
-    </ul>
-
-    <h2 data-num="06">Cómo lo activo en mi agente</h2>
-    <ol class="step-list">
-      <li><b>Settings → AI Models</b> Selecciona <code>Claude · Fable Mythos (MCP Native)</code> en el dropdown de modelo del agente. Aparece junto a los modelos Fable que ya tenías disponibles.</li>
-      <li><b>Configura la voz de marca</b> Si todavía no lo hiciste, define tono, vocabulario, frases prohibidas y referencias en <code>Brand Voice → Settings</code>. Mythos las usa automáticamente.</li>
-      <li><b>Sandbox primero</b> Haz una conversación de prueba con un compañero o tu propio número. La diferencia se nota en el segundo turno.</li>
-      <li><b>Pasa a producción</b> Activa Mythos para todos los agentes de un workspace con un toggle. Si algo no cuadra, puedes volver a Claude estándar en segundos.</li>
-    </ol>
-
-    <h2 data-num="07">Lo que viene</h2>
-    <p>Mythos es el primer modelo orientado a narrativa que Hapee integra. Pero no será el único. Para el Q3 estamos trabajando en:</p>
-    <ul>
-      <li><strong>Multi-modelo por escena</strong> · que un mismo agente use Mythos para la voz, Claude estándar para el razonamiento técnico, y un modelo más liviano para la transacción simple — todo en la misma conversación, sin que el cliente final lo note.</li>
-      <li><strong>Voice cloning con narrativa</strong> · ElevenLabs (ya integrado) + Mythos = la voz clonada de tu marca cuenta historias, no responde frío.</li>
-      <li><strong>Generador de campañas conversacionales</strong> · escribes un brief, Mythos diseña el flujo conversacional completo y lo deja listo para producción.</li>
-    </ul>
-
-    <p>La constante en todo esto es la dupla <strong>Hapee MCP + Claude Code</strong>. Uno te da los rieles de infraestructura; el otro te da la velocidad de iteración. Sin los dos, integrar Mythos en 11 días sería ciencia ficción.</p>
+    <p>Para los clientes que todavía no migraron a la conexión MCP, el camino sigue siendo el mismo: activar MCP en su workspace, conectar contexto (CRM, conversaciones, base de conocimiento, calendario) y dejar que los agentes razonen con la información completa. Cada modelo Fable que sumamos al stack opera sobre esa misma base.</p>
 
     <div class="post-cta">
-      <h3>Probá Fable Mythos en tu agente hoy.</h3>
-      <p>Te mostramos en 25 minutos qué cambia con tu propio CRM y voz de marca. Sin instalación, sin compromiso.</p>
+      <h3>Activa la conexión MCP de Hapee en tu cuenta.</h3>
+      <p>Es la base sobre la que sumamos cada variante nueva de Claude. Te mostramos en 25 minutos cómo funciona, con tu propio CRM conectado.</p>
       <a class="btn" href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener">Agendar demo →</a>
     </div>
 
