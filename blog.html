@@ -205,12 +205,9 @@ html:not(.dark) .mk-side{background:#f8f8fa}
 @keyframes mkKenBurns{from{transform:scale(1.04) translate(0,0)}to{transform:scale(1.12) translate(-2%,1%)}}
 .mk-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,14,0) 0%,rgba(10,10,14,0) 35%,rgba(10,10,14,.7) 75%,rgba(10,10,14,.95) 100%);pointer-events:none;z-index:2}
 
-/* Fable Mythos constellation background */
-.mk-cover-fable{background:radial-gradient(circle at 50% 50%,#1a0a2e 0%,#080611 75%)}
-.mk-fable-bg{position:absolute;inset:0;overflow:hidden}
-.mk-fable-bg::before,.mk-fable-bg::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
-.mk-fable-bg::before{width:50%;aspect-ratio:1;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(250,80,0,.32) 0%,transparent 60%);filter:blur(20px)}
-.mk-fable-bg::after{width:80%;aspect-ratio:1;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(124,58,237,.18) 30%,transparent 70%);filter:blur(28px)}
+/* Fable Mythos · portada real como bg */
+.mk-cover-fable{background:#0a0612 url('/img/blog-mythos-portada.png') center/cover no-repeat}
+.mk-fable-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .mk-fable-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--accent) 40%,var(--accent-alt) 100%);box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);animation:fableCorePulse 3s ease-in-out infinite;z-index:3;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.7rem;color:#fff;letter-spacing:.1em;font-weight:400;text-shadow:0 0 8px rgba(0,0,0,.4)}
 .mk-fable-core::before{content:'FABLE';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);font-size:.7rem}
 .mk-fable-core::after{content:'MYTHOS';position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;opacity:.85}
@@ -487,9 +484,10 @@ body.modal-open{overflow:hidden}
 .feat-art::after,.art-art::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.45) 65%,rgba(0,0,0,.72) 100%)}
 .feat-art > .glyph,.feat-art > .center-num,.art-art > .glyph,.art-art > .center-num{z-index:2;position:absolute}
 .feat-art .nodes-svg,.art-art .waves,.art-art .cl-shape,.art-art .servers,.art-art .glass,.art-art .bubble,.art-art .ring,.art-art .core,.art-art .neural,.art-art .hub,.art-art .orbit,.art-art .micon{display:none!important}
-/* But the new fable-svg should remain visible — no hero-bg image on this card */
-.theme-fable .fable-svg{display:block!important}
-.theme-fable::after{display:none!important}
+/* Fable Mythos · portada como bg + svg constelación encima como overlay */
+.theme-fable .hero-bg{display:block!important;z-index:0;opacity:.9}
+.theme-fable .fable-svg{display:block!important;z-index:2;mix-blend-mode:screen;opacity:.55}
+.theme-fable::after{display:block!important;background:linear-gradient(180deg,rgba(8,6,17,.20) 0%,rgba(8,6,17,.55) 65%,rgba(8,6,17,.85) 100%)!important;z-index:1!important}
 
 </style>
 </head>
@@ -588,16 +586,6 @@ body.modal-open{overflow:hidden}
             <!-- Main: featured story -->
             <main class="mk-main">
               <a class="mk-cover mk-cover-fable" href="/blog/fable-mythos-mcp-hapee.html" aria-label="Leer artículo destacado Fable Mythos × Hapee">
-                <!-- Animated constellation background -->
-                <div class="mk-fable-bg">
-                  <div class="mk-fable-core"></div>
-                  <div class="mk-fable-orbit mk-fable-orbit-1"></div>
-                  <div class="mk-fable-orbit mk-fable-orbit-2"></div>
-                  <span class="mk-fable-node" style="--x:18%;--y:22%;--d:0s">Claude</span>
-                  <span class="mk-fable-node" style="--x:78%;--y:18%;--d:.4s">Fable 5</span>
-                  <span class="mk-fable-node" style="--x:18%;--y:76%;--d:.8s">MCP</span>
-                  <span class="mk-fable-node" style="--x:80%;--y:78%;--d:1.2s">Claude Code</span>
-                </div>
                 <span class="mk-cover-glyph"><span class="star">★</span>Breaking</span>
                 <span class="mk-cover-glyph r">Now</span>
                 <div class="mk-cover-cta">
@@ -664,8 +652,9 @@ body.modal-open{overflow:hidden}
   <div class="ctn">
     <article class="feat-card" data-art="fable-mythos" data-cat="producto">
       <div class="feat-art theme-fable">
+        <img class="hero-bg" loading="eager" decoding="async" fetchpriority="high" src="img/blog-mythos-portada.png" alt="Fable Mythos × Hapee MCP · portada">
         <span class="glyph tl">Issue N°01 / Breaking</span>
-        <span class="glyph tr">2026.06.09</span>
+        <span class="glyph tr">2026.06.10</span>
         <span class="center-num">F·M</span>
         <!-- Fable Mythos animated nodes: Anthropic ↔ Hapee ↔ Claude Code -->
         <svg class="fable-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
