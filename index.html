@@ -3265,7 +3265,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
     async function callAnthropic(userMessage){
       messages.push({role:'user',content:userMessage});
       try{
-        const body=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:512,system:getSystemPrompt(),messages:messages.slice(-10)});
+        const body=JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:512,system:getSystemPrompt(),messages:messages.slice(-10)});
         const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body});
         if(!res.ok)throw new Error(await res.text());
         const data=await res.json();
