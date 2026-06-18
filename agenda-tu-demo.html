@@ -1390,14 +1390,21 @@ html.dark .nav-minimal.sc{background:rgba(8,8,8,.96) !important;box-shadow:0 4px
 }
 
 /* ===================== EACH SECTION FITS THE VIEWPORT ===================== */
-main > section{min-height:100svh}
+main > section{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
 @supports not (height:100svh){main > section{min-height:100vh}}
-main > section.video-section{min-height:auto;padding:40px 0 60px}
-/* Center content vertically for new sections (VSL + Calendar + CTA Final) */
-.vsl-section,.calendar-section,.demo-cta-final{display:flex;flex-direction:column;justify-content:center}
+/* Stats has internal flex layout that conflicts — re-anchor with content centering on the inner container */
+main > section.stats{display:block;padding:40px 0}
+main > section.stats > .ctn{display:flex;flex-direction:column;justify-content:center;min-height:100svh;gap:48px}
+@supports not (height:100svh){main > section.stats > .ctn{min-height:100vh}}
+/* Video showcase: shorter on purpose */
+main > section.video-section{min-height:auto;padding:40px 0 60px;display:block}
+/* Hero, Hapee Interact, Platform Show — they already have their own flex/grid layouts inside */
+main > section.hero,main > section.hapee-interact,main > section.platform-show{display:flex}
 @media(max-width:900px){
-  main > section{min-height:auto}
-  main > section.hero,main > section.demo-cta-final,main > section.vsl-section,main > section.calendar-section{min-height:100svh}
+  main > section{min-height:auto;display:block}
+  main > section.stats{padding:60px 0}
+  main > section.stats > .ctn{min-height:auto;gap:36px}
+  main > section.hero,main > section.demo-cta-final,main > section.vsl-section,main > section.calendar-section{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
 }
 
 /* ===================== VSL SECTION ===================== */
