@@ -361,18 +361,18 @@ html.dark .nav-logo{filter:brightness(0) invert(1)}
 .nctas{display:flex;gap:8px;align-items:center}
 .nctas .btn{padding:8px 16px;font-size:.82rem;white-space:nowrap;line-height:1}
 .nlinks a{white-space:nowrap}
+/* Logo aspect-ratio lock — never distort under any breakpoint */
+.nav-logo{height:30px;width:auto !important;object-fit:contain;flex-shrink:0}
 @media(max-width:1280px){
   .nlinks{gap:11px}
   .nlinks a{font-size:.78rem}
   .nctas .btn{padding:7px 13px;font-size:.76rem}
-  .nav-logo{height:26px}
 }
 @media(max-width:1180px){
   .nlinks{gap:9px}
   .nlinks a{font-size:.74rem}
   .nctas .btn{padding:6px 11px;font-size:.72rem}
   .nctas{gap:6px}
-  .nav-logo{height:24px}
 }
 
 /* Dark mode toggle button */
