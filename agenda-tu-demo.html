@@ -1371,6 +1371,35 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
 
 <!-- DEMO LANDING — Award-winning sections styles -->
 <style>
+/* ===================== MINIMAL NAV (landing page — no menu) ===================== */
+.nav-minimal{padding:14px 0 !important;background:rgba(255,255,255,.6) !important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.04);transition:background .3s,border-color .3s,padding .3s !important}
+html.dark .nav-minimal{background:rgba(8,8,8,.55) !important;border-bottom-color:rgba(250,80,0,.08)}
+.nav-minimal.sc{padding:8px 0 !important;background:rgba(255,255,255,.96) !important;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+html.dark .nav-minimal.sc{background:rgba(8,8,8,.96) !important;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.nav-minimal .ctn{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-minimal .nav-logo-wrap{display:flex;align-items:center}
+.nav-minimal .nav-logo{height:32px;width:auto}
+.nav-minimal .nctas{display:flex;align-items:center;gap:10px}
+.nav-minimal .nav-cta{padding:10px 22px !important;font-size:.88rem !important;font-weight:700 !important;background:linear-gradient(135deg,#FA5000,#CD2349) !important;color:#fff !important;box-shadow:0 6px 20px rgba(250,80,0,.3) !important;border:none !important}
+.nav-minimal .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(250,80,0,.4) !important}
+@media(max-width:520px){
+  .nav-minimal .nav-logo{height:26px}
+  .nav-minimal .nav-cta{padding:9px 16px !important;font-size:.78rem !important}
+  .nav-minimal .ctn{gap:8px;padding:0 16px}
+  .nav-minimal .dark-toggle{display:none}
+}
+
+/* ===================== EACH SECTION FITS THE VIEWPORT ===================== */
+main > section{min-height:100svh}
+@supports not (height:100svh){main > section{min-height:100vh}}
+main > section.video-section{min-height:auto;padding:40px 0 60px}
+/* Center content vertically for new sections (VSL + Calendar + CTA Final) */
+.vsl-section,.calendar-section,.demo-cta-final{display:flex;flex-direction:column;justify-content:center}
+@media(max-width:900px){
+  main > section{min-height:auto}
+  main > section.hero,main > section.demo-cta-final,main > section.vsl-section,main > section.calendar-section{min-height:100svh}
+}
+
 /* ===================== VSL SECTION ===================== */
 .vsl-section{position:relative;padding:120px 0 100px;overflow:hidden;background:var(--bg);transition:background var(--tr)}
 html.dark .vsl-section{background:transparent}
@@ -1391,7 +1420,18 @@ html.dark .vsl-section::before{background:radial-gradient(ellipse 60% 50% at 50%
 @keyframes vslBorderSpin{to{transform:rotate(1turn)}}
 .vsl-frame::after{content:'';position:absolute;inset:-50px;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(250,80,0,.25),transparent 70%);filter:blur(40px);z-index:-1;animation:vslGlow 4s ease-in-out infinite alternate}
 @keyframes vslGlow{0%{opacity:.5;transform:scale(.95)}100%{opacity:1;transform:scale(1.05)}}
-.vsl-video{position:relative;z-index:1;width:100%;display:block;background:#000;border-radius:22px;aspect-ratio:16/9;object-fit:cover}
+.vsl-video{position:relative;z-index:1;width:100%;display:block;background:radial-gradient(ellipse at center,#1a0a08 0%,#000 100%);border-radius:22px;aspect-ratio:16/9;object-fit:contain;object-position:center}
+/* VSL Play overlay (replaces native poster look with custom cinematic play CTA) */
+.vsl-play-overlay{position:absolute;inset:0;z-index:3;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:22px;overflow:hidden;transition:opacity .3s}
+.vsl-play-overlay:hover .vsl-play-bg{background:radial-gradient(ellipse at center,rgba(250,80,0,.18) 0%,rgba(0,0,0,.55) 60%,rgba(0,0,0,.7) 100%)}
+.vsl-play-overlay:hover .vsl-play-icon{transform:scale(1.1)}
+.vsl-play-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(250,80,0,.08) 0%,rgba(0,0,0,.5) 60%,rgba(0,0,0,.7) 100%);transition:background .3s}
+.vsl-play-icon{position:relative;z-index:2;width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#FA5000,#CD2349);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 20px 60px rgba(250,80,0,.5),0 0 0 6px rgba(255,255,255,.1);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.vsl-play-icon svg{width:36px;height:36px;margin-left:5px}
+.vsl-play-pulse{position:absolute;width:88px;height:88px;border-radius:50%;border:2px solid rgba(250,80,0,.6);animation:vslPlayPulse 2s ease-out infinite;pointer-events:none}
+.vsl-play-pulse-2{animation-delay:1s}
+@keyframes vslPlayPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.4);opacity:0}}
+@media(max-width:600px){.vsl-play-icon{width:68px;height:68px}.vsl-play-icon svg{width:28px;height:28px}.vsl-play-pulse{width:68px;height:68px}}
 .vsl-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 28px;margin-top:36px;opacity:0;transform:translateY(20px);transition:opacity .8s .2s ease,transform .8s .2s ease}
 .vsl-meta.in-view{opacity:1;transform:translateY(0)}
 .vsl-meta-item{display:flex;align-items:center;gap:10px;font-family:var(--fb);font-size:.88rem;font-weight:600;color:var(--text-2)}
@@ -1453,6 +1493,32 @@ html.dark .cal-wrap{background:#0a0a0a}
 .section-divider{position:relative;height:1px;background:linear-gradient(90deg,transparent,rgba(250,80,0,.18),transparent);max-width:1100px;margin:0 auto}
 html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250,80,0,.25),transparent)}
 
+/* ===================== STICKY DEMO CTAs (mobile bar + desktop pill) ===================== */
+.demo-sticky-cta{position:fixed;z-index:900;opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease}
+.demo-sticky-cta.visible{opacity:1;pointer-events:auto}
+/* Mobile: full-width bottom bar */
+.demo-sticky-mobile{bottom:0;left:0;right:0;background:rgba(8,8,8,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:11px 14px calc(11px + env(safe-area-inset-bottom,0));border-top:1px solid rgba(250,80,0,.22);box-shadow:0 -8px 30px rgba(0,0,0,.35);transform:translateY(100%)}
+.demo-sticky-mobile.visible{transform:translateY(0)}
+.demo-sticky-mobile-inner{display:flex;align-items:center;gap:12px;max-width:600px;margin:0 auto}
+.demo-sticky-mobile-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,rgba(250,80,0,.2),rgba(205,35,73,.2));display:flex;align-items:center;justify-content:center;border:1px solid rgba(250,80,0,.3)}
+.demo-sticky-mobile-icon svg{width:18px;height:18px;stroke:#FA5000;stroke-width:2.2;fill:none}
+.demo-sticky-mobile-txt{flex:1;color:#fff;font-family:var(--fb);font-size:.74rem;line-height:1.3;font-weight:500;min-width:0}
+.demo-sticky-mobile-txt strong{color:#FA5000;font-weight:700;display:block;font-size:.82rem;line-height:1.2;margin-bottom:1px}
+.demo-sticky-mobile-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff !important;font-family:var(--fb);font-size:.82rem;font-weight:700;padding:11px 16px;border-radius:999px;text-decoration:none;white-space:nowrap;box-shadow:0 6px 20px rgba(250,80,0,.45);transition:transform .25s;flex-shrink:0}
+.demo-sticky-mobile-btn:hover,.demo-sticky-mobile-btn:active{transform:scale(1.04)}
+.demo-sticky-mobile-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* Desktop: floating bottom-right pill */
+.demo-floating-pill{bottom:28px;right:28px;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff !important;font-family:var(--fb);font-size:.92rem;font-weight:700;padding:14px 26px;border-radius:999px;text-decoration:none;display:flex;align-items:center;gap:10px;box-shadow:0 14px 40px rgba(250,80,0,.45),0 0 0 1px rgba(255,255,255,.15) inset;transform:translateY(20px)}
+.demo-floating-pill.visible{transform:translateY(0)}
+.demo-floating-pill:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 20px 55px rgba(250,80,0,.6),0 0 0 1px rgba(255,255,255,.2) inset}
+.demo-floating-pill .float-pulse{width:8px;height:8px;border-radius:50%;background:#fff;animation:floatPulseRing 1.7s ease-in-out infinite;flex-shrink:0}
+@keyframes floatPulseRing{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,255,255,.7)}50%{opacity:.55;box-shadow:0 0 0 9px rgba(255,255,255,0)}}
+.demo-floating-pill svg{width:16px;height:16px;fill:currentColor}
+
+@media(max-width:900px){.demo-floating-pill{display:none}}
+@media(min-width:901px){.demo-sticky-mobile{display:none}}
+
 @media(max-width:768px){
   .vsl-section{padding:80px 0 70px}
   .calendar-section{padding:70px 0}
@@ -1468,62 +1534,24 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
 
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-<!-- NAV -->
+<!-- MINIMAL LANDING NAV — landing page (no menu, single CTA) -->
 <header>
-<nav class="nav" id="nav" role="navigation">
+<nav class="nav nav-minimal" id="nav" role="navigation" aria-label="Navegación principal">
   <div class="ctn">
-    <a href="/" aria-label="Hapee - Ir al inicio"><img src="img/logo-hapee.png" alt="Hapee - Plataforma de IA conversacional y automatización" class="nav-logo"></a>
-    <div class="nlinks">
-      <a href="#features">Funcionalidades</a>
-      <a href="#como">Cómo funciona</a>
-      <a href="/comparativa.html">Comparativa</a>
-      <a href="/blog.html">Blog</a>
-      <a href="/transformacion.html">Transformación</a>
-      <a href="/juego" class="nav-game">🎮 Jugar</a>
-      <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Academy</a>
-      <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
-    </div>
+    <a href="/" aria-label="Hapee - Ir al inicio" class="nav-logo-wrap"><img src="img/logo-hapee.png" alt="Hapee" class="nav-logo"></a>
     <div class="nctas">
-      <!-- Dark mode toggle -->
       <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
-        <!-- Sun icon (shown in dark mode) -->
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
-        <!-- Moon icon (shown in light mode) -->
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
-      <a href="#calendario" class="btn bo" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Agendar Demo</a>
-      <a href="#planes" class="btn bs">Ver Planes</a>
+      <a href="#calendario" class="btn bs nav-cta" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Reservar mi demo →</a>
     </div>
-    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open');document.documentElement.classList.add('menu-open')" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
-<div class="mmenu" id="mm">
-  <button class="mx" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')" aria-label="Cerrar menú">&times;</button>
-  <a href="#features" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')">Funcionalidades</a>
-  <a href="#como" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')">Cómo funciona</a>
-  <a href="/comparativa.html">Comparativa</a>
-  <a href="/blog.html">Blog</a>
-  <a href="/transformacion.html">Transformación</a>
-  <a href="/juego">🎮 Jugar Hapee</a>
-  <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Academy</a>
-  <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
-  <button class="dark-toggle" id="darkToggleMobile" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-    </svg>
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
-  <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
-    <a href="#calendario" class="btn bo" style="width:100%;justify-content:center" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'});document.documentElement.classList.remove('menu-open');document.querySelector('.mmenu').classList.remove('open')">Agendar Demo</a>
-    <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open');document.documentElement.classList.remove('menu-open')">Ver Planes</a>
-  </div>
-</div>
 </header>
 
 <main id="main-content">
@@ -1535,17 +1563,17 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
   <div id="hp"></div>
   <div class="ctn">
     <div>
-      <div class="hero-badge"><span class="dot"></span> Demo gratis · 30 minutos · sin compromiso</div>
+      <div class="hero-badge"><span class="dot"></span> Demo gratuita · 30 minutos · agenda al instante</div>
       <h1>
-        <span class="w">Descubre</span> <span class="w">cómo</span> <span class="w">Hapee</span><br>
-        <span class="w tg">multiplica</span> <span class="w tg">tus</span> <span class="w tg">ventas</span> <span class="w tg">con</span> <span class="w tg">IA.</span>
+        <span class="w">30</span> <span class="w">minutos.</span><br>
+        <span class="w tg">Y</span> <span class="w tg">verás</span> <span class="w tg">cómo</span> <span class="w tg">Hapee</span> <span class="w tg">vende</span> <span class="w tg">por</span> <span class="w tg">ti.</span>
       </h1>
-      <p class="hero-sub">Agenda una demo personalizada con nuestro equipo. Ve la plataforma funcionando en vivo, resuelve tus dudas y descubre qué automatizaciones puedes activar hoy mismo en tu negocio.</p>
+      <p class="hero-sub">Una llamada 1 a 1 con nuestro equipo. Te mostramos Hapee adaptado a tu negocio, identificamos dónde se te están escapando ventas y te dejamos un plan concreto para automatizarlas — todo en la misma reunión.</p>
       <div class="hero-ctas">
-        <a href="#calendario" class="btn bs glow" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Agendar mi Demo</a>
-        <a href="#vsl-section" class="btn bo" onclick="event.preventDefault();document.getElementById('vsl-section').scrollIntoView({behavior:'smooth',block:'start'})">▶ Ver Video Demo</a>
+        <a href="#calendario" class="btn bs glow" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Reservar mi demo gratis →</a>
+        <a href="#vsl-section" class="btn bo" onclick="event.preventDefault();document.getElementById('vsl-section').scrollIntoView({behavior:'smooth',block:'start'})">▶ Ver video primero</a>
       </div>
-      <p class="hero-d">Llamada 1:1 con nuestro equipo · 100% gratis · sin tarjeta de crédito</p>
+      <p class="hero-d">100% gratis · sin compromiso · agenda en Google Meet en menos de 60 segundos</p>
     </div>
     <div class="hero-vis">
       <div class="robot-glow"></div>
@@ -1595,10 +1623,19 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
       <p class="vsl-sub">5 minutos que te van a cambiar la forma de ver las ventas. Casos reales, resultados concretos, cero relleno.</p>
     </div>
     <div class="vsl-frame anim-rev">
-      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/video-poster.jpg" aria-label="Video demostración de Hapee — VSL completo">
+      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/robot.png" aria-label="Video demostración de Hapee — VSL completo">
         <source src="img/vsl-hapee.mp4" type="video/mp4">
         Tu navegador no soporta video HTML5.
       </video>
+      <!-- Custom play overlay (shown until user starts video) -->
+      <button class="vsl-play-overlay" type="button" aria-label="Reproducir video" onclick="(function(b){var v=document.getElementById('vslVideo');b.style.display='none';v.play()})(this)">
+        <span class="vsl-play-bg"></span>
+        <span class="vsl-play-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="vsl-play-pulse"></span>
+        <span class="vsl-play-pulse vsl-play-pulse-2"></span>
+      </button>
     </div>
     <div class="vsl-meta anim-rev">
       <div class="vsl-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <strong>5 min</strong> de duración</div>
@@ -1727,9 +1764,9 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
   <div class="hi-layer">
     <!-- Section header -->
     <div class="hi-header">
-      <span class="sl">Interactúa con Hapee</span>
-      <h2>Habla con tu <span class="tg">Agente IA</span></h2>
-      <p>Elige una industria y un canal. Conversa como si fueras el cliente — lo mismo que viviría en WhatsApp o Instagram con tu marca.</p>
+      <span class="sl">Pruébala antes de agendar</span>
+      <h2>Conversa con un <span class="tg">Agente IA</span> en vivo</h2>
+      <p>Antes de tu demo, prueba tú mismo. Elige una industria y un canal, escribe como si fueras el cliente — esto es exactamente lo que verás funcionando con tu marca, tu voz y tu data.</p>
     </div>
 
     <!-- INDUSTRY SELECTOR — pick a vertical to demo the agent as a fictional brand -->
@@ -2168,9 +2205,9 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
 <section class="pricing" id="planes">
   <div class="ctn">
     <div class="pricing-head">
-      <span class="sl">Planes y Precios</span>
-      <h2 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:16px">Invierte en tu <span class="tg">crecimiento</span></h2>
-      <p>Elige el plan perfecto para tus necesidades. Pruébalo 14 días gratis en Starter y Pro — cancela antes del día 14 y no se cobra nada.</p>
+      <span class="sl">Transparencia total · sin sorpresas</span>
+      <h2 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:16px">Esto es lo que cuesta <span class="tg">automatizar</span></h2>
+      <p>Después de tu demo decides. Mientras tanto: <strong>Starter y Pro con 14 días gratis</strong>. Cancela antes del día 14 y no se cobra nada. Sin letra chica.</p>
     </div>
     <div class="pgrid">
       <!-- STARTER -->
@@ -3491,6 +3528,59 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
     });
   },{threshold:.3});
   vo.observe(v);
+})();
+</script>
+
+<!-- ===================== STICKY DEMO CTAs (mobile bar + desktop pill) ===================== -->
+<div class="demo-sticky-cta demo-sticky-mobile" id="demoStickyMobile" aria-hidden="true">
+  <div class="demo-sticky-mobile-inner">
+    <div class="demo-sticky-mobile-icon">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </div>
+    <div class="demo-sticky-mobile-txt">
+      <strong>Demo gratis · 30 min</strong>
+      <span>Reserva ahora — sin compromiso</span>
+    </div>
+    <a href="#calendario" class="demo-sticky-mobile-btn" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">
+      Agendar
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+</div>
+
+<a href="#calendario" class="demo-sticky-cta demo-floating-pill" id="demoFloatingPill" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})" aria-hidden="true">
+  <span class="float-pulse"></span>
+  <span>Reservar mi demo gratis</span>
+  <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><polyline points="9 18 15 12 9 6"/></svg>
+</a>
+
+<script>
+// Sticky CTAs visibility: show after hero, hide on calendar + footer
+(function(){
+  var mobile=document.getElementById('demoStickyMobile');
+  var pill=document.getElementById('demoFloatingPill');
+  var hero=document.querySelector('.hero');
+  var calendar=document.getElementById('calendario');
+  var footer=document.querySelector('.footer');
+  if(!mobile||!pill||!hero||!calendar)return;
+
+  var inHero=true, inCalendar=false, inFooter=false;
+  function refresh(){
+    var show=!inHero && !inCalendar && !inFooter;
+    [mobile,pill].forEach(function(el){
+      el.classList.toggle('visible',show);
+      el.setAttribute('aria-hidden',show?'false':'true');
+    });
+  }
+  function makeObs(el,setter){
+    var o=new IntersectionObserver(function(ents){
+      ents.forEach(function(e){setter(e.isIntersecting);refresh()});
+    },{threshold:.25,rootMargin:'-60px 0px -60px 0px'});
+    o.observe(el);
+  }
+  makeObs(hero,function(v){inHero=v});
+  makeObs(calendar,function(v){inCalendar=v});
+  if(footer)makeObs(footer,function(v){inFooter=v});
 })();
 </script>
 

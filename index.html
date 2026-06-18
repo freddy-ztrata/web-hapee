@@ -1367,6 +1367,16 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
 /* ===== SKIP LINK (accessibility) ===== */
 .skip-link{position:absolute;top:-9999px;left:-9999px;z-index:9999;background:var(--accent);color:#fff;font-weight:700;padding:10px 20px;border-radius:var(--pill);font-size:.9rem;text-decoration:none;transition:none}
 .skip-link:focus{top:16px;left:16px}
+
+/* ===== SECTION-PER-SCREEN — each major section fills at least one viewport ===== */
+main > section{min-height:100svh}
+@supports not (height:100svh){main > section{min-height:100vh}}
+/* exceptions: shorter by design or break layout if forced */
+main > section.midcta,main > section.video-section{min-height:auto}
+@media(max-width:768px){
+  main > section{min-height:auto}
+  main > section.hero,main > section.ctaf,main > section.platform-show,main > section.pricing,main > section.hapee-interact{min-height:100svh}
+}
 </style>
 </head>
 <body>
