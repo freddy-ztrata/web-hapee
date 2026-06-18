@@ -359,12 +359,20 @@ html.dark .nav-logo{filter:brightness(0) invert(1)}
 .nlinks a.nav-game{color:var(--accent);font-weight:700;padding:5px 10px;border:1px solid rgba(250,80,0,.35);border-radius:6px;background:rgba(250,80,0,.06);font-size:.8rem}
 .nlinks a.nav-game:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 .nctas{display:flex;gap:8px;align-items:center}
-.nctas .btn{padding:8px 16px;font-size:.82rem}
-@media(max-width:1180px){
-  .nlinks{gap:13px}
-  .nlinks a{font-size:.8rem}
-  .nctas .btn{padding:7px 13px;font-size:.78rem}
+.nctas .btn{padding:8px 16px;font-size:.82rem;white-space:nowrap;line-height:1}
+.nlinks a{white-space:nowrap}
+@media(max-width:1280px){
+  .nlinks{gap:11px}
+  .nlinks a{font-size:.78rem}
+  .nctas .btn{padding:7px 13px;font-size:.76rem}
   .nav-logo{height:26px}
+}
+@media(max-width:1180px){
+  .nlinks{gap:9px}
+  .nlinks a{font-size:.74rem}
+  .nctas .btn{padding:6px 11px;font-size:.72rem}
+  .nctas{gap:6px}
+  .nav-logo{height:24px}
 }
 
 /* Dark mode toggle button */
