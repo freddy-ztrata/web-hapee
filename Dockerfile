@@ -10,6 +10,7 @@ COPY politica-privacidad.html /usr/share/nginx/html/politica-privacidad.html
 COPY terminos.html /usr/share/nginx/html/terminos.html
 COPY gracias-compra.html /usr/share/nginx/html/gracias-compra.html
 COPY juego.html /usr/share/nginx/html/juego.html
+COPY demo-countdown.html /usr/share/nginx/html/demo-countdown.html
 COPY img/ /usr/share/nginx/html/img/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml

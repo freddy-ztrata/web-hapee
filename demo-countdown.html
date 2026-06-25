@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo Hapee · comienza en…</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FA5000;
+  --orange-2:#FF8A3A;
+  --magenta:#CD2349;
+  --magenta-2:#E91E63;
+  --ink:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0612;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;-webkit-font-smoothing:antialiased;user-select:none}
+body{
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(250,80,0,.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(205,35,73,.32) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.10) 0%, transparent 70%),
+    linear-gradient(135deg,#0a0612 0%, #14081a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;position:relative;
+}
+
+/* canvas particles */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Top bar */
+.top-bar{position:absolute;top:24px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 36px;z-index:5}
+.brand{display:inline-flex;align-items:center;gap:.65rem;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:#fff;line-height:1}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e;animation:livePulse 1.4s ease-out infinite}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}100%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
+.brand img{height:24px;width:auto;filter:brightness(0) invert(1);opacity:.92}
+.session-id{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600}
+
+/* Robot float */
+.robot-wrap{
+  position:relative;width:clamp(180px,22vw,300px);aspect-ratio:1/1.05;
+  display:grid;place-items:center;
+  z-index:3;
+  filter:drop-shadow(0 30px 50px rgba(250,80,0,.45));
+  animation:robotFloat 4.2s ease-in-out infinite;
+}
+.robot-wrap img{width:100%;height:auto;display:block;will-change:transform}
+@keyframes robotFloat{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-22px) rotate(1deg)}
+}
+/* glow ring behind robot */
+.robot-wrap::before{
+  content:'';position:absolute;inset:auto 10% 8% 10%;height:24px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(250,80,0,.55),transparent 70%);
+  filter:blur(20px);z-index:-1;
+  animation:shadowPulse 4.2s ease-in-out infinite;
+}
+@keyframes shadowPulse{
+  0%,100%{transform:scaleX(.85);opacity:.7}
+  50%{transform:scaleX(1.05);opacity:1}
+}
+/* concentric pulse rings */
+.pulse-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1.5px solid rgba(250,80,0,.40);width:120%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;animation:ringExpand 3.6s ease-out infinite;z-index:0}
+.pulse-ring.r2{animation-delay:1.2s;border-color:rgba(205,35,73,.30)}
+.pulse-ring.r3{animation-delay:2.4s;border-color:rgba(255,138,58,.20)}
+@keyframes ringExpand{
+  0%{transform:translate(-50%,-50%) scale(.7);opacity:.85}
+  100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}
+}
+
+/* Eyebrow */
+.eyebrow{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--orange-2);
+  display:inline-flex;align-items:center;gap:.6rem;margin-top:38px;
+  padding:8px 16px;border:1px solid rgba(255,138,58,.4);border-radius:999px;background:rgba(255,138,58,.06);
+  z-index:3;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange-2);box-shadow:0 0 10px var(--orange-2);animation:livePulse 1.4s ease-out infinite}
+
+/* Countdown display */
+.countdown{
+  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-size:clamp(120px,22vw,260px);
+  line-height:.85;letter-spacing:.01em;color:#fff;
+  margin:18px 0 8px;display:flex;align-items:baseline;gap:.06em;
+  text-shadow:0 24px 80px rgba(250,80,0,.35);
+  font-variant-numeric:tabular-nums;
+  z-index:3;
+}
+.countdown .colon{color:var(--orange);animation:colonBlink 1s steps(1) infinite;display:inline-block;margin:0 .04em}
+@keyframes colonBlink{0%,49%{opacity:1}50%,100%{opacity:.18}}
+.countdown.urgent{color:var(--orange);animation:urgentPulse .55s ease-in-out infinite alternate}
+.countdown.urgent .colon{color:#fff}
+@keyframes urgentPulse{from{transform:scale(1);text-shadow:0 24px 80px rgba(250,80,0,.35)}to{transform:scale(1.04);text-shadow:0 24px 100px rgba(250,80,0,.7)}}
+
+.sub-line{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:1.05rem;color:rgba(255,255,255,.78);letter-spacing:.02em;
+  max-width:600px;text-align:center;line-height:1.5;z-index:3;
+  margin-bottom:38px;
+}
+.sub-line strong{color:#fff;font-weight:700}
+
+/* Heads-up callout (mic notice) */
+.heads-up{
+  display:flex;align-items:center;gap:14px;
+  max-width:640px;margin:6px 24px 32px;padding:14px 20px 14px 16px;
+  background:linear-gradient(135deg,rgba(250,80,0,.14),rgba(205,35,73,.10));
+  border:1px solid rgba(250,80,0,.45);border-radius:14px;
+  z-index:3;backdrop-filter:blur(10px);
+  box-shadow:0 14px 40px rgba(250,80,0,.18);
+}
+.heads-up .hu-icon{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-2));
+  display:grid;place-items:center;
+  font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:#fff;font-weight:400;
+  box-shadow:0 4px 14px rgba(250,80,0,.45);
+  animation:huPulse 2s ease-in-out infinite;
+}
+@keyframes huPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.heads-up .hu-body{flex:1;min-width:0;text-align:left}
+.heads-up .hu-title{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;color:#fff;line-height:1.3;
+  letter-spacing:.005em;
+}
+.heads-up .hu-sub{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.45;margin-top:3px;
+}
+.heads-up .hu-sub strong{color:var(--orange-2);font-weight:700}
+@media(max-width:640px){
+  .heads-up{margin:6px 16px 22px;padding:12px 14px;gap:10px}
+  .heads-up .hu-icon{width:32px;height:32px;font-size:1.4rem}
+  .heads-up .hu-title{font-size:.85rem}
+  .heads-up .hu-sub{font-size:.75rem}
+}
+
+/* Progress bar */
+.progress{
+  width:min(560px,80vw);height:6px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;z-index:3;
+  border:1px solid rgba(255,255,255,.05);
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--orange) 0%,var(--magenta) 60%,#7C3AED 100%);
+  width:100%;border-radius:99px;box-shadow:0 0 18px rgba(250,80,0,.55);
+  transition:width .25s linear;
+}
+
+/* Bottom row */
+.bottom{position:absolute;bottom:24px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 36px;z-index:5}
+.bottom-meta{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+.bottom-meta .v{color:var(--orange-2)}
+
+/* When reach 0:00 */
+.go-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at center,rgba(250,80,0,.35),rgba(10,6,18,.9) 70%);z-index:50;backdrop-filter:blur(6px)}
+.go-overlay.show{display:flex;animation:goShow 1s cubic-bezier(.16,1,.3,1)}
+.go-overlay h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(80px,18vw,220px);line-height:.9;color:#fff;letter-spacing:.02em;text-shadow:0 30px 80px rgba(250,80,0,.6);text-transform:uppercase;text-align:center}
+.go-overlay h1 .em{color:var(--orange);font-style:italic}
+.go-overlay p{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;color:rgba(255,255,255,.85);margin-top:18px;letter-spacing:.04em}
+@keyframes goShow{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* Responsive */
+@media(max-width:640px){
+  .top-bar,.bottom{padding:0 18px}
+  .top-bar{top:14px}
+  .bottom{bottom:14px}
+  .countdown{font-size:38vw}
+  .sub-line{font-size:.9rem;padding:0 18px;margin-bottom:24px}
+  .eyebrow{font-size:.62rem;margin-top:24px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- Top -->
+<div class="top-bar">
+  <div class="brand">
+    <span class="dot"></span>
+    <img src="img/logo-hapee.png" alt="Hapee" onerror="this.style.display='none'">
+    <span>Demo · en vivo</span>
+  </div>
+  <div class="session-id" id="sessionId">Session · 2026.06.10</div>
+</div>
+
+<!-- Robot floating -->
+<div class="robot-wrap">
+  <div class="pulse-ring"></div>
+  <div class="pulse-ring r2"></div>
+  <div class="pulse-ring r3"></div>
+  <img src="img/robot.png" alt="Hapee Robot">
+</div>
+
+<!-- Eyebrow -->
+<div class="eyebrow"><span class="dot"></span>La demo comienza en</div>
+
+<!-- Countdown -->
+<div class="countdown" id="countdown">
+  <span id="mins">05</span><span class="colon">:</span><span id="secs">00</span>
+</div>
+
+<!-- Heads-up callout -->
+<div class="heads-up">
+  <div class="hu-icon">!</div>
+  <div class="hu-body">
+    <div class="hu-title">Aprovecha este momento para interactuar con nuestro equipo</div>
+    <div class="hu-sub">Una vez empecemos, los <strong>micrófonos se apagarán</strong> hasta el final de la demo.</div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- Bottom -->
+<div class="bottom">
+  <div class="bottom-meta">Powered by <span class="v">Hapee.ai</span></div>
+  <div class="bottom-meta" id="clockTime">--:--:--</div>
+</div>
+
+<!-- GO! Overlay -->
+<div class="go-overlay" id="goOverlay">
+  <h1>¡Empezamos<br><span class="em">la demo!</span></h1>
+  <p>Tu host está conectándose ahora.</p>
+</div>
+
+<script>
+/* === COUNTDOWN === */
+const TOTAL_SECONDS = 5 * 60;
+let remaining = TOTAL_SECONDS;
+let startedAt = Date.now();
+
+const $mins = document.getElementById('mins');
+const $secs = document.getElementById('secs');
+const $countdown = document.getElementById('countdown');
+const $fill = document.getElementById('progressFill');
+const $go = document.getElementById('goOverlay');
+
+function tick(){
+  const elapsed = (Date.now() - startedAt) / 1000;
+  remaining = Math.max(0, TOTAL_SECONDS - elapsed);
+  const m = Math.floor(remaining / 60);
+  const s = Math.floor(remaining % 60);
+  $mins.textContent = String(m).padStart(2,'0');
+  $secs.textContent = String(s).padStart(2,'0');
+  /* progress bar */
+  const pct = (remaining / TOTAL_SECONDS) * 100;
+  $fill.style.width = pct + '%';
+  /* urgent state last 30s */
+  if(remaining <= 30 && remaining > 0) $countdown.classList.add('urgent');
+  else $countdown.classList.remove('urgent');
+  /* done */
+  if(remaining <= 0){
+    $go.classList.add('show');
+    return;
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* === Clock display === */
+function clockTick(){
+  const d = new Date();
+  document.getElementById('clockTime').textContent =
+    [d.getHours(),d.getMinutes(),d.getSeconds()].map(n => String(n).padStart(2,'0')).join(':');
+}
+clockTick();
+setInterval(clockTick, 1000);
+
+/* === Session ID === */
+const sid = Math.random().toString(36).slice(2,8).toUpperCase();
+document.getElementById('sessionId').textContent = `Session · ${sid}`;
+
+/* === Background particles === */
+(function(){
+  const c = document.getElementById('particles');
+  const x = c.getContext('2d');
+  let W = c.width = innerWidth;
+  let H = c.height = innerHeight;
+  const N = Math.min(80, Math.floor(W * H / 18000));
+  const ps = [];
+  for(let i = 0; i < N; i++){
+    ps.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: 1 + Math.random() * 2.5,
+      vx: (Math.random() - .5) * .25,
+      vy: -(0.15 + Math.random() * 0.45),
+      hue: Math.random() < .6 ? '#FA5000' : (Math.random() < .5 ? '#CD2349' : '#FFCC33'),
+      a: 0.3 + Math.random() * 0.4
+    });
+  }
+  function frame(){
+    x.clearRect(0,0,W,H);
+    for(const p of ps){
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.y < -10){ p.y = H + 10; p.x = Math.random() * W; }
+      if(p.x < -10) p.x = W + 10;
+      if(p.x > W + 10) p.x = -10;
+      x.globalAlpha = p.a;
+      x.fillStyle = p.hue;
+      x.beginPath();
+      x.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      x.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+  addEventListener('resize', () => { W = c.width = innerWidth; H = c.height = innerHeight; });
+})();
+
+/* === SFX countdown last 5 seconds (procedural beep) === */
+let audioCtx = null;
+function beep(freq, dur=0.12, vol=0.15){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0, audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + 0.005);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.connect(g).connect(audioCtx.destination);
+    o.start();
+    o.stop(audioCtx.currentTime + dur + 0.02);
+  }catch(e){}
+}
+let lastSec = -1;
+setInterval(() => {
+  const sec = Math.ceil(remaining);
+  if(sec !== lastSec){
+    lastSec = sec;
+    if(sec > 0 && sec <= 5) beep(660 + (5 - sec) * 80);
+    if(sec === 0) beep(1320, 0.5, 0.22);
+  }
+}, 80);
+/* unlock audio on first interaction */
+addEventListener('click', () => { if(!audioCtx) try{audioCtx = new (window.AudioContext || window.webkitAudioContext)()}catch(e){}; }, {once:true});
+</script>
+</body>
+</html>
