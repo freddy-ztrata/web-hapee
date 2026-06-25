@@ -131,7 +131,7 @@
       },
       "contactPoint": [
         {"@type":"ContactPoint","contactType":"sales","telephone":"+56-9-5925-4546","email":"hola@hapee.ai","availableLanguage":["Spanish","English"],"areaServed":["CL","MX","CO","PE","AR","US"]},
-        {"@type":"ContactPoint","contactType":"customer support","email":"soporte@hapee.ai","availableLanguage":["Spanish"]}
+        {"@type":"ContactPoint","contactType":"customer support","email":"info@hapee.ai","availableLanguage":["Spanish"]}
       ],
       "sameAs": [
         "https://www.instagram.com/hapee.ai/",
@@ -359,12 +359,20 @@ html.dark .nav-logo{filter:brightness(0) invert(1)}
 .nlinks a.nav-game{color:var(--accent);font-weight:700;padding:5px 10px;border:1px solid rgba(250,80,0,.35);border-radius:6px;background:rgba(250,80,0,.06);font-size:.8rem}
 .nlinks a.nav-game:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 .nctas{display:flex;gap:8px;align-items:center}
-.nctas .btn{padding:8px 16px;font-size:.82rem}
+.nctas .btn{padding:8px 16px;font-size:.82rem;white-space:nowrap;line-height:1}
+.nlinks a{white-space:nowrap}
+/* Logo aspect-ratio lock — never distort under any breakpoint */
+.nav-logo{height:30px;width:auto !important;object-fit:contain;flex-shrink:0}
+@media(max-width:1280px){
+  .nlinks{gap:11px}
+  .nlinks a{font-size:.78rem}
+  .nctas .btn{padding:7px 13px;font-size:.76rem}
+}
 @media(max-width:1180px){
-  .nlinks{gap:13px}
-  .nlinks a{font-size:.8rem}
-  .nctas .btn{padding:7px 13px;font-size:.78rem}
-  .nav-logo{height:26px}
+  .nlinks{gap:9px}
+  .nlinks a{font-size:.74rem}
+  .nctas .btn{padding:6px 11px;font-size:.72rem}
+  .nctas{gap:6px}
 }
 
 /* Dark mode toggle button */
@@ -1367,6 +1375,16 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
 /* ===== SKIP LINK (accessibility) ===== */
 .skip-link{position:absolute;top:-9999px;left:-9999px;z-index:9999;background:var(--accent);color:#fff;font-weight:700;padding:10px 20px;border-radius:var(--pill);font-size:.9rem;text-decoration:none;transition:none}
 .skip-link:focus{top:16px;left:16px}
+
+/* ===== SECTION-PER-SCREEN — each major section fills at least one viewport ===== */
+main > section{min-height:100svh}
+@supports not (height:100svh){main > section{min-height:100vh}}
+/* exceptions: shorter by design or break layout if forced */
+main > section.midcta,main > section.video-section{min-height:auto}
+@media(max-width:768px){
+  main > section{min-height:auto}
+  main > section.hero,main > section.ctaf,main > section.platform-show,main > section.pricing,main > section.hapee-interact{min-height:100svh}
+}
 </style>
 </head>
 <body>
@@ -1400,7 +1418,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
         </svg>
       </button>
-      <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
+      <a href="/agenda-tu-demo" class="btn bo">Agendar Demo</a>
       <a href="#planes" class="btn bs">Ver Planes</a>
     </div>
     <button class="mbtn" onclick="document.getElementById('mm').classList.add('open');document.documentElement.classList.add('menu-open')" aria-label="Menú"><span></span><span></span><span></span></button>
@@ -1425,7 +1443,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     </svg>
   </button>
   <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
-    <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo" style="width:100%;justify-content:center">Agendar Demo</a>
+    <a href="/agenda-tu-demo" class="btn bo" style="width:100%;justify-content:center">Agendar Demo</a>
     <a href="#planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open');document.documentElement.classList.remove('menu-open')">Ver Planes</a>
   </div>
 </div>
@@ -1448,7 +1466,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       <p class="hero-sub">La primera plataforma integral con Agentes IA Certificados. Cero tareas manuales. Cierre de ventas 24/7.</p>
       <div class="hero-ctas">
         <a href="#planes" class="btn bs glow">Ver Planes</a>
-        <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
+        <a href="/agenda-tu-demo" class="btn bo">Agendar Demo</a>
       </div>
       <p class="hero-d">Empieza con 14 días gratis · sin compromiso · cancelas cuando quieras</p>
     </div>
@@ -1674,7 +1692,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     <p>Consolida todo en una sola plataforma y ahorra miles de dólares al mes.</p>
     <div class="btns">
       <a href="#planes" class="btn bs">Ver Planes</a>
-      <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
+      <a href="/agenda-tu-demo" class="btn bo">Agendar Demo</a>
     </div>
   </div>
 </section>
@@ -2257,7 +2275,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
       </ul>
       <div class="cw-cta">
         <a href="https://digitals.cl" target="_blank" rel="noopener noreferrer" class="btn bs">Conocer Digitals</a>
-        <a href="https://wa.me/56959254546" target="_blank" rel="noopener noreferrer" class="btn bo">Cotizar setup custom</a>
+        <a href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer" class="btn bo">Cotizar setup custom</a>
       </div>
     </div>
     <div class="cw-right">
@@ -2289,7 +2307,7 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
     <p>Pruébalo 14 días gratis. Si te encanta, sigues. Si no, cancelas antes del día 14 y no se cobra nada.</p>
     <div class="btns">
       <a href="#planes" class="btn bs">Ver Planes</a>
-      <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer" class="btn bo">Agendar Demo</a>
+      <a href="/agenda-tu-demo" class="btn bo">Agendar Demo</a>
     </div>
   </div>
 </section>
@@ -2316,12 +2334,12 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
         <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Grupo Digitals</a>
         <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Digitals.cl</a>
         <a href="https://app.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
-        <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer">Agendar Demo</a>
+        <a href="/agenda-tu-demo">Agendar Demo</a>
       </div>
       <div class="fcol">
         <h4>Recursos</h4>
         <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Cursos</a>
-        <a href="https://be.hapee.ai/agenda-tu-demo" target="_blank" rel="noopener noreferrer">Soporte</a>
+        <a href="mailto:info@hapee.ai">Soporte</a>
         <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer">Instagram</a>
       </div>
     </div>
@@ -3583,5 +3601,6 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 
 });
 </script>
+<script src="/js/whatsapp.js" defer></script>
 </body>
 </html>
