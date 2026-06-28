@@ -1723,7 +1723,63 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
       <div class="cal-corner-deco tl"></div>
       <div class="cal-corner-deco br"></div>
       <div class="cal-wrap">
-        <iframe src="https://always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa" style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="chYXlIXrGibN07I5L7AD_1781790295356" title="Agenda tu demo de Hapee"></iframe>
+        <iframe style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="chYXlIXrGibN07I5L7AD_1781790295356" title="Agenda tu demo de Hapee" data-base-src="https://always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa"></iframe>
+        <noscript>
+          <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Tu navegador tiene JavaScript desactivado. <a href="https://always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa" target="_blank" rel="noopener" style="color:#FA5000">Abre el calendario en una nueva pestaña →</a></p>
+        </noscript>
+        <script>
+        /* === UTM / Click-ID forwarder al iframe GHL ===
+           Problema: el iframe lee window.location.search desde su propio origin (always.hapee.ai),
+           no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al form de GHL.
+           Fix: tomamos los UTMs del parent URL y los inyectamos en el src del iframe ANTES de la primera carga.
+           Persistencia en sessionStorage para sobrevivir navegación interna (hero CTA → calendar). */
+        (function(){
+          var FRAME_ID = 'chYXlIXrGibN07I5L7AD_1781790295356';
+          var STORAGE_KEY = 'hapee_attribution';
+          var TRACK = [
+            'utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id',
+            'utm_source_platform','utm_creative_format','utm_marketing_tactic',
+            'fbclid','gclid','ttclid','msclkid','dclid','twclid','yclid','wbraid','gbraid',
+            'li_fat_id','epik','irclickid','mc_cid','mc_eid'
+          ];
+
+          var iframe = document.getElementById(FRAME_ID);
+          if(!iframe) return;
+          var baseSrc = iframe.getAttribute('data-base-src');
+
+          /* 1) Captura UTMs del URL parent actual */
+          var urlParams = new URLSearchParams(window.location.search);
+          var fromUrl = {};
+          TRACK.forEach(function(k){
+            var v = urlParams.get(k);
+            if(v) fromUrl[k] = v;
+          });
+
+          /* 2) Recupera sessionStorage (last-click sobrevive a navegación interna) */
+          var stored = {};
+          try { stored = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+          /* 3) Si el URL actual trae UTMs, son el nuevo last-click → persistimos */
+          var hasNewUtms = Object.keys(fromUrl).length > 0;
+          var attribution = hasNewUtms ? fromUrl : stored;
+
+          if(hasNewUtms){
+            try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fromUrl)); } catch(e) {}
+          }
+
+          /* 4) Referrer extra (señal adicional para GHL) */
+          if(document.referrer && !attribution.referrer){
+            attribution.referrer = document.referrer;
+          }
+
+          /* 5) Setea el src del iframe (siempre — primera carga incluye UTMs si existen) */
+          var qs = new URLSearchParams(attribution).toString();
+          iframe.src = qs ? (baseSrc + '?' + qs) : baseSrc;
+
+          /* 6) Debug opcional: descomenta para chequear en consola */
+          /* console.log('[Hapee Attribution]', attribution, '\\niframe src →', iframe.src); */
+        })();
+        </script>
       </div>
     </div>
   </div>
