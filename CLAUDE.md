@@ -58,10 +58,10 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 ## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)
 
 - 3 plans: **STARTER $197/mo**, **PRO $297/mo** (recommended, animated beam border), **ELITE SETUP $2,990 one-time**.
-- **No free trial.** The previous 14-day trial offer has been discontinued — never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant. If you find these strings in code, remove them.
-- All 3 plans carry a **30-day money-back guarantee** from the first paid charge — this is the primary risk-reversal message.
-- CTAs on all plans (Starter, Pro, Elite) say **"Seleccionar plan"**. No trial-related microcopy under the buttons.
-- Canonical trust copy: *"Sin compromiso, sin contratos. Cancelas cuando quieras. 30 días de garantía de devolución."*
+- **No free trial.** Never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant.
+- **No money-back guarantee.** The previous 30-day guarantee has also been discontinued. Never write "garantía de devolución", "30 días de garantía", "reembolso completo", or promise refunds. Payments are non-refundable — terminos.html section 5 states this.
+- CTAs on all plans (Starter, Pro, Elite) say **"Seleccionar plan"**. No trial or guarantee microcopy under the buttons.
+- Canonical trust copy: *"Sin compromiso, sin contratos. Cancelas cuando quieras."*
 - The system prompt for the in-page AI chat lives in `index.html` (~line 3150) and reflects these terms. Update it whenever pricing changes.
 
 ## Theming (dark/light)
