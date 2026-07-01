@@ -55,15 +55,14 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 - **Logo**: `img/logo-hapee.png` only — never deform, rotate, or place on low-contrast backgrounds.
 - **Never mention** GoHighLevel, GHL, or any white-label provider in deployed copy or in the chatbot prompt.
 
-## Plans & trial facts (keep consistent across HTML and the chatbot prompt)
+## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)
 
 - 3 plans: **STARTER $197/mo**, **PRO $297/mo** (recommended, animated beam border), **ELITE SETUP $2,990 one-time**.
-- **14-day free trial** applies **only to Starter and Pro**. Elite has no trial — it's a one-time implementation service.
-- The trial **requires a credit/debit card**. Never write "sin tarjeta de crédito" — it's false and produces chargebacks.
-- On day 15 the plan is **auto-charged**. Canonical copy: *"Cancela antes del día 14 y no se cobra nada."*
-- All 3 plans carry a **30-day money-back guarantee** from the first paid charge — orthogonal to the trial, they stack.
-- CTAs on Starter/Pro say **"Empezar 14 días gratis"**; CTA on Elite says **"Seleccionar plan"** (no trial copy).
-- The system prompt for the in-page AI chat lives in `index.html` (~line 1850) and currently reflects these terms. Update it whenever pricing or trial mechanics change.
+- **No free trial.** The previous 14-day trial offer has been discontinued — never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant. If you find these strings in code, remove them.
+- All 3 plans carry a **30-day money-back guarantee** from the first paid charge — this is the primary risk-reversal message.
+- CTAs on all plans (Starter, Pro, Elite) say **"Seleccionar plan"**. No trial-related microcopy under the buttons.
+- Canonical trust copy: *"Sin compromiso, sin contratos. Cancelas cuando quieras. 30 días de garantía de devolución."*
+- The system prompt for the in-page AI chat lives in `index.html` (~line 3150) and reflects these terms. Update it whenever pricing changes.
 
 ## Theming (dark/light)
 
