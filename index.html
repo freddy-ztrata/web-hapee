@@ -828,6 +828,130 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
 .pc .btn{width:100%;margin-top:auto}
 .pricing-note{text-align:center;margin-top:36px;font-size:.95rem;color:var(--text)}
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+
+/* ===== PRICING CRYSTAL CLEAR · v2 ===== */
+/* Billing toggle */
+.bill-toggle{display:inline-flex;align-items:center;gap:0;padding:5px;background:rgba(0,0,0,.05);border-radius:100px;margin:0 auto 40px;position:relative;font-family:var(--fb)}
+html.dark .bill-toggle{background:rgba(255,255,255,.05)}
+.bill-toggle button{background:transparent;border:0;padding:11px 22px;font-family:inherit;font-size:.85rem;font-weight:600;color:var(--text);cursor:pointer;border-radius:100px;transition:.3s ease;display:flex;align-items:center;gap:8px;letter-spacing:.01em}
+.bill-toggle button.on{background:#fff;color:var(--heading);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+html.dark .bill-toggle button.on{background:#1a1a1a;color:#fff}
+.bill-toggle button .save{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.06em}
+
+/* Tag "For who" arriba del nombre */
+.pc-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.66rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--text-2);margin-bottom:14px;padding:5px 12px;border:1px solid rgba(0,0,0,.08);border-radius:100px;align-self:flex-start;background:rgba(0,0,0,.02)}
+html.dark .pc-tag{color:#a0a0a0;background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08)}
+.pc-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%}
+.pc.pop .pc-tag{color:var(--accent);border-color:rgba(250,80,0,.22);background:rgba(250,80,0,.06)}
+
+/* Value line debajo del precio · $X por día · billed annually */
+.pc-value{display:flex;flex-direction:column;gap:2px;margin-top:4px;margin-bottom:24px;font-family:var(--fb)}
+.pc-value .rate{font-size:.85rem;color:var(--text);font-weight:500}
+.pc-value .rate strong{color:var(--accent);font-weight:700}
+.pc-value .clp{font-size:.72rem;color:var(--text-2);opacity:.8}
+.pc-value .bill{font-size:.72rem;color:var(--text-2);font-weight:500}
+
+/* Feature section header dentro de la card */
+.pc-section-l{font-family:var(--fb);font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-2);margin:18px 0 10px;padding-top:14px;border-top:1px dashed rgba(0,0,0,.10)}
+html.dark .pc-section-l{color:#a0a0a0;border-top-color:rgba(255,255,255,.08)}
+.pc-section-l:first-of-type{margin-top:0;padding-top:0;border-top:0}
+
+.pc-cta-wrap{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.pc-cta-mini{text-align:center;font-family:var(--fb);font-size:.72rem;font-weight:600;color:var(--text-2);letter-spacing:.02em}
+.pc-cta-mini a{color:var(--accent);border-bottom:1px solid var(--accent)}
+
+/* Trust strip · qué NO se paga extra */
+.pricing-trust{max-width:1100px;margin:56px auto 0;padding:28px 32px;background:linear-gradient(135deg,rgba(250,80,0,.04),rgba(205,35,73,.03));border:1px solid rgba(250,80,0,.18);border-radius:16px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+html.dark .pricing-trust{background:linear-gradient(135deg,rgba(250,80,0,.08),rgba(205,35,73,.06));border-color:rgba(250,80,0,.22)}
+.pricing-trust-h{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--heading);line-height:1.15;letter-spacing:-.01em;padding-right:32px;border-right:1px solid rgba(0,0,0,.08);min-width:220px}
+html.dark .pricing-trust-h{border-right-color:rgba(255,255,255,.1)}
+.pricing-trust-h span{color:var(--accent)}
+.pricing-trust-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px;list-style:none;padding:0;margin:0}
+.pricing-trust-list li{display:flex;align-items:flex-start;gap:10px;font-family:var(--fb);font-size:.9rem;font-weight:500;color:var(--text);line-height:1.35}
+.pricing-trust-list li::before{content:'✓';color:var(--accent);font-weight:800;font-size:1rem;flex-shrink:0;margin-top:-1px}
+@media(max-width:900px){.pricing-trust{grid-template-columns:1fr;padding:24px 22px}.pricing-trust-h{border-right:0;border-bottom:1px solid rgba(0,0,0,.08);padding-right:0;padding-bottom:16px;min-width:0}.pricing-trust-list{grid-template-columns:1fr}}
+
+/* Section wrapper para las 3 tablas nuevas · replace + savings + faq */
+.pricing-extras{padding:80px 0;background:var(--bg)}
+html.dark .pricing-extras{background:transparent}
+.pricing-extras-inner{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* SAVINGS · Hapee vs stack tradicional */
+.stack-savings{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:44px 40px;margin-bottom:60px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+.stack-savings::before{content:'';position:absolute;top:0;right:0;width:280px;height:280px;background:radial-gradient(circle,rgba(250,80,0,.08),transparent 65%);pointer-events:none}
+.stack-savings-h{text-align:center;margin-bottom:36px;position:relative}
+.stack-savings-h .sl{margin-bottom:12px}
+.stack-savings-h h3{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--heading);letter-spacing:-.015em;line-height:1.1;max-width:22ch;margin:0 auto}
+.stack-savings-h h3 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stack-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:32px;align-items:stretch;position:relative}
+@media(max-width:900px){.stack-grid{grid-template-columns:1fr;gap:16px}}
+.stack-col{padding:24px 22px;border-radius:14px;background:rgba(0,0,0,.02);border:1px solid rgba(0,0,0,.06)}
+html.dark .stack-col{background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.06)}
+.stack-col-t{font-family:var(--fb);font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-2);margin-bottom:14px}
+.stack-col ul{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:8px}
+.stack-col ul li{display:flex;justify-content:space-between;gap:14px;font-family:var(--fb);font-size:.92rem;color:var(--text);padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.08)}
+html.dark .stack-col ul li{border-color:rgba(255,255,255,.06)}
+.stack-col ul li:last-child{border:0}
+.stack-col ul li strong{font-weight:600;color:var(--heading)}
+.stack-col ul li span{color:var(--text-2);font-size:.85rem;white-space:nowrap}
+.stack-col-tot{padding-top:14px;border-top:2px solid rgba(0,0,0,.14);display:flex;justify-content:space-between;align-items:baseline;font-family:var(--fd)}
+html.dark .stack-col-tot{border-top-color:rgba(255,255,255,.14)}
+.stack-col-tot span{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2)}
+.stack-col-tot strong{font-size:1.9rem;font-weight:800;color:var(--heading);letter-spacing:-.02em}
+.stack-vs{align-self:center;font-family:var(--fd);font-size:1.6rem;font-weight:800;color:var(--accent);letter-spacing:.02em;padding:6px 14px;background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.22);border-radius:100px}
+.stack-col.hapee{background:linear-gradient(135deg,rgba(250,80,0,.06),rgba(205,35,73,.04));border-color:rgba(250,80,0,.28)}
+.stack-col.hapee .stack-col-t{color:var(--accent)}
+.stack-col.hapee .stack-col-tot strong{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stack-savings-note{text-align:center;margin-top:24px;font-family:var(--fb);font-size:.85rem;color:var(--text-2);font-weight:500}
+.stack-savings-note strong{color:var(--accent);font-weight:700}
+
+/* COMPARE TABLE · full feature grid */
+.compare-wrap{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md);margin-bottom:60px}
+.compare-h{padding:36px 40px 20px;text-align:center}
+.compare-h .sl{margin-bottom:10px}
+.compare-h h3{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--heading);letter-spacing:-.015em;line-height:1.1}
+.compare-h h3 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.compare-h p{color:var(--text-2);font-size:.9rem;margin-top:8px}
+.compare-table{width:100%;border-collapse:collapse;font-family:var(--fb);overflow-x:auto;display:block}
+.compare-table thead th{position:sticky;top:0;background:var(--bg-alt);border-bottom:2px solid rgba(0,0,0,.10);padding:16px 18px;text-align:left;font-family:var(--fb);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--heading);z-index:5}
+html.dark .compare-table thead th{background:#141414;border-bottom-color:rgba(255,255,255,.10)}
+.compare-table thead th.pop{background:linear-gradient(135deg,rgba(250,80,0,.14),rgba(205,35,73,.10));color:var(--accent)}
+.compare-table tbody td{padding:14px 18px;font-size:.9rem;color:var(--text);border-bottom:1px solid rgba(0,0,0,.06);vertical-align:middle}
+html.dark .compare-table tbody td{border-bottom-color:rgba(255,255,255,.06)}
+.compare-table tbody tr:hover td{background:rgba(250,80,0,.02)}
+.compare-table td.feat{font-weight:600;color:var(--heading);min-width:220px}
+.compare-table td.cat{font-family:var(--fd);font-size:.72rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);padding:22px 18px 10px;background:rgba(250,80,0,.04);border-bottom:1px solid rgba(250,80,0,.16)}
+html.dark .compare-table td.cat{background:rgba(250,80,0,.06)}
+.compare-table td.v{text-align:center;min-width:130px}
+.compare-table td.v.pop{background:rgba(250,80,0,.03)}
+.compare-table td.v .yes{color:var(--accent);font-weight:700;font-size:1.15rem}
+.compare-table td.v .no{color:rgba(0,0,0,.24);font-size:1.15rem}
+html.dark .compare-table td.v .no{color:rgba(255,255,255,.2)}
+.compare-table td.v small{font-size:.78rem;color:var(--text-2);display:block;font-weight:500;margin-top:2px}
+
+/* PRICING FAQ */
+.pricing-faq{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:44px 40px;box-shadow:var(--shadow-md)}
+.pricing-faq-h{text-align:center;margin-bottom:32px}
+.pricing-faq-h .sl{margin-bottom:12px}
+.pricing-faq-h h3{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--heading);letter-spacing:-.015em;line-height:1.1}
+.pf-item{border-bottom:1px solid rgba(0,0,0,.08);padding:0}
+html.dark .pf-item{border-bottom-color:rgba(255,255,255,.08)}
+.pf-item:last-child{border-bottom:0}
+.pf-item summary{padding:22px 4px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:var(--fb);font-size:1.02rem;font-weight:600;color:var(--heading)}
+.pf-item summary::-webkit-details-marker{display:none}
+.pf-item summary::after{content:'+';font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--accent);width:32px;height:32px;display:grid;place-items:center;border:1px solid rgba(250,80,0,.24);border-radius:50%;flex-shrink:0;transition:.3s ease}
+.pf-item[open] summary::after{content:'−';background:var(--accent);color:#fff;border-color:var(--accent);transform:rotate(180deg)}
+.pf-item[open] summary{color:var(--accent)}
+.pf-body{padding:0 4px 24px;color:var(--text);font-size:.95rem;line-height:1.65;max-width:80ch}
+
+@media(max-width:768px){
+  .stack-savings{padding:32px 22px}
+  .compare-h,.pricing-faq{padding:28px 22px}
+  .pricing-trust{margin:36px 16px 0}
+  .pricing-extras{padding:60px 0}
+  .compare-table thead th,.compare-table tbody td{padding:10px 12px;font-size:.82rem}
+  .compare-table td.feat{min-width:180px}
+}
 /* ===== GLOBAL MOBILE FIXES ===== */
 @media(max-width:480px){
   .ctn{padding:0 16px}
@@ -2175,82 +2299,237 @@ main > section.midcta,main > section.video-section{min-height:auto}
 <section class="pricing" id="planes">
   <div class="ctn">
     <div class="pricing-head">
-      <span class="sl">Planes y Precios</span>
-      <h2 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:16px">Invierte en tu <span class="tg">crecimiento</span></h2>
-      <p>Elige el plan perfecto para tus necesidades. Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
+      <span class="sl">Planes y Precios · Transparencia total</span>
+      <h2 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:16px">Precios <span class="tg">crystal clear</span>. Sin letra chica.</h2>
+      <p>3 planes. Sin usuarios ocultos, sin costos extra al escalar, sin permanencia. Cancelas cuando quieras.</p>
+      <div class="bill-toggle" role="tablist" aria-label="Ciclo de facturación">
+        <button type="button" class="on" data-bill="monthly" role="tab" aria-selected="true">Mensual</button>
+        <button type="button" data-bill="annual" role="tab" aria-selected="false">Anual <span class="save">Ahorra 20%</span></button>
+      </div>
     </div>
+
     <div class="pgrid">
       <!-- STARTER -->
       <article class="pc" aria-label="Plan Starter">
+        <span class="pc-tag">Starter · Solo comienzo</span>
         <div class="pc-name">STARTER</div>
-        <div class="pc-desc">Para emprendedores y pequeños equipos que buscan profesionalizar su flujo de ventas.</div>
+        <div class="pc-desc">Para emprendedores y equipos pequeños que profesionalizan su flujo de ventas.</div>
         <div class="pc-price">
           <span class="pc-cur">$</span>
-          <span class="pc-val">197</span>
+          <span class="pc-val" data-monthly="197" data-annual="158">197</span>
         </div>
-        <div class="pc-per">USD/Mes</div>
+        <div class="pc-per" data-bill-lbl="monthly">USD / mes · facturación mensual</div>
+        <div class="pc-per" data-bill-lbl="annual" style="display:none">USD / mes · facturación anual (ahorras USD $468)</div>
+        <div class="pc-value">
+          <span class="rate">Equivale a <strong>$6,60</strong> al día · <strong>$0,10</strong> por conversación IA</span>
+          <span class="clp">Referencial CLP · ≈ $184.900/mes (TC $940)</span>
+        </div>
+
+        <div class="pc-section-l">Incluido base</div>
         <ul class="pc-feats">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 2 usuarios incluidos</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 2.000 contactos incluidos</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Pipeline de ventas ilimitados</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 2 usuarios · 2.000 contactos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Pipelines de ventas ilimitados</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Agentes IA conversacionales 24/7</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Automatizaciones básicas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Bandeja omnicanal WhatsApp · IG · FB</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Clonación de voz personalizada</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Bandeja omnicanal (WhatsApp, IG, FB)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Módulo de Email Marketing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Automatizaciones básicas + Email Marketing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Kickoff gratuito + soporte 24 h</li>
         </ul>
-        <div class="pc-ideal">Ideal para: Profesionales independientes y Startups.</div>
-        <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bo">Seleccionar plan</a>
+
+        <div class="pc-ideal">Ideal para: profesionales independientes y startups &lt; 10 personas.</div>
+        <div class="pc-cta-wrap">
+          <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bo">Seleccionar Starter</a>
+          <div class="pc-cta-mini">Sin permanencia · <a href="/agenda-tu-demo">Prefiero demo ↗</a></div>
+        </div>
       </article>
-      <!-- PRO (Recomendado) — Animated border beam -->
+
+      <!-- PRO -->
       <article class="pc pop" aria-label="Plan Pro - Recomendado">
         <div class="pc-beam"></div>
-        <div class="pc-badge">Recomendado</div>
+        <div class="pc-badge">Elegido por 8 de cada 10</div>
         <div class="pc-inner">
+          <span class="pc-tag">Pro · El sweet spot</span>
           <div class="pc-name">PRO</div>
-          <div class="pc-desc">Para empresas en expansión que necesitan IA avanzada y soporte prioritario.</div>
+          <div class="pc-desc">Para empresas en expansión que necesitan IA avanzada, WhatsApp API y soporte prioritario.</div>
           <div class="pc-price">
             <span class="pc-cur">$</span>
-            <span class="pc-val">297</span>
+            <span class="pc-val" data-monthly="297" data-annual="238">297</span>
           </div>
-          <div class="pc-per">USD/Mes</div>
+          <div class="pc-per" data-bill-lbl="monthly">USD / mes · facturación mensual</div>
+          <div class="pc-per" data-bill-lbl="annual" style="display:none">USD / mes · facturación anual (ahorras USD $708)</div>
+          <div class="pc-value">
+            <span class="rate">Equivale a <strong>$9,90</strong> al día · <strong>contactos ilimitados</strong></span>
+            <span class="clp">Referencial CLP · ≈ $279.200/mes (TC $940)</span>
+          </div>
+
+          <div class="pc-section-l">Todo lo de Starter, más:</div>
           <ul class="pc-feats">
-            <li class="inc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Todo lo del plan STARTER más:</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Usuarios ilimitados</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Contactos ilimitados</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> WhatsApp Business API incluido</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Soporte técnico VIP prioritario</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Informes de rendimiento detallados</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Automatizaciones avanzadas</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Gestión de reseñas inteligente</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Programación de publicaciones RRSS</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Usuarios y contactos <strong>ilimitados</strong></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> WhatsApp Business API oficial incluida</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Automatizaciones avanzadas + workflows</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Gestión inteligente de reseñas</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Programación multi-red RRSS</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Informes avanzados + attribution</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Soporte VIP prioritario · SLA 4 h</li>
           </ul>
-          <div class="pc-ideal">Ideal para: Equipos de ventas y empresas en crecimiento.</div>
-          <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bs">Seleccionar plan</a>
+
+          <div class="pc-ideal">Ideal para: equipos de ventas 5-50 personas con foco en escalar.</div>
+          <div class="pc-cta-wrap">
+            <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bs">Seleccionar Pro</a>
+            <div class="pc-cta-mini">Sin permanencia · <a href="/agenda-tu-demo">Ver demo con caso Pro ↗</a></div>
           </div>
+        </div>
       </article>
+
       <!-- ELITE -->
       <article class="pc" aria-label="Plan Elite Setup">
+        <span class="pc-tag">Elite · Llave en mano</span>
         <div class="pc-name">ELITE SETUP</div>
-        <div class="pc-desc">Solución 'llave en mano' para líderes que buscan resultados inmediatos.</div>
+        <div class="pc-desc">Implementación completa hecha por Digitals. Configuración, migración y estrategia inicial listas.</div>
         <div class="pc-price">
           <span class="pc-cur">$</span>
           <span class="pc-val">2.990</span>
         </div>
-        <div class="pc-per">USD (pago único)</div>
+        <div class="pc-per">USD · pago único de implementación</div>
+        <div class="pc-value">
+          <span class="rate">Incluye Pro por 6 meses <strong>gratis</strong> · después $297/mes</span>
+          <span class="clp">Referencial CLP · ≈ $2.810.600 (TC $940)</span>
+        </div>
+
+        <div class="pc-section-l">Todo lo de Pro, entregado hecho:</div>
         <ul class="pc-feats">
-          <li class="inc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Todo lo del plan PRO más:</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Configuración experta a tu medida</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Configuración técnica llave en mano</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Diseño de embudos estratégicos a medida</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Consultoría estratégica 1 a 1</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Migración de datos completa</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Configuración experta 100% a tu medida</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Setup técnico completo · agentes IA entrenados</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Diseño de embudos estratégicos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Migración de datos incluida</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Consultoría estratégica 1-a-1 (3 sesiones)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Capacitación al equipo (workshop 4 h)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Pro incluido 6 meses (valor USD $1.782)</li>
         </ul>
-        <div class="pc-ideal">Ideal para: Grandes empresas con implementación experta.</div>
-        <a href="https://be.hapee.ai/registro" target="_blank" rel="noopener noreferrer" class="btn bo">Seleccionar plan</a>
+
+        <div class="pc-ideal">Ideal para: empresas mid-market y enterprise que quieren resultados en semanas, no meses.</div>
+        <div class="pc-cta-wrap">
+          <a href="/agenda-tu-demo" class="btn bo">Solicitar Elite</a>
+          <div class="pc-cta-mini">Entrevista de calificación previa</div>
+        </div>
       </article>
     </div>
-    <p class="pricing-note">Sin compromiso, sin contratos, cancelas cuando quieras. Llamada de bienvenida (Kickoff) gratuita.</p>
+
+    <!-- TRUST STRIP · qué NO se cobra extra -->
+    <div class="pricing-trust">
+      <div class="pricing-trust-h">Qué <span>NO</span> pagas extra en ningún plan</div>
+      <ul class="pricing-trust-list">
+        <li>Setup técnico y kickoff inicial</li>
+        <li>Actualizaciones de producto de por vida</li>
+        <li>Almacenamiento de archivos ilimitado</li>
+        <li>Backups automáticos diarios</li>
+        <li>Certificación SSL + seguridad SOC-2</li>
+        <li>Soporte en español (Chile · LATAM)</li>
+      </ul>
+    </div>
+
+    <p class="pricing-note">Sin compromiso · sin contratos · cancelas cuando quieras · <strong>USD facturados en Chile con IVA</strong>. Aceptamos tarjeta, transferencia y factura empresa.</p>
+  </div>
+</section>
+
+<!-- PRICING EXTRAS · savings + comparativa + FAQ pricing -->
+<section class="pricing-extras" aria-labelledby="pricing-extras-h">
+  <div class="pricing-extras-inner">
+
+    <!-- STACK SAVINGS · Hapee vs herramientas separadas -->
+    <div class="stack-savings">
+      <div class="stack-savings-h">
+        <span class="sl">Comparativa · Hapee vs stack tradicional</span>
+        <h3 id="pricing-extras-h">Hapee <span class="tg">reemplaza $1.297/mes</span> en 6 herramientas separadas.</h3>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-col">
+          <div class="stack-col-t">Sin Hapee · Stack típico</div>
+          <ul>
+            <li><strong>HubSpot CRM Sales Hub</strong><span>USD $500/mes</span></li>
+            <li><strong>ManyChat / Chatfuel Pro</strong><span>USD $145/mes</span></li>
+            <li><strong>Mailchimp Standard</strong><span>USD $135/mes</span></li>
+            <li><strong>Calendly Teams</strong><span>USD $96/mes</span></li>
+            <li><strong>Loom / Vidyard</strong><span>USD $190/mes</span></li>
+            <li><strong>Buffer / Hootsuite</strong><span>USD $231/mes</span></li>
+          </ul>
+          <div class="stack-col-tot"><span>Total mensual</span><strong>USD $1.297</strong></div>
+        </div>
+        <div class="stack-vs">→ vs →</div>
+        <div class="stack-col hapee">
+          <div class="stack-col-t">Con Hapee Pro · Todo en uno</div>
+          <ul>
+            <li><strong>CRM all-in-one</strong><span>Incluido</span></li>
+            <li><strong>Agentes IA WhatsApp / IG / FB</strong><span>Incluido</span></li>
+            <li><strong>Email Marketing + SMS</strong><span>Incluido</span></li>
+            <li><strong>Calendario + booking</strong><span>Incluido</span></li>
+            <li><strong>Voice cloning + video</strong><span>Incluido</span></li>
+            <li><strong>Programación RRSS</strong><span>Incluido</span></li>
+          </ul>
+          <div class="stack-col-tot"><span>Total mensual</span><strong>USD $297</strong></div>
+        </div>
+      </div>
+      <p class="stack-savings-note">Ahorras <strong>USD $1.000/mes · USD $12.000/año</strong> vs armar el mismo stack por partes.</p>
+    </div>
+
+    <!-- COMPARE TABLE · full feature grid -->
+    <div class="compare-wrap">
+      <div class="compare-h">
+        <span class="sl">Compara feature por feature</span>
+        <h3>Todo lo que incluye <span class="tg">cada plan</span></h3>
+        <p>Sin asteriscos, sin "consultar precio", sin límites ocultos.</p>
+      </div>
+      <div style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="min-width:220px">Feature</th>
+            <th>Starter</th>
+            <th class="pop">Pro</th>
+            <th>Elite Setup</th>
+          </tr>
+        </thead>
+        <tbody id="compareBody"></tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- PRICING FAQ -->
+    <div class="pricing-faq">
+      <div class="pricing-faq-h">
+        <span class="sl">FAQ Precios · Sin humo</span>
+        <h3>Lo que <span class="tg">siempre preguntan</span> antes de pagar</h3>
+      </div>
+      <details class="pf-item">
+        <summary>¿Los precios están en USD o CLP? ¿Cómo se factura en Chile?</summary>
+        <div class="pf-body">Los planes son en USD. En Chile facturamos con IVA a través de nuestra sociedad chilena (Digitals SpA). Aceptamos tarjeta internacional, transferencia CLP con TC del día y factura empresa a 30 días para clientes Pro y Elite. En el resto de LATAM facturamos vía Wyoming, EE.UU. (WM Digital LLC).</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿Qué pasa si supero los 2.000 contactos del plan Starter?</summary>
+        <div class="pf-body">Te avisamos antes de que llegues al límite y tienes 30 días para decidir. Puedes upgrader a Pro (contactos ilimitados) por USD $100 adicionales al mes, o pagar overage de USD $10 cada 1.000 contactos extra. Cero corte de servicio, cero sorpresas.</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿Hay costo de setup, kickoff o implementación en Starter y Pro?</summary>
+        <div class="pf-body">No. Todo Starter y Pro incluye kickoff gratuito de 60 minutos + acceso a Hapee Academy + soporte de onboarding sin costo. Elite Setup es el único plan con setup pagado ($2.990 USD) porque incluye configuración experta 100% a medida hecha por el equipo Digitals.</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿WhatsApp Business API tiene costo aparte?</summary>
+        <div class="pf-body">La API oficial de WhatsApp (Meta Cloud API) está <strong>incluida en el plan Pro</strong> — sin fee extra de Hapee. Los mensajes de conversación iniciados por el usuario son gratis por 24 h; los mensajes de plantilla iniciados por ti tienen costo directo de Meta (~USD $0,04 por mensaje en Chile, cobrado por Meta directo, no por Hapee).</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿Puedo cancelar cuando quiera? ¿Hay permanencia?</summary>
+        <div class="pf-body">Sí, cancelas cuando quieras desde tu panel o escribiendo a info@hapee.ai. No hay contrato de permanencia, ni penalidad. Si pagaste anual, no hay reembolso pro-rata pero mantienes acceso hasta el final del período. Los planes mensuales cortan al final del ciclo pagado.</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿Hay diferencia de precio entre Chile y el resto de LATAM?</summary>
+        <div class="pf-body">No. Mismos precios en USD para todo LATAM. En Chile agregamos IVA (19%) porque emitimos boleta/factura local. En el resto de países no aplica IVA local (facturación desde EE.UU.). Todos los planes con las mismas funcionalidades y mismo SLA.</div>
+      </details>
+      <details class="pf-item">
+        <summary>¿Puedo cambiar de plan durante el ciclo?</summary>
+        <div class="pf-body">Sí, puedes upgrader (Starter → Pro o Pro → Elite) en cualquier momento. La diferencia se prorratea al día. Downgrader se agenda para el próximo ciclo — así no pierdes lo pagado.</div>
+      </details>
+    </div>
+
   </div>
 </section>
 
@@ -3642,6 +3921,96 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
       window.addEventListener('resize',()=>{if(running)resize()});
     })();
 
+  })();
+
+  /* ================= PRICING · billing toggle + compare table ================= */
+  (function(){
+    /* Billing toggle · Monthly / Annual */
+    var btns = document.querySelectorAll('.bill-toggle button');
+    if(btns.length){
+      btns.forEach(function(b){
+        b.addEventListener('click', function(){
+          var bill = b.dataset.bill;
+          btns.forEach(function(x){
+            x.classList.toggle('on', x.dataset.bill===bill);
+            x.setAttribute('aria-selected', x.dataset.bill===bill ? 'true':'false');
+          });
+          /* Swap valores */
+          document.querySelectorAll('.pc-val[data-monthly]').forEach(function(v){
+            v.textContent = v.dataset[bill];
+          });
+          /* Swap billing label */
+          document.querySelectorAll('[data-bill-lbl]').forEach(function(l){
+            l.style.display = l.dataset.billLbl===bill ? '' : 'none';
+          });
+        });
+      });
+    }
+
+    /* Compare table · feature-by-feature */
+    var body = document.getElementById('compareBody');
+    if(!body) return;
+    var yes = '<span class="yes">✓</span>';
+    var no  = '<span class="no">—</span>';
+    function v(txt){ return '<small>'+txt+'</small>'; }
+
+    var rows = [
+      {cat:'Fundamentos'},
+      {feat:'Usuarios incluidos', vals:['2', 'Ilimitados', 'Ilimitados']},
+      {feat:'Contactos en la base', vals:['2.000', 'Ilimitados', 'Ilimitados']},
+      {feat:'Pipelines de venta', vals:['Ilimitados', 'Ilimitados', 'Ilimitados']},
+      {feat:'Almacenamiento archivos', vals:['Ilimitado', 'Ilimitado', 'Ilimitado']},
+
+      {cat:'IA conversacional'},
+      {feat:'Agentes IA en WhatsApp/IG/FB', vals:[yes, yes, yes]},
+      {feat:'Conexión MCP con Claude', vals:[yes, yes, yes]},
+      {feat:'Clonación de voz personalizada', vals:[yes, yes, yes]},
+      {feat:'Multi-idioma (ES/EN/PT)', vals:[yes, yes, yes]},
+      {feat:'Entrenamiento con tu data', vals:[no+v('vía onboarding'), yes, yes+v('hecho por Digitals')]},
+
+      {cat:'Omnicanal'},
+      {feat:'WhatsApp Business API oficial', vals:[no+v('solo WA personal'), yes, yes]},
+      {feat:'Instagram DM + Facebook Messenger', vals:[yes, yes, yes]},
+      {feat:'Email marketing', vals:[yes+v('3.000 envíos/mes'), yes+v('30.000 envíos/mes'), yes+v('Ilimitado')]},
+      {feat:'SMS marketing (LATAM)', vals:[no, yes+v('pay-per-use'), yes+v('pay-per-use')]},
+      {feat:'Formularios y landings nativas', vals:[yes, yes, yes]},
+
+      {cat:'Automatizaciones y CRM'},
+      {feat:'Workflows visuales', vals:['Básicos', 'Avanzados', 'Avanzados + custom']},
+      {feat:'Triggers / disparadores', vals:['20', 'Ilimitados', 'Ilimitados']},
+      {feat:'Reglas de scoring y calificación', vals:[no, yes, yes]},
+      {feat:'Calendario y booking integrado', vals:[yes, yes, yes]},
+      {feat:'Programación de RRSS', vals:[no, yes, yes]},
+      {feat:'Gestión de reseñas', vals:[no, yes, yes]},
+
+      {cat:'Reportes y datos'},
+      {feat:'Dashboard analytics', vals:['Básico', 'Avanzado + attribution', 'Custom + BI']},
+      {feat:'Exportación CSV/API', vals:[yes+v('CSV'), yes+v('CSV + API'), yes+v('CSV + API + Sheets sync')]},
+      {feat:'Webhooks salientes', vals:['5', 'Ilimitados', 'Ilimitados']},
+
+      {cat:'Setup y soporte'},
+      {feat:'Kickoff onboarding', vals:['60 min gratis', '60 min gratis', 'Setup completo 100%']},
+      {feat:'Hapee Academy', vals:[yes, yes, yes+v('+ sesiones live')]},
+      {feat:'Soporte técnico', vals:['Ticket · SLA 24 h', 'Prioritario · SLA 4 h', 'White-glove · SLA 1 h']},
+      {feat:'Partner Manager dedicado', vals:[no, yes+v('pool'), yes+v('1-a-1')]},
+      {feat:'Consultoría estratégica', vals:[no, no, yes+v('3 sesiones incluidas')]},
+      {feat:'Migración de datos', vals:[no+v('DIY con Academy'), yes+v('asistida'), yes+v('completa por Digitals')]},
+
+      {cat:'Compromiso'},
+      {feat:'Sin permanencia', vals:[yes, yes, yes]},
+      {feat:'Cancelación en un clic', vals:[yes, yes, yes]},
+      {feat:'Actualizaciones gratis de por vida', vals:[yes, yes, yes]}
+    ];
+
+    var html='';
+    rows.forEach(function(r){
+      if(r.cat){ html += '<tr><td class="cat" colspan="4">'+r.cat+'</td></tr>'; return; }
+      html += '<tr><td class="feat">'+r.feat+'</td>'
+            + '<td class="v">'+r.vals[0]+'</td>'
+            + '<td class="v pop">'+r.vals[1]+'</td>'
+            + '<td class="v">'+r.vals[2]+'</td></tr>';
+    });
+    body.innerHTML = html;
   })();
 
 });
