@@ -876,63 +876,23 @@ html.dark .pbg-blob.b3{background:radial-gradient(circle at 50% 50%,rgba(255,140
 }
 html.dark .pbg-grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)}
 
-/* Orbes 3D flotantes tipo gla1/gla3 */
-.orb{position:absolute;border-radius:50%;pointer-events:none;will-change:transform;animation:orbFloat 12s ease-in-out infinite}
-.orb::before{content:'';position:absolute;inset:0;border-radius:50%;background:inherit;filter:blur(20px);opacity:.55;z-index:-1;transform:scale(1.1)}
-.orb-1{width:180px;height:180px;top:8%;left:6%;
-  background:radial-gradient(circle at 30% 25%,#fff 0%,#ffb08a 22%,#ff6a2e 55%,#a83810 88%,#5c1d05 100%);
-  box-shadow:inset -20px -30px 60px rgba(60,10,0,.5),inset 24px 20px 40px rgba(255,255,255,.35),0 40px 80px rgba(250,80,0,.35);
-}
-.orb-2{width:110px;height:110px;top:24%;right:8%;animation-delay:-3s;animation-duration:14s;
-  background:radial-gradient(circle at 30% 25%,#fff 0%,#ffc3d4 20%,#e04870 55%,#8a1a3a 88%,#4a0d20 100%);
-  box-shadow:inset -12px -20px 40px rgba(80,10,30,.5),inset 16px 14px 26px rgba(255,255,255,.35),0 28px 60px rgba(230,60,110,.35);
-}
-.orb-3{width:80px;height:80px;bottom:16%;left:14%;animation-delay:-6s;animation-duration:10s;
-  background:radial-gradient(circle at 30% 25%,#fff 0%,#ffe4b8 22%,#f9a04a 55%,#c56420 90%,#6b2f0a 100%);
-  box-shadow:inset -10px -14px 28px rgba(90,40,10,.5),inset 12px 10px 22px rgba(255,255,255,.35),0 20px 40px rgba(240,140,50,.35);
-}
-.orb-4{width:140px;height:140px;bottom:6%;right:6%;animation-delay:-9s;animation-duration:16s;
-  background:radial-gradient(circle at 30% 25%,#fff 0%,#ffd6c0 22%,#f36b1c 55%,#a83810 90%,#4a1a04 100%);
-  box-shadow:inset -16px -22px 44px rgba(70,20,0,.5),inset 18px 14px 30px rgba(255,255,255,.35),0 30px 70px rgba(250,90,20,.35);
-}
-/* Cubo iridiscente flotante tipo gla3 */
-.cube{position:absolute;width:120px;height:120px;top:52%;right:22%;transform-style:preserve-3d;animation:cubeSpin 20s linear infinite;pointer-events:none;opacity:.9}
-.cube-face{position:absolute;inset:0;border-radius:12px;
-  background:linear-gradient(135deg,rgba(255,255,255,.55),rgba(200,240,255,.28) 45%,rgba(255,180,90,.35) 100%);
-  border:1px solid rgba(255,255,255,.7);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 20px 40px rgba(90,50,20,.18);
-}
-.cube-face.f1{transform:translateZ(60px)}
-.cube-face.f2{transform:rotateY(90deg) translateZ(60px);background:linear-gradient(135deg,rgba(255,200,180,.55),rgba(255,140,90,.35) 100%)}
-.cube-face.f3{transform:rotateY(-90deg) translateZ(60px);background:linear-gradient(135deg,rgba(230,240,255,.55),rgba(200,150,255,.35) 100%)}
-@keyframes cubeSpin{
-  0%{transform:rotateY(0deg) rotateX(15deg)}
-  100%{transform:rotateY(360deg) rotateX(15deg)}
-}
-@keyframes orbFloat{
-  0%,100%{transform:translate(0,0)}
-  25%{transform:translate(20px,-30px)}
-  50%{transform:translate(-15px,-15px)}
-  75%{transform:translate(-25px,20px)}
-}
-
 /* === GLASS CARDS · ultra limpias + prismatic bottom === */
 .pgrid{position:relative;z-index:4}
 
 .pc{
-  background:linear-gradient(160deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.25) 100%);
-  -webkit-backdrop-filter:blur(30px) saturate(180%);
-  backdrop-filter:blur(30px) saturate(180%);
-  border:1px solid rgba(255,255,255,.65);
+  /* Light mode: MUCHO más transparente para que se vea el efecto glass real */
+  background:linear-gradient(160deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.10) 100%);
+  -webkit-backdrop-filter:blur(40px) saturate(200%);
+  backdrop-filter:blur(40px) saturate(200%);
+  border:1px solid rgba(255,255,255,.55);
   border-radius:26px;
   padding:38px 30px;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.95),
-    inset 0 0 0 1px rgba(255,255,255,.06),
-    0 24px 60px -18px rgba(80,40,20,.16),
-    0 8px 24px -8px rgba(250,80,0,.08);
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(255,255,255,.35),
+    0 30px 70px -18px rgba(120,60,30,.20),
+    0 10px 30px -8px rgba(250,80,0,.10);
   position:relative;
   overflow:hidden;
   isolation:isolate;
@@ -1006,14 +966,16 @@ html.dark .pc:hover{
 .pc.pop::before,.pc.pop::after{display:none}
 .pc.pop:hover{transform:translateY(-18px)}
 .pc.pop .pc-inner{
-  background:linear-gradient(160deg,rgba(255,255,255,.68) 0%,rgba(255,240,230,.38) 100%);
-  -webkit-backdrop-filter:blur(36px) saturate(200%);
-  backdrop-filter:blur(36px) saturate(200%);
+  /* Light: transparencia real · deja ver el fondo */
+  background:linear-gradient(160deg,rgba(255,255,255,.42) 0%,rgba(255,240,230,.18) 100%);
+  -webkit-backdrop-filter:blur(44px) saturate(220%);
+  backdrop-filter:blur(44px) saturate(220%);
   border-radius:24px;
   position:relative;z-index:1;padding:40px 30px;overflow:hidden;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,1),
-    inset 0 0 0 1px rgba(255,255,255,.12);
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    inset 0 -1px 0 rgba(255,255,255,.4);
 }
 .pc.pop .pc-inner::before{
   content:'';position:absolute;top:0;left:0;right:0;height:60%;pointer-events:none;
@@ -1063,14 +1025,6 @@ html.dark .pc.pop .pc-inner{
   .pbg-blob.b1{width:400px;height:400px}
   .pbg-blob.b2{width:460px;height:460px}
   .pbg-blob.b3{width:340px;height:340px}
-  .orb-1{width:120px;height:120px;top:2%;left:-4%}
-  .orb-2{width:80px;height:80px;top:18%;right:-2%}
-  .orb-3{width:60px;height:60px}
-  .orb-4{width:100px;height:100px;bottom:2%;right:-4%}
-  .cube{width:80px;height:80px;top:auto;bottom:30%;right:8%}
-  .cube-face.f1{transform:translateZ(40px)}
-  .cube-face.f2{transform:rotateY(90deg) translateZ(40px)}
-  .cube-face.f3{transform:rotateY(-90deg) translateZ(40px)}
 }
 /* ===== GLOBAL MOBILE FIXES ===== */
 @media(max-width:480px){
@@ -2422,15 +2376,6 @@ main > section.midcta,main > section.video-section{min-height:auto}
     <div class="pbg-blob b2"></div>
     <div class="pbg-blob b3"></div>
     <div class="pbg-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="orb orb-4"></div>
-    <div class="cube">
-      <div class="cube-face f1"></div>
-      <div class="cube-face f2"></div>
-      <div class="cube-face f3"></div>
-    </div>
   </div>
   <div class="ctn">
     <div class="pricing-head">
