@@ -162,17 +162,52 @@ html.dark .orbit-ring-2{border-color:rgba(250,80,0,.16)}
 html.dark .orbit-ring-3{border-color:rgba(250,80,0,.1)}
 @keyframes ringRot{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
-.hero-robot{width:100%;max-width:280px;filter:drop-shadow(0 24px 60px rgba(250,80,0,.32));animation:rf 4.5s ease-in-out infinite;position:relative;z-index:5}
-@keyframes rf{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.orbit-stage .hero-robot{position:relative;width:38%;max-width:230px;z-index:5;margin:0;display:block;filter:drop-shadow(0 20px 50px rgba(250,80,0,.28));animation:rf 4.5s ease-in-out infinite}
+@keyframes rf{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
-.orb{position:absolute;top:50%;left:50%;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);z-index:8;transform-origin:center;will-change:transform;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;padding:9px;border:1px solid rgba(0,0,0,.04);animation:orbFloat 6s ease-in-out infinite}
+/* Orbes con logos reales (mismo sistema del hero de index.html) */
+.orb{position:absolute;top:50%;left:50%;width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);z-index:8;transform-origin:center;will-change:transform;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,background .3s,border-color .3s;padding:8px;border:1px solid rgba(0,0,0,.04)}
 html.dark .orb{background:rgba(22,22,26,.92);box-shadow:0 8px 24px rgba(0,0,0,.55),0 2px 6px rgba(250,80,0,.18),inset 0 1px 0 rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
-.orb:hover{transform:translate(var(--tx),var(--ty)) scale(1.18) !important;z-index:10;box-shadow:0 14px 36px rgba(250,80,0,.4)}
-.orb span{font-family:var(--fd);font-size:.72rem;letter-spacing:.5px;color:var(--heading);text-align:center;line-height:1}
-html.dark .orb span{color:var(--heading)}
-.orb.brand{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
-.orb.brand span{color:#fff}
-@keyframes orbFloat{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
+.orb:hover{transform:translate(var(--tx),var(--ty)) scale(1.18) !important;z-index:20;box-shadow:0 14px 36px rgba(250,80,0,.4);background:#fff}
+.orb img{width:100%;height:100%;object-fit:contain;border-radius:8px;display:block}
+.orb::after{content:attr(data-label);position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--heading);color:var(--bg);font-family:var(--fb);font-size:.68rem;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s ease;letter-spacing:.02em}
+.orb:hover::after{opacity:1}
+.orb-product{background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:0 8px 24px rgba(250,80,0,.4),0 2px 6px rgba(205,35,73,.3),inset 0 1px 0 rgba(255,255,255,.25);padding:0;border:none}
+html.dark .orb-product{background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:0 8px 28px rgba(250,80,0,.55),0 2px 8px rgba(205,35,73,.4),inset 0 1px 0 rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.12)}
+.orb-product .orb-hp-text{font-family:var(--fd);font-size:.82rem;color:#fff;font-weight:700;letter-spacing:.6px}
+.orb-cg{background:#0d0d0d;padding:6px;border-color:rgba(255,255,255,.08)}
+html.dark .orb-cg{background:#000;border-color:rgba(255,255,255,.15)}
+.orb-cg img{filter:none}
+.orb-el{padding:2px;background:#0a0a0a;border-color:rgba(255,255,255,.08)}
+html.dark .orb-el{background:#000;border-color:rgba(255,255,255,.15)}
+.orb-el img{border-radius:11px}
+
+/* Positioning polar percentage-based (auto-escala con orbit-stage) */
+/* Inner ring */
+.orb-fb {--tx:283%;--ty:-50%;transform:translate(var(--tx),var(--ty));animation:floatA 4.2s ease-in-out infinite}
+.orb-ig {--tx:186%;--ty:186%;transform:translate(var(--tx),var(--ty));animation:floatB 4.5s ease-in-out infinite .25s}
+.orb-gm {--tx:-50%;--ty:283%;transform:translate(var(--tx),var(--ty));animation:floatA 4.4s ease-in-out infinite .5s}
+.orb-ol {--tx:-286%;--ty:186%;transform:translate(var(--tx),var(--ty));animation:floatB 4.7s ease-in-out infinite .75s}
+.orb-wa {--tx:-383%;--ty:-50%;transform:translate(var(--tx),var(--ty));animation:floatA 4.6s ease-in-out infinite 1s}
+.orb-mt {--tx:-286%;--ty:-286%;transform:translate(var(--tx),var(--ty));animation:floatB 4.8s ease-in-out infinite 1.25s}
+.orb-li {--tx:-50%;--ty:-383%;transform:translate(var(--tx),var(--ty));animation:floatA 5s ease-in-out infinite 1.5s}
+.orb-tm {--tx:186%;--ty:-286%;transform:translate(var(--tx),var(--ty));animation:floatB 4.9s ease-in-out infinite 1.75s}
+/* Outer ring */
+.orb-ga {--tx:402%;--ty:115%;transform:translate(var(--tx),var(--ty));animation:floatA 5.3s ease-in-out infinite .1s}
+.orb-sh {--tx:191%;--ty:368%;transform:translate(var(--tx),var(--ty));animation:floatB 5.1s ease-in-out infinite .4s}
+.orb-cg {--tx:-134%;--ty:425%;transform:translate(var(--tx),var(--ty));animation:floatA 5.5s ease-in-out infinite .7s}
+.orb-cl {--tx:-419%;--ty:259%;transform:translate(var(--tx),var(--ty));animation:floatB 4.7s ease-in-out infinite 1s}
+.orb-st {--tx:-531%;--ty:-50%;transform:translate(var(--tx),var(--ty));animation:floatA 5s ease-in-out infinite 1.3s}
+.orb-ge {--tx:-419%;--ty:-359%;transform:translate(var(--tx),var(--ty));animation:floatB 5.2s ease-in-out infinite 1.6s}
+.orb-el {--tx:-134%;--ty:-525%;transform:translate(var(--tx),var(--ty));animation:floatA 4.8s ease-in-out infinite 1.9s}
+.orb-gc {--tx:191%;--ty:-468%;transform:translate(var(--tx),var(--ty));animation:floatB 5.4s ease-in-out infinite .55s}
+.orb-gg {--tx:402%;--ty:-215%;transform:translate(var(--tx),var(--ty));animation:floatA 4.9s ease-in-out infinite .85s}
+/* Hapee product tags (top corners) */
+.orb-hp1{--tx:-300%;--ty:-565%;transform:translate(var(--tx),var(--ty));animation:floatA 4.5s ease-in-out infinite .2s;width:78px;height:42px;border-radius:11px;z-index:9}
+.orb-hp2{--tx:60%;--ty:-565%;transform:translate(var(--tx),var(--ty));animation:floatB 4.8s ease-in-out infinite .45s;width:78px;height:42px;border-radius:11px;z-index:9}
+
+@keyframes floatA{0%,100%{transform:translate(var(--tx),var(--ty)) translateY(0)}50%{transform:translate(var(--tx),var(--ty)) translateY(-8px)}}
+@keyframes floatB{0%,100%{transform:translate(var(--tx),var(--ty)) translateY(0)}50%{transform:translate(var(--tx),var(--ty)) translateY(6px)}}
 
 /* COMMON SECTIONS */
 section{position:relative}
@@ -415,17 +450,26 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
 .footer a{color:rgba(255,255,255,.4);font-size:.85rem;margin-left:14px;transition:var(--tr)}
 .footer a:hover{color:var(--accent)}
 
-/* MOBILE */
+/* MOBILE · responsive */
+@media(max-width:1100px){
+  .orbit-stage{max-width:520px}
+  .orb{width:48px;height:48px;border-radius:12px;padding:7px}
+  .orb-hp1,.orb-hp2{width:70px;height:38px}
+  .orb-product .orb-hp-text{font-size:.78rem}
+  .orbit-stage .hero-robot{max-width:200px}
+}
 @media(max-width:980px){
   .p-hero{padding:120px 0 60px}
   .p-hero .ctn{grid-template-columns:1fr;gap:40px;text-align:center}
   .p-hero .hero-sub{margin-left:auto;margin-right:auto}
   .p-hero .trust{justify-content:center}
   .p-hero .ctas{justify-content:center}
-  .orbit-stage{max-width:420px}
+  .orbit-stage{max-width:480px}
+  .orb{width:44px;height:44px;padding:7px}
+  .orb-hp1,.orb-hp2{width:64px;height:36px}
+  .orb-product .orb-hp-text{font-size:.74rem}
+  .orbit-stage .hero-robot{max-width:180px}
   .fpc{grid-template-columns:repeat(2,1fr)}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .sub-stats{grid-template-columns:1fr}
   .steps-grid{grid-template-columns:repeat(2,1fr)}
   .steps-grid::before{display:none}
   .badge-wrap{grid-template-columns:1fr;text-align:center}
@@ -435,18 +479,33 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
   .apply-wrap{grid-template-columns:1fr;gap:40px}
   .form-grid{grid-template-columns:1fr}
 }
+@media(max-width:720px){
+  .orbit-stage{max-width:400px}
+  .orb{width:40px;height:40px;border-radius:10px;padding:6px}
+  .orb-hp1,.orb-hp2{width:56px;height:32px;border-radius:9px}
+  .orb-product .orb-hp-text{font-size:.68rem}
+  .orbit-stage .hero-robot{max-width:150px}
+  .orb::after{display:none}
+}
 @media(max-width:640px){
   .fpc{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr}
   .steps-grid{grid-template-columns:1fr}
   .testi-grid{grid-template-columns:1fr}
   .footer .ctn{flex-direction:column;text-align:center}
   .footer a{margin:0 7px}
-  .orb{width:40px;height:40px;padding:7px}
-  .orb span{font-size:.62rem}
-  .hero-robot{max-width:200px}
+  .orbit-stage{max-width:340px}
+  .orb{width:36px;height:36px;padding:5px}
+  .orb-hp1,.orb-hp2{width:50px;height:28px}
+  .orb-product .orb-hp-text{font-size:.6rem}
+  .orbit-stage .hero-robot{max-width:130px}
   .badge-svg{width:74px;height:74px}
   .badge-svg .b-iso{font-size:1.3rem}
+}
+@media(max-width:400px){
+  .orbit-stage{max-width:300px}
+  .orb{width:32px;height:32px;padding:4px}
+  .orb-hp1,.orb-hp2{width:44px;height:26px}
+  .orbit-stage .hero-robot{max-width:110px}
 }
 </style>
 </head>
@@ -503,27 +562,29 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
       <div class="orbit-ring orbit-ring-1"></div>
       <div class="orbit-ring orbit-ring-2"></div>
       <div class="orbit-ring orbit-ring-3"></div>
-      <img src="img/robot.png" alt="" class="hero-robot">
-      <!-- 19 orbs - polar positioning via inline style with --tx/--ty offsets -->
-      <div class="orb brand" style="--tx:-100px;--ty:-160px;transform:translate(-100px,-160px)"><span>Meta</span></div>
-      <div class="orb" style="--tx:60px;--ty:-180px;transform:translate(60px,-180px);animation-delay:.4s"><span>WA</span></div>
-      <div class="orb brand" style="--tx:180px;--ty:-90px;transform:translate(180px,-90px);animation-delay:.8s"><span>Google</span></div>
-      <div class="orb" style="--tx:210px;--ty:40px;transform:translate(210px,40px);animation-delay:1.2s"><span>IG</span></div>
-      <div class="orb brand" style="--tx:150px;--ty:160px;transform:translate(150px,160px);animation-delay:1.6s"><span>Stripe</span></div>
-      <div class="orb" style="--tx:10px;--ty:210px;transform:translate(10px,210px);animation-delay:2s"><span>Shopify</span></div>
-      <div class="orb brand" style="--tx:-140px;--ty:170px;transform:translate(-140px,170px);animation-delay:2.4s"><span>OpenAI</span></div>
-      <div class="orb" style="--tx:-210px;--ty:50px;transform:translate(-210px,50px);animation-delay:2.8s"><span>Claude</span></div>
-      <div class="orb brand" style="--tx:-200px;--ty:-90px;transform:translate(-200px,-90px);animation-delay:3.2s"><span>HubSpot</span></div>
-      <div class="orb" style="--tx:-50px;--ty:-110px;transform:translate(-50px,-110px);animation-delay:.2s"><span>Make</span></div>
-      <div class="orb" style="--tx:110px;--ty:-30px;transform:translate(110px,-30px);animation-delay:.6s"><span>n8n</span></div>
-      <div class="orb" style="--tx:80px;--ty:100px;transform:translate(80px,100px);animation-delay:1s"><span>Zapier</span></div>
-      <div class="orb" style="--tx:-30px;--ty:130px;transform:translate(-30px,130px);animation-delay:1.4s"><span>Klaviyo</span></div>
-      <div class="orb" style="--tx:-110px;--ty:30px;transform:translate(-110px,30px);animation-delay:1.8s"><span>MP</span></div>
-      <div class="orb" style="--tx:-130px;--ty:-50px;transform:translate(-130px,-50px);animation-delay:2.2s"><span>11Labs</span></div>
-      <div class="orb" style="--tx:30px;--ty:-50px;transform:translate(30px,-50px);animation-delay:2.6s"><span>Cal</span></div>
-      <div class="orb" style="--tx:170px;--ty:-180px;transform:translate(170px,-180px);animation-delay:3s"><span>Notion</span></div>
-      <div class="orb" style="--tx:-180px;--ty:-180px;transform:translate(-180px,-180px);animation-delay:3.4s"><span>Slack</span></div>
-      <div class="orb" style="--tx:230px;--ty:160px;transform:translate(230px,160px);animation-delay:3.8s"><span>Linear</span></div>
+      <img src="img/robot.png" alt="" class="hero-robot" fetchpriority="high">
+      <!-- Inner ring (8 channels closest to robot) -->
+      <div class="orb orb-wa" data-label="WhatsApp"><img src="img/orbit/whatsapp.png" alt="WhatsApp" loading="lazy"></div>
+      <div class="orb orb-ig" data-label="Instagram"><img src="img/orbit/instagram.png" alt="Instagram" loading="lazy"></div>
+      <div class="orb orb-fb" data-label="Facebook"><img src="img/orbit/facebook.png" alt="Facebook" loading="lazy"></div>
+      <div class="orb orb-mt" data-label="Meta"><img src="img/orbit/meta.png" alt="Meta" loading="lazy"></div>
+      <div class="orb orb-gm" data-label="Gmail"><img src="img/orbit/gmail.png" alt="Gmail" loading="lazy"></div>
+      <div class="orb orb-ol" data-label="Outlook"><img src="img/orbit/outlook.png" alt="Outlook" loading="lazy"></div>
+      <div class="orb orb-li" data-label="LinkedIn"><img src="img/orbit/linkedin.png" alt="LinkedIn" loading="lazy"></div>
+      <div class="orb orb-tm" data-label="Teams"><img src="img/orbit/teams.png" alt="Microsoft Teams" loading="lazy"></div>
+      <!-- Outer ring (9 herramientas + IA + commerce) -->
+      <div class="orb orb-gg" data-label="Google"><img src="img/orbit/google.png" alt="Google" loading="lazy"></div>
+      <div class="orb orb-ga" data-label="Google Ads"><img src="img/orbit/google-ads.png" alt="Google Ads" loading="lazy"></div>
+      <div class="orb orb-gc" data-label="Calendar"><img src="img/orbit/google-calendar.png" alt="Google Calendar" loading="lazy"></div>
+      <div class="orb orb-sh" data-label="Shopify"><img src="img/orbit/shopify.png" alt="Shopify" loading="lazy"></div>
+      <div class="orb orb-st" data-label="Stripe"><img src="img/orbit/stripe.png" alt="Stripe" loading="lazy"></div>
+      <div class="orb orb-ge" data-label="Gemini"><img src="img/orbit/gemini.png" alt="Google Gemini" loading="lazy"></div>
+      <div class="orb orb-cg" data-label="ChatGPT"><img src="img/orbit/chatgpt.png" alt="ChatGPT" loading="lazy"></div>
+      <div class="orb orb-cl" data-label="Claude"><img src="img/orbit/claude.png" alt="Anthropic Claude" loading="lazy"></div>
+      <div class="orb orb-el" data-label="ElevenLabs"><img src="img/orbit/elevenlabs.png" alt="ElevenLabs" loading="lazy"></div>
+      <!-- Hapee products (top corners) -->
+      <div class="orb orb-hp1 orb-product" data-label="Hapee CRM"><span class="orb-hp-text">CRM</span></div>
+      <div class="orb orb-hp2 orb-product" data-label="Hapee Ads"><span class="orb-hp-text">Ads</span></div>
     </div>
   </div>
 </section>
@@ -556,39 +617,6 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
         <h3>Te paras en el escenario LATAM</h3>
         <p>Webinars co-branded con Hapee, ruedas de negocios con clientes Digitals, listing público en partners.hapee.ai y acceso al canal privado Hapee Insiders. La marca Hapee Partner abre puertas que tu agencia sola tarda años en abrir.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="stats-sec" id="cifras">
-  <div class="ctn">
-    <div class="sec-head">
-      <span class="sl">Hapee en números</span>
-      <h2>No te subes a una promesa. <span class="tg">Te subes a una plataforma que ya factura.</span></h2>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-n" data-target="90000" data-suffix="+">+90.000</div>
-        <div class="stat-l">Negocios activos sobre la plataforma</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-n">1.37B</div>
-        <div class="stat-l">Conversaciones procesadas por la IA Hapee en 2025</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-n">194M</div>
-        <div class="stat-l">Mensajes WhatsApp/Instagram/SMS mensuales</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-n">35%</div>
-        <div class="stat-l">Comisión recurrente máxima para Hapee Partner Elite</div>
-      </div>
-    </div>
-    <div class="sub-stats">
-      <div class="sub-stat"><strong>12 países</strong>LATAM en los que abrimos cupos 2026</div>
-      <div class="sub-stat"><strong>USD 0</strong>fee de entrada en el tier inicial</div>
-      <div class="sub-stat"><strong>72 horas</strong>tiempo promedio de aprobación</div>
     </div>
   </div>
 </section>
