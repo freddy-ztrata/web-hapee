@@ -145,7 +145,7 @@ WM Digital, LLC (Wyoming, EIN 38-4371956), domicilio: 1908 Thomes Ave STE 12605,
 
 ## Pricing oculto + checkout Stripe (self-service, 2026-07-10)
 
-Primera integración del sitio con la app FastAPI (`app.zentru.ai`). Plan maestro:
+Primera integración del sitio con la app FastAPI (**`beta.hapee.ai`** — dominio canónico de la app desde 2026-07-11; el proxy nginx apunta ahí). Plan maestro:
 `reporteria/docs/planes/2026-07-10-stripe-venta-subcuentas-provisioning.md` (F4).
 
 - **`planes-k9x2v7.html`** (slug oculto `/planes-k9x2v7`): página de pricing self-service.
@@ -159,7 +159,7 @@ Primera integración del sitio con la app FastAPI (`app.zentru.ai`). Plan maestr
   `GET /api/saas/checkout/{t}/estado` (3s, ~2min): preparando → “revisa tu correo para
   activar” | pago en proceso | fallo. **JAMÁS crea nada** — el aprovisionamiento es 100%
   del webhook de la app. (gracias-compra.html queda para el flujo GHL legacy.)
-- **Proxy nginx `location /api/saas/`** → `https://app.zentru.ai/api/public/saas/` con
+- **Proxy nginx `location /api/saas/`** → `https://beta.hapee.ai/api/public/saas/` con
   `X-Public-Api-Key "${SAAS_PUBLIC_API_KEY}"` inyectada server-side (misma técnica que
   `/api/chat`). Env var nueva en `entrypoint.sh` + **Dokploy del sitio**: `SAAS_PUBLIC_API_KEY`
   (debe coincidir con la de la app). Sin ella todo responde 404 — fail-secure.
