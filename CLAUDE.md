@@ -70,7 +70,7 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 - **Colors**: `#FA5000` (orange primary), `#CD2349` (burdeo secondary), `#000000`, `#FFFFFF`.
 - **Gradients**: always orange → burdeo, left to right.
 - **Fonts**: Bebas Neue (headlines), Plus Jakarta Sans (body), Poppins (logo only). GHL snippets and email templates use Inter + Nunito Sans instead.
-- **Logo**: `img/logo-hapee.png` only. Aspect-ratio must be locked (`width:auto !important; object-fit:contain; flex-shrink:0`) — never deform, rotate, or place on low-contrast backgrounds.
+- **Logo**: `img/logo-hapee.png` only. Aspect-ratio must be locked (`display:block; width:auto !important; object-fit:contain; flex-shrink:0; min-width:80px`) — never deform, rotate, or place on low-contrast backgrounds. **Never** apply `filter: brightness(0) invert(1)` for dark mode — that filter has been known to render the logo invisible in certain browsers. The branded orange/burdeo wordmark is visible on both light and dark backgrounds natively.
 - **Never mention** GoHighLevel, GHL, or any white-label provider in deployed copy or in the chatbot prompt.
 - **Single email address**: `info@hapee.ai` is the only public contact. `soporte@hapee.ai` is deprecated and must not appear in any file. Legal-only addresses (`legal@hapee.ai`, `privacidad@hapee.ai`) are preserved for compliance in `terminos.html` and `politica-privacidad.html`.
 
@@ -142,3 +142,25 @@ Meta Business Partner + Google Premier Partner are inline SVG (not external imag
 ## Legal entity
 
 WM Digital, LLC (Wyoming, EIN 38-4371956), domicilio: 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US. Public contact: `info@hapee.ai`. Legal-specific addresses (compliance only, in `terminos.html` and `politica-privacidad.html`): `legal@hapee.ai`, `privacidad@hapee.ai`.
+
+## Pricing oculto + checkout Stripe (self-service, 2026-07-10)
+
+Primera integración del sitio con la app FastAPI (`app.zentru.ai`). Plan maestro:
+`reporteria/docs/planes/2026-07-10-stripe-venta-subcuentas-provisioning.md` (F4).
+
+- **`planes-k9x2v7.html`** (slug oculto `/planes-k9x2v7`): página de pricing self-service.
+  `noindex,nofollow`, FUERA de sitemap/nav/robots (patrón gracias-compra). Renderiza los
+  planes desde `GET /api/saas/planes` (los precios NUNCA se hardcodean acá — la app es la
+  autoridad) y el CTA abre un modal de datos → `POST /api/saas/checkout` → redirect a
+  Stripe Checkout hosted. Con el flag de la app apagado exige `?preview=<token>`.
+  Al publicar: renombrar a `/planes`, quitar noindex, sumar a nav/sitemap + barrido de
+  copy (index cards + JSON-LD + prompt del chat + llms.txt) — checklist §20 del plan.
+- **`compra-exitosa.html`**: success page del checkout. Lee `?t=<token opaco>` y pollea
+  `GET /api/saas/checkout/{t}/estado` (3s, ~2min): preparando → “revisa tu correo para
+  activar” | pago en proceso | fallo. **JAMÁS crea nada** — el aprovisionamiento es 100%
+  del webhook de la app. (gracias-compra.html queda para el flujo GHL legacy.)
+- **Proxy nginx `location /api/saas/`** → `https://app.zentru.ai/api/public/saas/` con
+  `X-Public-Api-Key "${SAAS_PUBLIC_API_KEY}"` inyectada server-side (misma técnica que
+  `/api/chat`). Env var nueva en `entrypoint.sh` + **Dokploy del sitio**: `SAAS_PUBLIC_API_KEY`
+  (debe coincidir con la de la app). Sin ella todo responde 404 — fail-secure.
+- La pill “30 días de garantía” de gracias-compra.html fue eliminada (regla de pricing).

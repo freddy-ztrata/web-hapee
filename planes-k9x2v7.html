@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Planes — Hapee</title>
+<link rel="icon" href="img/logo-hapee.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+/* Tema: mismo mecanismo del sitio (html.dark + localStorage hapee-theme) */
+(function(){try{var t=localStorage.getItem('hapee-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();
+</script>
+<style>
+:root{--accent:#FA5000;--accent-alt:#CD2349;--bg:#FFFFFF;--bg-alt:#F5F3F0;--heading:#111;--text:#333;--text-2:#666;--muted:#888;--card:#fff;--border:rgba(0,0,0,.09);--pill:100px;--fd:'Bebas Neue',sans-serif;--fb:'Plus Jakarta Sans',sans-serif;--tr:.3s ease}
+html.dark{--bg:#080808;--bg-alt:#0d0d0d;--heading:#fff;--text:#d5d5d5;--text-2:#a0a0a0;--muted:#777;--card:#0f0f0f;--border:rgba(250,80,0,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;transition:background var(--tr)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,60px)}
+.nav img{height:38px;width:auto!important;object-fit:contain;flex-shrink:0;display:block;min-width:80px}
+.nav a.back{font-size:.85rem;color:var(--text-2);text-decoration:none}
+.nav a.back:hover{color:var(--accent)}
+.wrap{position:relative;overflow:hidden;padding:48px 20px 90px;background:
+ radial-gradient(ellipse 90% 70% at 15% 10%,#ffe6d3 0%,transparent 55%),
+ radial-gradient(ellipse 80% 60% at 85% 20%,#ffd6e2 0%,transparent 55%),
+ linear-gradient(180deg,var(--bg) 0%,var(--bg-alt) 100%)}
+html.dark .wrap{background:
+ radial-gradient(ellipse 90% 70% at 15% 10%,#2a0a08 0%,transparent 55%),
+ radial-gradient(ellipse 80% 60% at 85% 20%,#280714 0%,transparent 55%),
+ linear-gradient(180deg,#0a0505 0%,#050303 100%)}
+.ctn{max-width:1150px;margin:0 auto;position:relative;z-index:2}
+.head{text-align:center;margin-bottom:40px}
+.sl{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.head h1{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;color:var(--heading);margin-bottom:14px;line-height:1.1}
+.tg{background:linear-gradient(90deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;color:transparent}
+.head p{color:var(--text-2);max-width:520px;margin:0 auto;font-size:.95rem}
+/* Toggle mensual/anual */
+.itoggle{display:none;justify-content:center;gap:0;margin:26px auto 0;width:max-content;border:1px solid var(--border);border-radius:var(--pill);padding:4px;background:var(--card)}
+.itoggle.show{display:flex}
+.itoggle button{border:0;background:transparent;font-family:var(--fb);font-size:.85rem;font-weight:600;color:var(--text-2);padding:8px 22px;border-radius:var(--pill);cursor:pointer;transition:var(--tr)}
+.itoggle button.on{background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff}
+.itoggle .save{font-size:.7rem;font-weight:700;margin-left:6px;opacity:.9}
+/* Estados */
+.estado{max-width:560px;margin:60px auto;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:44px 32px}
+.estado h2{font-size:1.25rem;color:var(--heading);margin-bottom:8px}
+.estado p{font-size:.9rem;color:var(--text-2)}
+.spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);margin:0 auto 18px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* Cards */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;align-items:stretch;margin-top:46px;max-width:1000px;margin-left:auto;margin-right:auto}
+.pc{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;display:flex;flex-direction:column;position:relative;transition:var(--tr);box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.pc:hover{transform:translateY(-5px);box-shadow:0 14px 40px rgba(0,0,0,.10);border-color:rgba(250,80,0,.25)}
+.pc.pop{border:none;padding:0;overflow:visible;z-index:2}
+.pc.pop .beam{position:absolute;inset:-2px;border-radius:22px;z-index:0;background:conic-gradient(from var(--beam-a,0deg),var(--accent),#f97316,var(--accent-alt),#e8457c,var(--accent));animation:beam 4s linear infinite}
+@property --beam-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes beam{to{--beam-a:360deg}}
+.pc.pop .beam::after{content:'';position:absolute;inset:2px;border-radius:20px;background:var(--card)}
+.pc.pop .inner{position:relative;z-index:1;padding:36px 28px;display:flex;flex-direction:column;height:100%}
+.badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-size:.72rem;font-weight:700;padding:5px 20px;border-radius:var(--pill);text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;z-index:3;box-shadow:0 4px 14px rgba(250,80,0,.35)}
+.pc-name{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--heading);letter-spacing:.5px;margin-bottom:8px}
+.pc-desc{font-size:.92rem;color:var(--text);margin-bottom:22px;line-height:1.6;min-height:44px}
+.pc-price{display:flex;align-items:baseline;gap:2px}
+.pc-cur{font-size:1.2rem;color:var(--accent);font-weight:700}
+.pc-val{font-family:var(--fd);font-size:3.4rem;font-weight:800;color:var(--heading);line-height:1}
+.pc-per{font-size:.9rem;color:var(--text-2);margin:4px 0 6px}
+.pc-eq{font-size:.78rem;color:var(--muted);margin-bottom:14px;min-height:1em}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;padding-top:18px;border-top:1px solid var(--border);flex:1}
+.pc-feats li{display:flex;align-items:flex-start;gap:9px;font-size:.92rem;color:var(--text)}
+.pc-feats svg{flex-shrink:0;width:16px;height:16px;color:var(--accent);margin-top:2px}
+.btn{display:block;text-align:center;font-family:var(--fb);font-size:.95rem;font-weight:700;padding:13px 22px;border-radius:var(--pill);cursor:pointer;transition:var(--tr);text-decoration:none;margin-top:auto;border:0;width:100%}
+.btn.bs{background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff}
+.btn.bs:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.bo{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.btn.bo:hover{background:rgba(250,80,0,.08)}
+.note{text-align:center;margin-top:34px;font-size:.9rem;color:var(--text)}
+/* FAQ */
+.faq{max-width:680px;margin:70px auto 0}
+.faq h2{font-family:var(--fd);font-size:1.7rem;color:var(--heading);text-align:center;margin-bottom:20px;letter-spacing:.5px}
+.faq details{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+.faq summary{font-size:.95rem;font-weight:600;color:var(--heading);cursor:pointer}
+.faq p{font-size:.9rem;color:var(--text-2);margin-top:10px;line-height:1.6}
+/* Modal */
+.mask{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+.mask.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto}
+.modal h3{font-size:1.15rem;color:var(--heading);margin-bottom:4px}
+.modal .mp{font-size:.85rem;color:var(--text-2);margin-bottom:18px}
+.modal label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:14px 0 5px}
+.modal input{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg-alt);color:var(--heading);font-family:var(--fb);font-size:.95rem}
+.modal input:focus{outline:none;border-color:var(--accent)}
+.merr{display:none;background:rgba(204,68,53,.1);border:1px solid rgba(204,68,53,.4);color:#CC4435;border-radius:12px;padding:10px 14px;font-size:.85rem;margin-top:14px}
+.mact{display:flex;gap:10px;margin-top:22px}
+.mact .btn{margin-top:0}
+.mact .cancel{background:transparent;border:1px solid var(--border);color:var(--text-2)}
+.msec{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:.75rem;color:var(--muted)}
+@media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="/"><img src="img/logo-hapee.png" alt="Hapee"></a>
+  <a class="back" href="/">← hapee.ai</a>
+</nav>
+
+<div class="wrap">
+  <div class="ctn">
+    <div class="head">
+      <span class="sl">Planes y Precios</span>
+      <h1>Invierte en tu <span class="tg">crecimiento</span></h1>
+      <p>Elige el plan perfecto para tus necesidades. Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
+      <div class="itoggle" id="itoggle">
+        <button type="button" data-i="mensual" class="on">Mensual</button>
+        <button type="button" data-i="anual">Anual<span class="save" id="save-pct"></span></button>
+      </div>
+    </div>
+
+    <div class="estado" id="estado">
+      <div class="spin"></div>
+      <h2>Cargando planes…</h2>
+      <p>Un momento, por favor.</p>
+    </div>
+
+    <div class="pgrid" id="pgrid" hidden></div>
+    <p class="note" id="note" hidden>Sin compromiso, sin contratos, cancelas cuando quieras.</p>
+
+    <div class="faq" id="faq" hidden>
+      <h2>Preguntas frecuentes</h2>
+      <details><summary>¿Qué pasa después de pagar?</summary><p>Tu cuenta se crea automáticamente. Te llega un correo para definir tu contraseña y entrar de inmediato — sin esperas ni llamadas obligatorias.</p></details>
+      <details><summary>¿Cómo se procesa el pago?</summary><p>A través de Stripe, la plataforma de pagos más usada del mundo. Nosotros nunca vemos ni almacenamos los datos de tu tarjeta.</p></details>
+      <details><summary>¿Puedo cancelar cuando quiera?</summary><p>Sí. Sin contratos ni permanencia: puedes cancelar tu plan en cualquier momento desde tu panel de facturación.</p></details>
+      <details><summary>¿Puedo cambiar de plan más adelante?</summary><p>Sí, puedes subir o bajar de plan cuando lo necesites. El cambio se prorratea automáticamente.</p></details>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de datos del comprador -->
+<div class="mask" id="mask">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 id="m-titulo">Completa tus datos</h3>
+    <p class="mp" id="m-plan"></p>
+    <form id="m-form" autocomplete="on">
+      <label for="f-nombre">Nombre *</label>
+      <input id="f-nombre" required maxlength="120" autocomplete="given-name">
+      <label for="f-apellido">Apellido</label>
+      <input id="f-apellido" maxlength="120" autocomplete="family-name">
+      <label for="f-email">Correo electrónico *</label>
+      <input id="f-email" type="email" required maxlength="255" autocomplete="email">
+      <label for="f-empresa">Empresa</label>
+      <input id="f-empresa" maxlength="255" autocomplete="organization">
+      <label for="f-telefono">Teléfono</label>
+      <input id="f-telefono" type="tel" maxlength="40" autocomplete="tel">
+      <div class="merr" id="m-error"></div>
+      <div class="mact">
+        <button type="button" class="btn cancel" id="m-cancel">Cancelar</button>
+        <button type="submit" class="btn bs" id="m-submit">Ir a pagar</button>
+      </div>
+      <div class="msec">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Pago seguro con Stripe
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  var qs = new URLSearchParams(location.search);
+  var preview = qs.get('preview') || '';
+  var planes = [];
+  var intervalo = 'mensual';
+  var sel = null;
+  var $ = function(id){ return document.getElementById(id); };
+
+  function money(v){ return '$' + Number(v).toLocaleString('es-CL', {maximumFractionDigits: 0}); }
+
+  function noDisponible(){
+    $('estado').innerHTML = '';
+    var h = document.createElement('h2'); h.textContent = 'Los planes no están disponibles en este momento';
+    var p = document.createElement('p'); p.textContent = 'Vuelve a intentarlo más tarde o escríbenos a info@hapee.ai.';
+    $('estado').appendChild(h); $('estado').appendChild(p);
+  }
+
+  function checkIcon(){
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2.5');
+    var pl = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    pl.setAttribute('points', '20 6 9 17 4 12'); svg.appendChild(pl);
+    return svg;
+  }
+
+  function render(){
+    var grid = $('pgrid'); grid.innerHTML = '';
+    planes.forEach(function(pl){
+      var esAnual = intervalo === 'anual' && pl.precio_anual;
+      var precio = esAnual ? pl.precio_anual : pl.precio_mensual;
+      var card = document.createElement('article');
+      card.className = 'pc' + (pl.destacado ? ' pop' : '');
+      var host = card;
+      if (pl.destacado) {
+        var beam = document.createElement('div'); beam.className = 'beam'; card.appendChild(beam);
+        var badge = document.createElement('div'); badge.className = 'badge'; badge.textContent = 'Recomendado'; card.appendChild(badge);
+        host = document.createElement('div'); host.className = 'inner'; card.appendChild(host);
+      }
+      var name = document.createElement('div'); name.className = 'pc-name'; name.textContent = pl.nombre; host.appendChild(name);
+      var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = pl.descripcion || ''; host.appendChild(desc);
+      var pr = document.createElement('div'); pr.className = 'pc-price';
+      var cur = document.createElement('span'); cur.className = 'pc-cur'; cur.textContent = '$';
+      var val = document.createElement('span'); val.className = 'pc-val'; val.textContent = Number(precio).toLocaleString('es-CL', {maximumFractionDigits: 0});
+      pr.appendChild(cur); pr.appendChild(val); host.appendChild(pr);
+      var per = document.createElement('div'); per.className = 'pc-per';
+      per.textContent = (pl.moneda || 'USD') + (esAnual ? '/Año' : '/Mes'); host.appendChild(per);
+      var eq = document.createElement('div'); eq.className = 'pc-eq';
+      if (esAnual) eq.textContent = 'equivale a ' + money(pl.precio_anual / 12) + '/mes';
+      host.appendChild(eq);
+      var ul = document.createElement('ul'); ul.className = 'pc-feats';
+      (pl.features || []).forEach(function(f){
+        var li = document.createElement('li'); li.appendChild(checkIcon());
+        li.appendChild(document.createTextNode(' ' + f)); ul.appendChild(li);
+      });
+      host.appendChild(ul);
+      var btn = document.createElement('button');
+      btn.className = 'btn ' + (pl.destacado ? 'bs' : 'bo');
+      btn.type = 'button'; btn.textContent = 'Seleccionar plan';
+      btn.addEventListener('click', function(){ abrirModal(pl); });
+      host.appendChild(btn);
+      grid.appendChild(card);
+    });
+    grid.hidden = false; $('note').hidden = false; $('faq').hidden = false;
+    $('estado').style.display = 'none';
+  }
+
+  // Toggle mensual/anual (visible solo si algún plan tiene precio anual)
+  function setupToggle(){
+    var conAnual = planes.filter(function(p){ return p.precio_anual; });
+    if (!conAnual.length) return;
+    var maxPct = 0;
+    conAnual.forEach(function(p){
+      var pct = Math.round((1 - (p.precio_anual / 12) / p.precio_mensual) * 100);
+      if (pct > maxPct) maxPct = pct;
+    });
+    if (maxPct > 0) $('save-pct').textContent = '−' + maxPct + '%';
+    $('itoggle').classList.add('show');
+    $('itoggle').querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        intervalo = b.dataset.i;
+        $('itoggle').querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x === b); });
+        render();
+      });
+    });
+  }
+
+  function abrirModal(pl){
+    sel = pl;
+    $('m-plan').textContent = pl.nombre + ' · ' + (intervalo === 'anual' && pl.precio_anual
+      ? money(pl.precio_anual) + ' ' + (pl.moneda || 'USD') + '/Año'
+      : money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + '/Mes');
+    $('m-error').style.display = 'none';
+    $('mask').classList.add('open');
+    $('f-nombre').focus();
+  }
+  $('m-cancel').addEventListener('click', function(){ $('mask').classList.remove('open'); });
+  $('mask').addEventListener('click', function(e){ if (e.target === $('mask')) $('mask').classList.remove('open'); });
+
+  function utm(){
+    var out = {};
+    try {
+      var stored = sessionStorage.getItem('hapee_attribution');
+      if (stored) out = JSON.parse(stored) || {};
+    } catch(e){}
+    qs.forEach(function(v, k){ if (k.indexOf('utm_') === 0 || k === 'gclid' || k === 'fbclid') out[k] = v; });
+    return Object.keys(out).length ? out : null;
+  }
+
+  $('m-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!sel) return;
+    var btn = $('m-submit'); btn.disabled = true; btn.textContent = 'Redirigiendo…';
+    $('m-error').style.display = 'none';
+    fetch('/api/saas/checkout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        plan_slug: sel.slug,
+        intervalo: (intervalo === 'anual' && sel.precio_anual) ? 'anual' : 'mensual',
+        email: $('f-email').value.trim(),
+        nombre: $('f-nombre').value.trim(),
+        apellido: $('f-apellido').value.trim(),
+        empresa: $('f-empresa').value.trim(),
+        telefono: $('f-telefono').value.trim(),
+        idioma: 'es',
+        preview: preview || undefined,
+        utm: utm(),
+      }),
+    }).then(function(r){ return r.json().then(function(d){ return {ok: r.ok, d: d}; }); })
+      .then(function(res){
+        if (res.ok && res.d.checkout_url) { location.href = res.d.checkout_url; return; }
+        $('m-error').textContent = res.d.error || 'No pudimos iniciar el pago. Intenta de nuevo.';
+        $('m-error').style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Ir a pagar';
+      })
+      .catch(function(){
+        $('m-error').textContent = 'No pudimos iniciar el pago. Intenta de nuevo.';
+        $('m-error').style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Ir a pagar';
+      });
+  });
+
+  // Carga inicial
+  fetch('/api/saas/planes?lang=es' + (preview ? '&preview=' + encodeURIComponent(preview) : ''))
+    .then(function(r){ if (!r.ok) throw new Error('no disponible'); return r.json(); })
+    .then(function(d){
+      planes = d.planes || [];
+      if (!planes.length) { noDisponible(); return; }
+      setupToggle(); render();
+    })
+    .catch(noDisponible);
+})();
+</script>
+<script src="/js/whatsapp.js" defer></script>
+</body>
+</html>

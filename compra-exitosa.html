@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Compra confirmada — Hapee</title>
+<link rel="icon" href="img/logo-hapee.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+(function(){try{var t=localStorage.getItem('hapee-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();
+</script>
+<style>
+:root{--accent:#FA5000;--accent-alt:#CD2349;--bg:#FFFFFF;--bg-alt:#F5F3F0;--heading:#111;--text:#333;--text-2:#666;--muted:#888;--card:#fff;--border:rgba(0,0,0,.09);--ok:#0E8A57;--err:#CC4435;--fd:'Bebas Neue',sans-serif;--fb:'Plus Jakarta Sans',sans-serif}
+html.dark{--bg:#080808;--bg-alt:#0d0d0d;--heading:#fff;--text:#d5d5d5;--text-2:#a0a0a0;--muted:#777;--card:#0f0f0f;--border:rgba(250,80,0,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);background:
+ radial-gradient(ellipse 90% 70% at 15% 10%,#ffe6d3 0%,transparent 55%),
+ radial-gradient(ellipse 80% 60% at 85% 20%,#ffd6e2 0%,transparent 55%),
+ linear-gradient(180deg,var(--bg) 0%,var(--bg-alt) 100%);
+ color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+html.dark body{background:
+ radial-gradient(ellipse 90% 70% at 15% 10%,#2a0a08 0%,transparent 55%),
+ radial-gradient(ellipse 80% 60% at 85% 20%,#280714 0%,transparent 55%),
+ linear-gradient(180deg,#0a0505 0%,#050303 100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,60px)}
+.nav img{height:38px;width:auto!important;object-fit:contain;flex-shrink:0;display:block;min-width:80px}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:48px 36px;width:100%;max-width:520px;text-align:center;box-shadow:0 18px 60px rgba(0,0,0,.10)}
+h1{font-size:1.5rem;color:var(--heading);margin:18px 0 10px}
+p{font-size:.95rem;color:var(--text-2);line-height:1.65}
+.spin{width:44px;height:44px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);margin:0 auto;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.check{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));margin:0 auto;display:flex;align-items:center;justify-content:center;animation:pop .45s cubic-bezier(.34,1.56,.64,1)}
+.check svg{width:36px;height:36px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .5s .25s ease forwards}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.warn{width:72px;height:72px;border-radius:50%;background:rgba(204,68,53,.12);border:2px solid var(--err);color:var(--err);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800}
+.hint{margin-top:22px;padding:14px 18px;border-radius:14px;background:var(--bg-alt);font-size:.85rem;color:var(--text-2);text-align:left}
+html.dark .hint{background:rgba(255,255,255,.04)}
+.hint strong{color:var(--heading)}
+.btn{display:inline-block;margin-top:26px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;font-weight:700;font-size:.95rem;padding:13px 34px;border-radius:100px;text-decoration:none;transition:.25s}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+@media(prefers-reduced-motion:reduce){.spin,.check,.check svg{animation:none}.check svg{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<nav class="nav"><a href="/"><img src="img/logo-hapee.png" alt="Hapee"></a></nav>
+<main>
+  <div class="card" id="card">
+    <div class="spin" id="icono"></div>
+    <h1 id="titulo">Confirmando tu pago…</h1>
+    <p id="texto">Un momento, estamos verificando la compra con nuestro procesador de pagos.</p>
+    <div id="extra"></div>
+  </div>
+</main>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var token = new URLSearchParams(location.search).get('t') || '';
+  var intentos = 0, MAX = 40; // ~2 min a 3s
+
+  function set(iconHtmlClass, titulo, texto){
+    var ic = $('icono');
+    ic.className = iconHtmlClass;
+    ic.innerHTML = '';
+    if (iconHtmlClass === 'check') {
+      ic.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else if (iconHtmlClass === 'warn') {
+      ic.textContent = '!';
+    }
+    $('titulo').textContent = titulo;
+    $('texto').textContent = texto;
+  }
+
+  function listo(){
+    set('check', '¡Bienvenido a Hapee! Tu cuenta está lista',
+        'Te enviamos un correo para que definas tu contraseña y entres a tu cuenta.');
+    var extra = $('extra');
+    extra.innerHTML = '';
+    var hint = document.createElement('div');
+    hint.className = 'hint';
+    hint.innerHTML = '<strong>¿No ves el correo?</strong> Revisa la carpeta de spam o promociones. El enlace de activación vence en 72 horas.';
+    extra.appendChild(hint);
+  }
+
+  function procesando(){
+    set('spin', 'Estamos preparando tu cuenta…',
+        'Tu pago está confirmado. En unos segundos te llegará el correo de activación.');
+  }
+
+  function pagoEnProceso(){
+    set('spin', 'Tu pago está en proceso',
+        'Tu banco está confirmando el pago. Apenas se acredite, te enviaremos el correo de activación — puedes cerrar esta página.');
+  }
+
+  function fallo(msg){
+    set('warn', 'No pudimos completar la compra',
+        msg || 'El pago no se procesó. Puedes intentarlo de nuevo o escribirnos a info@hapee.ai.');
+    var extra = $('extra');
+    extra.innerHTML = '';
+    var a = document.createElement('a');
+    a.className = 'btn'; a.href = '/'; a.textContent = 'Volver al inicio';
+    extra.appendChild(a);
+  }
+
+  function poll(){
+    intentos++;
+    fetch('/api/saas/checkout/' + encodeURIComponent(token) + '/estado')
+      .then(function(r){ if (!r.ok) throw new Error('nf'); return r.json(); })
+      .then(function(d){
+        switch (d.estado) {
+          case 'provisioned': listo(); return;
+          case 'paid':
+          case 'provisioning': procesando(); break;
+          case 'payment_processing': pagoEnProceso(); break;
+          case 'failed': fallo('El pago fue rechazado. Puedes intentarlo con otro medio de pago.'); return;
+          case 'expired':
+          case 'canceled': fallo('La sesión de pago expiró o fue cancelada.'); return;
+          default: break; // created/checkout_created: seguir esperando
+        }
+        if (intentos < MAX) setTimeout(poll, 3000);
+        else pagoEnProceso();
+      })
+      .catch(function(){
+        if (intentos < 3 && token) { setTimeout(poll, 3000); return; }
+        fallo('No pudimos verificar el estado de la compra. Si ya pagaste, revisa tu correo — la activación llega igual.');
+      });
+  }
+
+  if (!token) fallo('Falta el identificador de la compra.');
+  else poll();
+})();
+</script>
+<script src="/js/whatsapp.js" defer></script>
+</body>
+</html>
