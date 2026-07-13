@@ -50,5 +50,14 @@
     '<span class="hapee-wa-label">' + LABEL + '</span>' +
     '<span class="hapee-wa-btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="' + WA_PATH + '"/></svg></span>';
 
+  // ---- Conversión: click en WhatsApp (evento clave GA4 'dg_whatsapp') ----
+  // Solo dispara en páginas con el Google tag instalado (gtag definido).
+  // El link abre en pestaña nueva, así que el hit sale sin necesidad de delay.
+  a.addEventListener('click', function () {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'dg_whatsapp');
+    }
+  });
+
   document.body.appendChild(a);
 })();
