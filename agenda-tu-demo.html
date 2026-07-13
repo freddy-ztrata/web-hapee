@@ -1798,9 +1798,17 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
            el evento va a todos los destinos configurados en el Google tag. */
         (function(){
           var fired = false;
+          var ALLOWED = ['hapee.ai','msgsndr.com','leadconnectorhq.com'];
           window.addEventListener('message', function(e){
-            /* Solo mensajes del widget GHL (dominio propio o infra LeadConnector) */
-            if(!/hapee\.ai|msgsndr|leadconnector/i.test(e.origin || '')) return;
+            /* Solo mensajes del widget GHL (dominio propio o infra LeadConnector).
+               Match exacto de hostname o subdominio — un substring/regex dejaría
+               pasar orígenes tipo https://hapee.ai.evil.com */
+            var host = '';
+            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+            var allowed = ALLOWED.some(function(d){
+              return host === d || host.slice(-(d.length + 1)) === ('.' + d);
+            });
+            if(!allowed) return;
             var d = e.data;
             var isBooking =
               (Array.isArray(d) && d[0] === 'msgsndr-booking-complete') ||
