@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
 <title>Agenda tu Demo Gratis — Hapee · Agentes IA + CRM all-in-one</title>
 <meta name="description" content="Agenda una demo en vivo de 60 minutos y descubre cómo Hapee automatiza tu negocio con Agentes IA + CRM all-in-one. Sin compromiso. Ve la plataforma funcionando en tiempo real y resuelve tus dudas con nuestro equipo.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -1777,6 +1787,30 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
 
           /* 6) Debug opcional: descomenta para chequear en consola */
           /* console.log('[Hapee Attribution]', attribution, '\\niframe src →', iframe.src); */
+        })();
+        </script>
+        <script>
+        /* === Conversión: demo agendada en el widget GHL ===
+           El iframe de booking (always.hapee.ai) avisa al parent vía postMessage
+           con event.data[0] === 'msgsndr-booking-complete' cuando la cita queda
+           confirmada. Ahí disparamos 'dg_agendar_demo', el evento clave definido
+           en Analytics (GA4) — Google Ads lo importa desde ahí. Sin send_to:
+           el evento va a todos los destinos configurados en el Google tag. */
+        (function(){
+          var fired = false;
+          window.addEventListener('message', function(e){
+            /* Solo mensajes del widget GHL (dominio propio o infra LeadConnector) */
+            if(!/hapee\.ai|msgsndr|leadconnector/i.test(e.origin || '')) return;
+            var d = e.data;
+            var isBooking =
+              (Array.isArray(d) && d[0] === 'msgsndr-booking-complete') ||
+              (typeof d === 'string' && d.indexOf('msgsndr-booking-complete') !== -1);
+            if(!isBooking || fired) return;
+            fired = true; /* una sola conversión por carga de página */
+            if(typeof gtag === 'function'){
+              gtag('event', 'dg_agendar_demo');
+            }
+          });
         })();
         </script>
       </div>
