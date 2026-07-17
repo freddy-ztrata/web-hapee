@@ -71,7 +71,8 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 - **Gradients**: always orange → burdeo, left to right.
 - **Fonts**: Bebas Neue (headlines), Plus Jakarta Sans (body), Poppins (logo only). GHL snippets and email templates use Inter + Nunito Sans instead.
 - **Logo**: `img/logo-hapee.png` only. Aspect-ratio must be locked (`display:block; width:auto !important; object-fit:contain; flex-shrink:0; min-width:80px`) — never deform, rotate, or place on low-contrast backgrounds. **Never** apply `filter: brightness(0) invert(1)` for dark mode — that filter has been known to render the logo invisible in certain browsers. The branded orange/burdeo wordmark is visible on both light and dark backgrounds natively.
-- **Never mention** GoHighLevel, GHL, or any white-label provider in deployed copy or in the chatbot prompt.
+- **Never mention** GoHighLevel, GHL, or any white-label provider as *Hapee's own* stack, in the chatbot prompt, or as the tech behind be.hapee.ai. Never imply Hapee is built on GHL.
+  - **Exception (approved 2026-07-17):** `comparativa.html` names **GoHighLevel** as a *competitor* column/duel, and positions **Zolutium** and **Heat** as rivals. Framing must stay **defensible** — differentiate on verifiable points (producto/soporte en inglés, self-service, sin agencia Meta/Google Partner local, sin voz clonada ni MCP Claude). Do **not** write "white-label", "marca blanca", or "software indio" in deployed copy (self-incrimination risk: Hapee's own app runs on GHL).
 - **Single email address**: `info@hapee.ai` is the only public contact. `soporte@hapee.ai` is deprecated and must not appear in any file. Legal-only addresses (`legal@hapee.ai`, `privacidad@hapee.ai`) are preserved for compliance in `terminos.html` and `politica-privacidad.html`.
 
 ## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)

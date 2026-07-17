@@ -30,7 +30,7 @@
 <link rel="icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -357,7 +357,7 @@ html.dark .badge-mock{background:linear-gradient(165deg,#141414 0%,#0c0c0c 100%)
 .badge-mock-r strong{display:block;color:var(--heading);font-family:var(--fd);font-size:1.05rem;letter-spacing:.6px;margin-bottom:4px;font-weight:700}
 /* Hapee Partner lockups oficiales — familia de marca, esquinas alternas (24/3), gradiente naranjo → magenta */
 .hp-lockup{display:inline-flex;align-items:center;gap:11px;padding:13px 20px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));border-radius:24px 5px 24px 5px;box-shadow:0 10px 26px rgba(250,80,0,.32);position:relative;white-space:nowrap}
-.hp-lockup .hp-logo{font-family:'Poppins',var(--fb);font-size:1.22rem;font-weight:700;color:#fff;line-height:1;letter-spacing:.2px}
+.hp-lockup .hp-logo{height:19px;width:auto;object-fit:contain;flex-shrink:0;display:block;filter:brightness(0) invert(1)}
 .hp-lockup .hp-div{width:1.5px;height:18px;background:rgba(255,255,255,.5);flex-shrink:0}
 .hp-lockup .hp-tier{font-family:var(--fb);font-size:.68rem;font-weight:700;letter-spacing:2.6px;color:#fff}
 .hp-chip{font-family:var(--fb);font-size:.56rem;font-weight:800;letter-spacing:1.4px;padding:4px 9px;border-radius:999px;line-height:1}
@@ -516,7 +516,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
   .orb-product .orb-hp-text{font-size:.6rem}
   .orbit-stage .hero-robot{max-width:130px}
   .hp-lockup{gap:8px;padding:11px 15px}
-  .hp-lockup .hp-logo{font-size:1.05rem}
+  .hp-lockup .hp-logo{height:16px}
   .hp-lockup .hp-tier{font-size:.6rem;letter-spacing:2px}
 }
 @media(max-width:400px){
@@ -649,7 +649,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
     <div class="pgrid">
       <!-- TIER 1: Partner -->
       <div class="pc">
-        <div class="hp-lockup" aria-hidden="true"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span></div>
+        <div class="hp-lockup" aria-hidden="true"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span></div>
         <div class="pc-name">Hapee Partner</div>
         <div class="pc-sub">Entry · Para empezar a vender desde el día uno</div>
         <div class="pc-comm">
@@ -685,7 +685,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
         <div class="pc-beam"></div>
         <div class="pc-inner">
           <div class="pc-badge">Recomendado</div>
-          <div class="hp-lockup keyline" aria-hidden="true"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip pro">PRO</span></div>
+          <div class="hp-lockup keyline" aria-hidden="true"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip pro">PRO</span></div>
           <div class="pc-name">Hapee Partner Pro</div>
           <div class="pc-sub">Mid · Para agencias que ya vendieron al menos 5 cuentas Hapee</div>
           <div class="pc-comm pc-comm-pop">
@@ -722,7 +722,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
 
       <!-- TIER 3: Elite -->
       <div class="pc">
-        <div class="hp-lockup keyline-oro" aria-hidden="true"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip elite">ELITE</span></div>
+        <div class="hp-lockup keyline-oro" aria-hidden="true"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip elite">ELITE</span></div>
         <div class="pc-name">Hapee Partner Elite</div>
         <div class="pc-sub">Top · Invitación o desempeño · Top 10 LATAM</div>
         <div class="pc-comm">
@@ -815,7 +815,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
       <div class="badge-stage">
         <div class="badge-mock">
           <div class="badge-mock-l">
-            <div class="hp-lockup"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span></div>
+            <div class="hp-lockup"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span></div>
           </div>
           <div class="badge-mock-r">
             <strong>Tier 1 · Partner</strong>
@@ -824,7 +824,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
         </div>
         <div class="badge-mock">
           <div class="badge-mock-l">
-            <div class="hp-lockup keyline"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip pro">PRO</span></div>
+            <div class="hp-lockup keyline"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip pro">PRO</span></div>
           </div>
           <div class="badge-mock-r">
             <strong>Tier 2 · Partner Pro</strong>
@@ -833,7 +833,7 @@ html.dark .f-row input,html.dark .f-row select,html.dark .f-row textarea{backgro
         </div>
         <div class="badge-mock">
           <div class="badge-mock-l">
-            <div class="hp-lockup keyline-oro"><span class="hp-logo">hapee</span><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip elite">ELITE</span></div>
+            <div class="hp-lockup keyline-oro"><img class="hp-logo" src="/img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip elite">ELITE</span></div>
           </div>
           <div class="badge-mock-r">
             <strong>Tier 3 · Partner Elite</strong>
