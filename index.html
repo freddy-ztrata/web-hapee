@@ -419,6 +419,16 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 .hero h1 .w{display:inline-block}
 .hero-sub{font-size:1.2rem;color:var(--text);line-height:1.7;margin-bottom:32px;max-width:500px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+/* Partner cert badges en el hero (logos oficiales, más peso que los orbs) */
+.hero-badges{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.hero-cert{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:14px;background:rgba(255,255,255,.72);border:1.5px solid rgba(0,0,0,.08);box-shadow:0 6px 20px rgba(0,0,0,.06);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .25s,box-shadow .25s,border-color .25s}
+.hero-cert:hover{transform:translateY(-2px);border-color:rgba(250,80,0,.32);box-shadow:0 12px 30px rgba(250,80,0,.15)}
+html.dark .hero-cert{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.hero-cert svg{height:22px;width:auto;display:block;flex-shrink:0}
+.hero-cert .hc-txt{display:flex;flex-direction:column;line-height:1.12;text-align:left}
+.hero-cert .hc-sub{font-size:.6rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--text-2)}
+.hero-cert .hc-main{font-size:.9rem;font-weight:700;color:var(--heading);font-family:var(--fb)}
+@media(max-width:600px){.hero-badges{justify-content:center;gap:9px;margin-bottom:18px}.hero-cert{padding:8px 13px;gap:8px}.hero-cert .hc-main{font-size:.82rem}}
 .hero-d{font-size:.95rem;color:var(--text-2);opacity:.8}
 .hero-vis{position:relative;display:flex;justify-content:center;align-items:center}
 .hero-robot{width:100%;max-width:350px;filter:drop-shadow(0 20px 50px rgba(250,80,0,.2));animation:rf 4s ease-in-out infinite;position:relative;z-index:5}
@@ -513,7 +523,7 @@ html.dark .video-wrap{box-shadow:0 8px 40px rgba(250,80,0,.15),0 0 0 1px rgba(25
 html.dark .video-wrap video{border-radius:20px}
 
 /* ===== STATS ===== */
-.stats{padding:80px 0;background:var(--bg);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
+.stats{padding:56px 0;background:var(--bg);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
 html.dark .stats{border:none}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
 .stat-item{padding:24px 16px;border-radius:16px;transition:transform .4s,box-shadow .4s;position:relative;overflow:hidden}
@@ -549,8 +559,8 @@ html.dark .partner-badge:hover{border-color:rgba(250,80,0,.45);background:rgba(2
 @media(max-width:640px){.partners-grid{gap:14px;width:100%}.partner-badge{padding:12px 18px;gap:12px;width:100%;max-width:320px;justify-content:flex-start}.partner-ico-wrap{width:40px;height:36px}.partner-main{font-size:.92rem}}
 
 /* ===== FEATURES TABBED ===== */
-.feat{padding:100px 0;background:var(--bg);transition:background var(--tr)}
-.feat-head{text-align:center;margin-bottom:48px}
+.feat{padding:64px 0;background:var(--bg);transition:background var(--tr)}
+.feat-head{text-align:center;margin-bottom:32px}
 .feat-head p{font-size:1.1rem;color:var(--text);max-width:560px;margin:0 auto;line-height:1.7}
 .feat-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:48px}
 .feat-tab{padding:10px 22px;border-radius:var(--pill);font-size:.88rem;font-weight:600;color:var(--text-2);background:var(--bg-alt2);border:1px solid var(--card-border);cursor:pointer;transition:var(--tr);white-space:nowrap}
@@ -562,6 +572,20 @@ html.dark .feat-tab{background:var(--bg-alt)}
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 .fpanel-img{border-radius:16px;overflow:hidden;border:1px solid var(--card-border);box-shadow:var(--shadow-md)}
 .fpanel-img img{width:100%;display:block}
+.fpanel-img .fi-dark{display:none}
+html.dark .fpanel-img .fi-light{display:none}
+html.dark .fpanel-img .fi-dark{display:block}
+/* imagen protagonista + lightbox */
+.feat .ctn{max-width:1320px}
+@media(min-width:1024px){.fpanel.on{grid-template-columns:1.35fr 1fr;gap:40px}}
+.fpanel-img{position:relative;cursor:zoom-in}
+.fpanel-img::after{content:'🔍 Ampliar';position:absolute;right:12px;bottom:12px;background:rgba(15,12,10,.72);color:#fff;font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:999px;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s;pointer-events:none;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.fpanel-img:hover::after{opacity:1;transform:translateY(0)}
+.img-lightbox{position:fixed;inset:0;z-index:4000;display:flex;align-items:center;justify-content:center;padding:30px;background:rgba(10,8,7,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;animation:lbIn .25s ease forwards;cursor:zoom-out}
+@keyframes lbIn{to{opacity:1}}
+.img-lightbox img{max-width:min(1500px,94vw);max-height:92vh;border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,.6);animation:lbImg .3s cubic-bezier(.2,.8,.3,1.1)}
+@keyframes lbImg{from{transform:scale(.94);opacity:.4}to{transform:scale(1);opacity:1}}
+.img-lightbox .lb-close{position:fixed;top:18px;right:22px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:1.3rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2)}
 .fpc h3{font-size:1.7rem;font-weight:800;margin-bottom:14px;color:var(--heading)}
 .fpc>p{font-size:1rem;color:var(--text);margin-bottom:24px;line-height:1.7}
 .flist{display:flex;flex-direction:column;gap:14px}
@@ -571,14 +595,14 @@ html.dark .feat-tab{background:var(--bg-alt)}
 @media(max-width:768px){.fpanel.on{grid-template-columns:1fr}.fpanel-img{order:-1}}
 
 /* ===== MID CTA ===== */
-.midcta{padding:80px 0;text-align:center;background:var(--bg-alt);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
+.midcta{padding:52px 0;text-align:center;background:var(--bg-alt);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
 html.dark .midcta{border:none}
 .midcta h2{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:12px;color:var(--heading)}
 .midcta p{color:var(--text-2);margin-bottom:28px;font-size:.95rem}
 .midcta .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 
 /* ===== HOW ===== */
-.how{padding:100px 0;background:var(--bg);transition:background var(--tr)}
+.how{padding:64px 0;background:var(--bg);transition:background var(--tr)}
 .how-head{text-align:center;margin-bottom:64px}
 .how-head p{color:var(--text-2);max-width:500px;margin:0 auto;font-size:.95rem}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}
@@ -616,7 +640,7 @@ html.dark .steps-line{background:rgba(250,80,0,.08)}
 @media(max-width:768px){.steps{grid-template-columns:1fr;gap:48px}.steps-line{display:none}}
 
 /* ===== HAPEE INTERACT ===== */
-.hapee-interact{position:relative;padding:100px 0;background:var(--bg);transition:background var(--tr);overflow:hidden}
+.hapee-interact{position:relative;padding:64px 0;background:var(--bg);transition:background var(--tr);overflow:hidden}
 #hiCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hi-layer{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%;max-width:900px;margin:0 auto;padding:0 24px}
 
@@ -785,8 +809,8 @@ html.dark .hi-ind{color:var(--accent);background:rgba(250,80,0,.04);border-color
 }
 
 /* ===== PRICING ===== */
-.pricing{padding:100px 0;background:var(--bg-alt);transition:background var(--tr)}
-.pricing-head{text-align:center;margin-bottom:56px}
+.pricing{padding:64px 0;background:var(--bg-alt);transition:background var(--tr)}
+.pricing-head{text-align:center;margin-bottom:36px}
 .pricing-head p{color:var(--text-2);max-width:500px;margin:0 auto;font-size:.95rem}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
 
@@ -844,7 +868,7 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
    Fondo dramático + 3D floating objects iridiscentes +
    cards glass ultra limpias + prismatic bottom edge
    ========================================================= */
-.pricing{position:relative;overflow:hidden;padding:140px 0 120px;
+.pricing{position:relative;overflow:hidden;padding:72px 0 60px;
   background:
     radial-gradient(ellipse 90% 70% at 15% 20%,#ffe6d3 0%,transparent 55%),
     radial-gradient(ellipse 80% 60% at 85% 30%,#ffd6e2 0%,transparent 55%),
@@ -1100,7 +1124,7 @@ html.dark .pc.pop .pc-inner::after{opacity:.95}
 }
 
 /* ===== CTA FINAL ===== */
-.ctaf{padding:100px 0;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#8b1a2e);position:relative;overflow:hidden;text-align:center}
+.ctaf{padding:64px 0;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#8b1a2e);position:relative;overflow:hidden;text-align:center}
 .ctaf::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(255,255,255,.09),transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.05),transparent 40%)}
 #ctafCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .ctaf-orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;will-change:transform,opacity}
@@ -1174,7 +1198,7 @@ html.dark .pc.pop .pc-inner::after{opacity:.95}
 }
 
 /* ===== PLATFORM SHOWCASE (Vambe-style) ===== */
-.platform-show{padding:90px 24px 100px;background:var(--bg);transition:background var(--tr);position:relative;overflow:hidden}
+.platform-show{padding:56px 24px 64px;background:var(--bg);transition:background var(--tr);position:relative;overflow:hidden}
 html.dark .platform-show{background:transparent}
 .platform-show::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(250,80,0,.15) 30%,rgba(205,35,73,.15) 70%,transparent)}
 .ps-head{text-align:center;max-width:680px;margin:0 auto 40px;position:relative;z-index:2}
@@ -1200,6 +1224,385 @@ html.dark .ps-frame .browser-bar{background:linear-gradient(180deg,#1f1f1f,#1717
 .ps-frame .browser-url{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--fm,var(--fb));font-size:.72rem;color:#666;background:#fff;padding:4px 22px;border-radius:6px;border:1px solid rgba(0,0,0,.08);letter-spacing:.3px;white-space:nowrap}
 html.dark .ps-frame .browser-url{background:#0a0a0a;color:#888;border-color:rgba(255,255,255,.08)}
 .ps-img{display:block;width:100%;height:auto}
+.ps-cap{max-width:900px;margin:22px auto 0;text-align:center;color:var(--text-2);font-size:1rem;line-height:1.65}
+.ps-cap strong{color:var(--heading);font-weight:700}
+
+/* ════════════════════════════════════════════════════════════════
+   MK RESKIN v2 — look REAL de la plataforma · glassmorphism pro
+   ════════════════════════════════════════════════════════════════ */
+.platform-show .mk-app{font-family:var(--fb);position:relative;
+  background:
+    radial-gradient(ellipse 60% 55% at 8% 0%,rgba(250,80,0,.10),transparent 60%),
+    radial-gradient(ellipse 55% 50% at 95% 12%,rgba(205,35,73,.09),transparent 62%),
+    radial-gradient(ellipse 70% 60% at 50% 115%,rgba(250,120,60,.10),transparent 60%),
+    linear-gradient(160deg,#FDF6F0 0%,#FAEFE9 55%,#F8EAE6 100%)}
+html.dark .platform-show .mk-app{background:
+    radial-gradient(ellipse 60% 55% at 8% 0%,rgba(250,80,0,.16),transparent 60%),
+    radial-gradient(ellipse 55% 50% at 95% 12%,rgba(205,35,73,.13),transparent 62%),
+    linear-gradient(160deg,#17110f 0%,#110c0b 55%,#140d0c 100%)}
+/* sidebar glass con LOGO OFICIAL */
+.platform-show .mk-nav{width:138px;min-width:138px;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);border-right:1px solid rgba(255,255,255,.65);box-shadow:inset -1px 0 0 rgba(0,0,0,.03);padding:13px 9px;display:flex;flex-direction:column;gap:2px;align-items:stretch;overflow:hidden}
+html.dark .platform-show .mk-nav{background:rgba(20,15,13,.6);border-right-color:rgba(255,255,255,.07)}
+.platform-show .mk-nav-logo{width:auto;height:auto;background:none;box-shadow:none;border-radius:0;margin:2px 6px 11px;display:block;text-align:left}
+.platform-show .mk-nav-logo img{height:15px;width:auto;display:block;object-fit:contain}
+.platform-show .mk-nav-i{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:9px;color:#6d645d;font-size:.6rem;font-weight:600;line-height:1;width:auto;height:auto;flex-direction:row;background:none}
+html.dark .platform-show .mk-nav-i{color:#a79c93}
+.platform-show .mk-nav-i .mk-nav-ico{font-size:.66rem;filter:saturate(.3) opacity(.8);width:14px;text-align:center}
+.platform-show .mk-nav-i .mk-nav-l{font-size:.6rem;letter-spacing:.2px;margin:0}
+.platform-show .mk-nav-i.mk-nav-on{background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;box-shadow:0 6px 16px rgba(250,80,0,.28)}
+.platform-show .mk-nav-i.mk-nav-on .mk-nav-ico{filter:none}
+.platform-show .mk-nav-user{margin-top:auto;display:flex;align-items:center;gap:7px;padding:8px 6px 2px;border-top:1px solid rgba(0,0,0,.06)}
+html.dark .platform-show .mk-nav-user{border-top-color:rgba(255,255,255,.07)}
+.platform-show .mk-nav-user .u-av{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-size:.5rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.platform-show .mk-nav-user .u-n{font-size:.54rem;font-weight:700;color:#3d3733;line-height:1.2}
+.platform-show .mk-nav-user .u-r{font-size:.46rem;color:#9a8f87;display:block;font-weight:500}
+html.dark .platform-show .mk-nav-user .u-n{color:#e8e0d9}
+.platform-show .ps-live-badge{left:auto;right:18px;top:auto;bottom:16px}
+.platform-show .ps-notif{top:88px}
+/* GLASS también en la bandeja y el pipeline originales */
+.platform-show .mk-conv-list{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-right:1px solid rgba(255,255,255,.6)}
+html.dark .platform-show .mk-conv-list{background:rgba(22,17,15,.55);border-right-color:rgba(255,255,255,.06)}
+.platform-show .mk-chat{background:rgba(255,255,255,.32)}
+html.dark .platform-show .mk-chat{background:rgba(15,11,10,.35)}
+.platform-show .mk-details{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-left:1px solid rgba(255,255,255,.6)}
+html.dark .platform-show .mk-details{background:rgba(22,17,15,.55);border-left-color:rgba(255,255,255,.06)}
+.platform-show .mk-col{background:rgba(255,255,255,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.55);border-radius:12px}
+html.dark .platform-show .mk-col{background:rgba(24,19,17,.5);border-color:rgba(255,255,255,.06)}
+.platform-show .mk-card{background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 14px rgba(66,32,6,.06)}
+html.dark .platform-show .mk-card{background:rgba(32,25,22,.9);border-color:rgba(255,255,255,.07)}
+/* barra de módulo glass */
+.mk-mod-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 16px;background:rgba(255,255,255,.45);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.6)}
+html.dark .mk-mod-top{background:rgba(22,17,15,.5);border-bottom-color:rgba(255,255,255,.06)}
+.mk-mod-title{font-weight:800;color:#2e2925;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.dark .mk-mod-title{color:#f0e9e2}
+.mk-mod-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.mk-chip-cta{background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;font-size:.56rem;font-weight:700;padding:6px 12px;border-radius:999px;box-shadow:0 4px 12px rgba(250,80,0,.3);white-space:nowrap}
+.mk-chip-soft{background:rgba(255,255,255,.7);border:1px solid rgba(250,80,0,.2);color:var(--accent);font-size:.56rem;font-weight:700;padding:5px 10px;border-radius:999px;white-space:nowrap}
+html.dark .mk-chip-soft{background:rgba(250,80,0,.1);border-color:rgba(250,80,0,.25)}
+/* superficie glass genérica */
+.mk-agent-card,.mk-agents-chat,.mk-wf-node,.mk-wf-stat,.mk-course,.mk-rank,.mk-kpi,.mk-chart,.mk-lic-stat,.mk-lic-row,.mk-cal-cell,.mk-ch-row,.mk-bld-palette .mk-bld-el{
+  background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 24px rgba(66,32,6,.06)}
+html.dark .mk-agent-card,html.dark .mk-agents-chat,html.dark .mk-wf-node,html.dark .mk-wf-stat,html.dark .mk-course,html.dark .mk-rank,html.dark .mk-kpi,html.dark .mk-chart,html.dark .mk-lic-stat,html.dark .mk-lic-row,html.dark .mk-cal-cell,html.dark .mk-ch-row,html.dark .mk-bld-palette .mk-bld-el{
+  background:rgba(28,22,19,.55);border-color:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+/* ——— Agentes IA (5 agentes · IA por proveedor) ——— */
+.mk-agents{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-agents-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:12px;padding:12px 14px;flex:1;min-height:0}
+.mk-agents-cards{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start}
+.mk-agent-card{border-radius:13px;padding:10px 11px}
+.mk-agent-card:nth-child(5){grid-column:1/-1}
+.mk-ag-top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.mk-ag-av{width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;flex-shrink:0}
+.mk-ag-name{font-size:.62rem;font-weight:800;color:#2e2925;line-height:1.1}
+html.dark .mk-ag-name{color:#f0e9e2}
+.mk-ag-state{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:.48rem;font-weight:700;color:#16a34a;background:rgba(34,197,94,.12);padding:3px 7px;border-radius:999px;white-space:nowrap}
+.mk-ag-state i{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite;flex-shrink:0}
+.mk-ag-state.busy{color:var(--accent);background:rgba(250,80,0,.1)}
+.mk-ag-state.busy i{background:var(--accent);box-shadow:0 0 0 0 rgba(250,80,0,.6)}
+.mk-ag-desc{font-size:.52rem;color:#8a7f77;line-height:1.4;margin-bottom:7px}
+html.dark .mk-ag-desc{color:#a79c93}
+.mk-ag-tags{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.mk-ag-ai{display:inline-flex;align-items:center;gap:4px;font-size:.5rem;font-weight:800;padding:3px 8px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,.08);color:#3d3733;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+html.dark .mk-ag-ai{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.12);color:#e8e0d9}
+.mk-ag-ai img{width:11px;height:11px;object-fit:contain;display:block}
+.mk-ag-tag{font-size:.48rem;font-weight:700;padding:3px 7px;border-radius:999px;background:rgba(0,0,0,.05);color:#6d645d}
+html.dark .mk-ag-tag{background:rgba(255,255,255,.07);color:#b5aaa1}
+.mk-ag-tag.wa{background:rgba(37,211,102,.13);color:#128C7E}
+.mk-ag-tag.ig{background:rgba(225,48,108,.12);color:#E1306C}
+.mk-ag-tag.voice{background:rgba(250,80,0,.1);color:var(--accent)}
+.mk-agents-chat{border-radius:13px;display:flex;flex-direction:column;overflow:hidden}
+.mk-agents-chat .mk-chat-body{flex:1}
+/* ——— Workflows: el flujo SE CONSTRUYE SOLO ——— */
+.mk-wf{flex:1;display:flex;min-width:0}
+.mk-wf-canvas{flex:1;position:relative;padding:14px 0 10px;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+.mk-wf-node{position:relative;z-index:2;border-radius:12px;padding:7px 14px;display:flex;align-items:center;gap:9px;min-width:230px;opacity:0;transform:translateY(10px) scale(.94);animation:wfIn .5s cubic-bezier(.2,.8,.3,1.2) forwards}
+.mk-wf-node .w-ico{width:21px;height:21px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.64rem;background:rgba(250,80,0,.1);flex-shrink:0}
+.mk-wf-node .w-t{font-size:.6rem;font-weight:700;color:#2e2925;line-height:1.25}
+html.dark .mk-wf-node .w-t{color:#ece4dd}
+.mk-wf-node .w-t small{display:block;font-weight:500;color:#9a8f87;font-size:.48rem}
+@keyframes wfIn{to{opacity:1;transform:translateY(0) scale(1)}}
+.wn1{animation-delay:.2s}.wn2{animation-delay:.9s}.wn3{animation-delay:1.6s}.wn4{animation-delay:2.3s}.wn5{animation-delay:3s}.wn6{animation-delay:3.7s}.wn7{animation-delay:3.9s}.wn8{animation-delay:4.6s}
+.mk-wf-link{width:2px;height:20px;background:linear-gradient(180deg,rgba(250,80,0,.55),rgba(205,35,73,.55));position:relative;z-index:1;transform:scaleY(0);transform-origin:top;animation:wfLinkIn .3s ease forwards}
+@keyframes wfLinkIn{to{transform:scaleY(1)}}
+.wl1{animation-delay:.65s}.wl2{animation-delay:1.35s}.wl3{animation-delay:2.05s}.wl4{animation-delay:2.75s}.wl5{animation-delay:4.35s}
+.mk-wf-link::after{content:'';position:absolute;left:50%;top:0;width:6px;height:6px;border-radius:50%;background:var(--accent);transform:translateX(-50%);animation:wfPulseDown 2.6s linear 5.2s infinite;box-shadow:0 0 10px rgba(250,80,0,.7);opacity:0}
+@keyframes wfPulseDown{0%{top:-3px;opacity:0}12%{opacity:1}88%{opacity:1}100%{top:calc(100% - 3px);opacity:0}}
+.mk-wf-branch{display:flex;gap:12px;margin:4px 0}
+.mk-wf-building{font-size:.56rem;font-weight:700;color:var(--accent);background:rgba(250,80,0,.09);border:1px solid rgba(250,80,0,.2);padding:5px 10px;border-radius:999px;animation:wfBuildOut .4s ease 5.2s forwards;white-space:nowrap}
+@keyframes wfBuildOut{to{opacity:0;visibility:hidden;position:absolute}}
+.mk-wf-published{font-size:.56rem;font-weight:700;color:#16a34a;background:rgba(34,197,94,.12);padding:5px 10px;border-radius:999px;opacity:0;animation:wfPubIn .4s ease 5.3s forwards;white-space:nowrap}
+@keyframes wfPubIn{to{opacity:1}}
+.mk-wf-side{width:200px;border-left:1px solid rgba(255,255,255,.55);padding:13px;display:flex;flex-direction:column;gap:8px}
+html.dark .mk-wf-side{border-left-color:rgba(255,255,255,.07)}
+.mk-wf-stat{border-radius:12px;padding:10px 12px}
+.mk-wf-stat .s-n{font-family:var(--fd);font-size:1.25rem;font-weight:800;color:#2e2925;line-height:1}
+html.dark .mk-wf-stat .s-n{color:#f0e9e2}
+.mk-wf-stat .s-l{font-size:.52rem;color:#9a8f87;font-weight:600;margin-top:3px}
+/* ——— RRSS · Planificador ——— */
+.mk-rrss{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-cal-legend{display:flex;align-items:center;gap:10px;padding:8px 16px 2px;font-size:.52rem;font-weight:700;color:#8a7f77;flex-wrap:wrap}
+.mk-cal-legend b{color:#3d3733;font-weight:800}
+html.dark .mk-cal-legend b{color:#e8e0d9}
+.mk-cal-legend span{display:inline-flex;align-items:center;gap:4px}
+.mk-cal-legend img,.mk-cal-legend .tt-svg{width:11px;height:11px;object-fit:contain}
+.mk-cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:6px 16px 4px;font-size:.48rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#9a8f87;text-align:center}
+.mk-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:1fr;gap:6px;padding:0 16px 14px;flex:1;min-height:0}
+.mk-cal-cell{border-radius:10px;padding:5px 6px;position:relative;min-height:0;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.mk-cal-cell .d{font-size:.5rem;font-weight:700;color:#9a8f87}
+.mk-post{display:inline-flex;align-items:center;gap:4px;font-size:.44rem;font-weight:700;padding:3px 5px;border-radius:6px;line-height:1.1;opacity:0;transform:scale(.85);animation:postIn .45s cubic-bezier(.2,.8,.3,1.25) forwards;overflow:hidden}
+.mk-post em{font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-post img,.mk-post .tt-svg{width:10px;height:10px;object-fit:contain;flex-shrink:0}
+@keyframes postIn{to{opacity:1;transform:scale(1)}}
+.pin1{animation-delay:.2s}.pin2{animation-delay:.35s}.pin3{animation-delay:.5s}.pin4{animation-delay:.65s}.pin5{animation-delay:.8s}.pin6{animation-delay:.95s}.pin7{animation-delay:1.1s}.pin8{animation-delay:1.25s}.pin9{animation-delay:1.4s}.pin10{animation-delay:1.55s}.pin11{animation-delay:1.7s}.pin0{animation-delay:1.9s}
+.mk-post.pig{background:rgba(225,48,108,.12);color:#C13584}
+.mk-post.pfb{background:rgba(24,119,242,.1);color:#1877F2}
+.mk-post.pli{background:rgba(10,102,194,.1);color:#0A66C2}
+.mk-post.ptt{background:rgba(0,0,0,.08);color:#222}
+html.dark .mk-post.ptt{background:rgba(255,255,255,.12);color:#eee}
+.mk-post.pia{background:linear-gradient(90deg,rgba(250,80,0,.16),rgba(205,35,73,.16));color:var(--accent);background-size:200% 100%;animation:postIn .45s cubic-bezier(.2,.8,.3,1.25) 1.9s forwards,iaShimmer 2.2s linear 2.4s infinite}
+@keyframes iaShimmer{0%{background-position:0 0}100%{background-position:200% 0}}
+/* ——— Constructor: drops reales en secuencia ——— */
+.mk-bld{flex:1;display:flex;min-width:0}
+.mk-bld-palette{width:150px;border-right:1px solid rgba(255,255,255,.55);padding:12px 10px;display:flex;flex-direction:column;gap:7px}
+html.dark .mk-bld-palette{border-right-color:rgba(255,255,255,.07)}
+.mk-bld-el{border-radius:9px;padding:7px 10px;font-size:.56rem;font-weight:700;color:#6d645d;display:flex;align-items:center;gap:7px;border-style:dashed!important}
+html.dark .mk-bld-el{color:#b5aaa1}
+.mk-bld-el.src{border-color:rgba(250,80,0,.5)!important;color:var(--accent)}
+.mk-bld-canvas{flex:1;padding:16px 22px;position:relative;display:flex;justify-content:center;overflow:hidden}
+.mk-bld-page{width:min(400px,90%);background:rgba(255,255,255,.92);border-radius:14px;box-shadow:0 18px 46px rgba(66,32,6,.12);overflow:hidden;border:1px solid rgba(255,255,255,.9);align-self:flex-start;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+html.dark .mk-bld-page{background:rgba(29,23,20,.92);border-color:rgba(255,255,255,.08)}
+.mk-bld-hero{height:56px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.72rem;letter-spacing:.3px}
+.mk-skel{height:7px;border-radius:4px;background:rgba(0,0,0,.09);display:block}
+html.dark .mk-skel{background:rgba(255,255,255,.12)}
+.mk-drop{margin:9px 12px 0;border-radius:10px;opacity:0;transform:translateY(-6px) scale(.96)}
+.mk-drop-form{padding:9px 11px;background:rgba(250,80,0,.05);border:1px solid rgba(250,80,0,.25);display:flex;flex-direction:column;gap:4px;animation:dropIn .5s cubic-bezier(.2,.8,.3,1.2) forwards;animation-delay:3.4s}
+.mk-drop-form .df-l{font-size:.46rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#9a8f87}
+.mk-drop-form .df-i{height:14px;border-radius:5px;background:#fff;border:1px solid rgba(0,0,0,.1)}
+html.dark .mk-drop-form .df-i{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12)}
+.mk-drop-form .df-btn{margin-top:3px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;font-size:.52rem;font-weight:800;text-align:center;padding:5px;border-radius:6px}
+.mk-drop-img{height:52px;background:linear-gradient(120deg,rgba(250,80,0,.14),rgba(205,35,73,.14));border:1px solid rgba(250,80,0,.2);display:flex;align-items:center;justify-content:center;gap:6px;font-size:1rem;color:var(--accent);animation:dropIn .5s cubic-bezier(.2,.8,.3,1.2) forwards;animation-delay:7.6s}
+.mk-drop-img em{font-style:normal;font-size:.48rem;font-weight:700}
+.mk-drop-text{padding:9px 11px;background:rgba(0,0,0,.025);border:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;gap:5px;animation:dropIn .5s cubic-bezier(.2,.8,.3,1.2) forwards;animation-delay:11.8s}
+html.dark .mk-drop-text{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+@keyframes dropIn{0%{opacity:0;transform:translateY(-6px) scale(.96)}60%{opacity:1;transform:translateY(2px) scale(1.02)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.mk-bld-slot{margin:10px 12px 12px;border:1.5px dashed rgba(250,80,0,.45);border-radius:10px;height:34px;display:flex;align-items:center;justify-content:center;font-size:.54rem;font-weight:700;color:var(--accent);background:rgba(250,80,0,.04);animation:slotFlash 4.2s ease-in-out infinite}
+@keyframes slotFlash{0%,68%,100%{background:rgba(250,80,0,.04)}78%,90%{background:rgba(250,80,0,.15);border-color:var(--accent)}}
+.mk-bld-ghost{position:absolute;left:20px;top:70px;background:rgba(255,255,255,.95);border:1.5px solid var(--accent);border-radius:9px;padding:7px 12px;font-size:.56rem;font-weight:700;color:var(--accent);box-shadow:0 14px 30px rgba(250,80,0,.28);z-index:5;pointer-events:none;display:flex;align-items:center;gap:6px;opacity:0}
+html.dark .mk-bld-ghost{background:rgba(36,29,26,.95)}
+.mk-bld-ghost.g1{animation:ghostDrag 12.6s cubic-bezier(.45,.1,.35,1) infinite;animation-delay:.6s}
+.mk-bld-ghost.g2{animation:ghostDrag 12.6s cubic-bezier(.45,.1,.35,1) infinite;animation-delay:4.8s}
+.mk-bld-ghost.g3{animation:ghostDrag 12.6s cubic-bezier(.45,.1,.35,1) infinite;animation-delay:9s}
+@keyframes ghostDrag{0%{left:20px;top:70px;opacity:0;transform:scale(.92)}2.5%{opacity:1;transform:scale(1)}18%{left:calc(50% - 46px);top:60%;opacity:1;transform:scale(1.05) rotate(2deg)}21%{left:calc(50% - 46px);top:64%;opacity:0;transform:scale(.88)}22%,100%{opacity:0;left:20px;top:70px}}
+/* ——— Academia (calcada al pantallazo) ——— */
+.mk-aca{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-aca-hero{margin:12px 16px 8px;background:linear-gradient(100deg,var(--accent) 0%,var(--accent-alt) 90%);border-radius:14px;padding:14px 18px;color:#fff;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;box-shadow:0 14px 34px rgba(205,35,73,.25)}
+.mk-aca-hero::after{content:'';position:absolute;right:-30px;top:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.14)}
+.mk-aca-hero .ah-k{font-size:.48rem;font-weight:800;letter-spacing:1.6px;opacity:.9;text-transform:uppercase}
+.mk-aca-hero .ah-t{font-family:var(--fd);font-size:1.15rem;font-weight:800;margin:2px 0 8px}
+.mk-aca-hero .ah-b{display:inline-flex;background:#fff;color:var(--accent-alt);font-size:.54rem;font-weight:800;padding:5px 11px;border-radius:999px;position:relative;z-index:1}
+.mk-aca-hero .ah-art{font-size:1.7rem;position:relative;z-index:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.mk-aca-cat{display:flex;align-items:center;gap:6px;padding:2px 16px 8px}
+.mk-aca-cat .cat-t{font-size:.62rem;font-weight:800;color:#2e2925;margin-right:4px}
+html.dark .mk-aca-cat .cat-t{color:#f0e9e2}
+.mk-aca-cat .cat-chip{font-size:.5rem;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.06);color:#6d645d}
+html.dark .mk-aca-cat .cat-chip{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);color:#b5aaa1}
+.mk-aca-cat .cat-chip.on{background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent}
+.mk-aca-grid{display:grid;grid-template-columns:repeat(3,1fr) 1fr;gap:10px;padding:0 16px 14px;flex:1;min-height:0}
+.mk-course{border-radius:13px;overflow:hidden;display:flex;flex-direction:column}
+.mk-course .c-img{height:64px;position:relative;display:flex;align-items:center;justify-content:center}
+.mk-course .c-img.ci1{background:radial-gradient(circle at 75% 20%,rgba(168,85,247,.5),transparent 55%),linear-gradient(135deg,#241a2e,#3d2050)}
+.mk-course .c-img.ci2{background:radial-gradient(circle at 75% 20%,rgba(34,197,94,.45),transparent 55%),linear-gradient(135deg,#12241a,#1d4030)}
+.mk-course .c-img.ci3{background:radial-gradient(circle at 75% 20%,rgba(250,80,0,.5),transparent 55%),linear-gradient(135deg,#2b1712,#521f14)}
+.mk-course .c-img::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.12) 45%,transparent 60%)}
+.mk-course .c-art{font-size:1.4rem;filter:drop-shadow(0 6px 12px rgba(0,0,0,.4));position:relative;z-index:1}
+.mk-course .c-tag{position:absolute;top:6px;left:6px;font-size:.4rem;font-weight:800;letter-spacing:.8px;color:#fff;padding:2.5px 7px;border-radius:999px;z-index:2}
+.mk-course .c-b{padding:8px 10px;display:flex;flex-direction:column;gap:5px;flex:1}
+.mk-course .c-t{font-size:.58rem;font-weight:800;color:#2e2925;line-height:1.3}
+html.dark .mk-course .c-t{color:#ece4dd}
+.mk-course .c-m{font-size:.48rem;color:#9a8f87;font-weight:600}
+.mk-prog{height:5px;border-radius:3px;background:rgba(0,0,0,.08);overflow:hidden;margin-top:auto;position:relative}
+html.dark .mk-prog{background:rgba(255,255,255,.1)}
+.mk-prog i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));width:0;animation:progFill 2s cubic-bezier(.2,.8,.2,1) forwards}
+.mk-prog.p68 i{animation-delay:.4s;--pw:68%}.mk-prog.p35 i{animation-delay:.65s;--pw:35%}.mk-prog.p90 i{animation-delay:.9s;--pw:90%}
+@keyframes progFill{to{width:var(--pw,60%)}}
+.mk-rank{border-radius:13px;padding:10px 12px;display:flex;flex-direction:column;gap:7px}
+.mk-rank .r-h{font-size:.52rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9a8f87}
+.mk-rank-row{display:flex;align-items:center;gap:6px;font-size:.54rem;font-weight:700;color:#4d453f}
+html.dark .mk-rank-row{color:#cfc5bc}
+.mk-rank-row.top{background:rgba(250,80,0,.07);border-radius:8px;padding:4px 6px;margin:0 -6px}
+.mk-rank-row .rr-pos{width:14px;text-align:center;font-size:.5rem;font-weight:800;color:#9a8f87;flex-shrink:0}
+.mk-rank-row .rr-av{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.42rem;font-weight:800;flex-shrink:0}
+.mk-rank-row .rr-pts{margin-left:auto;color:var(--accent);font-weight:800;font-size:.5rem;white-space:nowrap}
+/* ——— Reportería (rail de canales + charts) ——— */
+.mk-rep{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-rep-body{flex:1;display:flex;min-height:0}
+.mk-rep-rail{width:158px;padding:12px 10px;display:flex;flex-direction:column;gap:6px;border-right:1px solid rgba(255,255,255,.55)}
+html.dark .mk-rep-rail{border-right-color:rgba(255,255,255,.07)}
+.mk-rep-rail .rr-h{font-size:.48rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9a8f87;margin-bottom:2px}
+.mk-ch-row{display:flex;align-items:center;gap:7px;font-size:.54rem;font-weight:700;color:#4d453f;padding:6px 9px;border-radius:9px}
+html.dark .mk-ch-row{color:#cfc5bc}
+.mk-ch-row img,.mk-ch-row .tt-svg{width:13px;height:13px;object-fit:contain;flex-shrink:0}
+.mk-rep-rail .rr-note{margin-top:auto;font-size:.5rem;line-height:1.5;color:#8a7f77;font-weight:600;padding:8px;border-radius:9px;background:rgba(250,80,0,.06);border:1px solid rgba(250,80,0,.14)}
+html.dark .mk-rep-rail .rr-note{color:#b5aaa1}
+.mk-rep-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-rep-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:12px 14px 4px}
+.mk-kpi{border-radius:12px;padding:9px 11px}
+.mk-kpi .k-l{font-size:.48rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9a8f87}
+.mk-kpi .k-n{font-family:var(--fd);font-size:1.25rem;font-weight:800;color:#2e2925;line-height:1.1;margin-top:2px}
+html.dark .mk-kpi .k-n{color:#f0e9e2}
+.mk-kpi .k-d{font-size:.48rem;font-weight:700;color:#16a34a}
+.mk-rep-charts{display:grid;grid-template-columns:1.6fr 1fr;gap:9px;padding:9px 14px 14px;flex:1;min-height:0}
+.mk-chart{border-radius:12px;padding:11px;position:relative;overflow:hidden}
+.mk-chart .ch-t{font-size:.54rem;font-weight:800;color:#6d645d;margin-bottom:7px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+html.dark .mk-chart .ch-t{color:#b5aaa1}
+.mk-chart .ch-t .lg{display:inline-flex;align-items:center;gap:4px;font-size:.46rem;font-weight:700;color:#9a8f87}
+.mk-chart .ch-t .lg i{width:8px;height:8px;border-radius:3px}
+.mk-line{stroke-dasharray:640;stroke-dashoffset:640;animation:lineDraw 2.6s ease forwards}
+.mk-line.l2{animation-delay:.5s}
+.mk-line.l3{animation-delay:1s}
+@keyframes lineDraw{to{stroke-dashoffset:0}}
+.mk-bars{display:flex;align-items:flex-end;gap:9px;height:96px;padding-top:6px}
+.mk-bars i{flex:1;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--accent),var(--accent-alt));transform:scaleY(0);transform-origin:bottom;animation:barGrow 1.4s cubic-bezier(.2,.8,.2,1) forwards}
+.mk-bars i:nth-child(1){height:44%;animation-delay:.2s}.mk-bars i:nth-child(2){height:70%;animation-delay:.35s}.mk-bars i:nth-child(3){height:38%;animation-delay:.5s}.mk-bars i:nth-child(4){height:58%;animation-delay:.65s}.mk-bars i:nth-child(5){height:88%;animation-delay:.8s}.mk-bars i:nth-child(6){height:64%;animation-delay:.95s}
+@keyframes barGrow{to{transform:scaleY(1)}}
+.mk-bars-lbl{display:flex;gap:9px;margin-top:5px}
+.mk-bars-lbl span{flex:1;display:flex;justify-content:center}
+.mk-bars-lbl img,.mk-bars-lbl .tt-svg{width:11px;height:11px;object-fit:contain}
+.tt-svg{color:#111}
+html.dark .tt-svg{color:#eee}
+/* ——— Licitaciones (MP + WherEx + privadas) ——— */
+.mk-lic{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-lic-hero{margin:12px 16px 8px;background:linear-gradient(100deg,#E2244A 0%,var(--accent) 100%);border-radius:14px;padding:12px 18px;color:#fff;box-shadow:0 14px 34px rgba(226,36,74,.25)}
+.mk-lic-hero .lh-k{font-size:.46rem;font-weight:800;letter-spacing:1.6px;opacity:.9;text-transform:uppercase}
+.mk-lic-hero .lh-t{font-family:var(--fd);font-size:1.08rem;font-weight:800;margin-top:1px}
+.mk-lic-hero .lh-s{font-size:.52rem;font-weight:600;opacity:.95;margin-top:3px}
+.mk-lic-stats{display:flex;gap:9px;padding:0 16px;margin-bottom:7px}
+.mk-lic-stat{flex:1;border-radius:11px;padding:7px 11px}
+.mk-lic-stat .n{font-family:var(--fd);font-size:1.1rem;font-weight:800;color:#2e2925}
+html.dark .mk-lic-stat .n{color:#f0e9e2}
+.mk-lic-stat .l{font-size:.46rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9a8f87}
+.mk-lic-list{padding:0 16px 14px;display:flex;flex-direction:column;gap:7px;flex:1;min-height:0}
+.mk-lic-row{border-radius:12px;padding:7px 11px;display:flex;align-items:center;gap:9px;opacity:0;animation:licIn .55s cubic-bezier(.2,.8,.2,1) forwards}
+.mk-lic-row:nth-child(1){animation-delay:.2s}.mk-lic-row:nth-child(2){animation-delay:.4s}.mk-lic-row:nth-child(3){animation-delay:.6s}.mk-lic-row:nth-child(4){animation-delay:.8s}.mk-lic-row:nth-child(5){animation-delay:1s}.mk-lic-row:nth-child(6){animation-delay:1.2s}
+@keyframes licIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.mk-lic-score{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--accent) calc(var(--sc,80)*1%),rgba(0,0,0,.08) 0);position:relative}
+.mk-lic-score::before{content:'';position:absolute;inset:3px;border-radius:50%;background:#fff}
+html.dark .mk-lic-score::before{background:#241d1a}
+.mk-lic-score b{position:relative;z-index:1;color:var(--accent);font-size:.52rem;font-weight:800}
+.mk-lic-b{flex:1;min-width:0}
+.mk-lic-t{font-size:.58rem;font-weight:800;color:#2e2925;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.dark .mk-lic-t{color:#ece4dd}
+.mk-lic-m{font-size:.48rem;color:#9a8f87;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-lic-src{font-size:.44rem;font-weight:800;letter-spacing:.4px;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.mk-lic-src.mp{background:rgba(250,80,0,.1);color:var(--accent)}
+.mk-lic-src.wx{background:rgba(14,101,235,.1);color:#0E65EB}
+.mk-lic-src.pv{background:rgba(124,58,237,.12);color:#7C3AED}
+.mk-lic-val{font-size:.6rem;font-weight:800;color:var(--accent);white-space:nowrap;flex-shrink:0}
+.mk-lic-new{font-size:.44rem;font-weight:800;letter-spacing:.8px;color:#fff;background:#E2244A;border-radius:999px;padding:3px 7px;text-transform:uppercase;animation:fomoPulse 1.8s infinite;flex-shrink:0}
+@media(max-width:900px){
+  .platform-show .mk-nav{width:44px;min-width:44px;padding:10px 5px}
+  .platform-show .mk-nav .mk-nav-l,.platform-show .mk-nav-logo,.platform-show .mk-nav-user{display:none}
+  .platform-show .mk-nav-i{justify-content:center;padding:7px 0}
+  .mk-agents-grid{grid-template-columns:1fr}.mk-agents-chat{display:none}
+  .mk-agents-cards{grid-template-columns:1fr 1fr}
+  .mk-aca-grid{grid-template-columns:1fr 1fr}.mk-rank{display:none}
+  .mk-rep-rail{display:none}
+  .mk-rep-kpis{grid-template-columns:1fr 1fr}
+  .mk-rep-charts{grid-template-columns:1fr}
+  .mk-wf-side{display:none}
+  .mk-bld-palette{width:110px}
+  .mk-cal-legend{display:none}
+  .mk-post em{display:none}
+  .mk-lic-src,.mk-lic-m{display:none}
+}
+/* ——— MK v3: sidebar pro + Inicio + Asistente ——— */
+.platform-show .mk-nav{width:146px;min-width:146px;gap:1px}
+.platform-show .mk-nav-i{gap:8px;padding:6.5px 9px;font-weight:650}
+.platform-show .mk-nav-svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;opacity:.7}
+.platform-show .mk-nav-i.mk-nav-on .mk-nav-svg{opacity:1}
+.platform-show .mk-nav-i::after{content:'›';margin-left:auto;font-size:.7rem;line-height:1;opacity:.3;font-weight:700}
+.platform-show .mk-nav-i.mk-nav-on::after{opacity:.75}
+/* Inicio */
+.mk-home{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-home-hero{margin:12px 16px 10px;background:linear-gradient(100deg,var(--accent) 0%,var(--accent-alt) 92%);border-radius:14px;padding:15px 20px;color:#fff;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(205,35,73,.25)}
+.mk-home-hero::after{content:'';position:absolute;right:-40px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.13)}
+.mk-home-hero .hh-k{font-size:.48rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;opacity:.9}
+.mk-home-hero .hh-t{font-family:var(--fd);font-size:1.35rem;font-weight:800;margin:2px 0 3px}
+.mk-home-hero .hh-s{font-size:.56rem;font-weight:600;opacity:.95;max-width:340px}
+.mk-home-hero .hh-art{font-size:1.7rem;position:relative;z-index:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.mk-home-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;padding:0 16px}
+.mk-home-cols{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;padding:10px 16px 14px;flex:1;min-height:0}
+.mk-home-quick,.mk-home-today{border-radius:13px;padding:11px 13px;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,.75);box-shadow:0 8px 24px rgba(66,32,6,.06)}
+html.dark .mk-home-quick,html.dark .mk-home-today{background:rgba(28,22,19,.55);border-color:rgba(255,255,255,.08)}
+.hq-h{font-size:.52rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9a8f87;margin-bottom:8px}
+.hq-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.mk-qa-chip{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 4px;border-radius:11px;background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.05);font-size:.46rem;font-weight:700;color:#4d453f;text-align:center;opacity:0;animation:postIn .45s cubic-bezier(.2,.8,.3,1.25) forwards}
+html.dark .mk-qa-chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:#cfc5bc}
+.mk-qa-chip .mk-nav-svg{width:15px;height:15px;opacity:1;color:var(--accent)}
+.mk-qa-chip:nth-child(1){animation-delay:.15s}.mk-qa-chip:nth-child(2){animation-delay:.25s}.mk-qa-chip:nth-child(3){animation-delay:.35s}.mk-qa-chip:nth-child(4){animation-delay:.45s}.mk-qa-chip:nth-child(5){animation-delay:.55s}.mk-qa-chip:nth-child(6){animation-delay:.65s}.mk-qa-chip:nth-child(7){animation-delay:.75s}.mk-qa-chip:nth-child(8){animation-delay:.85s}
+.ht-row{font-size:.54rem;font-weight:650;color:#4d453f;padding:6px 9px;border-radius:9px;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.04);margin-bottom:6px;opacity:0;animation:licIn .5s ease forwards}
+html.dark .ht-row{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.07);color:#cfc5bc}
+.ht-row:nth-child(2){animation-delay:.3s}.ht-row:nth-child(3){animation-delay:.5s}.ht-row:nth-child(4){animation-delay:.7s}.ht-row:nth-child(5){animation-delay:.9s}
+.ht-row.ok{color:#15803d}.ht-row.warn{color:#b45309;background:rgba(245,158,11,.09);border-color:rgba(245,158,11,.2)}
+html.dark .ht-row.ok{color:#4ade80}html.dark .ht-row.warn{color:#fbbf24}
+/* Asistente */
+.mk-asst{flex:1;display:flex;flex-direction:column;min-width:0}
+.mk-asst-stage{flex:1;display:grid;grid-template-columns:1.15fr 1fr;gap:12px;padding:12px 16px 14px;min-height:0;position:relative}
+.mk-asst-left{display:flex;flex-direction:column;min-width:0}
+.as-chips{display:flex;flex-wrap:wrap;gap:6px}
+.as-chip{font-size:.52rem;font-weight:750;color:#4d453f;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.05);padding:6px 11px;border-radius:999px;opacity:0;animation:postIn .45s cubic-bezier(.2,.8,.3,1.25) forwards;box-shadow:0 4px 12px rgba(66,32,6,.05)}
+html.dark .as-chip{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:#cfc5bc}
+.as-chip:nth-child(1){animation-delay:.15s}.as-chip:nth-child(2){animation-delay:.3s}.as-chip:nth-child(3){animation-delay:.45s}.as-chip:nth-child(4){animation-delay:.6s}.as-chip:nth-child(5){animation-delay:.75s}
+.mk-asst-robot-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative;perspective:900px;min-height:0}
+.mk-asst-robot{width:min(46%,190px);animation:asstSpin 7s ease-in-out infinite;filter:drop-shadow(0 24px 44px rgba(250,80,0,.35));position:relative;z-index:2}
+@keyframes asstSpin{0%,100%{transform:rotateY(-16deg) translateY(0)}25%{transform:rotateY(0deg) translateY(-8px)}50%{transform:rotateY(16deg) translateY(0)}75%{transform:rotateY(0deg) translateY(-8px)}}
+.as-ring{position:absolute;width:230px;height:230px;border-radius:50%;border:1.5px dashed rgba(250,80,0,.35);animation:asstRing 14s linear infinite}
+@keyframes asstRing{to{transform:rotate(360deg)}}
+.as-hint{position:absolute;bottom:8%;right:14%;font-size:.5rem;font-weight:800;color:var(--accent);background:rgba(255,255,255,.85);border:1px dashed rgba(250,80,0,.4);padding:4px 9px;border-radius:999px;z-index:3;animation:floatCard 5s ease-in-out infinite}
+html.dark .as-hint{background:rgba(30,24,21,.85)}
+.mk-asst-chat{border-radius:14px;display:flex;flex-direction:column;overflow:hidden;background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.8);box-shadow:0 18px 44px rgba(66,32,6,.12);align-self:end;max-height:100%}
+html.dark .mk-asst-chat{background:rgba(28,22,19,.6);border-color:rgba(255,255,255,.09)}
+.ac-head{display:flex;align-items:center;gap:7px;padding:9px 12px;font-size:.6rem;font-weight:800;color:#2e2925;background:rgba(255,255,255,.55);border-bottom:1px solid rgba(0,0,0,.05)}
+html.dark .ac-head{color:#f0e9e2;background:rgba(255,255,255,.05);border-bottom-color:rgba(255,255,255,.07)}
+.ac-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:fomoPulse 1.8s infinite}
+.ac-ctl{margin-left:auto;display:flex;gap:5px}
+.ac-ctl b{width:18px;height:18px;border-radius:6px;background:rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#6d645d;font-weight:600}
+html.dark .ac-ctl b{background:rgba(255,255,255,.09);color:#b5aaa1}
+.ac-body{padding:11px;display:flex;flex-direction:column;gap:7px;flex:1;overflow:hidden}
+.ac-b{max-width:88%;font-size:.56rem;font-weight:600;line-height:1.5;padding:7px 10px;border-radius:11px;opacity:0;animation:licIn .5s ease forwards}
+.ac-b.me{align-self:flex-end;background:linear-gradient(90deg,var(--accent),var(--accent-alt));color:#fff;border-bottom-right-radius:4px;animation-delay:.3s}
+.ac-b.bot{align-self:flex-start;background:rgba(255,255,255,.85);border:1px solid rgba(0,0,0,.05);color:#3d3733;border-bottom-left-radius:4px;animation-delay:.9s}
+html.dark .ac-b.bot{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.08);color:#e8e0d9}
+.ac-b.me:nth-child(3){animation-delay:1.7s}
+.ac-b.bot.typing{animation-delay:2.3s;display:inline-flex;gap:3px;padding:9px 12px}
+.ac-b.typing span{width:5px;height:5px;border-radius:50%;background:#b5aaa1;animation:typingDot 1.2s infinite}
+.ac-b.typing span:nth-child(2){animation-delay:.15s}.ac-b.typing span:nth-child(3){animation-delay:.3s}
+@keyframes typingDot{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
+.ac-alert{margin:0 11px 11px;font-size:.52rem;font-weight:700;color:#b45309;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);padding:7px 10px;border-radius:10px;opacity:0;animation:licIn .5s ease 3s forwards}
+.ac-alert b{color:var(--accent)}
+html.dark .ac-alert{color:#fbbf24}
+@media(max-width:900px){
+  .platform-show .mk-nav-i::after{display:none}
+  .mk-home-kpis{grid-template-columns:1fr 1fr}
+  .mk-home-cols{grid-template-columns:1fr}
+  .hq-grid{grid-template-columns:repeat(4,1fr)}
+  .mk-asst-stage{grid-template-columns:1fr}
+  .mk-asst-robot-wrap{min-height:170px}
+}
+/* v3.1: robot 3D real + inicio ampliado */
+.mk-home-kpis{grid-template-columns:repeat(3,1fr);grid-auto-rows:auto;row-gap:9px}
+.mk-asst-robot3d{width:min(64%,270px);height:78%;--poster-color:transparent;background:transparent;position:relative;z-index:2}
+.mk-home-fab{position:absolute;right:16px;bottom:14px;display:flex;align-items:flex-end;gap:8px;z-index:6;pointer-events:none}
+.hf-robot{width:96px;height:104px;--poster-color:transparent;background:transparent;filter:drop-shadow(0 14px 26px rgba(250,80,0,.35))}
+.hf-bubble{max-width:230px;font-size:.56rem;font-weight:650;line-height:1.5;color:#3d3733;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);border-radius:13px 13px 4px 13px;padding:9px 12px;box-shadow:0 14px 34px rgba(66,32,6,.14);opacity:0;animation:licIn .55s cubic-bezier(.2,.8,.3,1.2) 1.1s forwards;margin-bottom:26px}
+.hf-bubble b{color:var(--accent)}
+html.dark .hf-bubble{background:rgba(32,25,22,.92);border-color:rgba(255,255,255,.1);color:#e8e0d9}
+.mk-home{position:relative}
+@media(max-width:900px){
+  .mk-home-kpis{grid-template-columns:1fr 1fr}
+  .mk-home-fab{display:none}
+  .mk-asst-robot3d{width:80%;height:200px}
+}
 .ps-panel{display:none;position:relative}
 .ps-panel.on{display:block;animation:psFade .35s ease}
 @keyframes psFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -1519,7 +1922,7 @@ html.dark .mk-card-new{background:linear-gradient(135deg,rgba(34,197,94,.12),#1a
 }
 
 /* ===== CUSTOM DIGITALS WIDGET (below pricing) ===== */
-.custom-widget{padding:80px 24px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#0a0a0a 100%);position:relative;overflow:hidden}
+.custom-widget{padding:56px 24px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#0a0a0a 100%);position:relative;overflow:hidden}
 .custom-widget::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(250,80,0,.12),transparent 50%),radial-gradient(circle at 80% 70%,rgba(205,35,73,.08),transparent 50%);pointer-events:none}
 .cw-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;position:relative}
 .cw-left .lbl{font-family:var(--fm,var(--fb));font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px;display:inline-block}
@@ -1586,15 +1989,10 @@ html.dark .fomo-close:hover{background:rgba(255,255,255,.08)}
 .skip-link{position:absolute;top:-9999px;left:-9999px;z-index:9999;background:var(--accent);color:#fff;font-weight:700;padding:10px 20px;border-radius:var(--pill);font-size:.9rem;text-decoration:none;transition:none}
 .skip-link:focus{top:16px;left:16px}
 
-/* ===== SECTION-PER-SCREEN — each major section fills at least one viewport ===== */
-main > section{min-height:100svh}
-@supports not (height:100svh){main > section{min-height:100vh}}
-/* exceptions: shorter by design or break layout if forced */
-main > section.midcta,main > section.video-section{min-height:auto}
-@media(max-width:768px){
-  main > section{min-height:auto}
-  main > section.hero,main > section.ctaf,main > section.platform-show,main > section.pricing,main > section.hapee-interact{min-height:100svh}
-}
+/* ===== COMPACT LAYOUT — secciones al alto de su contenido (solo el hero es full-screen) ===== */
+main > section{min-height:auto}
+main > section.hero{min-height:100svh}
+@supports not (height:100svh){main > section.hero{min-height:100vh}}
 </style>
 </head>
 <body>
@@ -1666,7 +2064,29 @@ main > section.midcta,main > section.video-section{min-height:auto}
   <div id="hp"></div>
   <div class="ctn">
     <div>
-      <div class="hero-badge"><span class="dot"></span> Validado por Meta &amp; Google Partner</div>
+      <div class="hero-badges">
+        <span class="hero-cert" aria-label="Meta Business Partner">
+          <svg viewBox="0 0 287.56 191" aria-hidden="true">
+            <defs>
+              <linearGradient id="metaHeroA" x1="62.3" y1="89.3" x2="260.1" y2="73" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0064E1"/><stop offset=".4" stop-color="#0064E1"/><stop offset=".83" stop-color="#0073EE"/><stop offset="1" stop-color="#0082FB"/></linearGradient>
+              <linearGradient id="metaHeroB" x1="41.4" y1="116.4" x2="41.4" y2="89.9" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0082FB"/><stop offset="1" stop-color="#0064E0"/></linearGradient>
+            </defs>
+            <path fill="#0081FB" d="M31.06 126c0 11 2.41 19.41 5.56 24.51A19 19 0 0 0 53.19 160c8.1 0 15.51-2 29.79-21.76 11.44-15.83 24.92-38 34-52l15.36-23.6c10.67-16.39 23-34.61 37.18-47C181.07 5.6 193.54 0 206.09 0c21.07 0 41.14 12.21 56.5 35.11 16.81 25.08 25 56.67 25 89.27 0 19.38-3.82 33.62-10.32 44.87C271 180.13 258.72 191 238.13 191v-31c17.63 0 22-16.2 22-34.74 0-26.42-6.16-55.74-19.73-76.69-9.63-14.86-22.11-23.94-35.84-23.94-14.85 0-26.8 11.2-40.23 31.17-7.14 10.61-14.47 23.54-22.7 38.13l-9.06 16c-18.2 32.27-22.81 39.62-31.91 51.75C84.74 183 71.12 191 53.19 191c-21.27 0-34.72-9.21-43-23.09C3.34 156.6 0 141.76 0 124.85Z"/>
+            <path fill="url(#metaHeroA)" d="M24.49 37.3C38.73 15.35 59.28 0 82.85 0c13.65 0 27.22 4 41.39 15.61 15.5 12.65 32 33.48 52.63 67.81l7.39 12.32c17.84 29.72 28 45 33.93 52.22 7.64 9.26 13 12 19.94 12 17.63 0 22-16.2 22-34.74l27.4-.86c0 19.38-3.82 33.62-10.32 44.87C271 180.13 258.72 191 238.13 191c-12.8 0-24.14-2.78-36.68-14.61-9.64-9.08-20.91-25.21-29.58-39.71L146.08 93.6c-12.94-21.62-24.81-37.74-31.68-45C107 40.71 97.51 31.23 82.35 31.23c-12.27 0-22.69 8.61-31.41 21.78Z"/>
+            <path fill="url(#metaHeroB)" d="M82.35 31.23c-12.27 0-22.69 8.61-31.41 21.78C38.61 71.62 31.06 99.34 31.06 126c0 11 2.41 19.41 5.56 24.51L10.14 167.91C3.34 156.6 0 141.76 0 124.85 0 94.1 8.44 62.05 24.49 37.3 38.73 15.35 59.28 0 82.85 0Z"/>
+          </svg>
+          <span class="hc-txt"><span class="hc-sub">Meta</span><span class="hc-main">Business Partner</span></span>
+        </span>
+        <span class="hero-cert" aria-label="Google Partner">
+          <svg viewBox="8.6 8.8 18.2 18.4" aria-hidden="true">
+            <path fill="#4285F4" d="M26.6 18.2c0-.6-.1-1.2-.2-1.8H18v3.4h4.8c-.2 1.1-.8 2.1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/>
+            <path fill="#34A853" d="M18 27c2.4 0 4.5-.8 6-2.2l-2.9-2.2c-.8.5-1.8.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H9.9v2.3C11.4 24.9 14.5 27 18 27z"/>
+            <path fill="#FBBC05" d="M12.9 19.7c-.2-.5-.3-1.1-.3-1.7s.1-1.2.3-1.7v-2.3H9.9c-.6 1.2-1 2.6-1 4s.3 2.8 1 4l3-2.3z"/>
+            <path fill="#EA4335" d="M18 12.5c1.3 0 2.5.5 3.5 1.4l2.6-2.6C22.5 9.8 20.4 9 18 9c-3.5 0-6.6 2.1-8.1 5l3 2.3c.7-2.2 2.7-3.8 5.1-3.8z"/>
+          </svg>
+          <span class="hc-txt"><span class="hc-sub">Google</span><span class="hc-main">Partner</span></span>
+        </span>
+      </div>
       <h1>
         <span class="w">Automatiza</span> <span class="w">tu</span> <span class="w">negocio.</span><br>
         <span class="w tg">Multiplica</span> <span class="w tg">tus</span> <span class="w tg">ventas</span> <span class="w tg">con</span> <span class="w tg">IA.</span>
@@ -1745,52 +2165,6 @@ main > section.midcta,main > section.video-section{min-height:auto}
         <div class="stat-l">Aumento en conversión con IA</div>
       </div>
     </div>
-    <div class="partners">
-      <div class="partners-label">Socios oficiales certificados</div>
-      <div class="partners-grid">
-        <!-- Meta Business Partner badge -->
-        <div class="partner-badge" aria-label="Meta Business Partner">
-          <div class="partner-ico-wrap">
-          <svg class="partner-ico" viewBox="0 0 287.56 191" aria-hidden="true">
-            <defs>
-              <linearGradient id="metaGradA" x1="62.3" y1="89.3" x2="260.1" y2="73" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#0064E1"/>
-                <stop offset=".4" stop-color="#0064E1"/>
-                <stop offset=".83" stop-color="#0073EE"/>
-                <stop offset="1" stop-color="#0082FB"/>
-              </linearGradient>
-              <linearGradient id="metaGradB" x1="41.4" y1="116.4" x2="41.4" y2="89.9" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#0082FB"/>
-                <stop offset="1" stop-color="#0064E0"/>
-              </linearGradient>
-            </defs>
-            <path fill="#0081FB" d="M31.06 126c0 11 2.41 19.41 5.56 24.51A19 19 0 0 0 53.19 160c8.1 0 15.51-2 29.79-21.76 11.44-15.83 24.92-38 34-52l15.36-23.6c10.67-16.39 23-34.61 37.18-47C181.07 5.6 193.54 0 206.09 0c21.07 0 41.14 12.21 56.5 35.11 16.81 25.08 25 56.67 25 89.27 0 19.38-3.82 33.62-10.32 44.87C271 180.13 258.72 191 238.13 191v-31c17.63 0 22-16.2 22-34.74 0-26.42-6.16-55.74-19.73-76.69-9.63-14.86-22.11-23.94-35.84-23.94-14.85 0-26.8 11.2-40.23 31.17-7.14 10.61-14.47 23.54-22.7 38.13l-9.06 16c-18.2 32.27-22.81 39.62-31.91 51.75C84.74 183 71.12 191 53.19 191c-21.27 0-34.72-9.21-43-23.09C3.34 156.6 0 141.76 0 124.85Z"/>
-            <path fill="url(#metaGradA)" d="M24.49 37.3C38.73 15.35 59.28 0 82.85 0c13.65 0 27.22 4 41.39 15.61 15.5 12.65 32 33.48 52.63 67.81l7.39 12.32c17.84 29.72 28 45 33.93 52.22 7.64 9.26 13 12 19.94 12 17.63 0 22-16.2 22-34.74l27.4-.86c0 19.38-3.82 33.62-10.32 44.87C271 180.13 258.72 191 238.13 191c-12.8 0-24.14-2.78-36.68-14.61-9.64-9.08-20.91-25.21-29.58-39.71L146.08 93.6c-12.94-21.62-24.81-37.74-31.68-45C107 40.71 97.51 31.23 82.35 31.23c-12.27 0-22.69 8.61-31.41 21.78Z"/>
-            <path fill="url(#metaGradB)" d="M82.35 31.23c-12.27 0-22.69 8.61-31.41 21.78C38.61 71.62 31.06 99.34 31.06 126c0 11 2.41 19.41 5.56 24.51L10.14 167.91C3.34 156.6 0 141.76 0 124.85 0 94.1 8.44 62.05 24.49 37.3 38.73 15.35 59.28 0 82.85 0Z"/>
-          </svg>
-          </div>
-          <div class="partner-txt">
-            <span class="partner-sub">Meta</span>
-            <span class="partner-main">Business Partner</span>
-          </div>
-        </div>
-        <!-- Google Partner badge -->
-        <div class="partner-badge" aria-label="Google Premier Partner">
-          <div class="partner-ico-wrap">
-          <svg class="partner-ico" viewBox="0 0 36 36" aria-hidden="true">
-            <path fill="#4285F4" d="M26.6 18.2c0-.6-.1-1.2-.2-1.8H18v3.4h4.8c-.2 1.1-.8 2.1-1.8 2.7v2.2h2.9c1.7-1.6 2.7-3.9 2.7-6.5z"/>
-            <path fill="#34A853" d="M18 27c2.4 0 4.5-.8 6-2.2l-2.9-2.2c-.8.5-1.8.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H9.9v2.3C11.4 24.9 14.5 27 18 27z"/>
-            <path fill="#FBBC05" d="M12.9 19.7c-.2-.5-.3-1.1-.3-1.7s.1-1.2.3-1.7v-2.3H9.9c-.6 1.2-1 2.6-1 4s.3 2.8 1 4l3-2.3z"/>
-            <path fill="#EA4335" d="M18 12.5c1.3 0 2.5.5 3.5 1.4l2.6-2.6C22.5 9.8 20.4 9 18 9c-3.5 0-6.6 2.1-8.1 5l3 2.3c.7-2.2 2.7-3.8 5.1-3.8z"/>
-          </svg>
-          </div>
-          <div class="partner-txt">
-            <span class="partner-sub">Google</span>
-            <span class="partner-main">Premier Partner</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1806,26 +2180,34 @@ main > section.midcta,main > section.video-section{min-height:auto}
       <button class="feat-tab on" data-t="0" aria-label="Ver funcionalidad: IA Conversacional">IA Conversacional</button>
       <button class="feat-tab" data-t="1" aria-label="Ver funcionalidad: CRM y Ventas">CRM &amp; Ventas</button>
       <button class="feat-tab" data-t="2" aria-label="Ver funcionalidad: Automatización">Automatización</button>
-      <button class="feat-tab" data-t="3" aria-label="Ver funcionalidad: Omnicanal">Omnicanal</button>
-      <button class="feat-tab" data-t="4" aria-label="Ver funcionalidad: Funnels y Web">Funnels &amp; Web</button>
-      <button class="feat-tab" data-t="5" aria-label="Ver funcionalidad: Más herramientas">Más herramientas</button>
+      <button class="feat-tab" data-t="3" aria-label="Ver funcionalidad: RRSS con IA">RRSS con IA</button>
+      <button class="feat-tab" data-t="4" aria-label="Ver funcionalidad: Funnels, Web y Mail">Funnels &amp; Web</button>
+      <button class="feat-tab" data-t="5" aria-label="Ver funcionalidad: Reportería">Reportería</button>
+      <button class="feat-tab" data-t="6" aria-label="Ver funcionalidad: Academia">Academia</button>
+      <button class="feat-tab" data-t="7" aria-label="Ver funcionalidad: Licitaciones">Licitaciones</button>
     </nav>
     <div id="fpanels">
       <div class="fpanel on" data-p="0">
-        <div class="fpanel-img"><img src="img/feat-ia.webp" alt="IA Conversacional Hapee" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/ia-light.webp" alt="Agentes de IA omnicanal Hapee — chat y voz con bandeja unificada" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/ia-dark.webp" alt="Agentes de IA omnicanal Hapee — chat y voz con bandeja unificada" loading="lazy">
+        </div>
         <div class="fpc">
           <h3>Agentes IA que <span class="tg">venden por ti</span></h3>
-          <p>Chatbots y agentes de voz con inteligencia artificial que responden, califican y cierran citas en todos tus canales. Tu equipo de ventas incansable, 24/7.</p>
+          <p>Chatbots y agentes de voz con IA que responden, califican y cierran citas en todos tus canales. Tu equipo de ventas incansable, 24/7.</p>
           <ul class="flist">
             <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Chatbots IA en WhatsApp, Instagram, Facebook y web</li>
             <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Agentes de voz con clonación personalizada</li>
             <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Calificación automática de leads con ML</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Respuestas inteligentes adaptadas a cada usuario</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Bandeja omnicanal unificada + chat en vivo</li>
           </ul>
         </div>
       </div>
       <div class="fpanel" data-p="1">
-        <div class="fpanel-img"><img src="img/feat-crm.webp" alt="CRM Hapee" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/crm-light.webp" alt="CRM Hapee — pipeline de ventas siempre en movimiento" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/crm-dark.webp" alt="CRM Hapee — pipeline de ventas siempre en movimiento" loading="lazy">
+        </div>
         <div class="fpc">
           <h3>Cierra más tratos <span class="tg">en menos tiempo</span></h3>
           <p>Pipeline visual para controlar cada prospecto. Segmentación avanzada, historial completo y cobros integrados.</p>
@@ -1838,7 +2220,10 @@ main > section.midcta,main > section.video-section{min-height:auto}
         </div>
       </div>
       <div class="fpanel" data-p="2">
-        <div class="fpanel-img"><img src="img/feat-auto.webp" alt="Automatización Hapee" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/auto-light.webp" alt="Automatizaciones Hapee — workflows drag and drop" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/auto-dark.webp" alt="Automatizaciones Hapee — workflows drag and drop" loading="lazy">
+        </div>
         <div class="fpc">
           <h3>Tus ventas corren <span class="tg">mientras duermes</span></h3>
           <p>Workflows visuales con triggers, condiciones y acciones automáticas. Nurturing, seguimiento y asignación sin esfuerzo.</p>
@@ -1851,41 +2236,82 @@ main > section.midcta,main > section.video-section{min-height:auto}
         </div>
       </div>
       <div class="fpanel" data-p="3">
-        <div class="fpanel-img"><img src="img/feat-omni.webp" alt="Comunicación Omnicanal" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/rrss-light.webp" alt="RRSS con IA — programa, crea y publica multicanal" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/rrss-dark.webp" alt="RRSS con IA — programa, crea y publica multicanal" loading="lazy">
+        </div>
         <div class="fpc">
-          <h3>Todos tus canales <span class="tg">en un solo lugar</span></h3>
-          <p>Bandeja unificada para WhatsApp, email, SMS, VoIP, Instagram y Facebook. Responde desde cualquier dispositivo.</p>
+          <h3>Programa, crea y publica <span class="tg">con IA</span></h3>
+          <p>Calendario de contenidos multicanal: la IA crea grillas completas, programa y publica por ti en todas tus redes.</p>
           <ul class="flist">
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Inbox unificado para todos los canales</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Email marketing con builder drag &amp; drop</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Llamadas VoIP y SMS nativos</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Chat en vivo para tu sitio web</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Grillas completas generadas con IA</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Programación multicanal: IG, FB, LinkedIn y TikTok</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Concursos y campañas en un clic</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Ideas y copies con agentes inteligentes</li>
           </ul>
         </div>
       </div>
       <div class="fpanel" data-p="4">
-        <div class="fpanel-img"><img src="img/feat-funnels.webp" alt="Funnels y Sitios Web" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/funnels-light.webp" alt="Constructor Hapee — funnels, web y email marketing" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/funnels-dark.webp" alt="Constructor Hapee — funnels, web y email marketing" loading="lazy">
+        </div>
         <div class="fpc">
-          <h3>Crea páginas que <span class="tg">convierten</span></h3>
-          <p>Constructor de funnels, landing pages, sitios web y formularios. Todo optimizado para capturar leads y vender.</p>
+          <h3>Crea experiencias que <span class="tg">convierten</span></h3>
+          <p>Constructor de funnels, landing pages, sitios y email marketing. Todo drag &amp; drop, optimizado para capturar y vender.</p>
           <ul class="flist">
             <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Embudos y landing pages con drag &amp; drop</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Email marketing con builder visual</li>
             <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> A/B testing, popups y upsells</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Formularios inteligentes y surveys</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Calendario integrado con Google y Outlook</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Formularios inteligentes y agenda integrada</li>
           </ul>
         </div>
       </div>
       <div class="fpanel" data-p="5">
-        <div class="fpanel-img"><img src="img/feat-more.webp" alt="Más herramientas Hapee" loading="lazy"></div>
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/reporteria-light.webp" alt="Reportería Hapee — de dónde vienen tus ventas, todo unificado" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/reporteria-dark.webp" alt="Reportería Hapee — de dónde vienen tus ventas, todo unificado" loading="lazy">
+        </div>
         <div class="fpc">
-          <h3>Y mucho <span class="tg">más</span></h3>
-          <p>Cursos, membresías, gestión de reseñas, reportes avanzados y marca blanca. Todo para dominar tu mercado.</p>
+          <h3>De datos a <span class="tg">decisiones</span></h3>
+          <p>Meta, Google, TikTok, LinkedIn y GA4 unificados. Identifica de qué campaña viene cada compra y toma mejores decisiones.</p>
           <ul class="flist">
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Cursos online, membresías y comunidades</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Google Reviews y Facebook Reviews</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Dashboards de ROI y atribución</li>
-            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Marca blanca total — tu marca al frente</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Todos tus canales en un solo dashboard</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Atribución real de compras y leads por campaña</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Reportes en 1 clic para tus clientes</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Insights con IA y ROAS en tiempo real</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fpanel" data-p="6">
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/academia-light.webp" alt="Academia Hapee — cursos, certificaciones y comunidad" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/academia-dark.webp" alt="Academia Hapee — cursos, certificaciones y comunidad" loading="lazy">
+        </div>
+        <div class="fpc">
+          <h3>Aprende y certifica <span class="tg">con IA</span></h3>
+          <p>Cursos, certificaciones y comunidad dentro de la misma plataforma, para que tú y tu equipo dominen Hapee.</p>
+          <ul class="flist">
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Cursos y certificaciones oficiales</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Onboarding guiado para tu equipo</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Comunidad activa con ranking y puntos</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Clases nuevas todos los meses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fpanel" data-p="7">
+        <div class="fpanel-img">
+          <img class="fi-light" src="img/fabrica/licitaciones-light.webp" alt="Licitaciones Hapee — Mercado Público, WherEx y portales privados" loading="lazy">
+          <img class="fi-dark" src="img/fabrica/licitaciones-dark.webp" alt="Licitaciones Hapee — Mercado Público, WherEx y portales privados" loading="lazy">
+        </div>
+        <div class="fpc">
+          <h3>Gana más <span class="tg">licitaciones</span></h3>
+          <p>Oportunidades de Mercado Público, WherEx y portales privados, filtradas por tu rubro y analizadas con IA.</p>
+          <ul class="flist">
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Mercado Público + WherEx + portales privados</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> % de afinidad calculado por IA</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Alertas inteligentes por correo</li>
+            <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span> Bases analizadas por IA en segundos</li>
           </ul>
         </div>
       </div>
@@ -2036,14 +2462,98 @@ main > section.midcta,main > section.video-section{min-height:auto}
   <div class="ps-head">
     <span class="lbl">Una plataforma sin fricciones</span>
     <h2>Así se ve <span class="tg">Hapee por dentro</span></h2>
-    <p>El operador en la bandeja omnicanal viendo TODAS las conversaciones de WhatsApp, Instagram, Facebook y Email en un solo lugar. Y el pipeline arrastrable con cada lead que el agente IA califica. Todo en una pantalla.</p>
+    <p>La plataforma real, funcionando en vivo: la bandeja respondiendo, el pipeline moviendo leads, los agentes IA vendiendo, la IA armando workflows y grillas de RRSS. Todos tus módulos, una sola pantalla.</p>
   </div>
   <div class="ps-stage">
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="mki-inicio" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/></symbol>
+    <symbol id="mki-crm" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.8-3.6 3.3-5.2 6.2-5.2s5.4 1.6 6.2 5.2"/><path d="M16 5.6a3 3 0 0 1 0 5.8M17.8 15.1c2.1.5 3.4 1.9 3.9 4.4"/></symbol>
+    <symbol id="mki-conv" viewBox="0 0 24 24"><path d="M21 14.5a2 2 0 0 1-2 2H8l-4.5 4V5.5a2 2 0 0 1 2-2H19a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="mki-agentes" viewBox="0 0 24 24"><rect x="5" y="8.5" width="14" height="10.5" rx="3"/><path d="M12 8.5V5"/><circle cx="12" cy="3.6" r="1.2"/><circle cx="9.2" cy="13.5" r=".9"/><circle cx="14.8" cy="13.5" r=".9"/></symbol>
+    <symbol id="mki-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></symbol>
+    <symbol id="mki-mkt" viewBox="0 0 24 24"><path d="M3 10.8 19.5 5v13L3 13.2z"/><path d="M7.5 14.5V18a2 2 0 0 0 4 .5"/></symbol>
+    <symbol id="mki-web" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M3.5 12h17M12 3.5c-4.6 4.8-4.6 12.2 0 17M12 3.5c4.6 4.8 4.6 12.2 0 17"/></symbol>
+    <symbol id="mki-aca" viewBox="0 0 24 24"><path d="m2.5 9 9.5-4.8L21.5 9 12 13.8z"/><path d="M6.5 11.4v4.4c0 1.4 2.6 2.7 5.5 2.7s5.5-1.3 5.5-2.7v-4.4"/></symbol>
+    <symbol id="mki-wf" viewBox="0 0 24 24"><path d="M13 2.5 4.5 14H11l-1 7.5L18.5 10H12z"/></symbol>
+    <symbol id="mki-rep" viewBox="0 0 24 24"><path d="M4.5 20v-7M10.5 20V4.5M16.5 20v-10"/><path d="M2.5 20h19"/></symbol>
+    <symbol id="mki-lic" viewBox="0 0 24 24"><path d="M6 3h8.5L19 7.5V21H6z"/><path d="M14.5 3v4.5H19M9 12.5h6M9 16h6"/></symbol>
+    <symbol id="mki-repo" viewBox="0 0 24 24"><path d="M3 7.5V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9.5H11L9 7.5z"/><path d="M3 7.5V5.5a2 2 0 0 1 2-2h3.6l2 2"/></symbol>
+  </svg>
     <div class="ps-tabs" role="tablist">
-      <button class="ps-tab on" data-ps="inbox" role="tab">Bandeja Omnicanal</button>
-      <button class="ps-tab" data-ps="pipeline" role="tab">Pipeline de Ventas</button>
+      <button class="ps-tab on" data-ps="inicio" role="tab">Inicio</button>
+      <button class="ps-tab" data-ps="inbox" role="tab">Bandeja Omnicanal</button>
+      <button class="ps-tab" data-ps="pipeline" role="tab">Pipeline</button>
+      <button class="ps-tab" data-ps="agentes" role="tab">Agentes IA</button>
+      <button class="ps-tab" data-ps="workflows" role="tab">Automatizaciones</button>
+      <button class="ps-tab" data-ps="rrss" role="tab">RRSS</button>
+      <button class="ps-tab" data-ps="builder" role="tab">Constructor Web/Email</button>
+      <button class="ps-tab" data-ps="academia" role="tab">Academia</button>
+      <button class="ps-tab" data-ps="reporteria" role="tab">Reportería</button>
+      <button class="ps-tab" data-ps="licitaciones" role="tab">Licitaciones</button>
+      <button class="ps-tab" data-ps="asistente" role="tab">🤖 Asistente</button>
     </div>
-    <div class="ps-panel on" data-panel="inbox">
+    <div class="ps-panel on" data-panel="inicio">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Inicio</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-home">
+            <div class="mk-home-hero">
+              <div><div class="hh-k">Tu centro de control</div>
+              <div class="hh-t">¡Bienvenido! 👋</div>
+              <div class="hh-s">Ventas, marketing y operación — todo tu negocio en un solo lugar.</div></div>
+              <span class="hh-art">🚀</span>
+            </div>
+            <div class="mk-home-kpis">
+              <div class="mk-kpi"><div class="k-l">💬 Por responder</div><div class="k-n"><span class="ctr-num" data-target="8">0</span></div><div class="k-d">la IA ya contestó 46</div></div>
+              <div class="mk-kpi"><div class="k-l">💼 Negocios activos</div><div class="k-n"><span class="ctr-num" data-target="34">0</span></div><div class="k-d">$48M en pipeline</div></div>
+              <div class="mk-kpi"><div class="k-l">📅 Citas esta semana</div><div class="k-n"><span class="ctr-num" data-target="12">0</span></div><div class="k-d">4 agendadas por IA</div></div>
+              <div class="mk-kpi"><div class="k-l">📆 Posts programados</div><div class="k-n"><span class="ctr-num" data-target="12">0</span></div><div class="k-d">este mes · multicanal</div></div>
+              <div class="mk-kpi"><div class="k-l">📣 Inversión Ads</div><div class="k-n">$1,2M</div><div class="k-d">Meta + Google + TikTok</div></div>
+              <div class="mk-kpi"><div class="k-l">🔥 ROAS actual</div><div class="k-n"><span class="ctr-num" data-target="18">0</span>x</div><div class="k-d">retorno sobre inversión</div></div>
+            </div>
+            <div class="mk-home-cols">
+              <div class="mk-home-quick">
+                <div class="hq-h">Accesos rápidos</div>
+                <div class="hq-grid"><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg>Conversaciones</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg>CRM</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg>Agentes IA</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg>Marketing</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg>Reportería</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg>Workflows</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg>Academia</span><span class="mk-qa-chip"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg>Licitaciones</span></div>
+              </div>
+              <div class="mk-home-today">
+                <div class="hq-h">Al día · hoy</div>
+                <div class="ht-row ok">✓ 12 conversaciones resueltas por la IA</div>
+                <div class="ht-row ok">✓ 3 citas agendadas automáticamente</div>
+                <div class="ht-row">📣 2 campañas activas rindiendo sobre el objetivo</div>
+                <div class="ht-row warn">⚠️ 1 propuesta vence hoy — priorizar</div>
+              </div>
+            </div>
+            <div class="mk-home-fab">
+              <div class="hf-bubble">¡Buenos días! ☀️ Tienes <b>8 conversaciones</b> esperando y <b>3 citas</b> hoy. ¿Te ayudo a priorizar?</div>
+              <model-viewer class="hf-robot" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Asistente Hapee" auto-rotate rotation-per-second="30deg" interaction-prompt="none" disable-zoom exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge" style="left:158px;right:auto">● Todo bajo control</span>
+      </div>
+      <p class="ps-cap"><strong>Inicio.</strong> El centro de control: KPIs del día, accesos a todos los módulos y tu resumen al día — todo se maneja desde aquí.</p>
+    </div>
+<div class="ps-panel" data-panel="inbox">
       <div class="ps-frame">
         <div class="browser-bar">
           <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
@@ -2053,19 +2563,20 @@ main > section.midcta,main > section.video-section{min-height:auto}
         <div class="mk-app mk-inbox-app">
           <!-- Hapee sidebar nav (left, orange) -->
           <nav class="mk-nav">
-            <div class="mk-nav-logo">H</div>
-            <a class="mk-nav-i mk-nav-on"><span class="mk-nav-ico">💬</span><span class="mk-nav-l">Conv.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📅</span><span class="mk-nav-l">Calend.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">👥</span><span class="mk-nav-l">CRM</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📊</span><span class="mk-nav-l">Pipeline</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📣</span><span class="mk-nav-l">Marketing</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">💳</span><span class="mk-nav-l">Pagos</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🎓</span><span class="mk-nav-l">Members</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🌐</span><span class="mk-nav-l">Sites</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">⚙️</span><span class="mk-nav-l">Auto</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">⭐</span><span class="mk-nav-l">Reputa.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📈</span><span class="mk-nav-l">Report.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🤖</span><span class="mk-nav-l">IA Apps</span></a>
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
           </nav>
           <!-- Conversations sidebar -->
           <aside class="mk-conv-list">
@@ -2230,34 +2741,35 @@ main > section.midcta,main > section.video-section{min-height:auto}
         <div class="ps-fc-sub">vs 38min humanos</div>
       </div>
     </div>
-    <div class="ps-panel" data-panel="pipeline">
+<div class="ps-panel" data-panel="pipeline">
       <div class="ps-frame">
         <div class="browser-bar">
           <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
-          <div class="browser-url">app.hapee.ai · Pipeline</div>
+          <div class="browser-url">app.hapee.ai · Kanban de ventas</div>
         </div>
         <!-- PIPELINE MOCKUP — Kanban con cards moviéndose entre fases en vivo -->
         <div class="mk-app mk-pipe-app">
           <!-- Hapee sidebar nav -->
           <nav class="mk-nav">
-            <div class="mk-nav-logo">H</div>
-            <a class="mk-nav-i"><span class="mk-nav-ico">💬</span><span class="mk-nav-l">Conv.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📅</span><span class="mk-nav-l">Calend.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">👥</span><span class="mk-nav-l">CRM</span></a>
-            <a class="mk-nav-i mk-nav-on"><span class="mk-nav-ico">📊</span><span class="mk-nav-l">Pipeline</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📣</span><span class="mk-nav-l">Marketing</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">💳</span><span class="mk-nav-l">Pagos</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🎓</span><span class="mk-nav-l">Members</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🌐</span><span class="mk-nav-l">Sites</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">⚙️</span><span class="mk-nav-l">Auto</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">⭐</span><span class="mk-nav-l">Reputa.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">📈</span><span class="mk-nav-l">Report.</span></a>
-            <a class="mk-nav-i"><span class="mk-nav-ico">🤖</span><span class="mk-nav-l">IA Apps</span></a>
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
           </nav>
           <!-- Pipeline area -->
           <div class="mk-pipe">
             <div class="mk-pipe-topbar">
-              <div class="mk-tb-title">Clientes Potenciales</div>
+              <div class="mk-tb-title">Kanban de ventas</div>
               <div class="mk-tb-actions">
                 <span class="mk-tb-new">+ Añadir oportunidad</span>
               </div>
@@ -2275,7 +2787,7 @@ main > section.midcta,main > section.video-section{min-height:auto}
             <div class="mk-kanban">
               <!-- Column 1: Lead Magnet Pagados -->
               <div class="mk-col">
-                <div class="mk-col-h"><span class="mk-col-dot" style="background:#8b5cf6"></span> Lead Magnet · <em><span class="ctr-num" data-target="6">0</span></em></div>
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#8b5cf6"></span> Nuevo · <em><span class="ctr-num" data-target="6">0</span></em></div>
                 <div class="mk-col-tot">$3.450.000</div>
                 <div class="mk-col-cards">
                   <div class="mk-card"><div class="mk-card-name">Negocio con Pablo S.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$845.000</div></div>
@@ -2286,7 +2798,7 @@ main > section.midcta,main > section.video-section{min-height:auto}
               </div>
               <!-- Column 2: Form Capture -->
               <div class="mk-col">
-                <div class="mk-col-h"><span class="mk-col-dot" style="background:#3b82f6"></span> Form Capture · <em><span class="ctr-num" data-target="7">0</span></em></div>
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#3b82f6"></span> Contactado · <em><span class="ctr-num" data-target="7">0</span></em></div>
                 <div class="mk-col-tot">$5.890.000</div>
                 <div class="mk-col-cards">
                   <div class="mk-card mk-flow-a"><div class="mk-card-name">Negocio con Marcelo M.</div><div class="mk-card-meta">Form de Captura · </div><div class="mk-card-val">$1.560.000</div></div>
@@ -2297,7 +2809,7 @@ main > section.midcta,main > section.video-section{min-height:auto}
               </div>
               <!-- Column 3: Seguimiento 1 -->
               <div class="mk-col">
-                <div class="mk-col-h"><span class="mk-col-dot" style="background:#f59e0b"></span> Seguimiento 1 · <em><span class="ctr-num" data-target="6">0</span></em></div>
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#f59e0b"></span> Reunión agendada · <em><span class="ctr-num" data-target="6">0</span></em></div>
                 <div class="mk-col-tot">$8.450.000</div>
                 <div class="mk-col-cards">
                   <div class="mk-card mk-flow-b"><div class="mk-card-name">Negocio con María M.</div><div class="mk-card-meta">Cotización enviada · </div><div class="mk-card-val">$2.450.000</div></div>
@@ -2309,7 +2821,7 @@ main > section.midcta,main > section.video-section{min-height:auto}
               </div>
               <!-- Column 4: Seguimiento 2 -->
               <div class="mk-col">
-                <div class="mk-col-h"><span class="mk-col-dot" style="background:#fb923c"></span> Seguimiento 2 · <em><span class="ctr-num" data-target="4">0</span></em></div>
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#fb923c"></span> Propuesta enviada · <em><span class="ctr-num" data-target="4">0</span></em></div>
                 <div class="mk-col-tot">$7.120.000</div>
                 <div class="mk-col-cards">
                   <div class="mk-card mk-flow-c"><div class="mk-card-name">Negocio con Carlos R.</div><div class="mk-card-meta">Llamada agendada · </div><div class="mk-card-val">$3.200.000</div></div>
@@ -2320,7 +2832,7 @@ main > section.midcta,main > section.video-section{min-height:auto}
               </div>
               <!-- Column 5: Seguimiento 3 -->
               <div class="mk-col">
-                <div class="mk-col-h"><span class="mk-col-dot" style="background:#FA5000"></span> Seguimiento 3 · <em><span class="ctr-num" data-target="3">0</span></em></div>
+                <div class="mk-col-h"><span class="mk-col-dot" style="background:#FA5000"></span> Negociación · <em><span class="ctr-num" data-target="3">0</span></em></div>
                 <div class="mk-col-tot">$6.230.000</div>
                 <div class="mk-col-cards">
                   <div class="mk-card"><div class="mk-card-name">Negocio con Sofía H.</div><div class="mk-card-meta">Propuesta enviada · </div><div class="mk-card-val">$4.500.000</div></div>
@@ -2375,6 +2887,489 @@ main > section.midcta,main > section.video-section{min-height:auto}
         <div class="ps-fc-val">$48M</div>
         <div class="ps-fc-sub">en oportunidades</div>
       </div>
+    </div>
+    <div class="ps-panel" data-panel="agentes">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Agentes IA</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-agents">
+            <div class="mk-mod-top"><span class="mk-mod-title">Agentes IA</span><div class="mk-mod-actions"><span class="mk-chip-soft">Entrenados con tu data</span><span class="mk-chip-cta">+ Crear agente</span></div></div>
+            <div class="mk-agents-grid">
+              <div class="mk-agents-cards">
+                <div class="mk-agent-card">
+                  <div class="mk-ag-top"><span class="mk-ag-av">🤖</span><span class="mk-ag-name">Agente de Ventas</span><span class="mk-ag-state "><i></i>Activo 24/7</span></div>
+                  <div class="mk-ag-desc">Responde, califica y agenda demos. Deriva a humano con intención alta.</div>
+                  <div class="mk-ag-tags"><span class="mk-ag-ai"><img src="img/orbit/claude.png" alt="Claude">Claude</span><span class="mk-ag-tag wa">WhatsApp</span><span class="mk-ag-tag ig">Instagram</span></div>
+                </div>
+                <div class="mk-agent-card">
+                  <div class="mk-ag-top"><span class="mk-ag-av">🎧</span><span class="mk-ag-name">Agente de Soporte</span><span class="mk-ag-state "><i></i>Activo</span></div>
+                  <div class="mk-ag-desc">Resuelve dudas con tu base de conocimiento y escala tickets.</div>
+                  <div class="mk-ag-tags"><span class="mk-ag-ai"><img src="img/orbit/chatgpt.png" alt="GPT">GPT</span><span class="mk-ag-tag ">Email</span><span class="mk-ag-tag ">Web chat</span></div>
+                </div>
+                <div class="mk-agent-card">
+                  <div class="mk-ag-top"><span class="mk-ag-av">🎙</span><span class="mk-ag-name">Agente de Voz</span><span class="mk-ag-state "><i></i>Clonado</span></div>
+                  <div class="mk-ag-desc">Atiende llamadas con tu voz clonada por IA, español nativo.</div>
+                  <div class="mk-ag-tags"><span class="mk-ag-ai"><img src="img/orbit/gemini.png" alt="Gemini">Gemini</span><span class="mk-ag-tag voice">Voz clonada</span></div>
+                </div>
+                <div class="mk-agent-card">
+                  <div class="mk-ag-top"><span class="mk-ag-av">🧾</span><span class="mk-ag-name">Agente de Facturación</span><span class="mk-ag-state busy"><i></i>Facturando #F-1042…</span></div>
+                  <div class="mk-ag-desc">Emite y envía facturas al cerrar cada venta, sin tocar nada.</div>
+                  <div class="mk-ag-tags"><span class="mk-ag-ai"><img src="img/orbit/claude.png" alt="Claude">Claude</span><span class="mk-ag-tag ">Stripe</span><span class="mk-ag-tag ">Email</span></div>
+                </div>
+                <div class="mk-agent-card">
+                  <div class="mk-ag-top"><span class="mk-ag-av">📄</span><span class="mk-ag-name">Agente de Cotizaciones</span><span class="mk-ag-state "><i></i>Cotización enviada ✓</span></div>
+                  <div class="mk-ag-desc">Arma cotizaciones PDF con tus precios y las envía en minutos.</div>
+                  <div class="mk-ag-tags"><span class="mk-ag-ai"><img src="img/orbit/chatgpt.png" alt="GPT">GPT</span><span class="mk-ag-tag ">PDF</span><span class="mk-ag-tag wa">WhatsApp</span></div>
+                </div>
+              </div>
+              <div class="mk-agents-chat">
+                <div class="mk-chat-head">
+                  <span class="mk-ch-av" style="background:linear-gradient(135deg,#22c55e,#128C7E)">RM</span>
+                  <div class="mk-ch-info">
+                    <div class="mk-ch-name">Rodrigo Miranda</div>
+                    <div class="mk-ch-status"><span class="mk-online-dot"></span> En línea · WhatsApp</div>
+                  </div>
+                  <span class="mk-ch-ai">🤖 Agente de Ventas</span>
+                </div>
+                <div class="mk-chat-body">
+                  <div class="mk-bubble mk-bubble-me bub-1"><span class="mk-bub-label">Rodrigo</span>Hola! Vi el anuncio, ¿cómo funciona el plan Pro?<span class="mk-bub-time">10:02 ✓✓</span></div>
+                  <div class="mk-bubble mk-bubble-bot bub-2"><span class="mk-bub-label">Agente IA · Hapee</span>¡Hola Rodrigo! El Pro incluye usuarios ilimitados, WhatsApp API y automatizaciones avanzadas. ¿Cuántas personas venden en tu equipo?<span class="mk-bub-time">10:02</span></div>
+                  <div class="mk-bubble mk-bubble-me bub-3"><span class="mk-bub-label">Rodrigo</span>Somos 6. ¿Me pueden mostrar una demo?<span class="mk-bub-time">10:03 ✓✓</span></div>
+                  <div class="mk-bubble mk-bubble-typing bub-4"><span></span><span></span><span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● Live · 5 agentes activos</span>
+      </div>
+      <div class="ps-floating-card fc-1">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Agentes IA · 24/7</span></div>
+        <div class="ps-fc-val">+<span class="ctr-num" data-target="147">0</span> <span class="gn">leads</span></div>
+        <div class="ps-fc-sub">calificados esta semana</div>
+      </div>
+      <div class="ps-floating-card fc-2">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">Tiempo respuesta</span></div>
+        <div class="ps-fc-val">2.4s</div>
+        <div class="ps-fc-sub">vs 38min humanos</div>
+      </div>
+      <p class="ps-cap"><strong>Agentes IA.</strong> Cinco agentes, cada uno con su IA — Claude, GPT y Gemini — vendiendo, cotizando y facturando por ti.</p>
+    </div>
+    <div class="ps-panel" data-panel="workflows">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Workflows</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-wf">
+            <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+              <div class="mk-mod-top"><span class="mk-mod-title">Automatización · Post-demo comercial</span><div class="mk-mod-actions"><span class="mk-wf-building">✨ IA construyendo el flujo…</span><span class="mk-wf-published">Publicado ✓</span></div></div>
+              <div class="mk-wf-canvas">
+                <div class="mk-wf-node wn1"><span class="w-ico">📥</span><span class="w-t">Lead entra al pipeline<small>Trigger · Form de captura</small></span></div>
+                <div class="mk-wf-link wl1"></div>
+                <div class="mk-wf-node wn2"><span class="w-ico">❓</span><span class="w-t">IF · ¿Tiene presupuesto?<small>Condición IA · calificación</small></span></div>
+                <div class="mk-wf-link wl2"></div>
+                <div class="mk-wf-node wn3"><span class="w-ico">📄</span><span class="w-t">Enviar cotización<small>Agente de Cotizaciones · WhatsApp</small></span></div>
+                <div class="mk-wf-link wl3"></div>
+                <div class="mk-wf-node wn4"><span class="w-ico">⏱</span><span class="w-t">Esperar 2 días<small>Delay inteligente</small></span></div>
+                <div class="mk-wf-link wl4"></div>
+                <div class="mk-wf-node wn5"><span class="w-ico">❓</span><span class="w-t">IF · ¿Respondió?<small>Condición IA · intención</small></span></div>
+                <div class="mk-wf-branch">
+                <div class="mk-wf-node wn6" style="min-width:150px"><span class="w-ico">✅</span><span class="w-t">Agendar reunión<small>Sí → Evento · Calendario</small></span></div>
+                <div class="mk-wf-node wn7" style="min-width:150px"><span class="w-ico">🔁</span><span class="w-t">Re-break email<small>No → Secuencia 2</small></span></div>
+                </div>
+                <div class="mk-wf-link wl5"></div>
+                <div class="mk-wf-node wn8"><span class="w-ico">🔔</span><span class="w-t">Notificar al vendedor<small>Evento · push + WhatsApp interno</small></span></div>
+              </div>
+            </div>
+            <div class="mk-wf-side">
+              <div class="mk-wf-stat"><div class="s-n"><span class="ctr-num" data-target="1240">0</span></div><div class="s-l">Ejecuciones hoy</div></div>
+              <div class="mk-wf-stat"><div class="s-n"><span class="ctr-num" data-target="98">0</span>%</div><div class="s-l">Tasa de entrega</div></div>
+              <div class="mk-wf-stat"><div class="s-n"><span class="ctr-num" data-target="36">0</span>h</div><div class="s-l">Ahorradas / semana</div></div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● IA construyendo el flujo</span>
+      </div>
+      <p class="ps-cap"><strong>Automatizaciones.</strong> Mira cómo la IA arma el flujo sola: trigger, condiciones IF y eventos — y queda corriendo 24/7.</p>
+    </div>
+    <div class="ps-panel" data-panel="rrss">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Planificador RRSS</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-rrss">
+            <div class="mk-mod-top"><span class="mk-mod-title">Planificador RRSS · Julio 2026</span><div class="mk-mod-actions"><span class="mk-chip-soft">✨ Crear grilla con IA</span><span class="mk-chip-soft">🎁 Concurso</span><span class="mk-chip-cta">+ Programar</span></div></div>
+            <div class="mk-cal-legend"><b>Multicanal:</b><span><img src="img/orbit/instagram.png" alt="IG"> Instagram</span><span><img src="img/orbit/facebook.png" alt="FB"> Facebook</span><span><img src="img/orbit/linkedin.png" alt="LinkedIn"> LinkedIn</span><span class="tt"><svg viewBox="0 0 24 24" class="tt-svg" aria-hidden="true"><path fill="currentColor" d="M19.32 5.56a5.1 5.1 0 0 1-3.05-2.55 5.06 5.06 0 0 1-.44-1.51H12.5v12.99a2.72 2.72 0 0 1-2.72 2.6 2.73 2.73 0 0 1-1.28-5.14 2.7 2.7 0 0 1 2.02-.14V8.42a6.1 6.1 0 0 0-4.6 1.31 6.06 6.06 0 0 0-2.16 3.71 6.07 6.07 0 0 0 9.33 6.03 6.04 6.04 0 0 0 2.74-5.06V8.77a8.36 8.36 0 0 0 4.66 1.42V6.87a5.1 5.1 0 0 1-1.17-.31Z"/></svg> TikTok</span></div>
+            <div class="mk-cal-dow"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+            <div class="mk-cal-grid">
+              <div class="mk-cal-cell"><span class="d">1</span></div>
+              <div class="mk-cal-cell"><span class="d">2</span><span class="mk-post pig pin1"><img src="img/orbit/instagram.png" alt="IG"><em>Reel lanzamiento</em></span></div>
+              <div class="mk-cal-cell"><span class="d">3</span></div>
+              <div class="mk-cal-cell"><span class="d">4</span><span class="mk-post pfb pin2"><img src="img/orbit/facebook.png" alt="FB"><em>Post testimonio</em></span></div>
+              <div class="mk-cal-cell"><span class="d">5</span></div>
+              <div class="mk-cal-cell"><span class="d">6</span></div>
+              <div class="mk-cal-cell"><span class="d">7</span><span class="mk-post pli pin3"><img src="img/orbit/linkedin.png" alt="LinkedIn"><em>Caso de éxito</em></span></div>
+              <div class="mk-cal-cell"><span class="d">8</span></div>
+              <div class="mk-cal-cell"><span class="d">9</span><span class="mk-post ptt pin4"><svg viewBox="0 0 24 24" class="tt-svg" aria-hidden="true"><path fill="currentColor" d="M19.32 5.56a5.1 5.1 0 0 1-3.05-2.55 5.06 5.06 0 0 1-.44-1.51H12.5v12.99a2.72 2.72 0 0 1-2.72 2.6 2.73 2.73 0 0 1-1.28-5.14 2.7 2.7 0 0 1 2.02-.14V8.42a6.1 6.1 0 0 0-4.6 1.31 6.06 6.06 0 0 0-2.16 3.71 6.07 6.07 0 0 0 9.33 6.03 6.04 6.04 0 0 0 2.74-5.06V8.77a8.36 8.36 0 0 0 4.66 1.42V6.87a5.1 5.1 0 0 1-1.17-.31Z"/></svg><em>Trend + CTA</em></span></div>
+              <div class="mk-cal-cell"><span class="d">10</span></div>
+              <div class="mk-cal-cell"><span class="d">11</span><span class="mk-post pig pin5"><img src="img/orbit/instagram.png" alt="IG"><em>Carrusel tips</em></span></div>
+              <div class="mk-cal-cell"><span class="d">12</span></div>
+              <div class="mk-cal-cell"><span class="d">13</span></div>
+              <div class="mk-cal-cell"><span class="d">14</span><span class="mk-post pia pin0">✨<em>IA generando grilla…</em></span></div>
+              <div class="mk-cal-cell"><span class="d">15</span></div>
+              <div class="mk-cal-cell"><span class="d">16</span><span class="mk-post pfb pin6"><img src="img/orbit/facebook.png" alt="FB"><em>Concurso 🎁</em></span></div>
+              <div class="mk-cal-cell"><span class="d">17</span></div>
+              <div class="mk-cal-cell"><span class="d">18</span><span class="mk-post pli pin7"><img src="img/orbit/linkedin.png" alt="LinkedIn"><em>Artículo blog</em></span></div>
+              <div class="mk-cal-cell"><span class="d">19</span></div>
+              <div class="mk-cal-cell"><span class="d">20</span></div>
+              <div class="mk-cal-cell"><span class="d">21</span><span class="mk-post pig pin8"><img src="img/orbit/instagram.png" alt="IG"><em>Stories AMA</em></span></div>
+              <div class="mk-cal-cell"><span class="d">22</span></div>
+              <div class="mk-cal-cell"><span class="d">23</span><span class="mk-post ptt pin9"><svg viewBox="0 0 24 24" class="tt-svg" aria-hidden="true"><path fill="currentColor" d="M19.32 5.56a5.1 5.1 0 0 1-3.05-2.55 5.06 5.06 0 0 1-.44-1.51H12.5v12.99a2.72 2.72 0 0 1-2.72 2.6 2.73 2.73 0 0 1-1.28-5.14 2.7 2.7 0 0 1 2.02-.14V8.42a6.1 6.1 0 0 0-4.6 1.31 6.06 6.06 0 0 0-2.16 3.71 6.07 6.07 0 0 0 9.33 6.03 6.04 6.04 0 0 0 2.74-5.06V8.77a8.36 8.36 0 0 0 4.66 1.42V6.87a5.1 5.1 0 0 1-1.17-.31Z"/></svg><em>Detrás de cámara</em></span></div>
+              <div class="mk-cal-cell"><span class="d">24</span></div>
+              <div class="mk-cal-cell"><span class="d">25</span><span class="mk-post pfb pin10"><img src="img/orbit/facebook.png" alt="FB"><em>Testimonio video</em></span></div>
+              <div class="mk-cal-cell"><span class="d">26</span></div>
+              <div class="mk-cal-cell"><span class="d">27</span></div>
+              <div class="mk-cal-cell"><span class="d">28</span><span class="mk-post pig pin11"><img src="img/orbit/instagram.png" alt="IG"><em>Reel resultados</em></span></div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● 12 posts programados</span>
+      </div>
+      <p class="ps-cap"><strong>RRSS.</strong> Calendario multicanal: programa publicaciones, crea grillas completas con IA y lanza concursos en Instagram, Facebook, LinkedIn y TikTok.</p>
+    </div>
+    <div class="ps-panel" data-panel="builder">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Constructor</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-bld">
+            <div class="mk-bld-palette">
+              <div class="mk-bld-el src">🧩 Bloques</div>
+              <div class="mk-bld-el">📝 Formulario</div>
+              <div class="mk-bld-el">🖼 Imagen</div>
+              <div class="mk-bld-el">✍️ Texto</div>
+              <div class="mk-bld-el">🔘 Botón CTA</div>
+              <div class="mk-bld-el">💳 Checkout</div>
+              <div class="mk-bld-el">📆 Calendario</div>
+            </div>
+            <div class="mk-bld-canvas">
+              <div class="mk-bld-page">
+                <div class="mk-bld-hero">Tu titular que convierte</div>
+                <div class="mk-drop mk-drop-form"><span class="df-l">Nombre</span><span class="df-i"></span><span class="df-l">Email</span><span class="df-i"></span><span class="df-btn">Quiero mi demo →</span></div>
+                <div class="mk-drop mk-drop-img">🖼<em>imagen-hero.png</em></div>
+                <div class="mk-drop mk-drop-text"><span class="mk-skel" style="width:88%"></span><span class="mk-skel" style="width:72%"></span><span class="mk-skel" style="width:55%"></span></div>
+                <div class="mk-bld-slot">Suelta aquí</div>
+              </div>
+              <div class="mk-bld-ghost g1">📝 Formulario</div>
+              <div class="mk-bld-ghost g2">🖼 Imagen</div>
+              <div class="mk-bld-ghost g3">✍️ Texto</div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● Editor drag &amp; drop</span>
+      </div>
+      <p class="ps-cap"><strong>Constructor web/email.</strong> Arrastra un bloque y aparece de verdad: formulario, imagen, texto — landings y campañas sin código.</p>
+    </div>
+    <div class="ps-panel" data-panel="academia">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Academia</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-aca">
+            <div class="mk-aca-hero">
+              <div><div class="ah-k">Continúa donde ibas</div>
+              <div class="ah-t">Reportes para clientes</div>
+              <span class="ah-b">Seguir aprendiendo →</span></div>
+              <span class="ah-art">🎓</span>
+            </div>
+            <div class="mk-aca-cat"><span class="cat-t">Catálogo</span><span class="cat-chip on">Todos</span><span class="cat-chip">Setup</span><span class="cat-chip">Ventas</span><span class="cat-chip">Operaciones</span></div>
+            <div class="mk-aca-grid">
+              <div class="mk-course"><div class="c-img ci1"><span class="c-tag" style="background:#7C3AED">SETUP</span><span class="c-art">🚀</span></div><div class="c-b"><div class="c-t">Setup Hapee desde cero</div><div class="c-m">8 lecciones · 45 min</div><div class="mk-prog p68"><i></i></div></div></div>
+              <div class="mk-course"><div class="c-img ci2"><span class="c-tag" style="background:#0E8A57">VENTAS</span><span class="c-art">💰</span></div><div class="c-b"><div class="c-t">Vende con Hapee</div><div class="c-m">6 lecciones · 1 h</div><div class="mk-prog p35"><i></i></div></div></div>
+              <div class="mk-course"><div class="c-img ci3"><span class="c-tag" style="background:#CD2349">IA</span><span class="c-art">🤖</span></div><div class="c-b"><div class="c-t">Agentes de IA que venden</div><div class="c-m">9 lecciones · 1,5 h</div><div class="mk-prog p90"><i></i></div></div></div>
+              <div class="mk-rank">
+                <div class="r-h">Comunidad · Ranking</div>
+                <div class="mk-rank-row top"><span class="rr-pos">👑</span><span class="rr-av" style="background:linear-gradient(135deg,#A855F7,#7E22CE)">FC</span> Freddy Castro <span class="rr-pts">570 pts</span></div>
+                <div class="mk-rank-row"><span class="rr-pos">2</span><span class="rr-av" style="background:linear-gradient(135deg,#0EA5E9,#0369A1)">RS</span> Rocío Segura <span class="rr-pts">540 pts</span></div>
+                <div class="mk-rank-row"><span class="rr-pos">3</span><span class="rr-av" style="background:linear-gradient(135deg,#FA5000,#CD2349)">CS</span> Camila San M. <span class="rr-pts">505 pts</span></div>
+                <div class="mk-rank-row"><span class="rr-pos">4</span><span class="rr-av" style="background:linear-gradient(135deg,#22c55e,#16a34a)">GZ</span> Giorgina Z. <span class="rr-pts">480 pts</span></div>
+                <div class="mk-rank-row"><span class="rr-pos">5</span><span class="rr-av" style="background:linear-gradient(135deg,#f59e0b,#dc2626)">ES</span> Emily Soto <span class="rr-pts">452 pts</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● Nueva lección disponible</span>
+      </div>
+      <p class="ps-cap"><strong>Academia.</strong> Cursos con progreso, catálogo por área y ranking de comunidad — tu equipo aprende dentro de Hapee.</p>
+    </div>
+    <div class="ps-panel" data-panel="reporteria">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Reportería</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-rep">
+            <div class="mk-mod-top"><span class="mk-mod-title">Resumen general</span><div class="mk-mod-actions"><span class="mk-chip-soft">1 Jul – 17 Jul</span><span class="mk-chip-cta">Reporte en 1 clic</span></div></div>
+            <div class="mk-rep-body">
+              <div class="mk-rep-rail">
+                <div class="rr-h">Canales conectados</div>
+                <div class="mk-ch-row"><img src="img/orbit/facebook.png" alt=""><span>Facebook</span></div>
+                <div class="mk-ch-row"><img src="img/orbit/instagram.png" alt=""><span>Instagram</span></div>
+                <div class="mk-ch-row"><img src="img/orbit/linkedin.png" alt=""><span>LinkedIn</span></div>
+                <div class="mk-ch-row"><svg viewBox="0 0 24 24" class="tt-svg" aria-hidden="true"><path fill="currentColor" d="M19.32 5.56a5.1 5.1 0 0 1-3.05-2.55 5.06 5.06 0 0 1-.44-1.51H12.5v12.99a2.72 2.72 0 0 1-2.72 2.6 2.73 2.73 0 0 1-1.28-5.14 2.7 2.7 0 0 1 2.02-.14V8.42a6.1 6.1 0 0 0-4.6 1.31 6.06 6.06 0 0 0-2.16 3.71 6.07 6.07 0 0 0 9.33 6.03 6.04 6.04 0 0 0 2.74-5.06V8.77a8.36 8.36 0 0 0 4.66 1.42V6.87a5.1 5.1 0 0 1-1.17-.31Z"/></svg><span>TikTok Ads</span></div>
+                <div class="mk-ch-row"><img src="img/orbit/meta.png" alt=""><span>Meta Ads</span></div>
+                <div class="mk-ch-row"><img src="img/orbit/google-ads.png" alt=""><span>Google Ads</span></div>
+                <div class="mk-ch-row"><img src="img/orbit/google.png" alt=""><span>GA4 · Analytics</span></div>
+                <div class="rr-note">Todo centralizado. Identifica de qué campaña vienen tus compras y leads — y toma mejores decisiones.</div>
+              </div>
+              <div class="mk-rep-main">
+                <div class="mk-rep-kpis">
+                  <div class="mk-kpi"><div class="k-l">Inversión</div><div class="k-n">$3,8M</div><div class="k-d">Meta + Google + TikTok</div></div>
+                  <div class="mk-kpi"><div class="k-l">Impresiones</div><div class="k-n"><span class="ctr-num" data-target="900">0</span>K</div><div class="k-d">▲ 12% vs anterior</div></div>
+                  <div class="mk-kpi"><div class="k-l">Leads</div><div class="k-n"><span class="ctr-num" data-target="612">0</span></div><div class="k-d">▲ 24% con IA</div></div>
+                  <div class="mk-kpi"><div class="k-l">Compras</div><div class="k-n"><span class="ctr-num" data-target="148">0</span></div><div class="k-d">atribuidas por campaña</div></div>
+                </div>
+                <div class="mk-rep-charts">
+                  <div class="mk-chart">
+                    <div class="ch-t">Rendimiento diario <span class="lg"><i style="background:#0866FF"></i>Meta Ads</span><span class="lg"><i style="background:#34A853"></i>Google Ads</span><span class="lg"><i style="background:#555"></i>TikTok</span></div>
+                    <svg viewBox="0 0 320 110" style="width:100%;height:110px" aria-hidden="true">
+                      <polyline class="mk-line" points="0,78 30,70 60,74 90,58 120,62 150,44 180,52 210,38 240,42 270,26 300,32 320,22" fill="none" stroke="#0866FF" stroke-width="2.5" stroke-linecap="round"/>
+                      <polyline class="mk-line l2" points="0,92 30,88 60,84 90,80 120,70 150,74 180,62 210,66 240,54 270,58 300,44 320,40" fill="none" stroke="#34A853" stroke-width="2.5" stroke-linecap="round"/>
+                      <polyline class="mk-line l3" points="0,100 30,97 60,95 90,92 120,88 150,90 180,82 210,84 240,76 270,72 300,66 320,62" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="mk-chart">
+                    <div class="ch-t">Leads por canal</div>
+                    <div class="mk-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="mk-bars-lbl"><span><img src="img/orbit/facebook.png" alt="FB"></span><span><img src="img/orbit/instagram.png" alt="IG"></span><span><img src="img/orbit/linkedin.png" alt="LinkedIn"></span><span class="tt"><svg viewBox="0 0 24 24" class="tt-svg" aria-hidden="true"><path fill="currentColor" d="M19.32 5.56a5.1 5.1 0 0 1-3.05-2.55 5.06 5.06 0 0 1-.44-1.51H12.5v12.99a2.72 2.72 0 0 1-2.72 2.6 2.73 2.73 0 0 1-1.28-5.14 2.7 2.7 0 0 1 2.02-.14V8.42a6.1 6.1 0 0 0-4.6 1.31 6.06 6.06 0 0 0-2.16 3.71 6.07 6.07 0 0 0 9.33 6.03 6.04 6.04 0 0 0 2.74-5.06V8.77a8.36 8.36 0 0 0 4.66 1.42V6.87a5.1 5.1 0 0 1-1.17-.31Z"/></svg></span><span><img src="img/orbit/google-ads.png" alt=""></span><span><img src="img/orbit/whatsapp.png" alt=""></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● Datos en tiempo real</span>
+      </div>
+      <div class="ps-floating-card fc-1">
+        <div class="ps-fc-top"><span class="ps-fc-dot"></span><span class="ps-fc-title">ROAS</span></div>
+        <div class="ps-fc-val">18x</div>
+        <div class="ps-fc-sub">con tracking nativo</div>
+      </div>
+      <p class="ps-cap"><strong>Reportería.</strong> Meta, Google, TikTok, LinkedIn e Instagram en un solo dashboard: reportes en 1 clic e identifica de qué campaña viene cada compra.</p>
+    </div>
+    <div class="ps-panel" data-panel="licitaciones">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Licitaciones</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-lic">
+            <div class="mk-lic-hero">
+              <div class="lh-k">Empate comercial · público y privado</div>
+              <div class="lh-t">Licitaciones filtradas para tu rubro</div>
+              <div class="lh-s">Conectados a <strong>Mercado Público</strong>, <strong>WherEx</strong> y portales privados</div>
+            </div>
+            <div class="mk-lic-stats">
+              <div class="mk-lic-stat"><div class="n"><span class="ctr-num" data-target="8">0</span></div><div class="l">Activas</div></div>
+              <div class="mk-lic-stat"><div class="n"><span class="ctr-num" data-target="6">0</span></div><div class="l">Relevantes</div></div>
+              <div class="mk-lic-stat"><div class="n"><span class="ctr-num" data-target="4">0</span></div><div class="l">Hot (≥80%)</div></div>
+              <div class="mk-lic-stat"><div class="n"><span class="ctr-num" data-target="3">0</span></div><div class="l">Privadas</div></div>
+            </div>
+            <div class="mk-lic-list">
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:87"><b>87</b></span><div class="mk-lic-b"><div class="mk-lic-t">Community management y pauta digital universitaria</div><div class="mk-lic-m">Universidad de Chile · Metropolitana</div></div><span class="mk-lic-src mp">M. Público</span><span class="mk-lic-val">$12.800.000</span><span class="mk-lic-new">Match</span></div>
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:85"><b>85</b></span><div class="mk-lic-b"><div class="mk-lic-t">Servicio de marketing digital y gestión de redes</div><div class="mk-lic-m">Municipalidad de Providencia</div></div><span class="mk-lic-src mp">M. Público</span><span class="mk-lic-val">$18.500.000</span></div>
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:84"><b>84</b></span><div class="mk-lic-b"><div class="mk-lic-t">Plataforma CRM + IA para fuerza de ventas regional</div><div class="mk-lic-m">Minera privada · vía WherEx</div></div><span class="mk-lic-src wx">WherEx</span><span class="mk-lic-val">$45.000.000</span><span class="mk-lic-new">Match</span></div>
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:81"><b>81</b></span><div class="mk-lic-b"><div class="mk-lic-t">Automatización de postventa y encuestas NPS</div><div class="mk-lic-m">Retail privado · portal propio</div></div><span class="mk-lic-src pv">Privada</span><span class="mk-lic-val">$22.000.000</span></div>
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:78"><b>78</b></span><div class="mk-lic-b"><div class="mk-lic-t">Campañas digitales y contenido corporativo 2026</div><div class="mk-lic-m">Holding agroindustrial · vía WherEx</div></div><span class="mk-lic-src wx">WherEx</span><span class="mk-lic-val">$28.500.000</span></div>
+              <div class="mk-lic-row"><span class="mk-lic-score" style="--sc:76"><b>76</b></span><div class="mk-lic-b"><div class="mk-lic-t">Producción audiovisual campañas de difusión</div><div class="mk-lic-m">Gobierno Regional Valparaíso</div></div><span class="mk-lic-src mp">M. Público</span><span class="mk-lic-val">$32.000.000</span></div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● 3 matches nuevos hoy</span>
+      </div>
+      <p class="ps-cap"><strong>Licitaciones.</strong> Mercado Público + WherEx + portales privados, filtrados por tu rubro con % de afinidad y alertas.</p>
+    </div>
+    <div class="ps-panel" data-panel="asistente">
+      <div class="ps-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+          <div class="browser-url">app.hapee.ai · Asistente IA</div>
+        </div>
+        <div class="mk-app">
+          <nav class="mk-nav">
+            <div class="mk-nav-logo"><img src="img/logo-hapee.png" alt="Hapee"></div>
+            <a class="mk-nav-i mk-nav-on"><svg class="mk-nav-svg"><use href="#mki-inicio"/></svg><span class="mk-nav-l">Inicio</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-crm"/></svg><span class="mk-nav-l">CRM</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-conv"/></svg><span class="mk-nav-l">Conversaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-agentes"/></svg><span class="mk-nav-l">Agentes IA</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mail"/></svg><span class="mk-nav-l">Mail Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-mkt"/></svg><span class="mk-nav-l">Marketing</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-web"/></svg><span class="mk-nav-l">Sitios web</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-aca"/></svg><span class="mk-nav-l">Academia</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-wf"/></svg><span class="mk-nav-l">Workflows</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-rep"/></svg><span class="mk-nav-l">Reportería</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-lic"/></svg><span class="mk-nav-l">Licitaciones</span></a>
+            <a class="mk-nav-i"><svg class="mk-nav-svg"><use href="#mki-repo"/></svg><span class="mk-nav-l">Repositorio</span></a>
+            <div class="mk-nav-user"><span class="u-av">TU</span><span><span class="u-n">Tu Empresa</span><span class="u-r">Owner</span></span></div>
+          </nav>
+          <div class="mk-asst">
+            <div class="mk-mod-top"><span class="mk-mod-title">Asistente Hapee · en toda la plataforma</span><div class="mk-mod-actions"><span class="mk-chip-soft">Siempre abajo a la derecha</span></div></div>
+            <div class="mk-asst-stage">
+              <div class="mk-asst-left">
+                <div class="as-chips">
+                  <span class="as-chip">⚡ Respuestas al instante</span>
+                  <span class="as-chip">🧭 Te guía paso a paso</span>
+                  <span class="as-chip">🔔 Alertas proactivas</span>
+                  <span class="as-chip">🖐 Se agranda y se mueve</span>
+                  <span class="as-chip">🔄 Gira en 3D</span>
+                </div>
+                <div class="mk-asst-robot-wrap">
+                  <div class="as-ring"></div>
+                  <model-viewer class="mk-asst-robot3d" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Asistente Hapee 3D" camera-controls auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom shadow-intensity="1.1" exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+                  <span class="as-hint">✥ arrástralo · gira en 3D</span>
+                </div>
+              </div>
+              <div class="mk-asst-chat">
+                <div class="ac-head"><span class="ac-dot"></span> Asistente Hapee <span class="ac-ctl"><b title="Mover">✥</b><b title="3D">↻</b><b title="Agrandar">⤢</b></span></div>
+                <div class="ac-body">
+                  <div class="ac-b me">¿Cómo voy en ventas este mes?</div>
+                  <div class="ac-b bot">🔥 <strong>$12,4M</strong> (+18% vs junio). Tienes <strong>3 propuestas</strong> por vencer hoy — ¿las priorizo y te armo el resumen?</div>
+                  <div class="ac-b me">Sí, y agenda seguimientos</div>
+                  <div class="ac-b bot typing"><span></span><span></span><span></span></div>
+                </div>
+                <div class="ac-alert">🔔 Lead caliente sin responder hace 32 min — <b>abrir chat</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="ps-live-badge">● Siempre contigo</span>
+      </div>
+      <p class="ps-cap"><strong>Asistente Hapee.</strong> El robot vive abajo a la derecha en toda la plataforma: pregúntale lo que sea y responde al instante, te guía, te alerta — se agranda, se mueve y gira en 3D.</p>
     </div>
   </div>
 </section>
@@ -3031,6 +4026,18 @@ document.addEventListener('DOMContentLoaded',()=>{
     tabs.forEach(t=>t.classList.remove('on'));panels.forEach(p=>p.classList.remove('on'));
     tab.classList.add('on');
     document.querySelector(`.fpanel[data-p="${tab.dataset.t}"]`).classList.add('on');
+  }));
+  // Lightbox: clic en la imagen de la fábrica → ampliar
+  document.querySelectorAll('.fpanel-img').forEach(fig=>fig.addEventListener('click',()=>{
+    const img=[...fig.querySelectorAll('img')].find(i=>getComputedStyle(i).display!=='none');
+    if(!img)return;
+    const ov=document.createElement('div');
+    ov.className='img-lightbox';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','Imagen ampliada');
+    ov.innerHTML=`<img src="${img.src}" alt="${img.alt}"><span class="lb-close" aria-hidden="true">×</span>`;
+    const close=()=>{ov.remove();document.removeEventListener('keydown',esc)};
+    const esc=e=>{if(e.key==='Escape')close()};
+    ov.addEventListener('click',close);document.addEventListener('keydown',esc);
+    document.body.appendChild(ov);
   }));
 
   // Smooth scroll
@@ -3862,6 +4869,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 
 });
 </script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <script src="/js/whatsapp.js" defer></script>
 </body>
 </html>
