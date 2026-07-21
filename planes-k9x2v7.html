@@ -123,11 +123,6 @@ html.dark .dark-toggle{background:#111;border-color:rgba(250,80,0,.1)}
 .mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px;transition:var(--tr)}
 @media(max-width:1100px){.nlinks,.nctas{display:none}.mbtn{display:block}}
 
-/* HERO */
-.ph-hero{padding:140px 0 30px;text-align:center;position:relative;overflow:hidden}
-.ph-hero h1{font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:800;margin-bottom:20px}
-.ph-hero .sub{font-size:1.15rem;color:var(--text);max-width:640px;margin:0 auto;line-height:1.7}
-
 /* Toggle mensual/anual */
 .itoggle{display:none;justify-content:center;gap:0;margin:30px auto 0;width:max-content;border:1px solid var(--card-border);border-radius:var(--pill);padding:4px;background:var(--card-bg);box-shadow:var(--shadow-sm)}
 html.dark .itoggle{background:var(--bg-alt2)}
@@ -143,42 +138,329 @@ html.dark .itoggle{background:var(--bg-alt2)}
 .spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--card-border);border-top-color:var(--accent);margin:0 auto 18px;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 
-/* PRICING SECTION */
-.psec{padding:40px 0 90px;position:relative}
-.psec::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:640px;height:640px;background:radial-gradient(circle,rgba(250,80,0,.06),transparent 70%);pointer-events:none}
-html.dark .psec::before{background:radial-gradient(circle,rgba(250,80,0,.1),transparent 70%)}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;align-items:stretch;margin-top:44px;max-width:1060px;margin-left:auto;margin-right:auto;position:relative}
-.pc{background:var(--card-bg);border:1.5px solid var(--card-border);border-radius:24px;padding:36px 30px;display:flex;flex-direction:column;position:relative;transition:var(--tr);box-shadow:var(--shadow-sm)}
-html.dark .pc{background:linear-gradient(165deg,#111 0%,#0c0c0c 100%);border-color:rgba(250,80,0,.1)}
-.pc:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:rgba(250,80,0,.28)}
+.pricing{padding:64px 0;background:var(--bg-alt);transition:background var(--tr)}
+.pricing-head{text-align:center;margin-bottom:36px}
+.pricing-head p{color:var(--text-2);max-width:500px;margin:0 auto;font-size:.95rem}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
 
-/* Card destacada — mismo beam animado de la comparativa */
-.pc.pop{border-color:transparent}
-.pc.pop::before{content:'';position:absolute;inset:-2px;border-radius:26px;z-index:-1;
-  background:conic-gradient(from var(--beam-a,0deg),var(--accent),#f97316,var(--accent-alt),#e8457c,var(--accent));
-  animation:beam 4s linear infinite}
+/* Base card — clean white with subtle border */
+.pc{background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:20px;padding:36px 28px;display:flex;flex-direction:column;transition:var(--tr);position:relative;box-shadow:var(--shadow-sm)}
+html.dark .pc{background:var(--card-bg);border-color:rgba(250,80,0,.1)}
+.pc:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(250,80,0,.2)}
+
+/* PRO card — animated border beam */
+.pc.pop{border:none;z-index:2;background:#fff;padding:0;overflow:visible}
+html.dark .pc.pop{background:transparent}
+.pc.pop .pc-beam{position:absolute;inset:-2px;border-radius:22px;z-index:0;
+background:conic-gradient(from var(--beam-a,0deg),var(--accent),#f97316,var(--accent-alt),#e8457c,var(--accent));
+animation:beam 4s linear infinite}
 @property --beam-a{syntax:'<angle>';initial-value:0deg;inherits:false}
 @keyframes beam{to{--beam-a:360deg}}
-.pc.pop::after{content:'';position:absolute;inset:-12px;border-radius:30px;z-index:-2;
-  background:conic-gradient(from var(--beam-a,0deg),rgba(250,80,0,.22),rgba(205,35,73,.18),rgba(250,80,0,.22));
-  animation:beam 4s linear infinite;filter:blur(22px);opacity:.7}
-.pc .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-family:var(--fd);font-size:.72rem;font-weight:700;padding:6px 18px;border-radius:var(--pill);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;z-index:5;box-shadow:0 4px 14px rgba(250,80,0,.35)}
+.pc.pop .pc-beam::after{content:'';position:absolute;inset:2px;border-radius:20px;background:#fff}
+html.dark .pc.pop .pc-beam::after{background:#0f0f0f}
+.pc.pop .pc-inner{position:relative;z-index:1;padding:36px 28px;display:flex;flex-direction:column;height:100%}
+.pc.pop:hover{transform:translateY(-6px)}
+.pc.pop:hover .pc-beam{filter:blur(4px);opacity:.9}
+/* Glow beneath PRO card */
+.pc.pop::before{content:'';position:absolute;inset:-8px;border-radius:28px;
+background:conic-gradient(from var(--beam-a,0deg),rgba(250,80,0,.2),rgba(205,35,73,.15),rgba(250,80,0,.2));
+animation:beam 4s linear infinite;filter:blur(20px);z-index:-1}
+html.dark .pc.pop::before{opacity:.5}
 
-.pc-tag{display:inline-block;width:max-content;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);background:rgba(250,80,0,.09);border:1px solid rgba(250,80,0,.2);padding:3px 11px;border-radius:var(--pill);margin-bottom:12px}
-.pc-name{font-family:var(--fd);font-size:1.7rem;font-weight:700;color:var(--heading);letter-spacing:.5px;margin-bottom:8px}
-.pc-desc{font-size:.9rem;color:var(--text);margin-bottom:22px;line-height:1.65;min-height:44px}
-.pc-price{display:flex;align-items:baseline;gap:3px}
+/* "Recomendado" badge — visible on white background */
+.pc-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;font-size:.72rem;font-weight:700;padding:5px 20px;border-radius:var(--pill);text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;z-index:3;box-shadow:0 4px 14px rgba(250,80,0,.35)}
+
+.pc-name{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--heading);margin-bottom:8px}
+.pc-desc{font-size:.95rem;color:var(--text);margin-bottom:24px;line-height:1.65;min-height:48px}
+.pc-price{display:flex;align-items:baseline;gap:2px;margin-bottom:4px}
 .pc-cur{font-size:1.2rem;color:var(--accent);font-weight:700}
-.pc-val{font-family:var(--fd);font-size:3.6rem;font-weight:800;color:var(--heading);line-height:1}
-.pc-per{font-size:.88rem;color:var(--text-2);margin:6px 0 2px}
-.pc-eq{font-size:.78rem;color:var(--text-2);opacity:.8;margin-bottom:14px;min-height:1em}
-.pc-feats{display:flex;flex-direction:column;gap:11px;margin-bottom:26px;padding-top:20px;border-top:1px solid var(--card-border);flex:1}
+.pc-val{font-family:var(--fd);font-size:3.5rem;font-weight:800;color:var(--heading);line-height:1}
+.pc-per{font-size:.95rem;color:var(--text-2);margin-bottom:24px}
+.pc-feats{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;padding-top:20px;border-top:1px solid rgba(0,0,0,.07);flex:1}
 html.dark .pc-feats{border-color:rgba(250,80,0,.08)}
-.pc-feats li{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;color:var(--text);line-height:1.55}
-.pc-feats .ico{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px;background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
-.pc-feats .ico svg{width:11px;height:11px}
+.pc-feats li{display:flex;align-items:flex-start;gap:9px;font-size:.95rem;color:var(--text)}
+.pc-feats svg{flex-shrink:0;width:16px;height:16px;color:var(--accent);margin-top:2px}
+.pc-feats .inc{font-weight:600;color:var(--accent)}
+.pc-ideal{font-size:.95rem;color:var(--accent);font-weight:600;font-style:normal;margin-bottom:20px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
+html.dark .pc-ideal{border-color:rgba(250,80,0,.08)}
+.pc-trial{text-align:center;margin-top:10px;font-size:.78rem;font-weight:600;color:var(--muted);letter-spacing:.01em}
+html.dark .pc-trial{color:#a0a0a0}
+.pc-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;padding:10px 14px;border-radius:999px;background:linear-gradient(90deg,rgba(250,80,0,.08),rgba(205,35,73,.08));border:1px solid rgba(250,80,0,.25);font-size:.85rem;font-weight:600;color:var(--accent);text-align:center}
+.pc-guarantee svg{width:16px;height:16px;flex-shrink:0}
+html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba(205,35,73,.12));border-color:rgba(250,80,0,.35)}
 .pc .btn{width:100%;margin-top:auto}
-.note{text-align:center;margin-top:34px;font-size:.9rem;color:var(--text-2)}
+.pricing-note{text-align:center;margin-top:36px;font-size:.95rem;color:var(--text)}
+@media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+
+/* =========================================================
+   PRICING · GLASSMORPHISM · liquid glass 2026 (refs gla1/2/3)
+   Fondo dramático + 3D floating objects iridiscentes +
+   cards glass ultra limpias + prismatic bottom edge
+   ========================================================= */
+.pricing{position:relative;overflow:hidden;padding:72px 0 60px;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 20%,#ffe6d3 0%,transparent 55%),
+    radial-gradient(ellipse 80% 60% at 85% 30%,#ffd6e2 0%,transparent 55%),
+    radial-gradient(ellipse 100% 80% at 50% 100%,#fff2e8 0%,transparent 60%),
+    linear-gradient(180deg,#fff9f2 0%,#faf0e8 100%);
+}
+html.dark .pricing{
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 20%,#2a0a08 0%,transparent 55%),
+    radial-gradient(ellipse 80% 60% at 85% 30%,#280714 0%,transparent 55%),
+    radial-gradient(ellipse 100% 80% at 50% 100%,#1a0a08 0%,transparent 60%),
+    linear-gradient(180deg,#0a0505 0%,#050303 100%);
+}
+.pricing .ctn{position:relative;z-index:3}
+
+/* Fondo dinámico · blobs animados + orbes 3D glossy iridiscentes */
+.pricing-bg{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+
+.pbg-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.7;will-change:transform;animation:pbgFloat 24s ease-in-out infinite}
+.pbg-blob.b1{width:640px;height:640px;top:-12%;left:-8%;background:radial-gradient(circle at 40% 40%,rgba(250,120,60,.55),transparent 65%)}
+.pbg-blob.b2{width:720px;height:720px;top:18%;right:-12%;background:radial-gradient(circle at 60% 40%,rgba(230,80,120,.48),transparent 65%);animation-delay:-8s}
+.pbg-blob.b3{width:520px;height:520px;bottom:-8%;left:28%;background:radial-gradient(circle at 50% 50%,rgba(255,180,90,.42),transparent 65%);animation-delay:-16s}
+html.dark .pbg-blob.b1{background:radial-gradient(circle at 40% 40%,rgba(250,80,0,.55),transparent 60%);opacity:.55}
+html.dark .pbg-blob.b2{background:radial-gradient(circle at 60% 40%,rgba(205,35,73,.55),transparent 60%);opacity:.5}
+html.dark .pbg-blob.b3{background:radial-gradient(circle at 50% 50%,rgba(255,140,60,.48),transparent 60%);opacity:.4}
+@keyframes pbgFloat{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(60px,-40px) scale(1.08)}
+  66%{transform:translate(-40px,35px) scale(.94)}
+}
+
+/* Grid discreto */
+.pbg-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.035) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 55% 55% at 50% 50%,#000,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 55% 55% at 50% 50%,#000,transparent 80%);
+  opacity:.5;
+}
+html.dark .pbg-grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)}
+
+/* === GLASS CARDS · ultra limpias + prismatic bottom === */
+.pgrid{position:relative;z-index:4}
+
+.pc{
+  /* Light mode: MUCHO más transparente para que se vea el efecto glass real */
+  background:linear-gradient(160deg,rgba(255,255,255,.32) 0%,rgba(255,255,255,.10) 100%);
+  -webkit-backdrop-filter:blur(40px) saturate(200%);
+  backdrop-filter:blur(40px) saturate(200%);
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:26px;
+  padding:38px 30px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 -1px 0 rgba(255,255,255,.35),
+    0 30px 70px -18px rgba(120,60,30,.20),
+    0 10px 30px -8px rgba(250,80,0,.10);
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .6s cubic-bezier(.2,.7,.15,1),box-shadow .6s cubic-bezier(.2,.7,.15,1),border-color .35s ease;
+}
+/* Highlight superior tipo "shine" */
+.pc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:60%;pointer-events:none;border-radius:26px 26px 0 0;z-index:1;
+  background:
+    radial-gradient(ellipse 90% 100% at 30% 0%,rgba(255,255,255,.65) 0%,transparent 55%),
+    linear-gradient(180deg,rgba(255,255,255,.25) 0%,transparent 60%);
+  mix-blend-mode:screen;
+}
+/* Refracción prismática inferior · el highlight iridiscente tipo gla3 */
+.pc::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:80px;pointer-events:none;border-radius:0 0 26px 26px;z-index:1;
+  background:linear-gradient(90deg,
+    rgba(255,120,60,.28) 0%,
+    rgba(255,180,90,.24) 22%,
+    rgba(220,255,180,.20) 45%,
+    rgba(140,220,255,.24) 68%,
+    rgba(230,140,220,.28) 100%);
+  filter:blur(24px);
+  opacity:.9;
+  mix-blend-mode:screen;
+}
+html.dark .pc{
+  background:linear-gradient(160deg,rgba(40,25,25,.5) 0%,rgba(25,15,20,.28) 100%);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    0 30px 80px -20px rgba(0,0,0,.6),
+    0 8px 24px -8px rgba(250,80,0,.14);
+}
+html.dark .pc::before{
+  background:
+    radial-gradient(ellipse 90% 100% at 30% 0%,rgba(255,255,255,.18) 0%,transparent 55%),
+    linear-gradient(180deg,rgba(255,255,255,.05) 0%,transparent 60%);
+}
+html.dark .pc::after{
+  background:linear-gradient(90deg,
+    rgba(255,90,40,.44) 0%,
+    rgba(255,150,70,.36) 22%,
+    rgba(180,240,140,.28) 45%,
+    rgba(120,200,240,.36) 68%,
+    rgba(230,120,200,.44) 100%);
+  opacity:.65;
+}
+.pc:hover{
+  transform:translateY(-10px);
+  border-color:rgba(255,255,255,.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 0 0 1px rgba(255,255,255,.10),
+    0 40px 90px -18px rgba(80,40,20,.26),
+    0 14px 40px -8px rgba(250,80,0,.14);
+}
+.pc:hover::after{opacity:1;height:100px}
+html.dark .pc:hover{
+  border-color:rgba(250,120,60,.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 0 0 1px rgba(250,80,0,.12),
+    0 50px 110px -20px rgba(0,0,0,.75),
+    0 14px 40px -8px rgba(250,80,0,.22);
+}
+
+/* PRO card */
+.pc.pop{background:transparent;padding:0;border:0;box-shadow:none;transform:translateY(-10px)}
+.pc.pop::before,.pc.pop::after{display:none}
+.pc.pop:hover{transform:translateY(-18px)}
+.pc.pop .pc-inner{
+  /* Light: glass legible · el beam queda como borde, no invade el texto */
+  background:linear-gradient(160deg,rgba(255,255,255,.88) 0%,rgba(255,247,242,.78) 100%);
+  -webkit-backdrop-filter:blur(44px) saturate(120%);
+  backdrop-filter:blur(44px) saturate(120%);
+  border-radius:24px;
+  position:relative;z-index:1;padding:40px 30px;overflow:hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    inset 0 -1px 0 rgba(255,255,255,.4);
+}
+.pc.pop .pc-inner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:60%;pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 100% at 30% 0%,rgba(255,255,255,.75) 0%,transparent 55%),
+    radial-gradient(circle at 100% 100%,rgba(250,80,0,.08),transparent 55%);
+  mix-blend-mode:screen;
+}
+.pc.pop .pc-inner::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:90px;pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(255,120,60,.36) 0%,
+    rgba(255,200,100,.30) 25%,
+    rgba(220,255,180,.24) 50%,
+    rgba(140,220,255,.30) 75%,
+    rgba(230,140,220,.36) 100%);
+  filter:blur(28px);
+  opacity:.5;
+  mix-blend-mode:screen;
+}
+html.dark .pc.pop .pc-inner{
+  background:linear-gradient(160deg,rgba(50,30,25,.62) 0%,rgba(25,12,15,.42) 100%);
+  /* dark mantiene el glass vibrante original */
+  -webkit-backdrop-filter:blur(44px) saturate(220%);
+  backdrop-filter:blur(44px) saturate(220%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 0 0 1px rgba(250,80,0,.08);
+}
+html.dark .pc.pop .pc-inner::after{opacity:.95}
+.pc.pop .pc-beam{inset:-1.5px;border-radius:25.5px;opacity:.85;filter:saturate(120%)}
+.pc.pop .pc-beam::after{inset:1.5px;border-radius:24px;background:transparent}
+
+/* Badge glossy */
+.pc-badge{
+  background:linear-gradient(135deg,#ffb040 0%,var(--accent) 50%,var(--accent-alt) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 0 0 1px rgba(255,255,255,.15),
+    0 8px 20px rgba(250,80,0,.4),
+    0 2px 6px rgba(205,35,73,.30);
+}
+
+.pc-feats svg{filter:drop-shadow(0 1px 2px rgba(250,80,0,.35))}
+.pc > *, .pc.pop .pc-inner > *{position:relative;z-index:2}
+
+@media(max-width:768px){
+  .pricing{padding:80px 0 60px}
+  .pc, .pc.pop .pc-inner{border-radius:20px;padding:30px 22px}
+  .pbg-blob{filter:blur(70px)}
+  .pbg-blob.b1{width:400px;height:400px}
+  .pbg-blob.b2{width:460px;height:460px}
+  .pbg-blob.b3{width:340px;height:340px}
+}
+/* ===== GLOBAL MOBILE FIXES ===== */
+@media(max-width:480px){
+  .ctn{padding:0 16px}
+  .hero{padding:110px 0 50px;min-height:auto}
+  .hero h1{font-size:2.2rem}
+  .hero-sub{font-size:1rem}
+  .hero-ctas .btn{width:100%;justify-content:center}
+  .hero-robot{max-width:180px}
+  .robot-glow{width:200px;height:200px}
+  .video-section{padding:40px 0}
+  .video-section .ctn > div{border-radius:12px !important}
+  .stats{padding:48px 0}
+  .stat-n{font-size:1.8rem !important}
+  .stat-l{font-size:.8rem}
+  .feat{padding:60px 0}
+  .feat-tabs{gap:6px}
+  .feat-tab{padding:8px 14px;font-size:.78rem}
+  .fpc h3{font-size:1.3rem}
+  .fpc>p{font-size:.9rem}
+  .flist li{font-size:.88rem}
+  .midcta{padding:60px 0}
+  .midcta h2{font-size:1.6rem !important}
+  .midcta .btns .btn{width:100%;justify-content:center}
+  .how{padding:60px 0}
+  .how-head{margin-bottom:40px}
+  .step-n{width:56px;height:56px;font-size:1.2rem}
+  .step h3{font-size:1.05rem}
+  .step p{font-size:.88rem}
+  .pricing{padding:60px 0}
+  .pgrid{max-width:100% !important}
+  .pc{padding:28px 20px}
+  .pc.pop .pc-inner{padding:28px 20px}
+  .pc-name{font-size:1.2rem}
+  .pc-val{font-size:2.8rem}
+  .pc-desc{font-size:.88rem;min-height:auto}
+  .pc-feats li{font-size:.88rem}
+  .ctaf{padding:60px 0}
+  .ctaf h2{font-size:1.6rem !important}
+  .ctaf-robot{width:100px}
+  .ctaf .btns .btn{width:100%;justify-content:center}
+  .footer{padding:40px 0 20px}
+  .fgrid{grid-template-columns:1fr !important;gap:24px}
+  .fb-brand p{max-width:100%}
+}
+
+@media(max-width:768px){
+  .nav{padding:12px 0}
+  .nav-logo{height:26px}
+  .hero-badge{font-size:.7rem;padding:6px 14px}
+  .hero-d{font-size:.82rem}
+  .feat-tabs{margin-bottom:32px}
+  .fpanel.on{gap:28px}
+  .fpc h3{font-size:1.4rem}
+  .midcta .btns{flex-direction:column;align-items:center}
+  .ctaf .btns{flex-direction:column;align-items:center}
+  .pricing-note{font-size:.85rem}
+  .pc-badge{font-size:.65rem;padding:4px 14px}
+}
+html.dark .pricing{background:transparent !important;border:none !important;box-shadow:none !important}
+html.dark .pc{background:linear-gradient(165deg,#111 0%,#0c0c0c 100%);border-color:rgba(250,80,0,.12);box-shadow:0 0 30px rgba(250,80,0,.05),0 4px 20px rgba(0,0,0,.4)}
+html.dark .pc:hover{border-color:rgba(250,80,0,.25);box-shadow:0 0 40px rgba(250,80,0,.08),var(--shadow-lg)}
+
+/* ── Ajustes de página interior (nav fija + toggle sobre el glass) ── */
+.pricing{padding-top:150px}
+@media(max-width:768px){.pricing{padding-top:120px}}
+.pricing .itoggle{position:relative;z-index:4}
+.pricing .estado{position:relative;z-index:4}
+.pricing-head h1{font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:800;margin-bottom:16px;font-family:var(--fd);color:var(--heading);line-height:1.15}
 
 /* FAQ */
 .faq-sec{padding:20px 0 100px}
@@ -237,7 +519,6 @@ html.dark .modal .addon{background:#141414}
 .msec{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:15px;font-size:.75rem;color:var(--text-2)}
 
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px}}
-@media(max-width:768px){.ph-hero{padding:120px 0 20px}}
 </style>
 </head>
 <body>
@@ -270,22 +551,25 @@ html.dark .modal .addon{background:#141414}
 
 <main>
 
-<!-- HERO -->
-<section class="ph-hero">
-  <div class="ctn">
-    <span class="sl">Planes y Precios</span>
-    <h1>Invierte en tu <span class="tg">crecimiento</span></h1>
-    <p class="sub">Elige el plan perfecto para tus necesidades. Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
-    <div class="itoggle" id="itoggle">
-      <button type="button" data-i="mensual" class="on">Mensual</button>
-      <button type="button" data-i="anual">Anual<span class="save" id="save-pct"></span></button>
-    </div>
+<!-- PRICING (glassmorphism del home) -->
+<section class="pricing" id="planes">
+  <div class="pricing-bg" aria-hidden="true">
+    <div class="pbg-blob b1"></div>
+    <div class="pbg-blob b2"></div>
+    <div class="pbg-blob b3"></div>
+    <div class="pbg-grid"></div>
   </div>
-</section>
-
-<!-- PRICING -->
-<section class="psec">
   <div class="ctn">
+    <div class="pricing-head">
+      <span class="sl">Planes y Precios</span>
+      <h1>Invierte en tu <span class="tg">crecimiento</span></h1>
+      <p>Elige el plan perfecto para tus necesidades. Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
+      <div class="itoggle" id="itoggle">
+        <button type="button" data-i="mensual" class="on">Mensual</button>
+        <button type="button" data-i="anual">Anual<span class="save" id="save-pct"></span></button>
+      </div>
+    </div>
+
     <div class="estado" id="estado">
       <div class="spin"></div>
       <h2>Cargando planes…</h2>
@@ -293,7 +577,7 @@ html.dark .modal .addon{background:#141414}
     </div>
 
     <div class="pgrid" id="pgrid" hidden></div>
-    <p class="note" id="note" hidden>Sin compromiso, sin contratos, cancelas cuando quieras.</p>
+    <p class="pricing-note" id="note" hidden>Sin compromiso, sin contratos, cancelas cuando quieras.</p>
   </div>
 </section>
 
@@ -417,43 +701,47 @@ html.dark .modal .addon{background:#141414}
     var grid = $('pgrid'); grid.innerHTML = '';
     planes.forEach(function(pl){
       var esUnico = pl.tipo === 'pago_unico';
-      var esAnual = intervalo === 'anual' && pl.precio_anual;
-      var precio = esAnual && !esUnico ? pl.precio_anual : pl.precio_mensual;
+      var esAnual = intervalo === 'anual' && pl.precio_anual && !esUnico;
+      var precio = esAnual ? pl.precio_anual : pl.precio_mensual;
       var card = document.createElement('article');
       card.className = 'pc' + (pl.destacado ? ' pop' : '');
+      var host = card;
       if (pl.destacado) {
-        var badge = document.createElement('div'); badge.className = 'badge'; badge.textContent = 'Recomendado'; card.appendChild(badge);
+        var beam = document.createElement('div'); beam.className = 'pc-beam'; card.appendChild(beam);
+        var badge = document.createElement('div'); badge.className = 'pc-badge'; badge.textContent = 'El más elegido'; card.appendChild(badge);
+        host = document.createElement('div'); host.className = 'pc-inner'; card.appendChild(host);
       }
-      if (esUnico) {
-        var tag = document.createElement('span'); tag.className = 'pc-tag'; tag.textContent = 'Pago único'; card.appendChild(tag);
-      }
-      var name = document.createElement('div'); name.className = 'pc-name'; name.textContent = pl.nombre; card.appendChild(name);
-      var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = pl.descripcion || ''; card.appendChild(desc);
+      var name = document.createElement('div'); name.className = 'pc-name'; name.textContent = (pl.nombre || '').toUpperCase(); host.appendChild(name);
+      var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = pl.descripcion || ''; host.appendChild(desc);
       var pr = document.createElement('div'); pr.className = 'pc-price';
       var cur = document.createElement('span'); cur.className = 'pc-cur'; cur.textContent = '$';
       var val = document.createElement('span'); val.className = 'pc-val'; val.textContent = Number(precio).toLocaleString('es-CL', {maximumFractionDigits: 0});
-      pr.appendChild(cur); pr.appendChild(val); card.appendChild(pr);
+      pr.appendChild(cur); pr.appendChild(val); host.appendChild(pr);
       var per = document.createElement('div'); per.className = 'pc-per';
-      per.textContent = (pl.moneda || 'USD') + (esUnico ? ' · Pago único' : (esAnual ? '/Año' : '/Mes'));
-      card.appendChild(per);
-      var eq = document.createElement('div'); eq.className = 'pc-eq';
-      if (esAnual && !esUnico) eq.textContent = 'equivale a ' + money(pl.precio_anual / 12) + '/mes';
-      if (esUnico) eq.textContent = 'Sin cobros recurrentes';
-      card.appendChild(eq);
+      per.textContent = (pl.moneda || 'USD') + (esUnico ? ' (pago único)' : (esAnual ? '/Año' : '/Mes'));
+      if (esAnual) per.textContent += ' · equivale a ' + money(pl.precio_anual / 12) + '/mes';
+      host.appendChild(per);
       var ul = document.createElement('ul'); ul.className = 'pc-feats';
+      var idealTxt = null;
       (pl.features || []).forEach(function(f){
+        var txt = String(f);
+        if (/^ideal para/i.test(txt.trim())) { idealTxt = txt; return; }
         var li = document.createElement('li');
-        var ico = document.createElement('span'); ico.className = 'ico'; ico.appendChild(checkIcon());
-        li.appendChild(ico);
-        li.appendChild(document.createTextNode(f));
+        if (/:\s*$/.test(txt)) li.className = 'inc';
+        li.appendChild(checkIcon());
+        li.appendChild(document.createTextNode(' ' + txt));
         ul.appendChild(li);
       });
-      card.appendChild(ul);
+      host.appendChild(ul);
+      if (idealTxt) {
+        var ideal = document.createElement('div'); ideal.className = 'pc-ideal'; ideal.textContent = idealTxt;
+        host.appendChild(ideal);
+      }
       var btn = document.createElement('button');
       btn.className = 'btn ' + (pl.destacado ? 'bs' : 'bo');
       btn.type = 'button'; btn.textContent = esUnico ? 'Comprar' : 'Seleccionar plan';
       btn.addEventListener('click', function(){ abrirModal(pl); });
-      card.appendChild(btn);
+      host.appendChild(btn);
       grid.appendChild(card);
     });
     grid.hidden = false; $('note').hidden = false; $('faq').hidden = false;
