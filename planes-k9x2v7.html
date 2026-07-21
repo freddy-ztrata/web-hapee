@@ -159,6 +159,8 @@ html.dark .wrap{background:
       <input id="f-empresa" maxlength="255" autocomplete="organization">
       <label for="f-telefono">Teléfono</label>
       <input id="f-telefono" type="tel" maxlength="40" autocomplete="tel">
+      <label for="f-cupon">Código de descuento</label>
+      <input id="f-cupon" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Opcional">
       <div class="merr" id="m-error"></div>
       <div class="mact">
         <button type="button" class="btn cancel" id="m-cancel">Cancelar</button>
@@ -298,6 +300,7 @@ html.dark .wrap{background:
         apellido: $('f-apellido').value.trim(),
         empresa: $('f-empresa').value.trim(),
         telefono: $('f-telefono').value.trim(),
+        promo_code: $('f-cupon').value.trim() || undefined,
         idioma: 'es',
         preview: preview || undefined,
         utm: utm(),
