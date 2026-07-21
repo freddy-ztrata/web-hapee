@@ -161,6 +161,7 @@ html.dark .wrap{background:
       <input id="f-telefono" type="tel" maxlength="40" autocomplete="tel">
       <label for="f-cupon">Código de descuento</label>
       <input id="f-cupon" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Opcional">
+      <div id="m-addon"></div>
       <div class="merr" id="m-error"></div>
       <div class="mact">
         <button type="button" class="btn cancel" id="m-cancel">Cancelar</button>
@@ -220,10 +221,13 @@ html.dark .wrap{background:
       var cur = document.createElement('span'); cur.className = 'pc-cur'; cur.textContent = '$';
       var val = document.createElement('span'); val.className = 'pc-val'; val.textContent = Number(precio).toLocaleString('es-CL', {maximumFractionDigits: 0});
       pr.appendChild(cur); pr.appendChild(val); host.appendChild(pr);
+      var esUnico = pl.tipo === 'pago_unico';
       var per = document.createElement('div'); per.className = 'pc-per';
-      per.textContent = (pl.moneda || 'USD') + (esAnual ? '/Año' : '/Mes'); host.appendChild(per);
+      per.textContent = (pl.moneda || 'USD') + (esUnico ? ' · Pago único' : (esAnual ? '/Año' : '/Mes'));
+      host.appendChild(per);
       var eq = document.createElement('div'); eq.className = 'pc-eq';
-      if (esAnual) eq.textContent = 'equivale a ' + money(pl.precio_anual / 12) + '/mes';
+      if (esAnual && !esUnico) eq.textContent = 'equivale a ' + money(pl.precio_anual / 12) + '/mes';
+      if (esUnico) eq.textContent = 'Sin cobros recurrentes';
       host.appendChild(eq);
       var ul = document.createElement('ul'); ul.className = 'pc-feats';
       (pl.features || []).forEach(function(f){
@@ -233,7 +237,7 @@ html.dark .wrap{background:
       host.appendChild(ul);
       var btn = document.createElement('button');
       btn.className = 'btn ' + (pl.destacado ? 'bs' : 'bo');
-      btn.type = 'button'; btn.textContent = 'Seleccionar plan';
+      btn.type = 'button'; btn.textContent = esUnico ? 'Comprar' : 'Seleccionar plan';
       btn.addEventListener('click', function(){ abrirModal(pl); });
       host.appendChild(btn);
       grid.appendChild(card);
@@ -264,9 +268,34 @@ html.dark .wrap{background:
 
   function abrirModal(pl){
     sel = pl;
-    $('m-plan').textContent = pl.nombre + ' · ' + (intervalo === 'anual' && pl.precio_anual
-      ? money(pl.precio_anual) + ' ' + (pl.moneda || 'USD') + '/Año'
-      : money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + '/Mes');
+    var esUnico = pl.tipo === 'pago_unico';
+    $('m-plan').textContent = pl.nombre + ' · ' + (esUnico
+      ? money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + ' (pago único)'
+      : (intervalo === 'anual' && pl.precio_anual
+        ? money(pl.precio_anual) + ' ' + (pl.moneda || 'USD') + '/Año'
+        : money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + '/Mes'));
+    // Addon de pago único (ej. Elite Setup): solo al comprar una suscripción.
+    var addonBox = $('m-addon'); addonBox.innerHTML = '';
+    var unicos = planes.filter(function(p){ return p.tipo === 'pago_unico' && p.slug !== pl.slug; });
+    if (!esUnico && unicos.length) {
+      unicos.forEach(function(u){
+        var lbl = document.createElement('label');
+        lbl.style.cssText = 'display:flex;align-items:flex-start;gap:8px;margin:10px 0 0;padding:10px 12px;border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.85rem;color:var(--text)';
+        var chk = document.createElement('input');
+        chk.type = 'checkbox'; chk.className = 'addon-chk'; chk.value = u.slug;
+        chk.style.cssText = 'margin-top:2px;accent-color:var(--accent)';
+        chk.addEventListener('change', function(){
+          // solo un addon a la vez (0-1 pago único por carrito)
+          if (chk.checked) addonBox.querySelectorAll('.addon-chk').forEach(function(o){ if (o !== chk) o.checked = false; });
+        });
+        var txt = document.createElement('span');
+        var b = document.createElement('strong'); b.textContent = 'Agregar ' + u.nombre;
+        txt.appendChild(b);
+        txt.appendChild(document.createTextNode(' (+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ', pago único)' + (u.descripcion ? ' — ' + u.descripcion : '')));
+        lbl.appendChild(chk); lbl.appendChild(txt);
+        addonBox.appendChild(lbl);
+      });
+    }
     $('m-error').style.display = 'none';
     $('mask').classList.add('open');
     $('f-nombre').focus();
@@ -301,6 +330,7 @@ html.dark .wrap{background:
         empresa: $('f-empresa').value.trim(),
         telefono: $('f-telefono').value.trim(),
         promo_code: $('f-cupon').value.trim() || undefined,
+        addon_slug: (function(){ var c = document.querySelector('#m-addon .addon-chk:checked'); return c ? c.value : undefined; })(),
         idioma: 'es',
         preview: preview || undefined,
         utm: utm(),
