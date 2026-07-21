@@ -14,7 +14,7 @@
   gtag('config', 'G-9RFLY7C3XE');
 </script>
 <title>Agente de IA para WhatsApp | Chatbot que atiende y vende 24/7 — Hapee</title>
-<meta name="description" content="Agente de IA y chatbot para WhatsApp Business que responde, atiende clientes 24 horas y vende por ti — en español. Automatiza la atención de tu WhatsApp con IA y deja de perder clientes por no responder. Software de atención WhatsApp en Chile, con WhatsApp Business API oficial.">
+<meta name="description" content="Agente de IA y chatbot para WhatsApp Business que responde, atiende clientes 24 horas y vende por ti — en español. Automatiza la atención de tu WhatsApp con IA y deja de perder clientes por no responder. Software de atención WhatsApp en Chile con la mejor IA de Anthropic (Claude), OpenAI (GPT) y Google (Gemini) en una sola plataforma.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="google-site-verification" content="LRNHJoZ4Jz1c-EfL_kNgbuB7CQO3Q1X7D66n8ef2hAY" />
 <meta name="facebook-domain-verification" content="t8t7uj7hdgdojg5vtvlxk0o2jfnwtk" />
@@ -36,7 +36,7 @@
 <meta property="og:locale:alternate" content="es_ES">
 <meta property="og:url" content="https://hapee.ai/agentes-ia-whatsapp">
 <meta property="og:title" content="Agente de IA para WhatsApp que atiende y vende 24/7 — Hapee">
-<meta property="og:description" content="Chatbot con IA para WhatsApp Business: responde, atiende 24/7 y vende por ti, en español. Deja de perder clientes por no responder a tiempo.">
+<meta property="og:description" content="Chatbot con IA para WhatsApp: responde, atiende 24/7 y vende por ti, en español. Con lo mejor de Claude, GPT y Gemini en una sola plataforma.">
 <meta property="og:image" content="https://hapee.ai/img/robot.png">
 <meta property="og:image:width" content="435">
 <meta property="og:image:height" content="800">
@@ -413,6 +413,17 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 .hero h1 .w{display:inline-block}
 .hero-sub{font-size:1.2rem;color:var(--text);line-height:1.7;margin-bottom:32px;max-width:500px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+/* Strip "la mejor IA" (Claude · GPT · Gemini) */
+.hero-ai{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:2px 0 20px}
+.hero-ai .hai-lbl{font-size:.82rem;font-weight:700;color:var(--text-2)}
+.hero-ai .hai-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.08);font-size:.82rem;font-weight:700;color:var(--heading);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+html.dark .hero-ai .hai-chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.hero-ai .hai-chip img{width:17px;height:17px;object-fit:contain;display:block;border-radius:4px}
+@media(max-width:600px){
+  .hero-ai{justify-content:center;gap:7px;margin-bottom:16px}
+  .hero-ai .hai-lbl{width:100%;text-align:center;font-size:.78rem;margin-bottom:2px}
+  .hero-ai .hai-chip{padding:6px 11px;font-size:.8rem}
+}
 /* Partner cert badges en el hero (logos oficiales) */
 .hero-badges{display:flex;gap:12px;flex-wrap:wrap;margin:2px 0 22px}
 .hero-cert{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:14px;background:rgba(255,255,255,.72);border:1.5px solid rgba(0,0,0,.08);box-shadow:0 6px 20px rgba(0,0,0,.06);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .25s,box-shadow .25s,border-color .25s}
@@ -780,6 +791,17 @@ html.dark .hi-ind{color:var(--accent);background:rgba(250,80,0,.04);border-color
   .hi-pi-icon{width:32px;height:32px}
   .hi-pi-send{width:38px;height:38px}
 }
+@media(max-width:600px){
+  .hero .ctn{text-align:center}
+  .hero h1{font-size:clamp(1.75rem,7vw,2.3rem);line-height:1.16;letter-spacing:0;overflow-wrap:break-word}
+  .hero h1 .w{display:inline}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-ctas{justify-content:center}
+  .hero-ctas .btn{width:100%;justify-content:center}
+  .hero-badges{justify-content:center}
+  .hero-ai{justify-content:center}
+  .hero-d{text-align:center}
+}
 @media(max-width:480px){
   .hi-phone{height:520px;border-radius:14px}
   .hi-ph-actions button{width:28px;height:28px}
@@ -846,7 +868,7 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
 @media(max-width:480px){
   .ctn{padding:0 16px}
   .hero{padding:110px 0 50px;min-height:auto}
-  .hero h1{font-size:2.2rem}
+  .hero h1{font-size:clamp(1.8rem,7.4vw,2.2rem)}
   .hero-sub{font-size:1rem}
   .hero-ctas .btn{width:100%;justify-content:center}
   .hero-robot{max-width:180px}
@@ -2073,12 +2095,18 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
         <span class="w">Tu</span> <span class="w">WhatsApp,</span> <span class="w">respondido</span> <span class="w">al</span> <span class="w">instante.</span><br>
         <span class="w tg">Un</span> <span class="w tg">agente</span> <span class="w tg">de</span> <span class="w tg">IA</span> <span class="w tg">que</span> <span class="w tg">vende</span> <span class="w tg">24/7.</span>
       </h1>
-      <p class="hero-sub">Deja de perder clientes por no responder a tiempo. Nuestro <strong>chatbot con IA para WhatsApp Business</strong> atiende, califica y agenda solo — en español y conectado a tu CRM. El agente de IA para ventas que trabaja por ti las 24 horas.</p>
+      <p class="hero-sub">Deja de perder clientes por no responder a tiempo. Nuestro <strong>chatbot con IA para WhatsApp</strong> atiende, califica y agenda solo — en español y conectado a tu CRM. Trabaja con <strong>lo mejor de la IA de Anthropic, OpenAI y Google, en una sola plataforma</strong>.</p>
       <div class="hero-ctas">
         <a href="https://wa.me/56965349093?text=Hola%20%F0%9F%91%8B%20Vengo%20de%20Google.%20Quiero%20un%20agente%20de%20IA%20que%20atienda%20y%20venda%20por%20mi%20WhatsApp%2024%2F7." class="btn bs glow" target="_blank" rel="noopener noreferrer" onclick="try{gtag('event','dg_whatsapp')}catch(e){}">Quiero mi agente en WhatsApp →</a>
         <a href="#vsl-section" class="btn bo" onclick="event.preventDefault();document.getElementById('vsl-section').scrollIntoView({behavior:'smooth',block:'start'})">▶ Ver Hapee en acción</a>
       </div>
-      <p class="hero-d">WhatsApp Business API oficial · atención 24/7 · en español · validado por Meta &amp; Google Partner</p>
+      <p class="hero-d">API oficial de WhatsApp · atención 24/7 · en español · validado por Meta &amp; Google Partner</p>
+      <div class="hero-ai" aria-label="Impulsado por Claude, GPT y Gemini">
+        <span class="hai-lbl">Un solo agente, la mejor IA:</span>
+        <span class="hai-chip"><img src="img/orbit/claude.png" alt="Anthropic Claude" loading="lazy"> Claude</span>
+        <span class="hai-chip"><img src="img/orbit/chatgpt.png" alt="OpenAI GPT" loading="lazy"> GPT</span>
+        <span class="hai-chip"><img src="img/orbit/gemini.png" alt="Google Gemini" loading="lazy"> Gemini</span>
+      </div>
       <div class="hero-badges">
         <span class="hero-cert" aria-label="Meta Business Partner">
           <svg viewBox="0 0 287.56 191" aria-hidden="true">
