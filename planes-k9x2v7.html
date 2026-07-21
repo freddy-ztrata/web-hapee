@@ -96,8 +96,21 @@ html.dark .wrap{background:
 .modal h3{font-size:1.15rem;color:var(--heading);margin-bottom:4px}
 .modal .mp{font-size:.85rem;color:var(--text-2);margin-bottom:18px}
 .modal label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-2);margin:14px 0 5px}
-.modal input{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg-alt);color:var(--heading);font-family:var(--fb);font-size:.95rem}
-.modal input:focus{outline:none;border-color:var(--accent)}
+.modal input{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:var(--bg-alt);color:var(--heading);font-family:var(--fb);font-size:.95rem;transition:border-color .2s,box-shadow .2s}
+.modal input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(250,80,0,.13)}
+.modal .mrow{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media(max-width:480px){.modal .mrow{grid-template-columns:1fr}}
+/* Addon de pago único (ej. Elite Setup) — card seleccionable */
+.modal .addon{display:flex;align-items:flex-start;gap:11px;margin:18px 0 0;padding:13px 14px;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;transition:var(--tr);background:var(--bg-alt);text-transform:none;letter-spacing:0;font-weight:400}
+.modal .addon:hover{border-color:rgba(250,80,0,.4)}
+.modal .addon.on{border-color:var(--accent);background:rgba(250,80,0,.06);box-shadow:0 2px 12px rgba(250,80,0,.10)}
+.modal .addon input{width:17px;height:17px;margin-top:2px;accent-color:var(--accent);flex-shrink:0;box-shadow:none;padding:0}
+.modal .addon .abody{flex:1;min-width:0}
+.modal .addon .ahead{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.modal .addon .an{font-size:.92rem;font-weight:700;color:var(--heading)}
+.modal .addon .ap{font-size:.85rem;font-weight:800;color:var(--accent);white-space:nowrap}
+.modal .addon .at{font-size:.68rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;background:rgba(250,80,0,.1);padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:4px}
+.modal .addon .ad{font-size:.8rem;color:var(--text-2);margin-top:4px;line-height:1.5}
 .merr{display:none;background:rgba(204,68,53,.1);border:1px solid rgba(204,68,53,.4);color:#CC4435;border-radius:12px;padding:10px 14px;font-size:.85rem;margin-top:14px}
 .mact{display:flex;gap:10px;margin-top:22px}
 .mact .btn{margin-top:0}
@@ -149,16 +162,28 @@ html.dark .wrap{background:
     <h3 id="m-titulo">Completa tus datos</h3>
     <p class="mp" id="m-plan"></p>
     <form id="m-form" autocomplete="on">
-      <label for="f-nombre">Nombre *</label>
-      <input id="f-nombre" required maxlength="120" autocomplete="given-name">
-      <label for="f-apellido">Apellido</label>
-      <input id="f-apellido" maxlength="120" autocomplete="family-name">
+      <div class="mrow">
+        <div>
+          <label for="f-nombre">Nombre *</label>
+          <input id="f-nombre" required maxlength="120" autocomplete="given-name">
+        </div>
+        <div>
+          <label for="f-apellido">Apellido</label>
+          <input id="f-apellido" maxlength="120" autocomplete="family-name">
+        </div>
+      </div>
       <label for="f-email">Correo electrónico *</label>
       <input id="f-email" type="email" required maxlength="255" autocomplete="email">
-      <label for="f-empresa">Empresa</label>
-      <input id="f-empresa" maxlength="255" autocomplete="organization">
-      <label for="f-telefono">Teléfono</label>
-      <input id="f-telefono" type="tel" maxlength="40" autocomplete="tel">
+      <div class="mrow">
+        <div>
+          <label for="f-empresa">Empresa</label>
+          <input id="f-empresa" maxlength="255" autocomplete="organization">
+        </div>
+        <div>
+          <label for="f-telefono">Teléfono</label>
+          <input id="f-telefono" type="tel" maxlength="40" autocomplete="tel">
+        </div>
+      </div>
       <label for="f-cupon">Código de descuento</label>
       <input id="f-cupon" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Opcional">
       <div id="m-addon"></div>
@@ -266,36 +291,58 @@ html.dark .wrap{background:
     });
   }
 
+  function resumenModal(){
+    if (!sel) return;
+    var esUnico = sel.tipo === 'pago_unico';
+    var base = sel.nombre + ' · ' + (esUnico
+      ? money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + ' (pago único)'
+      : (intervalo === 'anual' && sel.precio_anual
+        ? money(sel.precio_anual) + ' ' + (sel.moneda || 'USD') + '/Año'
+        : money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + '/Mes'));
+    var chk = document.querySelector('#m-addon .addon-chk:checked');
+    if (chk) {
+      var u = planes.find(function(p){ return p.slug === chk.value; });
+      if (u) base += '  +  ' + u.nombre + ' · ' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ' (pago único)';
+    }
+    $('m-plan').textContent = base;
+  }
+
   function abrirModal(pl){
     sel = pl;
     var esUnico = pl.tipo === 'pago_unico';
-    $('m-plan').textContent = pl.nombre + ' · ' + (esUnico
-      ? money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + ' (pago único)'
-      : (intervalo === 'anual' && pl.precio_anual
-        ? money(pl.precio_anual) + ' ' + (pl.moneda || 'USD') + '/Año'
-        : money(pl.precio_mensual) + ' ' + (pl.moneda || 'USD') + '/Mes'));
     // Addon de pago único (ej. Elite Setup): solo al comprar una suscripción.
     var addonBox = $('m-addon'); addonBox.innerHTML = '';
     var unicos = planes.filter(function(p){ return p.tipo === 'pago_unico' && p.slug !== pl.slug; });
     if (!esUnico && unicos.length) {
       unicos.forEach(function(u){
         var lbl = document.createElement('label');
-        lbl.style.cssText = 'display:flex;align-items:flex-start;gap:8px;margin:10px 0 0;padding:10px 12px;border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.85rem;color:var(--text)';
+        lbl.className = 'addon';
         var chk = document.createElement('input');
         chk.type = 'checkbox'; chk.className = 'addon-chk'; chk.value = u.slug;
-        chk.style.cssText = 'margin-top:2px;accent-color:var(--accent)';
         chk.addEventListener('change', function(){
           // solo un addon a la vez (0-1 pago único por carrito)
-          if (chk.checked) addonBox.querySelectorAll('.addon-chk').forEach(function(o){ if (o !== chk) o.checked = false; });
+          if (chk.checked) addonBox.querySelectorAll('.addon-chk').forEach(function(o){
+            if (o !== chk) { o.checked = false; o.closest('.addon').classList.remove('on'); }
+          });
+          lbl.classList.toggle('on', chk.checked);
+          resumenModal();
         });
-        var txt = document.createElement('span');
-        var b = document.createElement('strong'); b.textContent = 'Agregar ' + u.nombre;
-        txt.appendChild(b);
-        txt.appendChild(document.createTextNode(' (+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ', pago único)' + (u.descripcion ? ' — ' + u.descripcion : '')));
-        lbl.appendChild(chk); lbl.appendChild(txt);
+        var body = document.createElement('span'); body.className = 'abody';
+        var tag = document.createElement('span'); tag.className = 'at'; tag.textContent = 'Pago único · opcional';
+        var head = document.createElement('span'); head.className = 'ahead';
+        var an = document.createElement('span'); an.className = 'an'; an.textContent = u.nombre;
+        var ap = document.createElement('span'); ap.className = 'ap'; ap.textContent = '+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD');
+        head.appendChild(an); head.appendChild(ap);
+        body.appendChild(tag); body.appendChild(head);
+        if (u.descripcion) {
+          var ad = document.createElement('span'); ad.className = 'ad'; ad.style.display = 'block';
+          ad.textContent = u.descripcion; body.appendChild(ad);
+        }
+        lbl.appendChild(chk); lbl.appendChild(body);
         addonBox.appendChild(lbl);
       });
     }
+    resumenModal();
     $('m-error').style.display = 'none';
     $('mask').classList.add('open');
     $('f-nombre').focus();
