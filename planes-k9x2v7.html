@@ -291,18 +291,30 @@ html.dark .wrap{background:
     });
   }
 
+  function precioPlanTxt(p){
+    return intervalo === 'anual' && p.precio_anual
+      ? money(p.precio_anual) + ' ' + (p.moneda || 'USD') + '/Año'
+      : money(p.precio_mensual) + ' ' + (p.moneda || 'USD') + '/Mes';
+  }
+
   function resumenModal(){
     if (!sel) return;
     var esUnico = sel.tipo === 'pago_unico';
-    var base = sel.nombre + ' · ' + (esUnico
-      ? money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + ' (pago único)'
-      : (intervalo === 'anual' && sel.precio_anual
-        ? money(sel.precio_anual) + ' ' + (sel.moneda || 'USD') + '/Año'
-        : money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + '/Mes'));
-    var chk = document.querySelector('#m-addon .addon-chk:checked');
-    if (chk) {
-      var u = planes.find(function(p){ return p.slug === chk.value; });
-      if (u) base += '  +  ' + u.nombre + ' · ' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ' (pago único)';
+    var base;
+    if (esUnico) {
+      base = sel.nombre + ' · ' + money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + ' (pago único)';
+      var pc = document.querySelector('#m-addon .plan-chk:checked');
+      if (pc) {
+        var pp = planes.find(function(p){ return p.slug === pc.value; });
+        if (pp) base = pp.nombre + ' · ' + precioPlanTxt(pp) + '  +  ' + base;
+      }
+    } else {
+      base = sel.nombre + ' · ' + precioPlanTxt(sel);
+      var chk = document.querySelector('#m-addon .addon-chk:checked');
+      if (chk) {
+        var u = planes.find(function(p){ return p.slug === chk.value; });
+        if (u) base += '  +  ' + u.nombre + ' · ' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ' (pago único)';
+      }
     }
     $('m-plan').textContent = base;
   }
@@ -310,37 +322,49 @@ html.dark .wrap{background:
   function abrirModal(pl){
     sel = pl;
     var esUnico = pl.tipo === 'pago_unico';
-    // Addon de pago único (ej. Elite Setup): solo al comprar una suscripción.
+    // Complementos del carrito (regla: 0-1 suscripción + 0-1 pago único):
+    // - comprando una SUSCRIPCIÓN → ofrecer los pagos únicos como addon;
+    // - comprando un PAGO ÚNICO → ofrecer elegir UN plan (opcional).
     var addonBox = $('m-addon'); addonBox.innerHTML = '';
-    var unicos = planes.filter(function(p){ return p.tipo === 'pago_unico' && p.slug !== pl.slug; });
-    if (!esUnico && unicos.length) {
-      unicos.forEach(function(u){
-        var lbl = document.createElement('label');
-        lbl.className = 'addon';
-        var chk = document.createElement('input');
-        chk.type = 'checkbox'; chk.className = 'addon-chk'; chk.value = u.slug;
-        chk.addEventListener('change', function(){
-          // solo un addon a la vez (0-1 pago único por carrito)
-          if (chk.checked) addonBox.querySelectorAll('.addon-chk').forEach(function(o){
-            if (o !== chk) { o.checked = false; o.closest('.addon').classList.remove('on'); }
-          });
-          lbl.classList.toggle('on', chk.checked);
-          resumenModal();
+    function cardComplemento(u, clase, tagTxt, precioTxt){
+      var lbl = document.createElement('label');
+      lbl.className = 'addon';
+      var chk = document.createElement('input');
+      chk.type = 'checkbox'; chk.className = clase; chk.value = u.slug;
+      chk.addEventListener('change', function(){
+        // máximo 1 del mismo tipo
+        if (chk.checked) addonBox.querySelectorAll('.' + clase).forEach(function(o){
+          if (o !== chk) { o.checked = false; o.closest('.addon').classList.remove('on'); }
         });
-        var body = document.createElement('span'); body.className = 'abody';
-        var tag = document.createElement('span'); tag.className = 'at'; tag.textContent = 'Pago único · opcional';
-        var head = document.createElement('span'); head.className = 'ahead';
-        var an = document.createElement('span'); an.className = 'an'; an.textContent = u.nombre;
-        var ap = document.createElement('span'); ap.className = 'ap'; ap.textContent = '+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD');
-        head.appendChild(an); head.appendChild(ap);
-        body.appendChild(tag); body.appendChild(head);
-        if (u.descripcion) {
-          var ad = document.createElement('span'); ad.className = 'ad'; ad.style.display = 'block';
-          ad.textContent = u.descripcion; body.appendChild(ad);
-        }
-        lbl.appendChild(chk); lbl.appendChild(body);
-        addonBox.appendChild(lbl);
+        lbl.classList.toggle('on', chk.checked);
+        resumenModal();
       });
+      var body = document.createElement('span'); body.className = 'abody';
+      var tag = document.createElement('span'); tag.className = 'at'; tag.textContent = tagTxt;
+      var head = document.createElement('span'); head.className = 'ahead';
+      var an = document.createElement('span'); an.className = 'an'; an.textContent = u.nombre;
+      var ap = document.createElement('span'); ap.className = 'ap'; ap.textContent = precioTxt;
+      head.appendChild(an); head.appendChild(ap);
+      body.appendChild(tag); body.appendChild(head);
+      if (u.descripcion) {
+        var ad = document.createElement('span'); ad.className = 'ad'; ad.style.display = 'block';
+        ad.textContent = u.descripcion; body.appendChild(ad);
+      }
+      lbl.appendChild(chk); lbl.appendChild(body);
+      addonBox.appendChild(lbl);
+    }
+    if (!esUnico) {
+      planes.filter(function(p){ return p.tipo === 'pago_unico' && p.slug !== pl.slug; })
+        .forEach(function(u){
+          cardComplemento(u, 'addon-chk', 'Pago único · opcional',
+            '+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD'));
+        });
+    } else {
+      planes.filter(function(p){ return p.tipo !== 'pago_unico'; })
+        .forEach(function(p2){
+          cardComplemento(p2, 'plan-chk', 'Agrega un plan · opcional',
+            '+' + precioPlanTxt(p2));
+        });
     }
     resumenModal();
     $('m-error').style.display = 'none';
@@ -365,19 +389,31 @@ html.dark .wrap{background:
     if (!sel) return;
     var btn = $('m-submit'); btn.disabled = true; btn.textContent = 'Redirigiendo…';
     $('m-error').style.display = 'none';
+    // Armar el carrito según lo elegido (regla: 0-1 plan + 0-1 pago único):
+    // - suscripción [+ addon-chk] → plan principal + pago único opcional;
+    // - pago único con plan-chk → el PLAN pasa a ser el principal y el pago
+    //   único va como addon; sin plan-chk → pago único solo.
+    var planSlug = sel.slug, addonSlug, planRef = sel;
+    if (sel.tipo === 'pago_unico') {
+      var pc = document.querySelector('#m-addon .plan-chk:checked');
+      if (pc) { planSlug = pc.value; addonSlug = sel.slug; planRef = planes.find(function(p){ return p.slug === pc.value; }) || sel; }
+    } else {
+      var ac = document.querySelector('#m-addon .addon-chk:checked');
+      if (ac) addonSlug = ac.value;
+    }
     fetch('/api/saas/checkout', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        plan_slug: sel.slug,
-        intervalo: (intervalo === 'anual' && sel.precio_anual) ? 'anual' : 'mensual',
+        plan_slug: planSlug,
+        addon_slug: addonSlug,
+        intervalo: (intervalo === 'anual' && planRef.precio_anual) ? 'anual' : 'mensual',
         email: $('f-email').value.trim(),
         nombre: $('f-nombre').value.trim(),
         apellido: $('f-apellido').value.trim(),
         empresa: $('f-empresa').value.trim(),
         telefono: $('f-telefono').value.trim(),
         promo_code: $('f-cupon').value.trim() || undefined,
-        addon_slug: (function(){ var c = document.querySelector('#m-addon .addon-chk:checked'); return c ? c.value : undefined; })(),
         idioma: 'es',
         preview: preview || undefined,
         utm: utm(),
