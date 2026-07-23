@@ -92,6 +92,9 @@ html.dark .hint{background:rgba(255,255,255,.04)}
     hint.className = 'hint';
     hint.innerHTML = '<strong>¿No ves el correo?</strong> Revisa la carpeta de spam o promociones. El enlace de activación vence en 72 horas.';
     extra.appendChild(hint);
+    var a = document.createElement('a');
+    a.className = 'btn'; a.href = '/'; a.textContent = 'Volver al inicio';
+    extra.appendChild(a);
   }
 
   function procesando(){
