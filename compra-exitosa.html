@@ -15,7 +15,7 @@
 </script>
 <meta name="robots" content="noindex, nofollow">
 <title>Compra confirmada — Hapee</title>
-<link rel="icon" href="img/logo-hapee.png">
+<link rel="icon" type="image/png" href="img/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 (function(){try{var t=localStorage.getItem('hapee-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})();
@@ -46,6 +46,16 @@ p{font-size:.95rem;color:var(--text-2);line-height:1.65}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes draw{to{stroke-dashoffset:0}}
 .warn{width:72px;height:72px;border-radius:50%;background:rgba(204,68,53,.12);border:2px solid var(--err);color:var(--err);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800}
+.hero{position:relative;width:190px;height:200px;margin:-8px auto 4px}
+.hero .robot{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 14px 26px rgba(250,80,0,.30));animation:robotIn .6s cubic-bezier(.34,1.56,.64,1),float 3.6s 0.6s ease-in-out infinite}
+.hero::before{content:'';position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.42),rgba(205,35,73,.18) 45%,transparent 70%);filter:blur(18px);z-index:1;animation:glow 3.6s ease-in-out infinite}
+.hero .badge{position:absolute;right:14px;bottom:16px;z-index:3;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,.28);border:3px solid var(--card);animation:pop .5s .45s backwards cubic-bezier(.34,1.56,.64,1)}
+.hero .badge svg{width:22px;height:22px;stroke:#fff;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .5s .7s ease forwards}
+.spark{position:absolute;z-index:1;border-radius:50%;opacity:0;animation:spark 1.4s ease-out forwards}
+@keyframes robotIn{from{transform:scale(.55) translateY(26px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes glow{0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}50%{opacity:.95;transform:translate(-50%,-50%) scale(1.06)}}
+@keyframes spark{0%{opacity:0;transform:translate(0,0) scale(.4)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1)}}
 .hint{margin-top:22px;padding:14px 18px;border-radius:14px;background:var(--bg-alt);font-size:.85rem;color:var(--text-2);text-align:left}
 html.dark .hint{background:rgba(255,255,255,.04)}
 .hint strong{color:var(--heading)}
@@ -83,9 +93,23 @@ html.dark .hint{background:rgba(255,255,255,.04)}
     $('texto').textContent = texto;
   }
 
+  function sparkles(){
+    var s = [[28,18,7,'var(--accent)',-42,-30],[152,28,5,'var(--accent-alt)',44,-24],
+             [16,118,6,'#FFB020',-46,22],[162,112,7,'var(--accent)',46,26],
+             [92,6,4,'var(--accent-alt)',0,-48],[100,150,4,'#FFB020',10,44]];
+    return s.map(function(p){
+      return '<span class="spark" style="left:'+p[0]+'px;top:'+p[1]+'px;width:'+p[2]+'px;height:'+p[2]+'px;background:'+p[3]+';--dx:'+p[4]+'px;--dy:'+p[5]+'px;"></span>';
+    }).join('');
+  }
+
   function listo(){
     set('check', '¡Bienvenido a Hapee! Tu cuenta está lista',
         'Te enviamos un correo para que definas tu contraseña y entres a tu cuenta.');
+    var ic = $('icono');
+    ic.className = 'hero';
+    ic.innerHTML = sparkles() +
+      '<img class="robot" src="img/robot.png" alt="Hapee">' +
+      '<span class="badge"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>';
     var extra = $('extra');
     extra.innerHTML = '';
     var hint = document.createElement('div');
