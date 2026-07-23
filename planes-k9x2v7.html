@@ -729,10 +729,10 @@ html.dark .modal .addon{background:#141414}
         hli.appendChild(document.createTextNode(' ' + pl.bullet_destacado));
         ul.appendChild(hli);
       }
-      var idealTxt = null;
+      var idealTxt = pl.ideal_para || null;  // campo dedicado; fallback a un bullet "Ideal para..."
       (pl.features || []).forEach(function(f){
         var txt = String(f);
-        if (/^ideal para/i.test(txt.trim())) { idealTxt = txt; return; }
+        if (/^ideal para/i.test(txt.trim())) { if (!idealTxt) idealTxt = txt; return; }
         var li = document.createElement('li');
         if (/:\s*$/.test(txt)) li.className = 'inc';
         li.appendChild(checkIcon());
