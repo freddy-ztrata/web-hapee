@@ -722,6 +722,13 @@ html.dark .modal .addon{background:#141414}
       if (esAnual) per.textContent += ' · equivale a ' + money(pl.precio_anual / 12) + '/mes';
       host.appendChild(per);
       var ul = document.createElement('ul'); ul.className = 'pc-feats';
+      // Bullet inicial destacado ("Todo lo del plan X más:") — 1er ítem en naranja
+      if (pl.bullet_destacado) {
+        var hli = document.createElement('li'); hli.className = 'inc';
+        hli.appendChild(checkIcon());
+        hli.appendChild(document.createTextNode(' ' + pl.bullet_destacado));
+        ul.appendChild(hli);
+      }
       var idealTxt = null;
       (pl.features || []).forEach(function(f){
         var txt = String(f);
