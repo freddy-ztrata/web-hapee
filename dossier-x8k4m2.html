@@ -75,11 +75,15 @@ nav .n-right{display:flex;align-items:center;gap:10px}
 .btn.primary:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .btn.ghost{border-color:var(--border-2);color:var(--text)}
 .btn.ghost:hover{border-color:var(--accent);color:#fff}
-.hero-robot{position:relative;display:flex;justify-content:center}
-.hero-robot::after{content:'';position:absolute;inset:6% 10% 4%;border-radius:50%;z-index:0;
-  background:radial-gradient(circle,rgba(250,80,0,.32),rgba(205,35,73,.14) 45%,transparent 70%);filter:blur(18px)}
-.hero-robot img{position:relative;z-index:1;width:min(100%,420px);filter:drop-shadow(0 26px 50px rgba(0,0,0,.55));animation:float 6s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-robot{position:relative;display:flex;justify-content:center;align-items:flex-end}
+.hero-robot::before{content:'';position:absolute;left:50%;top:42%;width:74%;height:66%;transform:translate(-50%,-50%);z-index:0;border-radius:50%;
+  background:radial-gradient(circle,rgba(250,80,0,.32),rgba(205,35,73,.15) 45%,transparent 70%);filter:blur(28px);animation:glowPulse 5s ease-in-out infinite}
+.hero-robot::after{content:'';position:absolute;left:50%;bottom:1%;width:58%;height:12%;transform:translateX(-50%);z-index:0;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(0,0,0,.6),transparent 70%);filter:blur(11px);animation:shadowPulse 5s ease-in-out infinite}
+.hero-robot img{position:relative;z-index:1;width:auto;height:clamp(340px,44vw,480px);filter:drop-shadow(0 30px 46px rgba(0,0,0,.55));animation:robotFloat 5s ease-in-out infinite;transform-origin:50% 92%}
+@keyframes robotFloat{0%{transform:translateY(0) rotate(-1.8deg)}25%{transform:translateY(-12px) rotate(1deg)}50%{transform:translateY(-19px) rotate(2deg)}75%{transform:translateY(-9px) rotate(-.6deg)}100%{transform:translateY(0) rotate(-1.8deg)}}
+@keyframes glowPulse{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(.95)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.07)}}
+@keyframes shadowPulse{0%,100%{opacity:.55;transform:translateX(-50%) scale(1)}50%{opacity:.38;transform:translateX(-50%) scale(.84)}}
 .badge-pill{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
   color:var(--accent);border:1px solid var(--border);border-radius:var(--pill);padding:8px 16px;background:rgba(250,80,0,.06)}
 /* stat strip */
@@ -166,17 +170,23 @@ table.cmp tr:last-child td{border-bottom:0}
 
 /* ── EQUIPO ── */
 .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:clamp(34px,5vw,52px)}
-.mem{background:var(--card);border:1px solid var(--border-2);border-radius:18px;padding:22px;text-align:center;transition:var(--tr)}
+.mem{background:var(--card);border:1px solid var(--border-2);border-radius:18px;padding:24px 20px 20px;text-align:center;transition:var(--tr);display:flex;flex-direction:column;align-items:center}
 .mem:hover{border-color:var(--border);transform:translateY(-3px)}
-.mem.key{border-color:var(--border);background:linear-gradient(170deg,rgba(250,80,0,.08),rgba(255,255,255,.02))}
-.mem .av{width:66px;height:66px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;
-  font-family:var(--fd);font-size:1.6rem;color:#fff;letter-spacing:1px;background:linear-gradient(135deg,#2a2422,#1a1614);border:1px solid var(--border-2)}
-.mem.key .av{background:var(--grad);border-color:transparent;box-shadow:0 10px 26px -12px rgba(250,80,0,.6)}
-.mem .nm{font-weight:700;color:#fff;font-size:1rem}
-.mem .rl{font-size:.82rem;color:var(--text-2);margin-top:3px}
+.mem.key{border-color:rgba(250,80,0,.4);background:linear-gradient(170deg,rgba(250,80,0,.09),rgba(255,255,255,.02))}
+.mem .av{width:100px;height:100px;margin:0 auto 14px;border-radius:50%;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#2a2422,#1a1614);border:2px solid var(--border-2);display:grid;place-items:center;flex-shrink:0}
+.mem .av img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
+.mem .av .mono{font-family:var(--fd);font-size:2.2rem;color:#fff;letter-spacing:1px}
+.mem.key .av{border-color:var(--accent);box-shadow:0 12px 28px -12px rgba(250,80,0,.65)}
+.mem.key .av .mono{position:absolute;inset:0;display:grid;place-items:center;background:var(--grad)}
+.mem .nm{font-weight:700;color:#fff;font-size:1.02rem}
+.mem .rl{font-size:.82rem;color:var(--text-2);margin-top:3px;min-height:2.2em;display:flex;align-items:center;justify-content:center}
 .mem.key .rl{color:var(--accent);font-weight:600}
+.mem .li{display:inline-flex;align-items:center;justify-content:center;margin-top:11px;width:28px;height:28px;border-radius:8px;color:var(--text-2);border:1px solid var(--border-2);transition:var(--tr)}
+.mem .li:hover{color:#fff;background:#0A66C2;border-color:#0A66C2;transform:translateY(-1px)}
+.mem .li svg{width:15px;height:15px}
 @media(max-width:900px){.team-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:620px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.team-grid{grid-template-columns:repeat(2,1fr)}.mem .av{width:84px;height:84px}}
 
 /* ── PLANES ── */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(34px,5vw,52px);align-items:stretch}
@@ -204,7 +214,10 @@ table.cmp tr:last-child td{border-bottom:0}
 .cta .contact{margin-top:26px;display:flex;flex-direction:column;gap:8px;font-size:.96rem;color:var(--text-2)}
 .cta .contact b{color:#fff;font-weight:700}
 .cta .contact a:hover{color:var(--accent)}
-.cta-robot img{width:min(100%,340px);margin:0 auto;filter:drop-shadow(0 26px 50px rgba(0,0,0,.55));animation:float 6s ease-in-out infinite}
+.cta-robot{position:relative;display:flex;justify-content:center;align-items:flex-end}
+.cta-robot::before{content:'';position:absolute;left:50%;top:44%;width:78%;height:64%;transform:translate(-50%,-50%);z-index:0;border-radius:50%;
+  background:radial-gradient(circle,rgba(250,80,0,.28),rgba(205,35,73,.14) 45%,transparent 70%);filter:blur(26px);animation:glowPulse 5.5s ease-in-out infinite}
+.cta-robot img{position:relative;z-index:1;width:auto;height:clamp(260px,34vw,380px);margin:0 auto;filter:drop-shadow(0 26px 50px rgba(0,0,0,.55));animation:robotFloat 5.5s ease-in-out infinite;transform-origin:50% 92%}
 .certs{margin-top:clamp(40px,6vw,64px);padding-top:34px;border-top:1px solid var(--border-2)}
 .certs .cap{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
 .certs .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
@@ -242,7 +255,7 @@ table.cmp tr:last-child td{border-bottom:0}
           <a class="btn ghost" href="#planes">Planes y precios</a>
         </div>
       </div>
-      <div class="hero-robot"><img src="img/robot.png" alt="Asistente Hapee" width="420" height="420"></div>
+      <div class="hero-robot"><img src="img/robot.png" alt="Asistente Hapee" width="435" height="800"></div>
     </div>
     <div class="stats">
       <div class="stat"><div class="n">+2K</div><div class="l">Clientes automatizados</div></div>
@@ -320,6 +333,30 @@ table.cmp tr:last-child td{border-bottom:0}
         <span class="sector">Salud · B2B Médico · 5+ años</span>
         <div class="brand"><div class="mono">M</div><h3>Mundomed</h3></div>
         <p>Más de cinco años de trabajo continuo: demanda de equipamiento médico gestionada end-to-end en un solo CRM.</p>
+        <span class="tagline">Implementado con Hapee</span>
+      </article>
+      <article class="caso">
+        <span class="sector">Maquinaria · Montacargas · Chile</span>
+        <div class="brand"><div class="mono">H</div><h3>HeliForkLift</h3></div>
+        <p>Montacargas y equipos industriales: Meta y Google Ads, agente IA cotizando y el módulo de licitaciones activo — toda la operación comercial sobre Hapee.</p>
+        <span class="tagline">Implementado con Hapee</span>
+      </article>
+      <article class="caso">
+        <span class="sector">Industria · Cerramientos · B2B</span>
+        <div class="brand"><div class="mono">A</div><h3>ACMA</h3></div>
+        <p>Fabricante de mallas y sistemas de protección industrial: leads de proyectos B2B (minería, infraestructura, energía) calificados por IA antes de llegar al equipo comercial.</p>
+        <span class="tagline">Implementado con Hapee</span>
+      </article>
+      <article class="caso">
+        <span class="sector">E-commerce Industrial · B2B</span>
+        <div class="brand"><div class="mono">AN</div><h3>ACMAnet</h3></div>
+        <p>Canal comercial online de ACMA: catálogo, cotizaciones y postventa por WhatsApp con agentes IA, centralizados en un solo pipeline de ventas.</p>
+        <span class="tagline">Implementado con Hapee</span>
+      </article>
+      <article class="caso">
+        <span class="sector">Retail · Supermercados · Chile</span>
+        <div class="brand"><div class="mono">LO</div><h3>Supermercados La Oferta</h3></div>
+        <p>Retail de supermercados: atención al cliente y campañas promocionales centralizadas, con la comunidad respondida por agentes IA en cada canal.</p>
         <span class="tagline">Implementado con Hapee</span>
       </article>
     </div>
@@ -443,18 +480,64 @@ table.cmp tr:last-child td{border-bottom:0}
     <h2 class="title">El equipo de <span class="tg">Grupo Digitals</span></h2>
     <p class="lead">Hapee es el producto; este es el equipo detrás. Estrategas, performance, contenido, arte, TI e implementación — el mismo equipo que opera sobre Hapee cada día para nuestros clientes.</p>
     <div class="team-grid">
-      <div class="mem"><div class="av">SF</div><div class="nm">Sebastián Figueroa</div><div class="rl">Co-founder &amp; CEO</div></div>
-      <div class="mem"><div class="av">FC</div><div class="nm">Freddy Castro</div><div class="rl">Co-founder &amp; CFO</div></div>
-      <div class="mem key"><div class="av">CN</div><div class="nm">Claudia Novoa</div><div class="rl">Product Manager · Hapee</div></div>
-      <div class="mem key"><div class="av">LS</div><div class="nm">Leidy Salina</div><div class="rl">Implementadora Hapee</div></div>
-      <div class="mem key"><div class="av">NA</div><div class="nm">Nelly Alegría</div><div class="rl">Implementadora Hapee</div></div>
-      <div class="mem"><div class="av">GZ</div><div class="nm">Giorgina Zanotti</div><div class="rl">Directora de Marketing</div></div>
-      <div class="mem"><div class="av">JL</div><div class="nm">Jaime León</div><div class="rl">Director de TI</div></div>
-      <div class="mem"><div class="av">JG</div><div class="nm">Jose Guerrero</div><div class="rl">SEM Manager</div></div>
-      <div class="mem"><div class="av">CS</div><div class="nm">Camila San Martín</div><div class="rl">Content Manager</div></div>
-      <div class="mem"><div class="av">RS</div><div class="nm">Rocío Segura</div><div class="rl">Directora de Arte</div></div>
-      <div class="mem"><div class="av">RS</div><div class="nm">Richard Sepúlveda</div><div class="rl">Director de Arte Jr</div></div>
-      <div class="mem"><div class="av">PA</div><div class="nm">Patricia Arias</div><div class="rl">Diseñadora Gráfica</div></div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/sebastian.webp" alt="Sebastián Figueroa" loading="lazy"></div>
+        <div class="nm">Sebastián Figueroa</div><div class="rl">Co-founder &amp; CEO</div>
+        <a class="li" href="https://www.linkedin.com/in/sebastian-figueroa-302395106/" target="_blank" rel="noopener" aria-label="LinkedIn de Sebastián Figueroa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/freddy.webp" alt="Freddy Castro" loading="lazy"></div>
+        <div class="nm">Freddy Castro</div><div class="rl">Co-founder &amp; CFO</div>
+        <a class="li" href="https://www.linkedin.com/in/freddycastroc/" target="_blank" rel="noopener" aria-label="LinkedIn de Freddy Castro"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem key">
+        <div class="av"><img src="img/equipo/claudia.webp" alt="Claudia Novoa" loading="lazy"></div>
+        <div class="nm">Claudia Novoa</div><div class="rl">Product Manager · Hapee</div>
+      </div>
+      <div class="mem key">
+        <div class="av"><img src="img/equipo/leidy.webp" alt="Leidy Salina" loading="lazy"></div>
+        <div class="nm">Leidy Salina</div><div class="rl">Implementadora Hapee</div>
+      </div>
+      <div class="mem key">
+        <div class="av"><img src="img/equipo/nelly.webp" alt="Nelly Alegría" loading="lazy"></div>
+        <div class="nm">Nelly Alegría</div><div class="rl">Implementadora Hapee</div>
+      </div>
+      <div class="mem key">
+        <div class="av"><span class="mono">ML</span></div>
+        <div class="nm">Matías Laporta</div><div class="rl">Implementador Hapee</div>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/giorgina.webp" alt="Giorgina Zanotti" loading="lazy"></div>
+        <div class="nm">Giorgina Zanotti</div><div class="rl">Directora de Marketing</div>
+        <a class="li" href="https://www.linkedin.com/in/giorgina-stephanie-zanotti-tocuyo-26a1bba8/" target="_blank" rel="noopener" aria-label="LinkedIn de Giorgina Zanotti"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/jaime.webp" alt="Jaime León" loading="lazy"></div>
+        <div class="nm">Jaime León</div><div class="rl">Director de TI</div>
+        <a class="li" href="https://www.linkedin.com/in/jaime-leon-betancourt/" target="_blank" rel="noopener" aria-label="LinkedIn de Jaime León"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/jose.webp" alt="Jose Guerrero" loading="lazy"></div>
+        <div class="nm">Jose Guerrero</div><div class="rl">SEM Manager</div>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/camila.webp" alt="Camila San Martín" loading="lazy"></div>
+        <div class="nm">Camila San Martín</div><div class="rl">Content Manager</div>
+        <a class="li" href="https://www.linkedin.com/in/camila-paz-san-mart%C3%ADn-guzm%C3%A1n-4a21aa170/" target="_blank" rel="noopener" aria-label="LinkedIn de Camila San Martín"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/rocio.webp" alt="Rocío Segura" loading="lazy"></div>
+        <div class="nm">Rocío Segura</div><div class="rl">Directora de Arte</div>
+        <a class="li" href="https://www.linkedin.com/in/roc%C3%ADo-segura-miranda-7790a4234/" target="_blank" rel="noopener" aria-label="LinkedIn de Rocío Segura"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.24 8h4.52v14H.24V8zM8.24 8h4.33v1.91h.06c.6-1.14 2.08-2.34 4.28-2.34 4.58 0 5.42 3.01 5.42 6.93V22h-4.52v-6.6c0-1.57-.03-3.6-2.19-3.6-2.19 0-2.53 1.71-2.53 3.48V22H8.24V8z"/></svg></a>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/richard.webp" alt="Richard Sepúlveda" loading="lazy"></div>
+        <div class="nm">Richard Sepúlveda</div><div class="rl">Director de Arte Jr</div>
+      </div>
+      <div class="mem">
+        <div class="av"><img src="img/equipo/patricia.webp" alt="Patricia Arias" loading="lazy"></div>
+        <div class="nm">Patricia Arias</div><div class="rl">Diseñadora Gráfica</div>
+      </div>
     </div>
   </div>
 </section>
@@ -526,7 +609,7 @@ table.cmp tr:last-child td{border-bottom:0}
           <a class="btn primary" href="/agenda-tu-demo">Agenda tu demo</a>
         </div>
       </div>
-      <div class="cta-robot"><img src="img/robot.png" alt="Asistente Hapee" width="340" height="340"></div>
+      <div class="cta-robot"><img src="img/robot.png" alt="Asistente Hapee" width="435" height="800"></div>
     </div>
     <div class="certs rv">
       <div class="cap">Socios oficiales · Certificaciones</div>
