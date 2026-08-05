@@ -4,7 +4,7 @@
   const root = document.documentElement;
   const KEY = 'hapee-theme';
   const initial = localStorage.getItem(KEY);
-  if (initial === 'dark' || (!initial && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (initial === 'dark') {
     root.classList.add('dark');
   }
   const toggle = document.getElementById('darkToggle');

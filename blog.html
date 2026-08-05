@@ -26,6 +26,7 @@
 <link rel="icon" href="img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/fonts/poppins.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -43,9 +44,9 @@
   --paper:#FAFAFA;
   --pill:100px;
   --tr:.3s cubic-bezier(.4,0,.2,1);
-  --fd:'Bebas Neue',sans-serif;
-  --fb:'Plus Jakarta Sans',sans-serif;
-  --fm:'Plus Jakarta Sans','Inter',-apple-system,sans-serif;
+  --fd:'Poppins','Plus Jakarta Sans',-apple-system,sans-serif;
+  --fb:'Poppins','Plus Jakarta Sans',-apple-system,sans-serif;
+  --fm:'Poppins','Plus Jakarta Sans',-apple-system,sans-serif;
   --shadow-sm:0 2px 12px rgba(0,0,0,.07);
   --shadow-md:0 8px 32px rgba(0,0,0,.10);
   --shadow-lg:0 20px 60px rgba(0,0,0,.13);
@@ -138,7 +139,7 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 @keyframes bxLivePulse{0%{box-shadow:0 0 0 0 rgba(255,40,40,.6)}100%{box-shadow:0 0 0 14px rgba(255,40,40,0)}}
 .bx-counters{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap}
 .bx-counter{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
-.bx-counter .num{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.02em;color:var(--heading);line-height:1;font-weight:400;font-variant-numeric:tabular-nums}
+.bx-counter .num{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.02em;color:var(--heading);line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
 .bx-counter .lbl{font-size:.54rem;color:var(--text-2);letter-spacing:.22em;font-weight:600;opacity:.75}
 .bx-loc{font-weight:600;color:var(--text-2);opacity:.8}
 
@@ -146,7 +147,7 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 .mast-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:start;position:relative;padding-bottom:3rem}
 
 /* === Brutalist title === */
-.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,12vw,12rem);line-height:.92;font-weight:400;color:var(--heading);letter-spacing:-.035em;text-transform:uppercase;margin:0;padding:.05em 0 .15em;overflow:visible;position:relative}
+.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,12vw,12rem);line-height:.92;font-weight:800;color:var(--heading);letter-spacing:-.035em;text-transform:uppercase;margin:0;padding:.05em 0 .15em;overflow:visible;position:relative}
 .mast-title .word{display:block;overflow:visible;position:relative}
 .mast-title .word.w2{margin-top:0;line-height:1.05;padding-bottom:.18em}
 .mast-title .word>span{display:inline-block;opacity:0;transform:translateY(48px);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards;position:relative}
@@ -166,7 +167,7 @@ html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
 .mast-kicker{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--fm);font-size:.7rem;letter-spacing:.32em;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:1.4rem;padding:.4rem .85rem;border:1px solid var(--accent);border-radius:999px;background:rgba(250,80,0,.04)}
 .mast-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:mastPulse 1.8s ease-in-out infinite}
 @keyframes mastPulse{50%{opacity:.35;transform:scale(.65)}}
-.mast-issue-num{position:absolute;font-family:var(--fd);font-weight:400;font-size:clamp(10rem,22vw,22rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-stroke:1.5px var(--accent);opacity:.13;pointer-events:none;z-index:0;right:-2%;top:-8%;animation:mastFloat 6s ease-in-out infinite alternate;user-select:none}
+.mast-issue-num{position:absolute;font-family:var(--fd);font-weight:800;font-size:clamp(10rem,22vw,22rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-stroke:1.5px var(--accent);opacity:.13;pointer-events:none;z-index:0;right:-2%;top:-8%;animation:mastFloat 6s ease-in-out infinite alternate;user-select:none}
 @keyframes mastFloat{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-18px) rotate(0deg)}}
 .mast-edition{font-family:var(--fs);font-style:italic;font-size:1rem;color:var(--accent);margin-top:.1rem;opacity:0;animation:mastFade 1.1s 1.55s cubic-bezier(.16,1,.3,1) forwards;display:inline-flex;align-items:center;gap:.5rem}
 .mast-edition::before{content:'';width:24px;height:1px;background:var(--accent)}
@@ -222,7 +223,7 @@ html:not(.dark) .mk-side{background:#f8f8fa}
 /* Fable Mythos · usa la portada wide (robot derecha + Claude pill abajo) */
 .mk-cover-fable{background:#0a0612 url('/img/blog-mythos-portada.png?v=3') 70% 90%/cover no-repeat}
 .mk-fable-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.mk-fable-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--accent) 40%,var(--accent-alt) 100%);box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);animation:fableCorePulse 3s ease-in-out infinite;z-index:3;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.7rem;color:#fff;letter-spacing:.1em;font-weight:400;text-shadow:0 0 8px rgba(0,0,0,.4)}
+.mk-fable-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--accent) 40%,var(--accent-alt) 100%);box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);animation:fableCorePulse 3s ease-in-out infinite;z-index:3;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.7rem;color:#fff;letter-spacing:.1em;font-weight:700;text-shadow:0 0 8px rgba(0,0,0,.4)}
 .mk-fable-core::before{content:'FABLE';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);font-size:.7rem}
 .mk-fable-core::after{content:'MYTHOS';position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;opacity:.85}
 @keyframes fableCorePulse{0%,100%{box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 60px var(--accent),0 0 120px rgba(250,80,0,.7);transform:translate(-50%,-50%) scale(1.05)}}
@@ -238,7 +239,7 @@ html:not(.dark) .mk-side{background:#f8f8fa}
 .mk-cover-glyph.r::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;animation:bxLivePulse 1.3s ease-out infinite}
 .mk-cover-cta{position:absolute;bottom:18px;left:18px;right:18px;z-index:3;color:#fff}
 .mk-cover-tag{display:inline-block;font-family:var(--fm);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);background:rgba(250,80,0,.18);padding:4px 9px;border-radius:4px;border:1px solid rgba(250,80,0,.5);font-weight:800;margin-bottom:8px}
-.mk-cover-head{font-family:var(--fd);font-weight:400;font-size:1.55rem;letter-spacing:-.018em;line-height:1.08;margin:0 0 8px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.mk-cover-head{font-family:var(--fd);font-weight:700;font-size:1.55rem;letter-spacing:-.018em;line-height:1.08;margin:0 0 8px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45)}
 .mk-cover-exc{font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.45;max-width:88%;margin:0 0 12px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 .mk-cover-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fb);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800;transition:gap .25s}
 .mk-cover-link::after{content:'→';transition:transform .25s}
@@ -365,7 +366,9 @@ html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transpare
 .art-art .glyph.tr{top:18px;right:20px;text-align:right}
 .art-art .glyph.bl{bottom:18px;left:20px}
 .art-art .glyph.br{bottom:18px;right:20px;text-align:right}
-.art-art .center-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:8rem;font-weight:400;color:rgba(255,255,255,.06);letter-spacing:-4px;pointer-events:none;line-height:.85}
+/* número gigante en transparencia sobre las tarjetas: retirado a pedido.
+   La regla queda desactivada para no dejar CSS suelto si vuelve el markup. */
+.art-art .center-num{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:8rem;font-weight:400;color:rgba(255,255,255,.06);letter-spacing:-4px;pointer-events:none;line-height:.85}
 
 /* THEME: FABLE MYTHOS · solo foto limpia (sin overlays ni constelación) */
 .theme-fable{background:#0a0612}
@@ -699,9 +702,94 @@ body.modal-open{overflow:hidden}
   <div class="ctn">
     <div class="mag-head">
       <h3><span class="num">02</span>Notas recientes</h3>
-      <span class="count">05 ARTÍCULOS</span>
+      <span class="count">10 ARTÍCULOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
+
+      <!-- NOTA NUEVA: RADAR -->
+      <article class="art art-1" data-art="radar" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-radar-post.jpg" alt="">
+          <span class="glyph tl">N°01 / Producto</span>
+          <span class="glyph tr">Radar · Hapee</span>
+          <span class="glyph bl">Barrido semanal</span>
+          <span class="glyph br">Hasta 12 competidores</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Producto · Radar</div>
+          <h4>Radar de Competencia: qué hace tu competencia, cada semana</h4>
+          <p class="art-exc">Nuevo módulo: define a quién vigilar y cada lunes recibes una lectura de sus anuncios, su web, su visibilidad en asistentes de IA, sus redes y su prensa. Conclusiones y recomendaciones, no data cruda.</p>
+          <div class="art-meta">5 Ago 2026 · Producto · 5 min</div>
+        </div>
+      </article>
+
+      <!-- NOTA NUEVA: NOTETAKER -->
+      <article class="art art-2" data-art="notetaker" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-notetaker-post.jpg" alt="">
+          <span class="glyph tl">N°02 / Producto</span>
+          <span class="glyph tr">Notetaker propio</span>
+          <span class="glyph bl">Meet · Zoom · Teams</span>
+          <span class="glyph br">Tareas con responsable</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Producto · Reuniones IA</div>
+          <h4>Reuniones IA: un notetaker propio que entra, escucha y ordena</h4>
+          <p class="art-exc">El bot se suma solo a tus videollamadas, transcribe el audio y entrega resumen, insights, tareas con responsable y fecha, y un borrador de correo de seguimiento. Con medidores de clima para reuniones comerciales.</p>
+          <div class="art-meta">5 Ago 2026 · Producto · 6 min</div>
+        </div>
+      </article>
+
+      <!-- NOTA NUEVA: LICITACIONES -->
+      <article class="art art-3" data-art="licitaciones" data-cat="producto">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-licitaciones-post.jpg" alt="">
+          <span class="glyph tl">N°03 / Producto</span>
+          <span class="glyph tr">Mercado Público</span>
+          <span class="glyph bl">Afinidad calculada</span>
+          <span class="glyph br">Menos ruido</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Producto · Licitaciones</div>
+          <h4>Licitaciones: gana más sin pasar el día buscándolas</h4>
+          <p class="art-exc">Mercado Público y oportunidades privadas filtradas por afinidad real con tu negocio, con el puntaje explicado en una frase. Menos avisos y mejores.</p>
+          <div class="art-meta">5 Ago 2026 · Producto · 5 min</div>
+        </div>
+      </article>
+
+      <!-- NOTA NUEVA: OPUS5 -->
+      <article class="art art-4" data-art="opus5" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-opus5-post.jpg" alt="">
+          <span class="glyph tl">N°04 / Producto</span>
+          <span class="glyph tr">Claude Opus 5</span>
+          <span class="glyph bl">Elegible por agente</span>
+          <span class="glyph br">Sin migración</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Producto · Anthropic</div>
+          <h4>Claude Opus 5 ya está disponible en Hapee</h4>
+          <p class="art-exc">El motor más potente de Anthropic ya es elegible en tus agentes: mejor razonamiento en tareas de varios pasos, uso de herramientas más preciso y conversaciones largas sin perder el hilo.</p>
+          <div class="art-meta">5 Ago 2026 · Producto · 4 min</div>
+        </div>
+      </article>
+
+      <!-- NOTA NUEVA: EXPO -->
+      <article class="art art-5" data-art="expo" data-cat="eventos">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/expo-compra-publica-podcast-post.jpg" alt="">
+          <span class="glyph tl">N°05 / Eventos</span>
+          <span class="glyph tr">Expo Compra Pública</span>
+          <span class="glyph bl">Podcast</span>
+          <span class="glyph br">IA en compras públicas</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · Compra Pública</div>
+          <h4>Hapee en el podcast de la Expo Compra Pública</h4>
+          <p class="art-exc">Conversamos sobre IA aplicada a compras públicas: por qué el cuello no es la falta de licitaciones sino el tiempo para filtrarlas, y qué conviene automatizar y qué no.</p>
+          <div class="art-meta">5 Ago 2026 · Eventos · 3 min</div>
+        </div>
+      </article>
 
       <!-- ART 1: VOZ ELEVENLABS -->
       <article class="art art-1" data-art="voz" data-cat="producto">
@@ -709,7 +797,6 @@ body.modal-open{overflow:hidden}
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-voz-post.jpg" alt="">
           <span class="glyph tl">N°02 / Producto</span>
           <span class="glyph tr">ElevenLabs · Hapee</span>
-          <span class="center-num">02</span>
           <div class="waves">
             <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
             <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -735,7 +822,6 @@ body.modal-open{overflow:hidden}
           <div class="cl-shape"></div>
           <span class="glyph tl">N°03 / Eventos</span>
           <span class="glyph tr">AWS Chile · Hapee</span>
-          <span class="center-num">03</span>
           <div class="servers"><div class="server"></div><div class="server"></div><div class="server"></div><div class="server"></div><div class="server"></div></div>
           <span class="glyph bl">Strategic Partnership</span>
           <span class="glyph br">2026</span>
@@ -753,7 +839,6 @@ body.modal-open{overflow:hidden}
         <div class="art-art theme-aperol">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/eventos/hapee-podcast-launch.jpeg" alt="Lanzamiento Hapee SaaS · podcast en vivo" style="object-position:50% 40%">
           <span class="glyph tl">N°04 / Eventos</span>
-          <span class="center-num">04</span>
           <div class="glass">
             <div class="bubble b1"></div>
             <div class="bubble b2"></div>
@@ -778,7 +863,6 @@ body.modal-open{overflow:hidden}
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-gpt-post.jpg" alt="">
           <span class="glyph tl">N°05 / Producto</span>
           <span class="glyph tr">GPT 5.5</span>
-          <span class="center-num">05</span>
           <div class="ring"></div><div class="ring"></div><div class="ring"></div>
           <div class="core"></div>
           <span class="glyph bl">OpenAI · Hapee</span>
@@ -798,7 +882,6 @@ body.modal-open{overflow:hidden}
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-rrss-post.jpg" alt="">
           <span class="glyph tl">N°06 / How-to</span>
           <span class="glyph tr">Social Auto</span>
-          <span class="center-num">06</span>
           <div class="orbit orbit-1"></div>
           <div class="orbit orbit-2"></div>
           <div class="hub">H</div>
@@ -871,7 +954,7 @@ body.modal-open{overflow:hidden}
 // Dark mode init
 (function(){
   const s=localStorage.getItem('hapee-theme');
-  if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark');
+  if(s==='dark')document.documentElement.classList.add('dark');
 })();
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -1037,7 +1120,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
+  const POST_URLS={radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
