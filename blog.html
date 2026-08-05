@@ -702,11 +702,9 @@ body.modal-open{overflow:hidden}
   <div class="ctn">
     <div class="mag-head">
       <h3><span class="num">02</span>Notas recientes</h3>
-      <span class="count">10 ARTÍCULOS</span>
+      <span class="count">06 ARTÍCULOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
-
-      <!-- NOTA NUEVA: RADAR -->
       <article class="art art-1" data-art="radar" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-radar-post.jpg" alt="">
@@ -723,7 +721,7 @@ body.modal-open{overflow:hidden}
         </div>
       </article>
 
-      <!-- NOTA NUEVA: NOTETAKER -->
+      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
       <article class="art art-2" data-art="notetaker" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-notetaker-post.jpg" alt="">
@@ -739,8 +737,9 @@ body.modal-open{overflow:hidden}
           <div class="art-meta">5 Ago 2026 · Producto · 6 min</div>
         </div>
       </article>
+      -->
 
-      <!-- NOTA NUEVA: LICITACIONES -->
+      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
       <article class="art art-3" data-art="licitaciones" data-cat="producto">
         <div class="art-art theme-rrss">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-licitaciones-post.jpg" alt="">
@@ -756,8 +755,9 @@ body.modal-open{overflow:hidden}
           <div class="art-meta">5 Ago 2026 · Producto · 5 min</div>
         </div>
       </article>
+      -->
 
-      <!-- NOTA NUEVA: OPUS5 -->
+      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
       <article class="art art-4" data-art="opus5" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-opus5-post.jpg" alt="">
@@ -773,8 +773,9 @@ body.modal-open{overflow:hidden}
           <div class="art-meta">5 Ago 2026 · Producto · 4 min</div>
         </div>
       </article>
+      -->
 
-      <!-- NOTA NUEVA: EXPO -->
+      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
       <article class="art art-5" data-art="expo" data-cat="eventos">
         <div class="art-art theme-rrss">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/expo-compra-publica-podcast-post.jpg" alt="">
@@ -790,6 +791,7 @@ body.modal-open{overflow:hidden}
           <div class="art-meta">5 Ago 2026 · Eventos · 3 min</div>
         </div>
       </article>
+      -->
 
       <!-- ART 1: VOZ ELEVENLABS -->
       <article class="art art-1" data-art="voz" data-cat="producto">
@@ -1120,7 +1122,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   }
 
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
+  const POST_URLS={radar:'/blog/radar-de-competencia.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
