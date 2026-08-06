@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260731-01
+ARG CACHE_BUST=20260806-01
 COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
@@ -20,6 +20,10 @@ COPY demoday-via-x7m2.html /usr/share/nginx/html/demoday-via-x7m2.html
 COPY compra-exitosa.html /usr/share/nginx/html/compra-exitosa.html
 COPY img/ /usr/share/nginx/html/img/
 COPY js/ /usr/share/nginx/html/js/
+# Las tipografías van alojadas aquí. Faltaba esta línea: los .woff2 estaban en el
+# repo pero nunca entraban a la imagen, así que /fonts/ devolvía la portada en HTML
+# y el navegador caía a la fuente del sistema.
+COPY fonts/ /usr/share/nginx/html/fonts/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 COPY llms.txt /usr/share/nginx/html/llms.txt

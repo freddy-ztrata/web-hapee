@@ -237,7 +237,10 @@
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="preload" href="img/logo-hapee.png" as="image">
 <link rel="preload" href="img/robot.png" as="image">
-<link rel="stylesheet" href="/fonts/outfit.css">
+<!-- Tipografía de marca, alojada aquí mismo. El preload evita el parpadeo
+     con la fuente del sistema mientras carga. -->
+<link rel="preload" href="/fonts/dmsans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/dmsans.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -259,8 +262,8 @@
   --white:#fff;
   --pill:100px;
   --tr:.3s cubic-bezier(.4,0,.2,1);
-  --fd:'Outfit','Plus Jakarta Sans',-apple-system,sans-serif;
-  --fb:'Outfit','Plus Jakarta Sans',-apple-system,sans-serif;
+  --fd:'DM Sans','Plus Jakarta Sans',-apple-system,sans-serif;
+  --fb:'DM Sans','Plus Jakarta Sans',-apple-system,sans-serif;
   --shadow-sm:0 2px 12px rgba(0,0,0,.07);
   --shadow-md:0 8px 32px rgba(0,0,0,.10);
   --shadow-lg:0 20px 60px rgba(0,0,0,.13);
@@ -340,7 +343,10 @@ html{scroll-behavior:smooth}
 body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:.95rem;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
 img{max-width:100%;height:auto;display:block}
 a{text-decoration:none;color:inherit}ul{list-style:none}
-h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.15}
+/* El espaciado apretado es parte del look de las gráficas: en ellas las letras
+   casi se tocan. Sin esto la fuente es la correcta pero el titular se ve suelto. */
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.15;letter-spacing:-.022em}
+h1{letter-spacing:-.032em}
 
 .ctn{max-width:1140px;margin:0 auto;padding:0 24px}
 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}

@@ -705,7 +705,7 @@ body.modal-open{overflow:hidden}
       <span class="count">06 ARTÍCULOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
-      <article class="art art-1" data-art="radar" data-cat="producto">
+      <article class="art art-1" data-art="radar" data-pub="2026-08-05" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-radar-post.jpg" alt="">
           <span class="glyph tl">N°01 / Producto</span>
@@ -721,8 +721,7 @@ body.modal-open{overflow:hidden}
         </div>
       </article>
 
-      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
-      <article class="art art-2" data-art="notetaker" data-cat="producto">
+      <article class="art art-2" data-art="notetaker" data-pub="2026-08-06" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-notetaker-post.jpg" alt="">
           <span class="glyph tl">N°02 / Producto</span>
@@ -734,13 +733,11 @@ body.modal-open{overflow:hidden}
           <div class="art-tag">Producto · Reuniones IA</div>
           <h4>Reuniones IA: un notetaker propio que entra, escucha y ordena</h4>
           <p class="art-exc">El bot se suma solo a tus videollamadas, transcribe el audio y entrega resumen, insights, tareas con responsable y fecha, y un borrador de correo de seguimiento. Con medidores de clima para reuniones comerciales.</p>
-          <div class="art-meta">5 Ago 2026 · Producto · 6 min</div>
+          <div class="art-meta">6 Ago 2026 · Producto · 6 min</div>
         </div>
       </article>
-      -->
 
-      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
-      <article class="art art-3" data-art="licitaciones" data-cat="producto">
+      <article class="art art-3" data-art="licitaciones" data-pub="2026-08-10" data-cat="producto">
         <div class="art-art theme-rrss">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-licitaciones-post.jpg" alt="">
           <span class="glyph tl">N°03 / Producto</span>
@@ -752,13 +749,11 @@ body.modal-open{overflow:hidden}
           <div class="art-tag">Producto · Licitaciones</div>
           <h4>Licitaciones: gana más sin pasar el día buscándolas</h4>
           <p class="art-exc">Mercado Público y oportunidades privadas filtradas por afinidad real con tu negocio, con el puntaje explicado en una frase. Menos avisos y mejores.</p>
-          <div class="art-meta">5 Ago 2026 · Producto · 5 min</div>
+          <div class="art-meta">10 Ago 2026 · Producto · 5 min</div>
         </div>
       </article>
-      -->
 
-      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
-      <article class="art art-4" data-art="opus5" data-cat="producto">
+      <article class="art art-4" data-art="opus5" data-pub="2026-08-12" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-opus5-post.jpg" alt="">
           <span class="glyph tl">N°04 / Producto</span>
@@ -770,13 +765,11 @@ body.modal-open{overflow:hidden}
           <div class="art-tag">Producto · Anthropic</div>
           <h4>Claude Opus 5 ya está disponible en Hapee</h4>
           <p class="art-exc">El motor más potente de Anthropic ya es elegible en tus agentes: mejor razonamiento en tareas de varios pasos, uso de herramientas más preciso y conversaciones largas sin perder el hilo.</p>
-          <div class="art-meta">5 Ago 2026 · Producto · 4 min</div>
+          <div class="art-meta">12 Ago 2026 · Producto · 4 min</div>
         </div>
       </article>
-      -->
 
-      <!-- PENDIENTE DE PUBLICAR (quitar este comentario para publicarla)
-      <article class="art art-5" data-art="expo" data-cat="eventos">
+      <article class="art art-5" data-art="expo" data-pub="2026-08-14" data-cat="eventos">
         <div class="art-art theme-rrss">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/expo-compra-publica-podcast-post.jpg" alt="">
           <span class="glyph tl">N°05 / Eventos</span>
@@ -788,10 +781,9 @@ body.modal-open{overflow:hidden}
           <div class="art-tag">Eventos · Compra Pública</div>
           <h4>Hapee en el podcast de la Expo Compra Pública</h4>
           <p class="art-exc">Conversamos sobre IA aplicada a compras públicas: por qué el cuello no es la falta de licitaciones sino el tiempo para filtrarlas, y qué conviene automatizar y qué no.</p>
-          <div class="art-meta">5 Ago 2026 · Eventos · 3 min</div>
+          <div class="art-meta">14 Ago 2026 · Eventos · 3 min</div>
         </div>
       </article>
-      -->
 
       <!-- ART 1: VOZ ELEVENLABS -->
       <article class="art art-1" data-art="voz" data-cat="producto">
@@ -1121,8 +1113,23 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.body.classList.remove('modal-open');
   }
 
+  // ── Publicación por fecha ──────────────────────────────────────────
+  // Cada nota lleva data-pub="AAAA-MM-DD". Aparece en el listado sola, el día
+  // que le toca, sin que nadie tenga que subir nada. Se compara contra la fecha
+  // local del visitante a medianoche, no contra la hora de servidor.
+  (function(){
+    const hoy = new Date(); hoy.setHours(0,0,0,0);
+    document.querySelectorAll('[data-pub]').forEach(el=>{
+      const [a,m,d] = el.dataset.pub.split('-').map(Number);
+      if (new Date(a, m-1, d) > hoy) el.remove();
+    });
+    const n = document.querySelectorAll('#magGrid .art').length;
+    const c = document.querySelector('.mag-head .count');
+    if (c) c.textContent = String(n).padStart(2,'0') + (n === 1 ? ' ARTÍCULO' : ' ARTÍCULOS');
+  })();
+
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={radar:'/blog/radar-de-competencia.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
+  const POST_URLS={radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
