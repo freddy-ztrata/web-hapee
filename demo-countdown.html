@@ -43,7 +43,7 @@ body{
 
 /* Top bar */
 .top-bar{position:absolute;top:24px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 36px;z-index:5}
-.brand{display:inline-flex;align-items:center;gap:.65rem;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:#fff;line-height:1}
+.brand{display:inline-flex;align-items:center;gap:.65rem;font-family:'Plus Jakarta Sans',-apple-system,sans-serif;font-size:1.4rem;letter-spacing:.04em;color:#fff;line-height:1}
 .brand .dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e;animation:livePulse 1.4s ease-out infinite}
 @keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}100%{box-shadow:0 0 0 14px rgba(34,197,94,0)}}
 .brand img{height:24px;width:auto;filter:brightness(0) invert(1);opacity:.92}
@@ -93,7 +93,7 @@ body{
 
 /* Countdown display */
 .countdown{
-  font-family:'Bebas Neue',sans-serif;font-weight:400;
+  font-family:'Plus Jakarta Sans',-apple-system,sans-serif;font-weight:400;
   font-size:clamp(120px,22vw,260px);
   line-height:.85;letter-spacing:.01em;color:#fff;
   margin:18px 0 8px;display:flex;align-items:baseline;gap:.06em;
@@ -127,7 +127,7 @@ body{
   flex-shrink:0;width:36px;height:36px;border-radius:50%;
   background:linear-gradient(135deg,var(--orange),var(--orange-2));
   display:grid;place-items:center;
-  font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:#fff;font-weight:400;
+  font-family:'Plus Jakarta Sans',-apple-system,sans-serif;font-size:1.7rem;color:#fff;font-weight:400;
   box-shadow:0 4px 14px rgba(250,80,0,.45);
   animation:huPulse 2s ease-in-out infinite;
 }
@@ -167,7 +167,7 @@ body{
 /* When reach 0:00 */
 .go-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at center,rgba(250,80,0,.35),rgba(10,6,18,.9) 70%);z-index:50;backdrop-filter:blur(6px)}
 .go-overlay.show{display:flex;animation:goShow 1s cubic-bezier(.16,1,.3,1)}
-.go-overlay h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(80px,18vw,220px);line-height:.9;color:#fff;letter-spacing:.02em;text-shadow:0 30px 80px rgba(250,80,0,.6);text-transform:uppercase;text-align:center}
+.go-overlay h1{font-family:'Plus Jakarta Sans',-apple-system,sans-serif;font-weight:400;font-size:clamp(80px,18vw,220px);line-height:.9;color:#fff;letter-spacing:.02em;text-shadow:0 30px 80px rgba(250,80,0,.6);text-transform:uppercase;text-align:center}
 .go-overlay h1 .em{color:var(--orange);font-style:italic}
 .go-overlay p{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;color:rgba(255,255,255,.85);margin-top:18px;letter-spacing:.04em}
 @keyframes goShow{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}

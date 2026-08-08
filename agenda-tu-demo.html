@@ -258,7 +258,7 @@
   --white:#fff;
   --pill:100px;
   --tr:.3s cubic-bezier(.4,0,.2,1);
-  --fd:'Bebas Neue',sans-serif;
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
   --fb:'Plus Jakarta Sans',sans-serif;
   --shadow-sm:0 2px 12px rgba(0,0,0,.07);
   --shadow-md:0 8px 32px rgba(0,0,0,.10);
@@ -340,6 +340,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:.95r
 img{max-width:100%;height:auto;display:block}
 a{text-decoration:none;color:inherit}ul{list-style:none}
 h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.15}
+/* Titulares con la receta de marca: Plus Jakarta Sans 800, interlineado .95.
+   Lo que da el aire compacto es el interlineado, no el espaciado entre letras. */
+h1,h2{font-weight:800;line-height:.95;letter-spacing:-.025em}
+h3,h4{font-weight:800;letter-spacing:-.015em}
 
 .ctn{max-width:1140px;margin:0 auto;padding:0 24px}
 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
