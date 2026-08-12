@@ -4619,14 +4619,44 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
         const ttsBody=JSON.stringify({text:clean,model_id:'eleven_turbo_v2_5',voice_settings:{stability:.5,similarity_boost:.75,style:.3,use_speaker_boost:true},optimize_streaming_latency:4});
         const vid=VOICES[selectedVoice];
         const res=await fetch('/api/tts/'+vid,{method:'POST',headers:{'Content-Type':'application/json'},body:ttsBody});
-        if(!res.ok)throw new Error('TTS error');
+        if(!res.ok)throw new Error('TTS '+res.status);
         const blob=await res.blob();
+        if(!blob||blob.size<256)throw new Error('TTS vacío');
         const url=URL.createObjectURL(blob);
         currentAudio=new Audio(url);
         currentAudio.onended=()=>{setSpeaking(false);URL.revokeObjectURL(url);currentAudio=null};
-        currentAudio.onerror=()=>{setSpeaking(false);currentAudio=null};
+        currentAudio.onerror=()=>{URL.revokeObjectURL(url);currentAudio=null;speakFallback(clean)};
         await currentAudio.play();
-      }catch(e){console.error('TTS error:',e);setSpeaking(false)}
+      }catch(e){
+        // ElevenLabs puede fallar por facturación (401 payment_issue), corte o
+        // rate-limit. En una home pública el demo JAMÁS debe quedar mudo: se cae
+        // a la voz nativa del navegador. Al reactivar ElevenLabs vuelve sola la
+        // voz clonada de marca — no hay que revertir nada.
+        console.warn('TTS ElevenLabs no disponible, uso voz del navegador:',e&&e.message||e);
+        speakFallback(clean);
+      }
+    }
+    // Fallback: Web Speech API (voz del sistema). No es la voz clonada, pero
+    // mantiene vivo el demo. Elige una voz en español acorde al género elegido.
+    function speakFallback(clean){
+      try{
+        const synth=window.speechSynthesis;
+        if(!synth||!window.SpeechSynthesisUtterance){setSpeaking(false);return}
+        synth.cancel();
+        const u=new SpeechSynthesisUtterance(clean);
+        u.lang='es-ES';u.rate=1.02;u.pitch=selectedVoice==='m'?0.9:1.08;
+        const vs=(synth.getVoices()||[]).filter(v=>/^es(-|_|$)/i.test(v.lang)||/espa|spanish/i.test(v.name));
+        if(vs.length){
+          const fem=/m[óo]nica|paulina|helena|laura|marisol|female|mujer/i;
+          const mas=/jorge|diego|carlos|juan|male|hombre/i;
+          const want=selectedVoice==='m'?mas:fem;
+          u.voice=vs.find(v=>want.test(v.name))||vs[0];
+        }
+        u.onend=()=>setSpeaking(false);
+        u.onerror=()=>setSpeaking(false);
+        setSpeaking(true);
+        synth.speak(u);
+      }catch(e){setSpeaking(false)}
     }
 
     // --- Send message: append user bubble, show typing, fetch reply, append bot bubble, speak ---
