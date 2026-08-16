@@ -3625,9 +3625,11 @@ main > section.hero{min-height:100svh}
   html.dark .rw-chip{background:#161314;border-color:rgba(255,255,255,.1)}
   @keyframes rwFlota{from{margin-top:-7px}to{margin-top:9px}}
   .rw-chip i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-  .rw-chip .rw-tacha{position:absolute;left:8%;right:8%;top:50%;height:2.5px;background:var(--accent-alt);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  .rw-chip .rw-tacha{position:absolute;left:6%;right:6%;top:50%;height:9px;translate:0 -50%;background:linear-gradient(90deg,rgba(250,80,0,.32),rgba(205,35,73,.32));border-radius:5px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1);z-index:0}
+  .rw-chip .nm{position:relative;z-index:1}
+  .rw-chip i{position:relative;z-index:1}
   .rw-chip.chau .rw-tacha{transform:scaleX(1)}
-  .rw-chip.chau{opacity:.92}
+  .rw-chip.chau{opacity:1}
   .rw-core{position:absolute;left:50%;bottom:4px;translate:-50%;text-align:center;z-index:4}
   .rw-cuenta{font-family:var(--fm,monospace);font-weight:700;font-size:.76rem;letter-spacing:2px;color:var(--text-2,#666);display:block;margin-bottom:12px}
   .rw-cuenta b{color:var(--accent);font-size:1.1rem}
@@ -3653,7 +3655,7 @@ main > section.hero{min-height:100svh}
     var stage=document.getElementById('rwStage'); if(!stage)return;
     var pos=[[14,10,-6],[38,6,4],[63,9,-3],[85,14,6],[8,28,5],[30,24,-4],[55,22,3],[78,30,-5],
              [18,44,4],[44,40,-6],[68,42,5],[90,48,-4],[10,60,-3],[34,58,6],[60,58,-5],[83,64,3],
-             [24,74,-4],[50,72,5],[74,76,-6],[40,88,3],[64,90,-4]];
+             [24,74,-4],[50,72,5],[74,76,-6],[9,86,3],[91,86,-4]];
     TOOLS.forEach(function(t,i){
       var p=pos[i%pos.length];
       var ch=document.createElement('span');
@@ -3661,7 +3663,7 @@ main > section.hero{min-height:100svh}
       ch.style.left=p[0]+'%'; ch.style.top=p[1]+'%';
       ch.style.transform='rotate('+p[2]+'deg)';
       ch.style.animationDelay=(-i*0.4)+'s';
-      ch.innerHTML='<i style="background:'+t.c+'"></i>'+t.n+'<span class="rw-tacha"></span>';
+      ch.innerHTML='<i style="background:'+t.c+'"></i><b class="nm">'+t.n+'</b><span class="rw-tacha"></span>';
       stage.appendChild(ch);
     });
     var n=document.getElementById('rwN');
