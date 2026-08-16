@@ -3391,6 +3391,127 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
   </div>
 </section>
 
+<!-- SE CONECTA (red neuronal) + REEMPLAZA (absorción) -->
+<section class="dintg" aria-label="Integraciones de Hapee">
+  <div class="dintg-head">
+    <h2>Se conecta con lo que <span class="tgx">ya usas</span></h2>
+    <p>WhatsApp, Instagram, correo, calendarios, e-commerce y pagos — todos tus canales conversando con Hapee.</p>
+  </div>
+  <div class="int-stage" id="intStage">
+    <svg class="int-net" id="intNet" aria-hidden="true"></svg>
+    <div class="int-core"><img src="img/logo-hapee.png" alt="Hapee"></div>
+  </div>
+</section>
+<section class="dintg" aria-label="Herramientas que Hapee reemplaza" style="padding-top:0">
+  <div class="dintg-head">
+    <h2>Y reemplaza <span class="tgx">+20 herramientas</span></h2>
+    <p>CRM, email, automatización, comunidad y reportería: todo lo que hoy pagas por separado, absorbido por una sola plataforma.</p>
+  </div>
+  <div class="ab-stage" id="abStage">
+    <div class="ab-core"><img src="img/logo-hapee.png" alt="Hapee"><em>ALL-IN-ONE</em></div>
+    <span class="ab-cuenta"><b>+20</b> HERRAMIENTAS → <b>1</b> SOLA</span>
+  </div>
+</section>
+<style>
+.dintg{padding:72px 24px;position:relative;overflow:hidden}
+.dintg-head{max-width:660px;margin:0 auto;text-align:center}
+.dintg-head h2{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:12px}
+.dintg-head .tgx{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;padding:.1em .04em;margin:-.1em -.04em}
+.dintg-head p{color:var(--text,#666);font-size:1rem;line-height:1.6}
+.int-stage{position:relative;width:min(880px,94vw);height:clamp(420px,60vw,520px);margin:30px auto 0}
+.int-net{position:absolute;inset:0;width:100%;height:100%}
+.int-net path{fill:none;stroke:rgba(250,80,0,.28);stroke-width:1.2}
+.int-net circle.spark{fill:var(--accent);filter:drop-shadow(0 0 6px rgba(250,80,0,.8))}
+.int-node{position:absolute;width:clamp(42px,9vw,56px);height:clamp(42px,9vw,56px);translate:-50% -50%;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:15px;box-shadow:0 6px 18px rgba(15,15,15,.09);display:flex;align-items:center;justify-content:center;animation:dBob 4s ease-in-out infinite alternate}
+html.dark .int-node{background:#161314;border-color:rgba(255,255,255,.08)}
+@keyframes dBob{from{margin-top:-6px}to{margin-top:8px}}
+.int-node img{width:58%;height:58%;object-fit:contain}
+.int-core{position:absolute;left:50%;top:50%;translate:-50% -50%;width:clamp(94px,18vw,124px);height:clamp(94px,18vw,124px);background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(250,80,0,.28);z-index:3}
+html.dark .int-core{background:#161314;border-color:rgba(255,255,255,.08)}
+.int-core img{width:62%}
+.int-core::after{content:'';position:absolute;inset:-14px;border-radius:38px;border:1.5px dashed rgba(250,80,0,.3);animation:dGira 24s linear infinite}
+@keyframes dGira{to{rotate:360deg}}
+.ab-stage{position:relative;max-width:860px;margin:32px auto 0;height:440px}
+.ab-core{position:absolute;left:50%;top:50%;translate:-50% -50%;width:124px;height:124px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:32px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(250,80,0,.3);z-index:5}
+html.dark .ab-core{background:#161314;border-color:rgba(255,255,255,.1)}
+.ab-core img{width:60%}
+.ab-core em{font-style:normal;font-family:var(--fm,monospace);font-size:.58rem;letter-spacing:1.6px;color:var(--accent);font-weight:700}
+.ab-core::before{content:'';position:absolute;inset:-16px;border-radius:42px;border:1.5px dashed rgba(250,80,0,.35);animation:dGira 22s linear infinite}
+.ab-core::after{content:'';position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.14),transparent 70%);z-index:-1;animation:dLate 2.6s ease-in-out infinite alternate}
+@keyframes dLate{to{transform:scale(1.25);opacity:.6}}
+.ab-chip{position:absolute;left:var(--sx);top:var(--sy);translate:-50% -50%;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:999px;padding:9px 15px;font-weight:700;font-size:.82rem;color:var(--heading);box-shadow:0 4px 14px rgba(15,15,15,.06);white-space:nowrap;animation:dViaje var(--dur) ease-in infinite;animation-delay:var(--del);opacity:0}
+html.dark .ab-chip{background:#161314;border-color:rgba(255,255,255,.1)}
+.ab-chip i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+@keyframes dViaje{0%{left:var(--sx);top:var(--sy);opacity:0;transform:scale(.9)}12%{opacity:1;transform:scale(1)}70%{opacity:1}100%{left:50%;top:50%;opacity:0;transform:scale(.25)}}
+.ab-cuenta{position:absolute;left:50%;bottom:-4px;translate:-50%;font-family:var(--fm,monospace);font-size:.76rem;letter-spacing:2px;font-weight:700;color:var(--text,#666)}
+.ab-cuenta b{color:var(--accent);font-size:1.05rem}
+@media (prefers-reduced-motion:reduce){.int-node,.int-core::after,.ab-chip,.ab-core::before,.ab-core::after{animation:none}.ab-chip{opacity:1}}
+</style>
+<script>
+(function(){
+  var stage=document.getElementById('intStage'), svg=document.getElementById('intNet');
+  if(stage&&svg){
+    var nodes=[
+      {x:13,y:20,img:'img/orbit/whatsapp.svg',n:'WhatsApp'},{x:8,y:52,img:'img/orbit/facebook.png',n:'Messenger'},
+      {x:16,y:82,img:'img/orbit/instagram.png',n:'Instagram'},{x:33,y:10,img:'img/orbit/gmail.png',n:'Gmail'},
+      {x:36,y:92,img:'img/orbit/tiktok.svg',n:'TikTok'},{x:57,y:8,img:'img/orbit/google-calendar.png',n:'Calendar'},
+      {x:62,y:93,img:'img/orbit/outlook.png',n:'Outlook'},{x:79,y:14,img:'img/orbit/shopify.png',n:'Shopify'},
+      {x:91,y:36,img:'img/orbit/stripe.png',n:'Stripe'},{x:92,y:66,img:'img/orbit/google-ads.png',n:'Google Ads'},
+      {x:82,y:87,img:'img/orbit/linkedin.png',n:'LinkedIn'},{x:22,y:38,img:'img/orbit/wordpress.svg',n:'WordPress'}
+    ];
+    function draw(){
+      var W=stage.clientWidth,H=stage.clientHeight,NS='http://www.w3.org/2000/svg';
+      svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.innerHTML='';
+      var cx=W/2,cy=H/2;
+      nodes.forEach(function(o,i){
+        var nx=o.x/100*W,ny=o.y/100*H;
+        var mx=(nx+cx)/2+(ny>cy?26:-26),my=(ny+cy)/2+(nx>cx?-20:20);
+        var p=document.createElementNS(NS,'path');
+        p.setAttribute('d','M '+nx+' '+ny+' Q '+mx+' '+my+' '+cx+' '+cy);
+        p.setAttribute('id','dintp'+i); svg.appendChild(p);
+        var c=document.createElementNS(NS,'circle');
+        c.setAttribute('r','3.4'); c.setAttribute('class','spark');
+        var m=document.createElementNS(NS,'animateMotion');
+        m.setAttribute('dur',(2.6+i*0.32)+'s'); m.setAttribute('repeatCount','indefinite'); m.setAttribute('begin',(i*0.35)+'s');
+        var mp=document.createElementNS(NS,'mpath');
+        mp.setAttributeNS('http://www.w3.org/1999/xlink','href','#dintp'+i);
+        m.appendChild(mp); c.appendChild(m); svg.appendChild(c);
+      });
+      Array.prototype.forEach.call(stage.querySelectorAll('.int-node'),function(n){n.remove()});
+      nodes.forEach(function(o,i){
+        var d=document.createElement('div');
+        d.className='int-node'; d.style.left=o.x+'%'; d.style.top=o.y+'%';
+        d.style.animationDelay=(-i*0.45)+'s'; d.title=o.n;
+        d.innerHTML='<img src="'+o.img+'" alt="'+o.n+'" loading="lazy">';
+        stage.appendChild(d);
+      });
+    }
+    draw(); window.addEventListener('resize',draw);
+  }
+  var ab=document.getElementById('abStage');
+  if(ab){
+    var TOOLS=[
+      {n:'HubSpot',c:'#FF7A59'},{n:'Salesforce',c:'#00A1E0'},{n:'Zoho',c:'#E42527'},{n:'Pipedrive',c:'#21A464'},
+      {n:'Odoo',c:'#714B67'},{n:'Kommo',c:'#339DC7'},{n:'Mailchimp',c:'#F5C518'},{n:'Hotmart',c:'#F04E23'},
+      {n:'Skool',c:'#E4405F'},{n:'Vambe',c:'#7C3AED'},{n:'Metricool',c:'#12B5A5'},{n:'Supermetrics',c:'#23A47F'},
+      {n:'Diio',c:'#4F46E5'},{n:'LicitaLab',c:'#2563EB'},{n:'n8n',c:'#EA4B71'},{n:'Zapier',c:'#FF4F00'},
+      {n:'Make',c:'#6D00CC'},{n:'ManyChat',c:'#0084FF'},{n:'GoHighLevel',c:'#188BF6'},
+      {n:'Calendly',c:'#006BFF'},{n:'ActiveCampaign',c:'#356AE6'}
+    ];
+    var pts=[[6,16],[24,4],[48,2],[72,6],[92,18],[97,44],[94,72],[76,92],[52,97],[28,94],[7,76],[2,46],[16,30],[38,12],[64,10],[86,30],[88,60],[64,88],[36,92],[12,62],[80,44]];
+    TOOLS.forEach(function(t,i){
+      var p=pts[i%pts.length];
+      var ch=document.createElement('span');
+      ch.className='ab-chip';
+      ch.style.setProperty('--sx',p[0]+'%'); ch.style.setProperty('--sy',p[1]+'%');
+      ch.style.setProperty('--dur',(5.5+(i%5)*0.9)+'s'); ch.style.setProperty('--del',(i*0.6)+'s');
+      ch.innerHTML='<i style="background:'+t.c+'"></i>'+t.n;
+      ab.appendChild(ch);
+    });
+  }
+})();
+</script>
+
 </main>
 
 <!-- FOOTER — always dark regardless of theme -->
