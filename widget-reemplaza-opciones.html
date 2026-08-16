@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Widget "Lo que reemplazamos" — 3 opciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#FA5000; --accent-alt:#CD2349;
+  --bg:#FFFFFF; --bg2:#faf7f5; --heading:#1a1a1a; --text:#555; --line:rgba(0,0,0,.08);
+  --card:#fff; --card-line:rgba(0,0,0,.09);
+}
+html[data-theme="dark"]{
+  --bg:#080808; --bg2:#120e0d; --heading:#f5f0eb; --text:#b0a89e; --line:rgba(255,255,255,.09);
+  --card:#161314; --card-line:rgba(255,255,255,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;overflow-x:hidden}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 22px;background:var(--bg);border-bottom:1px solid var(--line)}
+.topbar h1{font-size:1rem;color:var(--heading);font-weight:800}
+.topbar .hint{font-size:.78rem}
+.tgl{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--heading);font-family:inherit;font-weight:700;font-size:.8rem;padding:9px 16px;border-radius:999px}
+.tgl:hover{border-color:var(--accent);color:var(--accent)}
+.opt{padding:70px 24px 84px;border-bottom:6px solid var(--line);position:relative;overflow:hidden}
+.opt:nth-child(odd of .opt){background:var(--bg2)}
+.tag{position:absolute;top:18px;left:22px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:2px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-alt));padding:6px 12px;border-radius:8px;z-index:5}
+.head{max-width:700px;margin:0 auto 10px;text-align:center}
+.head h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:12px}
+.head h2 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;padding:.1em .04em;margin:-.1em -.04em}
+.head p{font-size:clamp(.92rem,2.4vw,1.05rem);line-height:1.6;max-width:560px;margin:0 auto}
+.chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--card-line);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.85rem;color:var(--heading);box-shadow:0 4px 14px rgba(15,15,15,.06);white-space:nowrap}
+.chip i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.hapee-pill{display:inline-flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid rgba(250,80,0,.5);border-radius:999px;padding:14px 28px;box-shadow:0 18px 54px rgba(250,80,0,.25)}
+.hapee-pill img{height:30px}
+.hapee-pill span{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:2px;font-weight:700;color:var(--accent);text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+/* ═══ A · CHAU FRANKENSTEIN (nube tachada) ═══ */
+.va-stage{position:relative;max-width:860px;margin:40px auto 0;min-height:480px}
+.va-stage .chip{position:absolute;translate:-50% -50%;animation:vaFlota 5s ease-in-out infinite alternate;transition:opacity .5s,filter .5s}
+@keyframes vaFlota{from{margin-top:-7px}to{margin-top:9px}}
+.va-stage .chip s-line{position:absolute;left:8%;right:8%;top:50%;height:2.5px;background:var(--accent-alt);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.va-stage.tachado .chip s-line{transform:scaleX(1)}
+.va-stage.tachado .chip{opacity:.45;filter:grayscale(60%)}
+.va-core{position:absolute;left:50%;bottom:6px;translate:-50%;text-align:center;z-index:4}
+.va-core .cuenta{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.78rem;letter-spacing:2px;color:var(--text);display:block;margin-bottom:12px}
+.va-core .cuenta b{color:var(--accent);font-size:1.1rem}
+@media(max-width:680px){.va-stage{min-height:600px}}
+
+/* ═══ B · LA ABSORCIÓN (chips viajando al core) ═══ */
+.vb-stage{position:relative;max-width:860px;margin:44px auto 0;height:480px}
+.vb-core{position:absolute;left:50%;top:50%;translate:-50% -50%;width:132px;height:132px;background:var(--card);border:1px solid var(--card-line);border-radius:32px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(250,80,0,.3);z-index:5}
+.vb-core img{width:60%}
+.vb-core em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:1.6px;color:var(--accent);font-weight:700}
+.vb-core::before{content:'';position:absolute;inset:-16px;border-radius:42px;border:1.5px dashed rgba(250,80,0,.35);animation:vbGira 22s linear infinite}
+@keyframes vbGira{to{rotate:360deg}}
+.vb-core::after{content:'';position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.14),transparent 70%);z-index:-1;animation:vbLate 2.6s ease-in-out infinite alternate}
+@keyframes vbLate{to{transform:scale(1.25);opacity:.6}}
+.vb-chip{position:absolute;left:var(--sx);top:var(--sy);translate:-50% -50%;animation:vbViaje var(--dur) ease-in infinite;animation-delay:var(--del);opacity:0}
+@keyframes vbViaje{
+  0%{left:var(--sx);top:var(--sy);opacity:0;transform:scale(.9)}
+  12%{opacity:1;transform:scale(1)}
+  70%{opacity:1}
+  100%{left:50%;top:50%;opacity:0;transform:scale(.25)}
+}
+.vb-cuenta{position:absolute;left:50%;bottom:-8px;translate:-50%;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:2px;font-weight:700;color:var(--text)}
+.vb-cuenta b{color:var(--accent);font-size:1.05rem}
+@media(max-width:680px){.vb-stage{height:520px}}
+
+/* ═══ C · EL ADIÓS EDITORIAL (lista tachada + hapee sticky) ═══ */
+.vc-wrap{max-width:880px;margin:44px auto 0;display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:start}
+.vc-lista{border-top:1.5px solid var(--line)}
+.vc-it{display:flex;align-items:center;gap:16px;padding:13px 4px;border-bottom:1.5px solid var(--line);font-weight:800;font-size:clamp(1.05rem,2.6vw,1.45rem);color:var(--heading);letter-spacing:-.01em;position:relative}
+.vc-it i{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.vc-it .ln{position:relative;display:inline-block}
+.vc-it .ln::after{content:'';position:absolute;left:-2%;right:-2%;top:52%;height:2.5px;background:var(--accent-alt);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.vc-it.chau .ln::after{transform:scaleX(1)}
+.vc-it.chau{color:var(--text);}
+.vc-it .adios{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:1.6px;color:var(--accent);opacity:0;transition:opacity .5s .3s;font-weight:700}
+.vc-it.chau .adios{opacity:1}
+.vc-lado{position:sticky;top:90px;text-align:center;padding:38px 26px;border-radius:26px;background:linear-gradient(160deg,rgba(250,80,0,.07),rgba(205,35,73,.05));border:1.5px solid rgba(250,80,0,.35);box-shadow:0 20px 60px rgba(250,80,0,.14)}
+.vc-lado img{height:40px;margin:0 auto 14px}
+.vc-lado b{display:block;font-size:1.15rem;color:var(--heading);font-weight:800;margin-bottom:8px}
+.vc-lado p{font-size:.9rem;line-height:1.6}
+.vc-lado .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:2.4rem;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:block;margin:14px 0 2px}
+.vc-lado small{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--text)}
+@media(max-width:760px){.vc-wrap{grid-template-columns:1fr}.vc-lado{position:static}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Widget "Lo que reemplazamos" — 3 opciones</h1>
+  <span class="hint">19 herramientas → 1 plataforma · toggle para dark</span>
+  <button class="tgl" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';this.textContent=document.documentElement.dataset.theme==='dark'?'☀️ Claro':'🌙 Oscuro'">🌙 Oscuro</button>
+</div>
+
+<!-- ═══ OPCIÓN A ═══ -->
+<section class="opt" id="opcion-a">
+  <span class="tag">OPCIÓN A · CHAU, FRANKENSTEIN</span>
+  <div class="head">
+    <h2>Deja de coser <span class="tg">19 herramientas</span></h2>
+    <p>La nube de suscripciones flota desordenada — y al hacer scroll se van tachando una a una. Al final queda una sola en pie.</p>
+  </div>
+  <div class="va-stage" id="vaStage">
+    <div class="va-core">
+      <span class="cuenta"><b id="vaN">19</b> SUSCRIPCIONES → <b>1</b> PLATAFORMA</span>
+      <span class="hapee-pill"><img src="img/logo-hapee.png" alt="Hapee"><span>Todo adentro</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPCIÓN B ═══ -->
+<section class="opt" id="opcion-b">
+  <span class="tag">OPCIÓN B · LA ABSORCIÓN</span>
+  <div class="head">
+    <h2>Hapee se las <span class="tg">come todas</span></h2>
+    <p>Las herramientas viajan en loop hacia el centro y desaparecen absorbidas por Hapee. Movimiento perpetuo, hipnótico, cero grillas.</p>
+  </div>
+  <div class="vb-stage" id="vbStage">
+    <div class="vb-core"><img src="img/logo-hapee.png" alt="Hapee"><em>ALL-IN-ONE</em></div>
+    <span class="vb-cuenta"><b>19</b> HERRAMIENTAS → <b>1</b> SOLA</span>
+  </div>
+</section>
+
+<!-- ═══ OPCIÓN C ═══ -->
+<section class="opt" id="opcion-c">
+  <span class="tag">OPCIÓN C · EL ADIÓS EDITORIAL</span>
+  <div class="head">
+    <h2>La lista de las que <span class="tg">ya no pagas</span></h2>
+    <p>Editorial y elegante: cada herramienta se tacha con su "chau" al entrar en pantalla, mientras Hapee queda fijo al costado como el único sobreviviente.</p>
+  </div>
+  <div class="vc-wrap">
+    <div class="vc-lista" id="vcLista"></div>
+    <div class="vc-lado">
+      <img src="img/logo-hapee.png" alt="Hapee">
+      <b>Todo esto ya vive dentro de Hapee</b>
+      <p>CRM, agentes IA, email marketing, funnels, automatización, reportería, comunidad y licitaciones — en una sola suscripción.</p>
+      <span class="num" id="vcNum">0</span>
+      <small>herramientas reemplazadas</small>
+    </div>
+  </div>
+</section>
+
+<script>
+var TOOLS=[
+  {n:'HubSpot',c:'#FF7A59'},{n:'Salesforce',c:'#00A1E0'},{n:'Zoho',c:'#E42527'},
+  {n:'Pipedrive',c:'#21A464'},{n:'Odoo',c:'#714B67'},{n:'Kommo',c:'#339DC7'},
+  {n:'Mailchimp',c:'#F5C518'},{n:'Hotmart',c:'#F04E23'},{n:'Skool',c:'#E4405F'},
+  {n:'Vambe',c:'#7C3AED'},{n:'Metricool',c:'#12B5A5'},{n:'Supermetrics',c:'#23A47F'},
+  {n:'Diio',c:'#4F46E5'},{n:'LicitaLab',c:'#2563EB'},{n:'n8n',c:'#EA4B71'},
+  {n:'Zapier',c:'#FF4F00'},{n:'Make',c:'#6D00CC'},{n:'ManyChat',c:'#0084FF'},
+  {n:'GoHighLevel',c:'#188BF6'}
+];
+function chipHTML(t,extra){return '<span class="chip" '+(extra||'')+'><i style="background:'+t.c+'"></i>'+t.n+'<s-line></s-line></span>';}
+
+// ── A: nube dispersa orgánica + tachado por scroll ──
+(function(){
+  var stage=document.getElementById('vaStage');
+  // posiciones orgánicas (x%, y%, rot) — dispersas, nada de grilla
+  var pos=[[14,10,-6],[38,6,4],[63,9,-3],[85,14,6],[8,28,5],[30,24,-4],[55,22,3],[78,30,-5],
+           [18,44,4],[44,40,-6],[68,42,5],[90,48,-4],[10,60,-3],[34,58,6],[60,58,-5],[83,64,3],
+           [24,74,-4],[50,72,5],[74,76,-6]];
+  TOOLS.forEach(function(t,i){
+    var p=pos[i%pos.length];
+    var d=document.createElement('div');
+    d.innerHTML=chipHTML(t);
+    var chip=d.firstChild;
+    chip.style.left=p[0]+'%'; chip.style.top=p[1]+'%';
+    chip.style.transform='rotate('+p[2]+'deg)';
+    chip.style.animationDelay=(-i*0.4)+'s';
+    stage.appendChild(chip);
+  });
+  var n=document.getElementById('vaN');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      io.unobserve(stage);
+      var chips=stage.querySelectorAll('.chip:not(.hapee-pill)');
+      var vivos=TOOLS.length;
+      chips.forEach(function(ch,i){
+        setTimeout(function(){
+          ch.querySelector('s-line').style.transform='scaleX(1)';
+          ch.style.opacity=.45; ch.style.filter='grayscale(60%)';
+          vivos--; if(n)n.textContent=Math.max(vivos,0);
+        }, 500+i*160);
+      });
+    });
+  },{threshold:.35});
+  io.observe(stage);
+})();
+
+// ── B: absorción en loop ──
+(function(){
+  var stage=document.getElementById('vbStage');
+  // puntos de partida alrededor (orgánicos)
+  var pts=[[6,16],[24,4],[48,2],[72,6],[92,18],[97,44],[94,72],[76,92],[52,97],[28,94],[7,76],[2,46],
+           [16,30],[38,12],[64,10],[86,30],[88,60],[64,88]];
+  TOOLS.forEach(function(t,i){
+    var p=pts[i%pts.length];
+    var d=document.createElement('div');
+    d.innerHTML=chipHTML(t);
+    var chip=d.firstChild;
+    chip.classList.add('vb-chip');
+    chip.style.setProperty('--sx',p[0]+'%');
+    chip.style.setProperty('--sy',p[1]+'%');
+    chip.style.setProperty('--dur',(5.5+ (i%5)*0.9)+'s');
+    chip.style.setProperty('--del',(i*0.65)+'s');
+    stage.appendChild(chip);
+  });
+})();
+
+// ── C: lista editorial con tachado al reveal + contador ──
+(function(){
+  var lista=document.getElementById('vcLista'), num=document.getElementById('vcNum');
+  TOOLS.forEach(function(t){
+    var row=document.createElement('div');
+    row.className='vc-it';
+    row.innerHTML='<i style="background:'+t.c+'"></i><span class="ln">'+t.n+'</span><span class="adios">CHAU</span>';
+    lista.appendChild(row);
+  });
+  var count=0;
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      io.unobserve(e.target);
+      setTimeout(function(){
+        e.target.classList.add('chau');
+        count++; if(num)num.textContent=count;
+      }, 150);
+    });
+  },{threshold:.6});
+  lista.querySelectorAll('.vc-it').forEach(function(r){io.observe(r)});
+})();
+</script>
+</body>
+</html>

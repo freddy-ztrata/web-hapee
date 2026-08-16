@@ -424,7 +424,12 @@ html.dark .hero-badge{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.
 .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:bk 1.4s infinite}
 @keyframes bk{0%,100%{opacity:1}50%{opacity:.2}}
 .hero h1{font-size:clamp(2.8rem,6vw,4.2rem);font-weight:800;margin-bottom:20px;color:var(--heading)}
-.hero h1 .w{display:inline-block}
+/* Las palabras son inline-block y el h1 tiene line-height ~0.95: la caja de cada
+   span queda MÁS BAJA que los glifos. En los spans .tg el gradiente solo pinta
+   dentro de la caja (background-clip:text) → lo que sobresale queda transparente
+   y las letras se ven cortadas (la "o" en iPhone). Padding + margen negativo
+   idéntico: la caja crece para pintar el glifo completo sin mover el layout. */
+.hero h1 .w{display:inline-block;padding:.14em .05em;margin:-.14em -.05em}
 .hero-sub{font-size:1.2rem;color:var(--text);line-height:1.7;margin-bottom:32px;max-width:500px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 /* Partner cert badges en el hero (logos oficiales, más peso que los orbs) */
@@ -531,16 +536,21 @@ html.dark .video-wrap{box-shadow:0 8px 40px rgba(250,80,0,.15),0 0 0 1px rgba(25
 html.dark .video-wrap video{border-radius:20px}
 
 /* ===== STATS ===== */
-.stats{padding:56px 0;background:var(--bg);border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);transition:background var(--tr)}
+.stats{padding:64px 0;background:var(--bg);position:relative;overflow:hidden;transition:background var(--tr)}
+.stats::before{content:'';position:absolute;inset:0;background:radial-gradient(600px 200px at 15% 0%,rgba(250,80,0,.06),transparent 60%),radial-gradient(600px 200px at 85% 100%,rgba(205,35,73,.05),transparent 60%);pointer-events:none}
 html.dark .stats{border:none}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
-.stat-item{padding:24px 16px;border-radius:16px;transition:transform .4s,box-shadow .4s;position:relative;overflow:hidden}
-.stat-item:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(250,80,0,.1)}
-/* Animated underline bar */
-.stat-item::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));border-radius:2px;transform:translateX(-50%);transition:width .6s cubic-bezier(.4,0,.2,1)}
-.stat-item.counted::after{width:60%}
-.stat-n{font-family:var(--fd);font-size:clamp(2.8rem,5vw,4rem);font-weight:800;color:var(--heading);transition:transform .3s,color .3s;transform:scale(1)}
-.stat-n .sf{color:var(--accent)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center;position:relative}
+/* Sin cajas contenedoras: números al aire con separadores hairline entre
+   columnas — el protagonismo es del gradiente y el conteo, no del contenedor. */
+.stat-item{padding:18px 12px;position:relative;transition:transform .4s}
+.stat-item + .stat-item::before{content:'';position:absolute;left:0;top:50%;translate:0 -50%;height:56%;width:1px;background:linear-gradient(180deg,transparent,rgba(250,80,0,.28),transparent)}
+.stat-item:hover{transform:translateY(-4px)}
+/* barra inferior gradiente que se enciende al contar */
+.stat-item::after{content:'';position:absolute;bottom:6px;left:50%;width:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));border-radius:2px;transform:translateX(-50%);transition:width .7s cubic-bezier(.4,0,.2,1)}
+.stat-item.counted::after{width:52%}
+@media(max-width:768px){.stat-item:nth-child(odd)::before{display:none}}
+.stat-n{font-family:var(--fd);font-size:clamp(2.6rem,5vw,3.8rem);font-weight:800;background:linear-gradient(135deg,var(--heading) 30%,var(--accent) 85%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transition:transform .3s;transform:scale(1);padding:.1em .04em;margin:-.1em -.04em;display:inline-block}
+.stat-n .sf{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .stat-n.counting{transform:scale(1.08);color:var(--accent)}
 .stat-n.done{animation:statFlash .5s ease}
 @keyframes statFlash{
@@ -548,7 +558,7 @@ html.dark .stats{border:none}
   50%{transform:scale(1.15);text-shadow:0 0 50px rgba(250,80,0,.8)}
   100%{transform:scale(1);text-shadow:none}
 }
-.stat-l{font-size:.95rem;color:var(--text);margin-top:8px;font-weight:500;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.stat-l{font-size:.78rem;color:var(--text);margin-top:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
 .stat-item.counted .stat-l{opacity:1;transform:translateY(0)}
 @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:32px}}
 .partners{margin-top:64px;padding-top:40px;border-top:1px solid rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;gap:28px}
@@ -1955,6 +1965,114 @@ html.dark .mk-card-new{background:linear-gradient(135deg,rgba(34,197,94,.12),#1a
   70%,100%{transform:translateX(calc(200% + 52px)) translateY(0);opacity:1;box-shadow:0 0 0 2px rgba(34,197,94,.4),0 6px 20px rgba(34,197,94,.2)}
 }
 
+/* ===== INTEGRACIONES ORBITA (estilo tok-ai: centro + anillos punteados) ===== */
+.integ{padding:72px 24px 64px;position:relative;overflow:hidden}
+.integ-head{max-width:720px;margin:0 auto 8px;text-align:center}
+.integ-head h2{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:14px}
+.integ-head p{color:var(--text-2,#666);font-size:clamp(.95rem,2.5vw,1.1rem);line-height:1.6;max-width:560px;margin:0 auto}
+.orbit-stage{position:relative;width:clamp(300px,86vw,560px);aspect-ratio:1;margin:34px auto 0}
+/* barrido cónico de "radar" girando detrás de todo */
+.orbit-stage::before{content:'';position:absolute;inset:2%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,rgba(250,80,0,.10) 40deg,transparent 90deg);animation:orb-cw 9s linear infinite;pointer-events:none}
+.orbit-ring{position:absolute;top:50%;left:50%;translate:-50% -50%;border:1.5px dashed rgba(250,80,0,.3);border-radius:50%}
+.orbit-ring.r1{width:58%;height:58%}
+.orbit-ring.r2{width:96%;height:96%}
+/* la rotación usa la propiedad standalone `rotate` para no pisar el transform
+   de posicionamiento de cada icono */
+@keyframes orb-cw{from{rotate:0deg}to{rotate:360deg}}
+@keyframes orb-ccw{from{rotate:0deg}to{rotate:-360deg}}
+.orbit-ring.r1{animation:orb-ccw 38s linear infinite}
+.orbit-ring.r2{animation:orb-cw 60s linear infinite}
+.orbit-ic{position:absolute;top:50%;left:50%;width:clamp(40px,11vw,56px);height:clamp(40px,11vw,56px);margin:calc(clamp(40px,11vw,56px) / -2) 0 0 calc(clamp(40px,11vw,56px) / -2);background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;box-shadow:0 6px 18px rgba(15,15,15,.09);display:flex;align-items:center;justify-content:center;transition:box-shadow .3s}
+.orbit-ring.r1 .orbit-ic{animation:orb-cw 38s linear infinite}
+.orbit-ring.r2 .orbit-ic{animation:orb-ccw 60s linear infinite}
+.orbit-ic:hover{box-shadow:0 10px 28px rgba(250,80,0,.28)}
+/* flotación suave de cada icono (sobre la img: no pisa el transform de posición) */
+@keyframes orb-bob{from{transform:translateY(-7%) scale(.98)}to{transform:translateY(9%) scale(1.04)}}
+.orbit-ic img{width:58%;height:58%;object-fit:contain;display:block;animation:orb-bob 3.4s ease-in-out infinite alternate}
+.orbit-ring .orbit-ic:nth-child(2) img{animation-delay:-.9s}
+.orbit-ring .orbit-ic:nth-child(3) img{animation-delay:-1.7s}
+.orbit-ring .orbit-ic:nth-child(4) img{animation-delay:-2.5s}
+.orbit-ring .orbit-ic:nth-child(5) img{animation-delay:-1.3s}
+.orbit-ring .orbit-ic:nth-child(6) img{animation-delay:-2.1s}
+/* chispas orbitando entre iconos */
+.orbit-dot{position:absolute;top:50%;left:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));box-shadow:0 0 12px rgba(250,80,0,.55)}
+/* ondas de pulso emanando del centro */
+@keyframes orb-pulse{0%{opacity:.55;scale:.32}100%{opacity:0;scale:1.05}}
+.orbit-pulse{position:absolute;top:50%;left:50%;translate:-50% -50%;width:100%;height:100%;border:1.5px solid rgba(250,80,0,.4);border-radius:50%;animation:orb-pulse 4.2s ease-out infinite;pointer-events:none}
+.orbit-pulse.p2{animation-delay:2.1s}
+/* núcleo con respiración de glow */
+@keyframes orb-breathe{from{box-shadow:0 18px 44px rgba(250,80,0,.14),0 6px 18px rgba(15,15,15,.08)}to{box-shadow:0 18px 70px rgba(250,80,0,.34),0 6px 18px rgba(15,15,15,.08)}}
+.orbit-core{position:absolute;top:50%;left:50%;translate:-50% -50%;width:clamp(86px,22vw,120px);height:clamp(86px,22vw,120px);background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:26px;display:flex;align-items:center;justify-content:center;z-index:2;animation:orb-breathe 3s ease-in-out infinite alternate}
+.orbit-core img{width:66%;height:auto;object-fit:contain;display:block}
+@media (prefers-reduced-motion: reduce){.orbit-stage::before,.orbit-ring,.orbit-ic,.orbit-ic img,.orbit-pulse,.orbit-core{animation:none !important}}
+html.dark .orbit-ic,html.dark .orbit-core{background:#161314;border-color:rgba(255,255,255,.08)}
+
+/* ===== FAQ ===== */
+.faq{padding:80px 24px;max-width:880px;margin:0 auto;position:relative;counter-reset:faqn}
+.faq::before{content:'';position:absolute;top:40px;left:50%;translate:-50%;width:min(680px,90%);height:220px;background:radial-gradient(closest-side,rgba(250,80,0,.07),transparent);pointer-events:none}
+.faq-head{text-align:center;margin-bottom:38px;position:relative}
+.faq-kicker{display:inline-block;font-family:var(--fm,var(--fb));font-size:.68rem;letter-spacing:2.6px;text-transform:uppercase;color:var(--accent);font-weight:700;padding:6px 14px;border:1px solid rgba(250,80,0,.3);border-radius:999px;background:rgba(250,80,0,.06);margin-bottom:16px}
+.faq-head h2{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:12px}
+.faq-head p{color:var(--text-2,#666);font-size:1rem}
+/* Card con BORDE GRADIENTE real (doble background + clip) — apagado sutil,
+   encendido al hover/open. El número vive gigante como marca de agua. */
+.faq-item{counter-increment:faqn;border:1px solid transparent;border-radius:20px;margin-bottom:14px;background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,rgba(250,80,0,.22),rgba(0,0,0,.05) 40%,rgba(205,35,73,.2)) border-box;overflow:hidden;transition:transform .35s,box-shadow .35s,background .35s;position:relative}
+html.dark .faq-item{background:linear-gradient(#141010,#141010) padding-box,linear-gradient(120deg,rgba(250,80,0,.35),rgba(255,255,255,.06) 40%,rgba(205,35,73,.3)) border-box}
+/* número fantasma gigante a la derecha */
+.faq-item::before{content:counter(faqn,decimal-leading-zero);position:absolute;right:14px;top:50%;translate:0 -50%;font-family:var(--fd);font-size:4.4rem;font-weight:800;line-height:1;background:linear-gradient(135deg,rgba(250,80,0,.10),rgba(205,35,73,.06));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;pointer-events:none;transition:opacity .35s,scale .35s;z-index:0}
+.faq-item[open]::before{opacity:.35;scale:1.15}
+/* barrido de brillo al pasar el mouse */
+.faq-item::after{content:'';position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(250,80,0,.09),transparent);transform:skewX(-18deg);transition:left .8s ease;pointer-events:none}
+.faq-item:hover::after{left:130%}
+.faq-item:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(250,80,0,.13);background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,var(--accent),rgba(205,35,73,.7)) border-box}
+.faq-item[open]{box-shadow:0 18px 56px rgba(250,80,0,.16);background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,var(--accent),var(--accent-alt)) border-box}
+html.dark .faq-item:hover,html.dark .faq-item[open]{background:linear-gradient(#141010,#141010) padding-box,linear-gradient(120deg,var(--accent),var(--accent-alt)) border-box}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:21px 64px 21px 22px;font-family:var(--fb);font-weight:700;font-size:1.04rem;color:var(--heading);-webkit-tap-highlight-color:transparent;position:relative;z-index:1}
+.faq-item summary::before{content:counter(faqn,decimal-leading-zero);font-family:var(--fm,var(--fb));font-size:.8rem;font-weight:800;letter-spacing:1px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:.9;min-width:26px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';flex-shrink:0;margin-left:auto;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;box-shadow:0 4px 14px rgba(250,80,0,.3)}
+.faq-item:hover summary::after{box-shadow:0 6px 22px rgba(250,80,0,.5)}
+.faq-item[open] summary::after{transform:rotate(135deg)}
+/* la pregunta se enciende en gradiente al abrir */
+.faq-item[open] summary{background:linear-gradient(120deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.faq-item[open] summary::after{-webkit-text-fill-color:#fff}
+@keyframes faq-in{from{opacity:0;translate:0 -8px}to{opacity:1;translate:0 0}}
+.faq-a{padding:0 64px 22px 64px;color:var(--text-2,#555);font-size:.96rem;line-height:1.7;animation:faq-in .4s ease;position:relative;z-index:1}
+.faq-a strong{color:var(--heading)}
+@media (max-width:600px){.faq-a{padding:0 20px 20px}.faq-item::before{font-size:3rem;right:8px}.faq-item summary{padding-right:52px}}
+.faq-cta{margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 24px;border-radius:18px;background:linear-gradient(135deg,#0b0b0b,#1c0f0a);border:1px solid rgba(250,80,0,.25);flex-wrap:wrap}
+.faq-cta p{color:rgba(255,255,255,.85);font-size:.98rem;font-weight:600;margin:0}
+.faq-cta p span{color:var(--accent)}
+.faq-cta .btn{white-space:nowrap}
+@media (prefers-reduced-motion: reduce){.faq-a{animation:none}.faq-item:hover{transform:none}}
+
+/* ===== MARQUEE DE MARCAS (casos del grupo) ===== */
+.brands{padding:34px 0 38px;background:linear-gradient(135deg,#0b0b0b,#171010 60%,#0b0b0b);position:relative;overflow:hidden}
+.brands::before{content:'';position:absolute;inset:0;background:radial-gradient(500px 140px at 50% 0%,rgba(250,80,0,.10),transparent 70%);pointer-events:none}
+.brands-lbl{text-align:center;font-family:var(--fm,var(--fb));font-size:.68rem;letter-spacing:2.6px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:700;margin-bottom:22px}
+.brands-lbl strong{color:var(--accent)}
+.mq{overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+@keyframes mq-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-track{display:flex;align-items:center;gap:38px;width:max-content;animation:mq-slide 42s linear infinite;padding:0 24px}
+.mq:hover .mq-track{animation-play-state:paused}
+/* Todos los logos vienen NORMALIZADOS al mismo lienzo 360x140 (blanco puro,
+   recortados y centrados por script) — un solo height y la cinta queda
+   ópticamente pareja. Marca nueva = pasar por el mismo proceso, jamás el
+   archivo crudo. */
+.mq-track img{height:54px;width:auto;opacity:.85;transition:opacity .3s,transform .3s}
+.mq-track img:hover{opacity:1;transform:scale(1.06)}
+@media (prefers-reduced-motion: reduce){.mq-track{animation:none}}
+@media (max-width:768px){.mq-track{gap:30px}.mq-track img{height:44px}}
+
+/* casos de éxito dentro del widget validador */
+.cw-cases{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px}
+.cw-case{padding:14px 16px;background:rgba(250,80,0,.05);border:1px solid rgba(250,80,0,.16);border-radius:14px;transition:border-color .3s,transform .3s}
+.cw-case:hover{border-color:rgba(250,80,0,.45);transform:translateY(-2px)}
+.cw-case .n{font-family:var(--fd);font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;padding:.08em .03em;margin:-.08em -.03em}
+.cw-case .b{font-family:var(--fb);font-size:.82rem;color:#fff;font-weight:700;display:block;margin-top:2px}
+.cw-case .d{font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.35;display:block;margin-top:2px}
+@media (max-width:480px){.cw-cases{grid-template-columns:1fr 1fr}}
+
 /* ===== CUSTOM DIGITALS WIDGET (below pricing) ===== */
 .custom-widget{padding:56px 24px;background:linear-gradient(135deg,#0a0a0a 0%,#1a0d0d 50%,#0a0a0a 100%);position:relative;overflow:hidden}
 .custom-widget::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(250,80,0,.12),transparent 50%),radial-gradient(circle at 80% 70%,rgba(205,35,73,.08),transparent 50%);pointer-events:none}
@@ -2205,6 +2323,7 @@ main > section.hero{min-height:100svh}
     </div>
   </div>
 </section>
+
 
 <!-- FEATURES -->
 <section class="feat" id="features">
@@ -3415,6 +3534,168 @@ main > section.hero{min-height:100svh}
 
 
 <!-- PRICING -->
+<!-- INTEGRACIONES — órbita estilo tok-ai -->
+<section class="integ" id="integraciones">
+  <div class="integ-head">
+    <h2>Se conecta con lo que <span class="tg">ya usas</span></h2>
+    <p>WhatsApp, Instagram, correo, calendarios, e-commerce y pagos — todos tus canales conversando con Hapee, sin pegar herramientas a mano.</p>
+  </div>
+  <div class="int-stage" id="intStage" aria-label="Integraciones de Hapee: WhatsApp, Instagram, Facebook, Gmail, Google Calendar, Outlook, Shopify, Stripe, Google Ads, LinkedIn, TikTok y WordPress">
+    <svg class="int-net" id="intNet" aria-hidden="true"></svg>
+    <div class="int-core"><img src="img/logo-hapee.png" alt="Hapee"></div>
+  </div>
+  <style>
+  /* ═══ Red neuronal de integraciones (Opción B elegida por Seba) ═══ */
+  .int-stage{position:relative;width:min(880px,94vw);height:clamp(430px,62vw,540px);margin:34px auto 0}
+  .int-net{position:absolute;inset:0;width:100%;height:100%}
+  .int-net path{fill:none;stroke:rgba(250,80,0,.28);stroke-width:1.2}
+  .int-net circle.spark{fill:var(--accent);filter:drop-shadow(0 0 6px rgba(250,80,0,.8))}
+  .int-node{position:absolute;width:clamp(42px,9vw,58px);height:clamp(42px,9vw,58px);translate:-50% -50%;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:15px;box-shadow:0 6px 18px rgba(15,15,15,.09);display:flex;align-items:center;justify-content:center;animation:intBob 4s ease-in-out infinite alternate;transition:transform .3s,box-shadow .3s}
+  .int-node:hover{transform:scale(1.14);box-shadow:0 10px 30px rgba(250,80,0,.3)}
+  .int-node img{width:58%;height:58%;object-fit:contain;display:block}
+  @keyframes intBob{from{margin-top:-6px}to{margin-top:8px}}
+  .int-core{position:absolute;left:50%;top:50%;translate:-50% -50%;width:clamp(96px,19vw,128px);height:clamp(96px,19vw,128px);background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(250,80,0,.28);z-index:3}
+  .int-core img{width:62%}
+  .int-core::after{content:'';position:absolute;inset:-14px;border-radius:38px;border:1.5px dashed rgba(250,80,0,.3);animation:intGira 24s linear infinite}
+  @keyframes intGira{to{rotate:360deg}}
+  html.dark .int-node,html.dark .int-core{background:#161314;border-color:rgba(255,255,255,.08)}
+  @media (prefers-reduced-motion: reduce){.int-node,.int-core::after,.int-net *{animation:none !important}}
+  </style>
+  <script>
+  (function(){
+    var stage=document.getElementById('intStage'), svg=document.getElementById('intNet');
+    if(!stage||!svg)return;
+    var nodes=[
+      {x:13,y:20,img:'img/orbit/whatsapp.svg',n:'WhatsApp'},
+      {x:8,y:52,img:'img/orbit/facebook.png',n:'Messenger'},
+      {x:16,y:82,img:'img/orbit/instagram.png',n:'Instagram'},
+      {x:33,y:10,img:'img/orbit/gmail.png',n:'Gmail'},
+      {x:36,y:92,img:'img/orbit/tiktok.svg',n:'TikTok'},
+      {x:57,y:8,img:'img/orbit/google-calendar.png',n:'Google Calendar'},
+      {x:62,y:93,img:'img/orbit/outlook.png',n:'Outlook'},
+      {x:79,y:14,img:'img/orbit/shopify.png',n:'Shopify'},
+      {x:91,y:36,img:'img/orbit/stripe.png',n:'Stripe'},
+      {x:92,y:66,img:'img/orbit/google-ads.png',n:'Google Ads'},
+      {x:82,y:87,img:'img/orbit/linkedin.png',n:'LinkedIn'},
+      {x:22,y:38,img:'img/orbit/wordpress.svg',n:'WordPress'}
+    ];
+    function draw(){
+      var W=stage.clientWidth,H=stage.clientHeight;
+      svg.setAttribute('viewBox','0 0 '+W+' '+H); svg.innerHTML='';
+      var cx=W/2, cy=H/2, NS='http://www.w3.org/2000/svg';
+      nodes.forEach(function(o,i){
+        var nx=o.x/100*W, ny=o.y/100*H;
+        var mx=(nx+cx)/2+(ny>cy?26:-26), my=(ny+cy)/2+(nx>cx?-20:20);
+        var p=document.createElementNS(NS,'path');
+        p.setAttribute('d','M '+nx+' '+ny+' Q '+mx+' '+my+' '+cx+' '+cy);
+        p.setAttribute('id','intp'+i);
+        svg.appendChild(p);
+        var c=document.createElementNS(NS,'circle');
+        c.setAttribute('r','3.4'); c.setAttribute('class','spark');
+        var m=document.createElementNS(NS,'animateMotion');
+        m.setAttribute('dur',(2.6+i*0.32)+'s'); m.setAttribute('repeatCount','indefinite');
+        m.setAttribute('begin',(i*0.35)+'s');
+        var mp=document.createElementNS(NS,'mpath');
+        mp.setAttributeNS('http://www.w3.org/1999/xlink','href','#intp'+i);
+        m.appendChild(mp); c.appendChild(m); svg.appendChild(c);
+      });
+      Array.prototype.forEach.call(stage.querySelectorAll('.int-node'),function(n){n.remove()});
+      nodes.forEach(function(o,i){
+        var d=document.createElement('div');
+        d.className='int-node'; d.style.left=o.x+'%'; d.style.top=o.y+'%';
+        d.style.animationDelay=(-i*0.45)+'s'; d.title=o.n;
+        d.innerHTML='<img src="'+o.img+'" alt="'+o.n+'" loading="lazy">';
+        stage.appendChild(d);
+      });
+    }
+    draw(); window.addEventListener('resize',draw);
+  })();
+  </script>
+</section>
+
+<!-- REEMPLAZA — nube Chau Frankenstein (elegida por Seba) -->
+<section class="rw" id="reemplaza">
+  <div class="rw-head">
+    <h2>Y reemplaza <span class="tg">19 herramientas</span></h2>
+    <p>CRM, email, automatización, comunidad, reportería y licitaciones: todo lo que hoy pagas por separado, tachado de tu presupuesto.</p>
+  </div>
+  <div class="rw-stage" id="rwStage">
+    <div class="rw-core">
+      <span class="rw-cuenta"><b id="rwN">19</b> SUSCRIPCIONES → <b>1</b> PLATAFORMA</span>
+      <span class="rw-pill"><img src="img/logo-hapee.png" alt="Hapee"><span>Todo adentro</span></span>
+    </div>
+  </div>
+  <style>
+  .rw{padding:78px 24px 60px;position:relative;overflow:hidden}
+  .rw::before{content:'';position:absolute;top:0;left:50%;translate:-50%;width:min(700px,90%);height:240px;background:radial-gradient(closest-side,rgba(250,80,0,.07),transparent);pointer-events:none}
+  .rw-head{max-width:680px;margin:0 auto;text-align:center}
+  .rw-head h2{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:12px}
+  .rw-head h2 .tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;padding:.1em .04em;margin:-.1em -.04em}
+  .rw-head p{color:var(--text-2,#666);font-size:1rem;line-height:1.6;max-width:520px;margin:0 auto}
+  .rw-stage{position:relative;max-width:880px;margin:36px auto 0;min-height:470px}
+  .rw-chip{position:absolute;translate:-50% -50%;display:inline-flex;align-items:center;gap:8px;background:var(--bg-surface,#fff);border:1px solid rgba(0,0,0,.09);border-radius:999px;padding:9px 16px;font-weight:700;font-size:.84rem;color:var(--heading);box-shadow:0 4px 14px rgba(15,15,15,.06);white-space:nowrap;animation:rwFlota 5s ease-in-out infinite alternate;transition:opacity .5s,filter .5s}
+  html.dark .rw-chip{background:#161314;border-color:rgba(255,255,255,.1)}
+  @keyframes rwFlota{from{margin-top:-7px}to{margin-top:9px}}
+  .rw-chip i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .rw-chip .rw-tacha{position:absolute;left:8%;right:8%;top:50%;height:2.5px;background:var(--accent-alt);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  .rw-chip.chau .rw-tacha{transform:scaleX(1)}
+  .rw-chip.chau{opacity:.45;filter:grayscale(60%)}
+  .rw-core{position:absolute;left:50%;bottom:4px;translate:-50%;text-align:center;z-index:4}
+  .rw-cuenta{font-family:var(--fm,monospace);font-weight:700;font-size:.76rem;letter-spacing:2px;color:var(--text-2,#666);display:block;margin-bottom:12px}
+  .rw-cuenta b{color:var(--accent);font-size:1.1rem}
+  .rw-pill{display:inline-flex;align-items:center;gap:12px;background:var(--bg-surface,#fff);border:1.5px solid rgba(250,80,0,.5);border-radius:999px;padding:13px 26px;box-shadow:0 18px 54px rgba(250,80,0,.25)}
+  html.dark .rw-pill{background:#161314}
+  .rw-pill img{height:28px}
+  .rw-pill span{font-family:var(--fm,monospace);font-size:.64rem;letter-spacing:2px;font-weight:700;color:var(--accent);text-transform:uppercase}
+  @media(max-width:680px){.rw-stage{min-height:590px}}
+  @media (prefers-reduced-motion:reduce){.rw-chip{animation:none}}
+  </style>
+  <script>
+  (function(){
+    var TOOLS=[
+      {n:'HubSpot',c:'#FF7A59'},{n:'Salesforce',c:'#00A1E0'},{n:'Zoho',c:'#E42527'},
+      {n:'Pipedrive',c:'#21A464'},{n:'Odoo',c:'#714B67'},{n:'Kommo',c:'#339DC7'},
+      {n:'Mailchimp',c:'#F5C518'},{n:'Hotmart',c:'#F04E23'},{n:'Skool',c:'#E4405F'},
+      {n:'Vambe',c:'#7C3AED'},{n:'Metricool',c:'#12B5A5'},{n:'Supermetrics',c:'#23A47F'},
+      {n:'Diio',c:'#4F46E5'},{n:'LicitaLab',c:'#2563EB'},{n:'n8n',c:'#EA4B71'},
+      {n:'Zapier',c:'#FF4F00'},{n:'Make',c:'#6D00CC'},{n:'ManyChat',c:'#0084FF'},
+      {n:'GoHighLevel',c:'#188BF6'}
+    ];
+    var stage=document.getElementById('rwStage'); if(!stage)return;
+    var pos=[[14,10,-6],[38,6,4],[63,9,-3],[85,14,6],[8,28,5],[30,24,-4],[55,22,3],[78,30,-5],
+             [18,44,4],[44,40,-6],[68,42,5],[90,48,-4],[10,60,-3],[34,58,6],[60,58,-5],[83,64,3],
+             [24,74,-4],[50,72,5],[74,76,-6]];
+    TOOLS.forEach(function(t,i){
+      var p=pos[i%pos.length];
+      var ch=document.createElement('span');
+      ch.className='rw-chip';
+      ch.style.left=p[0]+'%'; ch.style.top=p[1]+'%';
+      ch.style.transform='rotate('+p[2]+'deg)';
+      ch.style.animationDelay=(-i*0.4)+'s';
+      ch.innerHTML='<i style="background:'+t.c+'"></i>'+t.n+'<span class="rw-tacha"></span>';
+      stage.appendChild(ch);
+    });
+    var n=document.getElementById('rwN');
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting)return;
+        io.unobserve(stage);
+        var chips=stage.querySelectorAll('.rw-chip');
+        var vivos=TOOLS.length;
+        chips.forEach(function(ch,i){
+          setTimeout(function(){
+            ch.classList.add('chau');
+            vivos--; if(n)n.textContent=Math.max(vivos,0);
+          }, 500+i*150);
+        });
+      });
+    },{threshold:.3});
+    io.observe(stage);
+  })();
+  </script>
+</section>
+
+
 <section class="pricing" id="planes">
   <div class="pricing-bg" aria-hidden="true">
     <div class="pbg-blob b1"></div>
@@ -3508,39 +3789,119 @@ main > section.hero{min-height:100svh}
 <section class="custom-widget">
   <div class="cw-inner">
     <div class="cw-left">
-      <span class="lbl">¿Buscas algo más?</span>
-      <h2>Una estrategia <span class="tg">100% custom</span> con la agencia #1 de IA en LATAM</h2>
-      <p>Hapee es la plataforma. <strong style="color:#fff">Digitals</strong> es el equipo que la pone a producir. Ads, contenido, community management, landings a medida y voice cloning de tu marca — todo conectado a Hapee desde el día 1.</p>
+      <span class="lbl">Grupo Digitals · desde 2018</span>
+      <h2>Hapee nace de <span class="tg">+10.000 clientes</span> reales</h2>
+      <p>No partimos de un pitch: partimos de operar. Desde 2018, <strong style="color:#fff">Grupo Digitals</strong> ha llevado el marketing y las ventas de más de 10.000 clientes en LATAM — y cada dolor, cada cuello de botella y cada hora perdida en tareas manuales se convirtió en una función de Hapee.</p>
       <ul class="cw-feats">
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Hapee Ads</strong><span>Estrategia completa de Meta &amp; Google Ads con tracking nativo</span></div></li>
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Hapee Content</strong><span>Creación de contenido + Community Management (CM)</span></div></li>
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Landings a medida</strong><span>Diseño + copy + CRO 100% custom</span></div></li>
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Setup técnico llave en mano</strong><span>Agentes entrenados con tu data real</span></div></li>
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Voice Cloning</strong><span>Tu marca habla con tu voz, 24/7</span></div></li>
-        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Equipo dedicado</strong><span>Santiago, Chile · LATAM + EEUU</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Fundados en 2018</strong><span>8 años operando marketing y ventas reales, no teoría</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>+10.000 clientes</strong><span>Cada dolor y cuello de botella: vivido, medido y resuelto</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Meta Business Partner + Google Partner</strong><span>Certificaciones oficiales que muy pocos en LATAM tienen</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Producto con trinchera</strong><span>Cada feature nace de una necesidad real de cliente, no de un roadmap teórico</span></div></li>
+        <li><span class="ico">✓</span><div class="cw-feat-txt"><strong>Equipo en Santiago · LATAM + EEUU</strong><span>Soporte en español que entiende tu mercado</span></div></li>
       </ul>
+      <div class="cw-cases" aria-label="Casos de éxito de Grupo Digitals">
+        <div class="cw-case"><span class="n">+40%</span><span class="b">Develon · Hyundai</span><span class="d">Crecimiento comercial en 2 años</span></div>
+        <div class="cw-case"><span class="n">+260%</span><span class="b">Sacyr</span><span class="d">Engagement y seguidores en 6 meses</span></div>
+        <div class="cw-case"><span class="n">+20%</span><span class="b">Heli Forklift</span><span class="d">Crecimiento mensual sostenido en ventas</span></div>
+        <div class="cw-case"><span class="n">+30%</span><span class="b">Mundo Med</span><span class="d">Crecimiento anual con full funnel 360°</span></div>
+      </div>
       <div class="cw-cta">
-        <a href="https://digitals.cl" target="_blank" rel="noopener noreferrer" class="btn bs">Conocer Digitals</a>
-        <a href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer" class="btn bo">Cotizar setup custom</a>
+        <a href="https://digitals.cl" target="_blank" rel="noopener noreferrer" class="btn bs">Conocer Grupo Digitals</a>
+        <a href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer" class="btn bo">Hablar con el equipo</a>
       </div>
     </div>
     <div class="cw-right">
       <div class="cw-logo">
-        <img src="img/digitals-logo.png" alt="Digitals · Agencia de IA #1 en LATAM">
+        <img src="img/logo-grupo-digitals-full.png" alt="Grupo Digitals — el grupo detrás de Hapee, fundado en 2018">
       </div>
-      <span class="cw-tag">Agencia certificada</span>
-      <h3>La agencia de IA<br>aplicada #1 en LATAM.</h3>
-      <p class="cw-sub">Performance · Talento · Growth · Analítica avanzada. El motor que tu empresa necesita para dominar el ecosistema digital.</p>
+      <span class="cw-tag">Trayectoria verificada</span>
+      <h3>El grupo detrás<br>de la plataforma.</h3>
+      <p class="cw-sub">Hapee no es una startup probando suerte: es la tecnología de un grupo que lleva 8 años en la cancha, destilada en producto.</p>
       <div class="cw-stats">
-        <div class="cw-stat"><div class="n">+450</div><div class="l">Clientes</div></div>
-        <div class="cw-stat"><div class="n">5</div><div class="l">Países LATAM</div></div>
-        <div class="cw-stat"><div class="n">2020</div><div class="l">Founded</div></div>
-      </div>
-      <div class="cw-price">
-        <span class="label">Setup custom</span>
-        <span class="val"><span class="from">desde</span>USD $1.490</span>
+        <div class="cw-stat"><div class="n">2018</div><div class="l">Fundados</div></div>
+        <div class="cw-stat"><div class="n">+10.000</div><div class="l">Clientes</div></div>
+        <div class="cw-stat"><div class="n">8</div><div class="l">Años</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- MARCAS DEL GRUPO -->
+<section class="brands" aria-label="Marcas que confían en Grupo Digitals">
+  <div class="brands-lbl">Confían en <strong>el grupo detrás de Hapee</strong> · +10.000 clientes desde 2018</div>
+  <div class="mq">
+    <div class="mq-track">
+      <img src="img/brands/heli.png?v=2" alt="Heli Forklift">
+      <img src="img/brands/sacyr.png?v=2" alt="Sacyr">
+      <img src="img/brands/mundomed.png?v=2" alt="Mundo Med">
+      <img src="img/brands/burgerking.png?v=2" alt="Burger King">
+      <img src="img/brands/indisa.png?v=2" alt="Clínica Indisa">
+      <img src="img/brands/corfo.png?v=2" alt="CORFO">
+      <img src="img/brands/logo-chery.png?v=2" alt="Chery">
+      <img src="img/brands/elloa.png?v=2" alt="Aeropuerto El Loa">
+      <img src="img/brands/tranciti.png?v=2" alt="Tranciti">
+      <img src="img/brands/andes.png?v=2" alt="Andes Construcción">
+      <img src="img/brands/reutter.png?v=2" alt="Empresas Reutter">
+      <img src="img/brands/gashn.png?v=2" alt="Gas HN">
+      <img src="img/brands/heli.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/sacyr.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/mundomed.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/burgerking.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/indisa.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/corfo.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/logo-chery.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/elloa.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/tranciti.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/andes.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/reutter.png?v=2" alt="" aria-hidden="true">
+      <img src="img/brands/gashn.png?v=2" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-head">
+    <span class="faq-kicker">FAQ</span>
+    <h2>Preguntas <span class="tg">frecuentes</span></h2>
+    <p>Lo que todos preguntan antes de automatizar con Hapee.</p>
+  </div>
+  <details class="faq-item">
+    <summary>¿Qué es Hapee y qué incluye?</summary>
+    <div class="faq-a">Hapee es la plataforma de <strong>agentes de IA + CRM all-in-one</strong> #1 en Chile y LATAM. Centraliza WhatsApp, Instagram, Facebook, Email y SMS en una bandeja omnicanal con agentes IA que responden, califican y cierran ventas 24/7. Incluye CRM, pipeline, automatizaciones, funnels, calendario y reportes en vivo.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Funciona con WhatsApp Business oficial?</summary>
+    <div class="faq-a">Sí — integramos la <strong>WhatsApp Business API oficial (Meta Cloud API)</strong>, además de Instagram DM, Messenger, Email, SMS y formularios web. Cumple 100% las políticas de Meta: nada de hacks que arriesguen tu número.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿En cuánto tiempo queda funcionando?</summary>
+    <div class="faq-a">El setup llave en mano típico toma <strong>7 a 14 días</strong>: conexión de canales, migración de contactos, entrenamiento de los agentes con tu data real y capacitación de tu equipo. Tú vendes; nosotros configuramos.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Necesito un equipo técnico para usarlo?</summary>
+    <div class="faq-a">No. Hapee se entrega <strong>configurado por Grupo Digitals</strong>: setup, canales, agentes entrenados y soporte ilimitado en español. Ideal para PyMEs y empresas sin equipo técnico interno.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Puedo migrar mis contactos desde otro CRM?</summary>
+    <div class="faq-a">Sí. Importamos tus contactos, etiquetas e historiales desde HubSpot, Kommo, GoHighLevel, planillas Excel o el CRM que uses hoy — sin perder data y sin frenar tu operación.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cómo se compara con Vambe, Kommo, HubSpot o GoHighLevel?</summary>
+    <div class="faq-a">Hapee combina lo mejor de todos — IA conversacional, omnicanal robusto y embudo automatizado — pero con una diferencia clave: <strong>detrás hay una agencia Meta + Google Partner</strong> que hace el setup, entrena los agentes con tu data y conecta ads y contenido. No te entregamos un software: te entregamos el sistema funcionando.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Cuánto cuesta?</summary>
+    <div class="faq-a">Tres planes: <strong>Starter desde USD 197/mes</strong>, Pro USD 297/mes y Elite Setup desde USD 2.990 (one-time, llave en mano). Todos incluyen agentes IA, CRM completo y soporte en español.</div>
+  </details>
+  <details class="faq-item">
+    <summary>¿Realmente puede cerrar ventas solo?</summary>
+    <div class="faq-a">Los agentes ejecutan el flujo completo: capturan el lead, lo califican, hacen seguimiento multicanal, agendan y cierran — y <strong>solo escalan a un humano cuando de verdad se necesita</strong>. Empresas en Chile y LATAM aumentan conversión hasta 35% con automatización Hapee.</div>
+  </details>
+  <div class="faq-cta">
+    <p>¿Quedó alguna duda? <span>Respondemos en minutos.</span></p>
+    <a href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer" class="btn bs">Hablar por WhatsApp</a>
   </div>
 </section>
 
@@ -3648,10 +4009,11 @@ main > section.hero{min-height:100svh}
       <span>&copy; 2026 Hapee (WM Digital, LLC). Todos los derechos reservados. · <a href="/politica-privacidad.html" style="color:rgba(255,255,255,.4)">Privacidad</a> · <a href="/terminos.html" style="color:rgba(255,255,255,.4)">Términos</a></span>
       <a class="powered-by-foot" href="https://digitals.cl" target="_blank" rel="noopener noreferrer" title="Grupo Digitals">
         <span>Powered by</span>
-        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals" loading="lazy">
+        <img src="img/logo-grupo-digitals-full.png" alt="Grupo Digitals" loading="lazy">
       </a>
       <div class="fsoc">
         <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+        <a href="https://www.linkedin.com/company/110088984/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
       </div>
     </div>
   </div>
