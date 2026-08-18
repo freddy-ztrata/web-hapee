@@ -46,7 +46,7 @@ Hapee es **la plataforma de agentes de IA + CRM all-in-one más completa de LATA
 |---|---|---|---|
 | Starter | USD 197/mes | Mensual | 2 usuarios y 2.000 contactos · pipeline ilimitado · agentes IA 24/7 · automatizaciones básicas · voice cloning · bandeja omnicanal (WhatsApp, Instagram, Facebook) · módulos de Email Marketing, Licitaciones (Mercado Público) y Academia |
 | Pro | USD 297/mes (el más elegido) | Mensual | Todo Starter + usuarios y contactos ilimitados · WhatsApp Business API · soporte VIP prioritario · informes detallados · automatizaciones avanzadas · gestión de reseñas · programación RRSS · Licitaciones (Mercado Público y Entidades privadas) |
-| Elite Setup | USD 2.990 | Setup llave en mano (one-time) | Setup completo por Digitals + entrenamiento agentes IA con tu data + migración + capacitación |
+| Elite Setup | USD 3.290 | Setup llave en mano (one-time) | Setup completo por Digitals + entrenamiento agentes IA con tu data + migración + capacitación |
 
 **Sin compromiso**: sin contratos. Cancela cuando quieras.
 
