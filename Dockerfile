@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260817-01
+ARG CACHE_BUST=20260818-01
 COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
@@ -15,6 +15,7 @@ COPY agenda-tu-demo.html /usr/share/nginx/html/agenda-tu-demo.html
 COPY agentes-ia-whatsapp.html /usr/share/nginx/html/agentes-ia-whatsapp.html
 COPY demo-countdown.html /usr/share/nginx/html/demo-countdown.html
 COPY planes.html /usr/share/nginx/html/planes.html
+COPY academia.html /usr/share/nginx/html/academia.html
 COPY dossier-x8k4m2.html /usr/share/nginx/html/dossier-x8k4m2.html
 COPY demoday-via-x7m2.html /usr/share/nginx/html/demoday-via-x7m2.html
 COPY compra-exitosa.html /usr/share/nginx/html/compra-exitosa.html

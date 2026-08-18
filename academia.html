@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academia Hapee · Deja tu Hapee funcionando hoy</title>
+<meta name="description" content="La guía oficial de autosetup de Hapee: 20 módulos en el orden correcto, desde el primer login hasta agentes IA respondiendo solos. Con checklist interactivo y progreso guardado.">
+<meta name="theme-color" content="#FA5000">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<meta property="og:title" content="Academia Hapee · Guía oficial de autosetup">
+<meta property="og:description" content="Deja tu Hapee funcionando hoy: 20 módulos, 2 a 4 horas, checklist interactivo con tu progreso guardado.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hapee.ai/academia.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* ═══════════ TOKENS ═══════════ */
+:root{
+  --accent:#FA5000;
+  --accent-alt:#CD2349;
+  --bg:#FFFFFF;
+  --bg-alt:#F5F3F0;
+  --bg-warm:#FBF7F3;
+  --text:#4a4a4a;
+  --text-2:#777e8f;
+  --heading:#1a1a1a;
+  --card:#FFFFFF;
+  --border:rgba(0,0,0,.09);
+  --hair:rgba(0,0,0,.07);
+  --ok:#0E8A4C;
+  --ok-bg:#EDF7F1;
+  --warn:#C2410C;
+  --warn-bg:#FDF1EA;
+  --code-bg:#131313;
+  --code-tx:#e8e2da;
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fm:'JetBrains Mono',ui-monospace,monospace;
+  --tr:.3s cubic-bezier(.4,0,.2,1);
+  --sh-sm:0 2px 12px rgba(0,0,0,.06);
+  --sh-md:0 10px 36px rgba(0,0,0,.09);
+  --r:18px;
+}
+html.dark{
+  --bg:#080808;
+  --bg-alt:#0d0d0d;
+  --bg-warm:#0f0d0b;
+  --text:#b0a89e;
+  --text-2:#7a7068;
+  --heading:#f5f0eb;
+  --card:#111111;
+  --border:rgba(255,255,255,.10);
+  --hair:rgba(255,255,255,.08);
+  --ok:#4ADE80;
+  --ok-bg:rgba(74,222,128,.08);
+  --warn:#FDBA74;
+  --warn-bg:rgba(251,146,60,.08);
+  --code-bg:#0d0d0d;
+  --sh-sm:0 2px 12px rgba(0,0,0,.4);
+  --sh-md:0 10px 36px rgba(0,0,0,.5);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fd);background:var(--bg);color:var(--text);font-size:.95rem;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+h1,h2,h3,h4{color:var(--heading);line-height:1.12;letter-spacing:-.02em}
+a{color:var(--accent);text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:rgba(250,80,0,.2)}
+
+/* scroll progress */
+#scrollbar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));width:0;z-index:300;transition:width .1s linear}
+
+/* ═══════════ HEADER ═══════════ */
+header{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;gap:18px;padding:0 clamp(16px,3vw,36px);height:64px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.brand img{height:26px}
+html.dark .brand img{filter:brightness(0) invert(1)}
+.brand .div{width:1px;height:22px;background:var(--border)}
+.brand .word{font-size:.72rem;font-weight:800;letter-spacing:3.5px;color:var(--accent)}
+.hd-search{flex:1;max-width:430px;position:relative;margin:0 auto}
+.hd-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--text-2);pointer-events:none}
+.hd-search input{width:100%;height:40px;border-radius:100px;border:1.5px solid var(--border);background:var(--bg-alt);color:var(--heading);font-family:var(--fd);font-size:.86rem;padding:0 40px;outline:none;transition:var(--tr)}
+.hd-search input:focus{border-color:var(--accent);background:var(--bg)}
+.hd-search kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:.62rem;color:var(--text-2);border:1px solid var(--border);border-radius:6px;padding:2px 6px;pointer-events:none}
+.hd-right{display:flex;align-items:center;gap:10px;flex-shrink:0;margin-left:auto}
+.prog-pill{display:flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;color:var(--heading);background:var(--bg-alt);border:1px solid var(--border);border-radius:100px;padding:7px 14px;white-space:nowrap}
+.prog-pill .bar{width:56px;height:5px;border-radius:10px;background:var(--border);overflow:hidden}
+.prog-pill .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-alt));border-radius:10px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.tbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--bg-alt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.95rem;transition:var(--tr)}
+.tbtn:hover{border-color:var(--accent)}
+.cta{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:.83rem;color:#fff;background:linear-gradient(100deg,var(--accent),var(--accent-alt));padding:10px 20px;border-radius:100px;white-space:nowrap;transition:var(--tr);box-shadow:0 6px 18px rgba(250,80,0,.28)}
+.cta:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(250,80,0,.36)}
+
+/* ═══════════ HERO ═══════════ */
+.hero{position:relative;padding:150px clamp(20px,5vw,60px) 70px;background:var(--bg-warm);overflow:hidden;transition:background var(--tr)}
+.hero::before{content:'';position:absolute;top:-220px;right:-160px;width:640px;height:640px;border-radius:46% 54% 58% 42%/52% 44% 56% 48%;background:radial-gradient(circle at 35% 35%,rgba(250,80,0,.14),rgba(205,35,73,.05) 60%,transparent 75%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-260px;left:-200px;width:560px;height:560px;border-radius:58% 42% 44% 56%/46% 58% 42% 54%;background:radial-gradient(circle at 60% 40%,rgba(250,80,0,.07),transparent 70%);pointer-events:none}
+.hero-in{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center;position:relative;z-index:1}
+.sl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.sl::before{content:'';width:26px;height:2px;background:var(--accent);border-radius:2px}
+.hero h1{font-size:clamp(2.5rem,5.6vw,4.1rem);font-weight:800;letter-spacing:-.028em;line-height:.98;margin-bottom:22px}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative}
+.hero h1 em::after{content:'';position:absolute;left:-2%;bottom:4px;width:104%;height:.28em;background:linear-gradient(90deg,rgba(250,80,0,.22),rgba(205,35,73,.16));z-index:-1;border-radius:4px;transform:rotate(-1deg)}
+.hero p.lead{font-size:1.06rem;max-width:520px;margin-bottom:30px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:26px 38px;margin-bottom:34px}
+.hstat b{display:block;font-size:1.05rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.hstat span{font-size:.78rem;color:var(--text-2)}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn2{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;padding:14px 28px;border-radius:100px;border:2px solid var(--heading);color:var(--heading);transition:var(--tr)}
+.btn2:hover{background:var(--heading);color:var(--bg)}
+.cta.big{font-size:.95rem;padding:15px 30px}
+.hero-vis{position:relative;display:flex;align-items:center;justify-content:center;min-height:340px}
+.blob{position:absolute;inset:8% 4%;border-radius:47% 53% 57% 43%/55% 46% 54% 45%;background:linear-gradient(140deg,rgba(250,80,0,.13),rgba(205,35,73,.07));animation:blobf 9s ease-in-out infinite alternate}
+@keyframes blobf{0%{border-radius:47% 53% 57% 43%/55% 46% 54% 45%;transform:rotate(0)}100%{border-radius:56% 44% 46% 54%/45% 57% 43% 55%;transform:rotate(4deg)}}
+.hero-vis img{width:min(64%,280px);position:relative;z-index:1;filter:drop-shadow(0 30px 50px rgba(250,80,0,.22));animation:bob 5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.ring-wrap{position:absolute;right:4%;bottom:2%;z-index:2;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:14px 18px;display:flex;align-items:center;gap:13px;box-shadow:var(--sh-md)}
+.ring{width:52px;height:52px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .track{stroke:var(--border);fill:none;stroke-width:5}
+.ring .fill{stroke:url(#ringgrad);fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:138.2;stroke-dashoffset:138.2;transition:stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)}
+.ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:var(--heading)}
+.ring-wrap .tx b{display:block;font-size:.85rem;font-weight:800;color:var(--heading)}
+.ring-wrap .tx span{font-size:.7rem;color:var(--text-2)}
+
+/* ═══════════ CÓMO USAR ═══════════ */
+.howto{max-width:1120px;margin:0 auto;padding:56px clamp(20px,5vw,60px) 8px}
+.howto-card{background:var(--card);border:1px solid var(--border);border-radius:26px;padding:clamp(26px,4vw,44px);box-shadow:var(--sh-sm)}
+.howto-card h2{font-size:1.35rem;font-weight:800;margin-bottom:20px}
+.howto ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px 34px}
+.howto li{position:relative;padding-left:26px;font-size:.9rem}
+.howto li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:800}
+.howto li b{color:var(--heading)}
+
+/* ═══════════ LAYOUT ═══════════ */
+.wrap{max-width:1240px;margin:0 auto;padding:40px clamp(16px,3vw,40px) 90px;display:grid;grid-template-columns:292px minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
+
+/* sidebar */
+.side{position:sticky;top:84px;max-height:calc(100vh - 104px);overflow-y:auto;padding-right:6px;scrollbar-width:thin}
+.side::-webkit-scrollbar{width:4px}
+.side::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.snav .fase{margin-bottom:18px}
+.snav .fase-t{display:flex;align-items:baseline;gap:8px;font-size:.66rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-2);padding:6px 10px 7px}
+.snav .fase-t em{font-style:normal;color:var(--accent);font-family:var(--fm)}
+.snav a.mod{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;color:var(--text);font-size:.85rem;font-weight:600;transition:background .18s,color .18s;line-height:1.3}
+.snav a.mod:hover{background:var(--bg-alt);color:var(--heading)}
+.snav a.mod.act{background:linear-gradient(100deg,rgba(250,80,0,.1),rgba(205,35,73,.06));color:var(--accent)}
+.snav a.mod .n{font-family:var(--fm);font-size:.66rem;font-weight:700;color:var(--text-2);width:20px;flex-shrink:0}
+.snav a.mod .tick{margin-left:auto;width:17px;height:17px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:transparent;transition:var(--tr)}
+.snav a.mod.done .tick{background:var(--ok);border-color:var(--ok);color:#fff}
+.snav a.mod.done{color:var(--text-2)}
+.snav a.mod.hidden{display:none}
+.snav .fase.hidden{display:none}
+.search-empty{display:none;font-size:.8rem;color:var(--text-2);padding:10px}
+.search-empty.show{display:block}
+
+/* content */
+.content{min-width:0}
+
+/* fase band */
+.fband{position:relative;border-radius:26px;overflow:hidden;background:linear-gradient(115deg,#E64A00,#CD2349);color:#fff;padding:clamp(28px,4vw,46px) clamp(24px,4vw,48px);margin:56px 0 34px;scroll-margin-top:90px}
+.fband:first-child{margin-top:0}
+.fband::after{content:attr(data-n);position:absolute;right:18px;bottom:-38px;font-size:11rem;font-weight:800;color:rgba(255,255,255,.12);line-height:1;letter-spacing:-.05em;pointer-events:none}
+.fband .fl{font-size:.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;opacity:.85;margin-bottom:10px;display:block}
+.fband h2{color:#fff;font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:800;margin-bottom:10px}
+.fband p{max-width:560px;font-size:.95rem;opacity:.92}
+
+/* module article */
+article.mod{background:var(--card);border:1px solid var(--border);border-radius:26px;padding:clamp(24px,4vw,44px);margin-bottom:30px;box-shadow:var(--sh-sm);scroll-margin-top:90px;position:relative;overflow:hidden}
+article.mod.done{border-color:color-mix(in srgb,var(--ok) 45%,var(--border))}
+.mod-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+.mod-num{flex-shrink:0;width:46px;height:46px;border-radius:14px;background:linear-gradient(120deg,var(--accent),var(--accent-alt));color:#fff;font-weight:800;font-size:1.02rem;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(250,80,0,.3)}
+article.mod.done .mod-num{background:var(--ok);box-shadow:0 8px 20px rgba(14,138,76,.25)}
+.mod-head h3{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:800;padding-top:6px}
+.donde{font-family:var(--fm);font-size:.72rem;color:var(--text-2);background:var(--bg-alt);border:1px solid var(--hair);border-radius:10px;padding:8px 13px;display:inline-block;margin:10px 0 18px}
+.donde b{color:var(--accent);font-weight:700}
+.mod p{margin-bottom:14px}
+.mod p:last-child{margin-bottom:0}
+.mod .intro{font-size:.98rem}
+.mod .intro b,.mod p b{color:var(--heading)}
+
+.subt{font-size:.7rem;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--accent);margin:26px 0 13px}
+
+/* chips antes de partir */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:4px}
+.chip{font-size:.8rem;font-weight:600;color:var(--heading);background:var(--bg-alt);border:1px solid var(--hair);border-radius:100px;padding:8px 16px}
+
+/* pasos */
+.pasos{list-style:none;counter-reset:p;display:flex;flex-direction:column;gap:10px}
+.pasos li{counter-increment:p;position:relative;background:var(--bg-alt);border-radius:16px;padding:15px 18px 15px 56px;font-size:.9rem}
+.pasos li::before{content:counter(p);position:absolute;left:16px;top:14px;width:26px;height:26px;border-radius:9px;border:1.5px solid var(--accent);color:var(--accent);font-size:.76rem;font-weight:800;display:flex;align-items:center;justify-content:center;background:var(--card)}
+.pasos li b{color:var(--heading)}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--border);border-radius:16px;margin:4px 0 8px}
+table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:480px}
+th{text-align:left;font-size:.66rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--text-2);padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg-alt)}
+td{padding:12px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.k{font-family:var(--fm);font-size:.74rem;font-weight:700;color:var(--accent);white-space:nowrap}
+td b{color:var(--heading)}
+tr.gr td{background:var(--bg-alt);font-weight:800;color:var(--heading);font-size:.78rem}
+
+/* callouts */
+.listo{display:flex;gap:14px;align-items:flex-start;background:var(--ok-bg);border-left:3px solid var(--ok);border-radius:0 16px 16px 0;padding:16px 18px;margin-top:22px}
+.listo .ck{flex-shrink:0;margin-top:2px;position:relative}
+.listo .ck input{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--ok);background:var(--card);cursor:pointer;transition:var(--tr);display:block}
+.listo .ck input:checked{background:var(--ok)}
+.listo .ck::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:#fff;opacity:0;pointer-events:none;transition:var(--tr)}
+.listo .ck.on::after{opacity:1}
+.listo .tx{font-size:.9rem}
+.listo .tx b{color:var(--ok);font-weight:800}
+.listo .tx .hint{display:block;font-size:.74rem;color:var(--text-2);margin-top:4px}
+.ojo{background:var(--warn-bg);border-left:3px solid var(--warn);border-radius:0 16px 16px 0;padding:15px 18px;margin-top:14px;font-size:.88rem}
+.ojo b{color:var(--warn);font-weight:800}
+.nota{background:var(--bg-alt);border-radius:16px;padding:15px 18px;margin-top:14px;font-size:.87rem}
+.nota b{color:var(--heading)}
+
+/* code block */
+.code{position:relative;background:var(--code-bg);border-radius:18px;padding:22px 22px 20px;margin:6px 0 10px;overflow-x:auto}
+.code pre{font-family:var(--fm);font-size:.76rem;line-height:1.75;color:var(--code-tx);white-space:pre}
+.code .cm{color:#8a8a8a}
+.code .hl{color:#FFB38A}
+.copy{position:absolute;top:12px;right:12px;font-family:var(--fd);font-size:.7rem;font-weight:700;color:#ddd;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:100px;padding:6px 14px;cursor:pointer;transition:var(--tr)}
+.copy:hover{background:rgba(255,255,255,.2)}
+.copy.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+
+/* chat demo */
+.chat{display:flex;flex-direction:column;gap:10px;margin:6px 0 10px}
+.bub{max-width:82%;padding:13px 17px;border-radius:18px;font-size:.87rem;line-height:1.55}
+.bub.c{align-self:flex-start;background:var(--bg-alt);border-bottom-left-radius:6px}
+.bub.a{align-self:flex-end;background:linear-gradient(115deg,rgba(250,80,0,.12),rgba(205,35,73,.08));border:1px solid rgba(250,80,0,.2);border-bottom-right-radius:6px}
+.bub .who{display:block;font-size:.62rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);margin-bottom:5px}
+.chat-note{font-size:.82rem;color:var(--text-2);font-style:italic}
+
+/* screenshot */
+.shot{border-radius:18px;border:1px solid var(--border);box-shadow:var(--sh-md);margin:8px 0 6px}
+.shot-cap{font-size:.76rem;color:var(--text-2);margin-bottom:16px}
+
+/* maestro */
+.maestro{background:var(--card);border:1px solid var(--border);border-radius:26px;padding:clamp(24px,4vw,44px);margin-top:56px;scroll-margin-top:90px}
+.maestro-head{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-bottom:8px}
+.maestro-head h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800}
+.maestro-head .print{margin-left:auto;font-size:.8rem;font-weight:700;border:1.5px solid var(--border);background:var(--bg-alt);color:var(--heading);border-radius:100px;padding:9px 18px;cursor:pointer;transition:var(--tr)}
+.maestro-head .print:hover{border-color:var(--accent);color:var(--accent)}
+.maestro>p{margin-bottom:20px}
+.mrow{display:flex;align-items:center;gap:14px;padding:13px 6px;border-bottom:1px solid var(--hair);cursor:pointer}
+.mrow:last-of-type{border-bottom:none}
+.mrow .mck{flex-shrink:0;width:22px;height:22px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:transparent;transition:var(--tr)}
+.mrow.done .mck{background:var(--ok);border-color:var(--ok);color:#fff}
+.mrow .mt{font-weight:700;color:var(--heading);font-size:.88rem;width:190px;flex-shrink:0}
+.mrow .md{font-size:.84rem;color:var(--text-2)}
+.mrow.done .mt{color:var(--text-2);text-decoration:line-through;text-decoration-color:rgba(14,138,76,.5)}
+.m-100{display:none;margin-top:22px;background:linear-gradient(115deg,rgba(250,80,0,.1),rgba(205,35,73,.07));border:1px solid rgba(250,80,0,.25);border-radius:18px;padding:20px 24px;font-size:.95rem}
+.m-100.show{display:block;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+.m-100 b{color:var(--accent)}
+@keyframes pop{0%{transform:scale(.94);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* footer */
+.foot{background:var(--bg-alt);border-top:1px solid var(--hair);margin-top:80px;padding:56px clamp(20px,5vw,60px)}
+.foot-in{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.foot h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;margin-bottom:12px}
+.foot p{font-size:.92rem;max-width:480px}
+.foot .fright{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.foot .legal{max-width:1120px;margin:44px auto 0;padding-top:22px;border-top:1px solid var(--hair);font-size:.75rem;color:var(--text-2);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.foot .legal a{color:var(--text-2)}
+.foot .legal a:hover{color:var(--accent)}
+
+/* fab + drawer (mobile) */
+.fab{display:none;position:fixed;bottom:20px;right:20px;z-index:220;width:56px;height:56px;border-radius:50%;border:none;background:linear-gradient(120deg,var(--accent),var(--accent-alt));color:#fff;font-size:1.25rem;cursor:pointer;box-shadow:0 12px 30px rgba(250,80,0,.4);align-items:center;justify-content:center}
+.drawer{display:none;position:fixed;inset:0;z-index:240;background:rgba(0,0,0,.45);backdrop-filter:blur(3px)}
+.drawer.open{display:block}
+.drawer .panel{position:absolute;right:0;top:0;bottom:0;width:min(84vw,340px);background:var(--bg);padding:22px 18px;overflow-y:auto;animation:slidein .28s cubic-bezier(.4,0,.2,1)}
+@keyframes slidein{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+.drawer .close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.4rem;color:var(--text-2);cursor:pointer}
+
+/* reveals */
+.rev{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.rev.in{opacity:1;transform:none}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:1020px){
+  .hero-in{grid-template-columns:1fr;gap:34px}
+  .hero-vis{min-height:280px;order:-1}
+  .hero-vis img{width:min(52%,220px)}
+  .wrap{grid-template-columns:1fr}
+  .side{display:none}
+  .fab{display:flex}
+  .howto ul{grid-template-columns:1fr}
+  .foot-in{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  header{gap:10px}
+  .hd-search{display:none}
+  .prog-pill .bar{display:none}
+  .cta span.x{display:none}
+  .hero{padding-top:120px}
+  .mrow .mt{width:auto;min-width:120px}
+  .mrow{flex-wrap:wrap}
+  .fband::after{font-size:7rem;bottom:-24px}
+}
+
+/* ═══════════ PRINT ═══════════ */
+@media print{
+  header,.fab,.drawer,#scrollbar,.hero-btns,.foot,.copy,.hd-search{display:none!important}
+  .hero{padding:20px 0}
+  .wrap{display:block;padding:0}
+  article.mod,.fband,.maestro,.howto-card{box-shadow:none;break-inside:avoid;margin:14px 0}
+  .fband{color:#000;background:#eee}
+  .fband h2,.fband .fl{color:#000}
+  body{font-size:11px}
+}
+</style>
+</head>
+<body>
+<div id="scrollbar"></div>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="ringgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs></svg>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header>
+  <a class="brand" href="https://hapee.ai">
+    <img src="img/logo-hapee.png" alt="Hapee">
+    <span class="div"></span>
+    <span class="word">ACADEMIA</span>
+  </a>
+  <div class="hd-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input id="q" type="search" placeholder="Busca un módulo: whatsapp, agentes, workflows…" autocomplete="off">
+    <kbd>/</kbd>
+  </div>
+  <div class="hd-right">
+    <div class="prog-pill"><span id="pnum">0/20</span><span class="bar"><i id="pbar"></i></span></div>
+    <button class="tbtn" id="theme" aria-label="Cambiar tema">🌙</button>
+    <a class="cta" href="https://beta.hapee.ai" target="_blank" rel="noopener">Abrir mi plataforma<span class="x"> →</span></a>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <span class="sl">Hapee · Guía oficial de autosetup</span>
+      <h1>Deja tu Hapee funcionando <em>hoy</em>.</h1>
+      <p class="lead">Esta guía te lleva módulo por módulo, en el orden correcto, desde el primer login hasta tener agentes respondiendo, tu CRM ordenado y tus reportes corriendo solos. Sin conocimientos técnicos — y con tu avance guardado acá mismo.</p>
+      <div class="hero-stats">
+        <div class="hstat"><b>beta.hapee.ai</b><span>tu plataforma</span></div>
+        <div class="hstat"><b>2 a 4 horas</b><span>el autosetup completo</span></div>
+        <div class="hstat"><b>20 módulos</b><span>activas los que contrataste</span></div>
+        <div class="hstat"><b>WhatsApp</b><span>si te trabas, escríbenos</span></div>
+      </div>
+      <div class="hero-btns">
+        <a class="cta big" href="#m01">Partir por la Fase 0 →</a>
+        <a class="btn2" href="#maestro">Ver checklist maestro</a>
+      </div>
+    </div>
+    <div class="hero-vis">
+      <div class="blob"></div>
+      <img src="img/robot.png" alt="Robot Hapee">
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg width="52" height="52" viewBox="0 0 52 52"><circle class="track" cx="26" cy="26" r="22"/><circle class="fill" id="ringfill" cx="26" cy="26" r="22"/></svg>
+          <b id="ringpct">0%</b>
+        </div>
+        <div class="tx"><b id="ringmods">0 de 20 módulos</b><span>tu progreso queda guardado</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CÓMO USAR ═══════════ -->
+<section class="howto rev">
+  <div class="howto-card">
+    <h2>Cómo usar esta guía</h2>
+    <ul>
+      <li><b>Sigue el orden de las fases.</b> Cada módulo encuentra listo lo que necesita del anterior: primero los canales, después el CRM, después los agentes que usan ambos.</li>
+      <li><b>No necesitas hacerlo todo de una vez.</b> Cada módulo es independiente: para al final de cualquier fase y retoma donde quedaste — tu avance queda guardado en este navegador.</li>
+      <li><b>Haz solo los módulos de tu plan.</b> Si un módulo no aparece en tu menú lateral, no está en tu plan: salta al siguiente.</li>
+      <li><b>La casilla «Listo cuando…»</b> de cada módulo es tu verificación: si eso se cumple, márcala y avanza tranquilo.</li>
+      <li><b>Al final está el checklist maestro</b> para ver tu avance completo — y se marca solo con lo que ya completaste.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="side" id="side">
+    <div class="search-empty" id="qempty">Nada calza con tu búsqueda 🤔</div>
+    <nav id="sidenav" class="snav"></nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content" id="content">
+
+    <!-- ════ FASE 0 ════ -->
+    <section class="fband rev" id="fase0" data-n="0" data-fase>
+      <span class="fl">Fase 0 · 15 minutos</span>
+      <h2>Tu cuenta</h2>
+      <p>Antes de conectar nada: que la plataforma sepa quién eres, cómo se ve tu marca y quiénes son tu equipo. Todo lo demás hereda esto.</p>
+    </section>
+
+    <!-- 01 -->
+    <article class="mod rev" id="m01" data-search="primer acceso perfil empresa login contraseña logo tema oscuro claro idioma configuracion datos">
+      <div class="mod-head"><div class="mod-num">01</div><h3>Primer acceso y perfil de empresa</h3></div>
+      <div class="donde">Dónde: <b>beta.hapee.ai</b> → menú <b>Configuración → Perfil de empresa</b></div>
+      <p class="intro">Tu logo, tus colores y tus datos aparecen en cotizaciones, correos, formularios y reportes. Cargarlos primero evita rehacer piezas después.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Correo de invitación de Hapee</span><span class="chip">Logo en PNG (fondo transparente ideal)</span><span class="chip">Datos de la empresa</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Abre el correo de bienvenida y entra a <b>beta.hapee.ai</b> con tu usuario. El sistema te pedirá <b>crear tu contraseña definitiva</b> en el primer ingreso.</li>
+        <li>Ve a <b>Configuración → Perfil de empresa</b> y completa nombre, rut/razón social, sitio web, teléfono y dirección.</li>
+        <li>Sube tu <b>logo</b> (y su versión en blanco si la tienes: se usa sobre fondos oscuros).</li>
+        <li>Revisa tu <b>foto de perfil y nombre</b> en tu cuenta personal: es lo que verán tus clientes cuando el equipo responda.</li>
+        <li>Elige tu <b>tema</b>: el botón de la luna 🌙 en la barra superior alterna entre modo claro y oscuro. Es una preferencia por usuario — cada persona elige el suyo y la plataforma lo recuerda. El idioma también se cambia por usuario, abajo en el menú lateral.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m01"></span><div class="tx"><b>Listo cuando…</b> entras con tu contraseña propia y el logo de tu empresa aparece en el perfil.<span class="hint">Márcalo y tu progreso queda guardado en este navegador.</span></div></div>
+    </article>
+
+    <!-- 02 -->
+    <article class="mod rev" id="m02" data-search="equipo usuarios invitar roles administrador miembro accesos contraseñas">
+      <div class="mod-head"><div class="mod-num">02</div><h3>Tu equipo dentro de Hapee</h3></div>
+      <div class="donde">Dónde: <b>Configuración → Equipo</b></div>
+      <p class="intro">Cada persona con su propio acceso: así los mensajes, tareas y ventas quedan asignados a alguien con nombre, y nadie comparte contraseñas.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Nombres y correos del equipo</span><span class="chip">Decidir quién administra</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>En <b>Configuración → Equipo</b>, invita a cada persona con su correo.</li>
+        <li>Asigna el rol: <b>administrador</b> (configura y ve todo) o <b>miembro</b> (opera el día a día).</li>
+        <li>Pide a cada uno aceptar la invitación y crear su contraseña.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m02"></span><div class="tx"><b>Listo cuando…</b> cada persona del equipo entra con su propio usuario.</div></div>
+      <div class="ojo"><b>Ojo:</b> no compartan un usuario entre varios. Todo lo que Hapee mide por persona (respuestas, tareas, ventas) deja de servir si dos personas usan la misma cuenta.</div>
+    </article>
+
+    <!-- ════ FASE 1 ════ -->
+    <section class="fband rev" id="fase1" data-n="1" data-fase>
+      <span class="fl">Fase 1 · 30 minutos</span>
+      <h2>Canales conectados</h2>
+      <p>El corazón de Hapee es que todos tus canales caen en una sola bandeja. Conéctalos antes de crear agentes: un agente sin canal no tiene dónde hablar.</p>
+    </section>
+
+    <!-- 03 -->
+    <article class="mod rev" id="m03" data-search="whatsapp business api oficial meta numero plantillas ventana 24 horas verificacion sms">
+      <div class="mod-head"><div class="mod-num">03</div><h3>WhatsApp</h3></div>
+      <div class="donde">Dónde: menú <b>Conversaciones → WhatsApp</b></div>
+      <p class="intro">El canal donde vende Chile. Hapee se conecta a la <b>API oficial de WhatsApp Business</b>: mensajes ilimitados por conversación, sin celular prendido y sin riesgo de bloqueo por apps no oficiales.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Un número para WhatsApp Business (puede ser nuevo)</span><span class="chip">Acceso admin a tu página de Facebook/Meta</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Entra a <b>Conversaciones → WhatsApp</b> y sigue el asistente de conexión con tu cuenta de Meta (te pedirá iniciar sesión en Facebook y autorizar el número).</li>
+        <li>Verifica el número con el <b>código SMS</b> que envía Meta.</li>
+        <li>Completa el <b>perfil del negocio</b>: foto, descripción y horario — es lo que ve el cliente al abrir tu chat.</li>
+        <li>Envíate un <b>mensaje de prueba</b> desde otro teléfono y confirma que aparece en la <b>Bandeja de entrada</b>.</li>
+      </ol>
+      <div class="subt">La regla que hay que entender: la ventana de 24 horas</div>
+      <p>WhatsApp oficial funciona con una regla simple: cuando un cliente te escribe, se abre una <b>ventana de 24 horas</b> en la que puedes responderle lo que quieras. Pasadas esas 24 horas —o si quieres escribirle TÚ primero— solo puedes iniciar con una <b>plantilla aprobada</b> por Meta.</p>
+      <div class="tbl"><table>
+        <tr><th>Situación</th><th>Qué puedes enviar</th></tr>
+        <tr><td class="k">Cliente escribió hace &lt; 24 h</td><td>Cualquier mensaje libre: texto, fotos, audios, documentos. <b>Aquí operan tus agentes.</b></td></tr>
+        <tr><td class="k">Cliente escribió hace &gt; 24 h</td><td>Solo plantillas aprobadas (la conversación se «reabre» si él responde).</td></tr>
+        <tr><td class="k">Tú inicias la conversación</td><td>Solo plantillas aprobadas. Los workflows que envían WhatsApp «en frío» las necesitan.</td></tr>
+      </table></div>
+      <p style="margin-top:14px">Crea desde el día uno tus <b>3 plantillas base</b> y mándalas a aprobación (tarda horas, a veces un día). Las plantillas no pueden ser puramente promocionales agresivas — Meta las rechaza; escríbelas como servicio al cliente. Puedes partir de estas:</p>
+      <div class="code"><button class="copy" data-copy="plantillas">Copiar</button><pre id="plantillas"><span class="cm"># 1 · Bienvenida</span>
+Hola {{nombre}}, gracias por escribirnos a <span class="hl">[tu empresa]</span> 👋
+Cuéntanos en qué te podemos ayudar y te respondemos al tiro.
+
+<span class="cm"># 2 · Recordatorio de cita</span>
+Hola {{nombre}}, te recordamos tu hora del <span class="hl">{{fecha}}</span> a las <span class="hl">{{hora}}</span>
+con <span class="hl">[tu empresa]</span>. Si necesitas reagendar, respóndenos por aquí.
+
+<span class="cm"># 3 · Seguimiento de cotización</span>
+Hola {{nombre}}, ¿pudiste revisar la cotización que te enviamos?
+Quedamos atentos a tus dudas — y si quieres, la vemos juntos en una
+llamada corta.</pre></div>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m03"></span><div class="tx"><b>Listo cuando…</b> escribes al número desde tu celular personal, el mensaje aparece en la bandeja de Hapee, y tus 3 plantillas base están enviadas a aprobación.</div></div>
+      <div class="ojo"><b>Ojo:</b> si tu número ya está en la app normal de WhatsApp, hay que liberarlo primero (borrar la cuenta en la app). Si te complica este paso, es el momento exacto de escribirnos: lo hacemos contigo en una llamada corta.</div>
+    </article>
+
+    <!-- 04 -->
+    <article class="mod rev" id="m04" data-search="bandeja entrada omnicanal conversaciones instagram facebook correo chat web asignar etiquetas responsable">
+      <div class="mod-head"><div class="mod-num">04</div><h3>Bandeja de entrada omnicanal</h3></div>
+      <div class="donde">Dónde: menú <b>Conversaciones → Bandeja de entrada</b></div>
+      <img class="shot" src="img/plataforma-bandeja.png" alt="Bandeja omnicanal de Hapee" loading="lazy">
+      <p class="shot-cap">La <b>bandeja omnicanal</b>: cada conversación con su canal, su responsable y la ficha del contacto al costado.</p>
+      <p class="intro">WhatsApp, Instagram, Facebook, correo y el chat de tu web, <b>en una sola lista</b>. Cada conversación puede asignarse a una persona del equipo, etiquetarse y convertirse en negocio del pipeline sin salir de ahí.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Abre la <b>Bandeja de entrada</b> y conecta los canales que uses: Instagram y Facebook se autorizan con tu cuenta de Meta; el correo, con tu casilla.</li>
+        <li>Define con tu equipo la regla de oro: <b>toda conversación se asigna</b> a un responsable apenas se responde por primera vez.</li>
+        <li>Crea tus primeras <b>etiquetas</b> (en Configuración → Etiquetas): por ejemplo «cotización», «postventa», «urgente». Pocas y claras rinde más que muchas.</li>
+        <li>Prueba el flujo completo: mensaje entrante → asignar → responder → etiquetar.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m04"></span><div class="tx"><b>Listo cuando…</b> los mensajes de tus canales llegan a la bandeja y el equipo responde desde ahí, no desde los celulares.</div></div>
+    </article>
+
+    <!-- ════ FASE 2 ════ -->
+    <section class="fband rev" id="fase2" data-n="2" data-fase>
+      <span class="fl">Fase 2 · 40 minutos</span>
+      <h2>Tu CRM ordenado</h2>
+      <p>Aquí vive la memoria del negocio: quién es cada cliente, en qué va cada venta y qué hay que hacer hoy. Los agentes IA leen y escriben sobre esta base, así que conviene dejarla limpia.</p>
+    </section>
+
+    <!-- 05 -->
+    <article class="mod rev" id="m05" data-search="contactos empresas importar csv excel planilla propiedades campos duplicados base datos">
+      <div class="mod-head"><div class="mod-num">05</div><h3>Contactos y empresas</h3></div>
+      <div class="donde">Dónde: menú <b>CRM → Contactos</b> y <b>CRM → Empresas</b></div>
+      <p class="intro">Cada persona que te escribe queda registrada con su historial completo: conversaciones, negocios, correos y notas. Las empresas agrupan a sus contactos.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Tu base actual en Excel/CSV (si tienes)</span><span class="chip">Columnas: nombre, teléfono, correo</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Si vienes de una planilla, usa la <b>importación</b> desde Contactos: sube el CSV y empareja las columnas con los campos de Hapee.</li>
+        <li>Revisa 5 contactos al azar tras importar: nombre bien escrito, teléfono con formato completo (+56 9…), correo sin espacios.</li>
+        <li>En <b>Configuración → Propiedades</b> agrega los campos propios de tu negocio. Los agentes IA pueden llenarlos conversando. Ejemplos por rubro — <b>inmobiliaria:</b> comuna de interés, dormitorios, pie disponible, primera vivienda sí/no · <b>clínica/salud:</b> previsión, tratamiento de interés, urgencia · <b>e-commerce/retail:</b> talla, categoría favorita, última compra · <b>servicios B2B:</b> tamaño de empresa, cargo, presupuesto estimado, fecha de renovación (esta última habilita el workflow de renovaciones del <a href="#m13">módulo 13</a>).</li>
+        <li>Desde cualquier conversación de la bandeja, verifica que el contacto <b>se crea solo</b> al primer mensaje.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m05"></span><div class="tx"><b>Listo cuando…</b> buscas a un cliente por nombre y su ficha muestra sus datos y su última conversación.</div></div>
+      <div class="ojo"><b>Ojo:</b> importa una vez y bien. Dos importaciones de la misma planilla crean duplicados que después cuesta limpiar.</div>
+    </article>
+
+    <!-- 06 -->
+    <article class="mod rev" id="m06" data-search="pipeline negocios kanban ventas etapas montos deal tarjetas">
+      <div class="mod-head"><div class="mod-num">06</div><h3>Pipeline de negocios</h3></div>
+      <div class="donde">Dónde: menú <b>CRM → Negocios · Pipeline</b></div>
+      <img class="shot" src="img/plataforma-pipeline.png" alt="Kanban de ventas de Hapee" loading="lazy">
+      <p class="shot-cap">El <b>kanban de ventas</b>: cada columna una etapa, cada tarjeta un negocio con su monto.</p>
+      <p class="intro">Tus ventas en columnas: de «nuevo interesado» a «cerrado». Ver el pipeline lleno es ver cuánta plata hay en juego y dónde se está atascando.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Define tus <b>etapas</b> con los nombres de TU proceso real. Regla práctica: entre 4 y 6 etapas; más que eso, nadie las mueve.</li>
+        <li>Ponle <b>monto</b> a cada negocio al crearlo, aunque sea estimado: el pipeline sin plata es solo una lista bonita.</li>
+        <li>Crea tus primeros <b>5 negocios reales</b> — los que hoy tienes en la cabeza o en un cuaderno.</li>
+        <li>Acuerda con el equipo el rito semanal: <b>una pasada al pipeline</b> moviendo tarjetas y anotando el siguiente paso de cada una.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m06"></span><div class="tx"><b>Listo cuando…</b> el pipeline muestra tus ventas reales en curso y el monto total que suman.</div></div>
+    </article>
+
+    <!-- 07 -->
+    <article class="mod rev" id="m07" data-search="calendario agendamiento google calendar gmail sincronizar disponibilidad citas reuniones">
+      <div class="mod-head"><div class="mod-num">07</div><h3>Calendario y agendamiento</h3></div>
+      <div class="donde">Dónde: menú <b>CRM → Calendario</b></div>
+      <p class="intro">Agenda conectada con Google: tus reuniones se sincronizan solas, los clientes pueden tomar hora en tus espacios libres, y el notetaker de Reuniones IA sabe a qué reuniones entrar.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Entra a <b>Calendario</b> y conecta tu <b>Google Calendar</b> (autorización de Google, dos clics).</li>
+        <li>Pide a cada persona del equipo conectar el suyo — cada uno el propio.</li>
+        <li>Configura tu <b>disponibilidad</b> (días y horas en que aceptas reuniones).</li>
+        <li>Agenda una reunión de prueba y confirma que aparece en tu Google Calendar y en Hapee.</li>
+      </ol>
+      <div class="subt">Tu cuenta Google, conectada completa</div>
+      <div class="tbl"><table>
+        <tr><th>Conexión</th><th>Qué habilita</th><th>Dónde se hace</th></tr>
+        <tr><td class="k">Google Calendar</td><td>Reuniones sincronizadas en ambos sentidos, disponibilidad para agendamiento, y el <b>notetaker entra solo</b> a tus reuniones (<a href="#m16">módulo 16</a>).</td><td>CRM → Calendario</td></tr>
+        <tr><td class="k">Gmail / casilla</td><td>Tus correos entran a la <b>bandeja omnicanal</b> y quedan en la ficha del contacto — la conversación completa en un solo hilo aunque salte de WhatsApp a correo.</td><td>Conversaciones → Bandeja</td></tr>
+      </table></div>
+      <p style="margin-top:14px">Ambas se autorizan con el botón de Google en dos clics — sin contraseñas compartidas: cada persona conecta SU cuenta, y puede desconectarla cuando quiera desde el mismo lugar.</p>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m07"></span><div class="tx"><b>Listo cuando…</b> una reunión creada en Google aparece en Hapee sola, sin copiarla a mano.</div></div>
+      <div class="ojo"><b>Ojo:</b> este paso habilita también el notetaker (<a href="#m16">módulo 16</a>). Si el calendario no está conectado, el bot no puede entrar solo a tus reuniones.</div>
+    </article>
+
+    <!-- ════ FASE 3 ════ -->
+    <section class="fband rev" id="fase3" data-n="3" data-fase>
+      <span class="fl">Fase 3 · 45 minutos</span>
+      <h2>La IA que vende</h2>
+      <p>Con canales y CRM listos, el agente tiene dónde hablar y dónde guardar lo que aprende. Este es el módulo que más cambia tu operación: tómate el tiempo de probarlo bien.</p>
+    </section>
+
+    <!-- 08 -->
+    <article class="mod rev" id="m08" data-search="hapee agents agente ia chatbot sdr ventas persona conocimiento herramientas guardrails autopilot sugerencia instrucciones prompt checklist tablero">
+      <div class="mod-head"><div class="mod-num">08</div><h3>Hapee Agents · tu equipo de IA</h3></div>
+      <div class="donde">Dónde: menú <b>Hapee Agents</b> · panel de control en <b>Tablero de agentes</b></div>
+      <p class="intro">Un agente de Hapee no es un chatbot que recita respuestas: es un <b>empleado digital</b> con rol, personalidad, base de conocimiento, herramientas y límites. Responde en tus canales, califica interesados, agenda en tu calendario real y registra todo en el CRM.</p>
+
+      <div class="subt">Cómo pensar un agente: las 6 piezas</div>
+      <div class="tbl"><table>
+        <tr><th>Pieza</th><th>Qué es</th><th>Ejemplo</th></tr>
+        <tr><td class="k">Rol</td><td>El puesto que ocupa. Define qué hace y qué no.</td><td>«SDR» (califica y agenda) · «Soporte» (resuelve dudas) · «Closer» (empuja el cierre)</td></tr>
+        <tr><td class="k">Persona</td><td>Nombre visible, tono y rasgos. Es quien tu cliente cree que le habla.</td><td>«Valentina, ejecutiva de ventas, cercana, tutea, usa emojis con moderación»</td></tr>
+        <tr><td class="k">Objetivo</td><td>La meta medible de cada conversación, con su criterio de éxito.</td><td>«Conseguir nombre + comuna + necesidad y agendar visita» → éxito = cita creada</td></tr>
+        <tr><td class="k">Conocimiento</td><td>Las bases de documentos de las que puede hablar. Puede tener varias.</td><td>Base «Ventas»: precios y planes · Base «Postventa»: garantías y devoluciones</td></tr>
+        <tr><td class="k">Herramientas</td><td>Lo que puede HACER, no solo decir. Cada una se activa por separado.</td><td>Agendar en tu calendario · crear el negocio en el pipeline · etiquetar al contacto</td></tr>
+        <tr><td class="k">Guardrails</td><td>Los límites duros: lo que tiene prohibido, con mensaje de respaldo.</td><td>«No prometer descuentos» · «No dar consejo legal/médico» · «No inventar stock»</td></tr>
+      </table></div>
+
+      <div class="subt">Los 3 modos — y cuál usar cuándo</div>
+      <div class="tbl"><table>
+        <tr><th>Modo</th><th>Qué hace</th><th>Úsalo cuando…</th></tr>
+        <tr><td class="k">Apagado</td><td>No responde nada.</td><td>Aún estás cargando conocimiento.</td></tr>
+        <tr><td class="k">Sugerencia</td><td><b>Escribe la respuesta pero NO la envía</b>: tu equipo la ve, la corrige o aprueba desde la bandeja.</td><td>La primera semana, siempre. Es tu período de prueba con clientes reales y riesgo cero.</td></tr>
+        <tr><td class="k">Autopilot</td><td>Responde y actúa solo.</td><td>Cuando en modo sugerencia apruebas sus respuestas casi sin tocarlas durante varios días.</td></tr>
+      </table></div>
+      <div class="ojo"><b>La ruta correcta es siempre la misma:</b> apagado → sugerencia (1 semana) → autopilot. Saltarse la etapa de sugerencia es la causa #1 de agentes desactivados a la semana.</div>
+
+      <div class="subt">El agente principal</div>
+      <p>Puedes tener varios agentes, pero <b>uno es el principal</b>: el que atiende automáticamente todo mensaje entrante que no tenga otro agente asignado. Marca como principal a tu agente de ventas — es quien recibe a los desconocidos. Los demás (soporte, postventa) se asignan a sus canales o conversaciones específicas.</p>
+
+      <div class="subt">Comportamiento fino: cómo convive con tu equipo</div>
+      <div class="tbl"><table>
+        <tr><th>Ajuste</th><th>Qué controla</th><th>Recomendado para partir</th></tr>
+        <tr><td class="k">Espera antes de responder</td><td>Segundos que aguarda por si el cliente sigue escribiendo (los mensajes de WhatsApp llegan en ráfagas).</td><td>20–40 segundos</td></tr>
+        <tr><td class="k">Máx. mensajes del bot</td><td>Cuántas respuestas seguidas puede dar sin que el humano intervenga.</td><td>6–8</td></tr>
+        <tr><td class="k">Silencio si escribe un humano</td><td>Si alguien del equipo responde a mano, el agente <b>se duerme en esa conversación</b> y no pisa a la persona.</td><td>Activado</td></tr>
+        <tr><td class="k">Despertar después de</td><td>Horas tras las cuales el agente retoma la conversación dormida.</td><td>24 horas</td></tr>
+        <tr><td class="k">Estilo de respuesta</td><td>Conciso · equilibrado · detallado.</td><td>Conciso para WhatsApp, equilibrado para correo</td></tr>
+        <tr><td class="k">Imágenes y notas de voz</td><td>Si intenta entender fotos y audios que manda el cliente.</td><td>Activado (los clientes chilenos mandan audios, siempre)</td></tr>
+        <tr><td class="k">Idiomas</td><td>Idioma principal y detección automática del idioma del cliente.</td><td>Español + detección automática</td></tr>
+      </table></div>
+
+      <div class="subt">Plantilla de instrucciones — cópiala y adapta lo marcado</div>
+      <div class="code"><button class="copy" data-copy="prompt08">Copiar plantilla</button><pre id="prompt08"><span class="cm"># QUIÉN ERES</span>
+Eres <span class="hl">[Valentina]</span>, ejecutiva de ventas de <span class="hl">[Inmobiliaria Andes]</span>.
+Hablas en chileno cercano y profesional: tuteas, frases cortas,
+máximo un emoji por mensaje. Nunca suenas a robot ni a formulario.
+
+<span class="cm"># QUÉ VENDES (resumen — el detalle vive en la base de conocimiento)</span>
+Departamentos de 1 a 3 dormitorios en <span class="hl">[Ñuñoa y La Florida]</span>,
+desde <span class="hl">[UF 2.990]</span>. Pie financiable en cuotas. Entrega <span class="hl">[inmediata]</span>.
+
+<span class="cm"># TU OBJETIVO EN CADA CONVERSACIÓN</span>
+1. Entender qué busca: dormitorios, comuna, si es primera vivienda.
+2. Conseguir nombre y correo de forma natural, no como interrogatorio.
+3. Ofrecer y AGENDAR una visita con la herramienta de calendario.
+Éxito = visita agendada. Si no quiere agendar aún, éxito = datos
+completos y etiqueta "interesado_futuro".
+
+<span class="cm"># REGLAS DURAS</span>
+- Nunca prometas descuentos ni precios que no estén en tu conocimiento.
+- Si preguntan por <span class="hl">[crédito hipotecario en detalle]</span>, deriva: "eso te lo
+  responde mejor nuestro ejecutivo, ¿te agendo con él?"
+- Reclamos o clientes molestos: deriva a humano DE INMEDIATO, sin discutir.
+- Si no sabes algo, dilo y ofrece averiguarlo. Jamás inventes.</pre></div>
+      <p>Las mismas cuatro secciones sirven para cualquier rubro: cambia el quién, el qué, el objetivo y las reglas. Una clínica deriva «temas de diagnóstico» al doctor; un e-commerce deriva «cambios y devoluciones fuera de plazo».</p>
+
+      <div class="subt">Así se ve una buena conversación</div>
+      <div class="chat">
+        <div class="bub c"><span class="who">Cliente · 21:47</span>hola vi el edificio de ñuñoa en instagram, tienen de 2 dormitorios? precio?</div>
+        <div class="bub a"><span class="who">Agente</span>¡Hola! Sí 😊 en Ñuñoa tenemos 2D/2B desde UF 3.450, entrega inmediata. ¿Lo buscas para vivir tú o como inversión?</div>
+        <div class="bub c"><span class="who">Cliente</span>para vivir con mi pareja</div>
+        <div class="bub a"><span class="who">Agente</span>Buenísimo — para eso el modelo B2 es el favorito: 58 m², terraza y bodega. ¿Te tinca venir a verlo? Tengo horas mañana a las 12:30 o el sábado a las 11:00. Dime tu nombre y te dejo la visita lista.</div>
+      </div>
+      <p class="chat-note">Fíjate qué hizo: respondió al tiro a las 21:47, dio el precio sin esconderlo, hizo UNA pregunta de calificación, y cerró proponiendo horas concretas — no un «¿te gustaría agendar?» vago. Eso es lo que el objetivo y las herramientas bien configuradas producen.</p>
+
+      <div class="subt">Pasos de configuración</div>
+      <ol class="pasos">
+        <li>Crea el agente en <b>Hapee Agents</b>: nombre visible, rol <b>SDR/ventas</b>, tipo chat.</li>
+        <li>Pega tus instrucciones adaptadas de la plantilla de arriba.</li>
+        <li>Crea la base de conocimiento <b>«Ventas»</b> y súbele: lista de precios, descripción de cada producto/servicio, cobertura, horarios, formas de pago y las respuestas a tus 10 preguntas frecuentes. <b>Documentos cortos y específicos rinden más que un PDF gigante.</b></li>
+        <li>Activa sus herramientas: <b>agendar en calendario</b> (elige cuál), <b>crear negocio</b> en el pipeline y <b>etiquetar contacto</b>. Si alguna te pone nervioso, márcala con <b>aprobación previa</b>: el agente pedirá permiso antes de ejecutarla.</li>
+        <li>Activa los guardrails de la biblioteca que apliquen (no prometer descuentos, no consejo legal/médico, no datos personales de terceros) y escribe el tuyo propio si tu rubro lo necesita.</li>
+        <li>Ajusta el comportamiento fino con la tabla de arriba.</li>
+        <li>Ponlo en <b>modo sugerencia</b> y márcalo como <b>principal</b>.</li>
+        <li>Pruébalo con el checklist de abajo antes de pensar en autopilot.</li>
+      </ol>
+
+      <div class="subt">Checklist de prueba — 15 preguntas antes de soltarlo</div>
+      <div class="tbl"><table>
+        <tr><th>#</th><th>Pregúntale…</th><th>Apruébalo si…</th></tr>
+        <tr><td class="k">1–4</td><td>Tus 4 preguntas más frecuentes reales.</td><td>Responde con TUS datos, exactos.</td></tr>
+        <tr><td class="k">5</td><td>«¿Cuánto cuesta?» a secas.</td><td>Da el precio o rango sin evadir.</td></tr>
+        <tr><td class="k">6</td><td>«¿Me haces un descuento?»</td><td>No promete nada fuera de política.</td></tr>
+        <tr><td class="k">7</td><td>Algo que NO vendes.</td><td>Lo dice claro y redirige a lo que sí.</td></tr>
+        <tr><td class="k">8</td><td>Una pregunta fuera de tema (fútbol, política).</td><td>Vuelve amable al negocio.</td></tr>
+        <tr><td class="k">9</td><td>«Quiero hablar con una persona.»</td><td>Deriva sin pelear.</td></tr>
+        <tr><td class="k">10</td><td>Un reclamo enojado.</td><td>Empatiza y deriva de inmediato.</td></tr>
+        <tr><td class="k">11</td><td>«¿Tienen disponible para mañana?»</td><td>Ofrece horas reales del calendario.</td></tr>
+        <tr><td class="k">12</td><td>Escríbele en 3 mensajes cortados, en ráfaga.</td><td>Responde UNA vez, al conjunto.</td></tr>
+        <tr><td class="k">13</td><td>Mándale una nota de voz.</td><td>La entiende (si activaste audios).</td></tr>
+        <tr><td class="k">14</td><td>Escríbele en inglés.</td><td>Cambia de idioma solo.</td></tr>
+        <tr><td class="k">15</td><td>Dale datos: nombre, correo.</td><td>Aparecen en la ficha del contacto.</td></tr>
+      </table></div>
+
+      <div class="subt">Después del despegue: el tablero</div>
+      <p>El <b>Tablero de agentes</b> muestra cada corrida: qué respondió, qué herramientas usó y dónde se trabó. Revísalo 10 minutos por semana las primeras 4 semanas: cada conversación floja te dice exactamente qué documento de conocimiento falta. Los agentes no se «reentrenan» — se les agrega el dato que no tenían y mejoran al instante.</p>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m08"></span><div class="tx"><b>Listo cuando…</b> pasó el checklist de 15 preguntas en modo sugerencia y llevas una semana aprobando sus respuestas casi sin editarlas.</div></div>
+      <div class="ojo"><b>Ojo:</b> si el agente responde vago, el 95% de las veces no es la IA: es que ese dato no está en su conocimiento. Antes de tocar las instrucciones, revisa qué documento le falta.</div>
+    </article>
+
+    <!-- ════ FASE 4 ════ -->
+    <section class="fband rev" id="fase4" data-n="4" data-fase>
+      <span class="fl">Fase 4 · 60 minutos</span>
+      <h2>Marketing andando</h2>
+      <p>Correo, formularios, redes y páginas: las piezas que traen interesados nuevos para que los agentes y el CRM los conviertan.</p>
+    </section>
+
+    <!-- 09 -->
+    <article class="mod rev" id="m09" data-search="mail marketing email campañas spf dkim dominio remitente spam plantillas correo aperturas clics newsletter">
+      <div class="mod-head"><div class="mod-num">09</div><h3>Mail Marketing</h3></div>
+      <div class="donde">Dónde: menú <b>Marketing → Mail Marketing</b></div>
+      <p class="intro">Campañas y correos automáticos a tu base, con métricas de apertura y clic, y todo registrado en la ficha de cada contacto.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Acceso al panel de tu dominio (o a quien lo maneje)</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Configura tu <b>remitente</b>: el módulo te muestra 2–3 registros para agregar en tu dominio (se llaman SPF y DKIM). En simple: son el <b>carnet de identidad de tus correos</b> — le prueban a Gmail y Outlook que ese correo lo mandaste tú y no un suplantador. Sin ellos, tus campañas caen a spam aunque el contenido sea perfecto. Se agregan UNA vez en el panel donde compraste tu dominio (NIC, GoDaddy, Cloudflare…): copias cada registro tal cual y lo pegas como registro TXT. Si nadie de tu equipo maneja el dominio, escríbenos y lo dejamos junto a tu proveedor en una llamada de 15 minutos.</li>
+        <li>Cuando el dominio verifique, envía una <b>campaña de prueba</b> a tu propio correo y revisa que llegue con tu nombre y tu logo.</li>
+        <li>Crea tu primera campaña real con una regla simple: <b>un solo objetivo por correo</b> (una oferta, una noticia, un recordatorio — no las tres).</li>
+        <li>Después de 48 horas, mira aperturas y clics en el mismo módulo.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m09"></span><div class="tx"><b>Listo cuando…</b> tu campaña de prueba llega a tu bandeja de entrada (no a spam) con tu remitente.</div></div>
+    </article>
+
+    <!-- 10 -->
+    <article class="mod rev" id="m10" data-search="formularios leads origen cotizacion landing qr insertar web crm campos">
+      <div class="mod-head"><div class="mod-num">10</div><h3>Formularios</h3></div>
+      <div class="donde">Dónde: menú <b>Marketing → Formularios</b></div>
+      <p class="intro">Cada formulario crea el contacto en el CRM al instante, con origen trazado: sabrás de qué campaña o página vino cada interesado.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Crea un formulario con los campos mínimos: <b>nombre, teléfono y qué necesita</b>. Cada campo extra que pides te cuesta interesados — la regla práctica: si un campo no cambia tu primera respuesta, no va en el formulario, lo pregunta después el agente.</li>
+        <li>Aprovecha el <b>origen</b>: cada formulario registra de dónde vino el envío, así que crea un formulario por uso («Cotización web», «Landing campaña abril», «Feria») en vez de uno genérico — después la reportería te dice cuál trae mejores clientes.</li>
+        <li>Insértalo en tu web (el módulo te da el código o el enlace directo — el enlace sirve también para bio de Instagram y códigos QR).</li>
+        <li>Conecta su workflow de bienvenida (receta 1 del <a href="#m13">módulo 13</a>): formulario sin respuesta automática es un cliente esperando.</li>
+        <li>Envía una respuesta de prueba y confirma que el contacto aparece en el CRM.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m10"></span><div class="tx"><b>Listo cuando…</b> llenar el formulario crea un contacto nuevo en el CRM con su origen visible.</div></div>
+    </article>
+
+    <!-- 11 -->
+    <article class="mod rev" id="m11" data-search="redes sociales instagram facebook tiktok linkedin publicaciones programar parrilla calendario contenidos 3-2-1">
+      <div class="mod-head"><div class="mod-num">11</div><h3>Redes sociales</h3></div>
+      <div class="donde">Dónde: menú <b>Marketing → Redes sociales</b></div>
+      <p class="intro">Planificas la parrilla del mes, programas las publicaciones y Hapee publica solo en tus cuentas, con calendario visual de lo que viene.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Conecta tus cuentas (Instagram y Facebook con tu usuario de Meta; las demás redes que uses, con su propia autorización).</li>
+        <li>Arma la parrilla con la regla <b>3-2-1 semanal</b>: 3 piezas de valor (consejos, datos, educación de tu rubro), 2 de prueba social (casos, testimonios, detrás de cámara) y 1 comercial (oferta o llamado directo). Las cuentas que solo publican ofertas dejan de ser vistas — el algoritmo y la gente las castigan igual.</li>
+        <li>Programa tus primeras <b>3 publicaciones</b> en horarios distintos. Referencia para Chile: 8–9 AM, 13–14 PM y 20–22 PM concentran la atención; después compara con tus propios datos en el módulo.</li>
+        <li>Verifica que se publiquen solas y aparezcan como «publicadas» en el calendario.</li>
+        <li>Deja el rito: <b>una sesión mensual de 1 hora</b> deja la parrilla del mes programada. Publicar «cuando se pueda» es la muerte silenciosa de las redes de una pyme.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m11"></span><div class="tx"><b>Listo cuando…</b> una publicación programada sale sola a la hora indicada, sin que nadie toque el celular.</div></div>
+    </article>
+
+    <!-- 12 -->
+    <article class="mod rev" id="m12" data-search="funnels sitios blog landing paginas constructor bloques titular conversion seo google ia">
+      <div class="mod-head"><div class="mod-num">12</div><h3>Funnels, sitios y blog</h3></div>
+      <div class="donde">Dónde: menú <b>Sitios web → Funnels</b> y <b>Sitios web → Blog</b></div>
+      <p class="intro">Páginas de aterrizaje para campañas, con formulario integrado al CRM, y un blog para posicionarte en Google y en los asistentes de IA.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Crea tu primer <b>funnel</b> para la campaña activa. La estructura que convierte, en orden: <b>titular</b> que promete el resultado («Departamentos en Ñuñoa desde UF 2.990», no «Bienvenidos a nuestra inmobiliaria») → <b>3 beneficios</b> concretos → <b>prueba social</b> (un testimonio o cifra real) → <b>formulario corto</b> → <b>un solo botón</b>. Todo lo que distraiga de ese botón, sobra: sin menú, sin enlaces de salida.</li>
+        <li>Conecta el formulario del funnel (viene integrado — verifica con un envío de prueba).</li>
+        <li>Si tu plan incluye blog, publica tu primer artículo respondiendo <b>la pregunta que más te hacen los clientes</b>. Es la que la gente ya está googleando.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m12"></span><div class="tx"><b>Listo cuando…</b> tu funnel está publicado en su URL y el envío de prueba llegó al CRM.</div></div>
+    </article>
+
+    <!-- ════ FASE 5 ════ -->
+    <section class="fband rev" id="fase5" data-n="5" data-fase>
+      <span class="fl">Fase 5 · 30 minutos</span>
+      <h2>Automatiza</h2>
+      <p>Todo lo que tu equipo hace dos veces por semana de la misma forma, puede hacerse solo.</p>
+    </section>
+
+    <!-- 13 -->
+    <article class="mod rev" id="m13" data-search="workflows automatizacion disparadores acciones recetas bienvenida no-show seguimiento cotizacion renovacion nodos esperas condiciones webhook">
+      <div class="mod-head"><div class="mod-num">13</div><h3>Workflows · automatiza de verdad</h3></div>
+      <div class="donde">Dónde: menú <b>Automatización → Workflows</b> · editor visual de nodos</div>
+      <p class="intro">Un workflow es una regla viva: <b>cuando pasa algo</b> (el disparador), <b>Hapee hace algo</b> (las acciones), opcionalmente con esperas y condiciones en el medio. Se arman arrastrando nodos en un lienzo visual — sin código.</p>
+
+      <div class="subt">Anatomía de un workflow</div>
+      <p><b>Disparador → (espera) → (condición) → acción → acción…</b> Un contacto «entra» al workflow cuando ocurre su disparador, y va avanzando nodo por nodo. Puedes ver en cada workflow cuántos contactos están dentro y en qué paso van.</p>
+
+      <div class="subt">Catálogo completo de disparadores</div>
+      <div class="tbl"><table>
+        <tr><th>Disparador</th><th>Se dispara cuando…</th><th>Se configura con…</th></tr>
+        <tr class="gr"><td colspan="3">Contactos</td></tr>
+        <tr><td class="k">Contacto creado</td><td>entra un contacto nuevo por cualquier vía: manual, import, formulario, calendario o API.</td><td>—</td></tr>
+        <tr><td class="k">Contacto actualizado</td><td>cambia cualquier campo de la ficha.</td><td>—</td></tr>
+        <tr><td class="k">Etiqueta agregada</td><td>alguien (o un agente) le pone una etiqueta.</td><td>qué etiqueta</td></tr>
+        <tr><td class="k">Etiqueta removida</td><td>se le quita una etiqueta.</td><td>qué etiqueta</td></tr>
+        <tr><td class="k">Etapa de vida cambia</td><td>pasa de lead a cliente, etc.</td><td>desde / hacia</td></tr>
+        <tr><td class="k">No molestar activado</td><td>el contacto pide no ser contactado.</td><td>—</td></tr>
+        <tr class="gr"><td colspan="3">Formularios y funnels</td></tr>
+        <tr><td class="k">Formulario enviado</td><td>alguien completa un formulario tuyo.</td><td>qué formulario</td></tr>
+        <tr><td class="k">Página de funnel visitada</td><td>un contacto conocido visita una página de tu funnel.</td><td>funnel y paso</td></tr>
+        <tr class="gr"><td colspan="3">Negocios (pipeline)</td></tr>
+        <tr><td class="k">Negocio creado</td><td>se crea un negocio.</td><td>en qué pipeline</td></tr>
+        <tr><td class="k">Cambia de etapa</td><td>una tarjeta se mueve de columna.</td><td>pipeline, desde/hacia</td></tr>
+        <tr><td class="k">Negocio ganado</td><td>se marca como ganado. 🎉</td><td>pipeline</td></tr>
+        <tr><td class="k">Negocio perdido</td><td>se marca como perdido.</td><td>pipeline</td></tr>
+        <tr><td class="k">Negocio asignado</td><td>se asigna a alguien del equipo.</td><td>a quién</td></tr>
+        <tr class="gr"><td colspan="3">Mail marketing</td></tr>
+        <tr><td class="k">Email abierto</td><td>el contacto abre tu correo.</td><td>una campaña o cualquiera</td></tr>
+        <tr><td class="k">Email clickeado</td><td>hace clic en un enlace del correo.</td><td>campaña</td></tr>
+        <tr><td class="k">Email respondido</td><td>te responde el correo.</td><td>—</td></tr>
+        <tr><td class="k">Email rebotado</td><td>la casilla no existe o rebota.</td><td>—</td></tr>
+        <tr><td class="k">Desuscrito</td><td>se da de baja de tus correos.</td><td>—</td></tr>
+        <tr class="gr"><td colspan="3">Calendario</td></tr>
+        <tr><td class="k">Cita agendada</td><td>alguien toma hora contigo.</td><td>qué calendario</td></tr>
+        <tr><td class="k">Cita cancelada</td><td>se cancela la cita.</td><td>—</td></tr>
+        <tr><td class="k">Cita completada</td><td>la reunión ocurrió.</td><td>—</td></tr>
+        <tr><td class="k">No asistió</td><td>el cliente no llegó (no-show).</td><td>—</td></tr>
+        <tr class="gr"><td colspan="3">Sistema</td></tr>
+        <tr><td class="k">Fecha</td><td>llega una fecha de la ficha (cumpleaños, vencimiento) con desfase configurable: «3 días antes de…».</td><td>campo fecha + desfase</td></tr>
+        <tr><td class="k">Manual</td><td>tú metes contactos al workflow a mano, uno o en masa.</td><td>—</td></tr>
+      </table></div>
+
+      <div class="subt">Catálogo de acciones</div>
+      <div class="tbl"><table>
+        <tr><th>Acción</th><th>Qué hace</th><th>Detalle útil</th></tr>
+        <tr><td class="k">Enviar WhatsApp</td><td>Manda un mensaje al contacto.</td><td>Usa variables: «Hola {{nombre}}…». Fuera de la ventana de 24 h, usa una plantilla aprobada (ver <a href="#m03">módulo 03</a>).</td></tr>
+        <tr><td class="k">Enviar email</td><td>Manda un correo con una de tus plantillas.</td><td>Elige plantilla, asunto y remitente.</td></tr>
+        <tr><td class="k">Agregar etiqueta</td><td>Etiqueta al contacto.</td><td>La base de la segmentación — y puede disparar OTRO workflow.</td></tr>
+        <tr><td class="k">Quitar etiqueta</td><td>Le saca una etiqueta.</td><td>Ej.: al comprar, quitarle «prospecto».</td></tr>
+        <tr><td class="k">Crear negocio</td><td>Abre una tarjeta en el pipeline.</td><td>Define pipeline, etapa inicial y monto.</td></tr>
+        <tr><td class="k">Mover negocio</td><td>Cambia la tarjeta de etapa.</td><td>Ej.: cita agendada → mover a «reunión».</td></tr>
+        <tr><td class="k">Asignar responsable</td><td>Le pone dueño al contacto o negocio.</td><td>Fijo o por turnos entre el equipo.</td></tr>
+        <tr><td class="k">Actualizar campo</td><td>Escribe un valor en la ficha.</td><td>Ej.: marcar «origen = campaña abril».</td></tr>
+        <tr><td class="k">Webhook</td><td>Avisa a otro sistema (avanzado).</td><td>Conecta con lo que sea vía Zapier/Make o tu propio sistema.</td></tr>
+      </table></div>
+      <p style="margin-top:14px">Entre acciones puedes poner <b>esperas</b> («aguarda 2 días») y <b>condiciones</b> («¿tiene la etiqueta X? sí → un camino, no → otro»). Ahí está la gracia del editor visual.</p>
+
+      <div class="subt">Seis recetas listas para armar</div>
+      <div class="tbl"><table>
+        <tr><th>Receta</th><th>Nodos, en orden</th><th>Qué resuelve</th></tr>
+        <tr><td class="k">1 · Bienvenida</td><td><b>Formulario enviado</b> → WhatsApp «Hola {{nombre}}, recibimos tu solicitud…» → asignar vendedor por turnos → crear negocio en etapa «Nuevo»</td><td>Nadie queda sin respuesta ni sin dueño. La receta que más plata devuelve.</td></tr>
+        <tr><td class="k">2 · Rescate de cita</td><td><b>No asistió</b> → esperar 1 hora → WhatsApp «te esperamos y no pudiste llegar, ¿reagendamos?» con link del calendario → etiquetar «no-show»</td><td>Recupera un tercio de los no-show sin que nadie persiga a nadie.</td></tr>
+        <tr><td class="k">3 · Seguimiento de cotización</td><td><b>Cambia de etapa</b> (a «Cotizado») → esperar 2 días → condición: ¿sigue en «Cotizado»? → sí: WhatsApp de seguimiento → esperar 3 días → sigue ahí: crear tarea «llamar» para el responsable</td><td>El seguimiento deja de depender de la memoria del vendedor.</td></tr>
+        <tr><td class="k">4 · Cliente nuevo</td><td><b>Negocio ganado</b> → email de bienvenida con próximos pasos → etiqueta «cliente» (quitar «prospecto») → crear tarea «kick-off» al responsable</td><td>El inicio del cliente es idéntico y profesional siempre.</td></tr>
+        <tr><td class="k">5 · Interés que se enfría</td><td><b>Email clickeado</b> → condición: ¿tiene negocio abierto? → no: WhatsApp del agente IA ofreciendo agendar → etiqueta «reactivado»</td><td>Convierte curiosidad de campaña en conversación de venta.</td></tr>
+        <tr><td class="k">6 · Cumpleaños / renovación</td><td><b>Fecha</b> (campo «renovación», 7 días antes) → email recordatorio → crear tarea al ejecutivo</td><td>Renovaciones que dejan de perderse por olvido.</td></tr>
+      </table></div>
+
+      <div class="subt">Pasos para tu primer workflow</div>
+      <ol class="pasos">
+        <li>Parte por la <b>receta 1 (Bienvenida)</b>: es la más corta y la que más se nota.</li>
+        <li>Créalo en <b>Workflows</b>, elige el disparador <b>Formulario enviado</b> y tu formulario.</li>
+        <li>Agrega la acción <b>Enviar WhatsApp</b> y escribe el mensaje con {{nombre}}. Léelo en voz alta: si suena a máquina, reescríbelo.</li>
+        <li>Agrega <b>Asignar responsable</b> (por turnos si son varios) y <b>Crear negocio</b>.</li>
+        <li>Actívalo y <b>pruébalo tú mismo</b>: llena el formulario con tus datos y cronometra. Deberías recibir el WhatsApp en menos de un minuto y ver el negocio creado.</li>
+        <li>Recién cuando la receta 1 lleve una semana andando limpia, arma la 2 y la 3.</li>
+      </ol>
+
+      <div class="subt">Las reglas de oro de la automatización</div>
+      <div class="tbl"><table>
+        <tr><th>Regla</th><th>Por qué</th></tr>
+        <tr><td class="k">1 workflow a la vez</td><td>Tres automatizaciones a medio probar generan más ruido que cero. Activa, prueba una semana, y recién ahí la siguiente.</td></tr>
+        <tr><td class="k">Siempre con salida</td><td>Todo mensaje automático debe aceptar «ya no me interesa». La etiqueta «no molestar» corta todos los workflows para ese contacto.</td></tr>
+        <tr><td class="k">Espera antes que insistencia</td><td>Dos mensajes con 2 días de espera rinden más que cinco seguidos. El que insiste mucho, quema la base.</td></tr>
+        <tr><td class="k">Nombra por lo que hace</td><td>«Bienvenida formulario web» y no «Workflow 3». En seis meses lo vas a agradecer.</td></tr>
+        <tr><td class="k">Revisa los enrolados</td><td>Cada workflow muestra cuántos contactos tiene dentro y dónde. Si hay 40 pegados en una espera, algo diseñaste mal.</td></tr>
+      </table></div>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m13"></span><div class="tx"><b>Listo cuando…</b> llenas tu formulario de prueba y en menos de un minuto: te llega el WhatsApp, el contacto tiene responsable y el negocio está en el pipeline.</div></div>
+      <div class="ojo"><b>Ojo:</b> workflows y agentes se complementan, no compiten. El workflow es la ruta fija (bienvenida, recordatorio); el agente es la conversación viva. La receta 5 los une: el workflow detecta el interés y el agente conversa.</div>
+    </article>
+
+    <!-- ════ FASE 6 ════ -->
+    <section class="fband rev" id="fase6" data-n="6" data-fase>
+      <span class="fl">Fase 6 · 30 minutos</span>
+      <h2>Inteligencia del negocio</h2>
+      <p>Los módulos que miran por ti: resultados, competencia, reuniones y oportunidades públicas. Se configuran una vez y trabajan solos cada semana.</p>
+    </section>
+
+    <!-- 14 -->
+    <article class="mod rev" id="m14" data-search="reporteria reportes meta google ads inversion cpl conversion roas tablero campañas metricas">
+      <div class="mod-head"><div class="mod-num">14</div><h3>Reportería</h3></div>
+      <div class="donde">Dónde: menú <b>Reportería</b></div>
+      <p class="intro">Tus campañas de Meta y Google en un solo tablero, con la lectura en simple: cuánto invertiste, cuánto volvió y qué conviene mover.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Conecta tus cuentas publicitarias (Meta Ads y Google Ads) con sus autorizaciones.</li>
+        <li>Revisa que el tablero muestre tus campañas activas y su inversión del mes.</li>
+        <li>Agenda en tu calendario una <b>revisión mensual</b> del reporte con tu equipo — el informe llega solo, la decisión la tomas tú.</li>
+      </ol>
+      <div class="subt">Las 4 cifras que importan (y cómo leerlas)</div>
+      <div class="tbl"><table>
+        <tr><th>Métrica</th><th>Qué es</th><th>Cómo leerla</th></tr>
+        <tr><td class="k">Inversión</td><td>Lo que gastaste en el período.</td><td>Contra tu presupuesto — sin sorpresas a fin de mes.</td></tr>
+        <tr><td class="k">CPL</td><td>Costo por lead: inversión ÷ interesados conseguidos.</td><td>La compara entre campañas: la de CPL más bajo merece más presupuesto… si sus leads son buenos.</td></tr>
+        <tr><td class="k">Conversión</td><td>De los que llegaron, cuántos hicieron lo que querías.</td><td>Si hay clics pero no conversiones, el problema no es el anuncio: es la página o el formulario.</td></tr>
+        <tr><td class="k">ROAS</td><td>Retorno: por cada peso invertido, cuántos volvieron.</td><td>La cifra que resume todo. Bajo 1 pierdes plata; el objetivo sano depende de tu margen.</td></tr>
+      </table></div>
+      <p style="margin-top:14px">El informe llega con la <b>lectura escrita</b>: qué anda bien, qué anda mal y qué haríamos. Léela antes que los gráficos — los números sin interpretación solo dan ansiedad.</p>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m14"></span><div class="tx"><b>Listo cuando…</b> el tablero muestra tu inversión real del mes en curso.</div></div>
+    </article>
+
+    <!-- 15 -->
+    <article class="mod rev" id="m15" data-search="radar competencia competidores anuncios ads web precios visibilidad ia chatgpt gemini informe semanal">
+      <div class="mod-head"><div class="mod-num">15</div><h3>Radar de Competencia</h3></div>
+      <div class="donde">Dónde: menú <b>Radar de Competencia</b></div>
+      <p class="intro">Defines a quién vigilar y cada lunes recibes la lectura completa: sus anuncios activos, sus cambios de web y precios, su visibilidad en asistentes de IA, sus redes y su prensa — <b>con conclusiones, no con data cruda</b>.</p>
+      <div class="subt">Antes de partir</div>
+      <div class="chips"><span class="chip">Tus 3 competidores más directos</span><span class="chip">El sitio web de cada uno</span></div>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Agrega cada competidor con su <b>nombre y sitio web</b>. Nada más: el radar hace el resto.</li>
+        <li>Aprieta <b>«Analizar ahora»</b> para tu primer informe al instante (los siguientes llegan solos cada lunes).</li>
+        <li>Lee la sección de <b>hallazgos</b>: está ordenada por relevancia, parte por arriba.</li>
+        <li>Si un competidor tiene nombre muy genérico y sus anuncios salen «ambiguos», fija su <b>ID de página de Meta</b> en el panel de competidores (el radar te lo indica).</li>
+      </ol>
+      <div class="subt">Cómo leer el informe semanal</div>
+      <div class="tbl"><table>
+        <tr><th>Sección</th><th>Qué te dice</th><th>Qué hacer con eso</th></tr>
+        <tr><td class="k">Lectura ejecutiva</td><td>El resumen con opinión: qué cambió esta semana y qué significa para ti.</td><td>Léela primero. Si solo tienes 2 minutos, es esto.</td></tr>
+        <tr><td class="k">Hallazgos</td><td>Cambios concretos ordenados por relevancia: bajó precios, lanzó campaña, cambió su promesa principal.</td><td>Los de relevancia alta van a tu reunión comercial de la semana.</td></tr>
+        <tr><td class="k">Ads activos</td><td>Cuántos anuncios tiene corriendo cada uno y cuáles — con enlace a la biblioteca pública de Meta para verlos.</td><td>Si un competidor duplica su pauta, algo le está funcionando: míralo.</td></tr>
+        <tr><td class="k">Cuadro comparativo</td><td>Lado a lado: promesa del sitio, señales técnicas y presencia.</td><td>Detecta qué dicen ellos que tú no estás diciendo.</td></tr>
+        <tr><td class="k">Visibilidad en IA</td><td>Cómo aparecen (y si apareces tú) cuando alguien le pregunta a ChatGPT o Gemini por tu rubro.</td><td>La batalla nueva: si no apareces, tu web necesita responder mejor las preguntas del rubro (<a href="#m12">módulo 12</a>, blog).</td></tr>
+      </table></div>
+      <p style="margin-top:14px"><b>El rito recomendado:</b> lunes, 10 minutos, informe en mano en la reunión comercial. Una decisión por semana basada en el radar («ellos subieron precios → destaquemos el nuestro esta semana») vale más que archivar diez informes leídos por encima.</p>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m15"></span><div class="tx"><b>Listo cuando…</b> tu primer informe muestra los anuncios activos de al menos un competidor.</div></div>
+    </article>
+
+    <!-- 16 -->
+    <article class="mod rev" id="m16" data-search="reuniones ia notetaker bot meet zoom teams transcripcion resumen tareas clima comercial audio grabacion">
+      <div class="mod-head"><div class="mod-num">16</div><h3>Reuniones IA · el notetaker</h3></div>
+      <div class="donde">Dónde: menú <b>Reuniones IA</b></div>
+      <p class="intro">Un bot propio entra a tus videollamadas (Meet, Zoom, Teams), escucha de verdad el audio, y al terminar te entrega resumen, transcripción, tareas con responsable y fecha, y un borrador de correo de seguimiento. En reuniones comerciales suma medidor de clima e insights de tu presentación.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Conecta tu <b>Google Calendar</b> si no lo hiciste en el <a href="#m07">módulo 07</a> — con eso el bot entra solo a tus reuniones agendadas.</li>
+        <li>Para una reunión puntual, pega la <b>URL de la videollamada</b> en el módulo y el bot se une de inmediato.</li>
+        <li>Cuando el bot pida entrar a la sala, <b>admítelo</b> — aparece como participante con nombre Hapee.</li>
+        <li>Al terminar la reunión, abre el registro: revisa el resumen y aprueba las <b>tareas detectadas</b> para que se creen con responsable y fecha.</li>
+        <li>Si tienes una grabación antigua, también puedes <b>subir el audio</b> y se procesa igual.</li>
+      </ol>
+      <div class="subt">Reunión interna vs. reunión comercial — pide la correcta</div>
+      <div class="tbl"><table>
+        <tr><th>Tipo</th><th>Qué entrega además del resumen y la transcripción</th></tr>
+        <tr><td class="k">Interna</td><td>Detecta los <b>compromisos</b> dichos en la reunión y los propone como tareas con responsable y fecha («Camila queda de enviar la grilla el viernes» → tarea para Camila, vence viernes). Tú apruebas y se crean solas en el módulo de tareas.</td></tr>
+        <tr><td class="k">Comercial</td><td>Suma el análisis de venta: <b>medidor de clima</b> de la reunión, intensidad de la conversación, insights sobre tu tono y presentación, objeciones que aparecieron y qué mejorar para la próxima. Es tener un coach comercial escuchando cada reunión.</td></tr>
+      </table></div>
+      <p style="margin-top:14px">El notetaker <b>escucha el audio real</b> — no depende de los subtítulos de la plataforma, así que funciona igual si la reunión es en Meet, Zoom, Teams u otra sala con enlace web. Con varios participantes, identifica quién dijo qué.</p>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m16"></span><div class="tx"><b>Listo cuando…</b> tu primera reunión tiene resumen y transcripción en el módulo minutos después de terminar.</div></div>
+      <div class="ojo"><b>Ojo:</b> el bot necesita que lo admitas en la sala, igual que a cualquier invitado. Si nadie lo admite en 10 minutos, se retira y queda registrado el motivo.</div>
+    </article>
+
+    <!-- 17 -->
+    <article class="mod rev" id="m17" data-search="licitaciones mercado publico afinidad puntaje oportunidades alertas filtro">
+      <div class="mod-head"><div class="mod-num">17</div><h3>Licitaciones</h3></div>
+      <div class="donde">Dónde: menú <b>Licitaciones</b></div>
+      <p class="intro">Mercado Público filtrado por afinidad real con tu negocio: en vez de mil avisos, recibes los que de verdad puedes ganar, con el puntaje explicado en una frase.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Describe tu negocio en el módulo: qué vendes, a quién, en qué regiones. La calidad del filtro depende de esta descripción — compara: ✗ «empresa de servicios tecnológicos» (le calza todo y no filtra nada) vs ✓ «desarrollo de software a medida y soporte TI para instituciones públicas; equipos de 5–50 personas; Región Metropolitana y Valparaíso; NO hacemos venta de hardware ni cableado». <b>Decir lo que NO haces filtra mejor que decir lo que haces.</b></li>
+        <li>Revisa la primera camada de oportunidades y marca las que te interesan — el filtro aprende de eso.</li>
+        <li>Define quién del equipo revisa las alertas y con qué frecuencia (recomendado: diario, 5 minutos).</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m17"></span><div class="tx"><b>Listo cuando…</b> el módulo te muestra oportunidades con puntaje de afinidad y entiendes por qué cada una te calza.</div></div>
+    </article>
+
+    <!-- ════ FASE 7 ════ -->
+    <section class="fband rev" id="fase7" data-n="7" data-fase>
+      <span class="fl">Fase 7 · Siempre</span>
+      <h2>El día a día</h2>
+      <p>Lo que mantiene al equipo aprendiendo y a la operación ordenada después del setup.</p>
+    </section>
+
+    <!-- 18 -->
+    <article class="mod rev" id="m18" data-search="academia comunidad cursos estudio lecciones induccion capacitacion equipo clientes">
+      <div class="mod-head"><div class="mod-num">18</div><h3>Academia y Comunidad</h3></div>
+      <div class="donde">Dónde: menú <b>Academia</b></div>
+      <p class="intro">Cursos cortos para dominar cada módulo y la comunidad donde se comparten novedades, casos y respuestas del equipo Hapee.</p>
+      <div class="subt">Pasos — como alumno</div>
+      <ol class="pasos">
+        <li>Haz el curso de partida de los módulos de tu plan — son piezas cortas, pensadas para verse entre reuniones. El avance queda guardado por persona.</li>
+        <li>Únete a la <b>Comunidad</b>: ahí se anuncian los módulos nuevos y las mejoras antes que en ningún otro canal, y es donde el equipo Hapee responde preguntas.</li>
+      </ol>
+      <div class="subt">Configurarla — tus propios cursos con el Estudio</div>
+      <p>La Academia no es solo para consumir: con el <b>Estudio</b> (visible para administradores) puedes crear cursos propios. Los usos que más rinden: <b>inducción de tu equipo</b> (cómo atendemos, cómo cotizamos, políticas) y <b>educación de tus clientes</b> (cómo usar lo que te compraron — menos tickets de soporte).</p>
+      <ol class="pasos">
+        <li>Entra a <b>Academia → Estudio</b> y usa <b>«Crear curso»</b>: título, descripción corta y una portada (sirve una imagen simple con tu marca).</li>
+        <li>Arma las <b>lecciones</b>: la medida que funciona es video corto (3–7 min) o texto de una pantalla por lección. Un curso de 5 lecciones que se termina gana a uno de 20 que se abandona.</li>
+        <li>Ordena las lecciones en la secuencia real de aprendizaje y <b>publica</b> el curso.</li>
+        <li>Avisa por la <b>Comunidad</b> que está disponible — y en la inducción de cada persona nueva, su primera tarea es completarlo.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m18"></span><div class="tx"><b>Listo cuando…</b> cada persona del equipo completó el curso del módulo que usa a diario — y tu primer curso propio está publicado en el catálogo.</div></div>
+    </article>
+
+    <!-- 19 -->
+    <article class="mod rev" id="m19" data-search="repositorio roadmap archivos material marca logo tipografias contratos desarrollo">
+      <div class="mod-head"><div class="mod-num">19</div><h3>Repositorio y Roadmap</h3></div>
+      <div class="donde">Dónde: menú <b>Repositorio</b> y <b>Roadmap</b></div>
+      <p class="intro">El repositorio guarda los archivos de tu proyecto (piezas, contratos, material de marca) en un solo lugar compartido. El roadmap muestra lo que viene en tu proyecto y en la plataforma.</p>
+      <div class="subt">Pasos</div>
+      <ol class="pasos">
+        <li>Sube al <b>Repositorio</b> tu material de marca: logo, tipografías, fotos aprobadas. Es de donde el equipo (y el nuestro) tomará siempre la versión correcta.</li>
+        <li>Revisa el <b>Roadmap</b> una vez al mes: ahí ves qué está en desarrollo y qué llegó.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m19"></span><div class="tx"><b>Listo cuando…</b> el material de marca vigente está en el repositorio y el equipo sabe que ahí se busca.</div></div>
+    </article>
+
+    <!-- 20 -->
+    <article class="mod rev" id="m20" data-search="asistente hapee ai copiloto voz datos metricas tareas contenido analizar recordar archivos pdf chat">
+      <div class="mod-head"><div class="mod-num">20</div><h3>El Asistente Hapee</h3></div>
+      <div class="donde">Dónde: menú <b>Hapee AI</b> · disponible en toda la plataforma</div>
+      <p class="intro">Tu copiloto dentro de la plataforma: conversas con él por texto <b>o por voz</b> y él lee tus datos reales — métricas, clientes, tareas, campañas — y actúa. No es un chat genérico: sabe lo que pasa en TU cuenta, respeta lo que tu rol puede ver, y recuerda lo que le pidas recordar.</p>
+      <div class="subt">Qué puede hacer, con ejemplos reales</div>
+      <div class="tbl"><table>
+        <tr><th>Capacidad</th><th>Pídeselo así</th></tr>
+        <tr><td class="k">Leer tus datos</td><td>«¿Cómo van las campañas de este mes?» · «Muéstrame el resumen de actividad de [cliente]» · «¿Qué tareas tengo pendientes esta semana?»</td></tr>
+        <tr><td class="k">Crear y agendar</td><td>«Créame una tarea para revisar la grilla el viernes» · «Agenda un post para el lunes a las 9 con este texto…»</td></tr>
+        <tr><td class="k">Generar contenido</td><td>«Escríbeme 3 captions para el lanzamiento del producto X» · «Redacta el correo de seguimiento para una cotización enviada hace 5 días»</td></tr>
+        <tr><td class="k">Analizar en profundidad</td><td>«Analiza a fondo el rendimiento de [cliente] este trimestre» — para esto usa su modo de análisis profundo, que piensa más y entrega conclusiones, no solo números.</td></tr>
+        <tr><td class="k">Recordar</td><td>«Recuerda que a este cliente no le gusta el tono formal» — y lo aplica en el futuro. También puedes pedirle que olvide algo.</td></tr>
+        <tr><td class="k">Leer archivos</td><td>Súbele un PDF o una imagen (un brief, una cotización de la competencia) y pregúntale sobre el contenido.</td></tr>
+      </table></div>
+      <div class="subt">Tres hábitos que le sacan el jugo</div>
+      <ol class="pasos">
+        <li><b>Pregunta antes de buscar.</b> En vez de navegar cinco módulos buscando un dato, pídeselo: «¿cuánto invertimos en Meta este mes?» llega más rápido que cualquier clic.</li>
+        <li><b>Dictado por voz para capturar.</b> Saliendo de una reunión, aprieta el micrófono y suéltale los compromisos: «créame tarea de enviar propuesta a X el jueves». Capturado.</li>
+        <li><b>Bórrale el trabajo aburrido.</b> Primeros borradores de captions, correos y propuestas: él hace el 80% y tú pules el 20% que lleva tu firma.</li>
+      </ol>
+      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m20"></span><div class="tx"><b>Listo cuando…</b> le pediste tu primera métrica real y tu primera tarea creada por él apareció en el módulo de tareas.</div></div>
+      <div class="ojo"><b>Ojo:</b> el asistente ve lo que TU usuario puede ver — ni más ni menos. Si un dato no te aparece, no es que lo esconda: es que tu rol no lo tiene asignado.</div>
+    </article>
+
+    <!-- ════ CHECKLIST MAESTRO ════ -->
+    <section class="maestro rev" id="maestro">
+      <div class="maestro-head">
+        <h2>✓ Checklist maestro</h2>
+        <button class="print" onclick="window.print()">Imprimir</button>
+      </div>
+      <p>Se marca solo con lo que ya completaste arriba — y puedes marcar directo aquí. Cuando las casillas de tu plan estén completas, <b>tu Hapee está operando</b>.</p>
+      <div id="mlist"></div>
+      <div class="m-100" id="m100">🎉 <b>¡Autosetup completo!</b> Tu Hapee está operando: canales conectados, CRM ordenado, agentes respondiendo y reportes corriendo solos. Ahora el rito es semanal: pipeline, radar y tablero de agentes. Nos vemos en la Comunidad.</div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <h2>¿Te trabaste en algún paso?</h2>
+      <p>Para eso estamos: escríbenos por el <b>WhatsApp de soporte de tu proyecto</b> y lo resolvemos contigo — en español y con alguien que conoce tu cuenta. El autosetup es para avanzar rápido, no para quedarte solo.</p>
+    </div>
+    <div class="fright">
+      <a class="cta big" href="https://beta.hapee.ai" target="_blank" rel="noopener">Abrir mi plataforma →</a>
+      <a class="btn2" href="https://hapee.ai/agenda-tu-demo">Agendar una llamada</a>
+    </div>
+  </div>
+  <div class="legal">
+    <span>Guía oficial de autosetup de Hapee · Grupo Digitals · agosto 2026. Esta guía se actualiza con cada módulo nuevo.</span>
+    <span><a href="https://hapee.ai">hapee.ai</a> · <a href="https://hapee.ai/planes.html">Planes</a> · <a href="https://hapee.ai/terminos.html">Términos</a></span>
+  </div>
+</footer>
+
+<button class="fab" id="fab" aria-label="Índice">☰</button>
+<div class="drawer" id="drawer"><div class="panel"><button class="close" id="dclose">✕</button><nav id="drawernav" class="snav" style="margin-top:30px"></nav></div></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ══ Datos ══ */
+var FASES=[
+ {id:'fase0',n:'Fase 0',t:'Tu cuenta',mods:['m01','m02']},
+ {id:'fase1',n:'Fase 1',t:'Canales conectados',mods:['m03','m04']},
+ {id:'fase2',n:'Fase 2',t:'Tu CRM ordenado',mods:['m05','m06','m07']},
+ {id:'fase3',n:'Fase 3',t:'La IA que vende',mods:['m08']},
+ {id:'fase4',n:'Fase 4',t:'Marketing andando',mods:['m09','m10','m11','m12']},
+ {id:'fase5',n:'Fase 5',t:'Automatiza',mods:['m13']},
+ {id:'fase6',n:'Fase 6',t:'Inteligencia del negocio',mods:['m14','m15','m16','m17']},
+ {id:'fase7',n:'Fase 7',t:'El día a día',mods:['m18','m19','m20']}
+];
+var TITULOS={m01:'Primer acceso y perfil',m02:'Tu equipo dentro de Hapee',m03:'WhatsApp',m04:'Bandeja omnicanal',m05:'Contactos y empresas',m06:'Pipeline de negocios',m07:'Calendario y agendamiento',m08:'Hapee Agents · tu equipo de IA',m09:'Mail Marketing',m10:'Formularios',m11:'Redes sociales',m12:'Funnels, sitios y blog',m13:'Workflows',m14:'Reportería',m15:'Radar de Competencia',m16:'Reuniones IA · notetaker',m17:'Licitaciones',m18:'Academia y Comunidad',m19:'Repositorio y Roadmap',m20:'El Asistente Hapee'};
+var MAESTRO={m01:'Entras con tu contraseña y tu logo está cargado',m02:'Cada persona tiene su propio usuario',m03:'Un mensaje de prueba llega a la bandeja',m04:'El equipo responde desde Hapee, no desde celulares',m05:'Tu base importada, sin duplicados',m06:'Tus ventas reales en curso, con montos',m07:'Google Calendar sincronizado (todo el equipo)',m08:'El agente respondió bien a un cliente real',m09:'Campaña de prueba en bandeja de entrada, no en spam',m10:'Un envío crea el contacto en el CRM',m11:'Una publicación programada salió sola',m12:'Funnel publicado con formulario probado',m13:'La receta de bienvenida corre sola',m14:'El tablero muestra tu inversión del mes',m15:'Primer informe con anuncios de tu competencia',m16:'Primera reunión con resumen y transcripción',m17:'Oportunidades con puntaje de afinidad',m18:'Cursos de partida completados',m19:'Material de marca subido',m20:'Primera métrica pedida y primera tarea creada por él'};
+var ALL=Object.keys(TITULOS);
+
+/* ══ Tema ══ */
+var themeBtn=document.getElementById('theme');
+function applyTheme(t){document.documentElement.classList.toggle('dark',t==='dark');themeBtn.textContent=t==='dark'?'☀️':'🌙'}
+var saved=localStorage.getItem('hapee-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+applyTheme(saved);
+themeBtn.addEventListener('click',function(){var t=document.documentElement.classList.contains('dark')?'light':'dark';localStorage.setItem('hapee-theme',t);applyTheme(t)});
+
+/* ══ Progreso (localStorage) ══ */
+var KEY='hapee-academia-v1';
+function getP(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function setP(p){localStorage.setItem(KEY,JSON.stringify(p))}
+function isDone(m){return !!getP()[m]}
+function setDone(m,v){var p=getP();if(v)p[m]=true;else delete p[m];setP(p);paintAll()}
+
+/* ══ Sidebar (se genera 2 veces: aside + drawer) ══ */
+function buildNav(el){
+  var h='';
+  FASES.forEach(function(f){
+    h+='<div class="fase" data-fase-nav="'+f.id+'"><div class="fase-t"><em>'+f.n.replace('Fase ','F')+'</em> '+f.t+'</div>';
+    f.mods.forEach(function(m){
+      h+='<a class="mod" data-nav="'+m+'" href="#'+m+'"><span class="n">'+m.slice(1)+'</span>'+TITULOS[m]+'<span class="tick">✓</span></a>';
+    });
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+buildNav(document.getElementById('sidenav'));
+buildNav(document.getElementById('drawernav'));
+
+/* ══ Checklist maestro ══ */
+var ml=document.getElementById('mlist'),mh='';
+ALL.forEach(function(m,i){
+  mh+='<div class="mrow" data-mrow="'+m+'"><span class="mck">✓</span><span class="mt">'+String(i+1).padStart(2,'0')+' · '+TITULOS[m]+'</span><span class="md">'+MAESTRO[m]+'</span></div>';
+});
+ml.innerHTML=mh;
+ml.addEventListener('click',function(e){
+  var r=e.target.closest('.mrow');if(!r)return;
+  var m=r.getAttribute('data-mrow');setDone(m,!isDone(m));
+});
+
+/* ══ Pintar estado ══ */
+var ringLen=138.2;
+function paintAll(){
+  var p=getP(),done=ALL.filter(function(m){return p[m]}).length,pct=Math.round(done/ALL.length*100);
+  document.getElementById('pnum').textContent=done+'/20';
+  document.getElementById('pbar').style.width=pct+'%';
+  document.getElementById('ringpct').textContent=pct+'%';
+  document.getElementById('ringmods').textContent=done+' de 20 módulos';
+  document.getElementById('ringfill').style.strokeDashoffset=String(ringLen-(ringLen*pct/100));
+  document.querySelectorAll('[data-nav]').forEach(function(a){a.classList.toggle('done',!!p[a.getAttribute('data-nav')])});
+  document.querySelectorAll('[data-mrow]').forEach(function(r){r.classList.toggle('done',!!p[r.getAttribute('data-mrow')])});
+  ALL.forEach(function(m){
+    var art=document.getElementById(m);if(art)art.classList.toggle('done',!!p[m]);
+    var cb=document.querySelector('input[data-mod="'+m+'"]');
+    if(cb){cb.checked=!!p[m];cb.parentElement.classList.toggle('on',!!p[m])}
+  });
+  document.getElementById('m100').classList.toggle('show',done===ALL.length);
+}
+document.querySelectorAll('input[data-mod]').forEach(function(cb){
+  cb.addEventListener('change',function(){setDone(cb.getAttribute('data-mod'),cb.checked)});
+});
+paintAll();
+
+/* ══ Scroll-spy ══ */
+var spy=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      document.querySelectorAll('[data-nav]').forEach(function(a){a.classList.remove('act')});
+      document.querySelectorAll('[data-nav="'+e.target.id+'"]').forEach(function(a){a.classList.add('act')});
+    }
+  });
+},{rootMargin:'-15% 0px -70% 0px'});
+ALL.forEach(function(m){var el=document.getElementById(m);if(el)spy.observe(el)});
+
+/* ══ Búsqueda ══ */
+var q=document.getElementById('q');
+function doSearch(v){
+  v=v.trim().toLowerCase();
+  var any=false;
+  FASES.forEach(function(f){
+    var vis=0;
+    f.mods.forEach(function(m){
+      var art=document.getElementById(m);
+      var hay=!v||( (TITULOS[m]+' '+(art?art.getAttribute('data-search'):'')).toLowerCase().indexOf(v)>-1 );
+      document.querySelectorAll('[data-nav="'+m+'"]').forEach(function(a){a.classList.toggle('hidden',!hay)});
+      if(hay)vis++;
+    });
+    document.querySelectorAll('[data-fase-nav="'+f.id+'"]').forEach(function(g){g.classList.toggle('hidden',vis===0)});
+    if(vis)any=true;
+  });
+  document.getElementById('qempty').classList.toggle('show',!any&&!!v);
+}
+q.addEventListener('input',function(){doSearch(q.value)});
+q.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    var first=document.querySelector('.snav a.mod:not(.hidden)');
+    if(first){location.hash=first.getAttribute('href');q.blur()}
+  }
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='/'&&document.activeElement!==q&&!/input|textarea/i.test(document.activeElement.tagName)){e.preventDefault();q.focus()}
+});
+
+/* ══ Copy buttons ══ */
+document.querySelectorAll('.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var pre=document.getElementById(b.getAttribute('data-copy'));
+    navigator.clipboard.writeText(pre.textContent).then(function(){
+      var t=b.textContent;b.textContent='¡Copiado!';b.classList.add('ok');
+      setTimeout(function(){b.textContent=t;b.classList.remove('ok')},1800);
+    });
+  });
+});
+
+/* ══ Drawer móvil ══ */
+var drawer=document.getElementById('drawer');
+document.getElementById('fab').addEventListener('click',function(){drawer.classList.add('open')});
+document.getElementById('dclose').addEventListener('click',function(){drawer.classList.remove('open')});
+drawer.addEventListener('click',function(e){if(e.target===drawer||e.target.closest('a.mod'))drawer.classList.remove('open')});
+
+/* ══ Scroll progress ══ */
+var sb=document.getElementById('scrollbar');
+addEventListener('scroll',function(){
+  var h=document.documentElement,p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  sb.style.width=p+'%';
+},{passive:true});
+
+/* ══ Reveals ══ */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.06});
+document.querySelectorAll('.rev').forEach(function(el){io.observe(el)});
+
+})();
+</script>
+</body>
+</html>
