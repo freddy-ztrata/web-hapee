@@ -7,8 +7,15 @@ COPY blog/ /usr/share/nginx/html/blog/
 COPY transformacion.html /usr/share/nginx/html/transformacion.html
 COPY partners.html /usr/share/nginx/html/partners.html
 COPY rrss-templates.html /usr/share/nginx/html/rrss-templates.html
+# OJO: las paginas se copian UNA POR UNA. Un .html nuevo commiteado sin su
+# linea COPY no llega a la imagen y nginx lo sirve con el catch-all
+# (try_files ... /index.html): devuelve la HOME con 200, o sea que se ve igual
+# que una URL inventada y no hay error en ningun lado. Paso con
+# eliminacion-datos.html, que la politica de privacidad linkea y que Meta abre
+# durante el App Review.
 COPY politica-privacidad.html /usr/share/nginx/html/politica-privacidad.html
 COPY terminos.html /usr/share/nginx/html/terminos.html
+COPY eliminacion-datos.html /usr/share/nginx/html/eliminacion-datos.html
 COPY gracias-compra.html /usr/share/nginx/html/gracias-compra.html
 COPY juego.html /usr/share/nginx/html/juego.html
 COPY agenda-tu-demo.html /usr/share/nginx/html/agenda-tu-demo.html
