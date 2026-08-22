@@ -254,7 +254,36 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>6.4 Cumplimiento con las políticas de Meta</h3>
 <p>Los datos de WhatsApp se intercambian con <strong>Meta Platforms, Inc.</strong>, proveedor de la WhatsApp Business Platform, para el envío y recepción de mensajes. Cumplimos con las <a href="https://www.whatsapp.com/legal/business-policy" target="_blank" rel="noopener noreferrer">Políticas de la Plataforma de WhatsApp Business</a> y no vendemos ni usamos estos datos con fines publicitarios.</p>
 
-<h2>7. Aplicaciones móviles (iOS y Android)</h2>
+<h2>7. Integración con Google (Gmail y Google Calendar)</h2>
+<p>Cuando conectás tu cuenta de Google a Hapee, procesamos —en tu nombre— los datos necesarios para que puedas responder correos y gestionar reuniones desde la plataforma. Esta integración es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y podés revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Google</a>.</p>
+
+<h3>7.1 Permisos que solicitamos y para qué</h3>
+<ul>
+  <li><strong><code>gmail.send</code></strong> — enviar correos desde tu casilla cuando respondés a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a vos.</li>
+  <li><strong><code>gmail.readonly</code></strong> — leer los correos de tu casilla para mostrar las respuestas de tus contactos dentro de la conversación en Hapee. Sin este permiso las respuestas quedarían solo en Gmail y el historial de la conversación estaría incompleto.</li>
+  <li><strong><code>calendar.events</code></strong> y <strong><code>calendar.readonly</code></strong> — crear, actualizar y cancelar las citas agendadas desde Hapee en tu calendario, y leer tu disponibilidad para no ofrecer horarios ocupados.</li>
+  <li><strong><code>drive.file</code></strong> — acceder únicamente a los archivos que se generan o adjuntan desde Hapee. Este permiso <strong>no</strong> da acceso al resto de tu Drive.</li>
+  <li><strong><code>openid</code></strong> y <strong><code>email</code></strong> — identificar la cuenta que se conectó y mostrar desde qué dirección se envían los correos.</li>
+</ul>
+<p>Solicitamos el permiso <strong>más restringido</strong> que permite cada función. Cuando existe una alternativa más acotada, la usamos: por eso pedimos <code>drive.file</code> y no acceso completo a Drive.</p>
+
+<h3>7.2 Uso limitado de los datos de Google (Limited Use)</h3>
+<p><strong>El uso y la transferencia que Hapee hace de la información recibida de las APIs de Google se ajusta a la <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Política de Datos de Usuario de los Servicios de API de Google</a>, incluidos sus requisitos de Uso Limitado.</strong> En concreto:</p>
+<ul>
+  <li>Usamos los datos de Gmail y Calendar <strong>únicamente</strong> para brindarte las funciones descritas en 7.1, visibles dentro de la plataforma.</li>
+  <li><strong>No transferimos</strong> estos datos a terceros, salvo (i) cuando es necesario para brindar y mejorar esas funciones, (ii) por motivos de seguridad, (iii) para cumplir una obligación legal, o (iv) como parte de una fusión o adquisición, previo aviso y con tu consentimiento.</li>
+  <li><strong>No usamos</strong> estos datos para publicidad, ni para perfilamiento publicitario, ni los vendemos o cedemos a intermediarios de datos.</li>
+  <li><strong>No usamos</strong> el contenido de tus correos para entrenar modelos de inteligencia artificial generalizados ni de terceros.</li>
+  <li><strong>Ninguna persona lee</strong> tus correos, salvo (i) con tu consentimiento expreso para un caso puntual, (ii) por motivos de seguridad —por ejemplo, investigar un abuso—, (iii) para cumplir la ley, o (iv) sobre datos agregados y anonimizados con fines de operación interna.</li>
+</ul>
+
+<h3>7.3 Procesamiento por inteligencia artificial</h3>
+<p>Si activás las funciones de asistencia con IA, el texto del correo que estés redactando o respondiendo puede ser procesado por <strong>Anthropic (Claude)</strong> u <strong>OpenAI (GPT)</strong>, según el modelo que elijas, con el único fin de generar o mejorar esa respuesta. Estos proveedores actúan como procesadores y <strong>no utilizan ese contenido para entrenar sus modelos</strong> bajo los términos comerciales que tenemos con ellos. Esta función es opcional y se activa por cuenta.</p>
+
+<h3>7.4 Almacenamiento, retención y eliminación</h3>
+<p>Los tokens de acceso se guardan cifrados y se usan solo para las llamadas descritas. Los correos que se muestran en una conversación se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Al desconectar la cuenta desde tu perfil, revocamos el token y dejamos de acceder a tu casilla. Podés solicitar la eliminación de los datos ya almacenados escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
+
+<h2>8. Aplicaciones móviles (iOS y Android)</h2>
 <p>La aplicación móvil de Hapee es una experiencia integrada que carga la plataforma web dentro de un contenedor nativo. Usa los siguientes permisos del sistema operativo, cuando los autorizas:</p>
 <ul>
   <li><strong>Notificaciones push</strong> — para avisarte de nuevos mensajes, asignaciones y eventos relevantes</li>
@@ -263,7 +292,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>Puedes revocar cualquiera de estos permisos en cualquier momento desde los ajustes del sistema de tu dispositivo.</p>
 
-<h2>8. Almacenamiento, seguridad y retención</h2>
+<h2>9. Almacenamiento, seguridad y retención</h2>
 <ul>
   <li>Los datos se almacenan en servidores AWS ubicados principalmente en regiones de Estados Unidos. Pueden transferirse internacionalmente en tránsito hacia los procesadores listados en la sección 4.</li>
   <li>Las contraseñas se almacenan con hash <em>bcrypt</em> de un solo sentido (nunca en texto plano)</li>
@@ -274,7 +303,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li>Conservamos tus datos mientras tu cuenta esté activa. Tras la eliminación, tus datos personales identificables se anonimizan o eliminan en un plazo máximo de 90 días, salvo cuando debamos conservarlos por obligación legal (por ejemplo, registros tributarios)</li>
 </ul>
 
-<h2>9. Tus derechos</h2>
+<h2>10. Tus derechos</h2>
 <p>Como titular de los datos, puedes ejercer en cualquier momento los derechos de:</p>
 <ul>
   <li><strong>Acceso</strong> — solicitar copia de los datos personales que tenemos sobre vos</li>
@@ -285,19 +314,19 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>Para ejercer cualquiera de estos derechos, escribinos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>. Responderemos en un plazo máximo de 30 días. La aplicación cuenta con una opción dedicada para solicitar la eliminación de tu cuenta en <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
-<h2>10. Menores de edad</h2>
+<h2>11. Menores de edad</h2>
 <p>La plataforma está dirigida a profesionales y empresas. No recopilamos intencionalmente datos personales de menores de 13 años. Si tomamos conocimiento de que un menor de 13 años nos ha proporcionado datos sin consentimiento parental verificable, procederemos a eliminar dicha información. Si sospechás que esto pudo ocurrir, contactanos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
 
-<h2>11. Cookies y tecnologías similares</h2>
+<h2>12. Cookies y tecnologías similares</h2>
 <p>Utilizamos cookies estrictamente necesarias para mantener tu sesión autenticada y recordar preferencias (idioma, tema). No utilizamos cookies de publicidad de terceros ni redes de seguimiento entre sitios.</p>
 
-<h2>12. Cambios a esta política</h2>
+<h2>13. Cambios a esta política</h2>
 <p>Podemos actualizar esta política para reflejar cambios legales, operativos o funcionales. Cuando los cambios sean significativos, te notificaremos por correo electrónico o mediante un aviso destacado dentro de la plataforma. La fecha en la parte superior indica la última revisión.</p>
 
-<h2>13. Legislación aplicable</h2>
+<h2>14. Legislación aplicable</h2>
 <p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile y demás normativa aplicable. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p>
 
-<h2>14. Contacto</h2>
+<h2>15. Contacto</h2>
 <p>Para cualquier consulta o reclamo relacionado con tu privacidad, podés escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p>
 
 </main>
