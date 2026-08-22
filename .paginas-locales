@@ -5,6 +5,7 @@
 # Si una de estas se va a publicar: sacala de aca Y agregale su linea COPY en
 # el Dockerfile. Las dos cosas, o nginx la sirve como la home con un 200.
 _render.html
+marca.html
 blog-hero-variants.html
 juego-cathedral.html
 widget-opciones.html
