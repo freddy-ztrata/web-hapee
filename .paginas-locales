@@ -1,0 +1,11 @@
+# Paginas .html que a PROPOSITO no se publican: variantes de diseno, pruebas y
+# renders de trabajo. El verificador las descuenta para que el listado de
+# "paginas que faltan en la imagen" sea accionable y no ruido.
+#
+# Si una de estas se va a publicar: sacala de aca Y agregale su linea COPY en
+# el Dockerfile. Las dos cosas, o nginx la sirve como la home con un 200.
+_render.html
+blog-hero-variants.html
+juego-cathedral.html
+widget-opciones.html
+widget-reemplaza-opciones.html
