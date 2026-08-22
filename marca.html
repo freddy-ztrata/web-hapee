@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de Marca · Hapee</title>
+<meta name="description" content="Guía de marca de Hapee: tipografía, color, componentes y criterios de uso. La referencia para todo lo que se construya con la marca.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#FA5000; --accent-alt:#CD2349; --accent-legible:#D44400;
+  --bg:#FFFFFF; --bg-alt:#F5F3F0; --bg-alt2:#F8FAFC;
+  --text:#4a4a4a; --text-2:#777e8f; --heading:#1a1a1a;
+  --card-bg:#FFFFFF; --card-border:rgba(0,0,0,.09);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow-md:0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.13);
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --pill:100px; --tr:.3s cubic-bezier(.4,0,.2,1);
+}
+html.dark{
+  --bg:#080808; --bg-alt:#0d0d0d; --bg-alt2:#111111;
+  --text:#b0a89e; --text-2:#8b8078; --heading:#f5f0eb;
+  --card-bg:#0f0f0f; --card-border:rgba(250,80,0,.14);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.5);
+  --shadow-md:0 8px 32px rgba(0,0,0,.6);
+  --shadow-lg:0 20px 60px rgba(250,80,0,.08),0 20px 60px rgba(0,0,0,.6);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fd);background:var(--bg);color:var(--text);font-size:.95rem;
+  line-height:1.65;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+h1,h2,h3,h4{color:var(--heading);line-height:.95;letter-spacing:-.025em;font-weight:800}
+h3,h4{line-height:1.15;letter-spacing:-.015em}
+a{color:var(--accent-legible)}
+code,.mono{font-family:var(--fm)}
+/* Los valores largos —un linear-gradient completo— quedaban CORTADOS dentro de
+   la tarjeta de color, que tiene overflow:hidden: se leía "linear-gradient(13"
+   y el resto desaparecía. En un manual de marca un valor que no se puede leer
+   ni copiar no sirve para nada, así que se parte de línea en vez de recortarse. */
+.sw .meta .mono{overflow-wrap:anywhere;word-break:break-word}
+.ctn{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* barra */
+.bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 94%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--card-border)}
+.bar .ctn{display:flex;align-items:center;gap:18px;height:62px}
+.bar img{height:26px}
+.bar nav{margin-left:auto;display:flex;gap:20px;flex-wrap:wrap}
+.bar nav a{color:var(--text-2);text-decoration:none;font-size:.85rem;font-weight:600;transition:var(--tr)}
+.bar nav a:hover{color:var(--accent)}
+.tog{width:36px;height:36px;border-radius:50%;border:1px solid var(--card-border);background:transparent;
+  cursor:pointer;font-size:.95rem;color:var(--text-2);display:grid;place-items:center;flex:none}
+
+/* portada */
+.hero{padding:88px 0 64px;border-bottom:1px solid var(--card-border)}
+.kick{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+  font-weight:800;display:block;margin-bottom:16px}
+.hero h1{font-size:clamp(2.6rem,7vw,4.6rem);margin-bottom:20px}
+.hero p{font-size:1.06rem;max-width:660px;color:var(--text-2)}
+.grad{background:linear-gradient(120deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent}
+
+/* secciones */
+section{padding:66px 0;border-bottom:1px solid var(--card-border)}
+.sh{margin-bottom:34px}
+.sh .n{font-family:var(--fm);font-size:.78rem;color:var(--accent);font-weight:700;letter-spacing:.1em}
+.sh h2{font-size:clamp(1.8rem,3.8vw,2.6rem);margin:6px 0 12px}
+.sh p{color:var(--text-2);max-width:680px}
+
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;
+  padding:26px;box-shadow:var(--shadow-sm)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+
+/* color */
+.sw{border-radius:18px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-bg)}
+.sw .chip{height:104px;display:grid;place-items:center;color:#fff;font-family:var(--fm);
+  font-size:.82rem;font-weight:700;letter-spacing:.06em}
+.sw .meta{padding:14px 16px}
+.sw .meta b{display:block;color:var(--heading);font-size:.92rem;font-weight:800}
+.sw .meta span{display:block;font-size:.8rem;color:var(--text-2);margin-top:3px;line-height:1.5}
+.ratio{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:.72rem;
+  font-weight:700;padding:3px 9px;border-radius:99px;margin-top:9px}
+.ok{background:rgba(22,163,74,.12);color:#15803D}
+.no{background:rgba(203,32,32,.1);color:#B42318}
+
+/* tipografía */
+.tsc{display:grid;gap:2px}
+.tsc div{padding:14px 0;border-bottom:1px solid var(--card-border);display:flex;
+  align-items:baseline;gap:20px;flex-wrap:wrap}
+.tsc .lbl{font-family:var(--fm);font-size:.72rem;color:var(--text-2);min-width:190px;flex:none}
+.tsc .ej{color:var(--heading)}
+.mues{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:.95;letter-spacing:-.025em;
+  color:var(--heading);margin:6px 0 4px}
+.glifo{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end;margin-top:18px}
+.glifo span{font-size:5rem;font-weight:800;line-height:1;color:var(--heading)}
+.glifo em{font-style:normal;font-family:var(--fm);font-size:.7rem;color:var(--text-2);display:block;
+  text-align:center;margin-top:6px}
+
+/* bloques de código */
+pre{background:var(--bg-alt);border:1px solid var(--card-border);border-radius:14px;padding:18px 20px;
+  overflow-x:auto;font-family:var(--fm);font-size:.8rem;line-height:1.75;color:var(--heading)}
+html.dark pre{background:#0c0c0c}
+pre .c{color:var(--text-2)}
+
+/* botones de muestra */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fd);
+  font-weight:600;font-size:.95rem;padding:14px 30px;border-radius:var(--pill);cursor:pointer;
+  transition:var(--tr);border:2px solid transparent;text-decoration:none}
+.bs{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
+.bs:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(250,80,0,.3)}
+.bo{border-color:var(--card-border);color:var(--heading)}
+.bo:hover{border-color:var(--accent);color:var(--accent)}
+.sobre-oscuro{background:#141414;padding:26px;border-radius:18px;display:flex;gap:12px;flex-wrap:wrap}
+.sobre-oscuro .bo{border-color:rgba(255,255,255,.45);color:#fff}
+
+/* reglas sí / no */
+.rr{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.rr>div{border-radius:16px;padding:20px;border:1.5px solid var(--card-border);background:var(--card-bg)}
+.rr .si{border-color:rgba(22,163,74,.4);background:rgba(22,163,74,.05)}
+.rr .no2{border-color:rgba(203,32,32,.32);background:rgba(203,32,32,.04)}
+.rr h4{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
+.rr .si h4{color:#15803D}
+.rr .no2 h4{color:#B42318}
+.rr ul{list-style:none;display:grid;gap:9px}
+.rr li{font-size:.88rem;line-height:1.55;padding-left:20px;position:relative}
+.rr li::before{position:absolute;left:0;font-weight:800}
+.rr .si li::before{content:'✓';color:#16A34A}
+.rr .no2 li::before{content:'✕';color:#DC2626}
+
+.nota{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:22px 0;color:var(--text-2);
+  font-size:.92rem;line-height:1.7}
+.nota b{color:var(--heading)}
+
+/* badge oficial de partner — copiado tal cual de partners.html */
+.hp-lockup{display:inline-flex;align-items:center;gap:11px;padding:13px 20px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));border-radius:24px 5px 24px 5px;box-shadow:0 10px 26px rgba(250,80,0,.32);position:relative;white-space:nowrap}
+.hp-lockup .hp-logo{height:19px;width:auto;object-fit:contain;flex-shrink:0;display:block;filter:brightness(0) invert(1)}
+.hp-lockup .hp-div{width:1.5px;height:18px;background:rgba(255,255,255,.5);flex-shrink:0}
+.hp-lockup .hp-tier{font-family:var(--fd);font-size:.68rem;font-weight:700;letter-spacing:2.6px;color:#fff}
+.hp-chip{font-family:var(--fd);font-size:.56rem;font-weight:800;letter-spacing:1.4px;padding:4px 9px;border-radius:999px;line-height:1}
+.hp-chip.pro{background:#fff;color:var(--accent-alt)}
+.hp-chip.elite{background:#F5BE4F;color:#4A2E00}
+.hp-lockup.keyline::after{content:'';position:absolute;inset:-5px;border-radius:28px 8px 28px 8px;border:1.5px solid rgba(205,35,73,.35);pointer-events:none}
+html.dark .hp-lockup.keyline::after{border-color:rgba(255,255,255,.8)}
+.hp-lockup.keyline-oro::after{content:'';position:absolute;inset:-5px;border-radius:28px 8px 28px 8px;border:2px solid #F5BE4F;pointer-events:none}
+.hp-lockup.keyline-oro{box-shadow:0 10px 26px rgba(250,80,0,.32),0 0 24px rgba(245,190,79,.25)}
+.hp-lockup .hp-logo{height:16px}
+.hp-lockup .hp-tier{font-size:.6rem;letter-spacing:2px}
+
+/* logo, mascota y partners */
+.pie{display:block;font-size:.78rem;color:var(--text-2);margin-top:12px;line-height:1.55}
+.mini{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.aire{position:relative;margin:16px 0;padding:34px;border:1px dashed rgba(250,80,0,.45);
+  border-radius:12px;display:grid;place-items:center;background:var(--bg-alt)}
+.aire img{max-width:150px;width:70%}
+.lista{list-style:none;display:grid;gap:9px;margin-top:12px}
+.lista li{font-size:.88rem;line-height:1.55;padding-left:18px;position:relative;color:var(--text)}
+.lista li::before{content:'●';position:absolute;left:0;color:var(--accent);font-size:.6rem;top:.45em}
+.lista b{color:var(--heading)}
+.cert-fila{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+/* sellos de certificación — mismo estilo que el pie del sitio */
+.cert-badge{display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);text-decoration:none;
+  color:#fff;transition:all .3s;min-height:64px}
+.cert-badge:hover{background:rgba(250,80,0,.06);border-color:rgba(250,80,0,.35);transform:translateY(-2px)}
+.cert-badge .cb-logo{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cert-badge .cb-logo svg{width:100%;height:100%}
+.cert-badge .cb-text{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.cert-badge .cb-sub{font-size:.6rem;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:#a8a098}
+.cert-badge .cb-main{font-size:.96rem;font-weight:700;color:#fff;letter-spacing:.1px;margin-top:2px}
+
+.int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:12px}
+.badge-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.badge-tiers .card{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.bt{font-size:.95rem;font-weight:800;color:var(--heading)}
+.badge-tiers .pie{margin-top:0}
+.int-grid img{width:100%;aspect-ratio:1;object-fit:contain;padding:14px;background:var(--card-bg);
+  border:1px solid var(--card-border);border-radius:16px}
+
+footer{padding:50px 0 70px;color:var(--text-2);font-size:.85rem}
+@media(max-width:860px){
+  .grid2,.rr{grid-template-columns:1fr}
+  .tsc .lbl{min-width:100%}
+  .bar nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="ctn">
+    <img src="img/logo-hapee.png" alt="Hapee">
+    <nav>
+      <a href="#tipografia">Tipografía</a>
+      <a href="#logo">Logo</a>
+      <a href="#mascota">Mascota</a>
+      <a href="#partners">Partners</a>
+      <a href="#color">Color</a>
+      <a href="#componentes">Componentes</a>
+      <a href="#voz">Voz</a>
+      <a href="#tokens">Tokens</a>
+    </nav>
+    <button class="tog" id="tog" aria-label="Cambiar tema">◐</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="ctn">
+    <span class="kick">Manual de marca · versión 1</span>
+    <h1>Cómo se ve y cómo <span class="grad">suena</span> Hapee</h1>
+    <p>La referencia para todo lo que se construya con la marca: web, presentaciones, gráficas,
+       correos y producto. Los valores de aquí son los que están de verdad en el código del sitio,
+       no una propuesta aparte.</p>
+  </div>
+</header>
+
+<!-- ── TIPOGRAFÍA ─────────────────────────────────────────────── -->
+<section id="tipografia">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">01</span>
+      <h2>Tipografía</h2>
+      <p>Una sola familia para todo: <b>Plus Jakarta Sans</b>. Titulares y texto corrido comparten
+         familia y se diferencian por peso y por interlineado, no por fuente.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:22px">
+      <div class="mues">Automatiza tu negocio.<br>Multiplica tus ventas con IA.</div>
+      <div class="glifo">
+        <div><span>a</span><em>dos pisos</em></div>
+        <div><span>g</span><em>cola abierta</em></div>
+        <div><span>t</span><em>remate recto</em></div>
+        <div><span>24/7</span><em>números tabulares</em></div>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>Cómo se identificó.</b> Se comparó contorno por contorno contra la gráfica
+      «Chat y voz con IA + bandeja unificada»: coincide <b>92% en la 'a'</b> y 91% en la 't'.
+      La 'a' es el detalle que decide — la de la marca es <b>de dos pisos</b>. Las geométricas de
+      un piso (Poppins, Outfit, Futura) nunca van a calzar, por mucho que se ajuste el peso.
+    </div>
+
+    <h3 style="margin:30px 0 14px">La escala</h3>
+    <div class="tsc">
+      <div><span class="lbl">Titular grande · 800 · lh .95</span><span class="ej" style="font-size:2.6rem;font-weight:800;line-height:.95;letter-spacing:-.025em">Tu fábrica de ventas</span></div>
+      <div><span class="lbl">Titular de sección · 800 · lh .95</span><span class="ej" style="font-size:1.9rem;font-weight:800;letter-spacing:-.025em">Resultados en 3 pasos</span></div>
+      <div><span class="lbl">Subtítulo · 800 · lh 1.15</span><span class="ej" style="font-size:1.2rem;font-weight:800;letter-spacing:-.015em">Agentes IA que venden por ti</span></div>
+      <div><span class="lbl">Texto corrido · 400 · lh 1.65</span><span class="ej" style="font-size:.95rem;font-weight:400;letter-spacing:normal;line-height:1.65">Chatbots y agentes de voz que responden, califican y cierran citas.</span></div>
+      <div><span class="lbl">Antetítulo · 800 · +.22em</span><span class="ej" style="font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Ecosistema completo</span></div>
+    </div>
+
+    <div class="nota">
+      <b>Lo que da el carácter es el interlineado, no el espaciado entre letras.</b>
+      En las gráficas de marca las líneas se apilan casi tocándose (<b>0.85</b>); en web usamos
+      <b>0.95</b> porque los titulares se reacomodan según el ancho de pantalla y a 0.85 la cola de
+      la 'g' choca con la línea de abajo en algunos móviles. El espaciado entre letras va casi
+      normal: <b>−0.025em</b>. Apretar las letras en vez de las líneas es el error que parece
+      correcto y no lo es.
+    </div>
+
+    <div class="rr" style="margin-top:26px">
+      <div class="si">
+        <h4>Sí</h4>
+        <ul>
+          <li>Peso 800 para cualquier titular</li>
+          <li>Interlineado 0.95 en titulares de dos líneas o más</li>
+          <li>Minúsculas normales, con su acentuación</li>
+          <li>Una sola palabra en color por titular, como remate</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>No</h4>
+        <ul>
+          <li>Titulares en peso 400 o 500: se ven desinflados</li>
+          <li>Todo en mayúsculas para frases largas</li>
+          <li>Mezclar una segunda familia «para dar variedad»</li>
+          <li>Espaciado de letras bajo −0.04em: se pegan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGO ───────────────────────────────────────────────────── -->
+<section id="logo">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">02</span>
+      <h2>El logo</h2>
+      <p>Escrito siempre en minúsculas, con el degradado naranja→magenta de izquierda a derecha.
+         Nunca «Hapee» con mayúscula inicial dentro del logo.</p>
+    </div>
+
+    <div class="grid2" style="margin-bottom:20px">
+      <div class="card" style="display:grid;place-items:center;min-height:210px;background:var(--bg)">
+        <img src="img/logo-hapee.png" alt="Logo Hapee sobre fondo claro" style="max-width:230px;width:70%">
+        <span class="pie">Sobre claro · uso principal</span>
+      </div>
+      <div class="card" style="display:grid;place-items:center;min-height:210px;background:#080808;border-color:rgba(250,80,0,.2)">
+        <img src="img/logo-hapee.png" alt="Logo Hapee sobre fondo oscuro" style="max-width:230px;width:70%">
+        <span class="pie" style="color:#8b8078">Sobre oscuro · el degradado no cambia</span>
+      </div>
+    </div>
+
+    <div class="grid3" style="margin-bottom:22px">
+      <div class="card">
+        <h4 class="mini">Aire mínimo</h4>
+        <div class="aire"><img src="img/logo-hapee.png" alt="Área de respeto del logo"></div>
+        <p class="pie">Deja alrededor al menos la altura de la «h» en todos los lados. Nada entra
+           en esa zona: ni texto, ni bordes, ni otro logo.</p>
+      </div>
+      <div class="card">
+        <h4 class="mini">Tamaño mínimo</h4>
+        <div style="display:flex;align-items:flex-end;gap:20px;margin:14px 0">
+          <div style="text-align:center"><img src="img/logo-hapee.png" style="height:26px" alt="Logo a 26px"><span class="pie">web · 26px</span></div>
+          <div style="text-align:center"><img src="img/logo-hapee.png" style="height:14px" alt="Logo a 14px"><span class="pie">límite · 14px</span></div>
+        </div>
+        <p class="pie">Bajo 14px de alto las letras se cierran y el degradado se ensucia.
+           Para tamaños menores va el ícono, no el logo completo.</p>
+      </div>
+      <div class="card">
+        <h4 class="mini">Ícono</h4>
+        <div style="display:flex;align-items:center;gap:16px;margin:14px 0">
+          <img src="img/favicon.png" alt="Ícono de Hapee" style="width:56px;border-radius:14px">
+          <img src="img/favicon.png" alt="Ícono de Hapee pequeño" style="width:32px;border-radius:9px">
+          <img src="img/favicon.png" alt="Ícono de Hapee mínimo" style="width:18px;border-radius:5px">
+        </div>
+        <p class="pie">Favicon, avatar de redes y apps. 180×180 de origen, siempre cuadrado con
+           esquinas redondeadas.</p>
+      </div>
+    </div>
+
+    <div class="rr">
+      <div class="si">
+        <h4>Sí</h4>
+        <ul>
+          <li>El logo tal cual, sin recolorear</li>
+          <li>Sobre fondos planos claros u oscuros de la paleta</li>
+          <li>Sobre foto, solo si hay una zona limpia y sin contraste peleando</li>
+          <li>El ícono cuando no hay espacio para el logotipo</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>No</h4>
+        <ul>
+          <li>Ponerlo en un solo color plano o en blanco y negro</li>
+          <li>Estirarlo, inclinarlo o cambiarle el interletraje</li>
+          <li>Agregarle sombra, contorno o brillo</li>
+          <li>Encerrarlo en una caja de color que compita con el degradado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MASCOTA ────────────────────────────────────────────────── -->
+<section id="mascota">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">03</span>
+      <h2>La mascota</h2>
+      <p>Un robot 3D con audífonos y el logo en el pecho. Es la cara amable de la marca: aparece
+         cuando queremos que la IA se sienta cercana, no cuando hablamos de números o contratos.</p>
+    </div>
+
+    <div class="grid2" style="margin-bottom:22px">
+      <div class="card" style="display:grid;place-items:center;background:var(--bg-alt)">
+        <img src="img/robot.png" alt="Mascota de Hapee, robot 3D con audífonos" style="max-height:300px">
+      </div>
+      <div class="card">
+        <h4 class="mini">Cómo es</h4>
+        <ul class="lista">
+          <li><b>Audífonos naranjas</b> — atiende, escucha. Es su rasgo principal.</li>
+          <li><b>Logo en el pecho</b> con el degradado de marca.</li>
+          <li><b>Cara oscura con ojos claros</b> y sonrisa simple. Nunca gesto neutro ni serio.</li>
+          <li><b>Cuerpo en naranja, magenta y blanco hueso</b>, con acabado 3D suave.</li>
+        </ul>
+        <h4 class="mini" style="margin-top:22px">Cuándo usarla</h4>
+        <ul class="lista">
+          <li>Portadas de redes y piezas de anuncio</li>
+          <li>Estados vacíos y pantallas de bienvenida del producto</li>
+          <li>Material de eventos y merchandising</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>La mascota no es el logo.</b> No la uses como avatar de marca en lugar del ícono, ni la
+      pongas junto al logotipo formando un lockup. Son dos cosas: el logo identifica, la mascota
+      acompaña. En una misma pieza, una de las dos manda.
+    </div>
+
+    <div class="rr">
+      <div class="si">
+        <h4>Sí</h4>
+        <ul>
+          <li>Cuerpo entero o de la cintura hacia arriba</li>
+          <li>Sobre fondos claros o degradados de marca</li>
+          <li>Gestos simples: saludar, pulgar arriba, señalar</li>
+          <li>Sombra suave abajo para que no flote</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>No</h4>
+        <ul>
+          <li>Recolorearla o cambiarle los audífonos de color</li>
+          <li>Generar versiones nuevas con IA: salen robots que no son este</li>
+          <li>Ponerle expresiones de enojo, tristeza o burla</li>
+          <li>Usarla en piezas de precio, contrato o legales</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARTNERS ───────────────────────────────────────────────── -->
+<section id="partners">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">04</span>
+      <h2>Partners y certificaciones</h2>
+      <p>Son respaldo, no decoración. Van al pie o en una franja propia, nunca compitiendo con el
+         logo de Hapee ni mezclados con las integraciones.</p>
+    </div>
+
+    <div class="card sobre-oscuro" style="display:block;margin-bottom:20px">
+      <span class="pie" style="color:#8b8078;letter-spacing:.18em;text-transform:uppercase;font-weight:800;font-size:.68rem">Socios oficiales · certificaciones</span>
+      <div class="cert-fila">
+<span class="cert-badge" title="Meta Business Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="meta-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00B2FF"/><stop offset=".5" stop-color="#0050FF"/><stop offset="1" stop-color="#0866FF"/></linearGradient></defs><path fill="url(#meta-g)" d="M5.7 22.6c0 1.7.4 3 1 4 .8 1.2 2 1.7 3.3 1.7 1.6 0 2.9-.4 5.4-3.8.9-1.3 1.4-2.1 3.1-4.8l1.3-2c1.2 2 2.2 3.5 3.4 5.4 1.4 2.2 2.8 3.5 4.8 3.5 1.4 0 2.5-.5 3.2-1.5.6-.9.9-2 .9-3.4 0-3-1.4-6.5-4-10.2-2.6-3.5-5.1-5.3-7.7-5.3-1.7 0-3.2.8-4.4 2.4-1.6-1.6-3.1-2.4-4.7-2.4-1.7 0-3.4 1-4.8 2.7C4.6 11.4 3.4 14.6 3.4 18c0 2 .4 3.6 1 4.4l1.3.2zm14.5-4.5c-1.4-2.1-2.4-3.7-3.3-5-1.4-2.3-2.4-3.4-3.6-3.4-1.3 0-2.5.9-3.5 2.5C8.5 14 7.7 16.5 7.7 19c0 1.1.3 2 .8 2.6.4.5 1 .8 1.7.8 1 0 1.8-.6 3.4-3 1.2-1.8 2-3 2.7-4.1l1-1.4 2.9 4.2zm8.2-7.7c1.3 1.7 2.5 4.7 2.5 7 0 .9-.2 1.5-.5 2-.3.4-.7.5-1.2.5-.9 0-1.6-.5-3-2.7-1.3-2-2.6-4.1-3.8-6.3 1-1.6 1.9-2.4 3-2.4 1.1 0 2.1.7 3 1.9z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Business</span><span class="cb-main">Meta Partner</span></span>
+        </span>
+        <!-- Google Partner -->
+        <span class="cert-badge" title="Google Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><path fill="#4285F4" d="M33.84 18.37c0-1.17-.1-2.3-.3-3.37H18v6.39h8.88c-.39 2.05-1.56 3.8-3.32 4.97v4.16h5.36c3.12-2.88 4.92-7.11 4.92-12.15z"/><path fill="#34A853" d="M18 34.5c4.46 0 8.19-1.47 10.92-3.99l-5.36-4.16c-1.47.99-3.35 1.59-5.56 1.59-4.29 0-7.93-2.9-9.24-6.8H3.27v4.26C5.99 30.8 11.55 34.5 18 34.5z"/><path fill="#FBBC05" d="M8.76 21.14c-.33-.99-.52-2.04-.52-3.14s.19-2.15.52-3.14V10.6H3.27C2.14 12.83 1.5 15.33 1.5 18s.64 5.17 1.77 7.4l4.27-3.33 1.22-.93z"/><path fill="#EA4335" d="M18 8.07c2.43 0 4.59.84 6.31 2.46l4.72-4.72C26.18 3.14 22.46 1.5 18 1.5 11.55 1.5 5.99 5.2 3.27 10.6l5.49 4.26c1.31-3.9 4.95-6.8 9.24-6.8z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Premier</span><span class="cb-main">Google Partner</span></span>
+        </span>
+        <!-- AWS Partner Network -->
+        <span class="cert-badge" title="AWS Partner Network">
+          <span class="cb-logo"><svg viewBox="0 0 36 24" aria-hidden="true"><path fill="#FF9900" d="M11.85 11.04c0 .42.05.76.13 1.01.09.25.21.52.36.81.06.09.08.18.08.26 0 .11-.07.22-.21.33l-.7.47a.54.54 0 01-.29.1c-.11 0-.22-.06-.33-.16-.16-.17-.29-.35-.4-.53-.11-.18-.23-.39-.35-.66-.87 1.03-1.96 1.54-3.27 1.54-.94 0-1.69-.27-2.23-.81-.55-.54-.83-1.25-.83-2.14 0-.95.33-1.72 1.01-2.3.68-.58 1.59-.87 2.74-.87.38 0 .77.03 1.18.09.41.06.84.15 1.29.25v-.81c0-.85-.18-1.44-.53-1.78-.36-.35-.96-.51-1.82-.51-.39 0-.79.04-1.21.14-.41.1-.81.22-1.21.38a3.2 3.2 0 01-.39.15.69.69 0 01-.18.03c-.16 0-.24-.11-.24-.34v-.55c0-.18.02-.31.08-.39.07-.08.18-.16.31-.24.4-.2.86-.37 1.41-.5a6.8 6.8 0 011.74-.21c1.33 0 2.31.3 2.93.91.62.6.93 1.52.93 2.74v3.62zm-4.53 1.7c.37 0 .75-.07 1.15-.2.4-.13.76-.38 1.06-.71.18-.21.31-.45.38-.72.07-.27.11-.59.11-.97v-.47a8.7 8.7 0 00-1.03-.19 8.4 8.4 0 00-1.05-.07c-.75 0-1.3.15-1.67.45-.37.3-.55.73-.55 1.29 0 .53.13.92.41 1.19.27.27.66.4 1.19.4zm8.97 1.21c-.2 0-.34-.04-.43-.12-.09-.07-.17-.23-.24-.44L13 6.16c-.07-.22-.1-.37-.1-.45 0-.18.09-.27.27-.27h1.1c.21 0 .36.04.45.12.09.07.16.22.22.43l1.88 7.42 1.75-7.42c.05-.22.12-.37.21-.43a.77.77 0 01.45-.12h.89c.21 0 .36.04.45.12.09.07.17.22.21.43L21.32 13l1.94-7.51c.07-.22.15-.37.23-.43a.73.73 0 01.43-.12h1.04c.18 0 .28.09.28.28 0 .05-.01.11-.02.18a1.6 1.6 0 01-.08.28L22.43 13.4c-.07.22-.15.37-.24.43a.72.72 0 01-.42.12h-.96c-.21 0-.36-.03-.45-.12-.09-.08-.17-.22-.21-.45L18.42 6.16l-1.72 7.21c-.06.22-.12.37-.21.45-.09.08-.25.12-.45.12zm14.4.3c-.58 0-1.16-.07-1.72-.2a3.62 3.62 0 01-1.29-.45c-.18-.1-.3-.21-.35-.31a.79.79 0 01-.07-.31v-.57c0-.23.09-.35.26-.35a.86.86 0 01.2.03c.07.02.17.07.28.11.38.17.79.3 1.23.39a6.62 6.62 0 002.97-.24c.36-.17.58-.43.58-.78a.71.71 0 00-.3-.6c-.2-.21-.58-.4-1.13-.58l-1.62-.5c-.82-.26-1.42-.64-1.79-1.14-.37-.5-.56-1.05-.56-1.62 0-.47.1-.88.3-1.24.2-.36.47-.67.81-.92.34-.26.71-.45 1.16-.58.45-.13.92-.19 1.41-.19.24 0 .5.01.75.04.26.04.49.08.72.12.22.05.43.11.63.18.2.07.36.13.47.2.1.06.24.16.34.28.04.06.09.16.09.27v.52c0 .23-.09.36-.26.36-.09 0-.23-.04-.42-.13a5.11 5.11 0 00-2.14-.43c-.64 0-1.14.1-1.49.31-.35.21-.52.53-.52.99 0 .31.11.58.34.79.22.21.63.42 1.23.61l1.59.5c.8.26 1.38.61 1.73 1.07.35.46.51.98.51 1.56 0 .48-.1.91-.29 1.29-.2.38-.47.71-.81.97-.35.27-.76.48-1.24.62-.5.16-1.03.23-1.6.23zM26.95 21.74c-3.68 2.71-9.01 4.15-13.6 4.15-6.43 0-12.22-2.38-16.6-6.33-.34-.31-.04-.74.38-.5 4.73 2.75 10.59 4.41 16.63 4.41 4.07 0 8.55-.85 12.67-2.59.62-.27 1.14.4.52.86zm1.54-1.75c-.47-.6-3.11-.29-4.31-.14-.36.04-.41-.27-.09-.5 2.1-1.48 5.55-1.05 5.95-.56.4.5-.11 3.95-2.08 5.6-.3.25-.59.12-.46-.2.44-1.1 1.45-3.6.99-4.2z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">AWS</span><span class="cb-main">Partner Network</span></span>
+        </span>
+        <!-- ElevenLabs Partner -->
+        <span class="cert-badge" title="ElevenLabs Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#fff"/><rect x="9" y="9" width="7" height="18" rx="1" fill="#000"/><rect x="20" y="9" width="7" height="18" rx="1" fill="#000"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Official</span><span class="cb-main">ElevenLabs Partner</span></span>
+        </span>
+        <!-- Anthropic MCP Integration -->
+        <span class="cert-badge" title="Anthropic Claude · MCP Integration">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#D4A27F"/><path d="M14 24h-3l5-12h3l-5 12zm6 0L25 12h3l-5 12h-3z" fill="#191919"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Native MCP</span><span class="cb-main">Anthropic Claude</span></span>
+        </span>
+      </div></div>
+      </div>
+    </div>
+
+    <h3 style="margin:26px 0 14px">Integraciones</h3>
+    <p style="color:var(--text-2);margin-bottom:18px;max-width:680px">Los canales y herramientas que
+       Hapee conecta. Se muestran como íconos sueltos, en su color original, sin marco ni etiqueta.
+       Nunca se presentan como si fueran partners.</p>
+    <div class="int-grid">
+      <img src="img/orbit/whatsapp.png" alt="WhatsApp"><img src="img/orbit/instagram.png" alt="Instagram">
+      <img src="img/orbit/facebook.png" alt="Facebook"><img src="img/orbit/linkedin.png" alt="LinkedIn">
+      <img src="img/orbit/gmail.png" alt="Gmail"><img src="img/orbit/outlook.png" alt="Outlook">
+      <img src="img/orbit/teams.png" alt="Teams"><img src="img/orbit/google-calendar.png" alt="Google Calendar">
+      <img src="img/orbit/google-ads.png" alt="Google Ads"><img src="img/orbit/shopify.png" alt="Shopify">
+      <img src="img/orbit/stripe.png" alt="Stripe"><img src="img/orbit/chatgpt.png" alt="ChatGPT">
+      <img src="img/orbit/gemini.png" alt="Gemini"><img src="img/orbit/claude.png" alt="Claude">
+    </div>
+
+
+    <h3 style="margin:34px 0 8px">El badge oficial de partner</h3>
+    <p style="color:var(--text-2);margin-bottom:20px;max-width:700px">Lo que un partner certificado
+       puede poner en su web, su LinkedIn y sus propuestas. Tres variantes según el tier; el partner
+       usa solo la que le corresponde.</p>
+
+    <div class="badge-tiers">
+      <div class="card">
+        <div class="hp-lockup"><img class="hp-logo" src="img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span></div>
+        <b class="bt">Tier 1 · Partner</b>
+        <span class="pie">Versión base. Degradado naranja→magenta, sin contorno.</span>
+      </div>
+      <div class="card">
+        <div class="hp-lockup keyline"><img class="hp-logo" src="img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip pro">PRO</span></div>
+        <b class="bt">Tier 2 · Partner Pro</b>
+        <span class="pie">Suma contorno blanco y chip PRO en blanco sobre magenta.</span>
+      </div>
+      <div class="card">
+        <div class="hp-lockup keyline-oro"><img class="hp-logo" src="img/logo-hapee.png" alt="Hapee"><span class="hp-div"></span><span class="hp-tier">PARTNER</span><span class="hp-chip elite">ELITE</span></div>
+        <b class="bt">Tier 3 · Partner Elite</b>
+        <span class="pie">Contorno dorado y chip ELITE en <span class="mono">#F5BE4F</span>.</span>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>La forma es parte de la marca.</b> El badge lleva esquinas asimétricas
+      (<span class="mono">24px 5px 24px 5px</span>): redondeadas arriba-izquierda y abajo-derecha,
+      casi rectas en las otras dos. No es un detalle decorativo — es lo que lo hace reconocible de
+      lejos y lo que un badge falso no acierta.
+    </div>
+
+    <div class="rr">
+      <div class="si">
+        <h4>Sí</h4>
+        <ul>
+          <li>Se entrega en SVG, PNG y Lottie animado</li>
+          <li>Cada partner usa solo el badge de su tier vigente</li>
+          <li>Sobre fondo claro u oscuro, sin caja detrás</li>
+          <li>Hay verificador público: solo aparecen los partners activos</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>No</h4>
+        <ul>
+          <li>Rehacerlo a mano: se nota en las esquinas y en el degradado</li>
+          <li>Usar el badge Elite sin serlo — hay verificación antifraude</li>
+          <li>Cambiarle el color al chip o el dorado del contorno</li>
+          <li>Seguir usándolo si la cuenta de partner dejó de estar activa</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:34px 0 14px">Relación con Grupo Digitals</h3>
+    <div class="grid2">
+      <div class="card" style="display:grid;place-items:center;background:#141414;min-height:150px">
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals" style="max-width:200px;width:60%">
+      </div>
+      <div class="card">
+        <p style="font-size:.92rem">Hapee es la plataforma; <b>Grupo Digitals</b> es la agencia que la
+           pone a producir. En las piezas de Hapee, Digitals aparece como respaldo al pie
+           («Powered by»), en tamaño menor que el logo de Hapee.</p>
+        <p class="pie" style="margin-top:12px">Nunca los dos logos al mismo tamaño ni uno encima del
+           otro: quien firma la pieza es Hapee.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLOR ──────────────────────────────────────────────────── -->
+<section id="color">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">05</span>
+      <h2>Color</h2>
+      <p>El naranja manda y el magenta acompaña. Siempre en degradado cuando es superficie,
+         nunca dos naranjas distintos en la misma pieza.</p>
+    </div>
+
+    <div class="grid3" style="margin-bottom:26px">
+      <div class="sw">
+        <div class="chip" style="background:#FA5000">#FA5000</div>
+        <div class="meta"><b>Naranja Hapee</b>
+          <span>El color de la marca. Botones, acentos, la palabra destacada del titular.</span>
+          <span class="ratio no">3.38:1 sobre blanco · solo texto grande</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#CD2349">#CD2349</div>
+        <div class="meta"><b>Magenta Hapee</b>
+          <span>Cierra el degradado. No se usa solo como color plano de marca.</span>
+          <span class="ratio ok">5.34:1 sobre blanco · apto</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#D44400">#D44400</div>
+        <div class="meta"><b>Naranja legible</b>
+          <span>Mismo tono, más oscuro. Para texto pequeño y enlaces sobre blanco.</span>
+          <span class="ratio ok">4.54:1 sobre blanco · apto</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:linear-gradient(135deg,#FA5000,#CD2349)">135°</div>
+        <div class="meta"><b>Degradado de marca</b>
+          <span><span class="mono">linear-gradient(135deg,#FA5000,#CD2349)</span></span>
+          <span>Botones primarios, números grandes, superficies de cierre.</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#1a1a1a">#1a1a1a</div>
+        <div class="meta"><b>Titulares</b>
+          <span>Negro de la marca, nunca #000 puro.</span>
+          <span class="ratio ok">17.40:1 sobre blanco</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#4a4a4a">#4a4a4a</div>
+        <div class="meta"><b>Texto corrido</b>
+          <span>Todo el cuerpo de texto.</span>
+          <span class="ratio ok">8.86:1 sobre blanco</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#F5F3F0;color:#1a1a1a">#F5F3F0</div>
+        <div class="meta"><b>Fondo alterno</b>
+          <span>Separa secciones sin usar bordes. El beige de la marca, no un gris.</span></div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#080808">#080808</div>
+        <div class="meta"><b>Fondo oscuro</b>
+          <span>Modo oscuro y secciones de cierre. El sitio abre siempre en claro.</span></div>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>Dos cosas medidas, no opinadas.</b> El naranja de marca sobre blanco da <b>3.38:1</b>:
+      alcanza para texto grande y para botones, pero <b>no para texto pequeño ni enlaces</b> —
+      ahí va <span class="mono">#D44400</span>, que es el mismo tono y llega a 4.54:1.
+      Y el gris secundario <span class="mono">#777e8f</span> se queda en <b>4.07:1</b>, bajo el
+      mínimo: para texto de apoyo conviene <span class="mono">#5F6675</span>.
+    </div>
+
+    <div class="rr">
+      <div class="si">
+        <h4>Sí</h4>
+        <ul>
+          <li>Degradado 135° para superficies de color</li>
+          <li>Naranja plano para íconos y detalles</li>
+          <li>Sobre fondo oscuro, botones secundarios con borde blanco</li>
+          <li>Fondos alternos beige para separar secciones</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>No</h4>
+        <ul>
+          <li>Texto naranja pequeño sobre blanco</li>
+          <li>Negro puro #000 en titulares</li>
+          <li>Heredar colores del tema claro en secciones oscuras</li>
+          <li>Añadir un tercer color de acento a la paleta</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPONENTES ────────────────────────────────────────────── -->
+<section id="componentes">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">06</span>
+      <h2>Componentes</h2>
+      <p>Bordes muy redondeados, sombras suaves y transiciones de 0.3s. Nada cuadrado, nada duro.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3 style="margin-bottom:16px">Botones</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+          <a class="btn bs">Ver Planes</a>
+          <a class="btn bo">Agendar Demo</a>
+        </div>
+        <div class="sobre-oscuro">
+          <a class="btn bs">Ver Planes</a>
+          <a class="btn bo">Agendar Demo</a>
+        </div>
+        <p style="font-size:.84rem;color:var(--text-2);margin-top:14px">
+          Sobre fondo oscuro el secundario cambia a borde y texto blancos. Si hereda el color del
+          tema claro queda invisible — pasó y hubo que corregirlo.</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:16px">Radios y sombras</h3>
+        <div class="tsc">
+          <div><span class="lbl">Botones y chips</span><span class="ej mono">100px · pastilla</span></div>
+          <div><span class="lbl">Tarjetas</span><span class="ej mono">20–24px</span></div>
+          <div><span class="lbl">Elementos internos</span><span class="ej mono">12–16px</span></div>
+          <div><span class="lbl">Sombra suave</span><span class="ej mono">0 2px 12px rgba(0,0,0,.07)</span></div>
+          <div><span class="lbl">Sombra media</span><span class="ej mono">0 8px 32px rgba(0,0,0,.10)</span></div>
+          <div><span class="lbl">Transición</span><span class="ej mono">.3s cubic-bezier(.4,0,.2,1)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>El movimiento es discreto.</b> Al pasar el cursor, las tarjetas suben 2px y las sombras
+      crecen. Nada rebota, nada gira. La animación confirma que algo es interactivo; no es el
+      espectáculo.
+    </div>
+  </div>
+</section>
+
+<!-- ── VOZ ────────────────────────────────────────────────────── -->
+<section id="voz">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">07</span>
+      <h2>Cómo escribimos</h2>
+      <p>Hapee le habla a alguien que dirige un negocio y no tiene tiempo. Frases cortas,
+         cifras concretas y cero jerga de agencia.</p>
+    </div>
+
+    <div class="rr">
+      <div class="si">
+        <h4>Así sí</h4>
+        <ul>
+          <li>«Cada lunes recibes una lectura de tus competidores»</li>
+          <li>«Son las 19:40 y el bot dejó de responder»</li>
+          <li>«Con 300 leads y 12 horas de demora: US$25.886 al mes sobre la mesa»</li>
+          <li>Nombrar al competidor con respeto y dejar que el contraste hable</li>
+        </ul>
+      </div>
+      <div class="no2">
+        <h4>Así no</h4>
+        <ul>
+          <li>«Solución integral de última generación»</li>
+          <li>«Revolucionamos el paradigma de la conversión»</li>
+          <li>«Mejora significativamente tus resultados» — ¿cuánto?</li>
+          <li>Descalificar a la competencia: baja la marca, no al otro</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nota">
+      <b>La regla que resume todo:</b> si una frase se puede decir de una empresa cualquiera,
+      no sirve. Cámbiala por un número, una hora del día o una situación que el cliente reconozca.
+    </div>
+  </div>
+</section>
+
+<!-- ── TOKENS ─────────────────────────────────────────────────── -->
+<section id="tokens">
+  <div class="ctn">
+    <div class="sh">
+      <span class="n">08</span>
+      <h2>Para copiar y pegar</h2>
+      <p>Estos son los valores exactos que usa el sitio. Pegar este bloque deja cualquier página
+         nueva alineada con la marca.</p>
+    </div>
+
+<pre>:root{
+  <span class="c">/* color */</span>
+  --accent:#FA5000;          <span class="c">/* naranja de marca */</span>
+  --accent-alt:#CD2349;      <span class="c">/* cierre del degradado */</span>
+  --accent-legible:#D44400;  <span class="c">/* naranja para texto pequeño */</span>
+  --bg:#FFFFFF;
+  --bg-alt:#F5F3F0;          <span class="c">/* beige que separa secciones */</span>
+  --heading:#1a1a1a;
+  --text:#4a4a4a;
+  --text-2:#5F6675;          <span class="c">/* apoyo, ya legible */</span>
+  --card-bg:#FFFFFF;
+  --card-border:rgba(0,0,0,.09);
+
+  <span class="c">/* tipografía */</span>
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fm:'JetBrains Mono',monospace;
+
+  <span class="c">/* forma */</span>
+  --pill:100px;
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow-md:0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.13);
+  --tr:.3s cubic-bezier(.4,0,.2,1);
+}
+
+<span class="c">/* la receta de titulares: el interlineado es lo que importa */</span>
+h1,h2{font-family:var(--fd);font-weight:800;line-height:.95;letter-spacing:-.025em}
+h3,h4{font-family:var(--fd);font-weight:800;line-height:1.15;letter-spacing:-.015em}
+body {font-family:var(--fd);font-weight:400;line-height:1.65}</pre>
+
+    <div class="nota">
+      <b>Una advertencia que costó cara.</b> Plus Jakarta Sans se carga desde Google Fonts, y hay
+      navegadores con bloqueadores de privacidad que bloquean ese dominio: ahí la página cae a la
+      fuente del sistema y se ve distinta. Si una pieza tiene que verse igual sí o sí, hay que
+      alojar la fuente en el propio servidor. Y si se aloja: <b>verificar que el archivo llegue
+      de verdad</b> — un servidor que devuelve la portada en HTML con estado 200 hace creer que
+      la fuente cargó cuando no existe.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ctn">
+    Manual de marca de Hapee · versión 1 · agosto 2026<br>
+    Los valores de esta página son los mismos que usa hapee.ai. Si cambia el sitio, cambia esto.
+  </div>
+</footer>
+
+<script>
+// tema: claro por defecto, siempre; solo se recuerda si el usuario lo cambia
+(function(){
+  var g=localStorage.getItem('tema-marca');
+  if(g==='dark') document.documentElement.classList.add('dark');
+  document.getElementById('tog').addEventListener('click',function(){
+    var d=document.documentElement.classList.toggle('dark');
+    localStorage.setItem('tema-marca', d?'dark':'light');
+  });
+})();
+</script>
+</body>
+</html>

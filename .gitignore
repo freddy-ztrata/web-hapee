@@ -1,1 +1,6 @@
 .DS_Store
+
+# Fuentes internas que NO van al sitio público: la página marca.html es el
+# entregable; el PDF original es material de trabajo y quedaría descargable
+# en una URL adivinable.
+Manual-de-Marca-Hapee.pdf
