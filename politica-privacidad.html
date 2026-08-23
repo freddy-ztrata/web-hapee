@@ -59,7 +59,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <main class="lg">
 
 <h1>Política de Privacidad</h1>
-<p class="updated">Última actualización: 19 de agosto de 2026</p>
+<p class="updated">Última actualización: 22 de agosto de 2026</p>
 
 <p>Esta política describe cómo <strong>WM Digital SpA</strong> y su filial <strong>WM Digital, LLC</strong> (en adelante, "Hapee", "nosotros" o "la plataforma") recopila, utiliza, almacena y protege los datos personales de los usuarios que acceden a la plataforma a través del sitio web <a href="https://hapee.ai">hapee.ai</a>, la aplicación móvil para iOS, la aplicación móvil para Android y la aplicación de escritorio para Windows y macOS.</p>
 <p>Al usar cualquiera de estos canales, aceptas las prácticas descritas en este documento. Si no estás de acuerdo, te pedimos que no utilices la plataforma.</p>
@@ -151,17 +151,24 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li><strong>Amazon Web Services (AWS)</strong> — alojamiento de servidores y base de datos</li>
   <li><strong>Anthropic</strong> — modelos Claude para asistente de IA, generación de contenido y agentes conversacionales. No se almacenan datos personales identificables en sus sistemas más allá del tiempo necesario para procesar la respuesta</li>
   <li><strong>OpenAI</strong> — modelos GPT para los agentes conversacionales, cuando el cliente elige uno de esos modelos en el editor de agentes, y para la indexación de la base de conocimiento. Rigen las mismas condiciones que en el punto anterior: no se usan tus datos para entrenar modelos</li>
+  <li><strong>Voyage AI</strong> — cálculo de representaciones vectoriales (<em>embeddings</em>) de los documentos que cargués en la base de conocimiento de un agente, para poder buscar en ellos. Misma condición: no se usan para entrenar modelos</li>
   <li><strong>Mailgun</strong> — envío de correos electrónicos transaccionales y de marketing</li>
-  <li><strong>Resend</strong> — envío de correo en los dominios conectados antes de la migración a Mailgun</li>
+  <li><strong>Microsoft Corporation</strong> — sincronización de correo (Outlook / Microsoft 365) y de calendario, únicamente cuando vos conectás tu cuenta mediante OAuth. Con tu autorización accedemos al contenido de los mensajes para mostrarlos en la bandeja de Hapee y para enviar desde tu propia dirección, y a tu calendario para leer y crear eventos. Podés revocar el acceso en cualquier momento desde Hapee o desde tu cuenta de Microsoft</li>
   <li><strong>Stripe</strong> — procesamiento de pagos (suscripciones y compras dentro de formularios)</li>
   <li><strong>Twilio</strong> — envío y recepción de SMS y llamadas de voz</li>
   <li><strong>Deepgram</strong> — conversión de voz a texto en las llamadas de los agentes de IA y en las notas de voz que recibís por WhatsApp</li>
+  <li><strong>Groq</strong> — conversión de voz a texto (modelo Whisper) para las notas de voz, como alternativa a Deepgram. El audio se envía solo para transcribirlo y no se conserva en sus sistemas más allá de ese procesamiento</li>
   <li><strong>ElevenLabs</strong> — síntesis de voz para agentes de IA y asistente de voz</li>
   <li><strong>Meta (Facebook), Google y plataformas publicitarias</strong> — solo cuando vos conectás esas cuentas mediante OAuth para extraer métricas publicitarias</li>
   <li><strong>Meta Platforms (WhatsApp Business Platform)</strong> — envío y recepción de mensajes de WhatsApp cuando conectás un número de WhatsApp Business a Hapee (ver sección 6)</li>
+  <li><strong>HighLevel Inc. (GoHighLevel)</strong> — puente de mensajería para WhatsApp, Messenger e Instagram, activo solo en las subcuentas donde está habilitado expresamente. Cuando lo está, el contenido de esos mensajes atraviesa la infraestructura de HighLevel para llegar a Hapee y viceversa. Es una vía provisional mientras se completan las habilitaciones directas con Meta</li>
   <li><strong>Google Firebase</strong> — autenticación social (Google, Apple) y notificaciones push (FCM) en aplicaciones móviles</li>
   <li><strong>Apple Inc.</strong> — Sign in with Apple en aplicación iOS</li>
+  <li><strong>Zoom Video Communications</strong> — creación y lectura de reuniones, únicamente cuando conectás tu cuenta de Zoom para que las citas agendadas en Hapee generen su enlace de reunión</li>
+  <li><strong>Google reCAPTCHA, Cloudflare Turnstile y hCaptcha</strong> — protección contra envíos automáticos en los formularios públicos, según el proveedor que el cliente elija para cada formulario. Reciben la dirección IP y señales del navegador de quien completa el formulario, con el único fin de distinguir a una persona de un programa automático</li>
+  <li><strong>Honeycomb</strong> — diagnóstico técnico del motor de automatizaciones (trazas de ejecución), solo si esa función está habilitada en la instalación. Las trazas registran qué paso se ejecutó y cuánto tardó, no el contenido de los mensajes</li>
 </ul>
+<p>Además, algunas páginas cargan tipografías y librerías de código abierto desde redes de distribución de contenido (<strong>Google Fonts</strong>, <strong>jsDelivr</strong> y <strong>cdnjs</strong>). Por el solo hecho de servir un archivo, esos servicios reciben la dirección IP del navegador que lo pide. No procesan datos por cuenta nuestra ni reciben ningún dato de tu cuenta, y por eso no figuran como encargados; lo dejamos dicho porque son conexiones que tu navegador realiza.</p>
 <p>No vendemos, alquilamos ni intercambiamos datos personales con terceros con fines publicitarios.</p>
 
 <h2>5. Integración con LinkedIn (Community Management API)</h2>
@@ -254,7 +261,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>6.4 Cumplimiento con las políticas de Meta</h3>
 <p>Los datos de WhatsApp se intercambian con <strong>Meta Platforms, Inc.</strong>, proveedor de la WhatsApp Business Platform, para el envío y recepción de mensajes. Cumplimos con las <a href="https://www.whatsapp.com/legal/business-policy" target="_blank" rel="noopener noreferrer">Políticas de la Plataforma de WhatsApp Business</a> y no vendemos ni usamos estos datos con fines publicitarios.</p>
 
-<h2>7. Integración con Google (Gmail y Google Calendar)</h2>
+<h2>7. Integración con tu casilla de correo y calendario (Google y Microsoft)</h2>
 <p>Cuando conectás tu cuenta de Google a Hapee, procesamos —en tu nombre— los datos necesarios para que puedas responder correos y gestionar reuniones desde la plataforma. Esta integración es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y podés revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Google</a>.</p>
 
 <h3>7.1 Permisos que solicitamos y para qué</h3>
@@ -282,6 +289,17 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 
 <h3>7.4 Almacenamiento, retención y eliminación</h3>
 <p>Los tokens de acceso se guardan cifrados y se usan solo para las llamadas descritas. Los correos que se muestran en una conversación se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Al desconectar la cuenta desde tu perfil, revocamos el token y dejamos de acceder a tu casilla. Podés solicitar la eliminación de los datos ya almacenados escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
+
+<h3>7.5 Integración con Microsoft (Outlook y Microsoft 365)</h3>
+<p>La conexión con Microsoft funciona igual que la de Google y con las mismas garantías: es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y podés revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.microsoft.com/" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Microsoft</a>. Los permisos que solicitamos son <strong>delegados</strong> —actuamos siempre en tu nombre y con tu autorización, nunca sobre la organización completa—:</p>
+<ul>
+  <li><strong><code>Mail.Send</code></strong> — enviar correos desde tu casilla cuando respondés a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a vos.</li>
+  <li><strong><code>Mail.Read</code></strong> — leer los correos de tu casilla para mostrar las respuestas de tus contactos dentro de la conversación en Hapee. Sin este permiso las respuestas quedarían solo en Outlook y el historial de la conversación estaría incompleto.</li>
+  <li><strong><code>Calendars.ReadWrite</code></strong> — crear, actualizar y cancelar en tu calendario las citas agendadas desde Hapee, y leer tu disponibilidad para no ofrecer horarios ocupados. Cuando marcás una cita como reunión en línea, este mismo permiso genera el enlace de Microsoft Teams.</li>
+  <li><strong><code>User.Read</code></strong> — identificar la cuenta que se conectó y mostrar desde qué dirección se envían los correos.</li>
+  <li><strong><code>offline_access</code></strong> — mantener la conexión activa sin pedirte que inicies sesión en cada sincronización.</li>
+</ul>
+<p><strong>No solicitamos permisos de administrador</strong> ni acceso a los datos de otras personas de tu organización. Todo lo que declaran los apartados 7.2, 7.3 y 7.4 —uso limitado, procesamiento por IA opcional, almacenamiento cifrado, retención y eliminación— aplica de la misma forma a los datos que recibimos de Microsoft: no los usamos para publicidad ni para entrenar modelos, y ninguna persona lee tus correos salvo en los casos allí enumerados.</p>
 
 <h2>8. Aplicaciones móviles (iOS y Android)</h2>
 <p>La aplicación móvil de Hapee es una experiencia integrada que carga la plataforma web dentro de un contenedor nativo. Usa los siguientes permisos del sistema operativo, cuando los autorizas:</p>
@@ -324,7 +342,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>Podemos actualizar esta política para reflejar cambios legales, operativos o funcionales. Cuando los cambios sean significativos, te notificaremos por correo electrónico o mediante un aviso destacado dentro de la plataforma. La fecha en la parte superior indica la última revisión.</p>
 
 <h2>14. Legislación aplicable</h2>
-<p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile y demás normativa aplicable. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p>
+<p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile, hoy vigente, y por la <strong>Ley 21.719</strong> sobre protección de datos personales, que la sustituye y entra en plena vigencia en <strong>diciembre de 2026</strong>. Desde esa fecha, y respecto de los datos que nuestros clientes nos encomiendan, Hapee actúa como <strong>encargado de tratamiento</strong> y el cliente como responsable. Aplica además la demás normativa chilena pertinente. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p>
 
 <h2>15. Contacto</h2>
 <p>Para cualquier consulta o reclamo relacionado con tu privacidad, podés escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p>
