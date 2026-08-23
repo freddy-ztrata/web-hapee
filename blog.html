@@ -437,6 +437,27 @@ html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transpare
 .theme-rrss .wa{top:50%;right:-17px;transform:translateY(-50%);background:#25D366;color:#fff}
 .theme-rrss .tk{bottom:-17px;left:50%;transform:translateX(-50%);background:#000;color:#fff}
 
+/* THEME: VÍA BY HAPEE · METRO — hito full-width, oscuro con línea de red */
+.art-via{grid-column:1/-1}
+.art-via .art-art{min-height:300px}
+.art-via h4{font-size:clamp(1.6rem,2.8vw,2.2rem);max-width:36ch}
+.art-via .art-exc{max-width:78ch}
+.theme-via{background:#070505;position:relative}
+.theme-via::before{content:'';position:absolute;inset:0;z-index:0;background:
+  radial-gradient(60% 48% at 82% 8%,rgba(250,80,0,.30),transparent 60%),
+  radial-gradient(52% 46% at 6% 88%,rgba(205,35,73,.24),transparent 60%)}
+.theme-via .via-word{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;width:100%;padding:0 20px;pointer-events:none}
+.theme-via .via-word .w{font-family:var(--fd);font-weight:800;font-size:clamp(2.6rem,6vw,4.4rem);line-height:.95;letter-spacing:-.03em;color:#fff}
+.theme-via .via-word .w em{font-style:normal;background:linear-gradient(92deg,#FA5000,#E8457C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.theme-via .via-word .s{display:block;font-family:var(--fm);font-size:clamp(.52rem,1.1vw,.7rem);letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:12px;font-weight:700}
+.theme-via .via-track{position:absolute;left:7%;right:7%;bottom:19%;height:3px;border-radius:3px;z-index:2;background:linear-gradient(90deg,#FA5000,#E8457C);box-shadow:0 0 18px rgba(250,80,0,.55)}
+.theme-via .via-st{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:#FA5000;border:3px solid #fff}
+.theme-via .via-st.now{width:15px;height:15px;background:#fff;border-color:#FA5000;box-shadow:0 0 0 0 rgba(250,80,0,.6);animation:viaPulse 1.6s ease-out infinite}
+.theme-via .via-st.next{background:#0a0a0a;border-color:rgba(255,255,255,.55)}
+@keyframes viaPulse{to{box-shadow:0 0 0 15px rgba(250,80,0,0)}}
+@media(prefers-reduced-motion:reduce){.theme-via .via-st.now{animation:none}}
+@media(max-width:768px){.art-via .art-art{min-height:260px}.art-via h4{font-size:1.55rem}.art-via .glyph.tr,.art-via .glyph.br{display:none}}
+
 /* ===== MODAL ===== */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:flex-start;justify-content:center;padding:80px 24px 24px;overflow-y:auto;backdrop-filter:blur(8px)}
 .modal-bg.open{display:flex}
@@ -704,6 +725,32 @@ body.modal-open{overflow:hidden}
       <span class="count">06 ARTÍCULOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
+      <article class="art art-via" data-art="via" data-pub="2026-08-23" data-cat="eventos">
+        <div class="art-art theme-via">
+          <span class="glyph tl">N°12 / Noticias</span>
+          <span class="glyph tr">Metro de Santiago · Demo Day 2026</span>
+          <div class="via-word">
+            <div class="w">Vía <em>by Hapee</em></div>
+            <span class="s">Asistente de viaje con IA · para el pasajero del Metro</span>
+          </div>
+          <div class="via-track" aria-hidden="true">
+            <span class="via-st" style="left:0%"></span>
+            <span class="via-st" style="left:25%"></span>
+            <span class="via-st" style="left:50%"></span>
+            <span class="via-st now" style="left:75%"></span>
+            <span class="via-st next" style="left:100%"></span>
+          </div>
+          <span class="glyph bl">Avanzamos de fase</span>
+          <span class="glyph br">Próxima estación: IA oficial</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Noticias · Vía by Hapee</div>
+          <h4>Vía by Hapee avanza de fase: vamos por ser la IA del Metro de Santiago</h4>
+          <p class="art-exc">Presentamos Vía —nuestro asistente de viaje con IA para el pasajero— al Demo Day 2026 de Metro, "Transformando la red que mueve la ciudad". El proyecto avanzó de fase y pronto estaremos concursando para convertirnos en la IA oficial de la red.</p>
+          <div class="art-meta">23 Ago 2026 · Noticias · 4 min</div>
+        </div>
+      </article>
+
       <article class="art art-1" data-art="radar" data-pub="2026-08-05" data-cat="producto">
         <div class="art-art theme-voice">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-radar-post.jpg" alt="">
@@ -1128,7 +1175,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   })();
 
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
+  const POST_URLS={via:'/blog/via-by-hapee-metro.html',radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
