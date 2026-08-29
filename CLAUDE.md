@@ -77,7 +77,7 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 
 ## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)
 
-- 3 plans: **STARTER $197/mo**, **PRO $297/mo** (badge "El más elegido", animated beam border), **ELITE SETUP $2,990 one-time**.
+- 3 plans: **STARTER $297/mo**, **PRO $397/mo** (badge "El más elegido", animated beam border), **ELITE SETUP $2,990 one-time**.
 - Starter: 2 usuarios y 2.000 contactos; incluye módulos de Email Marketing, **Licitaciones (Mercado Público)** y **Academia**. Pro: usuarios y contactos ilimitados; Licitaciones amplía a **Mercado Público y Entidades privadas**.
 - **No free trial.** Never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant.
 - **No money-back guarantee.** Never write "garantía de devolución", "30 días de garantía", "reembolso completo", or promise refunds. Payments are non-refundable per `terminos.html` section 5.
