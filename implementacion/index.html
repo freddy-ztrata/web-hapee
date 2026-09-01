@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avance de implementación · Hapee</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Tablero interno de avance de implementación por cliente.">
+<link rel="icon" href="../img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#FA5000; --accent-alt:#CD2349;
+  --bg:#FFFFFF; --bg-alt:#F5F3F0; --bg-alt2:#F8FAFC;
+  --text:#4a4a4a; --text-2:#777e8f; --heading:#1a1a1a;
+  --dark:#0a0e1a; --linea:#E6E2DC;
+  --ok:#1B8A5A; --pend:#C9A227; --nada:#B9B3AC;
+  --fd:'Plus Jakarta Sans',-apple-system,system-ui,sans-serif;
+  --fm:'JetBrains Mono',ui-monospace,monospace;
+  --pill:100px; --tr:.25s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg-alt);color:var(--text);font-family:var(--fd);line-height:1.55;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+button,input,textarea,select{font:inherit;color:inherit}
+.mono{font-family:var(--fm)}
+.lbl{font-family:var(--fm);font-size:10.5px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase}
+
+/* ── cabecera ── */
+.hd{background:var(--dark);color:#fff;position:sticky;top:0;z-index:30}
+.hd-in{max-width:1500px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.hd-in img{height:30px;width:auto}
+.hd-t{font-weight:800;letter-spacing:-.02em;font-size:1.05rem}
+.hd-t span{display:block;font-family:var(--fm);font-size:10px;letter-spacing:1.4px;
+  text-transform:uppercase;color:#9aa0ad;font-weight:400;margin-top:2px}
+.hd-glob{margin-left:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hd-glob .cifra{font-family:var(--fm);font-weight:700;font-size:1.5rem;line-height:1}
+.hd-glob .cifra small{font-size:.8rem;color:#9aa0ad;font-weight:400}
+.barra{width:190px;height:7px;border-radius:var(--pill);background:rgba(255,255,255,.16);overflow:hidden}
+.barra i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-alt));
+  border-radius:var(--pill);transition:width .5s var(--tr)}
+.hd-btn{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:var(--pill);
+  padding:.42rem .9rem;font-size:.8rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.hd-btn:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+/* ── layout ── */
+.wrap{max-width:1500px;margin:0 auto;padding:22px;display:grid;gap:20px}
+@media(min-width:1000px){.wrap{grid-template-columns:330px 1fr;align-items:start}}
+
+/* ── panel de clientes ── */
+.panel{background:var(--bg);border:1px solid var(--linea);border-radius:16px;overflow:hidden}
+.panel-h{padding:14px 16px;border-bottom:1px solid var(--linea)}
+.panel-h h2{font-size:.95rem;font-weight:800;color:var(--heading);letter-spacing:-.01em}
+.buscar{margin-top:10px;width:100%;border:1px solid var(--linea);border-radius:10px;
+  padding:.5rem .75rem;background:var(--bg-alt2);font-size:.88rem}
+.buscar:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.filtros{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.filtros button{border:1px solid var(--linea);background:transparent;border-radius:var(--pill);
+  padding:.3rem .7rem;font-size:.74rem;font-weight:600;cursor:pointer;color:var(--text-2)}
+.filtros button[aria-pressed="true"]{background:var(--heading);border-color:var(--heading);color:#fff}
+.lista{max-height:min(66vh,700px);overflow-y:auto}
+.cli{width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--linea);
+  padding:11px 16px;cursor:pointer;display:grid;gap:6px;transition:var(--tr)}
+.cli:hover{background:var(--bg-alt2)}
+.cli[aria-current="true"]{background:#FFF4EE;box-shadow:inset 3px 0 0 var(--accent)}
+.cli-top{display:flex;align-items:baseline;gap:8px}
+.cli-n{font-weight:700;font-size:.88rem;color:var(--heading);flex:1;line-height:1.25}
+.cli-p{font-family:var(--fm);font-size:.72rem;font-weight:700;color:var(--text-2)}
+.cli-b{height:5px;border-radius:var(--pill);background:var(--bg-alt);overflow:hidden}
+.cli-b i{display:block;height:100%;border-radius:var(--pill);background:var(--accent);transition:width .4s var(--tr)}
+.cli-meta{display:flex;gap:8px;align-items:center;font-size:.72rem;color:var(--text-2)}
+.chip{font-family:var(--fm);font-size:.64rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  border-radius:var(--pill);padding:.14rem .5rem;border:1px solid var(--linea)}
+.chip.trial{color:#9A6A00;border-color:#E8D9A8;background:#FFF9E8}
+.chip.proy{color:#2E5AAC;border-color:#CBD9F2;background:#EFF4FF}
+
+/* ── detalle ── */
+.det{display:grid;gap:16px}
+.det-h{background:var(--bg);border:1px solid var(--linea);border-radius:16px;padding:20px 22px}
+.det-h h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:-.03em;color:var(--heading);line-height:1.1}
+.det-sub{margin-top:8px;display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--text-2)}
+.det-prog{margin-top:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.det-prog .barra{flex:1;min-width:180px;background:var(--bg-alt);height:9px}
+.det-prog .n{font-family:var(--fm);font-weight:700;font-size:1.3rem;color:var(--heading)}
+
+.hito{background:var(--bg);border:1px solid var(--linea);border-radius:16px;overflow:hidden}
+.hito-h{padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;
+  border-bottom:1px solid transparent;transition:var(--tr)}
+.hito-h:hover{background:var(--bg-alt2)}
+.hito[open] .hito-h{border-bottom-color:var(--linea)}
+.hito-n{font-weight:800;color:var(--heading);font-size:.98rem;flex:1;letter-spacing:-.01em}
+.hito-n small{display:block;font-weight:400;font-size:.78rem;color:var(--text-2);margin-top:2px;letter-spacing:0}
+.estado{font-family:var(--fm);font-size:.7rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  border-radius:var(--pill);padding:.2rem .6rem;white-space:nowrap}
+.estado.ok{color:#0E6B44;background:#E4F5EC}
+.estado.curso{color:#8A6D00;background:#FBF2D6}
+.estado.no{color:#6B6560;background:var(--bg-alt)}
+.estado.na{color:#8A8A8A;background:#F0F0F0}
+.hito-b{width:64px;height:6px;border-radius:var(--pill);background:var(--bg-alt);overflow:hidden;flex:0 0 auto}
+.hito-b i{display:block;height:100%;background:var(--ok);border-radius:var(--pill);transition:width .4s var(--tr)}
+.hito-c{padding:6px 18px 16px}
+.tarea{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--bg-alt)}
+.tarea:last-child{border-bottom:0}
+.tarea input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);cursor:pointer;flex:0 0 auto}
+.tarea label{cursor:pointer;font-size:.9rem;line-height:1.45}
+.tarea label b{color:var(--heading);font-weight:600}
+.tarea label span{display:block;color:var(--text-2);font-size:.8rem;margin-top:1px}
+.tarea input:checked+label b{color:var(--text-2);text-decoration:line-through;text-decoration-color:var(--nada)}
+.hito-na{padding:0 18px 16px;font-size:.84rem;color:var(--text-2)}
+
+.notas{background:var(--bg);border:1px solid var(--linea);border-radius:16px;padding:18px}
+.notas h3{font-size:.95rem;font-weight:800;color:var(--heading);margin-bottom:4px}
+.notas p.ayuda{font-size:.8rem;color:var(--text-2);margin-bottom:10px}
+.notas textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--linea);border-radius:12px;
+  padding:12px 14px;background:var(--bg-alt2);font-size:.9rem;line-height:1.6}
+.notas textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.notas .pie{margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font-size:.75rem;color:var(--text-2)}
+
+.aviso{background:#FFF9E8;border:1px solid #E8D9A8;border-radius:12px;padding:12px 15px;
+  font-size:.83rem;color:#6B5400}
+.aviso b{color:#4A3A00}
+footer{max-width:1500px;margin:0 auto;padding:8px 22px 40px;font-size:.76rem;color:var(--text-2);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.vacio{padding:40px 22px;text-align:center;color:var(--text-2);font-size:.9rem}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <img src="../img/logo-hapee.png" alt="Hapee">
+    <div class="hd-t">Avance de implementación<span>Tablero interno · uso del equipo</span></div>
+    <div class="hd-glob">
+      <div><span class="cifra" id="gPct">0%</span> <small id="gDet">—</small></div>
+      <div class="barra"><i id="gBar" style="width:0%"></i></div>
+      <button class="hd-btn" id="btnExp" type="button">Exportar</button>
+      <button class="hd-btn" id="btnImp" type="button">Importar</button>
+      <input type="file" id="fileImp" accept="application/json" hidden>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="panel">
+    <div class="panel-h">
+      <h2>Clientes <span class="lbl" style="color:var(--text-2)" id="nClientes"></span></h2>
+      <input class="buscar" id="buscar" type="search" placeholder="Buscar cliente…" aria-label="Buscar cliente">
+      <div class="filtros" role="group" aria-label="Filtrar por avance">
+        <button type="button" data-f="todos" aria-pressed="true">Todos</button>
+        <button type="button" data-f="sin" aria-pressed="false">Sin partir</button>
+        <button type="button" data-f="curso" aria-pressed="false">En curso</button>
+        <button type="button" data-f="listo" aria-pressed="false">Completos</button>
+      </div>
+    </div>
+    <div class="lista" id="lista"></div>
+  </aside>
+
+  <main class="det" id="det"></main>
+</div>
+
+<footer>
+  <span>Hapee · tablero interno. No indexado.</span>
+  <span id="guardado">—</span>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Clientes. El plan va como ALCANCE (qué módulos aplican), no como dato
+  //    comercial: acá no hay pagos, MRR ni consumo a propósito.
+  var CLIENTES = [
+    {id:'bortex',      n:'Bortex Chile',                   plan:'pro'},
+    {id:'brainworks',  n:'BrainWorks Center',              plan:'starter'},
+    {id:'trico',       n:'Clínica Trico Solutions',        plan:'free'},
+    {id:'spak',        n:'Confites Spak',                  plan:'pro'},
+    {id:'develon',     n:'DEVELON Minicargadores HD',      plan:'proyecto'},
+    {id:'marjav',      n:'Empresas MARJAV',                plan:'pro'},
+    {id:'salud',       n:'Escuela Salud & Consciencia',    plan:'pro', trial:true},
+    {id:'fantasia',    n:'Fantasía en Las Vegas',          plan:'free'},
+    {id:'fiebre',      n:'Fiebre Producciones',            plan:'pro'},
+    {id:'heli',        n:'HELIFORKLIFT Chile',             plan:'pro'},
+    {id:'mampato',     n:'Mampato',                        plan:'proyecto'},
+    {id:'matriz',      n:'Matriz Cognitiva SpA',           plan:'starter'},
+    {id:'mujerfaro',   n:'Mujerfaro',                      plan:'starter'},
+    {id:'nahuel',      n:'Nahuel Seguridad',               plan:'free'},
+    {id:'naturalfit',  n:'Natural Fit',                    plan:'starter'},
+    {id:'psicosalud',  n:'Psicosalud Integral SpA',        plan:'starter'},
+    {id:'rate',        n:'RATE8407156A3',                  plan:'starter'},
+    {id:'rmsafety',    n:'RM Safety',                      plan:'pro'},
+    {id:'seba',        n:'Sebafigueroads',                 plan:'free'},
+    {id:'urbanplaza',  n:'Urban Plaza SpA',                plan:'starter', trial:true},
+    {id:'ventus',      n:'Ventus Corredores de Seguros',   plan:'pro'}
+  ];
+
+  var PLAN_TXT = {free:'Free · Redes y Reportes', starter:'Starter', pro:'Pro', proyecto:'Proyecto'};
+
+  // ── Hitos. Cada uno mapea a módulos REALES de la plataforma
+  //    (MODULOS_SUBCUENTA_DEFAULTS en app/models/cliente.py).
+  //    "planes" dice a qué alcance aplica; fuera de eso sale como No aplica.
+  var HITOS = [
+    {
+      id:'wsp', n:'Agente de IA en WhatsApp',
+      mod:'whatsapp · ai_agents · conversations',
+      planes:['starter','pro','proyecto'],
+      tareas:[
+        ['num',  'Número de WhatsApp definido y verificado', 'El del cliente o uno nuevo. Queda escrito quién es el dueño de la línea.'],
+        ['canal','Canal conectado en la plataforma', 'Hoy pasa por el puente provisional mientras Meta aprueba los permisos propios.'],
+        ['agente','Agente creado con el prompt de la marca', 'Tono, qué responde y qué NO responde.'],
+        ['base', 'Base de conocimiento cargada', 'Servicios, precios si corresponde, preguntas frecuentes, horarios.'],
+        ['deriva','Derivación a humano configurada', 'Cuándo pasa a una persona y a quién le llega.'],
+        ['prueba','Probado con conversaciones reales', 'No con mensajes de prueba: casos que de verdad llegan.'],
+        ['vivo', 'En producción y atendiendo', '']
+      ]
+    },
+    {
+      id:'crm', n:'Contactos en el CRM',
+      mod:'crm · contactos · empresas',
+      planes:['starter','pro','proyecto'],
+      tareas:[
+        ['fuente','Fuente de datos identificada', 'Planilla, export del sistema anterior, agenda del vendedor.'],
+        ['limpio','Archivo normalizado', 'Columnas mapeadas, duplicados resueltos, teléfonos en formato válido.'],
+        ['carga', 'Importación cargada', ''],
+        ['campos','Campos personalizados mapeados', 'Lo que el cliente necesita ver y que no viene por defecto.'],
+        ['segmen','Etiquetas y segmentos creados', 'Para que la base sea usable, no solo una lista.'],
+        ['valida','Validado con el cliente', 'Que reconozca sus propios contactos en la plataforma.']
+      ]
+    },
+    {
+      id:'auto', n:'Automatizaciones básicas',
+      mod:'workflows · funnels · forms',
+      planes:['starter','pro','proyecto'],
+      tareas:[
+        ['form',  'Formulario de captación publicado', 'En la web del cliente o como landing propia.'],
+        ['bienv', 'Workflow de bienvenida', 'Qué le llega a alguien que entra por primera vez.'],
+        ['asigna','Asignación y aviso al equipo', 'A quién le cae el lead y por qué canal se entera.'],
+        ['segui', 'Recordatorio de seguimiento', 'El que evita que un lead se muera por olvido.'],
+        ['e2e',   'Probado de punta a punta', 'Un lead de prueba recorriendo todo el flujo.']
+      ]
+    },
+    {
+      id:'lici', n:'Módulo de licitaciones (Sniper Comercial)',
+      mod:'licitaciones',
+      planes:['pro','proyecto'],
+      tareas:[
+        ['perfil','Perfil del cliente completo', 'Industria, productos/servicios, público y diferenciador: de ahí sale el match.'],
+        ['linea', 'Línea de negocio en la config de agencia', 'Los keywords_hint son los que amplían lo que trae el feed.'],
+        ['feed',  'Feed ingestando licitaciones', ''],
+        ['afin',  'Afinidad revisada con el cliente', 'Que las que llegan le sirvan de verdad; si no, se ajustan keywords.'],
+        ['alerta','Seguimiento y alertas activos', '']
+      ]
+    },
+    {
+      id:'radar', n:'Radar de competencia',
+      mod:'radar',
+      planes:['pro','proyecto'],
+      tareas:[
+        ['comp',  'Competidores cargados', 'Entre 3 y 12, con sitio verificado y vigente.'],
+        ['grupo', 'Agrupados si hay más de un set', ''],
+        ['primer','Primer informe semanal generado', ''],
+        ['revis', 'Revisado con el cliente', 'Que los hallazgos le digan algo accionable.']
+      ]
+    },
+    {
+      id:'report', n:'Reportería y redes',
+      mod:'reporteria · grillo',
+      planes:['free','starter','pro','proyecto'],
+      tareas:[
+        ['cuentas','Cuentas conectadas', 'Meta, Google, lo que el cliente tenga activo.'],
+        ['panel',  'Panel armado con sus métricas', 'Las que al cliente le importan, no las que vienen por defecto.'],
+        ['grillo', 'Calendario de contenido en uso', ''],
+        ['entrega','Primera entrega hecha al cliente', '']
+      ]
+    },
+    {
+      id:'onb', n:'Puesta en marcha de la cuenta',
+      mod:'chat · academy · roadmap',
+      planes:['free','starter','pro','proyecto'],
+      tareas:[
+        ['acceso','Accesos entregados', 'Usuarios creados y con su rol correcto.'],
+        ['brief', 'Brief de onboarding completo', 'Alimenta el match de licitaciones y el tono del agente.'],
+        ['chat',  'Canal de chat con el cliente abierto', ''],
+        ['kick',  'Reunión de kickoff hecha', ''],
+        ['acad',  'Academia presentada al equipo del cliente', '']
+      ]
+    }
+  ];
+
+  var LS = 'hapee-impl-v1';
+  var estado = cargar();
+  var sel = CLIENTES[0].id;
+  var filtro = 'todos';
+
+  function cargar() {
+    try { return JSON.parse(localStorage.getItem(LS)) || {}; }
+    catch (e) { return {}; }
+  }
+  function guardar() {
+    try {
+      localStorage.setItem(LS, JSON.stringify(estado));
+      var d = new Date();
+      document.getElementById('guardado').textContent =
+        'Guardado ' + d.toLocaleDateString('es-CL') + ' ' + d.toLocaleTimeString('es-CL').slice(0, 5);
+    } catch (e) {
+      document.getElementById('guardado').textContent = 'No se pudo guardar en este navegador';
+    }
+  }
+  function est(cid) {
+    if (!estado[cid]) { estado[cid] = {t: {}, nota: ''}; }
+    if (!estado[cid].t) { estado[cid].t = {}; }
+    return estado[cid];
+  }
+  function aplica(h, cli) { return h.planes.indexOf(cli.plan) !== -1; }
+
+  function progreso(cli) {
+    var hechas = 0, total = 0;
+    var e = est(cli.id);
+    HITOS.forEach(function (h) {
+      if (!aplica(h, cli)) { return; }
+      h.tareas.forEach(function (t) {
+        total++;
+        if (e.t[h.id + '.' + t[0]]) { hechas++; }
+      });
+    });
+    return {hechas: hechas, total: total, pct: total ? Math.round(hechas / total * 100) : 0};
+  }
+  function progresoHito(cli, h) {
+    var e = est(cli.id), hechas = 0;
+    h.tareas.forEach(function (t) { if (e.t[h.id + '.' + t[0]]) { hechas++; } });
+    return {hechas: hechas, total: h.tareas.length,
+            pct: Math.round(hechas / h.tareas.length * 100)};
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // ── lista de clientes ──
+  function pintaLista() {
+    var q = (document.getElementById('buscar').value || '').toLowerCase().trim();
+    var cont = document.getElementById('lista');
+    var vis = CLIENTES.filter(function (c) {
+      if (q && c.n.toLowerCase().indexOf(q) === -1) { return false; }
+      var p = progreso(c).pct;
+      if (filtro === 'sin')   { return p === 0; }
+      if (filtro === 'curso') { return p > 0 && p < 100; }
+      if (filtro === 'listo') { return p === 100; }
+      return true;
+    });
+    document.getElementById('nClientes').textContent = vis.length + ' / ' + CLIENTES.length;
+    if (!vis.length) { cont.innerHTML = '<p class="vacio">Sin clientes que coincidan.</p>'; return; }
+    cont.innerHTML = vis.map(function (c) {
+      var p = progreso(c);
+      return '<button class="cli" type="button" data-id="' + c.id + '"' +
+        (c.id === sel ? ' aria-current="true"' : '') + '>' +
+        '<span class="cli-top"><span class="cli-n">' + esc(c.n) + '</span>' +
+        '<span class="cli-p">' + p.pct + '%</span></span>' +
+        '<span class="cli-b"><i style="width:' + p.pct + '%"></i></span>' +
+        '<span class="cli-meta">' + esc(PLAN_TXT[c.plan]) +
+        (c.trial ? ' <span class="chip trial">trial</span>' : '') +
+        (c.plan === 'proyecto' ? ' <span class="chip proy">proyecto</span>' : '') +
+        ' · ' + p.hechas + '/' + p.total + '</span></button>';
+    }).join('');
+  }
+
+  // ── detalle ──
+  function pintaDetalle() {
+    var cli = CLIENTES.filter(function (c) { return c.id === sel; })[0];
+    if (!cli) { return; }
+    var e = est(cli.id), p = progreso(cli);
+    var h = '<section class="det-h">' +
+      '<h1>' + esc(cli.n) + '</h1>' +
+      '<div class="det-sub"><span class="lbl">Alcance</span> ' + esc(PLAN_TXT[cli.plan]) +
+      (cli.trial ? ' <span class="chip trial">trial</span>' : '') +
+      (cli.plan === 'proyecto' ? ' <span class="chip proy">proyecto</span>' : '') + '</div>' +
+      '<div class="det-prog"><span class="n">' + p.pct + '%</span>' +
+      '<div class="barra"><i style="width:' + p.pct + '%"></i></div>' +
+      '<span class="lbl" style="color:var(--text-2)">' + p.hechas + ' de ' + p.total + ' tareas</span>' +
+      '</div></section>';
+
+    HITOS.forEach(function (hi) {
+      var na = !aplica(hi, cli);
+      var ph = progresoHito(cli, hi);
+      var cls = na ? 'na' : (ph.pct === 100 ? 'ok' : (ph.pct > 0 ? 'curso' : 'no'));
+      var txt = na ? 'No aplica' : (ph.pct === 100 ? 'Listo' : (ph.pct > 0 ? 'En curso' : 'Sin partir'));
+      // Abierto todo lo que aplica y no esta terminado: un cliente recien creado
+      // esta en 0% y con todo cerrado no se ve QUE falta, que es justo el punto
+      // del tablero. Lo ya completo se pliega para no hacer ruido.
+      h += '<details class="hito"' + (!na && ph.pct < 100 ? ' open' : '') + '>' +
+        '<summary class="hito-h">' +
+        '<span class="hito-n">' + esc(hi.n) + '<small class="mono">' + esc(hi.mod) + '</small></span>' +
+        (na ? '' : '<span class="hito-b"><i style="width:' + ph.pct + '%"></i></span>') +
+        '<span class="estado ' + cls + '">' + txt + (na ? '' : ' · ' + ph.hechas + '/' + ph.total) + '</span>' +
+        '</summary>';
+      if (na) {
+        h += '<p class="hito-na">Este hito no entra en el alcance <b>' + esc(PLAN_TXT[cli.plan]) +
+             '</b>. Si el cliente lo contrata, aparece solo.</p>';
+      } else {
+        h += '<div class="hito-c">' + hi.tareas.map(function (t) {
+          var k = hi.id + '.' + t[0], id = cli.id + '-' + k;
+          return '<div class="tarea">' +
+            '<input type="checkbox" id="' + id + '" data-k="' + k + '"' + (e.t[k] ? ' checked' : '') + '>' +
+            '<label for="' + id + '"><b>' + esc(t[1]) + '</b>' +
+            (t[2] ? '<span>' + esc(t[2]) + '</span>' : '') + '</label></div>';
+        }).join('') + '</div>';
+      }
+      h += '</details>';
+    });
+
+    h += '<section class="notas"><h3>Notas de ' + esc(cli.n) + '</h3>' +
+      '<p class="ayuda">Lo que hay que recordar de esta cuenta: bloqueos, a quién hay que perseguir, ' +
+      'qué quedó conversado.</p>' +
+      '<textarea id="nota" placeholder="Escribe aquí…">' + esc(e.nota || '') + '</textarea>' +
+      '<div class="pie"><span>Se guarda solo, en este navegador.</span>' +
+      '<span id="notaEstado"></span></div></section>';
+
+    h += '<div class="aviso"><b>Dónde vive esto:</b> el avance y las notas se guardan en el navegador ' +
+      'de quien abre el tablero (localStorage). No se comparten solos entre personas: para pasarle ' +
+      'el estado a alguien, usa <b>Exportar</b> y que el otro haga <b>Importar</b>.</div>';
+
+    document.getElementById('det').innerHTML = h;
+
+    document.getElementById('det').querySelectorAll('input[type=checkbox]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        est(sel).t[cb.dataset.k] = cb.checked;
+        guardar();
+        // Actualizacion PUNTUAL. Re-dibujar el detalle entero en cada clic
+        // perdia el scroll y el foco justo cuando uno va marcando varias
+        // seguidas, que es el uso normal de un checklist.
+        refrescaCifras();
+        pintaLista();
+      });
+    });
+    var ta = document.getElementById('nota');
+    var tmr = null;
+    ta.addEventListener('input', function () {
+      est(sel).nota = ta.value;
+      document.getElementById('notaEstado').textContent = 'escribiendo…';
+      clearTimeout(tmr);
+      tmr = setTimeout(function () {
+        guardar();
+        document.getElementById('notaEstado').textContent = 'guardado';
+      }, 500);
+    });
+  }
+
+  function refrescaCifras() {
+    var cli = CLIENTES.filter(function (c) { return c.id === sel; })[0];
+    if (!cli) { return; }
+    var p = progreso(cli);
+    var n = document.querySelector('.det-prog .n');
+    var bar = document.querySelector('.det-prog .barra i');
+    var txt = document.querySelector('.det-prog .lbl');
+    if (n) { n.textContent = p.pct + '%'; }
+    if (bar) { bar.style.width = p.pct + '%'; }
+    if (txt) { txt.textContent = p.hechas + ' de ' + p.total + ' tareas'; }
+    HITOS.forEach(function (hi) {
+      if (!aplica(hi, cli)) { return; }
+      var ph = progresoHito(cli, hi);
+      var det = document.querySelectorAll('.hito');
+      for (var i = 0; i < det.length; i++) {
+        var nm = det[i].querySelector('.hito-n');
+        if (!nm || nm.childNodes[0].nodeValue !== hi.n) { continue; }
+        var b = det[i].querySelector('.hito-b i');
+        var e = det[i].querySelector('.estado');
+        if (b) { b.style.width = ph.pct + '%'; }
+        if (e) {
+          e.className = 'estado ' + (ph.pct === 100 ? 'ok' : (ph.pct > 0 ? 'curso' : 'no'));
+          e.textContent = (ph.pct === 100 ? 'Listo' : (ph.pct > 0 ? 'En curso' : 'Sin partir')) +
+                          ' · ' + ph.hechas + '/' + ph.total;
+        }
+        break;
+      }
+    });
+    pintaGlobal();
+  }
+
+  function pintaGlobal() {
+    var hechas = 0, total = 0, listos = 0;
+    CLIENTES.forEach(function (c) {
+      var p = progreso(c); hechas += p.hechas; total += p.total;
+      if (p.total && p.pct === 100) { listos++; }
+    });
+    var pct = total ? Math.round(hechas / total * 100) : 0;
+    document.getElementById('gPct').textContent = pct + '%';
+    document.getElementById('gBar').style.width = pct + '%';
+    document.getElementById('gDet').textContent =
+      hechas + '/' + total + ' tareas · ' + listos + ' de ' + CLIENTES.length + ' completos';
+  }
+
+  function pinta() { pintaLista(); pintaDetalle(); pintaGlobal(); }
+
+  // ── eventos ──
+  document.getElementById('lista').addEventListener('click', function (ev) {
+    var b = ev.target.closest('.cli');
+    if (!b) { return; }
+    sel = b.dataset.id; pinta();
+  });
+  document.getElementById('buscar').addEventListener('input', pintaLista);
+  document.querySelectorAll('.filtros button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      filtro = b.dataset.f;
+      document.querySelectorAll('.filtros button').forEach(function (o) {
+        o.setAttribute('aria-pressed', String(o === b));
+      });
+      pintaLista();
+    });
+  });
+  document.getElementById('btnExp').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify({v: 1, estado: estado}, null, 2)], {type: 'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'hapee-implementacion.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('btnImp').addEventListener('click', function () {
+    document.getElementById('fileImp').click();
+  });
+  document.getElementById('fileImp').addEventListener('change', function (ev) {
+    var f = ev.target.files[0];
+    if (!f) { return; }
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        var d = JSON.parse(r.result);
+        if (!d || typeof d.estado !== 'object') { throw new Error('formato'); }
+        estado = d.estado; guardar(); pinta();
+      } catch (e) {
+        alert('Ese archivo no tiene el formato del tablero.');
+      }
+    };
+    r.readAsText(f);
+    ev.target.value = '';
+  });
+
+  pinta();
+})();
+</script>
+</body>
+</html>
