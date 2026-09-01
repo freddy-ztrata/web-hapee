@@ -29,6 +29,7 @@ COPY academia.html /usr/share/nginx/html/academia.html
 COPY dossier-x8k4m2.html /usr/share/nginx/html/dossier-x8k4m2.html
 COPY demoday-via-x7m2.html /usr/share/nginx/html/demoday-via-x7m2.html
 COPY compra-exitosa.html /usr/share/nginx/html/compra-exitosa.html
+COPY implementacion/index.html /usr/share/nginx/html/implementacion/index.html
 COPY img/ /usr/share/nginx/html/img/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
