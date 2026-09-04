@@ -517,6 +517,19 @@ html.dark .modal .addon{background:#141414}
 .modal .addon .at{font-size:.64rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;background:rgba(250,80,0,.1);padding:2px 9px;border-radius:var(--pill);display:inline-block;margin-bottom:5px}
 .modal .addon .ad{font-size:.8rem;color:var(--text-2);margin-top:4px;line-height:1.5}
 
+/* Consentimiento legal — casillas obligatorias, nunca premarcadas.
+   Fila táctil >=44px y link que abre sin togglear la casilla (stopPropagation en JS). */
+.modal .lglbox{margin:18px 0 0;display:flex;flex-direction:column;gap:8px}
+.modal .lgl{display:flex;align-items:flex-start;gap:12px;min-height:44px;margin:0;padding:11px 13px;border:1.5px solid var(--card-border);border-radius:14px;background:var(--bg-alt);cursor:pointer;transition:var(--tr);text-transform:none;letter-spacing:0;font-weight:400;font-size:.85rem;line-height:1.5;color:var(--text)}
+html.dark .modal .lgl{background:#141414}
+.modal .lgl:hover{border-color:rgba(250,80,0,.4)}
+.modal .lgl input{width:20px;height:20px;min-width:20px;margin-top:1px;padding:0;box-shadow:none;accent-color:var(--accent);flex-shrink:0;cursor:pointer}
+.modal .lgl input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.modal .lgl a{color:var(--accent);font-weight:600;text-decoration:underline}
+.modal .lgl.bad{border-color:#CC4435;background:rgba(204,68,53,.06)}
+@media(max-width:480px){.modal .lgl{font-size:.82rem}}
+.merr-retry{display:block;margin-top:9px;background:transparent;border:1.5px solid rgba(204,68,53,.5);color:#CC4435;font-family:var(--fb);font-size:.8rem;font-weight:700;padding:7px 16px;border-radius:var(--pill);cursor:pointer;min-height:36px}
+.merr-retry:hover{background:rgba(204,68,53,.1)}
 .merr{display:none;background:rgba(204,68,53,.1);border:1px solid rgba(204,68,53,.4);color:#CC4435;border-radius:14px;padding:11px 15px;font-size:.85rem;margin-top:14px}
 .mact{display:flex;gap:10px;margin-top:22px}
 .mact .btn{flex:1;padding:13px 22px;font-size:.92rem}
@@ -653,7 +666,17 @@ html.dark .modal .addon{background:#141414}
       <label for="f-cupon">Código de descuento</label>
       <input id="f-cupon" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Opcional">
       <div id="m-addon"></div>
-      <div class="merr" id="m-error"></div>
+      <div class="lglbox">
+        <label class="lgl" for="f-acepta-terminos">
+          <input type="checkbox" id="f-acepta-terminos" required aria-required="true">
+          <span>He leído y acepto los <a href="/terminos.html" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a> de Hapee.</span>
+        </label>
+        <label class="lgl" for="f-acepta-privacidad">
+          <input type="checkbox" id="f-acepta-privacidad" required aria-required="true">
+          <span>He leído y acepto la <a href="/politica-privacidad.html" target="_blank" rel="noopener noreferrer">Política de Privacidad</a> de Hapee.</span>
+        </label>
+      </div>
+      <div class="merr" id="m-error" role="alert" aria-live="assertive"></div>
       <div class="mact">
         <button type="button" class="btn cancel" id="m-cancel">Cancelar</button>
         <button type="submit" class="btn bs" id="m-submit">Ir a pagar</button>
@@ -673,6 +696,10 @@ html.dark .modal .addon{background:#141414}
   var planes = [];
   var intervalo = 'mensual';
   var sel = null;
+  var desafio = null;    // desafío firmado del backend: SOLO en memoria, nunca en storage
+  var legalReq = null;   // promesa en curso de GET /api/saas/legal
+  var enviando = false;
+  var envioActivo = 0;   // invalida respuestas en vuelo si el usuario cierra el modal
   var $ = function(id){ return document.getElementById(id); };
 
   // Chrome del sitio: dark toggle + nav scroll
@@ -809,6 +836,143 @@ html.dark .modal .addon{background:#141414}
     $('m-plan').textContent = base;
   }
 
+  // ===== Consentimiento legal (obligatorio) ================================
+  // El backend exige acepta_terminos + acepta_privacidad + un desafío firmado y
+  // responde 422 antes de tocar Stripe si falta algo. Acá el desafío vive solo en
+  // memoria (nada de localStorage/sessionStorage) y se pide sin caché al abrir cada
+  // modal; si no se puede obtener, el botón queda bloqueado (fail-closed).
+  var MSG_LEGAL_OFF = 'No pudimos cargar los términos legales. Reintenta en unos segundos.';
+  var MSG_CONSENT = 'Debes aceptar los Términos y Condiciones y la Política de Privacidad para continuar.';
+  var MSG_PAGO = 'No pudimos iniciar el pago. Intenta de nuevo.';
+
+  function ocultarError(){
+    var box = $('m-error');
+    box.textContent = '';
+    box.style.display = 'none';
+  }
+
+  function mostrarError(msg, conReintento){
+    var box = $('m-error');
+    box.style.display = 'block';
+    box.textContent = msg;
+    if (conReintento) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'merr-retry'; b.textContent = 'Reintentar';
+      b.addEventListener('click', function(){
+        ocultarError();
+        cargarLegal().catch(function(){ mostrarError(MSG_LEGAL_OFF, true); });
+      });
+      box.appendChild(b);
+    }
+  }
+
+  function urlLegal(){
+    return '/api/saas/legal' + (preview ? '?preview=' + encodeURIComponent(preview) : '');
+  }
+
+  function extraerDesafio(d){
+    if (!d) return null;
+    if (typeof d === 'string') return d;
+    return d.desafio || d.challenge || d.token ||
+           (d.legal && (d.legal.desafio || d.legal.challenge)) || null;
+  }
+
+  function cargarLegal(){
+    desafio = null;
+    $('m-submit').disabled = true;
+    legalReq = fetch(urlLegal(), {cache: 'no-store', headers: {'Cache-Control': 'no-cache'}})
+      .then(function(r){ if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+      .then(function(d){
+        var v = extraerDesafio(d);
+        if (!v) throw new Error('respuesta legal sin desafío');
+        desafio = v;
+        if (!enviando) $('m-submit').disabled = false;
+        return v;
+      });
+    return legalReq;
+  }
+
+  var IDS_CONSENT = ['f-acepta-terminos', 'f-acepta-privacidad'];
+
+  function marcarConsent(c, mal){
+    var fila = c.closest('.lgl');
+    if (fila) fila.classList.toggle('bad', mal);
+    if (mal) c.setAttribute('aria-invalid', 'true'); else c.removeAttribute('aria-invalid');
+    // Mensaje nativo en español para el globo del navegador (además del role="alert").
+    c.setCustomValidity(mal ? MSG_CONSENT : '');
+  }
+
+  function resetConsent(){
+    IDS_CONSENT.forEach(function(id){
+      var c = $(id);
+      c.checked = false;
+      marcarConsent(c, false);   // sin error visible hasta que el usuario intente enviar
+    });
+  }
+
+  // La validación nativa de `required` corta el submit antes de nuestro handler:
+  // enganchamos 'invalid' para que el aviso accesible se muestre igual.
+  IDS_CONSENT.forEach(function(id){
+    var c = $(id);
+    c.addEventListener('invalid', function(){
+      marcarConsent(c, true);
+      mostrarError(MSG_CONSENT);
+    });
+    c.addEventListener('change', function(){
+      marcarConsent(c, !c.checked);
+      if ($('m-error').textContent.indexOf(MSG_CONSENT) === 0 && $('f-acepta-terminos').checked && $('f-acepta-privacidad').checked) ocultarError();
+    });
+  });
+
+  // Se lee del DOM en el momento del envío: los valores nunca se asumen.
+  function consentimientoOk(){
+    var falta = null;
+    IDS_CONSENT.forEach(function(id){
+      var c = $(id), mal = !c.checked;
+      marcarConsent(c, mal);
+      if (mal && !falta) falta = c;
+    });
+    if (falta) { mostrarError(MSG_CONSENT); falta.focus(); return false; }
+    return true;
+  }
+
+  // El backend puede responder {error:"..."} o el {detail:[...]} de FastAPI.
+  function mensajeError(d){
+    if (!d) return '';
+    if (typeof d === 'string') return d;
+    if (typeof d.error === 'string') return d.error;
+    if (d.error && typeof d.error === 'object') {
+      var e = d.error.mensaje || d.error.message || d.error.detail;
+      if (typeof e === 'string') return e;
+    }
+    var det = d.detail !== undefined ? d.detail : (d.mensaje !== undefined ? d.mensaje : d.message);
+    if (typeof det === 'string') return det;
+    if (Array.isArray(det)) {
+      return det.map(function(x){
+        if (typeof x === 'string') return x;
+        return (x && (x.msg || x.mensaje || x.message)) || '';
+      }).filter(Boolean).join(' · ');
+    }
+    if (det && typeof det === 'object') return det.msg || det.mensaje || det.message || '';
+    return '';
+  }
+
+  function esErrorDesafio(status, d, msg){
+    if ([400, 403, 409, 422].indexOf(status) === -1) return false;
+    var cod = (d && (d.codigo || d.code || d.error_code || (d.error && d.error.codigo))) || '';
+    var txt = (String(cod) + ' ' + (msg || '')).toLowerCase();
+    return /desaf|challenge|nonce/.test(txt) || /expir|vencid|caduc/.test(txt);
+  }
+
+  function cerrarModal(){
+    $('mask').classList.remove('open');
+    // Cancelar descarta cualquier envío en vuelo: nadie termina en Stripe tras cerrar.
+    envioActivo++; enviando = false;
+    desafio = null; legalReq = null;
+    resetConsent();
+    ocultarError();
+  }
+
   function abrirModal(pl){
     sel = pl;
     var esUnico = pl.tipo === 'pago_unico';
@@ -857,12 +1021,20 @@ html.dark .modal .addon{background:#141414}
         });
     }
     resumenModal();
-    $('m-error').style.display = 'none';
+    resetConsent();
+    ocultarError();
     $('mask').classList.add('open');
     $('f-nombre').focus();
+    cargarLegal().catch(function(){
+      if ($('mask').classList.contains('open')) mostrarError(MSG_LEGAL_OFF, true);
+    });
   }
-  $('m-cancel').addEventListener('click', function(){ $('mask').classList.remove('open'); });
-  $('mask').addEventListener('click', function(e){ if (e.target === $('mask')) $('mask').classList.remove('open'); });
+  $('m-cancel').addEventListener('click', cerrarModal);
+  $('mask').addEventListener('click', function(e){ if (e.target === $('mask')) cerrarModal(); });
+  // Abrir Términos/Privacidad no debe marcar la casilla que los contiene.
+  document.querySelectorAll('.lgl a').forEach(function(a){
+    a.addEventListener('click', function(ev){ ev.stopPropagation(); });
+  });
 
   function utm(){
     var out = {};
@@ -874,15 +1046,11 @@ html.dark .modal .addon{background:#141414}
     return Object.keys(out).length ? out : null;
   }
 
-  $('m-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    if (!sel) return;
-    var btn = $('m-submit'); btn.disabled = true; btn.textContent = 'Redirigiendo…';
-    $('m-error').style.display = 'none';
-    // Armar el carrito según lo elegido (regla: 0-1 plan + 0-1 pago único):
-    // - suscripción [+ addon-chk] → plan principal + pago único opcional;
-    // - pago único con plan-chk → el PLAN pasa a ser el principal y el pago
-    //   único va como addon; sin plan-chk → pago único solo.
+  // Armar el carrito según lo elegido (regla: 0-1 plan + 0-1 pago único):
+  // - suscripción [+ addon-chk] → plan principal + pago único opcional;
+  // - pago único con plan-chk → el PLAN pasa a ser el principal y el pago
+  //   único va como addon; sin plan-chk → pago único solo.
+  function armarPayload(){
     var planSlug = sel.slug, addonSlug, planRef = sel;
     if (sel.tipo === 'pago_unico') {
       var pc = document.querySelector('#m-addon .plan-chk:checked');
@@ -891,34 +1059,70 @@ html.dark .modal .addon{background:#141414}
       var ac = document.querySelector('#m-addon .addon-chk:checked');
       if (ac) addonSlug = ac.value;
     }
-    fetch('/api/saas/checkout', {
+    return {
+      plan_slug: planSlug,
+      addon_slug: addonSlug,
+      intervalo: (intervalo === 'anual' && planRef.precio_anual) ? 'anual' : 'mensual',
+      email: $('f-email').value.trim(),
+      nombre: $('f-nombre').value.trim(),
+      apellido: $('f-apellido').value.trim(),
+      empresa: $('f-empresa').value.trim(),
+      telefono: $('f-telefono').value.trim(),
+      promo_code: $('f-cupon').value.trim() || undefined,
+      idioma: 'es',
+      preview: preview || undefined,
+      utm: utm(),
+      // Consentimiento leído del DOM en este mismo instante + desafío firmado vigente.
+      acepta_terminos: $('f-acepta-terminos').checked,
+      acepta_privacidad: $('f-acepta-privacidad').checked,
+      desafio: desafio,
+    };
+  }
+
+  function finFallo(msg, bloquear){
+    enviando = false;
+    var btn = $('m-submit');
+    btn.textContent = 'Ir a pagar';
+    btn.disabled = !!bloquear;
+    mostrarError(msg, bloquear);
+  }
+
+  function enviarCheckout(reintento, envio){
+    return fetch('/api/saas/checkout', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        plan_slug: planSlug,
-        addon_slug: addonSlug,
-        intervalo: (intervalo === 'anual' && planRef.precio_anual) ? 'anual' : 'mensual',
-        email: $('f-email').value.trim(),
-        nombre: $('f-nombre').value.trim(),
-        apellido: $('f-apellido').value.trim(),
-        empresa: $('f-empresa').value.trim(),
-        telefono: $('f-telefono').value.trim(),
-        promo_code: $('f-cupon').value.trim() || undefined,
-        idioma: 'es',
-        preview: preview || undefined,
-        utm: utm(),
-      }),
-    }).then(function(r){ return r.json().then(function(d){ return {ok: r.ok, d: d}; }); })
-      .then(function(res){
-        if (res.ok && res.d.checkout_url) { location.href = res.d.checkout_url; return; }
-        $('m-error').textContent = res.d.error || 'No pudimos iniciar el pago. Intenta de nuevo.';
-        $('m-error').style.display = 'block';
-        btn.disabled = false; btn.textContent = 'Ir a pagar';
-      })
+      body: JSON.stringify(armarPayload()),
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(d){
+        return {ok: r.ok, status: r.status, d: d};
+      });
+    }).then(function(res){
+      if (envio !== envioActivo) return;   // el usuario cerró el modal mientras tanto
+      if (res.ok && res.d && res.d.checkout_url) { location.href = res.d.checkout_url; return; }
+      var msg = mensajeError(res.d);
+      // Si el desafío venció mientras el usuario llenaba el formulario, pedimos
+      // uno nuevo y reintentamos UNA sola vez, sin perder lo que ya escribió.
+      if (!reintento && esErrorDesafio(res.status, res.d, msg)) {
+        return cargarLegal().then(function(){ return enviarCheckout(true, envio); });
+      }
+      finFallo(msg || MSG_PAGO);
+    });
+  }
+
+  $('m-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!sel || enviando) return;
+    ocultarError();
+    if (!consentimientoOk()) return;  // sin ambas casillas no se llama al backend
+    var btn = $('m-submit');
+    enviando = true; btn.disabled = true; btn.textContent = 'Redirigiendo…';
+    var envio = ++envioActivo;
+    // Sin desafío vigente no se envía nada: se espera (o se reintenta) la carga legal.
+    var listo = desafio ? Promise.resolve(desafio) : (legalReq || cargarLegal());
+    listo.then(function(){ return enviarCheckout(false, envio); })
       .catch(function(){
-        $('m-error').textContent = 'No pudimos iniciar el pago. Intenta de nuevo.';
-        $('m-error').style.display = 'block';
-        btn.disabled = false; btn.textContent = 'Ir a pagar';
+        if (envio !== envioActivo) return;
+        finFallo(desafio ? MSG_PAGO : MSG_LEGAL_OFF, !desafio);
       });
   });
 

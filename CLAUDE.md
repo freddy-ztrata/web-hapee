@@ -145,18 +145,27 @@ Meta Business Partner + Google Premier Partner are inline SVG (not external imag
 
 WM Digital, LLC (Wyoming, EIN 38-4371956), domicilio: 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US. Public contact: `info@hapee.ai`. Legal-specific addresses (compliance only, in `terminos.html` and `politica-privacidad.html`): `legal@hapee.ai`, `privacidad@hapee.ai`.
 
-## Pricing oculto + checkout Stripe (self-service, 2026-07-10)
+## Pricing público + checkout Stripe (self-service, 2026-07-10)
 
 Primera integración del sitio con la app FastAPI (**`beta.hapee.ai`** — dominio canónico de la app desde 2026-07-11; el proxy nginx apunta ahí). Plan maestro:
 `reporteria/docs/planes/2026-07-10-stripe-venta-subcuentas-provisioning.md` (F4).
 
-- **`planes-k9x2v7.html`** (slug oculto `/planes-k9x2v7`): página de pricing self-service.
-  `noindex,nofollow`, FUERA de sitemap/nav/robots (patrón gracias-compra). Renderiza los
-  planes desde `GET /api/saas/planes` (los precios NUNCA se hardcodean acá — la app es la
+- **`planes.html`** (`/planes`, ya publicado e indexable; el slug viejo `/planes-k9x2v7`
+  redirige 301 desde `nginx.conf`): página de pricing self-service. Renderiza los planes
+  desde `GET /api/saas/planes` (los precios NUNCA se hardcodean acá — la app es la
   autoridad) y el CTA abre un modal de datos → `POST /api/saas/checkout` → redirect a
   Stripe Checkout hosted. Con el flag de la app apagado exige `?preview=<token>`.
-  Al publicar: renombrar a `/planes`, quitar noindex, sumar a nav/sitemap + barrido de
-  copy (index cards + JSON-LD + prompt del chat + llms.txt) — checklist §20 del plan.
+- **Consentimiento legal del checkout (obligatorio, 2026-09-04)**: el backend exige
+  `acepta_terminos` + `acepta_privacidad` + un `desafio` firmado que se obtiene con
+  `GET /api/saas/legal`; sin eso responde 422 **antes** de tocar Stripe. En el modal hay
+  dos casillas independientes, **nunca premarcadas**, con links a `/terminos.html` y
+  `/politica-privacidad.html`. Reglas al tocar ese código:
+  - el desafío se pide con `cache:'no-store'` al abrir **cada** modal y vive **solo en
+    memoria** — jamás en `localStorage`/`sessionStorage`;
+  - fail-closed: sin desafío el botón de pago queda deshabilitado (con opción de reintento);
+  - los booleanos se leen del DOM en el submit — nunca se envían literales `true`;
+  - si el desafío expira (422), se pide uno nuevo y se reintenta **una sola vez**;
+  - el enforcement real es del backend: la landing no debe simular el consentimiento.
 - **`compra-exitosa.html`**: success page del checkout. Lee `?t=<token opaco>` y pollea
   `GET /api/saas/checkout/{t}/estado` (3s, ~2min): preparando → “revisa tu correo para
   activar” | pago en proceso | fallo. **JAMÁS crea nada** — el aprovisionamiento es 100%
