@@ -92,7 +92,7 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 - **Section-per-screen** CSS rule applied on both `index.html` and `agenda-tu-demo.html`: `main > section { min-height: 100svh }` with exceptions for short sections (`midcta`, `video-section`). On mobile only key sections enforce full-viewport height to keep readability.
 - **Sticky demo CTAs** on `agenda-tu-demo.html`: full-width bottom bar on mobile + floating bottom-right pill on desktop. Auto-hide when hero or calendar section is in view (IntersectionObserver). Both scroll smoothly to `#calendario`.
 - **VSL video treatment**: cinematic frame with animated conic-gradient border, custom play overlay (double pulsing ring), radial glow halo. Poster is `img/robot.png` (aspect-ratio locked in CSS via `object-fit:contain`).
-- **GHL calendar embed**: `always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa` inside a styled `.cal-wrap` container. Requires `<script src="https://always.hapee.ai/js/form_embed.js">` at end of body to auto-resize the iframe.
+- **GHL calendar embed**: `always.hapee.ai/widget/booking/0ZKjNaJzeZjcTjhs9l34` (iframe id `chYXlIXrGibN07I5L7AD_1788736456068`, `allow="payment"`) inside a styled `.cal-wrap` container. `agentes-ia-whatsapp.html` sigue con su propio calendario (`dxPntqtyC5ZeHsKLKupa`) — no se toca. Requires `<script src="https://always.hapee.ai/js/form_embed.js">` at end of body to auto-resize the iframe.
 
 ## Theming (dark/light)
 
