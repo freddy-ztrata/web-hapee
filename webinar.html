@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aprende todo sobre IA · Webinar gratuito de Hapee y SearchBrand.ai</title>
+<meta name="description" content="Webinar gratuito: agentes de IA, posicionamiento AEO y mas. Miercoles 30 de septiembre, 19:00 de Chile, via Google Meet. Con Sebastian Figueroa (CEO Grupo Digitals y Hapee) y Hussam Sufan (CEO SearchBrand.ai).">
+<link rel="canonical" href="https://hapee.ai/webinar">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aprende todo sobre IA · Webinar gratuito">
+<meta property="og:description" content="Agentes de IA, posicionamiento AEO y mas. Miercoles 30 de septiembre, 19:00 de Chile. Gratis, via Google Meet.">
+<meta property="og:url" content="https://hapee.ai/webinar">
+<meta property="og:image" content="https://hapee.ai/img/webinar-sebastian.png">
+<meta name="theme-color" content="#FA5000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --naranjo:#FA5000; --guinda:#CD2349; --tinta:#1a1a1a; --cuerpo:#4a4a4a;
+  --papel:#FFFFFF; --hueso:#F5F3F0; --linea:rgba(26,26,26,.12);
+  --fs:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fm:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --gut:20px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--cuerpo);font:400 16px/1.62 var(--fs);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.mono{font-family:var(--fm);letter-spacing:.12em;text-transform:uppercase}
+
+/* ── cinta superior ── */
+.cinta{background:var(--tinta);color:#fff;overflow:hidden;padding-top:9px;padding-bottom:9px}
+.cinta .run{display:flex;gap:44px;white-space:nowrap;font:700 11px/1 var(--fm);letter-spacing:.16em;text-transform:uppercase;animation:corre 26s linear infinite}
+.cinta i{font-style:normal;color:#FFB58C}
+@keyframes corre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── barra de marca ── */
+.top{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.top .in{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px}
+.lock{display:flex;align-items:center;gap:10px;font:800 19px/1 var(--fs);color:var(--tinta);text-decoration:none;letter-spacing:-.02em}
+.lock b{color:var(--naranjo)}
+.lock span{font:600 11px/1 var(--fm);letter-spacing:.14em;color:#8a8a8a;text-transform:uppercase}
+.top .cta{margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--naranjo);color:#fff;text-decoration:none;
+ font:700 14px/1 var(--fs);padding:13px 22px;border-radius:999px;border:0;cursor:pointer;transition:transform .16s,background .16s}
+.btn:hover{background:#e04700;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--tinta);border:1.5px solid var(--linea)}
+.btn.ghost:hover{background:var(--hueso);color:var(--tinta)}
+
+/* ── hero ── */
+.hero{position:relative;background:
+   radial-gradient(1100px 620px at 78% 18%, #FF7A2E 0%, rgba(255,122,46,0) 62%),
+   linear-gradient(152deg, #FA5000 0%, #E8352B 52%, #CD2349 100%);
+ color:#fff;overflow:hidden;padding-top:clamp(38px,7vw,74px);padding-bottom:clamp(38px,7vw,64px)}
+.hero::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(2px 2px at 12% 28%, rgba(255,255,255,.5) 50%, transparent 51%),
+  radial-gradient(2px 2px at 82% 62%, rgba(255,255,255,.35) 50%, transparent 51%),
+  radial-gradient(2px 2px at 46% 82%, rgba(255,255,255,.3) 50%, transparent 51%);pointer-events:none}
+.hero .in{position:relative;z-index:2;display:grid;gap:clamp(26px,4vw,50px);grid-template-columns:1fr}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);
+ border-radius:999px;padding:7px 16px;font:700 11px/1 var(--fm);letter-spacing:.15em;text-transform:uppercase}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:#9BFF6E;box-shadow:0 0 0 0 rgba(155,255,110,.7);animation:late 2s infinite}
+@keyframes late{70%{box-shadow:0 0 0 9px rgba(155,255,110,0)}100%{box-shadow:0 0 0 0 rgba(155,255,110,0)}}
+h1{margin:18px 0 0;font:800 clamp(40px,9.4vw,92px)/0.98 var(--fs);letter-spacing:-.045em;color:#fff}
+h1 em{font-style:normal;display:block;color:#FFE08A}
+.bajada{margin:16px 0 0;max-width:34ch;font-size:clamp(17px,2.1vw,21px);line-height:1.5;color:rgba(255,255,255,.94);font-weight:500}
+.datos{margin-top:26px;display:grid;gap:10px;max-width:440px}
+.dato{display:flex;align-items:center;gap:13px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);
+ border-radius:14px;padding:13px 17px;font-weight:600}
+.dato svg{flex:0 0 20px;opacity:.92}
+.dato small{display:block;font:600 10px/1.5 var(--fm);letter-spacing:.14em;text-transform:uppercase;opacity:.72}
+.acciones{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+.acciones .btn{background:#fff;color:var(--guinda);padding:16px 30px;font-size:15px}
+.acciones .btn:hover{background:#FFE08A;color:#7d1029}
+.acciones .btn.linea{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+.acciones .btn.linea:hover{background:rgba(255,255,255,.14)}
+.gratis{margin-top:14px;font:600 12px/1.5 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+
+/* speakers en el hero */
+.caras{display:flex;align-items:flex-end;gap:clamp(6px,2vw,20px);justify-content:flex-start}
+.cara{position:relative;flex:1 1 0;min-width:0;max-width:280px}
+.cara .foto{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.5);border-radius:999px;overflow:hidden;aspect-ratio:1/1;display:flex;align-items:flex-end}
+.cara .foto img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.cara .nom{margin-top:12px;font:800 clamp(15px,1.9vw,20px)/1.16 var(--fs);letter-spacing:-.02em;color:#fff}
+.cara .rol{font:600 11px/1.45 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-top:3px}
+
+/* ── cuenta atras ── */
+.reloj{background:var(--tinta);color:#fff;padding-top:26px;padding-bottom:26px}
+.reloj .in{display:flex;flex-wrap:wrap;align-items:center;gap:18px 30px;justify-content:space-between}
+.cd{display:flex;gap:10px}
+.cd div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:11px 14px;text-align:center;min-width:74px}
+.cd b{display:block;font:800 clamp(22px,3.4vw,32px)/1 var(--fs);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cd small{font:600 10px/1.6 var(--fm);letter-spacing:.14em;text-transform:uppercase;color:#9a9a9a}
+.reloj .tu{font:600 13px/1.5 var(--fs);color:#c9c9c9}
+.reloj .tu b{color:#FFB58C;font-weight:700}
+
+/* ── secciones ── */
+section{padding-top:clamp(50px,8vw,92px);padding-bottom:clamp(50px,8vw,92px)}
+.eyebrow{font:700 11px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--naranjo)}
+h2{margin:14px 0 0;font:800 clamp(28px,5.4vw,54px)/1.04 var(--fs);letter-spacing:-.04em;color:var(--tinta);max-width:20ch}
+.lead{margin-top:16px;max-width:60ch;font-size:clamp(16px,1.7vw,19px)}
+.temas{margin-top:clamp(28px,4vw,44px);display:grid;gap:14px;grid-template-columns:1fr}
+.tema{border:1px solid var(--linea);border-radius:18px;padding:24px 22px;background:var(--papel);transition:border-color .18s,transform .18s}
+.tema:hover{border-color:var(--naranjo);transform:translateY(-2px)}
+.tema b{display:block;font:800 19px/1.24 var(--fs);color:var(--tinta);letter-spacing:-.02em;margin-bottom:8px}
+.tema .n{font:700 11px/1 var(--fm);color:var(--naranjo);letter-spacing:.14em;display:block;margin-bottom:12px}
+.tema p{margin:0}
+
+/* speakers a fondo */
+.bios{background:var(--hueso)}
+.bio{display:grid;gap:22px;grid-template-columns:1fr;align-items:start;padding-top:clamp(26px,4vw,40px)}
+.bio+.bio{margin-top:clamp(26px,4vw,40px);border-top:1px solid var(--linea)}
+.bio .retrato{width:clamp(120px,26vw,180px);aspect-ratio:1/1;border-radius:999px;overflow:hidden;background:linear-gradient(150deg,#FA5000,#CD2349);flex:0 0 auto}
+.bio .retrato img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.bio h3{margin:0;font:800 clamp(23px,3.4vw,34px)/1.1 var(--fs);letter-spacing:-.03em;color:var(--tinta)}
+.bio .rol{margin-top:5px;font:700 12px/1.5 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--naranjo)}
+.bio ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:9px}
+.bio li{position:relative;padding-left:22px}
+.bio li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;border-radius:3px;background:var(--naranjo)}
+.chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--papel);border:1px solid var(--linea);border-radius:999px;padding:7px 14px;font:700 11px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--tinta)}
+.chip.on{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+
+/* horarios */
+.husos{margin-top:26px;border:1px solid var(--linea);border-radius:18px;overflow:hidden}
+.husos .fila{display:flex;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--linea);align-items:center}
+.husos .fila:last-child{border-bottom:0}
+.husos .fila.tuya{background:#FFF3EC}
+.husos .pais{font-weight:600;color:var(--tinta)}
+.husos .hora{font:800 19px/1 var(--fs);color:var(--tinta);font-variant-numeric:tabular-nums}
+.husos .tag{font:700 10px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:var(--naranjo)}
+
+/* formulario */
+.form-sec{background:linear-gradient(152deg,#FA5000 0%,#E8352B 52%,#CD2349 100%);color:#fff}
+.form-sec h2{color:#fff}
+.form-sec .lead{color:rgba(255,255,255,.92)}
+.form-sec .eyebrow{color:#FFE08A}
+form{margin-top:clamp(26px,4vw,38px);background:#fff;border-radius:22px;padding:clamp(22px,3.6vw,34px);display:grid;gap:14px;max-width:640px}
+label{display:block;font:700 11px/1 var(--fm);letter-spacing:.13em;text-transform:uppercase;color:#7a7a7a;margin-bottom:7px}
+input,select{width:100%;font:500 16px/1.4 var(--fs);color:var(--tinta);background:var(--hueso);border:1.5px solid transparent;border-radius:12px;padding:14px 15px}
+input:focus,select:focus{outline:none;border-color:var(--naranjo);background:#fff}
+.dosc{display:grid;gap:14px;grid-template-columns:1fr}
+form .btn{width:100%;padding:17px;font-size:16px;margin-top:4px}
+.nota{font:500 12px/1.6 var(--fs);color:#8a8a8a;margin:0}
+.ok{display:none;background:#F0FBF2;border:1.5px solid #7BD08F;border-radius:14px;padding:18px;color:#1c5c30;font-weight:600}
+.ok.on{display:block}
+.luma{margin-top:clamp(26px,4vw,38px);background:#fff;border-radius:22px;padding:clamp(26px,4vw,40px);max-width:640px;text-align:center}
+.luma .btn.grande{background:var(--naranjo);color:#fff;font-size:clamp(16px,2.2vw,20px);padding:19px 34px;width:100%}
+.luma .btn.grande:hover{background:#e04700}
+.nota-luma{margin:14px 0 0;font:600 12px/1.6 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:#9a9a9a}
+
+footer{background:var(--tinta);color:#9a9a9a;padding-top:44px;padding-bottom:52px;font-size:14px}
+footer a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+footer .marcas{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;margin-bottom:22px}
+footer .marcas span{font:800 17px/1 var(--fs);color:#fff;letter-spacing:-.02em}
+footer p{max-width:70ch;margin:0 0 10px}
+
+@media(min-width:720px){
+  :root{--gut:32px}
+  .dosc{grid-template-columns:1fr 1fr}
+  .temas{grid-template-columns:repeat(2,1fr)}
+  .bio{grid-template-columns:auto 1fr;gap:32px}
+}
+@media(min-width:1000px){
+  .hero .in{grid-template-columns:1.05fr .95fr;align-items:center}
+  .temas{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="cinta"><div class="run" id="run" aria-hidden="true"></div></div>
+
+<header class="top">
+  <div class="wrap in">
+    <a class="lock" href="#top"><b>hapee</b> <span>&times; SearchBrand.ai</span></a>
+    <a class="btn cta" href="https://luma.com/rrxtwcet" target="_blank" rel="noopener">Reserva tu cupo</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap in">
+    <div>
+      <span class="pill"><span class="dot"></span> Evento online &middot; Gratuito</span>
+      <h1>Aprende todo<br>sobre <em>IA.</em></h1>
+      <p class="bajada">Agentes de IA, posicionamiento AEO y c&oacute;mo hacer que los modelos hablen de tu marca. Una hora, dos fundadores, cero relleno.</p>
+
+      <div class="datos">
+        <div class="dato">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+          <div><small>Cu&aacute;ndo</small><b>Mi&eacute;rcoles 30 de septiembre</b></div>
+        </div>
+        <div class="dato">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <div><small>Hora</small><b>19:00 Chile y Argentina &middot; 17:00 Col/Ecu/Per&uacute;</b></div>
+        </div>
+        <div class="dato">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>
+          <div><small>D&oacute;nde</small><b>V&iacute;a Google Meet</b></div>
+        </div>
+      </div>
+
+      <div class="acciones">
+        <a class="btn" href="https://luma.com/rrxtwcet" target="_blank" rel="noopener">Reserva tu cupo</a>
+        <a class="btn linea" href="#temario">Ver el temario</a>
+      </div>
+      <p class="gratis">Sin costo &middot; Cupos limitados &middot; Queda grabado para los inscritos</p>
+    </div>
+
+    <div class="caras">
+      <div class="cara">
+        <div class="foto"><img src="img/webinar-sebastian.png" width="560" height="560" alt="Sebasti&aacute;n Figueroa" fetchpriority="high" decoding="async"></div>
+        <p class="nom">Sebasti&aacute;n Figueroa</p>
+        <p class="rol">CEO Grupo Digitals y Hapee</p>
+      </div>
+      <div class="cara">
+        <div class="foto"><img src="img/webinar-hussam.png" width="400" height="400" alt="Hussam Sufan" fetchpriority="high" decoding="async"></div>
+        <p class="nom">Hussam Sufan</p>
+        <p class="rol">CEO SearchBrand.ai</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="reloj">
+  <div class="wrap in">
+    <div class="cd" id="cd" aria-live="off">
+      <div><b id="cd-d">--</b><small>d&iacute;as</small></div>
+      <div><b id="cd-h">--</b><small>horas</small></div>
+      <div><b id="cd-m">--</b><small>min</small></div>
+      <div><b id="cd-s">--</b><small>seg</small></div>
+    </div>
+    <p class="tu" id="tuhora">Calculando tu hora local&hellip;</p>
+  </div>
+</div>
+
+<section id="temario">
+  <div class="wrap">
+    <p class="eyebrow">01 &middot; El temario</p>
+    <h2>Lo que vas a poder hacer al d&iacute;a siguiente.</h2>
+    <p class="lead">No es una charla de tendencias. Es lo que estamos usando hoy en Grupo Digitals, en Hapee y en SearchBrand.ai, explicado para que lo apliques en tu propia marca.</p>
+    <div class="temas">
+      <div class="tema"><span class="n">01</span><b>Agentes de IA que trabajan solos</b><p>Qu&eacute; es un agente, en qu&eacute; se diferencia de un chatbot y d&oacute;nde conviene poner el primero: atenci&oacute;n, ventas o postventa.</p></div>
+      <div class="tema"><span class="n">02</span><b>Posicionamiento AEO</b><p>El SEO era para Google. El AEO es para que ChatGPT, Perplexity, Claude y Gemini te nombren cuando alguien pregunta por tu categor&iacute;a.</p></div>
+      <div class="tema"><span class="n">03</span><b>Que la IA hable de tu marca</b><p>C&oacute;mo se construye la huella que los modelos leen, y c&oacute;mo se mide si est&aacute;n hablando bien o mal de ti.</p></div>
+      <div class="tema"><span class="n">04</span><b>Automatizar sin romper el equipo</b><p>Qu&eacute; procesos conviene automatizar primero y cu&aacute;les no, con casos reales de implementaci&oacute;n.</p></div>
+      <div class="tema"><span class="n">05</span><b>Las herramientas que usamos</b><p>El stack concreto, con nombres, para que no salgas del webinar a googlear qu&eacute; probar.</p></div>
+      <div class="tema"><span class="n">06</span><b>Preguntas y respuestas</b><p>Todas las preguntas son bienvenidas y se responden al final, en el Q&amp;A.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bios">
+  <div class="wrap">
+    <p class="eyebrow">02 &middot; Qui&eacute;nes exponen</p>
+    <h2>Dos fundadores que lo est&aacute;n aplicando.</h2>
+
+    <div class="bio">
+      <div class="retrato"><img src="img/webinar-sebastian.png" width="560" height="560" alt="Sebasti&aacute;n Figueroa" loading="lazy" decoding="async"></div>
+      <div>
+        <h3>Sebasti&aacute;n Figueroa</h3>
+        <p class="rol">CEO Grupo Digitals y Hapee</p>
+        <div class="chips">
+          <span class="chip on">Jurado Effie 2026</span>
+          <span class="chip on">Presidente ACHIAG</span>
+        </div>
+        <ul>
+          <li>Publicista con enfoque en estrategias digitales y comunicaci&oacute;n. M&aacute;ster en Marketing Digital, Universidad Complutense de Madrid.</li>
+          <li>Cofundador y CEO de Agencia Digitals. Cofundador y CEO de Linkd.</li>
+          <li>Mentor en el Centro de Innovaci&oacute;n UC, Anacleto Angelevich y UDD Ventures, apoyando a emprendedores y startups.</li>
+          <li>Ha trabajado y asesorado marcas nacionales e internacionales como Sacyr, Ajinomoto, Guillermo Morales, Khipu, HubSpot y Jumpseller.</li>
+          <li>Especialidades: marketing digital, publicidad online, automatizaci&oacute;n de procesos e inteligencia artificial aplicada a marketing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bio">
+      <div class="retrato"><img src="img/webinar-hussam.png" width="400" height="400" alt="Hussam Sufan" loading="lazy" decoding="async"></div>
+      <div>
+        <h3>Hussam Sufan</h3>
+        <p class="rol">CEO SearchBrand.ai</p>
+        <div class="chips">
+          <span class="chip on">Growth #1 en Chile</span>
+          <span class="chip">Charlas TED</span>
+        </div>
+        <ul>
+          <li>Consultor empresarial experto en Growth.</li>
+          <li>Ha dado charlas TED.</li>
+          <li>Ha trabajado y asesorado empresas como MACH, Google, Cabify y Examedi.</li>
+          <li>Mentor en Start-Up Chile y profesor en la Universidad Adolfo Ib&aacute;&ntilde;ez y otros centros de estudio.</li>
+          <li>Cofounder de Unlearni, del Club de la IA y de Raisy.ai. Fund&oacute; SearchBrand.ai.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">03 &middot; A qu&eacute; hora te toca</p>
+    <h2>El mismo momento, en tu pa&iacute;s.</h2>
+    <p class="lead">La hora se calcula desde el instante real del evento, no desde una tabla escrita a mano. Si est&aacute;s en otro pa&iacute;s, tu fila aparece marcada.</p>
+    <div class="husos" id="husos"></div>
+  </div>
+</section>
+
+<section class="form-sec" id="inscribirme">
+  <div class="wrap">
+    <p class="eyebrow">04 &middot; Inscripci&oacute;n</p>
+    <h2>Reserva tu cupo.</h2>
+    <p class="lead">La inscripci&oacute;n se hace en Luma. Te llega el enlace de Google Meet, el recordatorio antes de empezar y la grabaci&oacute;n despu&eacute;s. Es gratis.</p>
+    <div class="luma">
+      <a class="btn grande" href="https://luma.com/rrxtwcet" target="_blank" rel="noopener">Reservar mi cupo en Luma &rarr;</a>
+      <p class="nota-luma">Se abre en una pesta&ntilde;a nueva &middot; luma.com/rrxtwcet</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="marcas"><span>hapee</span><span>&times;</span><span>SearchBrand.ai</span><span>&times;</span><span>Grupo Digitals</span></div>
+    <p>Webinar gratuito y online. Mi&eacute;rcoles 30 de septiembre de 2026, 19:00 hora de Chile, v&iacute;a Google Meet. Las preguntas se responden al final, en el Q&amp;A; el micr&oacute;fono permanece cerrado durante la exposici&oacute;n.</p>
+    <p><a href="https://hapee.ai">hapee.ai</a> &middot; <a href="https://digitals.cl">digitals.cl</a> &middot; <a href="https://grupodigitals.com">grupodigitals.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce=false; try{reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;}catch(e){}
+
+  /* ═══ El instante real del evento: 30-09-2026, 19:00 en Chile = 22:00 UTC ═══
+     Todo lo demas (cuenta atras, husos, tu hora local) se deriva de aqui, asi
+     que no hay dos horas escritas a mano que puedan contradecirse. */
+  var EVENTO=new Date(Date.UTC(2026,8,30,22,0,0));
+
+  /* cinta superior */
+  var run=document.getElementById("run");
+  if(run){
+    var frases=["Webinar gratuito","Agentes de IA","Posicionamiento AEO","30 de septiembre","19:00 de Chile","Vía Google Meet","Cupos limitados"];
+    var h="";
+    for(var r=0;r<2;r++) for(var i=0;i<frases.length;i++) h+="<span>"+frases[i]+"</span><i>&bull;</i>";
+    run.innerHTML=h;
+    if(reduce) run.style.animation="none";
+  }
+
+  /* cuenta atras */
+  var dd=document.getElementById("cd-d"),hh=document.getElementById("cd-h"),
+      mm=document.getElementById("cd-m"),ss=document.getElementById("cd-s");
+  function dos(n){return n<10?"0"+n:""+n;}
+  function tick(){
+    var t=EVENTO-new Date();
+    if(t<=0){dd.textContent="00";hh.textContent="00";mm.textContent="00";ss.textContent="00";return;}
+    var s=Math.floor(t/1000);
+    dd.textContent=dos(Math.floor(s/86400));
+    hh.textContent=dos(Math.floor(s%86400/3600));
+    mm.textContent=dos(Math.floor(s%3600/60));
+    ss.textContent=dos(s%60);
+  }
+  tick(); if(!reduce) setInterval(tick,1000);
+
+  /* tu hora local, leida del navegador */
+  try{
+    var tzTuya=Intl.DateTimeFormat().resolvedOptions().timeZone||"";
+    var fmt=new Intl.DateTimeFormat("es-CL",{weekday:"long",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit",hour12:false});
+    document.getElementById("tuhora").innerHTML="En tu zona horaria empieza el <b>"+fmt.format(EVENTO)+"</b>"+(tzTuya?" ("+tzTuya+")":"");
+  }catch(e){}
+
+  /* tabla de husos, calculada del mismo instante */
+  var PAISES=[["Chile","America/Santiago"],["Argentina","America/Argentina/Buenos_Aires"],
+              ["Colombia","America/Bogota"],["Ecuador","America/Guayaquil"],["Perú","America/Lima"],
+              ["México (CDMX)","America/Mexico_City"],["España","Europe/Madrid"]];
+  var cont=document.getElementById("husos");
+  if(cont){
+    var miTz=""; try{miTz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}
+    var out="";
+    for(var p=0;p<PAISES.length;p++){
+      var nom=PAISES[p][0],tz=PAISES[p][1],hora="",dia="";
+      try{
+        hora=new Intl.DateTimeFormat("es-CL",{timeZone:tz,hour:"2-digit",minute:"2-digit",hour12:false}).format(EVENTO);
+        dia=new Intl.DateTimeFormat("es-CL",{timeZone:tz,day:"numeric",month:"short"}).format(EVENTO);
+      }catch(e){continue;}
+      var tuya=(tz===miTz);
+      out+='<div class="fila'+(tuya?" tuya":"")+'"><span class="pais">'+nom+
+           (tuya?' <span class="tag">tu zona</span>':'')+'</span><span class="hora">'+hora+
+           ' <span class="tag">'+dia+'</span></span></div>';
+    }
+    cont.innerHTML=out;
+  }
+
+})();
+</script>
+</body>
+</html>
