@@ -199,7 +199,7 @@ footer p{max-width:70ch;margin:0 0 10px}
         </div>
         <div class="dato">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          <div><small>Hora</small><b>19:00 Chile y Argentina &middot; 17:00 Col/Ecu/Per&uacute;</b></div>
+          <div><small>Hora</small><b>19:00 Chile y Argentina &middot; 17:00 Colombia, Ecuador y Per&uacute;</b></div>
         </div>
         <div class="dato">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>
@@ -376,9 +376,10 @@ footer p{max-width:70ch;margin:0 0 10px}
   }catch(e){}
 
   /* tabla de husos, calculada del mismo instante */
+  /* Los cinco paises del flyer. Chile y Argentina van a UTC-3, y Colombia,
+     Ecuador y Peru a UTC-5, asi que las 19:00 y las 17:00 del arte son correctas. */
   var PAISES=[["Chile","America/Santiago"],["Argentina","America/Argentina/Buenos_Aires"],
-              ["Colombia","America/Bogota"],["Ecuador","America/Guayaquil"],["Perú","America/Lima"],
-              ["México (CDMX)","America/Mexico_City"],["España","Europe/Madrid"]];
+              ["Colombia","America/Bogota"],["Ecuador","America/Guayaquil"],["Perú","America/Lima"]];
   var cont=document.getElementById("husos");
   if(cont){
     var miTz=""; try{miTz=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}
