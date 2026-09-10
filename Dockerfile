@@ -30,6 +30,12 @@ COPY dossier-x8k4m2.html /usr/share/nginx/html/dossier-x8k4m2.html
 COPY demoday-via-x7m2.html /usr/share/nginx/html/demoday-via-x7m2.html
 COPY compra-exitosa.html /usr/share/nginx/html/compra-exitosa.html
 COPY webinar.html /usr/share/nginx/html/webinar.html
+# Documentacion publica de la API (hapee.ai/docs). Se copia el DIRECTORIO
+# entero, como blog/, y no pagina por pagina: asi agregar una guia nueva no
+# depende de que alguien se acuerde de sumar su COPY -- que es justo el
+# defecto que este archivo advierte arriba y que ya paso con
+# eliminacion-datos.html y con marca.html.
+COPY docs/ /usr/share/nginx/html/docs/
 COPY img/ /usr/share/nginx/html/img/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt

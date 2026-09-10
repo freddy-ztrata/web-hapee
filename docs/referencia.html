@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Referencia de la API — Hapee v1</title>
+<meta name="description" content="Referencia completa de la API REST de Hapee v1: todos los endpoints con sus parámetros, respuestas y ejemplos.">
+<link rel="canonical" href="https://hapee.ai/docs/referencia">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+<style>
+  /* La referencia ocupa todo el ancho: la barra lateral de navegación la pone
+     Scalar, y sumarle la nuestra dejaría dos columnas de índice compitiendo. */
+  .ref-wrap { max-width: 1180px; margin: 0 auto; padding: 26px 24px 0; }
+  .ref-marco { border: 1px solid rgba(255,255,255,.07); border-radius: 12px; overflow: hidden; margin-top: 18px; }
+  #referencia-api { min-height: 78vh; }
+  /* Estado de carga: si el contrato no llega, esto queda a la vista en vez de
+     un rectángulo vacío que se lee como «la página está rota». */
+  .ref-cargando { padding: 60px 24px; text-align: center; color: #6a6a6a; font-size: .92rem; }
+  .ref-cargando code { display: inline-block; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/docs/">Inicio</a>
+      <a href="/docs/empezar">Empezar</a>
+      <a href="/docs/erp">Integrar un ERP</a>
+      <a href="/docs/webhooks">Webhooks</a>
+      <a href="/docs/referencia" class="activo">Referencia</a>
+      <a href="/">← Volver al sitio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="ref-wrap">
+  <h1 style="font-family:'Inter',sans-serif;font-size:1.9rem;font-weight:800;color:#fff;margin-bottom:8px">Referencia de la API</h1>
+  <p style="color:#6a6a6a;font-size:.95rem;margin-bottom:4px">
+    Todos los endpoints con sus parámetros y respuestas. Se genera desde la aplicación,
+    así que refleja las rutas que de verdad están montadas.
+  </p>
+  <p style="font-size:.88rem;color:#6a6a6a">
+    ¿Preferís el archivo? <a href="https://beta.hapee.ai/api/v1/openapi.json">Descargá el contrato OpenAPI 3.1</a> —
+    Postman, Insomnia y la mayoría de los generadores de cliente lo importan directo.
+  </p>
+
+  <div class="ref-marco">
+    <div id="referencia-api">
+      <div class="ref-cargando" id="ref-cargando">
+        Cargando la referencia…<br>
+        <code>Si no aparece, el contrato está en beta.hapee.ai/api/v1/openapi.json</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="dv-footer" style="margin-top:40px">
+  <p>Hapee — WM Digital SpA · <a href="/politica-privacidad.html">Política de privacidad</a> · <a href="/terminos.html">Términos</a></p>
+  <p>API v1 · Documentación actualizada al 10 de septiembre de 2026</p>
+</footer>
+
+<script>
+  /* La referencia se dibuja con Scalar leyendo el contrato EN VIVO de la
+     aplicación, no una copia guardada acá. Con una copia, el día que alguien
+     agregue un endpoint esta página seguiría mostrando el contrato viejo y el
+     integrador programaría contra algo que ya no es.
+
+     Contrapartida asumida: si la aplicación no responde, esta página no muestra
+     la referencia. Por eso el enlace al archivo queda arriba, fuera del marco,
+     y el estado de carga dice dónde está el contrato. */
+  var configuration = {
+    spec: { url: 'https://beta.hapee.ai/api/v1/openapi.json' },
+    theme: 'default',
+    darkMode: true,
+    hideDownloadButton: false,
+    searchHotKey: 'k',
+    metaData: { title: 'Hapee API v1' }
+  };
+</script>
+<script id="api-reference" data-url="https://beta.hapee.ai/api/v1/openapi.json"></script>
+<script>
+  document.getElementById('api-reference').dataset.configuration =
+    JSON.stringify(configuration);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+</body>
+</html>

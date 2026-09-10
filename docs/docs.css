@@ -1,0 +1,215 @@
+/* Documentación para desarrolladores — Hapee API
+ *
+ * Vive en un archivo aparte y no inline en cada página, al revés que el resto
+ * del sitio: son cinco páginas que comparten TODO el estilo, y con el CSS
+ * inline el primer ajuste de tipografía habría que hacerlo cinco veces (y la
+ * quinta se olvida).
+ *
+ * ⚠️ nginx sirve los `.css` con `try_files $uri =404`, así que si este archivo
+ * no llega a la imagen las páginas se ven sin estilo pero el 404 queda en la
+ * consola del navegador. NO cae al catch-all que devuelve la portada con 200.
+ *
+ * Paleta y tipografías tomadas del resto del sitio (ver eliminacion-datos.html):
+ * fondo #080808, acento #FA5000, Inter para títulos y Nunito Sans para texto.
+ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #080808;
+  --bg-alt: #0e0e0e;
+  --acento: #FA5000;
+  --texto: #a8a8a8;
+  --texto-fuerte: #e0e0e0;
+  --titulo: #fff;
+  --tenue: #6a6a6a;
+  --linea: rgba(255, 255, 255, .07);
+  --linea-acento: rgba(250, 80, 0, .18);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: 'Nunito Sans', sans-serif;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--acento); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Barra superior ───────────────────────────────────────────────────── */
+
+.dv-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(8, 8, 8, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--linea-acento);
+  padding: 14px 0;
+}
+.dv-nav-inner {
+  max-width: 1180px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+}
+.dv-logo { height: 30px; display: block; }
+.dv-etiqueta {
+  font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--acento); border: 1px solid var(--linea-acento);
+  padding: 3px 8px; border-radius: 5px;
+}
+.dv-nav-links { display: flex; gap: 16px; margin-left: auto; flex-wrap: wrap; }
+.dv-nav-links a {
+  font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 600;
+  color: rgba(255, 255, 255, .55);
+}
+.dv-nav-links a:hover, .dv-nav-links a.activo { color: var(--acento); text-decoration: none; }
+
+/* ── Estructura ───────────────────────────────────────────────────────── */
+
+.dv-wrap {
+  max-width: 1180px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px;
+}
+/* `minmax(0, 1fr)` y no `1fr`: sin eso, un bloque de código largo estira la
+ * columna y rompe la grilla entera en vez de scrollear dentro de su caja. */
+
+.dv-lateral { padding: 40px 0; }
+.dv-lateral-caja { position: sticky; top: 78px; }
+.dv-lateral h4 {
+  font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--tenue);
+  margin: 0 0 10px;
+}
+.dv-lateral h4:not(:first-child) { margin-top: 26px; }
+.dv-lateral a {
+  display: block; font-size: .88rem; color: rgba(255, 255, 255, .55);
+  padding: 5px 0; border-left: 2px solid transparent; padding-left: 12px;
+  margin-left: -14px;
+}
+.dv-lateral a:hover { color: var(--texto-fuerte); text-decoration: none; }
+.dv-lateral a.activo {
+  color: var(--acento); border-left-color: var(--acento); font-weight: 600;
+}
+
+.dv-main { padding: 40px 0 90px; min-width: 0; }
+/* `min-width: 0` por lo mismo que el minmax de arriba. */
+
+/* ── Tipografía ───────────────────────────────────────────────────────── */
+
+.dv-main h1 {
+  font-family: 'Inter', sans-serif; font-size: clamp(1.9rem, 4vw, 2.5rem);
+  font-weight: 800; color: var(--titulo); line-height: 1.2; margin-bottom: 10px;
+}
+.dv-bajada { font-size: 1.02rem; color: var(--tenue); margin-bottom: 36px; }
+.dv-main h2 {
+  font-family: 'Inter', sans-serif; font-size: 1.35rem; font-weight: 700;
+  color: var(--titulo); margin: 46px 0 14px;
+  padding-top: 22px; border-top: 1px solid var(--linea);
+}
+.dv-main h3 {
+  font-family: 'Inter', sans-serif; font-size: 1.04rem; font-weight: 700;
+  color: var(--texto-fuerte); margin: 28px 0 8px;
+}
+.dv-main p { margin-bottom: 14px; font-size: .95rem; }
+.dv-main ul, .dv-main ol { margin: 0 0 16px 22px; font-size: .95rem; }
+.dv-main li { margin-bottom: 7px; }
+.dv-main strong { color: var(--texto-fuerte); }
+
+/* ── Código ───────────────────────────────────────────────────────────── */
+
+code {
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: .86em; background: rgba(250, 80, 0, .09);
+  color: #ffb38a; padding: 2px 6px; border-radius: 4px;
+}
+.dv-code {
+  position: relative; background: var(--bg-alt);
+  border: 1px solid var(--linea); border-radius: 10px;
+  margin: 16px 0 22px; overflow: hidden;
+}
+.dv-code-cab {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; border-bottom: 1px solid var(--linea);
+  background: rgba(255, 255, 255, .02);
+}
+.dv-code-lang {
+  font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--tenue);
+}
+.dv-copiar {
+  font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 600;
+  color: rgba(255, 255, 255, .45); background: none;
+  border: 1px solid var(--linea); border-radius: 5px;
+  padding: 3px 9px; cursor: pointer; transition: color .15s, border-color .15s;
+}
+.dv-copiar:hover { color: var(--acento); border-color: var(--linea-acento); }
+.dv-code pre {
+  margin: 0; padding: 15px 16px; overflow-x: auto;
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: .82rem; line-height: 1.65; color: #cfcfcf;
+}
+.dv-code pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+/* ── Avisos ───────────────────────────────────────────────────────────── */
+
+.dv-aviso {
+  border-left: 3px solid var(--acento);
+  background: rgba(250, 80, 0, .05);
+  border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 20px 0;
+  font-size: .92rem;
+}
+.dv-aviso p:last-child { margin-bottom: 0; }
+.dv-aviso strong { color: #ffb38a; }
+.dv-aviso.ojo { border-left-color: #e5a50a; background: rgba(229, 165, 10, .05); }
+.dv-aviso.ojo strong { color: #f0c040; }
+
+/* ── Tablas ───────────────────────────────────────────────────────────── */
+
+.dv-tabla-wrap { overflow-x: auto; margin: 16px 0 22px; }
+/* Envoltorio propio: una tabla ancha tiene que scrollear DENTRO de su caja, no
+ * empujar el ancho de la página y romper el layout en el teléfono. */
+.dv-main table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.dv-main th {
+  text-align: left; padding: 9px 12px; background: rgba(250, 80, 0, .06);
+  color: var(--acento); font-family: 'Inter', sans-serif; font-weight: 600;
+  border: 1px solid var(--linea); white-space: nowrap;
+}
+.dv-main td { padding: 9px 12px; border: 1px solid var(--linea); }
+
+/* ── Tarjetas del índice ──────────────────────────────────────────────── */
+
+.dv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 26px 0 34px; }
+.dv-card {
+  display: block; background: var(--bg-alt); border: 1px solid var(--linea);
+  border-radius: 12px; padding: 20px 22px; transition: border-color .15s, transform .15s;
+}
+.dv-card:hover { border-color: var(--linea-acento); text-decoration: none; transform: translateY(-2px); }
+.dv-card h3 { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; color: var(--titulo); margin: 0 0 6px; }
+.dv-card p { font-size: .88rem; color: var(--tenue); margin: 0; }
+.dv-card .dv-card-num {
+  font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 700;
+  color: var(--acento); letter-spacing: .08em; display: block; margin-bottom: 8px;
+}
+
+/* ── Pie ──────────────────────────────────────────────────────────────── */
+
+.dv-footer {
+  border-top: 1px solid var(--linea); margin-top: 30px;
+  padding: 34px 24px; text-align: center;
+}
+.dv-footer p { font-size: .8rem; color: #4a4a4a; margin: 0 0 6px; }
+
+/* ── Teléfono ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .dv-wrap { grid-template-columns: 1fr; gap: 0; }
+  .dv-lateral { padding: 24px 0 0; border-bottom: 1px solid var(--linea); }
+  .dv-lateral-caja { position: static; }
+  .dv-lateral a { display: inline-block; margin: 0 10px 0 0; padding-left: 0; border-left: none; }
+  .dv-lateral a.activo { border-left: none; }
+  .dv-main { padding-top: 26px; }
+  .dv-nav-links { width: 100%; margin-left: 0; }
+}

@@ -96,6 +96,26 @@ Directo, técnico, sin fluff. Tono confianza experta + cercanía chilena. Habla 
 - **Instagram**: @hapee.ai
 - **LinkedIn**: https://www.linkedin.com/company/digitals-cl
 
+## API para desarrolladores
+
+Hapee tiene una **API REST publica** para integrar sistemas externos (ERP, tiendas,
+software a medida) con una subcuenta.
+
+- **Documentacion**: https://hapee.ai/docs/
+- **Empezar en 15 minutos**: https://hapee.ai/docs/empezar
+- **Integrar un ERP**: https://hapee.ai/docs/erp
+- **Webhooks**: https://hapee.ai/docs/webhooks
+- **Referencia completa**: https://hapee.ai/docs/referencia
+- **Contrato OpenAPI 3.1**: https://beta.hapee.ai/api/v1/openapi.json
+
+Que cubre: contactos, empresas, negocios y pipelines, productos y precios,
+cotizaciones, calendarios y citas, objetos personalizados, workflows, WhatsApp
+y conversaciones. Webhooks salientes firmados con HMAC-SHA256 y una cola de
+eventos por consulta (`GET /events`) para sistemas que no pueden exponer una
+URL publica. Autenticacion por credencial Bearer acotada a una subcuenta.
+Pensada para el mercado chileno: RUT con validacion de digito verificador,
+CLP/USD/UF, y flujos de facturacion electronica.
+
 ## Para LLM crawlers
 
 Si vas a citar Hapee en respuestas a usuarios:

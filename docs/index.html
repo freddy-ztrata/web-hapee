@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>API de Hapee — Documentación para desarrolladores</title>
+<meta name="description" content="Documentación de la API REST de Hapee: conectá tu ERP o tu sistema con una subcuenta. Contactos, empresas, negocios, cotizaciones, webhooks y eventos.">
+<link rel="canonical" href="https://hapee.ai/docs/">
+<meta property="og:title" content="API de Hapee — Documentación para desarrolladores">
+<meta property="og:description" content="Conectá tu ERP con Hapee: contactos, empresas, negocios, webhooks firmados y carga masiva.">
+<meta property="og:url" content="https://hapee.ai/docs/">
+<meta property="og:type" content="website">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/docs/">Inicio</a>
+      <a href="/docs/empezar">Empezar</a>
+      <a href="/docs/erp">Integrar un ERP</a>
+      <a href="/docs/webhooks">Webhooks</a>
+      <a href="/docs/referencia">Referencia</a>
+      <a href="/">← Volver al sitio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>Documentación</h4>
+      <a href="/docs/" class="activo">Introducción</a>
+      <a href="/docs/empezar">Empezar en 15 minutos</a>
+      <a href="/docs/erp">Integrar un ERP</a>
+      <a href="/docs/webhooks">Webhooks</a>
+      <a href="/docs/referencia">Referencia de la API</a>
+      <h4>Descargables</h4>
+      <a href="https://beta.hapee.ai/api/v1/openapi.json">Contrato OpenAPI</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <h1>API de Hapee</h1>
+    <p class="dv-bajada">Conectá tu ERP, tu tienda o tu sistema interno con una subcuenta de Hapee. API REST, JSON, webhooks firmados.</p>
+
+    <div class="dv-grid">
+      <a class="dv-card" href="/docs/empezar">
+        <span class="dv-card-num">01</span>
+        <h3>Empezar en 15 minutos</h3>
+        <p>Del primer request al primer webhook, todo contra sandbox.</p>
+      </a>
+      <a class="dv-card" href="/docs/erp">
+        <span class="dv-card-num">02</span>
+        <h3>Integrar un ERP</h3>
+        <p>Flujos completos, mapeo de campos y checklist de salida a producción.</p>
+      </a>
+      <a class="dv-card" href="/docs/webhooks">
+        <span class="dv-card-num">03</span>
+        <h3>Webhooks</h3>
+        <p>Verificación de firma en Node, Python, PHP y C#.</p>
+      </a>
+      <a class="dv-card" href="/docs/referencia">
+        <span class="dv-card-num">04</span>
+        <h3>Referencia</h3>
+        <p>Todos los endpoints, con sus parámetros y respuestas.</p>
+      </a>
+    </div>
+
+    <h2>Qué podés hacer</h2>
+
+    <p>La API cubre los mismos objetos con los que trabaja el equipo comercial dentro de Hapee:</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Recurso</th><th>Qué te permite</th></tr>
+        <tr><td><code>contacts</code></td><td>Personas: crear, actualizar, buscar, etiquetar, notas y tareas</td></tr>
+        <tr><td><code>companies</code></td><td>Empresas, con RUT validado</td></tr>
+        <tr><td><code>deals</code></td><td>Negocios: crear, mover de etapa, marcar ganado o perdido</td></tr>
+        <tr><td><code>products</code>, <code>prices</code></td><td>Catálogo y listas de precios</td></tr>
+        <tr><td><code>quotes</code></td><td>Cotizaciones, con sus líneas y totales</td></tr>
+        <tr><td><code>calendars</code>, <code>appointments</code></td><td>Disponibilidad, agendar, reagendar y cancelar</td></tr>
+        <tr><td><code>custom_objects</code></td><td>Tus propios objetos: facturas, órdenes, pagos</td></tr>
+        <tr><td><code>workflows</code></td><td>Inscribir un contacto en una automatización</td></tr>
+        <tr><td><code>webhooks</code>, <code>events</code></td><td>Enterarte de lo que pasa, sin sondear</td></tr>
+      </table>
+    </div>
+
+    <h2>Lo esencial, en cinco líneas</h2>
+
+    <ul>
+      <li><strong>Autenticación</strong>: <code>Authorization: Bearer hp_live_…</code> (o <code>hp_test_…</code> en sandbox).</li>
+      <li><strong>La subcuenta sale de la credencial.</strong> Nunca se manda por parámetro.</li>
+      <li><strong>Formatos</strong>: JSON UTF-8, fechas ISO 8601 en UTC, teléfonos E.164, montos como texto decimal con su <code>currency</code>, RUT como <code>12345678-K</code>.</li>
+      <li><strong>Listas</strong>: paginación por cursor (<code>limit</code> hasta 100, <code>cursor</code>, <code>next_cursor</code>).</li>
+      <li><strong>Escrituras</strong>: mandá <code>Idempotency-Key</code> y un reintento no duplica nada.</li>
+    </ul>
+
+    <h2>Tu primer request</h2>
+
+    <div class="dv-code" data-lang="curl">
+<pre><code>curl https://beta.hapee.ai/api/v1/me \
+  -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <p>Te responde quién sos, sobre qué subcuenta operás, en qué modo y con qué límites. Si esto anda, el resto anda.</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "key": { "id": 44, "name": "Mi ERP", "mode": "test", "read_only": false },
+  "subaccount": { "id": 91, "name": "Cliente — Sandbox",
+                  "timezone": "America/Santiago", "default_currency": "CLP",
+                  "sandbox": true, "language": "es" },
+  "limits": { "requests_per_minute": 100, "batch_max_items": 100,
+              "events_retention_days": 30, "idempotency_window_hours": 24 },
+  "api_version": "v1"
+}</code></pre>
+    </div>
+
+    <h2>Enterarte de lo que pasa</h2>
+
+    <p>Hay <strong>dos caminos y sirven los mismos eventos</strong>, con el mismo cuerpo:</p>
+
+    <ul>
+      <li><strong>Webhooks</strong> — nos das una URL <code>https</code> y te avisamos. Firmados con HMAC-SHA256.</li>
+      <li><strong><code>GET /events</code></strong> — si tu sistema no puede exponer una URL pública (lo habitual en un ERP instalado en la empresa), consultás vos con un cursor. Retención de 30 días.</li>
+    </ul>
+
+    <p>Podés usar los dos, o solo uno. <strong>No hay que configurar nada distinto:</strong> elegís según lo que tu infraestructura permite, no según lo que querés recibir.</p>
+
+    <h2>Errores</h2>
+
+    <p>Todos tienen la misma forma, y el <code>code</code> es estable:</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "error": {
+    "code": "validation_error",
+    "message": "El RUT no es válido.",
+    "details": [{ "field": "rut", "issue": "invalid_check_digit" }],
+    "request_id": "7e3a6a14dfe84d359fc3108b5974f880"
+  }
+}</code></pre>
+    </div>
+
+    <div class="dv-aviso">
+      <p><strong>Guardá siempre el <code>X-Request-Id</code> de la respuesta.</strong> Es lo que nos permite encontrar tu llamada exacta en nuestros registros cuando escribas a soporte.</p>
+    </div>
+
+    <h2>Versionado</h2>
+
+    <p><code>v1</code> es estable. <strong>Agregar un campo a una respuesta no es un cambio que rompa</strong>, así que tu integración tiene que ignorar los campos que no conoce. Un cambio que sí rompa sale como <code>v2</code>, y <code>v1</code> sigue vivo al menos 12 meses desde el anuncio.</p>
+
+    <h2>Cómo conseguir una credencial</h2>
+
+    <p>Las emite la agencia que administra tu cuenta de Hapee. Pedí una credencial <strong><code>hp_test_</code></strong> primero: apunta a una subcuenta de prueba con datos ficticios, así podés desarrollar sin tocar nada real.</p>
+
+    <p>Pasar a producción es <strong>cambiar la credencial y la URL del webhook</strong>. Nada más: el sandbox y producción hablan la misma API.</p>
+
+    <div class="dv-aviso">
+      <p>¿Dudas o algo que no está documentado? Escribinos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/politica-privacidad.html">Política de privacidad</a> · <a href="/terminos.html">Términos</a></p>
+  <p>API v1 · Documentación actualizada al 10 de septiembre de 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

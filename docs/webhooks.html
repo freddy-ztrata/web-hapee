@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Webhooks — API de Hapee</title>
+<meta name="description" content="Webhooks de Hapee: verificación de firma HMAC-SHA256 en Node, Python, PHP y C#, reintentos, deduplicación y la alternativa por consulta.">
+<link rel="canonical" href="https://hapee.ai/docs/webhooks">
+<meta property="og:title" content="Webhooks — API de Hapee">
+<meta property="og:description" content="Verificación de firma en cuatro lenguajes y las reglas del receptor.">
+<meta property="og:url" content="https://hapee.ai/docs/webhooks">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/docs/">Inicio</a>
+      <a href="/docs/empezar">Empezar</a>
+      <a href="/docs/erp">Integrar un ERP</a>
+      <a href="/docs/webhooks" class="activo">Webhooks</a>
+      <a href="/docs/referencia">Referencia</a>
+      <a href="/">← Volver al sitio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>En esta página</h4>
+      <a href="#forma">Cómo se ve lo que llega</a>
+      <a href="#firma">Verificar la firma</a>
+      <a href="#node">· Node</a>
+      <a href="#python">· Python</a>
+      <a href="#php">· PHP</a>
+      <a href="#csharp">· C#</a>
+      <a href="#reglas">Reglas del receptor</a>
+      <a href="#rotar">Rotar el secreto</a>
+      <a href="#probar">Probar</a>
+      <a href="#pull">Alternativa por consulta</a>
+      <a href="#catalogo">Catálogo de eventos</a>
+      <h4>Ver también</h4>
+      <a href="/docs/erp">Integrar un ERP</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <h1>Webhooks</h1>
+    <p class="dv-bajada">Te avisamos cuando pasa algo en la subcuenta. Si tu sistema no puede exponer una URL pública, saltá a <a href="#pull">la alternativa por consulta</a> — sirve exactamente los mismos eventos.</p>
+
+    <h2 id="forma">Cómo se ve lo que te llega</h2>
+
+    <div class="dv-code" data-lang="http">
+<pre><code>POST /hooks/hapee HTTP/1.1
+Content-Type: application/json
+User-Agent: Hapee-Webhooks/1.0
+X-Hapee-Event: deal.won
+X-Hapee-Delivery: 88213
+X-Hapee-Signature: t=1789057409,v1=18af345942aa99c0...
+
+{
+  "id": "evt_10433",
+  "type": "deal.won",
+  "api_version": "v1",
+  "created_at": "2026-09-10T14:02:11Z",
+  "subaccount_id": 63,
+  "data": { "id": 5521, "title": "Reposición Q4",
+            "amount": "4200000", "currency": "CLP" }
+}</code></pre>
+    </div>
+
+    <p><strong><code>data</code> tiene la misma forma que devuelve el <code>GET</code> de ese recurso.</strong> No es un resumen: es el objeto completo. Si recibís <code>contact.updated</code> y después consultás el contacto, vas a ver lo mismo.</p>
+
+    <p>En los eventos de actualización viaja además <code>previous</code>, con los campos que cambiaron.</p>
+
+    <h2 id="firma">Verificar la firma</h2>
+
+    <div class="dv-aviso ojo">
+      <p><strong>No es opcional.</strong> Sin verificar, cualquiera que conozca tu URL puede inventar un pago recibido o un negocio ganado.</p>
+    </div>
+
+    <p>La firma es <code>t=&lt;unix&gt;,v1=&lt;hex&gt;</code> donde el HMAC-SHA256 cubre <code>t + "." + cuerpo</code> usando el secreto de tu endpoint.</p>
+
+    <ul>
+      <li><strong>El timestamp entra en el mensaje firmado a propósito.</strong> Si solo se firmara el cuerpo, el <code>t</code> sería decorativo y un cuerpo capturado con su firma valdría para siempre.</li>
+      <li><strong>Verificá la firma ANTES de mirar el timestamp.</strong> El <code>t</code> viene del propio encabezado: dejarlo decidir primero sería creerle a quien todavía no demostró nada.</li>
+      <li><strong>Usá el cuerpo crudo</strong>, tal como llegó. Si lo parseás a JSON y lo volvés a serializar, cambia un espacio y la firma no valida.</li>
+    </ul>
+
+    <h3 id="node">Node</h3>
+
+    <div class="dv-code" data-lang="javascript">
+<pre><code>const crypto = require('crypto');
+
+function firmaValida(cuerpoCrudo, cabecera, secreto, toleranciaSeg = 300) {
+  const partes = Object.fromEntries(
+    cabecera.split(',').map(p =&gt; p.split('=').map(s =&gt; s.trim()))
+  );
+  const { t, v1 } = partes;
+  if (!t || !v1) return false;
+
+  const esperado = crypto
+    .createHmac('sha256', secreto)
+    .update(`${t}.${cuerpoCrudo}`)
+    .digest('hex');
+
+  // Comparación en tiempo constante: un `===` filtra información por el
+  // tiempo que tarda en fallar.
+  const a = Buffer.from(esperado, 'hex');
+  const b = Buffer.from(v1, 'hex');
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+
+  return Math.abs(Math.floor(Date.now() / 1000) - Number(t)) &lt;= toleranciaSeg;
+}
+
+// Express: hace falta el cuerpo CRUDO, no el parseado.
+app.post('/hooks/hapee', express.raw({ type: 'application/json' }), (req, res) =&gt; {
+  const crudo = req.body.toString('utf8');
+  if (!firmaValida(crudo, req.get('X-Hapee-Signature'),
+                   process.env.HAPEE_WEBHOOK_SECRET)) {
+    return res.sendStatus(401);
+  }
+  const evento = JSON.parse(crudo);
+  encolar(evento);       // deduplicá por evento.id ANTES de procesar
+  res.sendStatus(200);   // respondé rápido; procesá después
+});</code></pre>
+    </div>
+
+    <h3 id="python">Python</h3>
+
+    <div class="dv-code" data-lang="python">
+<pre><code>import hashlib, hmac, time
+
+def firma_valida(cuerpo_crudo: bytes, cabecera: str, secreto: str,
+                 tolerancia_seg: int = 300) -&gt; bool:
+    partes = dict(
+        p.strip().split("=", 1) for p in cabecera.split(",") if "=" in p
+    )
+    t, v1 = partes.get("t"), partes.get("v1")
+    if not t or not v1:
+        return False
+
+    esperado = hmac.new(
+        secreto.encode("utf-8"),
+        t.encode("utf-8") + b"." + cuerpo_crudo,
+        hashlib.sha256,
+    ).hexdigest()
+
+    if not hmac.compare_digest(esperado, v1):
+        return False
+    return abs(int(time.time()) - int(t)) &lt;= tolerancia_seg</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="python">
+<pre><code># FastAPI: pedí el cuerpo crudo.
+@app.post("/hooks/hapee")
+async def hook(request: Request):
+    crudo = await request.body()
+    if not firma_valida(crudo, request.headers.get("x-hapee-signature", ""), SECRETO):
+        raise HTTPException(401)
+    evento = json.loads(crudo)
+    encolar(evento)
+    return {"ok": True}</code></pre>
+    </div>
+
+    <h3 id="php">PHP</h3>
+
+    <div class="dv-code" data-lang="php">
+<pre><code>&lt;?php
+function firma_valida(string $cuerpoCrudo, string $cabecera,
+                      string $secreto, int $toleranciaSeg = 300): bool {
+    $partes = [];
+    foreach (explode(',', $cabecera) as $p) {
+        $kv = explode('=', trim($p), 2);
+        if (count($kv) === 2) { $partes[$kv[0]] = $kv[1]; }
+    }
+    if (empty($partes['t']) || empty($partes['v1'])) { return false; }
+
+    $esperado = hash_hmac('sha256', $partes['t'] . '.' . $cuerpoCrudo, $secreto);
+
+    if (!hash_equals($esperado, $partes['v1'])) { return false; }
+    return abs(time() - (int)$partes['t']) &lt;= $toleranciaSeg;
+}
+
+$crudo = file_get_contents('php://input');
+$cabecera = $_SERVER['HTTP_X_HAPEE_SIGNATURE'] ?? '';
+if (!firma_valida($crudo, $cabecera, getenv('HAPEE_WEBHOOK_SECRET'))) {
+    http_response_code(401); exit;
+}
+$evento = json_decode($crudo, true);</code></pre>
+    </div>
+
+    <h3 id="csharp">C#</h3>
+
+    <div class="dv-code" data-lang="csharp">
+<pre><code>using System.Security.Cryptography;
+using System.Text;
+
+public static bool FirmaValida(string cuerpoCrudo, string cabecera,
+                               string secreto, int toleranciaSeg = 300)
+{
+    var partes = cabecera.Split(',')
+        .Select(p =&gt; p.Trim().Split('=', 2))
+        .Where(kv =&gt; kv.Length == 2)
+        .ToDictionary(kv =&gt; kv[0], kv =&gt; kv[1]);
+
+    if (!partes.TryGetValue("t", out var t) || !partes.TryGetValue("v1", out var v1))
+        return false;
+
+    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secreto));
+    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes($"{t}.{cuerpoCrudo}"));
+    var esperado = Convert.ToHexString(hash).ToLowerInvariant();
+
+    if (!CryptographicOperations.FixedTimeEquals(
+            Encoding.UTF8.GetBytes(esperado), Encoding.UTF8.GetBytes(v1)))
+        return false;
+
+    var ahora = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    return Math.Abs(ahora - long.Parse(t)) &lt;= toleranciaSeg;
+}</code></pre>
+    </div>
+
+    <h2 id="reglas">Reglas del receptor</h2>
+
+    <h3>Deduplicá por <code>id</code></h3>
+
+    <p><strong>Una entrega puede repetirse.</strong> Si tu endpoint tarda y se corta la conexión después de procesar pero antes de responder, lo reintentamos. Guardá los <code>id</code> que ya procesaste:</p>
+
+    <div class="dv-code" data-lang="sql">
+<pre><code>INSERT INTO eventos_hapee (id) VALUES ('evt_10433')
+ON CONFLICT (id) DO NOTHING;   -- si no insertó, ya lo procesaste: salí</code></pre>
+    </div>
+
+    <h3>El orden <em>no</em> está garantizado</h3>
+
+    <p>Son N endpoints con reintentos independientes: un <code>deal.won</code> puede llegar antes que el <code>deal.stage_changed</code> que lo precedió. Si el orden te importa, ordená por <code>created_at</code>, o consultá el estado actual con un <code>GET</code> en vez de reconstruirlo desde la secuencia de eventos.</p>
+
+    <h3>Respondé rápido</h3>
+
+    <p>Cualquier <code>2xx</code> confirma. <strong>Encolá y procesá después</strong>: el timeout es de 10 segundos, y un endpoint lento acumula reintentos que se ven como duplicados.</p>
+
+    <h3>Reintentos</h3>
+
+    <p>Espera creciente (2^intentos minutos, tope 60) hasta ~24 horas. Tras <strong>15 entregas seguidas sin 2xx</strong> el endpoint se desactiva solo y se avisa. El contador vuelve a cero con cada entrega exitosa, así que un endpoint que se cae una tarde y vuelve <strong>no</strong> se apaga.</p>
+
+    <p>Para reactivarlo: <code>PATCH /webhooks/endpoints/{id}</code> con <code>{"active": true}</code>.</p>
+
+    <h2 id="rotar">Rotar el secreto</h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/webhooks/endpoints/12/rotate-secret \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <p>Durante <strong>24 horas</strong> los dos secretos son válidos y cada entrega viaja con dos firmas: <code>X-Hapee-Signature</code> (el nuevo) y <code>X-Hapee-Signature-Previous</code> (el viejo).</p>
+
+    <div class="dv-aviso">
+      <p><strong>Por eso no hace falta coordinar una caída.</strong> Sin el traslape tendrías que cambiar el secreto en el mismo instante que nosotros, y todo evento en vuelo en esa ventana llegaría con una firma que no valida.</p>
+    </div>
+
+    <p>Durante la ventana, aceptá cualquiera de las dos. Después de cambiar, quedate solo con la nueva.</p>
+
+    <h2 id="probar">Probar</h2>
+
+    <h3>Sin salir a producción</h3>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/webhooks/endpoints/12/ping \
+  -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <p>Dispara un <code>webhook.test</code> <strong>real</strong>, por la misma cola, con la misma firma y los mismos reintentos. Un botón de prueba que use un atajo prueba el atajo.</p>
+
+    <h3>En tu máquina</h3>
+
+    <p>Levantá un túnel (<code>ngrok http 3000</code>, <code>cloudflared tunnel</code>) y registrá la URL temporal como endpoint. Acordate de borrarlo después.</p>
+
+    <h3>Ver qué pasó</h3>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code># Últimas entregas
+curl "https://beta.hapee.ai/api/v1/webhooks/deliveries?endpoint_id=12&amp;status=failed" \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"
+
+# El detalle, con el cuerpo que se mandó
+curl https://beta.hapee.ai/api/v1/webhooks/deliveries/88213 \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"
+
+# Reenviar
+curl -X POST https://beta.hapee.ai/api/v1/webhooks/deliveries/88213/redeliver \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <p>Reenviar <strong>clona</strong> la entrega, no reabre la original: el registro de lo que pasó —con su estado, sus intentos y su error— es la única evidencia de por qué hubo que reenviar. El clon lleva el mismo <code>id</code> de evento, así que tu deduplicación lo reconoce.</p>
+
+    <h2 id="pull">Alternativa: <code>GET /events</code></h2>
+
+    <p>Si tu sistema no puede exponer una URL pública —lo habitual en un ERP instalado en la empresa— consultás vos. <strong>Mismos eventos, mismo cuerpo.</strong></p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl "https://beta.hapee.ai/api/v1/events?cursor=10432&amp;limit=100" \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <ul>
+      <li>Guardá el <code>next_cursor</code> y pasalo la vez siguiente</li>
+      <li>Vienen <strong>del más viejo al más nuevo</strong>: te estás poniendo al día</li>
+      <li>Retención: <strong>30 días</strong></li>
+      <li>Filtrá con <code>?type=deal.won,quote.accepted</code></li>
+    </ul>
+
+    <div class="dv-aviso">
+      <p><strong>El cursor es el <code>id</code>, nunca la fecha.</strong> Dos eventos del mismo milisegundo con un cursor por fecha se pierden o se repiten al cortar la página, y en una sincronización eso significa una venta que nunca viste.</p>
+    </div>
+
+    <h2 id="catalogo">Catálogo de eventos</h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl https://beta.hapee.ai/api/v1/webhooks/events \
+  -H "Authorization: Bearer hp_live_TU_CREDENCIAL"</code></pre>
+    </div>
+
+    <p>Hoy son <strong>35</strong>:</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Grupo</th><th>Eventos</th></tr>
+        <tr><td>Contactos</td><td><code>contact.created</code>, <code>.updated</code>, <code>.deleted</code>, <code>.tag_added</code>, <code>.tag_removed</code></td></tr>
+        <tr><td>Empresas</td><td><code>company.created</code>, <code>.updated</code>, <code>.archived</code></td></tr>
+        <tr><td>Negocios</td><td><code>deal.created</code>, <code>.updated</code>, <code>.stage_changed</code>, <code>.won</code>, <code>.lost</code>, <code>.deleted</code></td></tr>
+        <tr><td>Cotizaciones</td><td><code>quote.created</code>, <code>.sent</code>, <code>.viewed</code>, <code>.accepted</code>, <code>.rejected</code></td></tr>
+        <tr><td>Productos</td><td><code>product.created</code>, <code>.updated</code>, <code>.archived</code></td></tr>
+        <tr><td>Objetos personalizados</td><td><code>custom_object.record.created</code>, <code>.updated</code>, <code>.deleted</code></td></tr>
+        <tr><td>Citas</td><td><code>appointment.created</code>, <code>.updated</code>, <code>.cancelled</code></td></tr>
+        <tr><td>Formularios</td><td><code>form.submitted</code></td></tr>
+        <tr><td>Facturación y cobranza</td><td><code>invoice.sent</code>, <code>.paid</code>, <code>.overdue</code>, <code>payment.received</code>, <code>refund.issued</code></td></tr>
+        <tr><td>Prueba</td><td><code>webhook.test</code></td></tr>
+      </table>
+    </div>
+
+    <p>Suscribite con <code>["*"]</code> a todos, o a la lista que te importe. <strong>El comodín se resuelve al momento de emitir</strong>, pero la suscripción se guarda como lista: un evento nuevo en el catálogo no empieza a mandársele a quien no lo pidió.</p>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/politica-privacidad.html">Política de privacidad</a> · <a href="/terminos.html">Términos</a></p>
+  <p>API v1 · Documentación actualizada al 10 de septiembre de 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>
