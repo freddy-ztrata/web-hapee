@@ -206,6 +206,60 @@ for p in PAGINAS:
 
 
 # ══════════════════════════════════════════════════════════════════════════
+titulo("F. Las anclas internas existen")
+# ══════════════════════════════════════════════════════════════════════════
+# El bloque C RECORTA el `#` antes de resolver, asi que un `href="#caminos"`
+# sin su `id="caminos"` pasa en verde ahi. Es el mismo modo de falla que esta
+# suite existe para cerrar: nadie recibe un error, el enlace no hace nada.
+
+anclas_rotas = []
+for p, par in parseadas.items():
+    ids = set(re.findall(r'\sid="([^"]+)"', leer(p)))
+    for href in par.enlaces:
+        if "#" not in href:
+            continue
+        destino, frag = href.split("#", 1)
+        # Solo las de ESTA pagina: un ancla de otra se comprueba al parsearla.
+        if destino and destino not in ("", "/"):
+            continue
+        if frag and frag not in ids:
+            anclas_rotas.append("%s -> #%s" % (os.path.basename(p), frag))
+
+chk(not anclas_rotas, "toda ancla interna apunta a un id que existe")
+for a in anclas_rotas:
+    print("     ANCLA ROTA: %s" % a)
+
+
+# ══════════════════════════════════════════════════════════════════════════
+titulo("G. El aviso que mas caro sale aprender solo")
+# ══════════════════════════════════════════════════════════════════════════
+# Medido en `workflow_engine_service._action_webhook_out`: la unica rama que
+# devuelve `mode="fail"` es `500 <= status < 600`. O sea que un 401 del sistema
+# del cliente cae en `continue` y el workflow sigue como si hubiera funcionado.
+# Nada falla, nada se registra como error, y el operador se entera cuando le
+# preguntan por las ventas que nunca llegaron.
+
+erp = leer("docs/erp.html")
+chk("_http_status" in erp,
+    "la guia nombra la variable donde queda el codigo de respuesta")
+chk("5xx" in erp and "4xx" in erp,
+    "y dice que la diferencia esta entre 4xx y 5xx")
+# Se acota al AVISO donde vive `_http_status`: «If/Else» aparece tambien en la
+# tabla comparativa de mas abajo, asi que un `in erp` pelado pasa en verde con
+# la instruccion borrada -- pasa por la OTRA aparicion.
+# Se acota al PARRAFO, no al aviso: dentro del mismo aviso el nombre del nodo
+# aparece dos veces, asi que borrar la instruccion dejaba el check en verde por
+# la OTRA aparicion. Contar apariciones en un bloque no prueba la rama que
+# importa -- la instruccion y `_http_status` viven en el MISMO <p>.
+_parrafos = re.findall(r"<p>(.*?)</p>", erp, re.S)
+_aviso_4xx = next((a for a in _parrafos if "_http_status" in a), "")
+# El nombre va EXACTO al de la pantalla (`wf.catalog.logic.if_else` = "Si / Si
+# no" en el catalogo de la app). Un nombre inventado manda al cliente a buscar
+# un nodo que no va a encontrar, y ahi concluye que el aviso esta vencido.
+chk(bool(_aviso_4xx) and "«Si / Si no»" in _aviso_4xx,
+    "y dice QUE hacer, nombrando el nodo como se llama en la pantalla")
+
+# ══════════════════════════════════════════════════════════════════════════
 print("\n" + "=" * 72)
 print("RESUMEN: %d OK, %d FALLAS" % (len(oks), len(fallos)))
 if fallos:

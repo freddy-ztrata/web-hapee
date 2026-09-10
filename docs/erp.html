@@ -46,6 +46,7 @@
     <div class="dv-lateral-caja">
       <h4>En esta página</h4>
       <a href="#antes">Antes de escribir código</a>
+      <a href="#caminos">¿API o workflows?</a>
       <a href="#verdad">Fuente de verdad</a>
       <a href="#flujo-a">A · Carga inicial</a>
       <a href="#flujo-b">B · Sincronización</a>
@@ -81,6 +82,68 @@
     </div>
 
     <p>Si esto anda, el resto anda.</p>
+
+    <h2 id="caminos">¿API o workflows?</h2>
+
+    <p>Hay <strong>tres formas de conectar</strong> y no compiten: se usan juntas. La diferencia
+    real es <em>quién escribe código</em>.</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Qué querés hacer</th><th>Camino</th><th>Quién lo hace</th></tr>
+        <tr><td>Cargar miles de clientes y productos</td><td><strong>API + lote</strong></td><td>Tu equipo técnico</td></tr>
+        <tr><td>«Negocio ganado → avisá al ERP»</td><td><strong>Workflow</strong></td><td>Tu equipo comercial, sin código</td></tr>
+        <tr><td>«El ERP avisa que se pagó»</td><td><strong>Trigger de webhook</strong></td><td>Una llamada HTTP, sin credencial</td></tr>
+        <tr><td>Sync incremental sin perder nada</td><td><strong>API + webhooks</strong></td><td>Tu equipo técnico</td></tr>
+      </table>
+    </div>
+
+    <h3>Con workflows, sin escribir código del lado de Hapee</h3>
+
+    <p>Dentro de Hapee, en el constructor de workflows, hay dos piezas que hablan con tu sistema:</p>
+
+    <ul>
+      <li><strong>Nodo «Webhook saliente»</strong> — se pone después del paso que te interese
+      (por ejemplo, «el negocio pasó a Ganado») y hace un <code>POST</code> a tu URL. Se configura
+      URL, método, cuerpo JSON con variables del contacto, cabeceras y un secreto para firmar.</li>
+      <li><strong>Activador «Webhook recibido»</strong> — te da una URL a la que tu sistema le hace
+      <code>POST</code> para arrancar el workflow. <strong>No necesita credencial</strong>: alcanza con
+      el token que va en la propia URL.</li>
+    </ul>
+
+    <p>Es el camino más rápido para empezar: lo arma la persona que ya usa Hapee, en una tarde,
+    sin esperar a nadie.</p>
+
+    <div class="dv-aviso ojo">
+      <p><strong>⚠️ Un 4xx tuyo NO detiene el workflow.</strong> El motor solo reintenta cuando tu
+      sistema responde <strong>5xx</strong>. Si responde <code>401</code> porque el token está mal, o
+      <code>400</code> porque el cuerpo no le gusta, <strong>el workflow sigue como si hubiera
+      funcionado</strong> y nadie se entera.</p>
+      <p>El código de respuesta queda en la variable <code>_http_status</code>. <strong>Poné siempre un
+      nodo «Si / Si no» que lo revise</strong> justo después del webhook saliente, y mandá el caso malo a
+      una notificación interna. Sin eso, el día que tu token venza, las ventas «se avisaron» y no
+      llegaron.</p>
+      <p>En el registro de ejecución del workflow ese paso aparece marcado como
+      <strong>«sin efecto»</strong>, con el código HTTP al lado — pero eso lo ve quien entra a
+      mirar, y el nodo «Si / Si no» avisa solo.</p>
+    </div>
+
+    <h3>Cuándo conviene la API en vez del workflow</h3>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th></th><th>Workflow</th><th>API + webhooks</th></tr>
+        <tr><td>Reintentos si tu sistema está caído</td><td>5 intentos, ~1 hora</td><td><strong>12 intentos, ~24 horas</strong></td></tr>
+        <tr><td>Registro de entregas consultable</td><td>En el registro del workflow</td><td><strong>Sí, con reenvío manual</strong></td></tr>
+        <tr><td>Un 4xx tuyo</td><td>Sigue como si nada</td><td><strong>Se reintenta y queda registrado</strong></td></tr>
+        <tr><td>Firma</td><td>Secreto opcional que configurás</td><td><strong>HMAC con marca de tiempo</strong></td></tr>
+        <tr><td>Carga masiva</td><td>No</td><td><strong>Hasta 100 por llamada</strong></td></tr>
+        <tr><td>Quién lo configura</td><td><strong>El equipo comercial</strong></td><td>El equipo técnico</td></tr>
+      </table>
+    </div>
+
+    <p><strong>Nuestra recomendación:</strong> empezá con workflows para probar la conexión de punta
+    a punta, y pasá a la API lo que no se puede perder — cobranza, facturas y la carga inicial.</p>
 
     <h2 id="verdad">Fuente de verdad: quién manda sobre qué</h2>
 
