@@ -64,7 +64,7 @@
   <main class="dv-main">
 
     <h1>Webhooks</h1>
-    <p class="dv-bajada">Te avisamos cuando pasa algo en la subcuenta. Si tu sistema no puede exponer una URL pública, saltá a <a href="#pull">la alternativa por consulta</a> — sirve exactamente los mismos eventos.</p>
+    <p class="dv-bajada">Te avisamos cuando pasa algo en la subcuenta. Si tu sistema no puede exponer una URL pública, salta a <a href="#pull">la alternativa por consulta</a> — sirve exactamente los mismos eventos.</p>
 
     <h2 id="forma">Cómo se ve lo que te llega</h2>
 
@@ -87,7 +87,7 @@ X-Hapee-Signature: t=1789057409,v1=18af345942aa99c0...
 }</code></pre>
     </div>
 
-    <p><strong><code>data</code> tiene la misma forma que devuelve el <code>GET</code> de ese recurso.</strong> No es un resumen: es el objeto completo. Si recibís <code>contact.updated</code> y después consultás el contacto, vas a ver lo mismo.</p>
+    <p><strong><code>data</code> tiene la misma forma que devuelve el <code>GET</code> de ese recurso.</strong> No es un resumen: es el objeto completo. Si recibes <code>contact.updated</code> y después consultas el contacto, vas a ver lo mismo.</p>
 
     <p>En los eventos de actualización viaja además <code>previous</code>, con los campos que cambiaron.</p>
 
@@ -101,8 +101,8 @@ X-Hapee-Signature: t=1789057409,v1=18af345942aa99c0...
 
     <ul>
       <li><strong>El timestamp entra en el mensaje firmado a propósito.</strong> Si solo se firmara el cuerpo, el <code>t</code> sería decorativo y un cuerpo capturado con su firma valdría para siempre.</li>
-      <li><strong>Verificá la firma ANTES de mirar el timestamp.</strong> El <code>t</code> viene del propio encabezado: dejarlo decidir primero sería creerle a quien todavía no demostró nada.</li>
-      <li><strong>Usá el cuerpo crudo</strong>, tal como llegó. Si lo parseás a JSON y lo volvés a serializar, cambia un espacio y la firma no valida.</li>
+      <li><strong>Verifica la firma ANTES de mirar el timestamp.</strong> El <code>t</code> viene del propio encabezado: dejarlo decidir primero sería creerle a quien todavía no demostró nada.</li>
+      <li><strong>Usa el cuerpo crudo</strong>, tal como llegó. Si lo parseas a JSON y lo vuelves a serializar, cambia un espacio y la firma no valida.</li>
     </ul>
 
     <h3 id="node">Node</h3>
@@ -139,8 +139,8 @@ app.post('/hooks/hapee', express.raw({ type: 'application/json' }), (req, res) =
     return res.sendStatus(401);
   }
   const evento = JSON.parse(crudo);
-  encolar(evento);       // deduplicá por evento.id ANTES de procesar
-  res.sendStatus(200);   // respondé rápido; procesá después
+  encolar(evento);       // deduplica por evento.id ANTES de procesar
+  res.sendStatus(200);   // responde rápido; procesa después
 });</code></pre>
     </div>
 
@@ -170,7 +170,7 @@ def firma_valida(cuerpo_crudo: bytes, cabecera: str, secreto: str,
     </div>
 
     <div class="dv-code" data-lang="python">
-<pre><code># FastAPI: pedí el cuerpo crudo.
+<pre><code># FastAPI: pide el cuerpo crudo.
 @app.post("/hooks/hapee")
 async def hook(request: Request):
     crudo = await request.body()
@@ -240,22 +240,22 @@ public static bool FirmaValida(string cuerpoCrudo, string cabecera,
 
     <h2 id="reglas">Reglas del receptor</h2>
 
-    <h3>Deduplicá por <code>id</code></h3>
+    <h3>Deduplica por <code>id</code></h3>
 
-    <p><strong>Una entrega puede repetirse.</strong> Si tu endpoint tarda y se corta la conexión después de procesar pero antes de responder, lo reintentamos. Guardá los <code>id</code> que ya procesaste:</p>
+    <p><strong>Una entrega puede repetirse.</strong> Si tu endpoint tarda y se corta la conexión después de procesar pero antes de responder, lo reintentamos. Guarda los <code>id</code> que ya procesaste:</p>
 
     <div class="dv-code" data-lang="sql">
 <pre><code>INSERT INTO eventos_hapee (id) VALUES ('evt_10433')
-ON CONFLICT (id) DO NOTHING;   -- si no insertó, ya lo procesaste: salí</code></pre>
+ON CONFLICT (id) DO NOTHING;   -- si no insertó, ya lo procesaste: sal</code></pre>
     </div>
 
     <h3>El orden <em>no</em> está garantizado</h3>
 
-    <p>Son N endpoints con reintentos independientes: un <code>deal.won</code> puede llegar antes que el <code>deal.stage_changed</code> que lo precedió. Si el orden te importa, ordená por <code>created_at</code>, o consultá el estado actual con un <code>GET</code> en vez de reconstruirlo desde la secuencia de eventos.</p>
+    <p>Son N endpoints con reintentos independientes: un <code>deal.won</code> puede llegar antes que el <code>deal.stage_changed</code> que lo precedió. Si el orden te importa, ordena por <code>created_at</code>, o consulta el estado actual con un <code>GET</code> en vez de reconstruirlo desde la secuencia de eventos.</p>
 
-    <h3>Respondé rápido</h3>
+    <h3>Responde rápido</h3>
 
-    <p>Cualquier <code>2xx</code> confirma. <strong>Encolá y procesá después</strong>: el timeout es de 10 segundos, y un endpoint lento acumula reintentos que se ven como duplicados.</p>
+    <p>Cualquier <code>2xx</code> confirma. <strong>Encola y procesa después</strong>: el timeout es de 10 segundos, y un endpoint lento acumula reintentos que se ven como duplicados.</p>
 
     <h3>Reintentos</h3>
 
@@ -276,7 +276,7 @@ ON CONFLICT (id) DO NOTHING;   -- si no insertó, ya lo procesaste: salí</code>
       <p><strong>Por eso no hace falta coordinar una caída.</strong> Sin el traslape tendrías que cambiar el secreto en el mismo instante que nosotros, y todo evento en vuelo en esa ventana llegaría con una firma que no valida.</p>
     </div>
 
-    <p>Durante la ventana, aceptá cualquiera de las dos. Después de cambiar, quedate solo con la nueva.</p>
+    <p>Durante la ventana, acepta cualquiera de las dos. Después de cambiar, quédate solo con la nueva.</p>
 
     <h2 id="probar">Probar</h2>
 
@@ -291,7 +291,7 @@ ON CONFLICT (id) DO NOTHING;   -- si no insertó, ya lo procesaste: salí</code>
 
     <h3>En tu máquina</h3>
 
-    <p>Levantá un túnel (<code>ngrok http 3000</code>, <code>cloudflared tunnel</code>) y registrá la URL temporal como endpoint. Acordate de borrarlo después.</p>
+    <p>Levanta un túnel (<code>ngrok http 3000</code>, <code>cloudflared tunnel</code>) y registra la URL temporal como endpoint. Acuérdate de borrarlo después.</p>
 
     <h3>Ver qué pasó</h3>
 
@@ -313,7 +313,7 @@ curl -X POST https://beta.hapee.ai/api/v1/webhooks/deliveries/88213/redeliver \
 
     <h2 id="pull">Alternativa: <code>GET /events</code></h2>
 
-    <p>Si tu sistema no puede exponer una URL pública —lo habitual en un ERP instalado en la empresa— consultás vos. <strong>Mismos eventos, mismo cuerpo.</strong></p>
+    <p>Si tu sistema no puede exponer una URL pública —lo habitual en un ERP instalado en la empresa— consultas tú. <strong>Mismos eventos, mismo cuerpo.</strong></p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>curl "https://beta.hapee.ai/api/v1/events?cursor=10432&amp;limit=100" \
@@ -321,10 +321,10 @@ curl -X POST https://beta.hapee.ai/api/v1/webhooks/deliveries/88213/redeliver \
     </div>
 
     <ul>
-      <li>Guardá el <code>next_cursor</code> y pasalo la vez siguiente</li>
+      <li>Guarda el <code>next_cursor</code> y pásalo la vez siguiente</li>
       <li>Vienen <strong>del más viejo al más nuevo</strong>: te estás poniendo al día</li>
       <li>Retención: <strong>30 días</strong></li>
-      <li>Filtrá con <code>?type=deal.won,quote.accepted</code></li>
+      <li>Filtra con <code>?type=deal.won,quote.accepted</code></li>
     </ul>
 
     <div class="dv-aviso">

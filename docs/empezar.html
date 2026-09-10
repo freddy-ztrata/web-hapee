@@ -42,13 +42,13 @@
   <aside class="dv-lateral">
     <div class="dv-lateral-caja">
       <h4>En esta página</h4>
-      <a href="#credencial">0. Lo que necesitás</a>
+      <a href="#credencial">0. Lo que necesitas</a>
       <a href="#probar">1. Probar la credencial</a>
       <a href="#contacto">2. Crear un contacto</a>
       <a href="#idempotencia">3. Probar la idempotencia</a>
       <a href="#webhook">4. Registrar un webhook</a>
       <a href="#disparar">5. Disparar el primer evento</a>
-      <a href="#pull">6. Si no podés exponer una URL</a>
+      <a href="#pull">6. Si no puedes exponer una URL</a>
       <a href="#entregas">7. Ver qué pasó</a>
       <h4>Seguir</h4>
       <a href="/docs/erp">Integrar un ERP</a>
@@ -61,7 +61,7 @@
     <h1>Empezar en 15 minutos</h1>
     <p class="dv-bajada">Del primer request al primer webhook. Todo contra sandbox, sin tocar nada real.</p>
 
-    <h2 id="credencial">0. Lo que necesitás</h2>
+    <h2 id="credencial">0. Lo que necesitas</h2>
 
     <p>Una credencial <code>hp_test_…</code> que te da la agencia que administra tu cuenta. Apunta a una subcuenta de prueba con datos ficticios.</p>
 
@@ -90,7 +90,7 @@ export HAPEE_URL="https://beta.hapee.ai/api/v1"</code></pre>
     </div>
 
     <div class="dv-aviso ojo">
-      <p><strong>Mirá que <code>sandbox</code> diga <code>true</code>.</strong> Si dice <code>false</code>, parás acá: esa credencial apunta a datos reales.</p>
+      <p><strong>Mira que <code>sandbox</code> diga <code>true</code>.</strong> Si dice <code>false</code>, paras acá: esa credencial apunta a datos reales.</p>
     </div>
 
     <h2 id="contacto">2. Crear un contacto <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
@@ -118,9 +118,9 @@ export HAPEE_URL="https://beta.hapee.ai/api/v1"</code></pre>
 
     <h2 id="idempotencia">3. Probar que la idempotencia funciona <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
 
-    <p>Corré <strong>el mismo comando otra vez</strong>, sin cambiar nada. Vas a recibir la misma respuesta y la cabecera <code>Idempotent-Replay: true</code>. <strong>No se creó un segundo contacto.</strong></p>
+    <p>Corre <strong>el mismo comando otra vez</strong>, sin cambiar nada. Vas a recibir la misma respuesta y la cabecera <code>Idempotent-Replay: true</code>. <strong>No se creó un segundo contacto.</strong></p>
 
-    <p>Ahora corré una <strong>tercera</strong> vez cambiando <code>first_name</code> pero dejando la misma <code>Idempotency-Key</code>:</p>
+    <p>Ahora corre una <strong>tercera</strong> vez cambiando <code>first_name</code> pero dejando la misma <code>Idempotency-Key</code>:</p>
 
     <div class="dv-code" data-lang="json">
 <pre><code>{ "error": {
@@ -133,7 +133,7 @@ export HAPEE_URL="https://beta.hapee.ai/api/v1"</code></pre>
 
     <h2 id="webhook">4. Registrar un webhook <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 5 min</span></h2>
 
-    <p>Necesitás una URL pública. Para probar en tu máquina, levantá un túnel:</p>
+    <p>Necesitas una URL pública. Para probar en tu máquina, levanta un túnel:</p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>ngrok http 3000     # te da algo como https://a1b2c3.ngrok-free.app</code></pre>
@@ -151,7 +151,7 @@ export HAPEE_URL="https://beta.hapee.ai/api/v1"</code></pre>
     </div>
 
     <div class="dv-aviso ojo">
-      <p><strong>Guardá el <code>secret</code> ahora.</strong> Es la única vez que se muestra completo. Después solo vas a ver <code>whsec_…aB3d</code>.</p>
+      <p><strong>Guarda el <code>secret</code> ahora.</strong> Es la única vez que se muestra completo. Después solo vas a ver <code>whsec_…aB3d</code>.</p>
     </div>
 
     <h3>Receptor mínimo</h3>
@@ -193,7 +193,7 @@ app.listen(3000);</code></pre>
 
     <p>En tu consola: <code>evento: webhook.test</code></p>
 
-    <p>Y ahora uno de verdad — actualizá el contacto del paso 2:</p>
+    <p>Y ahora uno de verdad — actualiza el contacto del paso 2:</p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>curl -s -X POST "$HAPEE_URL/contacts/upsert" \
@@ -207,18 +207,18 @@ app.listen(3000);</code></pre>
     <p>En tu consola: <code>evento: contact.updated</code></p>
 
     <div class="dv-aviso">
-      <p>Los eventos se disparan por <strong>todo</strong> lo que pasa en la subcuenta, no solo por lo que hacés vos. Si alguien del equipo comercial mueve un negocio a «ganado» desde la aplicación, te llega igual.</p>
+      <p>Los eventos se disparan por <strong>todo</strong> lo que pasa en la subcuenta, no solo por lo que haces tú. Si alguien del equipo comercial mueve un negocio a «ganado» desde la aplicación, te llega igual.</p>
     </div>
 
-    <h2 id="pull">6. Si no podés exponer una URL <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
+    <h2 id="pull">6. Si no puedes exponer una URL <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
 
-    <p>Lo mismo, pero consultando vos:</p>
+    <p>Lo mismo, pero consultando tú:</p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>curl -s "$HAPEE_URL/events?limit=10" -H "Authorization: Bearer $HAPEE_KEY"</code></pre>
     </div>
 
-    <p>Guardá el <code>next_cursor</code> y pasalo la próxima vez. <strong>Mismos eventos, mismo cuerpo.</strong></p>
+    <p>Guarda el <code>next_cursor</code> y pásalo la próxima vez. <strong>Mismos eventos, mismo cuerpo.</strong></p>
 
     <h2 id="entregas">7. Ver qué pasó con una entrega</h2>
 

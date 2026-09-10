@@ -138,7 +138,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li>Autenticación, gestión de cuentas y control de acceso</li>
   <li>Proveer las funcionalidades de la plataforma (CRM, mailing, workflows, reportes, sites, AI agents, etc.)</li>
   <li>Enviar notificaciones push, correos transaccionales y alertas relacionadas con tu actividad</li>
-  <li>Ofrecer atención al cliente cuando solicitás soporte por correo o dentro de la plataforma</li>
+  <li>Ofrecer atención al cliente cuando solicitas soporte por correo o dentro de la plataforma</li>
   <li>Análisis interno de uso (medir adopción de funcionalidades, detectar errores, mejorar el producto)</li>
   <li>Comunicaciones de marketing del propio Hapee (novedades, mejoras, promociones), de las que puedes darte de baja en cualquier momento</li>
   <li>Cumplir obligaciones legales, fiscales y contractuales aplicables</li>
@@ -151,20 +151,20 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li><strong>Amazon Web Services (AWS)</strong> — alojamiento de servidores y base de datos</li>
   <li><strong>Anthropic</strong> — modelos Claude para asistente de IA, generación de contenido y agentes conversacionales. No se almacenan datos personales identificables en sus sistemas más allá del tiempo necesario para procesar la respuesta</li>
   <li><strong>OpenAI</strong> — modelos GPT para los agentes conversacionales, cuando el cliente elige uno de esos modelos en el editor de agentes, y para la indexación de la base de conocimiento. Rigen las mismas condiciones que en el punto anterior: no se usan tus datos para entrenar modelos</li>
-  <li><strong>Voyage AI</strong> — cálculo de representaciones vectoriales (<em>embeddings</em>) de los documentos que cargués en la base de conocimiento de un agente, para poder buscar en ellos. Misma condición: no se usan para entrenar modelos</li>
+  <li><strong>Voyage AI</strong> — cálculo de representaciones vectoriales (<em>embeddings</em>) de los documentos que cargues en la base de conocimiento de un agente, para poder buscar en ellos. Misma condición: no se usan para entrenar modelos</li>
   <li><strong>Mailgun</strong> — envío de correos electrónicos transaccionales y de marketing</li>
-  <li><strong>Microsoft Corporation</strong> — sincronización de correo (Outlook / Microsoft 365) y de calendario, únicamente cuando vos conectás tu cuenta mediante OAuth. Con tu autorización accedemos al contenido de los mensajes para mostrarlos en la bandeja de Hapee y para enviar desde tu propia dirección, y a tu calendario para leer y crear eventos. Podés revocar el acceso en cualquier momento desde Hapee o desde tu cuenta de Microsoft</li>
+  <li><strong>Microsoft Corporation</strong> — sincronización de correo (Outlook / Microsoft 365) y de calendario, únicamente cuando conectas tu cuenta mediante OAuth. Con tu autorización accedemos al contenido de los mensajes para mostrarlos en la bandeja de Hapee y para enviar desde tu propia dirección, y a tu calendario para leer y crear eventos. Puedes revocar el acceso en cualquier momento desde Hapee o desde tu cuenta de Microsoft</li>
   <li><strong>Stripe</strong> — procesamiento de pagos (suscripciones y compras dentro de formularios)</li>
   <li><strong>Twilio</strong> — envío y recepción de SMS y llamadas de voz</li>
-  <li><strong>Deepgram</strong> — conversión de voz a texto en las llamadas de los agentes de IA y en las notas de voz que recibís por WhatsApp</li>
+  <li><strong>Deepgram</strong> — conversión de voz a texto en las llamadas de los agentes de IA y en las notas de voz que recibes por WhatsApp</li>
   <li><strong>Groq</strong> — conversión de voz a texto (modelo Whisper) para las notas de voz, como alternativa a Deepgram. El audio se envía solo para transcribirlo y no se conserva en sus sistemas más allá de ese procesamiento</li>
   <li><strong>ElevenLabs</strong> — síntesis de voz para agentes de IA y asistente de voz</li>
-  <li><strong>Meta (Facebook), Google y plataformas publicitarias</strong> — solo cuando vos conectás esas cuentas mediante OAuth para extraer métricas publicitarias</li>
-  <li><strong>Meta Platforms (WhatsApp Business Platform)</strong> — envío y recepción de mensajes de WhatsApp cuando conectás un número de WhatsApp Business a Hapee (ver sección 6)</li>
+  <li><strong>Meta (Facebook), Google y plataformas publicitarias</strong> — solo cuando conectas esas cuentas mediante OAuth para extraer métricas publicitarias</li>
+  <li><strong>Meta Platforms (WhatsApp Business Platform)</strong> — envío y recepción de mensajes de WhatsApp cuando conectas un número de WhatsApp Business a Hapee (ver sección 6)</li>
   <li><strong>HighLevel Inc. (GoHighLevel)</strong> — puente de mensajería para WhatsApp, Messenger e Instagram, activo solo en las subcuentas donde está habilitado expresamente. Cuando lo está, el contenido de esos mensajes atraviesa la infraestructura de HighLevel para llegar a Hapee y viceversa. Es una vía provisional mientras se completan las habilitaciones directas con Meta</li>
   <li><strong>Google Firebase</strong> — autenticación social (Google, Apple) y notificaciones push (FCM) en aplicaciones móviles</li>
   <li><strong>Apple Inc.</strong> — Sign in with Apple en aplicación iOS</li>
-  <li><strong>Zoom Video Communications</strong> — creación y lectura de reuniones, únicamente cuando conectás tu cuenta de Zoom para que las citas agendadas en Hapee generen su enlace de reunión</li>
+  <li><strong>Zoom Video Communications</strong> — creación y lectura de reuniones, únicamente cuando conectas tu cuenta de Zoom para que las citas agendadas en Hapee generen su enlace de reunión</li>
   <li><strong>Cloudflare</strong> — publicación de los dominios propios de cada cliente. Cuando un cliente conecta su propio dominio a Hapee, ese dominio se sirve a través de Cloudflare, que emite y renueva su certificado de seguridad y actúa como intermediario entre quien visita el sitio y nuestros servidores. Por ese motivo Cloudflare procesa las solicitudes de esos visitantes — incluida su dirección IP y el contenido de la página en tránsito — por cuenta nuestra. Es una función distinta de Cloudflare Turnstile, que se describe más abajo y solo interviene en los formularios</li>
   <li><strong>Google reCAPTCHA, Cloudflare Turnstile y hCaptcha</strong> — protección contra envíos automáticos en los formularios públicos, según el proveedor que el cliente elija para cada formulario. Reciben la dirección IP y señales del navegador de quien completa el formulario, con el único fin de distinguir a una persona de un programa automático</li>
   <li><strong>Honeycomb</strong> — diagnóstico técnico del motor de automatizaciones (trazas de ejecución), solo si esa función está habilitada en la instalación. Las trazas registran qué paso se ejecutó y cuánto tardó, no el contenido de los mensajes</li>
@@ -173,11 +173,11 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>No vendemos, alquilamos ni intercambiamos datos personales con terceros con fines publicitarios.</p>
 
 <h2>5. Integración con LinkedIn (Community Management API)</h2>
-<p>Esta sección describe específicamente cómo Hapee utiliza la <strong>Community Management API</strong> de LinkedIn cuando vinculás una página de empresa de LinkedIn o tu perfil personal de LinkedIn a tu cuenta de Hapee mediante el flujo de autorización <strong>OAuth 2.0</strong>. Cada integración es independiente, opcional, y se activa únicamente cuando vos —como administrador autorizado de la página, o como titular del perfil personal— decidís conectarla.</p>
+<p>Esta sección describe específicamente cómo Hapee utiliza la <strong>Community Management API</strong> de LinkedIn cuando vinculas una página de empresa de LinkedIn o tu perfil personal de LinkedIn a tu cuenta de Hapee mediante el flujo de autorización <strong>OAuth 2.0</strong>. Cada integración es independiente, opcional, y se activa únicamente cuando —como administrador autorizado de la página, o como titular del perfil personal— decides conectarla.</p>
 <p>La integración con Hapee permite dos escenarios distintos: (a) gestionar la publicación y el desempeño de contenido orgánico en una <strong>página de empresa</strong> (cubierto en los apartados 5.1 y 5.2), y (b) gestionar la publicación de contenido orgánico en tu <strong>perfil personal</strong> (cubierto en el apartado 5.3). Las finalidades, la revocación y las garantías de cumplimiento de los apartados 5.4, 5.5 y 5.6 aplican a ambos escenarios.</p>
 
 <h3>5.1 Datos que accedemos de tu página de LinkedIn</h3>
-<p>Cuando conectás una página de empresa de LinkedIn, accedemos a los siguientes datos de esa página (no de perfiles personales de tus seguidores):</p>
+<p>Cuando conectas una página de empresa de LinkedIn, accedemos a los siguientes datos de esa página (no de perfiles personales de tus seguidores):</p>
 <ul>
   <li><strong>Información de la página</strong> — nombre, identificador (URN), logotipo, descripción, industria, tamaño de empresa, URL del sitio web y número total de seguidores</li>
   <li><strong>Publicaciones existentes</strong> — contenido, fecha de publicación, formato (texto, imagen, video, artículo, documento, encuesta)</li>
@@ -187,34 +187,34 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p><strong>No accedemos a perfiles individuales de tus seguidores</strong>, a sus datos de contacto personales, a mensajes privados (InMail) de la página, ni a conexiones personales del administrador que autoriza la integración.</p>
 
 <h3>5.2 Acciones que realizamos en nombre de tu página</h3>
-<p>La autorización OAuth nos permite realizar las siguientes acciones, siempre iniciadas por vos o un miembro autorizado de tu cuenta Hapee:</p>
+<p>La autorización OAuth nos permite realizar las siguientes acciones, siempre iniciadas por ti o un miembro autorizado de tu cuenta Hapee:</p>
 <ul>
-  <li><strong>Publicar contenido orgánico</strong> en nombre de la página: posts de texto, imágenes, videos, artículos, documentos y encuestas. Cada publicación se ejecuta únicamente cuando vos la programás o aprobás desde el módulo de gestión de redes sociales de Hapee</li>
+  <li><strong>Publicar contenido orgánico</strong> en nombre de la página: posts de texto, imágenes, videos, artículos, documentos y encuestas. Cada publicación se ejecuta únicamente cuando la programas o apruebas desde el módulo de gestión de redes sociales de Hapee</li>
   <li><strong>Programar publicaciones</strong> con fecha y hora específicas</li>
   <li><strong>Editar o eliminar</strong> publicaciones creadas desde Hapee</li>
   <li><strong>Leer estadísticas</strong> orgánicas para mostrarte el desempeño de tus publicaciones en el módulo de Reportería</li>
 </ul>
 
 <h3>5.3 Conexión y publicación en tu perfil personal de LinkedIn</h3>
-<p>Adicionalmente, Hapee permite conectar tu <strong>perfil personal</strong> de LinkedIn mediante OAuth 2.0 para gestionar publicaciones desde el módulo de gestión de redes sociales. Esta integración es independiente de la conexión de página de empresa: podés tener una, otra, o ambas activas.</p>
+<p>Adicionalmente, Hapee permite conectar tu <strong>perfil personal</strong> de LinkedIn mediante OAuth 2.0 para gestionar publicaciones desde el módulo de gestión de redes sociales. Esta integración es independiente de la conexión de página de empresa: puedes tener una, otra, o ambas activas.</p>
 <p><strong>Datos que accedemos de tu perfil personal:</strong></p>
 <ul>
   <li><strong>Información básica</strong> de tu perfil: nombre, identificador (URN), foto de perfil, titular profesional (headline) y URL pública del perfil</li>
   <li><strong>Publicaciones existentes y métricas</strong> de las publicaciones creadas desde Hapee: impresiones, reacciones, comentarios, compartidos y tasa de interacción</li>
 </ul>
-<p><strong>Acciones que realizamos en tu perfil personal, siempre iniciadas por vos:</strong></p>
+<p><strong>Acciones que realizamos en tu perfil personal, siempre iniciadas por ti:</strong></p>
 <ul>
-  <li><strong>Publicar contenido orgánico</strong> únicamente en <em>tu propio perfil personal</em> (el del usuario autenticado vía OAuth): posts de texto, imágenes, videos, artículos, documentos y encuestas. Cada publicación se ejecuta solo cuando vos la programás o aprobás desde el módulo de gestión de redes sociales</li>
+  <li><strong>Publicar contenido orgánico</strong> únicamente en <em>tu propio perfil personal</em> (el del usuario autenticado vía OAuth): posts de texto, imágenes, videos, artículos, documentos y encuestas. Cada publicación se ejecuta solo cuando la programas o apruebas desde el módulo de gestión de redes sociales</li>
   <li><strong>Programar publicaciones</strong> con fecha y hora específicas</li>
   <li><strong>Editar o eliminar</strong> publicaciones creadas desde Hapee</li>
-  <li><strong>Leer estadísticas</strong> orgánicas de las publicaciones que vos hayas creado desde Hapee</li>
+  <li><strong>Leer estadísticas</strong> orgánicas de las publicaciones que hayas creado desde Hapee</li>
 </ul>
 <p><strong>Restricciones explícitas para perfiles personales:</strong></p>
 <ul>
   <li><strong>Solo publicamos en el perfil personal del usuario que se autenticó vía OAuth</strong>. No publicamos, comentamos ni reaccionamos en perfiles de terceros bajo ninguna circunstancia</li>
   <li><strong>No accedemos a tu red de conexiones</strong> (1er, 2do o 3er grado), ni a sus datos personales, ni les enviamos mensajes</li>
   <li><strong>No leemos mensajes privados (InMail)</strong> ni de tu bandeja de entrada</li>
-  <li><strong>No realizamos acciones automáticas sin tu aprobación</strong>: Hapee nunca dispara publicaciones, comentarios, reacciones, ni solicitudes de conexión de manera autónoma. Cada acción requiere una operación explícita iniciada por vos en la interfaz del módulo de gestión de redes sociales</li>
+  <li><strong>No realizamos acciones automáticas sin tu aprobación</strong>: Hapee nunca dispara publicaciones, comentarios, reacciones, ni solicitudes de conexión de manera autónoma. Cada acción requiere una operación explícita iniciada por ti en la interfaz del módulo de gestión de redes sociales</li>
   <li><strong>No usamos tu perfil para automatizaciones de engagement</strong> (likes automáticos, follows automáticos, scraping de perfiles, mensajes en frío masivos): estas prácticas violan los términos de LinkedIn y no forman parte de Hapee</li>
 </ul>
 
@@ -222,16 +222,16 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>Los datos obtenidos de LinkedIn se usan exclusivamente para:</p>
 <ul>
   <li>Permitir la gestión centralizada de contenido orgánico desde el módulo de gestión de redes sociales</li>
-  <li>Generar reportes de desempeño orgánico para vos y tu equipo</li>
+  <li>Generar reportes de desempeño orgánico para ti y tu equipo</li>
   <li>Calendarización de publicaciones programadas</li>
 </ul>
 <p><strong>No usamos estos datos para entrenar modelos de inteligencia artificial, para reventa publicitaria, para perfilamiento de terceros, ni para ningún fin ajeno a la operación directa de tu cuenta.</strong></p>
 
 <h3>5.5 Cómo revocar el acceso a LinkedIn</h3>
-<p>Podés revocar el acceso de Hapee a tu página de empresa o a tu perfil personal de LinkedIn en cualquier momento, de manera independiente. Estas son las dos vías:</p>
+<p>Puedes revocar el acceso de Hapee a tu página de empresa o a tu perfil personal de LinkedIn en cualquier momento, de manera independiente. Estas son las dos vías:</p>
 <ul>
-  <li><strong>Desde Hapee:</strong> ingresá a <em>Configuración → Integraciones → LinkedIn</em> y presioná "Desconectar" sobre la página o el perfil personal que querés desvincular. La revocación es inmediata</li>
-  <li><strong>Desde LinkedIn:</strong> ingresá a <em>Settings &amp; Privacy → Data Privacy → Permitted Services</em> en <a href="https://www.linkedin.com/mypreferences/d/data-sharing-for-permitted-services" target="_blank" rel="noopener noreferrer">linkedin.com</a> y remové la autorización de Hapee</li>
+  <li><strong>Desde Hapee:</strong> ingresa a <em>Configuración → Integraciones → LinkedIn</em> y presiona "Desconectar" sobre la página o el perfil personal que quieres desvincular. La revocación es inmediata</li>
+  <li><strong>Desde LinkedIn:</strong> ingresa a <em>Settings &amp; Privacy → Data Privacy → Permitted Services</em> en <a href="https://www.linkedin.com/mypreferences/d/data-sharing-for-permitted-services" target="_blank" rel="noopener noreferrer">linkedin.com</a> y elimina la autorización de Hapee</li>
 </ul>
 <p>Al revocar el acceso, eliminamos los tokens OAuth de la sesión (página o perfil personal) en un plazo máximo de <strong>24 horas</strong> y los datos cacheados (métricas, demografía agregada para páginas, datos básicos del perfil y borradores no publicados) en un plazo máximo de <strong>90 días</strong>. Las publicaciones que ya hayan sido enviadas a LinkedIn permanecen en tu cuenta de Hapee como registro de auditoría, asociadas a tu historial, pero ya no se podrá editarlas ni leer estadísticas actualizadas hasta que reconectes esa página o ese perfil.</p>
 
@@ -239,11 +239,11 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>Esta integración cumple con el <a href="https://legal.linkedin.com/api-terms-of-use" target="_blank" rel="noopener noreferrer">LinkedIn API Terms of Use</a> y la <a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidad de LinkedIn</a>. No retenemos, copiamos ni distribuimos datos derivados de LinkedIn más allá de lo estrictamente necesario para la operación del servicio. No compartimos datos obtenidos de LinkedIn con terceros, ni siquiera de forma agregada o anonimizada con fines comerciales.</p>
 
 <h2>6. Integración con WhatsApp Business (Meta Cloud API)</h2>
-<p>Cuando conectás un número de WhatsApp Business a Hapee, procesamos —en tu nombre y el de tus subcuentas, a través de la <strong>WhatsApp Business Platform (Meta Cloud API)</strong>— los datos necesarios para gestionar tus conversaciones. Esta integración es opcional y se activa únicamente cuando vos, como administrador autorizado, conectás el número.</p>
+<p>Cuando conectas un número de WhatsApp Business a Hapee, procesamos —en tu nombre y el de tus subcuentas, a través de la <strong>WhatsApp Business Platform (Meta Cloud API)</strong>— los datos necesarios para gestionar tus conversaciones. Esta integración es opcional y se activa únicamente cuando tú, como administrador autorizado, conectas el número.</p>
 
 <h3>6.1 Datos que procesamos</h3>
 <ul>
-  <li><strong>Números de teléfono</strong> de los contactos que te escriben o a quienes escribís</li>
+  <li><strong>Números de teléfono</strong> de los contactos que te escriben o a quienes escribes</li>
   <li><strong>Nombre de perfil</strong> del contacto en WhatsApp</li>
   <li><strong>Contenido de los mensajes</strong> (texto, imágenes, audio, video, documentos) enviados y recibidos, y su estado de entrega (enviado, entregado, leído)</li>
 </ul>
@@ -257,17 +257,17 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>Los mensajes pueden ser procesados por <strong>Anthropic (Claude)</strong> o <strong>OpenAI (GPT)</strong> —según el modelo que elijas para tu agente— para generar respuestas o análisis, y las notas de voz por <strong>Deepgram</strong> para transcribirlas. <strong>No usamos el contenido de tus mensajes de WhatsApp para entrenar modelos de inteligencia artificial, para publicidad, ni para ningún fin ajeno a la operación directa de tu cuenta.</strong></p>
 
 <h3>6.3 Almacenamiento, retención y eliminación</h3>
-<p>Los mensajes de WhatsApp se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Podés solicitar su eliminación escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
+<p>Los mensajes de WhatsApp se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Puedes solicitar su eliminación escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
 <h3>6.4 Cumplimiento con las políticas de Meta</h3>
 <p>Los datos de WhatsApp se intercambian con <strong>Meta Platforms, Inc.</strong>, proveedor de la WhatsApp Business Platform, para el envío y recepción de mensajes. Cumplimos con las <a href="https://www.whatsapp.com/legal/business-policy" target="_blank" rel="noopener noreferrer">Políticas de la Plataforma de WhatsApp Business</a> y no vendemos ni usamos estos datos con fines publicitarios.</p>
 
 <h2>7. Integración con tu casilla de correo y calendario (Google y Microsoft)</h2>
-<p>Cuando conectás tu cuenta de Google a Hapee, procesamos —en tu nombre— los datos necesarios para que puedas responder correos y gestionar reuniones desde la plataforma. Esta integración es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y podés revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Google</a>.</p>
+<p>Cuando conectas tu cuenta de Google a Hapee, procesamos —en tu nombre— los datos necesarios para que puedas responder correos y gestionar reuniones desde la plataforma. Esta integración es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y puedes revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Google</a>.</p>
 
 <h3>7.1 Permisos que solicitamos y para qué</h3>
 <ul>
-  <li><strong><code>gmail.send</code></strong> — enviar correos desde tu casilla cuando respondés a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a vos.</li>
+  <li><strong><code>gmail.send</code></strong> — enviar correos desde tu casilla cuando respondes a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a ti.</li>
   <li><strong><code>calendar.events</code></strong> — crear, actualizar y cancelar en tu calendario las citas agendadas desde Hapee, incluido el enlace de Google Meet, y detectar los cambios que hagas en Google para que se reflejen en Hapee.</li>
   <li><strong><code>calendar.readonly</code></strong> — listar tus calendarios para que elijas en cuál escribe Hapee, y leer tus horarios ocupados para que la página de reservas no ofrezca un bloque ya tomado.</li>
   <li><strong><code>openid</code></strong> y <strong><code>email</code></strong> — identificar la cuenta que se conectó y mostrar desde qué dirección se envían los correos.</li>
@@ -285,17 +285,17 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 
 <h3>7.3 Procesamiento por inteligencia artificial</h3>
-<p>Si activás las funciones de asistencia con IA, el texto del correo que estés redactando o respondiendo puede ser procesado por <strong>Anthropic (Claude)</strong> u <strong>OpenAI (GPT)</strong>, según el modelo que elijas, con el único fin de generar o mejorar esa respuesta. Estos proveedores actúan como procesadores y <strong>no utilizan ese contenido para entrenar sus modelos</strong> bajo los términos comerciales que tenemos con ellos. Esta función es opcional y se activa por cuenta.</p>
+<p>Si activas las funciones de asistencia con IA, el texto del correo que estés redactando o respondiendo puede ser procesado por <strong>Anthropic (Claude)</strong> u <strong>OpenAI (GPT)</strong>, según el modelo que elijas, con el único fin de generar o mejorar esa respuesta. Estos proveedores actúan como procesadores y <strong>no utilizan ese contenido para entrenar sus modelos</strong> bajo los términos comerciales que tenemos con ellos. Esta función es opcional y se activa por cuenta.</p>
 
 <h3>7.4 Almacenamiento, retención y eliminación</h3>
-<p>Los tokens de acceso se guardan cifrados y se usan solo para las llamadas descritas. Los correos que se muestran en una conversación se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Al desconectar la cuenta desde tu perfil, revocamos el token y dejamos de acceder a tu casilla. Podés solicitar la eliminación de los datos ya almacenados escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
+<p>Los tokens de acceso se guardan cifrados y se usan solo para las llamadas descritas. Los correos que se muestran en una conversación se almacenan cifrados en servidores AWS mientras la conversación esté activa y según el período de retención acordado con cada cliente. Al desconectar la cuenta desde tu perfil, revocamos el token y dejamos de acceder a tu casilla. Puedes solicitar la eliminación de los datos ya almacenados escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o desde <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
 <h3>7.5 Integración con Microsoft (Outlook y Microsoft 365)</h3>
-<p>La conexión con Microsoft funciona igual que la de Google y con las mismas garantías: es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y podés revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.microsoft.com/" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Microsoft</a>. Los permisos que solicitamos son <strong>delegados</strong> —actuamos siempre en tu nombre y con tu autorización, nunca sobre la organización completa—:</p>
+<p>La conexión con Microsoft funciona igual que la de Google y con las mismas garantías: es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y puedes revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.microsoft.com/" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Microsoft</a>. Los permisos que solicitamos son <strong>delegados</strong> —actuamos siempre en tu nombre y con tu autorización, nunca sobre la organización completa—:</p>
 <ul>
-  <li><strong><code>Mail.Send</code></strong> — enviar correos desde tu casilla cuando respondés a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a vos.</li>
+  <li><strong><code>Mail.Send</code></strong> — enviar correos desde tu casilla cuando respondes a un contacto desde Hapee, para que el destinatario reciba el mensaje desde tu dirección real y pueda contestarte a ti.</li>
   <li><strong><code>Mail.Read</code></strong> — leer los correos de tu casilla para mostrar las respuestas de tus contactos dentro de la conversación en Hapee. Sin este permiso las respuestas quedarían solo en Outlook y el historial de la conversación estaría incompleto.</li>
-  <li><strong><code>Calendars.ReadWrite</code></strong> — crear, actualizar y cancelar en tu calendario las citas agendadas desde Hapee, y leer tu disponibilidad para no ofrecer horarios ocupados. Cuando marcás una cita como reunión en línea, este mismo permiso genera el enlace de Microsoft Teams.</li>
+  <li><strong><code>Calendars.ReadWrite</code></strong> — crear, actualizar y cancelar en tu calendario las citas agendadas desde Hapee, y leer tu disponibilidad para no ofrecer horarios ocupados. Cuando marcas una cita como reunión en línea, este mismo permiso genera el enlace de Microsoft Teams.</li>
   <li><strong><code>User.Read</code></strong> — identificar la cuenta que se conectó y mostrar desde qué dirección se envían los correos.</li>
   <li><strong><code>offline_access</code></strong> — mantener la conexión activa sin pedirte que inicies sesión en cada sincronización.</li>
 </ul>
@@ -324,16 +324,16 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h2>10. Tus derechos</h2>
 <p>Como titular de los datos, puedes ejercer en cualquier momento los derechos de:</p>
 <ul>
-  <li><strong>Acceso</strong> — solicitar copia de los datos personales que tenemos sobre vos</li>
+  <li><strong>Acceso</strong> — solicitar copia de los datos personales que tenemos sobre ti</li>
   <li><strong>Rectificación</strong> — corregir datos inexactos o incompletos</li>
   <li><strong>Eliminación</strong> — solicitar el borrado de tu cuenta y datos asociados</li>
   <li><strong>Oposición</strong> — oponerte al tratamiento con fines de marketing</li>
   <li><strong>Portabilidad</strong> — recibir tus datos en un formato estructurado y de uso común</li>
 </ul>
-<p>Para ejercer cualquiera de estos derechos, escribinos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>. Responderemos en un plazo máximo de 30 días. La aplicación cuenta con una opción dedicada para solicitar la eliminación de tu cuenta en <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
+<p>Para ejercer cualquiera de estos derechos, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>. Responderemos en un plazo máximo de 30 días. La aplicación cuenta con una opción dedicada para solicitar la eliminación de tu cuenta en <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
 <h2>11. Menores de edad</h2>
-<p>La plataforma está dirigida a profesionales y empresas. No recopilamos intencionalmente datos personales de menores de 13 años. Si tomamos conocimiento de que un menor de 13 años nos ha proporcionado datos sin consentimiento parental verificable, procederemos a eliminar dicha información. Si sospechás que esto pudo ocurrir, contactanos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+<p>La plataforma está dirigida a profesionales y empresas. No recopilamos intencionalmente datos personales de menores de 13 años. Si tomamos conocimiento de que un menor de 13 años nos ha proporcionado datos sin consentimiento parental verificable, procederemos a eliminar dicha información. Si sospechas que esto pudo ocurrir, contactanos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
 
 <h2>12. Cookies y tecnologías similares</h2>
 <p>Utilizamos cookies estrictamente necesarias para mantener tu sesión autenticada y recordar preferencias (idioma, tema). No utilizamos cookies de publicidad de terceros ni redes de seguimiento entre sitios.</p>
@@ -345,7 +345,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile, hoy vigente, y por la <strong>Ley 21.719</strong> sobre protección de datos personales, que la sustituye y entra en plena vigencia en <strong>diciembre de 2026</strong>. Desde esa fecha, y respecto de los datos que nuestros clientes nos encomiendan, Hapee actúa como <strong>encargado de tratamiento</strong> y el cliente como responsable. Aplica además la demás normativa chilena pertinente. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p>
 
 <h2>15. Contacto</h2>
-<p>Para cualquier consulta o reclamo relacionado con tu privacidad, podés escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p>
+<p>Para cualquier consulta o reclamo relacionado con tu privacidad, puedes escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p>
 
 </main>
 

@@ -16,7 +16,7 @@
 <meta name="description" content="Documentación de la API REST de Hapee: conectá tu ERP o tu sistema con una subcuenta. Contactos, empresas, negocios, cotizaciones, webhooks y eventos.">
 <link rel="canonical" href="https://hapee.ai/docs/">
 <meta property="og:title" content="API de Hapee — Documentación para desarrolladores">
-<meta property="og:description" content="Conectá tu ERP con Hapee: contactos, empresas, negocios, webhooks firmados y carga masiva.">
+<meta property="og:description" content="Conecta tu ERP con Hapee: contactos, empresas, negocios, webhooks firmados y carga masiva.">
 <meta property="og:url" content="https://hapee.ai/docs/">
 <meta property="og:type" content="website">
 <link rel="icon" href="/img/favicon.png">
@@ -60,7 +60,7 @@
   <main class="dv-main">
 
     <h1>API de Hapee</h1>
-    <p class="dv-bajada">Conectá tu ERP, tu tienda o tu sistema interno con una subcuenta de Hapee. API REST, JSON, webhooks firmados.</p>
+    <p class="dv-bajada">Conecta tu ERP, tu tienda o tu sistema interno con una subcuenta de Hapee. API REST, JSON, webhooks firmados.</p>
 
     <div class="dv-grid">
       <a class="dv-card" href="/docs/empezar">
@@ -85,7 +85,7 @@
       </a>
     </div>
 
-    <h2>Qué podés hacer</h2>
+    <h2>Qué puedes hacer</h2>
 
     <p>La API cubre los mismos objetos con los que trabaja el equipo comercial dentro de Hapee:</p>
 
@@ -111,7 +111,7 @@
       <li><strong>La subcuenta sale de la credencial.</strong> Nunca se manda por parámetro.</li>
       <li><strong>Formatos</strong>: JSON UTF-8, fechas ISO 8601 en UTC, teléfonos E.164, montos como texto decimal con su <code>currency</code>, RUT como <code>12345678-K</code>.</li>
       <li><strong>Listas</strong>: paginación por cursor (<code>limit</code> hasta 100, <code>cursor</code>, <code>next_cursor</code>).</li>
-      <li><strong>Escrituras</strong>: mandá <code>Idempotency-Key</code> y un reintento no duplica nada.</li>
+      <li><strong>Escrituras</strong>: manda <code>Idempotency-Key</code> y un reintento no duplica nada.</li>
     </ul>
 
     <h2>Tu primer request</h2>
@@ -121,7 +121,7 @@
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
     </div>
 
-    <p>Te responde quién sos, sobre qué subcuenta operás, en qué modo y con qué límites. Si esto anda, el resto anda.</p>
+    <p>Te responde quién eres, sobre qué subcuenta operas, en qué modo y con qué límites. Si esto anda, el resto anda.</p>
 
     <div class="dv-code" data-lang="json">
 <pre><code>{
@@ -141,10 +141,10 @@
 
     <ul>
       <li><strong>Webhooks</strong> — nos das una URL <code>https</code> y te avisamos. Firmados con HMAC-SHA256.</li>
-      <li><strong><code>GET /events</code></strong> — si tu sistema no puede exponer una URL pública (lo habitual en un ERP instalado en la empresa), consultás vos con un cursor. Retención de 30 días.</li>
+      <li><strong><code>GET /events</code></strong> — si tu sistema no puede exponer una URL pública (lo habitual en un ERP instalado en la empresa), consultas tú con un cursor. Retención de 30 días.</li>
     </ul>
 
-    <p>Podés usar los dos, o solo uno. <strong>No hay que configurar nada distinto:</strong> elegís según lo que tu infraestructura permite, no según lo que querés recibir.</p>
+    <p>Puedes usar los dos, o solo uno. <strong>No hay que configurar nada distinto:</strong> eliges según lo que tu infraestructura permite, no según lo que quieres recibir.</p>
 
     <h2>Errores</h2>
 
@@ -162,7 +162,7 @@
     </div>
 
     <div class="dv-aviso">
-      <p><strong>Guardá siempre el <code>X-Request-Id</code> de la respuesta.</strong> Es lo que nos permite encontrar tu llamada exacta en nuestros registros cuando escribas a soporte.</p>
+      <p><strong>Guarda siempre el <code>X-Request-Id</code> de la respuesta.</strong> Es lo que nos permite encontrar tu llamada exacta en nuestros registros cuando escribas a soporte.</p>
     </div>
 
     <h2>Versionado</h2>
@@ -171,12 +171,12 @@
 
     <h2>Cómo conseguir una credencial</h2>
 
-    <p>Las emite la agencia que administra tu cuenta de Hapee. Pedí una credencial <strong><code>hp_test_</code></strong> primero: apunta a una subcuenta de prueba con datos ficticios, así podés desarrollar sin tocar nada real.</p>
+    <p>Las emite la agencia que administra tu cuenta de Hapee. Pide una credencial <strong><code>hp_test_</code></strong> primero: apunta a una subcuenta de prueba con datos ficticios, así puedes desarrollar sin tocar nada real.</p>
 
     <p>Pasar a producción es <strong>cambiar la credencial y la URL del webhook</strong>. Nada más: el sandbox y producción hablan la misma API.</p>
 
     <div class="dv-aviso">
-      <p>¿Dudas o algo que no está documentado? Escribinos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+      <p>¿Dudas o algo que no está documentado? Escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
     </div>
 
   </main>
