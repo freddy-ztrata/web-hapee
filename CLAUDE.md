@@ -8,18 +8,25 @@ Landing site for **Hapee.ai** — an AI conversational platform + automation + C
 
 ## Site map
 
-**Deployed via Docker (`Dockerfile` enumerates these — 12 HTML pages):**
+**Deployed via Docker.** The `Dockerfile` copies pages **one by one** (plus the `blog/`, `docs/`, `img/`, `js/` directories whole). A committed `.html` without its `COPY` line never reaches the image, and nginx's catch-all serves the **home page with a 200** for its URL — no 404, no log error, it just looks like an invented URL. This has bitten twice (`eliminacion-datos.html`, `marca.html`). Run `bash verificacion/paginas_en_imagen.sh` before pushing; pages that are deliberately unpublished are listed in `.paginas-locales`.
 
 Main funnel:
 - `index.html` — Main landing (~3500 lines). CSS in `<style>`, JS in `<script>`. Hosts an interactive **Hapee AI chat** that streams through nginx → Anthropic + ElevenLabs. Also has orbital robot hero + platform showcase + Hapee Interact demo.
 - `agenda-tu-demo.html` — Demo booking landing. Same full nav + mobile menu as `index.html` (since 2026-09-13; keep both in sync). Includes VSL video, embedded Hapee booking calendar (`beta.hapee.ai`), home-page widgets, sticky demo CTAs (mobile bar + desktop pill).
 - `partners.html` — Reseller/partners program landing.
 - `comparativa.html` — Hapee vs. competitors table.
-- `gracias-compra.html` — Post-purchase thank-you page (linked from the checkout flow).
+- `planes.html` — Self-service pricing + Stripe checkout (see the pricing section at the bottom of this file).
+- `compra-exitosa.html` — Stripe checkout success page (polls the app; creates nothing).
+- `gracias-compra.html` — Legacy GHL post-purchase thank-you page.
+- `agentes-ia-whatsapp.html` — WhatsApp AI-agent landing with its **own** GHL calendar (`always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa`) — do not swap it for the Hapee calendar.
+- `academia.html` — Academia Hapee onboarding page (`/academia`, linked from the nav).
+- `webinar.html` — Webinar landing with a per-country schedule table and its own link-preview card.
 - `demo-countdown.html` — One-pager with 5-min countdown before demo starts. `noindex,nofollow`.
+- `dossier-x8k4m2.html`, `demoday-via-x7m2.html` — Unlisted sales collateral (obfuscated slugs, `noindex,nofollow,noarchive`). Shared by link only; never add to nav or sitemap.
 
 Content:
-- `blog.html` + `blog/*.html` — Blog index plus 7 articles. Articles share `blog/article.css` and `blog/article.js`.
+- `blog.html` + `blog/*.html` — Blog index plus articles. Articles share `blog/article.css` and `blog/article.js`. Add new articles to `blog.html` and `sitemap.xml`.
+- `docs/` — Public API documentation (`hapee.ai/docs`): `index`, `empezar`, `referencia`, `webhooks`, `erp`, sharing `docs/docs.css` + `docs/docs.js`. Copied as a whole directory, so a new guide needs no `COPY` line; `py docs/_verificar_docs.py` asserts that and checks internal links.
 - `rrss-templates.html` — Social media template gallery.
 - `transformacion.html` — Before/after transformation showcase (uses `img/transformacion-*.mp4`).
 - `juego.html` — Interactive game/entertainment page. Served at `/juego` (clean URL).
@@ -27,15 +34,14 @@ Content:
 Legal:
 - `politica-privacidad.html` — Privacy policy (Chile Ley 21.719, GDPR, US).
 - `terminos.html` — Terms of service. **No trial + no refund** policy lives in sections 4.2 and 5.
+- `eliminacion-datos.html` — Data-deletion instructions. Linked from the privacy policy and opened by **Meta during App Review** — must always be in the image.
 
 Assets:
 - `js/whatsapp.js` — Site-wide floating WhatsApp button (loaded via `<script src="/js/whatsapp.js" defer>` on every deployed page except `demo-countdown.html`). Single source of truth for contact number + prefilled message.
 - `img/vsl-hapee.mp4` (86MB) — VSL video used in `agenda-tu-demo.html`. Above GitHub's 50MB recommended limit; if adding more videos consider CDN hosting instead of bundling.
 - `llms.txt` — LLM-optimized index at root, for AI crawlers.
 
-**Not deployed (workspace only):**
-- `_render.html` — Internal render helper, `noindex`. Not in `Dockerfile`.
-- `blog-hero-variants.html` — Design exploration file.
+**Not deployed (workspace only, listed in `.paginas-locales`):** `_render.html` (render helper), `blog-hero-variants.html`, `juego-cathedral.html`, `widget-opciones.html`, `widget-reemplaza-opciones.html` (design explorations). To publish one: remove it from `.paginas-locales` **and** add its `COPY` line.
 
 **External GHL page** (NOT in this repo):
 - `be.hapee.ai/registro` — Registration/checkout flow lives in GoHighLevel.
@@ -44,11 +50,14 @@ Assets:
 
 - **Hosting**: GitHub `freddy-ztrata/web-hapee` → Dokploy auto-deploys on push to `master`.
 - **Container**: `Dockerfile` based on `nginx:alpine`. Bump the `CACHE_BUST` ARG on each release so Dokploy's layer cache invalidates and the new HTML actually ships. Also update the `COPY` list when adding new HTML pages or asset directories.
-- **Entrypoint**: `entrypoint.sh` runs `envsubst` to inject `ANTHROPIC_API_KEY` and `ELEVENLABS_API_KEY` into the nginx template, then starts nginx. Both env vars are required by Dokploy for the AI chat to work.
+- **Entrypoint**: `entrypoint.sh` runs `envsubst` to inject `ANTHROPIC_API_KEY`, `ELEVENLABS_API_KEY` and `SAAS_PUBLIC_API_KEY` into the nginx template, then starts nginx. All three must be set in Dokploy (chat, TTS, and pricing/checkout respectively). A new secret needs to be added to the `envsubst` variable list too, or nginx gets a literal empty string.
+- If a push doesn't redeploy, push an empty commit to re-fire the webhook or hit *Redeploy* in Dokploy; `curl -s https://hapee.ai/<page> | grep <marker>` tells you what's actually live.
 
 ## nginx (`nginx.conf`)
 
 - **Clean URLs**: `try_files $uri $uri.html $uri/ /index.html` — `/comparativa` and `/comparativa.html` both work. Any new HTML file gets clean-URL routing automatically. Don't link to `.html` in new code unless there's a reason (canonical exception: legal pages still self-canonicalize to `.html`).
+- **Static assets 404 for real**: a `location ~* \.(css|js|png|mp4|…)$ { try_files $uri =404; }` block precedes the catch-all, so a missing asset returns 404 instead of the home page HTML with 200. HTML pages are *not* covered by it — that's why the `COPY` check above exists.
+- **`/api/saas/`** — GET/POST proxy to `beta.hapee.ai/api/public/saas/` with `X-Public-Api-Key` injected. Used by `planes.html` and `compra-exitosa.html`.
 - **`/api/chat`** — POST-only reverse proxy to `api.anthropic.com/v1/messages`. Injects `x-api-key` from env. Used by the Hapee AI chat.
 - **`/api/tts/{voice_id}`** — POST-only streaming proxy to `api.elevenlabs.io/v1/text-to-speech/{id}/stream`. Injects `xi-api-key`. Used by the chat to speak responses.
 - DNS resolver pinned to Docker internal (`127.0.0.11`) — external DNS is unreachable from the container.
@@ -56,14 +65,25 @@ Assets:
 ## Commands
 
 ```bash
-# Local preview
+# Local preview (clean URLs work: /agenda-tu-demo, /planes, …)
 npx serve -l 3000
+
+# Pre-push checks (no build/test framework — these are the whole suite)
+bash verificacion/paginas_en_imagen.sh   # every committed .html has a COPY line (or is in .paginas-locales)
+py verificacion/v_espanol_neutro.py      # site copy is neutral Spanish — no voseo (see below)
+py docs/_verificar_docs.py               # docs/ pages reach the image + internal links resolve
+py verificacion/mutar_espanol_neutro.py  # mutation run: proves the voseo detector still detects
+py docs/_mutar_docs.py                   # same for the docs verifier
 
 # Deploy: push and Dokploy takes it from there
 git push origin master
 ```
 
-Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx layer cache.
+Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx layer cache. Use `py` (Windows launcher) for the Python scripts; they are run from the repo root.
+
+## Language: neutral Spanish, no voseo
+
+All public copy (HTML text, JS strings, code comments inside docs examples) is **neutral Spanish**: `tú`/`usted` forms, never `vos` (`conectás`, `respondés`, `mirá`, …). `verificacion/v_espanol_neutro.py` extracts every accented-ending word form and compares against an explicit allowlist (futures like `recibirás`, proper nouns, tuteo forms shared with voseo). If it flags a legitimate word, add it to the allowlist in that script rather than weakening the detector; run the mutation script afterwards.
 
 ## Brand guidelines (critical)
 
