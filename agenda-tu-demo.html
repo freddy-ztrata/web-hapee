@@ -2191,18 +2191,20 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
       <div class="cal-corner-deco tl"></div>
       <div class="cal-corner-deco br"></div>
       <div class="cal-wrap">
-        <iframe style="width: 100%;border:none;overflow: hidden;" scrolling="no" id="chYXlIXrGibN07I5L7AD_1788736456068" title="Agenda tu demo de Hapee" allow="payment" data-base-src="https://always.hapee.ai/widget/booking/0ZKjNaJzeZjcTjhs9l34"></iframe>
+        <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
         <noscript>
-          <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Tu navegador tiene JavaScript desactivado. <a href="https://always.hapee.ai/widget/booking/0ZKjNaJzeZjcTjhs9l34" target="_blank" rel="noopener" style="color:#FA5000">Abre el calendario en una nueva pestaña →</a></p>
+          <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Tu navegador tiene JavaScript desactivado. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Abre el calendario en una nueva pestaña →</a></p>
         </noscript>
         <script>
-        /* === UTM / Click-ID forwarder al iframe GHL ===
-           Problema: el iframe lee window.location.search desde su propio origin (always.hapee.ai),
-           no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al form de GHL.
-           Fix: tomamos los UTMs del parent URL y los inyectamos en el src del iframe ANTES de la primera carga.
+        /* === UTM / Click-ID forwarder al widget de calendario Hapee ===
+           Problema: el iframe lee window.location.search desde su propio origin (beta.hapee.ai),
+           no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al calendario.
+           Fix: tomamos los UTMs del parent URL y los inyectamos en data-hapee-calendar (el loader
+           calendar-embed.js acepta una URL completa y le agrega ?embed=1) ANTES de que monte el iframe.
+           Este script corre síncrono; el loader (async, al final del body) monta después.
            Persistencia en sessionStorage para sobrevivir navegación interna (hero CTA → calendar). */
         (function(){
-          var FRAME_ID = 'chYXlIXrGibN07I5L7AD_1788736456068';
+          var FRAME_ID = 'hapeeCalendar';
           var STORAGE_KEY = 'hapee_attribution';
           var TRACK = [
             'utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id',
@@ -2235,31 +2237,31 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
             try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fromUrl)); } catch(e) {}
           }
 
-          /* 4) Referrer extra (señal adicional para GHL) */
+          /* 4) Referrer extra (señal adicional de atribución) */
           if(document.referrer && !attribution.referrer){
             attribution.referrer = document.referrer;
           }
 
-          /* 5) Setea el src del iframe (siempre — primera carga incluye UTMs si existen) */
+          /* 5) Setea la URL que montará el loader (solo si hay atribución; si no, queda el slug) */
           var qs = new URLSearchParams(attribution).toString();
-          iframe.src = qs ? (baseSrc + '?' + qs) : baseSrc;
+          if(qs) iframe.setAttribute('data-hapee-calendar', baseSrc + '?' + qs);
 
           /* 6) Debug opcional: descomenta para chequear en consola */
-          /* console.log('[Hapee Attribution]', attribution, '\\niframe src →', iframe.src); */
+          /* console.log('[Hapee Attribution]', attribution, '\\ncalendar →', iframe.getAttribute('data-hapee-calendar')); */
         })();
         </script>
         <script>
-        /* === Conversión: demo agendada en el widget GHL ===
-           El iframe de booking (always.hapee.ai) avisa al parent vía postMessage
-           con event.data[0] === 'msgsndr-booking-complete' cuando la cita queda
+        /* === Conversión: demo agendada en el widget de calendario Hapee ===
+           El iframe de booking (beta.hapee.ai) avisa al parent vía postMessage
+           con event.data.type === 'zentru_calendar_submitted' cuando la cita queda
            confirmada. Ahí disparamos 'dg_agendar_demo', el evento clave definido
            en Analytics (GA4) — Google Ads lo importa desde ahí. Sin send_to:
            el evento va a todos los destinos configurados en el Google tag. */
         (function(){
           var fired = false;
-          var ALLOWED = ['hapee.ai','msgsndr.com','leadconnectorhq.com'];
+          var ALLOWED = ['hapee.ai'];
           window.addEventListener('message', function(e){
-            /* Solo mensajes del widget GHL (dominio propio o infra LeadConnector).
+            /* Solo mensajes del widget propio (beta.hapee.ai u otro subdominio).
                Match exacto de hostname o subdominio — un substring/regex dejaría
                pasar orígenes tipo https://hapee.ai.evil.com */
             var host = '';
@@ -2269,9 +2271,7 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
             });
             if(!allowed) return;
             var d = e.data;
-            var isBooking =
-              (Array.isArray(d) && d[0] === 'msgsndr-booking-complete') ||
-              (typeof d === 'string' && d.indexOf('msgsndr-booking-complete') !== -1);
+            var isBooking = !!d && typeof d === 'object' && d.type === 'zentru_calendar_submitted';
             if(!isBooking || fired) return;
             fired = true; /* una sola conversión por carga de página */
             if(typeof gtag === 'function'){
@@ -4790,8 +4790,8 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 })();
 </script>
 
-<!-- GHL Calendar embed loader (auto-resize iframe) -->
-<script src="https://always.hapee.ai/js/form_embed.js" type="text/javascript"></script>
+<!-- Hapee Calendar embed loader (monta el iframe en #hapeeCalendar + auto-resize) -->
+<script src="https://beta.hapee.ai/static/calendar-embed.js" async></script>
 
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <script src="/js/whatsapp.js" defer></script>
