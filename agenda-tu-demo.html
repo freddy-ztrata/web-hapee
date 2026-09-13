@@ -1798,24 +1798,6 @@ html.dark .hf-bubble{background:rgba(32,25,22,.92);border-color:rgba(255,255,255
 
 <!-- DEMO LANDING — Award-winning sections styles -->
 <style>
-/* ===================== MINIMAL NAV (landing page — no menu) ===================== */
-.nav-minimal{padding:14px 0 !important;background:rgba(255,255,255,.6) !important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.04);transition:background .3s,border-color .3s,padding .3s !important}
-html.dark .nav-minimal{background:rgba(8,8,8,.55) !important;border-bottom-color:rgba(250,80,0,.08)}
-.nav-minimal.sc{padding:8px 0 !important;background:rgba(255,255,255,.96) !important;box-shadow:0 4px 20px rgba(0,0,0,.06)}
-html.dark .nav-minimal.sc{background:rgba(8,8,8,.96) !important;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.nav-minimal .ctn{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.nav-minimal .nav-logo-wrap{display:flex;align-items:center}
-.nav-minimal .nav-logo{height:32px;width:auto !important;object-fit:contain;flex-shrink:0}
-.nav-minimal .nctas{display:flex;align-items:center;gap:10px}
-.nav-minimal .nav-cta{padding:10px 22px !important;font-size:.88rem !important;font-weight:700 !important;background:linear-gradient(135deg,#FA5000,#CD2349) !important;color:#fff !important;box-shadow:0 6px 20px rgba(250,80,0,.3) !important;border:none !important}
-.nav-minimal .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(250,80,0,.4) !important}
-@media(max-width:520px){
-  .nav-minimal .nav-logo{height:26px}
-  .nav-minimal .nav-cta{padding:9px 16px !important;font-size:.78rem !important}
-  .nav-minimal .ctn{gap:8px;padding:0 16px}
-  .nav-minimal .dark-toggle{display:none}
-}
-
 /* ===================== COMPACT LAYOUT — alto según contenido (solo hero full-screen) ===================== */
 main > section{min-height:auto}
 main > section.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
@@ -1880,13 +1862,10 @@ html.dark .calendar-section::before{background:radial-gradient(ellipse 70% 60% a
 .cal-trust.in-view{opacity:1;transform:translateY(0)}
 .cal-trust-item{display:flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.84rem;font-weight:600;color:var(--text-2)}
 .cal-trust-item svg{width:16px;height:16px;stroke:#00d97e;stroke-width:2.5;fill:none;flex-shrink:0}
-.cal-frame{position:relative;max-width:920px;margin:48px auto 0;opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
-.cal-frame.in-view{opacity:1;transform:translateY(0)}
-.cal-frame::before{content:'';position:absolute;inset:-1px;border-radius:25px;padding:1px;background:linear-gradient(135deg,rgba(250,80,0,.5),rgba(205,35,73,.5),rgba(250,80,0,.5));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;z-index:1;pointer-events:none}
-.cal-frame::after{content:'';position:absolute;inset:-60px;background:radial-gradient(ellipse 55% 45% at 50% 50%,rgba(250,80,0,.18),transparent 70%);filter:blur(50px);z-index:-1;animation:calGlow 5s ease-in-out infinite alternate;pointer-events:none}
-@keyframes calGlow{0%{opacity:.6;transform:scale(.95)}100%{opacity:1;transform:scale(1.05)}}
-.cal-wrap{position:relative;background:var(--card-bg);border-radius:24px;padding:30px 24px;box-shadow:var(--shadow-lg);overflow:hidden;min-height:760px}
-html.dark .cal-wrap{background:#0a0a0a}
+/* El widget (beta.hapee.ai) ya trae su propia tarjeta: sin marco ni cuadro alrededor */
+.cal-embed{position:relative;max-width:960px;margin:40px auto 0;opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
+.cal-embed.in-view{opacity:1;transform:translateY(0)}
+.cal-embed iframe{display:block;width:100%;border:0;background:transparent}
 
 /* ============================================================
    GLASSMORPHISM — look "liquid glass" del home aplicado a la landing
@@ -1902,23 +1881,17 @@ html.dark body::before{
     radial-gradient(ellipse 50% 45% at 90% 20%,rgba(205,35,73,.14),transparent 60%),
     radial-gradient(ellipse 65% 50% at 50% 108%,rgba(250,80,0,.13),transparent 62%)}
 /* superficies principales en cristal esmerilado (la card Pro conserva su beam) */
-.cal-wrap,
 .stat-item,
 .pc:not(.pop){
   background:rgba(255,255,255,.58)!important;
   -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);
   border:1px solid rgba(255,255,255,.65)!important;
   box-shadow:0 18px 50px rgba(0,0,0,.07),inset 0 1px 0 rgba(255,255,255,.85)!important}
-html.dark .cal-wrap,
 html.dark .stat-item,
 html.dark .pc:not(.pop){
   background:rgba(22,18,17,.5)!important;
   border:1px solid rgba(255,255,255,.09)!important;
   box-shadow:0 18px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08)!important}
-.cal-wrap iframe{display:block;width:100%;min-height:720px;border:0;background:transparent}
-.cal-corner-deco{position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.15),transparent 70%);pointer-events:none;filter:blur(20px)}
-.cal-corner-deco.tl{top:-40px;left:-40px}
-.cal-corner-deco.br{bottom:-40px;right:-40px;background:radial-gradient(circle,rgba(205,35,73,.15),transparent 70%)}
 
 /* ===================== SCROLL-DOWN INDICATOR (HERO) ===================== */
 .hero-scroll{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:8px;animation:scrollFloat 2.4s ease-in-out infinite;color:var(--text-2);font-family:var(--fb);font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;pointer-events:none}
@@ -2029,8 +2002,7 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
   .vsl-section{padding:80px 0 70px}
   .calendar-section{padding:70px 0}
   .demo-cta-final{padding:64px 20px}
-  .cal-wrap{padding:18px 12px;min-height:720px}
-  .cal-wrap iframe{min-height:700px}
+  .cal-embed{margin-top:28px}
   .vsl-meta{gap:10px 18px}
   .vsl-meta-item{font-size:.78rem}
 }
@@ -2040,13 +2012,19 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
 
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-<!-- MINIMAL LANDING NAV — landing page (no menu, single CTA) -->
+<!-- NAV — mismo menú que el home (index.html); mantener ambos sincronizados -->
 <header>
-<nav class="nav nav-minimal" id="nav" role="navigation" aria-label="Navegación principal">
+<nav class="nav" id="nav" role="navigation" aria-label="Navegación principal">
   <div class="ctn">
-    <a href="/" aria-label="Hapee - Ir al inicio" class="nav-logo-wrap"><img src="img/logo-hapee.png" alt="Hapee" class="nav-logo"></a>
+    <a href="/" aria-label="Hapee - Ir al inicio"><img src="img/logo-hapee.png" alt="Hapee - Plataforma de IA conversacional y automatización" class="nav-logo"></a>
     <div class="nlinks">
+      <a href="/comparativa.html">Comparativa</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/transformacion.html">Transformación</a>
       <a href="/partners.html">Partners</a>
+      <a href="/juego" class="nav-game">🎮 Jugar</a>
+      <a href="/academia">Academy</a>
+      <a href="https://beta.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
     </div>
     <div class="nctas">
       <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
@@ -2058,9 +2036,33 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
         </svg>
       </button>
       <a href="#calendario" class="btn bs nav-cta" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Reservar mi demo →</a>
+      <a href="/planes" class="btn bo">Ver Planes</a>
     </div>
+    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open');document.documentElement.classList.add('menu-open')" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mmenu" id="mm">
+  <button class="mx" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')" aria-label="Cerrar menú">&times;</button>
+  <a href="/comparativa.html">Comparativa</a>
+  <a href="/blog.html">Blog</a>
+  <a href="/transformacion.html">Transformación</a>
+  <a href="/partners.html">Partners</a>
+  <a href="/juego">🎮 Jugar Hapee</a>
+  <a href="/academia">Academy</a>
+  <a href="https://beta.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
+  <button class="dark-toggle" id="darkToggleMobile" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
+    <a href="#calendario" class="btn bs" style="width:100%;justify-content:center" onclick="event.preventDefault();this.closest('.mmenu').classList.remove('open');document.documentElement.classList.remove('menu-open');document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">Reservar mi demo →</a>
+    <a href="/planes" class="btn bo" style="width:100%;justify-content:center">Ver Planes</a>
+  </div>
+</div>
 </header>
 
 <main id="main-content">
@@ -2187,10 +2189,7 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
         <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Sin compromiso de compra</div>
       </div>
     </div>
-    <div class="cal-frame anim-rev">
-      <div class="cal-corner-deco tl"></div>
-      <div class="cal-corner-deco br"></div>
-      <div class="cal-wrap">
+    <div class="cal-embed anim-rev">
         <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
         <noscript>
           <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Tu navegador tiene JavaScript desactivado. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Abre el calendario en una nueva pestaña →</a></p>
@@ -2280,7 +2279,30 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
           });
         })();
         </script>
-      </div>
+        <script>
+        /* === Guard de auto-resize del widget ===
+           La página del calendario reporta documentElement.scrollHeight (que nunca baja del alto
+           del propio iframe) y calendar-embed.js fija el iframe en ese valor + 16px cada segundo
+           → bucle: el iframe crece 16px/s sin fin. Este listener se registra ANTES que el loader
+           (orden del documento; el loader es async al final del body), se queda con el mensaje y
+           solo agranda el iframe cuando el contenido real supera el alto actual. */
+        (function(){
+          window.addEventListener('message', function(e){
+            var d = e.data;
+            if(!d || typeof d !== 'object' || d.type !== 'zentru_calendar_height') return;
+            var host = '';
+            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+            if(host !== 'hapee.ai' && host.slice(-9) !== '.hapee.ai') return;
+            var f = document.querySelector('#hapeeCalendar iframe[data-zcal]');
+            if(!f) return;
+            e.stopImmediatePropagation();
+            var h = parseInt(d.height, 10);
+            if(!h || h < 200) return;
+            var cur = Math.round(f.getBoundingClientRect().height);
+            if(h > cur + 2) f.style.height = h + 'px';
+          });
+        })();
+        </script>
     </div>
   </div>
 </section>

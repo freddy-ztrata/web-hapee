@@ -12,7 +12,7 @@ Landing site for **Hapee.ai** — an AI conversational platform + automation + C
 
 Main funnel:
 - `index.html` — Main landing (~3500 lines). CSS in `<style>`, JS in `<script>`. Hosts an interactive **Hapee AI chat** that streams through nginx → Anthropic + ElevenLabs. Also has orbital robot hero + platform showcase + Hapee Interact demo.
-- `agenda-tu-demo.html` — Demo booking landing. **Minimal nav** (no menu, just logo + "Reservar mi demo" CTA). Includes VSL video, embedded GHL booking calendar, home-page widgets, sticky demo CTAs (mobile bar + desktop pill).
+- `agenda-tu-demo.html` — Demo booking landing. Same full nav + mobile menu as `index.html` (since 2026-09-13; keep both in sync). Includes VSL video, embedded Hapee booking calendar (`beta.hapee.ai`), home-page widgets, sticky demo CTAs (mobile bar + desktop pill).
 - `partners.html` — Reseller/partners program landing.
 - `comparativa.html` — Hapee vs. competitors table.
 - `gracias-compra.html` — Post-purchase thank-you page (linked from the checkout flow).
@@ -88,11 +88,11 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 
 ## Landing-page conventions
 
-- **`agenda-tu-demo.html`** uses a **minimal nav** (`.nav-minimal`): logo + dark toggle + single "Reservar mi demo" CTA. No menu items, no mobile menu. Landing-page principle = zero distractions.
+- **`agenda-tu-demo.html`** uses the **same full nav and `.mmenu` mobile menu as `index.html`** (owner's decision 2026-09-13, replacing the earlier minimal nav). Nav CTAs: "Reservar mi demo →" (scrolls to `#calendario`) + "Ver Planes". When editing menu items on the home, mirror them here.
 - **Section-per-screen** CSS rule applied on both `index.html` and `agenda-tu-demo.html`: `main > section { min-height: 100svh }` with exceptions for short sections (`midcta`, `video-section`). On mobile only key sections enforce full-viewport height to keep readability.
 - **Sticky demo CTAs** on `agenda-tu-demo.html`: full-width bottom bar on mobile + floating bottom-right pill on desktop. Auto-hide when hero or calendar section is in view (IntersectionObserver). Both scroll smoothly to `#calendario`.
 - **VSL video treatment**: cinematic frame with animated conic-gradient border, custom play overlay (double pulsing ring), radial glow halo. Poster is `img/robot.png` (aspect-ratio locked in CSS via `object-fit:contain`).
-- **Calendar embed** (Hapee app, since 2026-09-13): `<div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee">` inside `.cal-wrap`, mounted by `https://beta.hapee.ai/static/calendar-embed.js` (async, end of body). The inline UTM forwarder rewrites `data-hapee-calendar` to the full `beta.hapee.ai/calendar/book/...?utm...` URL before mount; the conversion `dg_agendar_demo` fires on postMessage `{type:"zentru_calendar_submitted"}` from a `*.hapee.ai` origin. `agentes-ia-whatsapp.html` sigue con su propio calendario (`dxPntqtyC5ZeHsKLKupa`) — no se toca.
+- **Calendar embed** (Hapee app, since 2026-09-13): `<div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee">` inside a plain `.cal-embed` wrapper (no card/frame — the widget brings its own), mounted by `https://beta.hapee.ai/static/calendar-embed.js` (async, end of body). The inline UTM forwarder rewrites `data-hapee-calendar` to the full `beta.hapee.ai/calendar/book/...?utm...` URL before mount; the conversion `dg_agendar_demo` fires on postMessage `{type:"zentru_calendar_submitted"}` from a `*.hapee.ai` origin. **Resize guard**: the widget reports `documentElement.scrollHeight` (never below the iframe's own height) and `calendar-embed.js` sets height = reported + 16 every second → unbounded growth; an inline listener registered before the loader swallows `zentru_calendar_height` and only grows the iframe when content actually exceeds it. Remove the guard only once the app's embed script is fixed. `agentes-ia-whatsapp.html` sigue con su propio calendario (`dxPntqtyC5ZeHsKLKupa`) — no se toca.
 
 ## Theming (dark/light)
 
@@ -108,7 +108,7 @@ Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx l
 
 - `.mmenu` + `.open` class, `position:fixed;inset:0` for fullscreen overlay.
 - `html.menu-open` locks body scroll when open. **Every** menu close action (X button, nav links, CTA buttons) must remove both `.open` from `.mmenu` AND `.menu-open` from `<html>`.
-- `agenda-tu-demo.html` has no mobile menu — the minimal nav is always visible with a single CTA.
+- `agenda-tu-demo.html` has the same mobile menu markup (`#mm`) — apply the same close-action rule there.
 
 ## Visual effects in `index.html`
 
