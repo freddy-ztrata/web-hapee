@@ -21,7 +21,8 @@ Main funnel:
 - `agentes-ia-whatsapp.html` — WhatsApp AI-agent landing with its **own** GHL calendar (`always.hapee.ai/widget/booking/dxPntqtyC5ZeHsKLKupa`) — do not swap it for the Hapee calendar.
 - `academia.html` — Academia Hapee onboarding page (`/academia`, linked from the nav).
 - `webinar.html` — Webinar landing with a per-country schedule table and its own link-preview card.
-- `demo-countdown.html` — One-pager with 5-min countdown before demo starts. `noindex,nofollow`.
+- `preparate-demo.html` — Post-booking "prepárate para tu demo" page (`/preparate-demo`, `noindex,follow`). The Hapee calendar redirects here after a booking; replaces the old GHL page at `be.hapee.ai/preparate-demo`. Optional query params `?nombre=`, `?fecha=<ISO-8601 with offset>`, `?tz=` personalize the greeting / countdown / add-to-calendar; everything hides gracefully without them. Not in `sitemap.xml` on purpose.
+- `demo-countdown.html` — One-pager with 5-min countdown the **host projects during the call** before the demo starts (not sent to leads). `noindex,nofollow`.
 - `dossier-x8k4m2.html`, `demoday-via-x7m2.html` — Unlisted sales collateral (obfuscated slugs, `noindex,nofollow,noarchive`). Shared by link only; never add to nav or sitemap.
 
 Content:
@@ -97,7 +98,7 @@ All public copy (HTML text, JS strings, code comments inside docs examples) is *
 
 ## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)
 
-- 3 plans: **STARTER $297/mo**, **PRO $397/mo** (badge "El más elegido", animated beam border), **ELITE SETUP $2,990 one-time**.
+- 3 plans: **STARTER $297/mo**, **PRO $397/mo** (badge "El más elegido", animated beam border), **ELITE SETUP USD 3,290 one-time** (matches `planes.html`, `index.html` FAQ/JSON-LD and the old `$2,990` figure is wrong — confirmed by the owner 2026-09-14).
 - Starter: 2 usuarios y 2.000 contactos; incluye módulos de Email Marketing, **Licitaciones (Mercado Público)** y **Academia**. Pro: usuarios y contactos ilimitados; Licitaciones amplía a **Mercado Público y Entidades privadas**.
 - **No free trial.** Never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant.
 - **No money-back guarantee.** Never write "garantía de devolución", "30 días de garantía", "reembolso completo", or promise refunds. Payments are non-refundable per `terminos.html` section 5.
@@ -151,7 +152,7 @@ Meta Business Partner + Google Premier Partner are inline SVG (not external imag
 
 ## Tracking / pixels
 
-**None installed.** Only domain-verification `meta` tags for Meta Business + Google Search Console (not pixels — verification only). No Meta Pixel (`fbq`), Google Tag Manager, or GA4. When adding ads, install via GTM to centralize.
+**Google tag (gtag.js)** is in the `<head>` of every deployed page (including `blog/` and `docs/`): `AW-18308791323` (Google Ads) + `G-9RFLY7C3XE` (GA4). Copy the same snippet into any new page. Key events: `dg_agendar_demo` (fired on `agenda-tu-demo.html` when the calendar widget confirms a booking), `dg_whatsapp` (fired by `js/whatsapp.js` on FAB click and by the in-page WhatsApp CTA on `preparate-demo.html`) and `dg_prep_completa` (fired once on `preparate-demo.html` when the prep checklist reaches 5/5 — register it in GA4 if you want to see it) — Google Ads imports conversions from GA4, so don't add `send_to`. No Meta Pixel (`fbq`) and no Google Tag Manager; the Meta/Search Console `meta` tags are domain verification only. Post-conversion pages (`preparate-demo`, `compra-exitosa`) must **not** re-fire the conversion events.
 
 ## Skills installed
 

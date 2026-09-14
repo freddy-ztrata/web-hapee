@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) — identico a agenda-tu-demo.html. NO disparar dg_agendar_demo en esta pagina: ya se disparo al confirmar la reserva. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Prepárate para tu demo — Hapee</title>
+<meta name="description" content="Tu demo con Hapee está confirmada. Revisa el plan de los 30 minutos, tu lista de preparación y lo que verás en vivo antes de la videollamada.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://hapee.ai/preparate-demo">
+<meta name="theme-color" content="#FA5000">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hapee">
+<meta property="og:locale" content="es_CL">
+<meta property="og:url" content="https://hapee.ai/preparate-demo">
+<meta property="og:title" content="Tu demo con Hapee está confirmada">
+<meta property="og:description" content="Prepárate en 2 minutos: plan de los 30 minutos, lista de preparación y lo que verás en vivo.">
+<meta property="og:image" content="https://hapee.ai/img/robot.png">
+<meta property="og:image:width" content="435">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Robot Hapee, asistente de inteligencia artificial">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@hapee_ai">
+<meta name="twitter:title" content="Tu demo con Hapee está confirmada">
+<meta name="twitter:description" content="Plan de los 30 minutos, lista de preparación y lo que verás en vivo.">
+<meta name="twitter:image" content="https://hapee.ai/img/robot.png">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preload" href="img/logo-hapee.png" as="image">
+<link rel="preload" href="img/robot.png" as="image">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<style>
+/* ══════════════════════════════════════════════════════════════════════
+   PREPARATE-DEMO — "T-MENOS · Tu demo esta confirmada"
+   Tokens, nav, footer y efectos heredados de agenda-tu-demo.html / index.html.
+   ══════════════════════════════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ===== CSS VARIABLES — LIGHT MODE (default) ===== */
+:root{
+  --accent:#FA5000;
+  --accent-alt:#CD2349;
+  --dark:#0a0e1a;
+  --dark-2:#1a1a1a;
+  --bg:#FFFFFF;
+  --bg-alt:#F5F3F0;
+  --bg-alt2:#F8FAFC;
+  --text:#4a4a4a;
+  --text-2:#5f6673;   /* 5.6:1 sobre blanco: AA en texto pequeño (antes #777e8f = 4.07:1) */
+  --heading:#1a1a1a;
+  --white:#fff;
+  --pill:100px;
+  --tr:.3s cubic-bezier(.4,0,.2,1);
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fb:'Plus Jakarta Sans',sans-serif;
+  --fm:'Plus Jakarta Sans',-apple-system,sans-serif;   /* como blog.html: el sitio no usa monoespaciada; las etiquetas se diferencian con peso 700, mayusculas y tracking */
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow-md:0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.13);
+  --card-bg:#FFFFFF;
+  --card-border:rgba(0,0,0,.09);
+  --nav-scrolled-bg:rgba(255,255,255,.97);
+  --nav-scrolled-border:rgba(0,0,0,.06);
+  --canvas-bg:255,255,255;
+  --nav-h:66px;
+}
+
+/* ===== DARK MODE ===== */
+html.dark{
+  --bg:#080808;
+  --bg-alt:#0d0d0d;
+  --bg-alt2:#111111;
+  --text:#b0a89e;
+  --text-2:#8b8078;
+  --heading:#f5f0eb;
+  --card-bg:#0f0f0f;
+  --card-border:rgba(250,80,0,.12);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.5);
+  --shadow-md:0 8px 32px rgba(0,0,0,.6);
+  --shadow-lg:0 20px 60px rgba(250,80,0,.08),0 20px 60px rgba(0,0,0,.6);
+  --nav-scrolled-bg:rgba(8,8,8,.97);
+  --nav-scrolled-border:rgba(250,80,0,.08);
+  --canvas-bg:8,8,8;
+}
+
+/* Dark mode: malla iridiscente fija que cubre todo el viewport */
+html.dark body{background:#080808;position:relative}
+html.dark body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 15%,rgba(250,80,0,.22),transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 30%,rgba(205,35,73,.16),transparent 45%),
+    radial-gradient(ellipse 70% 45% at 50% 60%,rgba(250,80,0,.14),transparent 50%),
+    radial-gradient(ellipse 55% 35% at 15% 85%,rgba(205,35,73,.16),transparent 45%),
+    radial-gradient(ellipse 75% 45% at 85% 90%,rgba(250,80,0,.2),transparent 50%);
+}
+/* El contenido queda sobre la malla. NUNCA incluir aqui .mmenu, .nav, #tminusSticky ni el FAB (son fixed). */
+html.dark main,html.dark .footer{position:relative;z-index:1}
+html.dark .mmenu{z-index:1100}
+html.dark .nav{z-index:1000}
+html.dark .nlinks a{color:#b0a89e}
+html.dark .nlinks a:hover{color:var(--accent)}
+html.dark .mbtn span{background:#f5f0eb}
+html.dark .dark-toggle{background:#111111;border-color:rgba(250,80,0,.1)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:7px}
+::-webkit-scrollbar-track{background:var(--bg-alt)}
+::-webkit-scrollbar-thumb{background:rgba(250,80,0,.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(250,80,0,.4)}
+html.dark ::-webkit-scrollbar-track{background:#0a0a0a}
+html.dark ::-webkit-scrollbar-thumb{background:rgba(250,80,0,.25)}
+html.dark ::-webkit-scrollbar-thumb:hover{background:rgba(250,80,0,.45)}
+
+/* ===== BASE ===== */
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:.95rem;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.15}
+/* Titulares con la receta de marca: Plus Jakarta Sans 800, interlineado .95. */
+h1,h2{font-weight:800;line-height:.95;letter-spacing:-.025em}
+h3,h4{font-weight:800;letter-spacing:-.015em}
+
+.ctn{max-width:1140px;margin:0 auto;padding:0 24px}
+.tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl{font-family:var(--fb);font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:14px;text-wrap:balance;display:inline-block}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-weight:600;font-size:.95rem;padding:14px 30px;border-radius:var(--pill);cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;border:2px solid transparent;min-height:44px}
+.bs{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
+.bs:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(250,80,0,.35)}
+.bo{background:transparent;color:var(--heading);border-color:rgba(26,26,26,.2)}
+html.dark .bo{border-color:rgba(250,80,0,.2);color:var(--heading)}
+.bo:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn.small{padding:10px 20px;font-size:.85rem}
+.btn .rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rp .6s ease-out}
+@keyframes rp{to{transform:scale(4);opacity:0}}
+.glow{animation:gl 2.5s ease-in-out infinite}
+@keyframes gl{0%,100%{box-shadow:0 0 15px rgba(250,80,0,.15)}50%{box-shadow:0 0 40px rgba(250,80,0,.4),0 0 80px rgba(250,80,0,.12)}}
+
+/* Accesibilidad */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:absolute;top:-9999px;left:-9999px;z-index:9999;background:var(--accent-alt);color:#fff;font-weight:700;padding:10px 20px;border-radius:var(--pill);font-size:.9rem;text-decoration:none;transition:none}
+.skip-link:focus{top:16px;left:16px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* Radio del foco solo en links de texto sin radio propio; .btn, chips y toggles conservan su forma (el outline sigue el border-radius del elemento) */
+.nlinks a:focus-visible,.mmenu a:focus-visible,.fcol a:focus-visible,.fbot a:focus-visible,.faq-a a:focus-visible,.sw-tip a:focus-visible,.pase-more:focus-visible{border-radius:8px}
+
+/* ===== NAV (misma nav y menu movil que agenda-tu-demo.html) ===== */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:16px 0;transition:var(--tr);background:transparent}
+.nav.sc{background:var(--nav-scrolled-bg);backdrop-filter:blur(20px);padding:10px 0;border-bottom:1px solid var(--nav-scrolled-border);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.nav .ctn{display:flex;align-items:center;justify-content:space-between;gap:18px}
+/* Regla de marca: el logo NUNCA se invierte; el wordmark naranja/burdeo se ve en ambos temas. */
+.nav-logo{display:block;height:34px;width:auto !important;object-fit:contain;flex-shrink:0;min-width:80px;transition:var(--tr)}
+.nlinks{display:flex;align-items:center;gap:18px}
+.nlinks a{font-size:.85rem;font-weight:500;color:var(--text-2);transition:var(--tr);white-space:nowrap}
+.nlinks a:hover,.nlinks a.on{color:var(--accent)}
+.nlinks a.nav-game{color:var(--accent);font-weight:700;padding:5px 10px;border:1px solid rgba(250,80,0,.35);border-radius:6px;background:rgba(250,80,0,.06);font-size:.8rem}
+.nlinks a.nav-game:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nctas{display:flex;gap:8px;align-items:center}
+.nctas .btn{padding:8px 16px;font-size:.82rem;min-height:36px}
+@media(max-width:1180px){
+  .nlinks{gap:13px}
+  .nlinks a{font-size:.8rem}
+  .nctas .btn{padding:7px 13px;font-size:.78rem}
+  .nav-logo{height:26px}
+}
+
+/* Dark mode toggle button */
+.dark-toggle{width:36px;height:36px;border-radius:50%;background:var(--bg-alt);border:1px solid var(--card-border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0;color:var(--text-2)}
+.dark-toggle:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.08)}
+.dark-toggle svg{width:16px;height:16px;transition:var(--tr)}
+.icon-sun{display:none}
+.icon-moon{display:block}
+html.dark .icon-sun{display:block}
+html.dark .icon-moon{display:none}
+
+.mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px;transition:var(--tr)}
+.mmenu{display:none;position:fixed;inset:0;background:var(--bg);z-index:1100;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;transition:background var(--tr);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mmenu.open{display:flex}
+html.menu-open{overflow:hidden}
+.mmenu a{font-size:1.1rem;color:var(--heading);font-weight:600}
+.mmenu a:hover{color:var(--accent)}
+.mmenu .btn{width:200px;justify-content:center}
+.mx{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--heading);font-size:2rem;cursor:pointer}
+@media(max-width:1100px){.nlinks,.nctas{display:none}.mbtn{display:block}}
+/* Tap targets de 44px en el rango movil/tablet (solo suma area, no cambia el dibujo) */
+@media(max-width:1100px){.mbtn{min-width:44px;min-height:44px;display:flex;flex-direction:column;justify-content:center;align-items:center}.mx{min-width:44px;min-height:44px}.mmenu .dark-toggle{width:44px;height:44px}.nav .ctn>a[aria-label]{min-height:44px;display:flex;align-items:center}.mmenu>a:not(.btn){min-height:44px;display:flex;align-items:center;padding:0 12px}}
+
+/* ===== SECCIONES: alto segun contenido; hero a pantalla completa ===== */
+main > section{min-height:auto;scroll-margin-top:calc(var(--nav-h,66px) + 16px)}
+main > section.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+@supports not (height:100svh){main > section.hero{min-height:100vh}}
+/* plan y preparacion: alto segun contenido (a 100svh quedaban ~260px vacios en 1440x900) */
+
+/* ===== SCROLL-REVEAL (solo baja opacidad cuando hay JS) ===== */
+html.js .anim-rev{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+html.js .anim-rev.in-view{opacity:1;transform:none}
+.sec-head{max-width:640px;margin-bottom:40px}
+.sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:14px;text-wrap:balance}
+.sec-head p{font-size:1.05rem;color:var(--text);line-height:1.7}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+
+/* Beam de marca (misma tecnica que la card PRO del home) */
+@property --beam-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes beam{to{--beam-a:360deg}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rf{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}100%{box-shadow:0 0 0 12px rgba(34,197,94,0)}}
+
+/* ══════════════════════ HERO — Tu demo esta confirmada ══════════════════════ */
+.hero{position:relative;padding:104px 0 64px;overflow:hidden;background:transparent;transition:background var(--tr)}
+#constellationCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .ctn{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;width:100%}
+.hero-copy{perspective:1200px}
+.hero .anim-rev:nth-child(1){transition-delay:.05s}
+.hero .anim-rev:nth-child(2){transition-delay:.1s}
+.hero .anim-rev:nth-child(3){transition-delay:.15s}
+.hero .anim-rev:nth-child(4){transition-delay:.2s}
+.hero .anim-rev:nth-child(5){transition-delay:.25s}
+.hero .anim-rev:nth-child(6){transition-delay:.3s}
+.hero .anim-rev:nth-child(7){transition-delay:.35s}
+
+/* Kicker "sello" */
+.kicker{display:inline-flex;align-items:center;gap:9px;background:rgba(250,80,0,.07);border:1px solid rgba(250,80,0,.18);border-radius:var(--pill);padding:8px 16px;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;animation:seal .6s cubic-bezier(.16,1,.3,1) both}
+html.dark .kicker{background:rgba(250,80,0,.08);border-color:rgba(250,80,0,.15)}
+.kicker .live{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;animation:livePulse 1.4s ease-out infinite;flex-shrink:0}
+@keyframes seal{0%{transform:scale(1.35);opacity:0}60%{transform:scale(.96);opacity:1}100%{transform:scale(1);opacity:1}}
+.hero-hola{font-size:1.15rem;font-weight:700;color:var(--heading);margin-bottom:8px;letter-spacing:-.01em}
+
+/* H1 con mascara CSS pura (GSAP solo mejora) */
+.hero h1{font-size:clamp(2.7rem,5.8vw,4.3rem);margin-bottom:18px;color:var(--heading)}
+.wmask{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .04em .12em 0;margin-bottom:-.12em}
+.w{display:inline-block;transform:translateY(110%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.wmask:nth-of-type(2) .w{transition-delay:.09s}
+.wmask:nth-of-type(3) .w{transition-delay:.18s}
+.wmask:nth-of-type(4) .w{transition-delay:.27s}
+html.hero-ready .w{transform:none}
+html:not(.js) .w{transform:none}
+html.gsap .w{transition:none}
+
+/* Sin pildoras de datos: 1:1, 30 min, Meet y "sin costo" viven una sola vez en el pase (antes se repetian tres veces en 800px) */
+.hero-sub{font-size:1.1rem;color:var(--text);line-height:1.7;margin-bottom:26px;max-width:540px}
+/* Sin indicador flotante de scroll: el talon del pase ("Ver el plan de la sesion ↓") ya cumple ese rol en todos los estados */
+@media(min-width:901px){html.has-fecha .hero{padding-top:92px}}
+/* El modo compacto para laptops (1366x768, 1280x720) vive en RESPONSIVE, despues de todas las reglas de componentes */
+
+/* ── Pase de acceso ── */
+.pase{position:relative;overflow:hidden;background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);box-shadow:var(--shadow-lg);max-width:520px;transform-origin:left center;text-align:left}
+html.dark .pase{border-color:rgba(250,80,0,.18);background:rgba(15,15,15,.86)}
+html.js .pase.anim-rev{transform:translateX(24px) rotateY(-10deg)}
+html.js .pase.anim-rev.in-view{transform:none}
+/* beam lento en el borde */
+.pase::before{content:'';position:absolute;inset:0;border-radius:22px;padding:1.5px;background:conic-gradient(from var(--beam-a,0deg),transparent 0 70%,#FA5000 85%,#CD2349 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:beam 8s linear infinite;pointer-events:none;z-index:3}
+.pase-band{background:linear-gradient(90deg,#FA5000,#CD2349);color:#fff;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:10px 18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;min-height:36px}
+.pase-band span:last-child{transition:opacity .3s}
+html.preflight-done .pase-band span:last-child{opacity:0}   /* deja el sitio al sello LISTO */
+.pase-perf{border-top:2px dashed var(--card-border);position:relative;margin:0}
+.pase-perf::before,.pase-perf::after{content:'';position:absolute;top:-10px;width:18px;height:18px;border-radius:50%;background:var(--bg)}
+.pase-perf::before{left:-9px}
+.pase-perf::after{right:-9px}
+.pase-rows{display:grid;gap:9px;padding:16px 20px 14px}
+.pase-rows>div{display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:baseline}
+.pase-rows>div.row-con{align-items:center}
+.pase-rows dt{font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.pase-rows dd{font-weight:700;color:var(--heading);font-size:.95rem;line-height:1.4;overflow-wrap:anywhere}
+.pase-note{display:block;font-weight:500;color:var(--text-2);font-size:.8rem;line-height:1.4;margin-top:2px}
+/* Fila "Con": el equipo que implementa (antes vivia en una seccion aparte que repetia el hero) */
+.pase-team{display:flex;align-items:center;gap:10px}
+.pase-team>span:last-child{font-size:.88rem;font-weight:600;line-height:1.35}
+.avatars{display:flex;flex-shrink:0}
+.avatars img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--card-bg);margin-left:-9px;background:var(--bg-alt);box-shadow:var(--shadow-sm)}
+.avatars img:first-child{margin-left:0}
+.pase-actions{display:flex;flex-wrap:wrap;gap:10px;padding:4px 20px 16px}
+.pase-actions .btn{min-height:44px;padding:10px 18px;font-size:.85rem}
+/* Talon del pase: cierra la tarjeta con aire en todos los estados y lleva al plan */
+.pase-more{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:0 20px;border-top:1px dashed var(--card-border);font-weight:700;font-size:.88rem;color:var(--heading);transition:var(--tr);position:relative;z-index:2}
+.pase-more:hover{color:var(--accent);background:rgba(250,80,0,.04)}
+.pase-more span{color:var(--accent);transition:transform .3s}
+.pase-more:hover span{transform:translateY(3px)}
+/* Sello LISTO sobre la banda del pase (a top:48px tapaba nombres largos en 390px) */
+.pase-stamp{position:absolute;right:16px;top:8px;z-index:4;padding:5px 12px;border:3px solid;border-image:linear-gradient(90deg,#FA5000,#CD2349) 1;font:800 .82rem/1 var(--fd);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);background:var(--card-bg);transform:rotate(-10deg) scale(1.6);opacity:0;transition:.45s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+html.preflight-done .pase-stamp{opacity:1;transform:rotate(-10deg) scale(1)}
+
+/* ── T-MENOS (cuenta regresiva) ── */
+.tminus{padding:6px 20px 14px}
+.tm-eyebrow{font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);margin-bottom:8px}
+.tm-grid{display:flex;align-items:flex-start;gap:6px}
+.tm-cell{display:flex;flex-direction:column;align-items:center;min-width:58px}
+.tm-num{font-family:var(--fd);font-weight:800;font-size:clamp(1.5rem,3.2vw,2.3rem);line-height:1;color:var(--heading);font-variant-numeric:tabular-nums;text-shadow:0 12px 40px rgba(250,80,0,.25)}
+.tm-num.tick{animation:tick .18s ease-out}
+@keyframes tick{0%{transform:translateY(8px);opacity:0}100%{transform:none;opacity:1}}
+.tm-lbl{font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin-top:5px}
+.tm-colon{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.8vw,2rem);line-height:1;color:var(--accent);animation:colonBlink 1s steps(1) infinite;margin-top:.08em}
+@keyframes colonBlink{0%,49%{opacity:1}50%,100%{opacity:.18}}
+.tminus.urgent .tm-num{color:var(--accent);animation:urgentPulse .9s ease-in-out infinite alternate}
+@keyframes urgentPulse{from{transform:scale(1)}to{transform:scale(1.02)}}
+.tminus.go .tm-eyebrow,.tminus.go .tm-grid,.tminus.past .tm-eyebrow,.tminus.past .tm-grid{display:none}
+.tm-state{padding:4px 0 6px}
+.tm-state .tm-state-t{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,3.6rem);line-height:.95;letter-spacing:-.025em;margin-bottom:8px}
+.tm-state p{color:var(--text);font-size:.95rem;line-height:1.6;margin-bottom:14px}
+.tm-state .btn{min-height:44px;padding:10px 18px;font-size:.85rem;margin:0 8px 8px 0}
+
+/* ── Plataforma de lanzamiento (columna derecha) ── */
+.launch{position:relative;width:100%;max-width:520px;aspect-ratio:1;margin:0 auto;display:flex;align-items:center;justify-content:center;perspective:1000px}
+.launch-shadow{position:absolute;inset:auto 18% 10% 18%;height:26px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(250,80,0,.55),transparent 70%);filter:blur(20px);animation:shadowPulse 4.2s ease-in-out infinite;z-index:0}
+@keyframes shadowPulse{0%,100%{transform:scaleX(.85);opacity:.7}50%{transform:scaleX(1.05);opacity:1}}
+.pulse-ring{position:absolute;top:50%;left:50%;width:62%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgba(250,80,0,.4);transform:translate(-50%,-50%);pointer-events:none;opacity:0;animation:ringExpand 3.6s ease-out infinite .4s;z-index:0}
+.pulse-ring.r2{animation-delay:1.6s;border-color:rgba(205,35,73,.3)}
+.pulse-ring.r3{animation-delay:2.8s;border-color:rgba(250,80,0,.2)}
+@keyframes ringExpand{0%{transform:translate(-50%,-50%) scale(.7);opacity:.85}100%{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+html.imminent .pulse-ring{animation-duration:1.8s}
+.orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1px solid rgba(250,80,0,.12);pointer-events:none;transform:translate(-50%,-50%)}
+.orbit-ring-1{width:66%;height:66%;animation:orbitRot 60s linear infinite}
+.orbit-ring-2{width:92%;height:92%;border-style:dashed;border-color:rgba(250,80,0,.07);animation:orbitRot 90s linear infinite reverse}
+html.dark .orbit-ring-1{border-color:rgba(250,80,0,.18)}
+html.dark .orbit-ring-2{border-color:rgba(250,80,0,.1)}
+@keyframes orbitRot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+/* Satelites: hijos del anillo; contrarrotan con la propiedad `rotate` para quedar derechos */
+.sat{position:absolute;width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(0,0,0,.04);translate:-50% -50%;pointer-events:auto;z-index:8;transition:scale .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+html.dark .sat{background:rgba(22,22,26,.92);box-shadow:0 8px 24px rgba(0,0,0,.55),0 2px 6px rgba(250,80,0,.18),inset 0 1px 0 rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+.sat img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.sat:hover{scale:1.15;box-shadow:0 14px 36px rgba(250,80,0,.35),0 4px 12px rgba(0,0,0,.18)}
+.orbit-ring-1 .sat{animation:satCounter 60s linear infinite}
+.orbit-ring-2 .sat{animation:satCounter 90s linear infinite reverse}
+@keyframes satCounter{from{rotate:0deg}to{rotate:-360deg}}
+.sat-0{left:100%;top:50%}
+.sat-90{left:50%;top:100%}
+.sat-180{left:0;top:50%}
+.sat-270{left:50%;top:0}
+.sat-45{left:85.36%;top:85.36%}
+.sat-225{left:14.64%;top:14.64%}
+/* Robot: entrada (scale) > tilt (rotateX/Y) > flotacion */
+.launch-robot{position:relative;z-index:5;height:68%;aspect-ratio:435/800;transition:opacity .9s cubic-bezier(.16,1,.3,1) .25s,scale .9s cubic-bezier(.16,1,.3,1) .25s;will-change:transform}
+/* El estado oculto solo existe con JS (igual que .anim-rev): sin JavaScript el robot se ve desde el primer render */
+html.js:not(.hero-ready) .launch-robot{opacity:0;scale:.85}
+.launch-tilt{width:100%;height:100%;transform:rotateX(calc(var(--ty,0)*-4deg)) rotateY(calc(var(--tx,0)*4deg));transition:transform .18s linear;transform-style:preserve-3d}
+.launch-float{width:100%;height:100%;animation:robotFloat 4.2s ease-in-out infinite;filter:drop-shadow(0 30px 50px rgba(250,80,0,.35))}
+@keyframes robotFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-22px) rotate(1deg)}}
+.launch-robot-img{width:100%;height:100%;object-fit:contain}
+.launch-float model-viewer{display:block;width:100%;height:100%;--poster-color:transparent;background:transparent}
+
+/* ══════════════════════ PLAN DE VUELO — los 30 minutos ══════════════════════ */
+.plan{padding:100px 0}
+.plan-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:8px}
+.plan-head .sec-head{margin-bottom:0}
+.track-clock{text-align:right;flex-shrink:0}
+.track-clock span{display:block;font-family:var(--fd);font-weight:800;font-size:clamp(1.8rem,3.2vw,2.6rem);font-variant-numeric:tabular-nums;color:var(--heading);line-height:1;letter-spacing:-.02em}
+.track-clock small{display:block;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);margin-top:6px}
+.track-wrap{padding:40px 0 48px}
+.track{position:relative;height:14px;border-radius:7px;background:var(--bg-alt);border:1px solid var(--card-border);--p:0}
+html.dark .track{background:#111}
+.track-fill{position:absolute;top:-1px;bottom:-1px;left:-1px;width:calc(var(--p)*100% + 2px);border-radius:7px;background:linear-gradient(90deg,#FA5000,#CD2349);box-shadow:0 0 18px rgba(250,80,0,.35);will-change:width}
+.track-mark{position:absolute;top:100%;transform:translateX(-50%);font-family:var(--fb);font-size:.72rem;font-weight:700;color:var(--text-2);padding-top:12px;line-height:1}
+.track-mark::before{content:'';position:absolute;top:3px;left:50%;width:1px;height:6px;background:var(--text-2);opacity:.6}
+.track-bot{position:absolute;top:50%;left:calc(var(--p)*100%);translate:-50% -82%;width:28px;height:52px;background:url(img/robot.png) center/contain no-repeat;filter:drop-shadow(0 6px 14px rgba(250,80,0,.45));z-index:2;pointer-events:none}
+/* La proporcion 10/15/5 la cuenta la pista (.track); las tarjetas se reparten equilibradas para que la 03 (el plan que se lleva la persona) no sea la mas apretada */
+.phases{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr);gap:16px;align-items:stretch}   /* start: 01 y 03 no se estiran a la altura de 02 (quedaban con aire muerto) */
+.phase{position:relative;display:flex;flex-direction:column;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:24px;-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);transition:border-color .5s,box-shadow .5s,background .5s;display:flex;flex-direction:column;gap:10px}
+.phase::before{content:'';position:absolute;inset:-1px;border-radius:21px;padding:1.5px;background:conic-gradient(from var(--beam-a,0deg),transparent 0 70%,#FA5000 85%,#CD2349 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;pointer-events:none;z-index:2}
+.phase.lit{border-color:transparent;background:linear-gradient(var(--card-bg),var(--card-bg)) padding-box,linear-gradient(120deg,rgba(250,80,0,.55),rgba(205,35,73,.55)) border-box;box-shadow:0 14px 44px rgba(250,80,0,.10)}
+.phase.lit::before{animation:beamOnce 6s linear 1 forwards}
+@keyframes beamOnce{0%{--beam-a:0deg;opacity:1}85%{opacity:1}100%{--beam-a:360deg;opacity:0}}
+.phase-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.phase-n{font-family:var(--fb);font-size:.8rem;font-weight:800;color:var(--accent);letter-spacing:.1em}
+.phase-t{font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2)}
+.phase h3{font-size:1.25rem;line-height:1.15}
+.phase>p{color:var(--text);font-size:.92rem;line-height:1.6}
+.phase-need-l{display:block;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--heading);margin-top:6px}
+.phase-need{display:flex;flex-direction:column;gap:9px}
+.phase-need li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text);line-height:1.5}
+.fck{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));display:flex;align-items:center;justify-content:center;margin-top:1px}
+.fck svg{width:13px;height:13px;color:#fff}
+/* Los tres chips en una fila (IA · Automatización · CRM); en ≤600px se apilan (ver responsive) */
+.mod-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.mod-chip{flex:0 0 auto;min-height:44px;padding:8px 10px;border-radius:var(--pill);font-family:var(--fb);font-size:.76rem;font-weight:700;color:var(--accent);background:rgba(250,80,0,.06);border:1px solid rgba(250,80,0,.3);cursor:pointer;transition:var(--tr);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.mod-chip::after{content:'↓';font-size:.8em;opacity:.7}
+.mod-chip:hover{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent;transform:translateY(-2px)}
+/* Cierre de cada tarjeta: con que sale la persona de esa fase (.phase>p gana en cascada, por eso la especificidad) */
+.phase>p.phase-out{margin-top:auto;padding-top:12px;border-top:1px dashed var(--card-border);font-size:.86rem;line-height:1.45;color:var(--text)}
+.phase-out strong{color:var(--accent);font-weight:800}
+
+/* ══════════════════════ REVISION PRE-VUELO — lista de preparacion ══════════════════════ */
+.preparacion{padding:100px 0;position:relative}
+.prep-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start}
+.gauge-wrap{position:sticky;top:120px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.gauge{position:relative;width:200px;height:200px}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
+.gauge circle{fill:none;stroke-width:10}
+.g-bg{stroke:var(--card-border)}
+.g-arc{stroke:url(#gaugeGrad);stroke-dasharray:565.5;stroke-dashoffset:565.5;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 0 8px rgba(250,80,0,.35))}
+.gauge-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#gaugeCount{font-family:var(--fd);font-weight:800;font-size:2.2rem;color:var(--heading);line-height:1;font-variant-numeric:tabular-nums}
+.gauge-l{font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2);margin-top:5px}
+.prep-robot{width:auto;height:120px;animation:rf 4s ease-in-out infinite;filter:drop-shadow(0 16px 30px rgba(250,80,0,.25));transition:filter .5s}
+.prep-robot.happy{filter:drop-shadow(0 0 40px rgba(250,80,0,.6));animation:happyJump .7s cubic-bezier(.34,1.56,.64,1) 1,rf 4s ease-in-out .7s infinite}
+@keyframes happyJump{0%{transform:translateY(0)}40%{transform:translateY(-14px) scale(1.06)}100%{transform:translateY(0)}}
+.prep-done{font-weight:700;color:var(--heading);font-size:.95rem;max-width:260px;animation:fu .35s ease}
+.prep-done::before{content:'✓ ';color:var(--accent)}
+#prepReset{min-height:44px}
+.prep-mini{display:none}   /* barra compacta de progreso: solo en movil (ver responsive) */
+.sw-list{display:flex;flex-direction:column;gap:12px}
+.sw-item{position:relative;border-radius:18px;background:var(--card-bg);border:1px solid var(--card-border);transition:border-color .3s,box-shadow .3s;-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px)}
+.sw-item:hover{border-color:rgba(250,80,0,.3)}
+.sw-item.done{border-color:rgba(250,80,0,.35);animation:swPulse .5s ease}
+@keyframes swPulse{0%{box-shadow:0 0 0 0 rgba(250,80,0,.35)}60%{box-shadow:0 0 0 12px rgba(250,80,0,0)}100%{box-shadow:0 0 0 0 rgba(250,80,0,0)}}
+.sw{display:flex;gap:16px;align-items:flex-start;min-height:72px;padding:16px 18px;cursor:pointer;border-radius:18px}
+.sw-input{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:-1px}
+.sw-input:focus-visible~.sw-toggle{outline:3px solid var(--accent);outline-offset:3px}
+.sw-toggle{flex-shrink:0;width:52px;height:30px;border-radius:15px;background:var(--bg-alt);border:1px solid var(--card-border);position:relative;transition:background .3s,border-color .3s;margin-top:2px}
+html.dark .sw-toggle{background:#1a1a1a}
+.sw-toggle::after{content:'';position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.sw-input:checked~.sw-toggle{background:linear-gradient(90deg,#FA5000,#CD2349);border-color:transparent}
+.sw-input:checked~.sw-toggle::after{transform:translateX(22px)}
+.sw-body{flex:1;min-width:0}
+.sw-title{display:block;font-family:var(--fd);font-weight:800;font-size:1.05rem;color:var(--heading);letter-spacing:-.01em;line-height:1.25}
+.sw-desc{display:block;color:var(--text);font-size:.9rem;line-height:1.55;margin-top:4px}
+.sw-extra{padding:0 18px 16px 86px}
+.sw-tip{padding:10px 12px;border-radius:12px;background:rgba(250,80,0,.06);border:1px solid rgba(250,80,0,.16);color:var(--heading);font-size:.85rem;line-height:1.5;animation:fu .35s ease;margin-top:2px}
+.sw-tip strong{color:var(--accent);font-weight:700}
+/* Enlace del consejo como pildora de 44px (mismo tratamiento que .faq-a a): era el unico control tocable bajo 44px en movil */
+.sw-tip a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;margin-top:8px;border-radius:var(--pill);background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.3);color:var(--accent-alt);font-weight:700;text-decoration:none;transition:var(--tr)}   /* burdeo: 5.4:1 sobre blanco (el naranja da 3.4:1) */
+html.dark .sw-tip a{color:var(--accent)}
+.sw-tip a:hover,html.dark .sw-tip a:hover{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent}
+.pain-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.pain-chip{min-height:44px;padding:8px 14px;border-radius:var(--pill);font-family:var(--fb);font-size:.82rem;font-weight:600;color:var(--text-2);background:var(--bg-alt2);border:1px solid var(--card-border);cursor:pointer;transition:var(--tr)}
+html.dark .pain-chip{background:var(--bg-alt)}
+.pain-chip:hover{color:var(--accent);border-color:rgba(250,80,0,.3)}
+.pain-chip[aria-pressed="true"]{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent}
+.prep-confetti{position:absolute;inset:0;pointer-events:none;z-index:3}
+html.prep-restoring .preparacion *{transition:none!important;animation:none!important}
+
+/* ══════════════════════ CABINA — asi se ve por dentro ══════════════════════ */
+.cabina{padding:100px 0}
+.cab-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px}
+.feat-tab{padding:10px 22px;border-radius:var(--pill);font-size:.88rem;font-weight:600;color:var(--text-2);background:var(--bg-alt2);border:1px solid var(--card-border);cursor:pointer;transition:var(--tr);white-space:nowrap;min-height:44px;font-family:var(--fb)}
+html.dark .feat-tab{background:var(--bg-alt);border-color:rgba(250,80,0,.1)}
+.feat-tab:hover{color:var(--accent);border-color:rgba(250,80,0,.3)}
+.feat-tab.on{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent}
+/* Desktop: composicion a la izquierda (~60%) y las tarjetas "En la demo / Que preguntar" apiladas a la derecha, como el home.
+   Asi el titular interno de la composicion queda por debajo del h2 de la seccion y la imagen entera cabe con las pestañas a la vista. */
+.cab-stage{perspective:1400px}
+@media(min-width:960px){
+  .cab-stage{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+  .cab-panel{margin-top:0}
+  .cab-info{grid-template-columns:1fr}
+}
+.cab-frame{position:relative;border-radius:18px;border:1px solid var(--card-border);background:var(--card-bg);box-shadow:var(--shadow-lg);overflow:hidden;transform:rotateX(calc(var(--ty,0)*-5deg)) rotateY(calc(var(--tx,0)*5deg));transition:transform .5s cubic-bezier(.16,1,.3,1);will-change:transform}
+.cab-frame.tilting{transition:transform .12s linear}
+html.dark .cab-frame{border-color:rgba(250,80,0,.18);box-shadow:0 30px 80px rgba(250,80,0,.12),0 0 0 1px rgba(250,80,0,.1)}
+.cab-min{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(255,255,255,.85);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(250,80,0,.3);border-radius:var(--pill);padding:4px 10px;white-space:nowrap}
+html.dark .cab-min{background:rgba(8,8,8,.7)}
+/* Composiciones de producto del repo (img/fabrica, 1600x1194) con variante para tema oscuro (-dark.webp): se muestran completas, sin recorte, filtro ni viñeta.
+   Son ilustrativas (los modulos que la persona vera en vivo), no capturas de la app. El marco no impone proporcion: la pone la imagen.
+   Sus titulares grandes se leen bien a 390px, asi que no hay encuadre por pestaña ni boton de ampliar. */
+.cab-shot{position:relative;overflow:hidden;background:var(--bg-alt)}
+.cab-shot img{display:block;width:100%;height:auto;aspect-ratio:1600/1194;object-fit:cover}
+html.dark .cab-shot{background:#0c0c0c}
+.cab-shot img.enter{animation:cabIn .55s cubic-bezier(.16,1,.3,1)}
+@keyframes cabIn{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0)}}
+.cab-shine{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.cab-shine::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);transform:translateX(-120%)}
+.cab-shine.go::after{animation:shine .8s ease}
+@keyframes shine{from{transform:translateX(-120%)}to{transform:translateX(120%)}}
+.cab-panel{display:none;margin-top:18px}
+.cab-panel.on{display:block;animation:fu .45s ease}
+.cab-info{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cab-info>div{padding:16px 18px;border-radius:14px;background:var(--card-bg);border:1px solid var(--card-border)}
+.cab-info b{display:block;font-family:var(--fb);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.cab-info p{color:var(--text);font-size:.95rem;line-height:1.6}
+.cab-info q{font-style:italic;color:var(--heading);font-weight:600}
+.cab-logos{margin-top:40px;text-align:center}
+.cab-logos .sl{margin-bottom:18px}
+.cab-logo-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.cab-logo{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(0,0,0,.04)}
+html.dark .cab-logo{background:rgba(22,22,26,.92);box-shadow:0 8px 24px rgba(0,0,0,.55),0 2px 6px rgba(250,80,0,.18);border-color:rgba(255,255,255,.08)}
+.cab-logo img{width:100%;height:100%;object-fit:contain}
+
+/* ══════════════════════ VOCES — quienes ya usan Hapee ══════════════════════ */
+.voces{padding:100px 0 0}
+.voces-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.voces-head .sec-head{margin-bottom:0}
+.tq-pause{min-height:44px;margin-right:auto}   /* junto al titulo, no en el borde derecho: ahi vive el chip fijo de la cuenta regresiva */
+.tq-mq.paused .tq-track{animation-play-state:paused}
+.tq-mq{overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);padding:10px 0 60px}
+@keyframes mq-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tq-track{display:flex;align-items:stretch;gap:18px;width:max-content;animation:mq-slide 46s linear infinite;padding:0 24px}
+.tq-mq:hover .tq-track,.tq-mq:focus-within .tq-track{animation-play-state:paused}
+.tq{position:relative;width:320px;flex-shrink:0;padding:22px;border-radius:18px;background:var(--card-bg);border:1px solid var(--card-border);-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);transition:transform .35s,box-shadow .35s;display:flex;flex-direction:column}
+html.dark .tq{border-color:rgba(250,80,0,.14)}
+.tq:hover,.tq:focus-visible{transform:translateY(-4px);box-shadow:0 14px 44px rgba(250,80,0,.13)}
+.tq::before{content:'';position:absolute;inset:-1px;border-radius:19px;padding:1.5px;background:conic-gradient(from var(--beam-a,0deg),transparent 0 70%,#FA5000 85%,#CD2349 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;pointer-events:none}
+.voces.seen .tq::before{animation:beamOnce 1.2s linear 1 forwards}
+.tq-stars{color:var(--accent);letter-spacing:2px;font-size:.9rem;margin-bottom:10px}
+.tq blockquote{font-size:.95rem;line-height:1.6;color:var(--text);flex:1}
+.tq blockquote strong{color:var(--accent);font-weight:700}
+.tq footer{margin-top:14px;font-size:.84rem;color:var(--heading);font-weight:700}
+.tq footer span{display:block;color:var(--text-2);font-weight:500;font-size:.8rem}
+
+/* ===== MARQUEE DE MARCAS (casos del grupo) — verbatim index.html ===== */
+.brands{padding:34px 0 38px;background:linear-gradient(135deg,#0b0b0b,#171010 60%,#0b0b0b);position:relative;overflow:hidden}
+.brands::before{content:'';position:absolute;inset:0;background:radial-gradient(500px 140px at 50% 0%,rgba(250,80,0,.10),transparent 70%);pointer-events:none}
+.brands-lbl{text-align:center;font-family:var(--fm,var(--fb));font-size:.68rem;letter-spacing:2.6px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:700;margin-bottom:22px;padding:0 24px}   /* padding lateral: desviacion de index.html para respetar el gutter de 16px+ en movil */
+.brands-lbl strong{color:var(--accent)}
+.mq{overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;align-items:center;gap:38px;width:max-content;animation:mq-slide 42s linear infinite;padding:0 24px}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-track img{height:54px;width:auto;opacity:.85;transition:opacity .3s,transform .3s}
+.mq-track img:hover{opacity:1;transform:scale(1.06)}
+@media (prefers-reduced-motion: reduce){.mq-track{animation:none}}
+@media (max-width:768px){.mq-track{gap:30px}.mq-track img{height:44px}}
+/* En esta pagina la cinta de marcas cruza en sentido contrario al de los testimonios */
+.brands .mq-track{animation-direction:reverse}
+
+/* ══════════════════════ FAQ — preguntas antes de la demo (patron index.html) ══════════════════════ */
+.faq-sec{padding:0}
+.faq{padding:80px 24px;max-width:760px;margin:0 auto;position:relative;counter-reset:faqn}
+.faq::before{content:'';position:absolute;top:40px;left:50%;translate:-50%;width:min(680px,90%);height:220px;background:radial-gradient(closest-side,rgba(250,80,0,.07),transparent);pointer-events:none}
+.faq-head{text-align:center;margin-bottom:38px;position:relative}
+.faq-head h2{font-family:var(--fd);font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin-bottom:12px}
+.faq-head p{color:var(--text-2);font-size:1rem}
+.faq-item{counter-increment:faqn;border:1px solid transparent;border-radius:20px;margin-bottom:14px;background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,rgba(250,80,0,.22),rgba(0,0,0,.05) 40%,rgba(205,35,73,.2)) border-box;overflow:hidden;transition:transform .35s,box-shadow .35s,background .35s,opacity .35s;position:relative}
+html.dark .faq-item{background:linear-gradient(#141010,#141010) padding-box,linear-gradient(120deg,rgba(250,80,0,.35),rgba(255,255,255,.06) 40%,rgba(205,35,73,.3)) border-box}
+.faq-item::before{content:counter(faqn,decimal-leading-zero);position:absolute;right:14px;top:50%;translate:0 -50%;font-family:var(--fd);font-size:4.4rem;font-weight:800;line-height:1;background:linear-gradient(135deg,rgba(250,80,0,.10),rgba(205,35,73,.06));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;pointer-events:none;transition:opacity .35s,scale .35s;z-index:0}
+.faq-item[open]::before{opacity:.35;scale:1.15}
+.faq-item::after{content:'';position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(250,80,0,.09),transparent);transform:skewX(-18deg);transition:left .8s ease;pointer-events:none}
+.faq-item:hover::after{left:130%}
+.faq-item:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(250,80,0,.13);background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,var(--accent),rgba(205,35,73,.7)) border-box}
+.faq-item[open]{box-shadow:0 18px 56px rgba(250,80,0,.16);background:linear-gradient(var(--bg,#fff),var(--bg,#fff)) padding-box,linear-gradient(120deg,var(--accent),var(--accent-alt)) border-box}
+html.dark .faq-item:hover,html.dark .faq-item[open]{background:linear-gradient(#141010,#141010) padding-box,linear-gradient(120deg,var(--accent),var(--accent-alt)) border-box}
+.faq.has-open .faq-item:not([open]){opacity:.75}
+.faq.has-open .faq-item:not([open]):hover{opacity:1}
+.faq-item.flash{animation:faqFlash .6s ease}
+@keyframes faqFlash{0%{box-shadow:0 0 0 0 rgba(250,80,0,.5)}100%{box-shadow:0 18px 56px rgba(250,80,0,.16)}}
+.faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:21px 64px 21px 22px;font-family:var(--fb);font-weight:700;font-size:1.04rem;color:var(--heading);position:relative;z-index:1;min-height:56px}
+.faq-item summary::before{content:counter(faqn,decimal-leading-zero);font-family:var(--fm,var(--fb));font-size:.8rem;font-weight:800;letter-spacing:1px;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:.9;min-width:26px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';flex-shrink:0;margin-left:auto;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;box-shadow:0 4px 14px rgba(250,80,0,.3)}
+.faq-item:hover summary::after{box-shadow:0 6px 22px rgba(250,80,0,.5)}
+.faq-item[open] summary::after{transform:rotate(135deg)}
+/* El degradado va en un <span> propio y no en el <summary> (que contiene el "+"): evita el glifo fantasma de Chromium con background-clip:text */
+.faq-q{flex:1;min-width:0}
+.faq-item[open] .faq-q{background:linear-gradient(120deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+/* Anillo de foco dentro de la tarjeta (overflow:hidden lo recortaba) */
+.faq-item summary:focus-visible{outline-offset:-5px;border-radius:16px}
+@keyframes faq-in{from{opacity:0;translate:0 -8px}to{opacity:1;translate:0 0}}
+.faq-a{padding:0 64px 22px 22px;color:var(--text-2);font-size:.96rem;line-height:1.7;animation:faq-in .4s ease;position:relative;z-index:1}
+.faq-a strong{color:var(--heading)}
+.faq-a a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;margin-top:8px;border-radius:var(--pill);background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.3);color:var(--accent-alt);font-weight:700;text-decoration:none;transition:var(--tr)}
+html.dark .faq-a a{color:var(--accent)}
+.faq-a a:hover,html.dark .faq-a a:hover{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;border-color:transparent}
+/* La respuesta es una burbuja del robot (patron .hi-msg/.bubble del home) */
+.hi-msg{display:flex;align-items:flex-end;gap:8px;max-width:100%;animation:bubbleIn .26s cubic-bezier(.16,1,.3,1)}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hi-msg.bot{align-self:flex-start}
+.hi-msg-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;overflow:hidden;background:linear-gradient(135deg,#FA5000,#CD2349);display:flex;align-items:center;justify-content:center}
+.hi-msg-av img{width:80%;height:80%;object-fit:contain}
+.bubble{padding:12px 16px;border-radius:16px;border-bottom-left-radius:4px;font-size:.95rem;line-height:1.55;position:relative;font-family:var(--fb);word-wrap:break-word;min-width:60px;background:var(--bg-alt);color:var(--text);border:1px solid var(--card-border)}
+html.dark .bubble{background:#141010;border-color:rgba(250,80,0,.16)}
+.bubble strong{font-weight:700;color:var(--heading)}
+@media (max-width:600px){.faq{padding:64px 16px}.faq-a{padding:0 16px 18px 16px}.faq-item::before{font-size:3rem;right:8px}.faq-item summary{padding:16px 52px 16px 16px}}
+
+/* ══════════════════════ CANAL DIRECTO — CTA final (variante demo de agenda, sin stats) ══════════════════════ */
+.demo-cta-final{position:relative;padding:64px 24px;text-align:center;overflow:hidden;background:linear-gradient(135deg,#FA5000,#CD2349 55%,#8b1a2e)}
+.demo-cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(255,255,255,.08),transparent),radial-gradient(ellipse 40% 40% at 20% 30%,rgba(255,255,255,.08),transparent),radial-gradient(ellipse 35% 35% at 85% 75%,rgba(255,180,120,.1),transparent);pointer-events:none}
+.demo-cta-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);animation:demoCtaOrb var(--d,12s) ease-in-out infinite alternate;opacity:.4}
+.demo-cta-orb-1{width:420px;height:420px;background:rgba(255,255,255,.1);top:-100px;left:-100px;--d:14s}
+.demo-cta-orb-2{width:340px;height:340px;background:rgba(255,200,150,.08);bottom:-80px;right:-80px;--d:10s;animation-delay:-4s}
+.demo-cta-orb-3{width:240px;height:240px;background:rgba(255,255,255,.06);top:30%;right:15%;--d:16s;animation-delay:-7s;opacity:.3}
+@keyframes demoCtaOrb{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,-40px) scale(1.15)}}
+.demo-cta-particles{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.demo-cta-particles i{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);box-shadow:0 0 10px rgba(255,255,255,.5);animation:ctaParticleFloat var(--pd,8s) var(--pdel,0s) ease-in-out infinite alternate;opacity:0}
+.demo-cta-particles i:nth-child(1){top:15%;left:12%;--pd:7s;--pdel:0s}
+.demo-cta-particles i:nth-child(2){top:25%;left:88%;--pd:9s;--pdel:1s;width:5px;height:5px}
+.demo-cta-particles i:nth-child(3){top:55%;left:8%;--pd:8s;--pdel:.6s}
+.demo-cta-particles i:nth-child(4){top:70%;left:92%;--pd:10s;--pdel:1.8s;width:3px;height:3px}
+.demo-cta-particles i:nth-child(5){top:42%;left:50%;--pd:11s;--pdel:.4s;width:5px;height:5px}
+.demo-cta-particles i:nth-child(6){top:85%;left:35%;--pd:8.5s;--pdel:2.2s}
+.demo-cta-particles i:nth-child(7){top:18%;left:55%;--pd:9.5s;--pdel:.9s;width:4px;height:4px}
+.demo-cta-particles i:nth-child(8){top:78%;left:70%;--pd:7.5s;--pdel:1.5s;width:5px;height:5px}
+@keyframes ctaParticleFloat{0%{transform:translate(0,0);opacity:0}20%{opacity:.9}80%{opacity:.9}100%{transform:translate(var(--ptx,30px),var(--pty,-40px));opacity:0}}
+.demo-cta-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-family:var(--fb);font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:8px 18px;border-radius:var(--pill);backdrop-filter:blur(10px);margin-bottom:16px}
+.demo-cta-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:#fff;animation:ctaPulse 1.5s ease-in-out infinite}
+@keyframes ctaPulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.7)}50%{opacity:.6;transform:scale(.8);box-shadow:0 0 0 8px rgba(255,255,255,0)}}
+.demo-cta-grid{position:relative;z-index:1;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:0.85fr 1fr;align-items:center;gap:60px}
+.demo-cta-robot-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+.demo-cta-robot-glow{position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.25) 0%,rgba(255,200,150,.12) 40%,transparent 70%);filter:blur(20px);animation:ctaRobotGlow 3.5s ease-in-out infinite alternate}
+@keyframes ctaRobotGlow{0%{transform:scale(.9);opacity:.6}100%{transform:scale(1.1);opacity:1}}
+.demo-cta-robot{position:relative;z-index:2;width:clamp(200px,28vw,340px);height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.4)) drop-shadow(0 0 40px rgba(255,180,100,.4));animation:ctaRobotFloat 5s ease-in-out infinite}
+@keyframes ctaRobotFloat{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-12px) rotate(1.5deg)}75%{transform:translateY(8px) rotate(-1.5deg)}}
+.demo-cta-ring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.18);pointer-events:none}
+.demo-cta-ring-1{width:340px;height:340px;animation:ctaRingSpin 60s linear infinite}
+.demo-cta-ring-2{width:440px;height:440px;animation:ctaRingSpin 80s linear infinite reverse;border-color:rgba(255,255,255,.1)}
+@keyframes ctaRingSpin{to{transform:rotate(1turn)}}
+.demo-cta-content{text-align:left}
+.demo-cta-content h2{font-family:var(--fd);font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;color:#fff;line-height:1.05;margin:14px 0 16px;letter-spacing:-.01em}
+.demo-cta-content h2 em{font-style:normal;color:#FFE6CC;display:inline-block;position:relative}
+.demo-cta-content h2 em::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.25);border-radius:4px;z-index:-1}
+.demo-cta-content p{color:rgba(255,255,255,.95);font-size:1.05rem;max-width:520px;margin:0 0 22px;line-height:1.65}
+.cta-tminus{display:inline-flex;align-items:center;gap:8px;font-family:var(--fb);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.3);border-radius:var(--pill);padding:8px 14px;margin-bottom:20px}
+.cta-tminus::before{content:'';width:7px;height:7px;border-radius:50%;background:#fff;animation:bk 1.4s infinite}
+.demo-cta-actions{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.demo-cta-btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.demo-cta-btn{display:inline-flex;align-items:center;gap:12px;background:#fff;color:#CD2349;font-family:var(--fb);font-size:1.05rem;font-weight:800;padding:18px 36px;border-radius:var(--pill);text-decoration:none;border:none;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 14px 40px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.4) inset;position:relative;overflow:hidden;min-height:56px}
+.demo-cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(250,80,0,.15),transparent);transform:translateX(-100%);transition:transform .6s}
+.demo-cta-btn:hover::before{transform:translateX(100%)}
+.demo-cta-btn:hover{transform:scale(1.04) translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.5) inset}
+.demo-cta-btn svg{width:22px;height:22px;flex-shrink:0}
+.cta-bo{border-color:rgba(255,255,255,.55);color:#fff;min-height:56px}
+.cta-bo:hover{background:#fff;color:var(--accent);border-color:#fff}
+.demo-cta-note{margin:0;font-family:var(--fb);font-size:.82rem;color:rgba(255,255,255,.85);font-weight:500;display:flex;align-items:center;gap:6px}
+.demo-cta-note::before{content:'✓';color:#fff;font-weight:900}
+.demo-cta-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.demo-cta-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;font-family:var(--fb);font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:var(--pill);backdrop-filter:blur(10px)}
+.demo-cta-chip svg{width:14px;height:14px;stroke:#fff;stroke-width:2.5;fill:none}
+
+/* ══════════════════════ STICKY T-MENOS (solo con ?fecha) ══════════════════════ */
+#tminusSticky{position:fixed;z-index:900;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity .35s,transform .35s,visibility 0s .35s;font-family:var(--fb)}
+#tminusSticky.visible{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .35s,transform .35s,visibility 0s}
+.ts-txt{flex:1;min-width:0;display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:.8rem;font-weight:600;color:var(--heading);background:none;border:0;cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:44px;padding:0 4px}
+.ts-txt .bk{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bk 1.4s infinite;flex-shrink:0}
+.ts-txt .ts-ok{color:var(--accent);font-weight:800;flex-shrink:0}
+#tsLabel{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}   /* la elipsis va en el hijo: en un contenedor flex no recorta con puntos suspensivos */
+.ts-btn{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;color:var(--text-2);cursor:pointer;flex-shrink:0;transition:var(--tr)}
+.ts-btn:hover{color:var(--accent);background:rgba(250,80,0,.08)}
+.ts-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#tsShort{display:none;white-space:nowrap}
+@media(min-width:901px){
+  /* Arriba a la derecha, bajo la nav: abajo-izquierda tapaba "Reiniciar lista" y respuestas del FAQ; la esquina del FAB queda libre */
+  #tminusSticky{top:calc(var(--nav-h,66px) + 12px);right:16px;display:flex;align-items:center;gap:4px;padding:4px 6px 4px 16px;border-radius:var(--pill);background:rgba(255,255,255,.86);border:1px solid var(--card-border);-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);box-shadow:var(--shadow-lg);max-width:min(540px,calc(100vw - 56px));transform:translateY(-12px)}
+  html.dark #tminusSticky{background:rgba(12,12,12,.86);border-color:rgba(250,80,0,.2)}
+  /* A los 4 s de aparecer se pliega a "● 6 d 15 h" + cerrar (~140px): queda sobre el margen derecho y deja de tapar la columna de lectura.
+     Se despliega (texto completo + calendario) al pasar el puntero o al recibir foco. */
+  #tminusSticky.compact:not(:hover):not(:focus-within){padding-left:12px}
+  #tminusSticky.compact:not(:hover):not(:focus-within) .ts-cal{display:none}
+  /* El texto completo sigue en el arbol de accesibilidad (solo se oculta visualmente): el nombre del boton no cambia al plegarse */
+  #tminusSticky.compact:not(:hover):not(:focus-within) #tsLabel{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  #tminusSticky.compact:not(:hover):not(:focus-within) #tsShort{display:block}
+}
+@media(max-width:900px){
+  #tminusSticky{left:0;right:0;top:var(--nav-h,64px);height:44px;display:flex;align-items:center;gap:2px;padding:0 2px 0 14px;background:rgba(8,8,8,.94);color:#fff;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid rgba(250,80,0,.22);transform:translateY(-12px)}
+  #tminusSticky .ts-cal{display:none}
+  .ts-txt{color:#fff;font-size:.76rem}
+  .ts-btn{color:rgba(255,255,255,.85)}
+  .ts-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+}
+
+/* ══════════════════════ FOOTER — always dark (verbatim agenda-tu-demo.html) ══════════════════════ */
+.footer{padding:56px 0 28px;background:#080808;border-top:1px solid rgba(250,80,0,.06)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px}
+.fb-brand p{font-size:.95rem;color:#8b8078;margin-top:14px;line-height:1.65;max-width:300px}
+/* Desviacion documentada: sin el filtro de inversion del logo (regla de marca: el wordmark nunca se invierte) */
+.fb-logo{height:28px;width:auto}
+.fcol h4{font-family:var(--fd);font-size:.85rem;font-weight:700;color:#fff;margin-bottom:14px}
+.fcol a{display:block;font-size:.95rem;color:#8b8078;margin-bottom:9px;transition:var(--tr)}
+.fcol a:hover{color:var(--accent)}
+.fbot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(250,80,0,.08);font-size:.95rem;color:#8b8078;gap:18px;flex-wrap:wrap}
+.powered-by-foot{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--fm);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#8b8078;font-weight:600;text-decoration:none;padding:.6rem 1rem;border-radius:999px;border:1px solid rgba(250,80,0,.14);transition:all .25s;line-height:1}
+.powered-by-foot:hover{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.05)}
+.powered-by-foot{padding:.55rem 1rem;line-height:1;display:inline-flex;align-items:center;gap:.7rem}
+.powered-by-foot img{height:28px;width:auto;max-width:140px;display:block;object-fit:contain;opacity:.95;transition:opacity .25s}
+.powered-by-foot:hover img{opacity:1}
+.fsoc{display:flex;gap:12px}
+.fsoc a{width:34px;height:34px;border-radius:50%;background:rgba(250,80,0,.06);display:flex;align-items:center;justify-content:center;transition:var(--tr);color:#8b8078}
+.fsoc a:hover{background:var(--accent);color:#fff}
+.fsoc svg{width:15px;height:15px}
+@media(max-width:768px){.fgrid{grid-template-columns:1fr 1fr;gap:28px}.fbot{flex-direction:column;gap:14px;text-align:center}}
+
+/* ===== PARTNER BADGES (footer strip — ultra-pro like Vambe) ===== */
+.partner-strip{padding:40px 0 32px;border-top:1px solid rgba(255,255,255,.06);margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:22px}
+.partner-strip-lbl{font-family:var(--fd);font-size:.82rem;letter-spacing:3.5px;text-transform:uppercase;color:#a8a098;font-weight:700}
+
+/* APP DOWNLOAD BADGES — Apple + Google Play */
+.partner-row.apps{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;align-items:center}
+.app-badge{display:inline-flex;align-items:center;gap:12px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 18px;text-decoration:none;color:#fff;transition:all .25s;min-height:56px}
+.app-badge:hover{background:#0f0f0f;border-color:rgba(255,255,255,.4);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.app-badge svg{width:32px;height:32px;flex-shrink:0}
+.app-badge .ab-text{display:flex;flex-direction:column;line-height:1.05;text-align:left}
+.app-badge .ab-sub{font-size:.62rem;font-weight:400;letter-spacing:.3px;color:rgba(255,255,255,.85);font-family:var(--fb)}
+.app-badge .ab-main{font-size:1.15rem;font-weight:600;color:#fff;font-family:var(--fb);letter-spacing:.2px;line-height:1.1;margin-top:1px}
+
+/* CERTIFICATIONS — Meta / Google / AWS */
+.partner-row.certs{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;align-items:stretch;margin-top:6px}
+.cert-badge{display:inline-flex;align-items:center;gap:12px;padding:12px 20px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);text-decoration:none;color:#fff;transition:all .3s;min-height:64px}
+.cert-badge:hover{background:rgba(250,80,0,.06);border-color:rgba(250,80,0,.35);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.cert-badge .cb-logo{width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cert-badge .cb-logo svg{width:100%;height:100%}
+.cert-badge .cb-text{display:flex;flex-direction:column;line-height:1.15;text-align:left}
+.cert-badge .cb-sub{font-size:.6rem;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:#a8a098;font-family:var(--fb)}
+.cert-badge .cb-main{font-size:.96rem;font-weight:700;color:#fff;font-family:var(--fb);letter-spacing:.1px;margin-top:2px}
+
+/* Origin badges (Marca Chile, etc) */
+.partner-row.origin{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:4px}
+.origin-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-family:var(--fb);font-size:.78rem;font-weight:600;color:#a8a098;letter-spacing:.2px}
+.origin-badge .ob-flag{width:18px;height:13px;border-radius:2px;overflow:hidden;display:inline-block;flex-shrink:0}
+
+@media(max-width:640px){
+  .partner-row.apps,.partner-row.certs{gap:8px}
+  .app-badge{padding:8px 14px;gap:9px;min-height:48px}
+  .app-badge svg{width:26px;height:26px}
+  .app-badge .ab-main{font-size:1rem}
+  .cert-badge{padding:10px 14px;gap:9px;min-height:56px}
+  .cert-badge .cb-logo{width:30px;height:30px}
+  .cert-badge .cb-main{font-size:.86rem}
+}
+
+/* ══════════════════════ RESPONSIVE ══════════════════════ */
+/* Alturas de laptop y escritorio comun (≤920px: 1440x900, 1366x768, 1280x720): modo compacto por alto de viewport para que el pase completo
+   —con cuenta regresiva y botones— quede sobre el fold. Va despues de las reglas de componentes para ganar en cascada con la misma especificidad. */
+@media(min-width:901px) and (max-height:920px){
+  .hero,html.has-fecha .hero{padding-top:84px;padding-bottom:28px}
+  .launch{max-width:420px}
+  .hero h1{font-size:clamp(2.4rem,4.6vw,3.4rem);margin-bottom:12px}
+  .kicker{margin-bottom:12px}
+  .hero-hola{font-size:1.05rem;margin-bottom:4px}
+  .hero-sub{font-size:1rem;margin-bottom:14px}
+  .pase-rows{gap:6px;padding:12px 20px 10px}
+  .tminus{padding:4px 20px 10px}
+  .tm-eyebrow{margin-bottom:6px}
+  .tm-num{font-size:1.7rem}
+  .tm-cell{min-width:48px}
+  .pase-actions{padding:2px 20px 12px}
+  .pase-more{min-height:44px}
+}
+/* 1366x768: con cuenta regresiva, la fila "Con" cede su alto (el equipo sigue nombrado en el CTA final) */
+@media(min-width:901px) and (max-height:800px){
+  html.has-fecha .row-con{display:none}
+}
+/* 1280x720 y similares: un poco mas de aire para que el pase con cuenta regresiva termine al menos 16px sobre el fold */
+@media(min-width:901px) and (max-height:740px){
+  .hero,html.has-fecha .hero{padding-top:80px;padding-bottom:24px}
+  .kicker{padding:6px 14px;margin-bottom:10px}
+  .hero h1{margin-bottom:10px}
+  .hero-sub{margin-bottom:10px}
+  html.has-fecha .pase-note{display:none}   /* el aviso de Promociones/Spam sigue en la seccion de estado del CTA y en el correo */
+}
+@media(max-width:1100px){
+  .hero .ctn{gap:32px}
+  .phases{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr)}
+}
+@media(max-width:900px){
+  .hero{padding:100px 0 56px}
+  html.tminus-active main > section{scroll-margin-top:calc(var(--nav-h,66px) + 60px)}
+  /* Footer heredado: en pantallas chicas los links crecen a 44px de alto (solo area tactil) */
+  .fcol a{min-height:44px;display:flex;align-items:center;margin-bottom:0}
+  .fsoc a{width:44px;height:44px}
+  .fbot a{display:inline-block;padding:12px 4px}
+  .hero .ctn{grid-template-columns:1fr;text-align:center;gap:24px}
+  .hero-copy{order:2;display:flex;flex-direction:column;align-items:center}
+  .launch{order:1;max-width:320px}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .pase{max-width:100%;width:100%}
+  .phases{grid-template-columns:1fr}
+  .track-wrap{padding:32px 0 44px}
+  .track{height:10px;border-radius:5px}
+  .track-bot{width:22px;height:40px}
+  .prep-grid{grid-template-columns:1fr;gap:32px}
+  /* Movil: primero la lista (la accion), despues el medidor y la celebracion; una barra compacta sticky lleva el progreso */
+  .gauge-wrap{position:static;order:2;padding-top:8px}
+  .gauge{width:160px;height:160px}
+  .prep-mini{display:flex;align-items:center;gap:12px;position:sticky;top:calc(var(--nav-h,66px) + 8px);z-index:5;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.9);border:1px solid var(--card-border);box-shadow:var(--shadow-md);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);font-weight:800;color:var(--heading);font-size:.92rem;font-variant-numeric:tabular-nums}
+  html.dark .prep-mini{background:rgba(15,15,15,.92)}
+  html.tminus-active .prep-mini{top:calc(var(--nav-h,66px) + 52px)}
+  .prep-mini small{font-weight:600;color:var(--text-2);font-size:.78rem}
+  .prep-mini-bar{flex:1;height:8px;border-radius:4px;background:var(--bg-alt);overflow:hidden;border:1px solid var(--card-border)}
+  .prep-mini-bar i{display:block;height:100%;width:0;border-radius:4px;background:linear-gradient(90deg,#FA5000,#CD2349);transition:width .5s cubic-bezier(.16,1,.3,1)}
+  .cab-info{grid-template-columns:1fr}
+  .tq{width:280px}
+  .tq-track{animation-duration:70s}
+  .demo-cta-grid{grid-template-columns:1fr;gap:32px;text-align:center}
+  .demo-cta-content{text-align:center}
+  .demo-cta-content p{margin-left:auto;margin-right:auto}
+  .demo-cta-actions{align-items:center}
+  .demo-cta-btns{justify-content:center;width:100%}
+  .demo-cta-chips{justify-content:center}
+  .demo-cta-robot{width:200px}
+  .demo-cta-ring-1{width:260px;height:260px}
+  .demo-cta-ring-2{width:330px;height:330px}
+  .demo-cta-robot-glow{width:280px;height:280px}
+}
+@media(max-width:768px){
+  .plan,.preparacion,.cabina{padding:72px 0}
+  .voces{padding:72px 0 0}
+  .demo-cta-final{padding:64px 20px}
+  .sw-extra{padding-left:18px}
+}
+@media(max-width:600px){
+  .launch{max-width:270px}
+  .kicker{font-size:.6rem;letter-spacing:.1em;padding:7px 12px;line-height:1.5;text-align:center}
+  .launch-robot{height:58%}
+  .sat{width:38px;height:38px;border-radius:11px;padding:6px}
+  .tm-grid{gap:4px}
+  .tm-cell{min-width:0;flex:1}
+  .tm-num{font-size:clamp(1.5rem,7vw,2.2rem)}
+  .tm-lbl{font-size:11px;letter-spacing:.08em}
+  .tm-colon{font-size:clamp(1.3rem,6vw,2rem)}
+  .pase-rows>div{grid-template-columns:64px 1fr}
+  .pase-actions .btn{width:100%}
+  .demo-cta-btn,.cta-bo{width:100%;justify-content:center}
+  .cab-tabs .feat-tab{flex:1 1 auto;text-align:center}   /* las 3 pestañas a la vista (antes la tercera quedaba fuera del scroll) */
+  /* Cabina en movil: la composicion completa a todo el ancho (sus titulares grandes se leen a 390px); sin encuadre ni zoom */
+  /* CTA final: el ✓ fluye con el texto centrado en vez de quedar como columna aparte */
+  .demo-cta-note{display:block;text-align:center}
+  .demo-cta-note::before{display:inline;margin-right:6px}
+  .brands-lbl{font-size:.62rem;letter-spacing:1.8px;padding:0 20px}
+  .cab-logo-row{gap:8px}
+  .cab-logo{width:40px;height:40px;padding:7px}   /* 7 logos en una fila de 342px */
+}
+@media(max-width:360px){
+  .cab-logo-row{max-width:200px;margin:0 auto}   /* 4+3 intencional cuando no caben los 7 */
+}
+@media(max-width:480px) and (pointer:coarse){
+  .tq-mq{-webkit-mask-image:none;mask-image:none}
+  .tq-track{animation:none;width:auto;flex-direction:column;align-items:stretch;padding:0 24px}
+  .tq{width:100%}
+  .tq[aria-hidden="true"]{display:none}
+  .tq-pause{display:none}
+}
+@media(max-width:390px){
+  .hero h1{font-size:2.5rem}
+  .pase-band{font-size:.6rem;letter-spacing:.14em;padding:9px 14px}
+}
+
+/* ══════════════════════ REDUCED MOTION — un solo bloque final ══════════════════════ */
+@media(prefers-reduced-motion:reduce){
+  .pulse-ring,.launch-shadow,.orbit-ring,.sat,.launch-float,.prep-robot,.kicker,.kicker .live,.ts-txt .bk,.cta-tminus::before,.tm-colon,.tminus.urgent .tm-num,.tm-num.tick,.demo-cta-orb,.demo-cta-particles i,.demo-cta-robot,.demo-cta-ring,.demo-cta-robot-glow,.demo-cta-badge::before,.mq-track,.tq-track,.phase.lit::before,.pase::before,.voces.seen .tq::before,.faq-a,.hi-msg,.sw-tip,.prep-done,.faq-item.flash,.cab-shine::after,.cab-shot img.enter,.cab-panel.on,.sw-item.done,.glow{animation:none!important}
+  .pulse-ring{display:none}
+  .w,.launch-robot,.anim-rev,.launch-tilt,.cab-frame,.g-arc,.track-fill,.track-bot,.tm-num,.pase-stamp,.pase-band span,.prep-mini-bar i,.faq-item,.sw-toggle,.sw-toggle::after{transition:none!important}
+  .w{transform:none!important}
+  html.js .anim-rev{opacity:1!important;transform:none!important}
+  .launch-robot{opacity:1!important;scale:1!important}
+  .launch-tilt,.cab-frame{transform:none!important}
+  .tq-pause{display:none}
+  .pase::before,.phase::before,.tq::before{display:none}
+  .faq-item::after,.demo-cta-btn::before{transition:none!important;display:none}   /* destellos de hover del FAQ y del boton de WhatsApp */
+  .cab-shot img{transition:opacity .2s}
+  .tq-mq{-webkit-mask-image:none;mask-image:none}
+  .tq-track{flex-wrap:wrap;width:auto;justify-content:center}
+  .tq[aria-hidden="true"]{display:none}
+  .faq-item:hover{transform:none}
+}
+</style>
+<script>/* init sin flash: tema + marca js */(function(){document.documentElement.classList.add('js');try{if(localStorage.getItem('hapee-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}})();</script>
+</head>
+<body>
+<!--
+  Personalizacion opcional por query string (la app la envia en el redirect post-reserva):
+    ?nombre=Camila                       → saludo "Hola, Camila." y fila "Para" del pase. Solo letras, espacios, guion y apostrofo (cualquier otro caracter descarta el nombre completo); max. 40 caracteres.
+    ?fecha=2026-09-18T16:30:00-03:00     → ISO-8601 CON offset (o Z). Activa cuenta regresiva, fila "Cuando", Google Calendar, .ics, sticky y chip del CTA.
+                                           Un offset positivo debe ir codificado (%2B): 2026-09-18T16:30:00%2B02:00. El JS repara un espacio por "+" si llega sin codificar.
+    ?tz=America/Santiago                 → zona IANA para mostrar la hora. Invalida o ausente → zona del dispositivo.
+  Sin parametros, la pagina es completa: los bloques dependientes quedan hidden. Todo dato de la URL se inyecta con textContent, nunca innerHTML.
+  Ejemplo: /preparate-demo?nombre=Camila&fecha=2026-09-18T16:30:00-03:00&tz=America/Santiago
+-->
+
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+
+<!-- NAV — mismo menu que agenda-tu-demo.html; CTA unico "Ver Planes" porque la demo ya esta agendada -->
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Navegación principal">
+  <div class="ctn">
+    <a href="/" aria-label="Hapee - Ir al inicio"><img src="img/logo-hapee.png" alt="Hapee - Plataforma de IA conversacional y automatización" class="nav-logo" width="500" height="175"></a>
+    <div class="nlinks">
+      <a href="/comparativa.html">Comparativa</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/transformacion.html">Transformación</a>
+      <a href="/partners.html">Partners</a>
+      <a href="/juego" class="nav-game">🎮 Jugar</a>
+      <a href="/academia">Academy</a>
+      <a href="https://beta.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
+    </div>
+    <div class="nctas">
+      <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a href="/planes" class="btn bs">Ver Planes</a>
+    </div>
+    <button class="mbtn" onclick="document.getElementById('mm').classList.add('open');document.documentElement.classList.add('menu-open')" aria-label="Menú" aria-expanded="false" aria-controls="mm"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mmenu" id="mm" role="dialog" aria-modal="true" aria-label="Menú">
+  <button class="mx" onclick="this.parentElement.classList.remove('open');document.documentElement.classList.remove('menu-open')" aria-label="Cerrar menú">&times;</button>
+  <a href="/comparativa.html">Comparativa</a>
+  <a href="/blog.html">Blog</a>
+  <a href="/transformacion.html">Transformación</a>
+  <a href="/partners.html">Partners</a>
+  <a href="/juego">🎮 Jugar Hapee</a>
+  <a href="/academia">Academy</a>
+  <a href="https://beta.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
+  <button class="dark-toggle" id="darkToggleMobile" aria-label="Cambiar modo oscuro/claro" title="Cambiar tema">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:16px;width:100%;max-width:240px">
+    <a href="/planes" class="btn bs" style="width:100%;justify-content:center" onclick="this.closest('.mmenu').classList.remove('open');document.documentElement.classList.remove('menu-open')">Ver Planes</a>
+  </div>
+</div>
+</header>
+
+<main id="main-content">
+
+<!-- ═══════════════════ HERO — Tu demo esta confirmada ═══════════════════ -->
+<section class="hero" id="hero" aria-labelledby="heroTitle">
+  <canvas id="constellationCanvas" aria-hidden="true"></canvas>
+  <div class="ctn">
+    <div class="hero-copy">
+      <div class="kicker anim-rev"><span class="live" aria-hidden="true"></span><span id="kickerTxt">Reserva recibida · revisa tu correo</span></div>
+      <p class="hero-hola anim-rev" id="heroHola" hidden></p>
+      <h1 id="heroTitle"><span class="wmask"><span class="w">Tu</span></span> <span class="wmask"><span class="w">demo</span></span> <span class="wmask"><span class="w">está</span></span> <span class="wmask"><span class="w tg">confirmada.</span></span></h1>
+      <p class="hero-sub anim-rev">Aquí tienes tu plan de vuelo, tu lista de preparación y un canal directo por si surge una duda antes.</p>
+
+      <!-- Pase de acceso: completo con o sin parametros. Los datos de la sesion (1:1, 30 min, sin costo, Meet) viven solo aqui -->
+      <aside class="pase anim-rev" id="pase" aria-label="Tu pase de acceso a la demo">
+        <div class="pase-band"><span>Pase de acceso</span><span>Demo 1:1 · 30 min · sin costo</span></div>
+        <div class="pase-perf" aria-hidden="true"></div>
+        <dl class="pase-rows">
+          <div><dt>Para</dt><dd id="paseNombre">Tu negocio</dd></div>
+          <div><dt>Cuándo</dt><dd id="paseCuando">La fecha y la hora están en tu correo</dd></div>
+          <div><dt>Dónde</dt><dd>Google Meet · el enlace llega a tu correo<small class="pase-note">Revisa también Promociones o Spam.</small></dd></div>
+          <div class="row-con"><dt>Con</dt><dd class="pase-team"><span class="avatars"><img src="img/equipo/claudia.webp" alt="Claudia Novoa, Product Manager de Hapee" width="44" height="44"><img src="img/equipo/leidy.webp" alt="Leidy Salina, implementadora Hapee" width="44" height="44"><img src="img/equipo/nelly.webp" alt="Nelly Alegría, implementadora Hapee" width="44" height="44"></span><span>Claudia, Leidy o Nelly · equipo de implementación Hapee</span></dd></div>
+        </dl>
+        <div class="tminus" id="tminus" hidden>
+          <p class="tm-eyebrow">La demo comienza en</p>
+          <div class="tm-grid" id="tmGrid" role="timer" aria-live="off" aria-label="Cuenta regresiva para tu demo">
+            <div class="tm-cell"><span class="tm-num" data-unit="d">00</span><span class="tm-lbl">días</span></div>
+            <span class="tm-colon" aria-hidden="true">:</span>
+            <div class="tm-cell"><span class="tm-num" data-unit="h">00</span><span class="tm-lbl">horas</span></div>
+            <span class="tm-colon" aria-hidden="true">:</span>
+            <div class="tm-cell"><span class="tm-num" data-unit="m">00</span><span class="tm-lbl">min</span></div>
+            <span class="tm-colon" aria-hidden="true">:</span>
+            <div class="tm-cell"><span class="tm-num" data-unit="s">00</span><span class="tm-lbl">seg</span></div>
+          </div>
+          <div class="tm-state" id="tminusGo" hidden>
+            <p class="tm-state-t tg">¡Es la hora!</p>
+            <p>Abre el enlace de Google Meet que llegó a tu correo.</p>
+            <a class="btn bo" id="btnGoWa" href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer">¿Problemas para entrar? Escríbenos</a>
+          </div>
+          <div class="tm-state" id="tminusPast" hidden>
+            <p class="tm-state-t">Tu demo ya ocurrió.</p>
+            <p>Si no pudiste conectarte, reagenda en un minuto.</p>
+            <a class="btn bs" href="/agenda-tu-demo">Reagendar mi demo</a>
+            <a class="btn bo" id="btnPastWa" href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp</a>
+          </div>
+        </div>
+        <div class="pase-actions" id="paseActions" hidden>
+          <a class="btn bs" id="btnGcal" href="https://calendar.google.com/calendar/render?action=TEMPLATE" target="_blank" rel="noopener noreferrer">Agregar a Google Calendar</a>
+          <a class="btn bo" id="btnIcs" href="#" download="demo-hapee.ics">Descargar .ics</a>
+        </div>
+        <a href="#plan" class="pase-more" data-scroll>Ver el plan de la sesión <span aria-hidden="true">↓</span></a>
+        <span class="pase-stamp" aria-hidden="true">Listo</span>
+      </aside>
+    </div>
+
+    <!-- Plataforma de lanzamiento: robot + anillos + satelites -->
+    <div class="launch">
+      <div class="launch-shadow" aria-hidden="true"></div>
+      <div class="pulse-ring" aria-hidden="true"></div>
+      <div class="pulse-ring r2" aria-hidden="true"></div>
+      <div class="pulse-ring r3" aria-hidden="true"></div>
+      <div class="orbit-ring orbit-ring-2">
+        <div class="sat sat-45"><img src="img/orbit/facebook.png" alt="Facebook" width="46" height="46"></div>
+        <div class="sat sat-90"><img src="img/orbit/instagram.png" alt="Instagram" width="46" height="46"></div>
+        <div class="sat sat-225"><img src="img/orbit/meta.png" alt="Meta" width="46" height="46"></div>
+        <div class="sat sat-270"><img src="img/orbit/google-calendar.png" alt="Google Calendar" width="46" height="46"></div>
+      </div>
+      <div class="orbit-ring orbit-ring-1">
+        <div class="sat sat-0"><img src="img/orbit/whatsapp.svg" alt="WhatsApp" width="46" height="46"></div>
+        <div class="sat sat-180"><img src="img/orbit/gmail.png" alt="Gmail" width="46" height="46"></div>
+      </div>
+      <div class="launch-robot"><div class="launch-tilt"><div class="launch-float">
+        <img src="img/robot.png" alt="Robot Hapee, asistente de inteligencia artificial" class="launch-robot-img" fetchpriority="high" width="435" height="800">
+      </div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PLAN DE VUELO — los 30 minutos ═══════════════════ -->
+<section class="plan" id="plan" aria-labelledby="planTitle">
+  <div class="ctn">
+    <div class="plan-head anim-rev">
+      <div class="sec-head">
+        <span class="sl">Plan de vuelo · Los 30 minutos de tu demo</span>
+        <h2 id="planTitle">30 minutos <span class="tg">sin relleno.</span></h2>
+        <p>Así repartimos el tiempo para que salgas con un plan concreto, no con una presentación.</p>
+      </div>
+      <div class="track-clock"><span id="planClock" aria-hidden="true">00:00</span><small>Cronómetro de la sesión</small></div>
+    </div>
+    <div class="track-wrap anim-rev" id="planTrackWrap">
+      <div class="track" id="planTrack" aria-hidden="true">
+        <div class="track-fill"></div>
+        <span class="track-mark" style="left:0">00</span>
+        <span class="track-mark" style="left:33.33%">10</span>
+        <span class="track-mark" style="left:83.33%">25</span>
+        <span class="track-mark" style="left:100%">30</span>
+        <div class="track-bot"></div>
+      </div>
+    </div>
+    <div class="phases">
+      <article class="phase anim-rev" data-at="0">
+        <div class="phase-top"><span class="phase-n">01</span><span class="phase-t">00–10 min</span></div>
+        <h3>Diagnóstico de tu negocio</h3>
+        <p>Modelo comercial, canales que usas y dónde se te escapan oportunidades.</p>
+        <strong class="phase-need-l">Lo que necesitamos de ti</strong>
+        <ul class="phase-need">
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Cómo llegan tus clientes hoy</li>
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Quién responde y en cuánto tiempo</li>
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Tu mayor dolor de ventas</li>
+        </ul>
+        <p class="phase-out"><strong>Sales con:</strong> un diagnóstico claro</p>
+      </article>
+      <article class="phase anim-rev" data-at="0.3333">
+        <div class="phase-top"><span class="phase-n">02</span><span class="phase-t">10–25 min</span></div>
+        <h3>Demo en vivo de Hapee</h3>
+        <p>IA conversacional, automatizaciones y CRM, adaptados a tu caso.</p>
+        <strong class="phase-need-l">Lo que necesitamos de ti</strong>
+        <ul class="phase-need">
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Mira, interrumpe y pregunta</li>
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Ten a mano tu WhatsApp y tus herramientas</li>
+        </ul>
+        <div class="mod-chips" role="group" aria-label="Módulos que verás en vivo">
+          <button type="button" class="mod-chip" data-mod="ia">IA</button>
+          <button type="button" class="mod-chip" data-mod="auto">Automatización</button>
+          <button type="button" class="mod-chip" data-mod="crm">CRM</button>
+        </div>
+        <p class="phase-out"><strong>Sales con:</strong> una demo a tu medida</p>
+      </article>
+      <article class="phase anim-rev" data-at="0.8333">
+        <div class="phase-top"><span class="phase-n">03</span><span class="phase-t">25–30 min</span></div>
+        <h3>Plan de acción personalizado</h3>
+        <p>Hoja de ruta de implementación y retorno esperado para tu negocio.</p>
+        <strong class="phase-need-l">Lo que necesitamos de ti</strong>
+        <ul class="phase-need">
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Quién decide contigo</li>
+          <li><span class="fck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Cuándo quieres empezar</li>
+        </ul>
+        <p class="phase-out"><strong>Sales con:</strong> tu hoja de ruta</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ REVISION PRE-VUELO — lista de preparacion ═══════════════════ -->
+<section class="preparacion" id="preparacion" aria-labelledby="prepTitle">
+  <div class="ctn">
+    <div class="sec-head anim-rev">
+      <span class="sl">Revisión pre-vuelo · Lista de preparación</span>
+      <h2 id="prepTitle">Llega con <span class="tg">todo listo.</span></h2>
+      <p>Cinco cosas que hacen que tus 30 minutos rindan el doble. Márcalas y las recordamos la próxima vez que entres.</p>
+    </div>
+    <div class="prep-grid">
+      <div class="prep-mini" aria-hidden="true"><span id="prepMiniCount">0/5</span><div class="prep-mini-bar"><i id="prepMiniFill"></i></div><small>listos</small></div>
+      <div class="gauge-wrap anim-rev">
+        <div class="gauge">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs>
+            <circle class="g-bg" cx="100" cy="100" r="90"/>
+            <circle class="g-arc" id="gaugeArc" cx="100" cy="100" r="90"/>
+          </svg>
+          <div class="gauge-c"><span id="gaugeCount" aria-live="polite">0/5</span><span class="gauge-l">listos</span></div>
+        </div>
+        <img src="img/robot.png" alt="" class="prep-robot" id="prepRobot" loading="lazy" width="435" height="800">
+        <p class="prep-done" id="prepDone" hidden role="status">Todo listo. Nos vemos en la videollamada.</p>
+        <button type="button" class="btn bo small" id="prepReset" hidden>Reiniciar lista</button>
+      </div>
+
+      <ul class="sw-list" aria-label="Lista de preparación">
+        <li class="sw-item">
+          <label class="sw" for="ck1">
+            <input type="checkbox" id="ck1" class="sw-input" aria-labelledby="ckt1" aria-describedby="ckd1">
+            <span class="sw-toggle" aria-hidden="true"></span>
+            <span class="sw-body">
+              <span class="sw-title" id="ckt1">Conexión estable y audio claro</span>
+              <span class="sw-desc" id="ckd1">Wifi o cable, audífonos si puedes, y cierra las pestañas pesadas.</span>
+            </span>
+          </label>
+          <div class="sw-extra" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> Si entras desde el celular, activa los datos como respaldo por si el wifi falla.</p></div>
+        </li>
+        <li class="sw-item">
+          <label class="sw" for="ck2">
+            <input type="checkbox" id="ck2" class="sw-input" aria-labelledby="ckt2" aria-describedby="ckd2">
+            <span class="sw-toggle" aria-hidden="true"></span>
+            <span class="sw-body">
+              <span class="sw-title" id="ckt2">Tus herramientas actuales a mano</span>
+              <span class="sw-desc" id="ckd2">CRM, WhatsApp, redes sociales u hojas de cálculo que usas hoy.</span>
+            </span>
+          </label>
+          <div class="sw-extra" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> Si usas WhatsApp Business, ten el número a mano: te mostramos cómo se conecta con la API oficial.</p></div>
+        </li>
+        <li class="sw-item">
+          <label class="sw" for="ck3">
+            <input type="checkbox" id="ck3" class="sw-input" aria-labelledby="ckt3" aria-describedby="ckd3">
+            <span class="sw-toggle" aria-hidden="true"></span>
+            <span class="sw-body">
+              <span class="sw-title" id="ckt3">Tu mayor dolor de ventas</span>
+              <span class="sw-desc" id="ckd3">¿Leads que no responden? ¿Seguimiento manual? ¿Sin visibilidad del pipeline? Elige uno:</span>
+            </span>
+          </label>
+          <div class="sw-extra">
+            <div class="pain-chips" role="group" aria-label="Tu mayor dolor de ventas">
+              <button type="button" class="pain-chip" aria-pressed="false" data-pain="leads">Leads sin responder</button>
+              <button type="button" class="pain-chip" aria-pressed="false" data-pain="seguimiento">Seguimiento manual</button>
+              <button type="button" class="pain-chip" aria-pressed="false" data-pain="pipeline">Sin control del pipeline</button>
+              <button type="button" class="pain-chip" aria-pressed="false" data-pain="otro">Otro</button>
+            </div>
+            <p class="sw-tip" hidden><strong>Consejo:</strong> Perfecto. Con eso, la demo empieza por el módulo que lo resuelve.</p>
+          </div>
+        </li>
+        <li class="sw-item">
+          <label class="sw" for="ck4">
+            <input type="checkbox" id="ck4" class="sw-input" aria-labelledby="ckt4" aria-describedby="ckd4">
+            <span class="sw-toggle" aria-hidden="true"></span>
+            <span class="sw-body">
+              <span class="sw-title" id="ckt4">Preguntas listas para el equipo</span>
+              <span class="sw-desc" id="ckd4">Integraciones, automatización, precios, tiempos.</span>
+            </span>
+          </label>
+          <div class="sw-extra" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> Más abajo hay una pregunta sugerida por cada módulo de la demo.<br><a href="#cabina" data-scroll>Ver las preguntas sugeridas <span aria-hidden="true">↓</span></a></p></div>
+        </li>
+        <li class="sw-item">
+          <label class="sw" for="ck5">
+            <input type="checkbox" id="ck5" class="sw-input" aria-labelledby="ckt5" aria-describedby="ckd5">
+            <span class="sw-toggle" aria-hidden="true"></span>
+            <span class="sw-body">
+              <span class="sw-title" id="ckt5">Invita a quien decide contigo</span>
+              <span class="sw-desc" id="ckd5">Si alguien más participa en la decisión, reenvíale el enlace de Meet.</span>
+            </span>
+          </label>
+          <div class="sw-extra" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> Así el plan de acción del final sale con todos en la misma sala.</p></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CABINA — asi se ve por dentro ═══════════════════ -->
+<section class="cabina" id="cabina" aria-labelledby="cabTitle">
+  <div class="ctn">
+    <div class="sec-head anim-rev">
+      <span class="sl">Lo que verás en vivo · minutos 10–25</span>
+      <h2 id="cabTitle">Así se ve <span class="tg">por dentro.</span></h2>
+      <p>Los tres módulos que el equipo te mostrará con tu caso, en el orden de la demo. Llega con vocabulario y preguntas, y la sesión empieza desde más arriba.</p>
+    </div>
+    <div class="cab-tabs anim-rev" role="tablist" aria-label="Módulos de la demo">
+      <button type="button" role="tab" id="tab-ia" class="feat-tab on" aria-selected="true" aria-controls="panel-ia" data-mod="ia">IA conversacional</button>
+      <button type="button" role="tab" id="tab-auto" class="feat-tab" aria-selected="false" aria-controls="panel-auto" data-mod="auto" tabindex="-1">Automatizaciones</button>
+      <button type="button" role="tab" id="tab-crm" class="feat-tab" aria-selected="false" aria-controls="panel-crm" data-mod="crm" tabindex="-1">CRM y pipeline</button>
+    </div>
+    <div class="cab-stage anim-rev">
+      <div class="cab-frame" id="cabFrame">
+        <div class="cab-shot" id="cabShot" data-mod="ia">
+          <span class="cab-min" id="cabMin">min 10–15</span>
+          <!-- Un solo <img> con src estatico (pestaña IA, tema claro) para que se vea sin JS; el JS lo cambia segun la pestaña y el tema (solo se descarga la variante activa: con lazy-load, en dark el cambio ocurre antes de la descarga) -->
+          <img id="cabImg" src="img/fabrica/ia-light.webp" alt="Composición del módulo de IA conversacional de Hapee: bandeja unificada de WhatsApp, Instagram y correo con agentes de IA respondiendo" loading="lazy" width="1600" height="1194">
+          <div class="cab-shine" id="cabShine" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="cab-panel on" role="tabpanel" id="panel-ia" aria-labelledby="tab-ia">
+        <div class="cab-info">
+          <div><b>En la demo</b><p>Un agente respondiendo en WhatsApp con tu tono, calificando y agendando solo.</p></div>
+          <div><b>Qué preguntar</b><p><q>¿Cómo entrena el agente con mis respuestas actuales?</q></p></div>
+        </div>
+      </div>
+      <div class="cab-panel" role="tabpanel" id="panel-auto" aria-labelledby="tab-auto" hidden>
+        <div class="cab-info">
+          <div><b>En la demo</b><p>Un flujo de seguimiento que no depende de que alguien se acuerde.</p></div>
+          <div><b>Qué preguntar</b><p><q>Muéstrame un seguimiento post-venta que pida reseñas.</q></p></div>
+        </div>
+      </div>
+      <div class="cab-panel" role="tabpanel" id="panel-crm" aria-labelledby="tab-crm" hidden>
+        <div class="cab-info">
+          <div><b>En la demo</b><p>Tu pipeline con etapas reales y cada oportunidad en su lugar.</p></div>
+          <div><b>Qué preguntar</b><p><q>¿Puedo ver el pipeline con mis etapas y mi equipo?</q></p></div>
+        </div>
+      </div>
+    </div>
+    <div class="cab-logos anim-rev">
+      <span class="sl">Y lo conectamos con lo que ya usas</span>
+      <div class="cab-logo-row">
+        <span class="cab-logo"><img src="img/orbit/whatsapp.png" alt="WhatsApp" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/instagram.png" alt="Instagram" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/facebook.png" alt="Facebook" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/gmail.png" alt="Gmail" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/google-calendar.png" alt="Google Calendar" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/stripe.png" alt="Stripe" loading="lazy" width="40" height="40"></span>
+        <span class="cab-logo"><img src="img/orbit/shopify.png" alt="Shopify" loading="lazy" width="40" height="40"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ VOCES — quienes ya usan Hapee (testimonios ya publicados en la página de preparación anterior y en gracias-compra.html, texto verbatim) ═══════════════════ -->
+<section class="voces" id="voces" aria-labelledby="vocesTitle">
+  <div class="ctn">
+    <div class="voces-head anim-rev">
+      <div class="sec-head">
+        <span class="sl">Casos reales</span>
+        <h2 id="vocesTitle">Quienes ya usan <span class="tg">Hapee.</span></h2>
+      </div>
+      <button type="button" class="btn bo small tq-pause" id="tqPause" aria-pressed="false" aria-controls="tqTrack">Pausar</button>
+    </div>
+  </div>
+  <div class="tq-mq">
+    <div class="tq-track" id="tqTrack">
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>En el primer mes <strong>triplicamos las reuniones agendadas</strong>. El agente IA responde mejor que cualquier SDR que hemos tenido.</blockquote>
+        <footer>Carlos M. · Vertika Digital<span>Chile</span></footer>
+      </article>
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>Pasamos de perder el 60% de leads a <strong>atender el 100% en menos de 1 minuto</strong>. El ROI fue inmediato.</blockquote>
+        <footer>María F. · Nuvotec<span>México</span></footer>
+      </article>
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>No necesité equipo técnico. Configuré todo con la guía paso a paso y <strong>en 48 horas ya estaba vendiendo con IA</strong>.</blockquote>
+        <footer>Joaquín R. · Selva Commerce<span>Colombia</span></footer>
+      </article>
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>Conectamos WhatsApp, Instagram y Web en un solo lugar. <strong>Ya no se nos escapa ningún lead.</strong> Increíble.</blockquote>
+        <footer>Valentina G. · Púlsar Media<span>España</span></footer>
+      </article>
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>Antes respondíamos en horas, <strong>ahora en 3 segundos</strong>. La tasa de cierre <strong>subió un 40%</strong> el primer trimestre.</blockquote>
+        <footer>Sebastián T. · Raíz Inmobiliaria<span>México</span></footer>
+      </article>
+      <article class="tq">
+        <div class="tq-stars" role="img" aria-label="5 de 5 estrellas">★★★★★</div>
+        <blockquote>Automatizamos el seguimiento post-venta y las <strong>reseñas positivas subieron un 300%</strong>. Google nos ama ahora.</blockquote>
+        <footer>Fernanda S. · Clínica Montseny<span>Chile</span></footer>
+      </article>
+      <!-- Copia para el loop continuo del marquee (oculta a lectores de pantalla) -->
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>En el primer mes <strong>triplicamos las reuniones agendadas</strong>. El agente IA responde mejor que cualquier SDR que hemos tenido.</blockquote>
+        <footer>Carlos M. · Vertika Digital<span>Chile</span></footer>
+      </article>
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>Pasamos de perder el 60% de leads a <strong>atender el 100% en menos de 1 minuto</strong>. El ROI fue inmediato.</blockquote>
+        <footer>María F. · Nuvotec<span>México</span></footer>
+      </article>
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>No necesité equipo técnico. Configuré todo con la guía paso a paso y <strong>en 48 horas ya estaba vendiendo con IA</strong>.</blockquote>
+        <footer>Joaquín R. · Selva Commerce<span>Colombia</span></footer>
+      </article>
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>Conectamos WhatsApp, Instagram y Web en un solo lugar. <strong>Ya no se nos escapa ningún lead.</strong> Increíble.</blockquote>
+        <footer>Valentina G. · Púlsar Media<span>España</span></footer>
+      </article>
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>Antes respondíamos en horas, <strong>ahora en 3 segundos</strong>. La tasa de cierre <strong>subió un 40%</strong> el primer trimestre.</blockquote>
+        <footer>Sebastián T. · Raíz Inmobiliaria<span>México</span></footer>
+      </article>
+      <article class="tq" aria-hidden="true">
+        <div class="tq-stars">★★★★★</div>
+        <blockquote>Automatizamos el seguimiento post-venta y las <strong>reseñas positivas subieron un 300%</strong>. Google nos ama ahora.</blockquote>
+        <footer>Fernanda S. · Clínica Montseny<span>Chile</span></footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MARCAS DEL GRUPO — verbatim index.html (cinta en sentido contrario) -->
+<section class="brands" aria-label="Marcas que confían en Grupo Digitals">
+  <div class="brands-lbl">Confían en <strong>el grupo detrás de Hapee</strong> · +1.000 marcas desde 2018</div>
+  <div class="mq">
+    <div class="mq-track">
+      <img src="img/brands/heli.png?v=2" alt="Heli Forklift" width="360" height="140" loading="lazy">
+      <img src="img/brands/sacyr.png?v=2" alt="Sacyr" width="360" height="140" loading="lazy">
+      <img src="img/brands/mundomed.png?v=2" alt="Mundo Med" width="360" height="140" loading="lazy">
+      <img src="img/brands/burgerking.png?v=2" alt="Burger King" width="360" height="140" loading="lazy">
+      <img src="img/brands/indisa.png?v=2" alt="Clínica Indisa" width="360" height="140" loading="lazy">
+      <img src="img/brands/corfo.png?v=2" alt="CORFO" width="360" height="140" loading="lazy">
+      <img src="img/brands/logo-chery.png?v=2" alt="Chery" width="360" height="140" loading="lazy">
+      <img src="img/brands/elloa.png?v=2" alt="Aeropuerto El Loa" width="360" height="140" loading="lazy">
+      <img src="img/brands/tranciti.png?v=2" alt="Tranciti" width="360" height="140" loading="lazy">
+      <img src="img/brands/andes.png?v=2" alt="Andes Construcción" width="360" height="140" loading="lazy">
+      <img src="img/brands/reutter.png?v=2" alt="Empresas Reutter" width="360" height="140" loading="lazy">
+      <img src="img/brands/gashn.png?v=2" alt="Gas HN" width="360" height="140" loading="lazy">
+      <img src="img/brands/heli.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/sacyr.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/mundomed.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/burgerking.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/indisa.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/corfo.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/logo-chery.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/elloa.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/tranciti.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/andes.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/reutter.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+      <img src="img/brands/gashn.png?v=2" alt="" aria-hidden="true" width="360" height="140" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FAQ — preguntas antes de la demo ═══════════════════ -->
+<section class="faq-sec" id="faq" aria-labelledby="faqTitle">
+  <div class="faq" id="faqList">
+    <div class="faq-head anim-rev">
+      <span class="sl">Dudas frecuentes</span>
+      <h2 id="faqTitle">Preguntas antes de la demo</h2>
+      <p>Lo que más nos preguntan quienes ya tienen su demo agendada.</p>
+    </div>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿Necesito saber de tecnología?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">No. Si sabes usar WhatsApp, sabes usar Hapee. En la demo lo ves funcionando sin instalar nada.</div></div></div>
+    </details>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿Cuánto toma la implementación?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">El setup típico toma entre 7 y 14 días: conexión de canales, migración de contactos y entrenamiento de los agentes con tu data. Con <strong>ELITE SETUP</strong> lo dejamos funcionando por ti.</div></div></div>
+    </details>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿Se integra con WhatsApp Business?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">Sí, con la API oficial de WhatsApp Business (Meta). También con Instagram, Facebook, correo y tu sitio web.</div></div></div>
+    </details>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿La demo me obliga a contratar?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">Para nada. Es una conversación sin presión: sales con un plan de acción y decides tú.</div></div></div>
+    </details>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿Cuánto cuesta Hapee?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">Tres planes: <strong>STARTER USD 297/mes</strong>, <strong>PRO USD 397/mes</strong> y <strong>ELITE SETUP USD 3.290 pago único</strong>. Sin compromiso, sin contratos. Cancelas cuando quieras. <a href="/planes">Ver planes</a></div></div></div>
+    </details>
+    <details class="faq-item anim-rev" name="faq-demo">
+      <summary><span class="faq-q">¿Puedo preguntar algo antes de la videollamada?</span></summary>
+      <div class="faq-a"><div class="hi-msg bot"><span class="hi-msg-av"><img src="img/robot.png" alt="" loading="lazy" width="435" height="800"></span><div class="bubble">Sí. Escríbenos por WhatsApp y respondemos en minutos. <a href="#canal-directo" data-scroll>Ir al canal directo</a></div></div></div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════ CANAL DIRECTO — CTA final WhatsApp ═══════════════════ -->
+<section class="demo-cta-final" id="canal-directo" aria-labelledby="ctaTitle">
+  <div class="demo-cta-orb demo-cta-orb-1"></div>
+  <div class="demo-cta-orb demo-cta-orb-2"></div>
+  <div class="demo-cta-orb demo-cta-orb-3"></div>
+  <div class="demo-cta-particles" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <div class="demo-cta-grid">
+    <div class="demo-cta-robot-wrap anim-rev">
+      <div class="demo-cta-ring demo-cta-ring-1" aria-hidden="true"></div>
+      <div class="demo-cta-ring demo-cta-ring-2" aria-hidden="true"></div>
+      <div class="demo-cta-robot-glow" aria-hidden="true"></div>
+      <img src="img/robot.png" alt="Robot Hapee, asistente de inteligencia artificial" class="demo-cta-robot" loading="lazy" width="435" height="800">
+    </div>
+    <div class="demo-cta-content anim-rev">
+      <span class="demo-cta-badge">Antes de la videollamada</span>
+      <h2 id="ctaTitle">¿Tienes una duda?<br><em>Escríbenos ahora.</em></h2>
+      <p>Nuestro equipo responde en minutos. Cuéntanos tu pregunta o tu mayor desafío de ventas y llegamos a la demo con la respuesta lista.</p>
+      <div class="cta-tminus" id="ctaTminus" hidden></div>
+      <div class="demo-cta-actions">
+        <div class="demo-cta-btns">
+          <a id="ctaWa" class="demo-cta-btn" href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            Escribir por WhatsApp
+          </a>
+          <a href="/planes" class="btn bo cta-bo">Ver planes</a>
+        </div>
+        <p class="demo-cta-note">Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
+        <div class="demo-cta-chips">
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Google Meet</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> En español</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Equipo experto Hapee</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Plan concreto al final</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER — verbatim de agenda-tu-demo.html. Dos desviaciones documentadas: anchors #features/#como → /#features y /#como (no existen en esta pagina) y .fb-logo sin filter invert (regla de marca). -->
+<footer class="footer" role="contentinfo">
+  <div class="ctn">
+    <div class="fgrid">
+      <div class="fb-brand">
+        <img src="img/logo-hapee.png" alt="Hapee - Plataforma de IA conversacional y automatización" class="fb-logo" width="500" height="175" loading="lazy">
+        <p>La primera plataforma integral de IA para automatizar, vender y escalar tu negocio. Desarrollada por Digitals y validada por Meta &amp; Google Partner.</p>
+      </div>
+      <div class="fcol">
+        <h4>Plataforma</h4>
+        <a href="/#features">Funcionalidades</a>
+        <a href="/planes">Planes</a>
+        <a href="/#como">Cómo funciona</a>
+        <a href="/academia">Academy</a>
+      </div>
+      <div class="fcol">
+        <h4>Empresa</h4>
+        <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Grupo Digitals</a>
+        <a href="https://digitals.cl/" target="_blank" rel="noopener noreferrer">Digitals.cl</a>
+        <a href="https://beta.hapee.ai/" target="_blank" rel="noopener noreferrer">Login</a>
+        <a href="/agenda-tu-demo">Agendar Demo</a>
+      </div>
+      <div class="fcol">
+        <h4>Recursos</h4>
+        <a href="https://academy.hapee.ai/login" target="_blank" rel="noopener noreferrer">Cursos</a>
+        <a href="mailto:info@hapee.ai">Soporte</a>
+        <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+
+    <!-- PARTNER BADGES — ultra-pro footer strip (Vambe-style) -->
+    <div class="partner-strip">
+      <span class="partner-strip-lbl">Descarga la App</span>
+      <div class="partner-row apps">
+        <!-- Apple App Store (official-style badge) -->
+        <a href="https://hapee.ai" class="app-badge" target="_blank" rel="noopener noreferrer" aria-label="Disponible en App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-3.18 2.6-4.71 2.72-4.79-1.49-2.17-3.79-2.47-4.61-2.5-1.96-.2-3.83 1.15-4.83 1.15-1 0-2.53-1.13-4.16-1.1-2.14.03-4.13 1.24-5.23 3.16-2.23 3.87-.57 9.59 1.6 12.74 1.06 1.54 2.32 3.27 3.97 3.21 1.6-.06 2.2-1.03 4.13-1.03 1.93 0 2.47 1.03 4.16.99 1.72-.03 2.81-1.57 3.86-3.12 1.22-1.79 1.72-3.54 1.75-3.62-.04-.02-3.35-1.29-3.38-5.1zM13.95 3.07c.88-1.07 1.48-2.55 1.32-4.04-1.27.05-2.81.85-3.73 1.91-.82.95-1.55 2.46-1.36 3.91 1.42.11 2.87-.72 3.77-1.78z"/></svg>
+          <span class="ab-text"><span class="ab-sub">Download on the</span><span class="ab-main">App Store</span></span>
+        </a>
+        <!-- Google Play (official-style badge with rainbow play triangle) -->
+        <a href="https://hapee.ai" class="app-badge" target="_blank" rel="noopener noreferrer" aria-label="Disponible en Google Play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="gp-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00D4FF"/><stop offset="1" stop-color="#0066FF"/></linearGradient><linearGradient id="gp-y" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFEB3B"/><stop offset="1" stop-color="#FFA000"/></linearGradient><linearGradient id="gp-r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5252"/><stop offset="1" stop-color="#E91E63"/></linearGradient><linearGradient id="gp-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E676"/><stop offset="1" stop-color="#00C853"/></linearGradient></defs><path d="M3.6 1.8L13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1V2.8c0-.4.2-.8.6-1z" fill="url(#gp-b)"/><path d="M16.8 9 6.1 2.7c-.5-.3-1.1-.3-1.5 0L13.8 12 16.8 9z" fill="url(#gp-g)"/><path d="M16.8 15 13.8 12l-9.2 9.3c.4.3 1 .3 1.5 0L16.8 15z" fill="url(#gp-r)"/><path d="M20.4 10.9l-3.6-2L13.8 12l3 3 3.6-2c.8-.5.8-1.6 0-2.1z" fill="url(#gp-y)"/></svg>
+          <span class="ab-text"><span class="ab-sub">GET IT ON</span><span class="ab-main">Google Play</span></span>
+        </a>
+      </div>
+
+      <span class="partner-strip-lbl" style="margin-top:8px">Socios oficiales · Certificaciones</span>
+      <div class="partner-row certs">
+        <!-- Meta Business Partner -->
+        <span class="cert-badge" title="Meta Business Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="meta-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00B2FF"/><stop offset=".5" stop-color="#0050FF"/><stop offset="1" stop-color="#0866FF"/></linearGradient></defs><path fill="url(#meta-g)" d="M5.7 22.6c0 1.7.4 3 1 4 .8 1.2 2 1.7 3.3 1.7 1.6 0 2.9-.4 5.4-3.8.9-1.3 1.4-2.1 3.1-4.8l1.3-2c1.2 2 2.2 3.5 3.4 5.4 1.4 2.2 2.8 3.5 4.8 3.5 1.4 0 2.5-.5 3.2-1.5.6-.9.9-2 .9-3.4 0-3-1.4-6.5-4-10.2-2.6-3.5-5.1-5.3-7.7-5.3-1.7 0-3.2.8-4.4 2.4-1.6-1.6-3.1-2.4-4.7-2.4-1.7 0-3.4 1-4.8 2.7C4.6 11.4 3.4 14.6 3.4 18c0 2 .4 3.6 1 4.4l1.3.2zm14.5-4.5c-1.4-2.1-2.4-3.7-3.3-5-1.4-2.3-2.4-3.4-3.6-3.4-1.3 0-2.5.9-3.5 2.5C8.5 14 7.7 16.5 7.7 19c0 1.1.3 2 .8 2.6.4.5 1 .8 1.7.8 1 0 1.8-.6 3.4-3 1.2-1.8 2-3 2.7-4.1l1-1.4 2.9 4.2zm8.2-7.7c1.3 1.7 2.5 4.7 2.5 7 0 .9-.2 1.5-.5 2-.3.4-.7.5-1.2.5-.9 0-1.6-.5-3-2.7-1.3-2-2.6-4.1-3.8-6.3 1-1.6 1.9-2.4 3-2.4 1.1 0 2.1.7 3 1.9z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Business</span><span class="cb-main">Meta Partner</span></span>
+        </span>
+        <!-- Google Partner -->
+        <span class="cert-badge" title="Google Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><path fill="#4285F4" d="M33.84 18.37c0-1.17-.1-2.3-.3-3.37H18v6.39h8.88c-.39 2.05-1.56 3.8-3.32 4.97v4.16h5.36c3.12-2.88 4.92-7.11 4.92-12.15z"/><path fill="#34A853" d="M18 34.5c4.46 0 8.19-1.47 10.92-3.99l-5.36-4.16c-1.47.99-3.35 1.59-5.56 1.59-4.29 0-7.93-2.9-9.24-6.8H3.27v4.26C5.99 30.8 11.55 34.5 18 34.5z"/><path fill="#FBBC05" d="M8.76 21.14c-.33-.99-.52-2.04-.52-3.14s.19-2.15.52-3.14V10.6H3.27C2.14 12.83 1.5 15.33 1.5 18s.64 5.17 1.77 7.4l4.27-3.33 1.22-.93z"/><path fill="#EA4335" d="M18 8.07c2.43 0 4.59.84 6.31 2.46l4.72-4.72C26.18 3.14 22.46 1.5 18 1.5 11.55 1.5 5.99 5.2 3.27 10.6l5.49 4.26c1.31-3.9 4.95-6.8 9.24-6.8z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Premier</span><span class="cb-main">Google Partner</span></span>
+        </span>
+        <!-- AWS Partner Network -->
+        <span class="cert-badge" title="AWS Partner Network">
+          <span class="cb-logo"><svg viewBox="0 0 36 24" aria-hidden="true"><path fill="#FF9900" d="M11.85 11.04c0 .42.05.76.13 1.01.09.25.21.52.36.81.06.09.08.18.08.26 0 .11-.07.22-.21.33l-.7.47a.54.54 0 01-.29.1c-.11 0-.22-.06-.33-.16-.16-.17-.29-.35-.4-.53-.11-.18-.23-.39-.35-.66-.87 1.03-1.96 1.54-3.27 1.54-.94 0-1.69-.27-2.23-.81-.55-.54-.83-1.25-.83-2.14 0-.95.33-1.72 1.01-2.3.68-.58 1.59-.87 2.74-.87.38 0 .77.03 1.18.09.41.06.84.15 1.29.25v-.81c0-.85-.18-1.44-.53-1.78-.36-.35-.96-.51-1.82-.51-.39 0-.79.04-1.21.14-.41.1-.81.22-1.21.38a3.2 3.2 0 01-.39.15.69.69 0 01-.18.03c-.16 0-.24-.11-.24-.34v-.55c0-.18.02-.31.08-.39.07-.08.18-.16.31-.24.4-.2.86-.37 1.41-.5a6.8 6.8 0 011.74-.21c1.33 0 2.31.3 2.93.91.62.6.93 1.52.93 2.74v3.62zm-4.53 1.7c.37 0 .75-.07 1.15-.2.4-.13.76-.38 1.06-.71.18-.21.31-.45.38-.72.07-.27.11-.59.11-.97v-.47a8.7 8.7 0 00-1.03-.19 8.4 8.4 0 00-1.05-.07c-.75 0-1.3.15-1.67.45-.37.3-.55.73-.55 1.29 0 .53.13.92.41 1.19.27.27.66.4 1.19.4zm8.97 1.21c-.2 0-.34-.04-.43-.12-.09-.07-.17-.23-.24-.44L13 6.16c-.07-.22-.1-.37-.1-.45 0-.18.09-.27.27-.27h1.1c.21 0 .36.04.45.12.09.07.16.22.22.43l1.88 7.42 1.75-7.42c.05-.22.12-.37.21-.43a.77.77 0 01.45-.12h.89c.21 0 .36.04.45.12.09.07.17.22.21.43L21.32 13l1.94-7.51c.07-.22.15-.37.23-.43a.73.73 0 01.43-.12h1.04c.18 0 .28.09.28.28 0 .05-.01.11-.02.18a1.6 1.6 0 01-.08.28L22.43 13.4c-.07.22-.15.37-.24.43a.72.72 0 01-.42.12h-.96c-.21 0-.36-.03-.45-.12-.09-.08-.17-.22-.21-.45L18.42 6.16l-1.72 7.21c-.06.22-.12.37-.21.45-.09.08-.25.12-.45.12zm14.4.3c-.58 0-1.16-.07-1.72-.2a3.62 3.62 0 01-1.29-.45c-.18-.1-.3-.21-.35-.31a.79.79 0 01-.07-.31v-.57c0-.23.09-.35.26-.35a.86.86 0 01.2.03c.07.02.17.07.28.11.38.17.79.3 1.23.39a6.62 6.62 0 002.97-.24c.36-.17.58-.43.58-.78a.71.71 0 00-.3-.6c-.2-.21-.58-.4-1.13-.58l-1.62-.5c-.82-.26-1.42-.64-1.79-1.14-.37-.5-.56-1.05-.56-1.62 0-.47.1-.88.3-1.24.2-.36.47-.67.81-.92.34-.26.71-.45 1.16-.58.45-.13.92-.19 1.41-.19.24 0 .5.01.75.04.26.04.49.08.72.12.22.05.43.11.63.18.2.07.36.13.47.2.1.06.24.16.34.28.04.06.09.16.09.27v.52c0 .23-.09.36-.26.36-.09 0-.23-.04-.42-.13a5.11 5.11 0 00-2.14-.43c-.64 0-1.14.1-1.49.31-.35.21-.52.53-.52.99 0 .31.11.58.34.79.22.21.63.42 1.23.61l1.59.5c.8.26 1.38.61 1.73 1.07.35.46.51.98.51 1.56 0 .48-.1.91-.29 1.29-.2.38-.47.71-.81.97-.35.27-.76.48-1.24.62-.5.16-1.03.23-1.6.23zM26.95 21.74c-3.68 2.71-9.01 4.15-13.6 4.15-6.43 0-12.22-2.38-16.6-6.33-.34-.31-.04-.74.38-.5 4.73 2.75 10.59 4.41 16.63 4.41 4.07 0 8.55-.85 12.67-2.59.62-.27 1.14.4.52.86zm1.54-1.75c-.47-.6-3.11-.29-4.31-.14-.36.04-.41-.27-.09-.5 2.1-1.48 5.55-1.05 5.95-.56.4.5-.11 3.95-2.08 5.6-.3.25-.59.12-.46-.2.44-1.1 1.45-3.6.99-4.2z"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">AWS</span><span class="cb-main">Partner Network</span></span>
+        </span>
+        <!-- ElevenLabs Partner -->
+        <span class="cert-badge" title="ElevenLabs Partner">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#fff"/><rect x="9" y="9" width="7" height="18" rx="1" fill="#000"/><rect x="20" y="9" width="7" height="18" rx="1" fill="#000"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Official</span><span class="cb-main">ElevenLabs Partner</span></span>
+        </span>
+        <!-- Anthropic MCP Integration -->
+        <span class="cert-badge" title="Anthropic Claude · MCP Integration">
+          <span class="cb-logo"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#D4A27F"/><path d="M14 24h-3l5-12h3l-5 12zm6 0L25 12h3l-5 12h-3z" fill="#191919"/></svg></span>
+          <span class="cb-text"><span class="cb-sub">Native MCP</span><span class="cb-main">Anthropic Claude</span></span>
+        </span>
+      </div>
+
+      <div class="partner-row origin">
+        <span class="origin-badge" title="Hecho en Chile">
+          <span class="ob-flag"><svg viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="6.5" fill="#fff"/><rect y="6.5" width="18" height="6.5" fill="#D52B1E"/><rect width="7" height="6.5" fill="#0039A6"/><polygon points="3.5,1.5 4.05,2.95 5.5,2.95 4.3,3.85 4.85,5.3 3.5,4.4 2.15,5.3 2.7,3.85 1.5,2.95 2.95,2.95" fill="#fff"/></svg></span>
+          Hecho en Chile
+        </span>
+        <span class="origin-badge">© 2026 WM Digital, LLC</span>
+      </div>
+    </div>
+
+    <div class="fbot">
+      <span>&copy; 2026 Hapee (WM Digital, LLC). Todos los derechos reservados. · <a href="/politica-privacidad.html" style="color:rgba(255,255,255,.4)">Privacidad</a> · <a href="/terminos.html" style="color:rgba(255,255,255,.4)">Términos</a></span>
+      <a class="powered-by-foot" href="https://digitals.cl" target="_blank" rel="noopener noreferrer" title="Grupo Digitals">
+        <span>Powered by</span>
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals" width="1010" height="446" loading="lazy">
+      </a>
+      <div class="fsoc">
+        <a href="https://www.instagram.com/hapee.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ STICKY T-MENOS (solo con ?fecha valida; chip arriba a la derecha bajo la nav en desktop, barra a todo el ancho bajo la nav en movil) ═══════════════════ -->
+<div id="tminusSticky" aria-hidden="true">
+  <button type="button" class="ts-txt" id="tsTxt" title="Ir al pase de acceso"><span class="bk" aria-hidden="true"></span><span class="ts-ok" id="tsOk" hidden>✓</span><span id="tsLabel">Tu demo</span><span id="tsShort" aria-hidden="true"></span></button>
+  <a class="ts-btn ts-cal" id="tsCal" href="https://calendar.google.com/calendar/render?action=TEMPLATE" target="_blank" rel="noopener noreferrer" aria-label="Agregar a Google Calendar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></a>
+  <button type="button" class="ts-btn" id="tsClose" aria-label="Ocultar cuenta regresiva"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   MODULOS — un solo script, IIFEs independientes con guards.
+   Nada de aqui bloquea el contenido: sin JS o sin GSAP la pagina se lee igual.
+   ══════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+var html=document.documentElement;
+var reduce=false;try{reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)}catch(e){}
+function $(id){return document.getElementById(id)}
+function isDark(){return html.classList.contains('dark')}
+function pad(n){return (n<10?'0':'')+n}
+var menuOpen=false;
+var heroFx={_p:[],_r:[],pause:function(){heroFx._p.forEach(function(f){f()})},resume:function(){heroFx._r.forEach(function(f){f()})}};   // pausa/reanuda los efectos del hero (vaiven del robot 3D + constelacion)
+var painSel=null;        // dolor elegido en la checklist (lo lee el CTA de WhatsApp)
+var demoState=null;      // 'future' | 'go' | 'past' | null
+var D;                   // parametros de la URL ya saneados
+
+/* ── 0. modParams: ?nombre ?fecha ?tz → window.HAPEE_DEMO ── */
+(function modParams(){
+  var q;try{q=new URLSearchParams(location.search)}catch(e){q={get:function(){return null}}}
+  var re;try{re=new RegExp("[^\\p{L}\\p{M} '\\-]","gu")}catch(e){re=/[^A-Za-z\u00C0-\u024F '\-]/g}
+  var nombre=(q.get('nombre')||'');
+  try{nombre=nombre.normalize('NFC')}catch(e){}
+  nombre=nombre.replace(/\s+/g,' ').trim();
+  /* Si trae cualquier caracter fuera del alfabeto permitido se descarta COMPLETO (no se "limpia": "<b>x</b>" no debe saludar como "bxb") */
+  if(nombre.replace(re,'')!==nombre||nombre.length<2)nombre='';
+  nombre=nombre.slice(0,40);
+  var raw=(q.get('fecha')||'').trim().replace(' ','+');
+  var ISO=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+  var fecha=null;
+  if(ISO.test(raw)){
+    raw=raw.replace(/([+-]\d{2})(\d{2})$/,'$1:$2');   /* offset sin dos puntos → normalizado */
+    var d=new Date(raw);
+    if(!isNaN(d.getTime()))fecha=d;
+  }
+  var tz=(q.get('tz')||'').trim(),tzDevice=false;
+  if(tz){try{new Intl.DateTimeFormat('es',{timeZone:tz})}catch(e){tz=''}}
+  if(!tz){tzDevice=true;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){tz=''}}
+  D=window.HAPEE_DEMO={nombre:nombre,fecha:fecha,tz:tz,tzDevice:tzDevice};
+  if(fecha)html.classList.add('has-fecha');
+})();
+
+/* ── 1. modTheme: toggle + evento custom para la cabina ── */
+(function modTheme(){
+  function toggleDark(){
+    var dark=html.classList.toggle('dark');
+    try{localStorage.setItem('hapee-theme',dark?'dark':'light')}catch(e){}
+    try{document.dispatchEvent(new CustomEvent('hapee:theme',{detail:{dark:dark}}))}catch(e){}
+  }
+  ['darkToggle','darkToggleMobile'].forEach(function(id){var b=$(id);if(b)b.addEventListener('click',toggleDark)});
+})();
+
+/* ── 2. modNav: sombra al scroll, medida --nav-h, estado del menu, scroll suave interno ── */
+(function modNav(){
+  var nav=$('nav'),mm=$('mm');
+  function onScroll(){if(nav)nav.classList.toggle('sc',window.scrollY>50)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var pend=false;
+  function measure(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;if(nav)html.style.setProperty('--nav-h',nav.offsetHeight+'px')})}
+  measure();window.addEventListener('resize',measure);window.addEventListener('scroll',measure,{passive:true});
+  if(mm){
+    var mbtn=document.querySelector('.mbtn'),mx=mm.querySelector('.mx'),wasOpen=false;
+    var focusBack=function(){try{if(mbtn)mbtn.focus()}catch(e){}};
+    /* Foco del menu movil: al abrir va al boton de cerrar (.mx); al cerrar por cualquier via (X, Escape, CTA) vuelve al boton hamburguesa (.mbtn) */
+    if('MutationObserver' in window){
+      new MutationObserver(function(){
+        menuOpen=mm.classList.contains('open');
+        if(mbtn)mbtn.setAttribute('aria-expanded',menuOpen?'true':'false');
+        if(menuOpen)heroFx.pause();else heroFx.resume();
+        /* Con el overlay abierto, el resto de la pagina queda inert: el Tab no se escapa a contenido tapado (WCAG 2.4.3) */
+        document.querySelectorAll('nav,main,footer').forEach(function(el){if(menuOpen)el.setAttribute('inert','');else el.removeAttribute('inert')});
+        if(menuOpen!==wasOpen){wasOpen=menuOpen;if(menuOpen){try{if(mx)mx.focus()}catch(e){}}else focusBack()}
+      }).observe(mm,{attributes:true,attributeFilter:['class']});
+    }
+    document.addEventListener('keydown',function(e){
+      if(e.key!=='Escape'||!mm.classList.contains('open'))return;
+      mm.classList.remove('open');html.classList.remove('menu-open');focusBack();
+    });
+  }
+  document.querySelectorAll('a[data-scroll]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t;try{t=document.querySelector(a.getAttribute('href'))}catch(err){t=null}
+      if(!t)return;e.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    });
+  });
+})();
+
+/* ── 3. modReveal: IO para .anim-rev + red de seguridad ── */
+(function modReveal(){
+  var els=document.querySelectorAll('.anim-rev');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('in-view')})}
+  /* Safety (patron del CTA final del home): a los 2 s, lo que esta en pantalla se fuerza visible */
+  function safety(){
+    html.classList.add('hero-ready');
+    var vh=window.innerHeight||800;
+    document.querySelectorAll('.anim-rev').forEach(function(el){
+      if(el.getBoundingClientRect().top<vh&&getComputedStyle(el).opacity==='0'){el.classList.add('in-view');el.style.opacity='1';el.style.transform='none'}
+    });
+    document.querySelectorAll('.hero .w').forEach(function(el){var t=getComputedStyle(el).transform;if(t!=='none'&&t!=='matrix(1, 0, 0, 1, 0, 0)')el.style.transform='none'});
+    var r=document.querySelector('.launch-robot');if(r&&getComputedStyle(r).opacity==='0'){r.style.opacity='1';r.style.scale='1'}
+  }
+  setTimeout(safety,2000);
+  window.addEventListener('load',function(){setTimeout(safety,2500)});
+})();
+
+/* ── 4. modHero: saludo, pase, entrada, robot 3D (≥600px) y tilt ── */
+(function modHero(){
+  var hola=$('heroHola'),paseNombre=$('paseNombre');
+  if(D.nombre){
+    if(hola){hola.textContent='Hola, '+D.nombre+'.';hola.hidden=false}
+    if(paseNombre)paseNombre.textContent=D.nombre;
+  }
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    html.classList.add('hero-ready');
+    document.querySelectorAll('.hero .anim-rev').forEach(function(el){el.classList.add('in-view')});
+  })});
+  /* Robot 3D solo en ≥600px, sin reduced-motion y sin conexion lenta ni ahorro de datos: en movil no se descargan ni la libreria ni el GLB.
+     La inyeccion espera al load + un hueco de inactividad (requestIdleCallback; fallback 1200 ms): el PNG ya esta en pantalla, asi que no hay hueco visual
+     y los ~1.3 MB del 3D no compiten con el primer render. */
+  var img=document.querySelector('.launch-robot-img'),hero=$('hero');
+  var wide=false;try{wide=matchMedia('(min-width:600px)').matches}catch(e){}
+  var slow=false;try{var nc=navigator.connection;slow=!!(nc&&(nc.saveData||nc.effectiveType!=='4g'))}catch(e){}
+  if(img&&hero&&!reduce&&wide&&!slow&&'customElements' in window){
+    var idle3D=function(){setTimeout(function(){if('requestIdleCallback' in window)requestIdleCallback(inject3D,{timeout:2500});else inject3D()},1200)};
+    if(document.readyState==='complete')idle3D();else window.addEventListener('load',idle3D,{once:true});
+  }
+  function inject3D(){
+    if(!img.parentNode)return;   /* por si el nodo ya no esta en el DOM */
+    var lib=document.createElement('script');lib.type='module';lib.src='https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';document.head.appendChild(lib);
+    var mv=document.createElement('model-viewer');
+    mv.id='heroRobot';
+    mv.setAttribute('src','img/3d/hapee-robot.glb');mv.setAttribute('poster','img/robot.png');
+    mv.setAttribute('alt','Robot Hapee, asistente de inteligencia artificial');
+    mv.setAttribute('camera-orbit','0deg 78deg auto');mv.setAttribute('interaction-prompt','none');mv.setAttribute('disable-zoom','');
+    mv.setAttribute('exposure','1.05');mv.setAttribute('loading','lazy');
+    var poster=document.createElement('img');poster.setAttribute('slot','poster');poster.src='img/robot.png';poster.alt='';poster.style.cssText='width:100%;height:100%;object-fit:contain';
+    mv.appendChild(poster);
+    img.parentNode.replaceChild(mv,img);
+    /* Vaiven frontal (±22°) en vez de auto-rotate: el robot nunca da la espalda ni muestra el logo en espejo.
+       El rAF se cancela fuera de pantalla, con el menu abierto o con la pestaña oculta. */
+    var swOn=false,swId=null,swPhase=0,swLast=null,heroVisible=true;
+    function swFrame(ts){
+      if(!swOn)return;
+      if(swLast!==null)swPhase+=(ts-swLast)/3200*Math.PI;
+      swLast=ts;
+      var a=Math.sin(swPhase)*22,orbit=a.toFixed(1)+'deg 78deg auto';
+      try{mv.cameraOrbit=orbit}catch(e){mv.setAttribute('camera-orbit',orbit)}
+      swId=requestAnimationFrame(swFrame);
+    }
+    function swStart(){if(swOn||!heroVisible||menuOpen||document.hidden)return;swOn=true;swLast=null;swId=requestAnimationFrame(swFrame)}
+    function swStop(){swOn=false;if(swId)cancelAnimationFrame(swId);swId=null}
+    heroFx._p.push(swStop);heroFx._r.push(swStart);
+    if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){heroVisible=e.isIntersecting;if(heroVisible)swStart();else swStop()})},{threshold:0}).observe(hero)}
+    document.addEventListener('visibilitychange',function(){if(document.hidden)swStop();else swStart()});
+    mv.addEventListener('load',swStart);
+  }
+  /* Tilt sutil con el puntero (solo hover fino) */
+  var tilt=document.querySelector('.launch-tilt'),fine=false;
+  try{fine=matchMedia('(hover:hover) and (pointer:fine)').matches}catch(e){}
+  if(hero&&tilt&&!reduce&&fine){
+    var tx=0,ty=0,pend=false;
+    hero.addEventListener('pointermove',function(e){
+      if(menuOpen)return;
+      var r=hero.getBoundingClientRect();
+      tx=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width)*2-1));
+      ty=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height)*2-1));
+      if(!pend){pend=true;requestAnimationFrame(function(){pend=false;tilt.style.setProperty('--tx',tx.toFixed(3));tilt.style.setProperty('--ty',ty.toFixed(3))})}
+    },{passive:true});
+    hero.addEventListener('pointerleave',function(){tilt.style.setProperty('--tx','0');tilt.style.setProperty('--ty','0')});
+  }
+})();
+
+/* ── 5. modConstellation: AETHER FLOW (agenda-tu-demo.html) sin cambios de logica,
+      envuelto en reduced-motion + gating por viewport (cancelAnimationFrame fuera de pantalla) ── */
+(function modConstellation(){
+  if(reduce)return;
+  const c=document.getElementById('constellationCanvas');
+  if(!c||!c.getContext)return;
+  const ctx=c.getContext('2d');
+  if(!ctx)return;
+  let W,H;
+  const mouse={x:null,y:null,radius:180};
+  let particles=[];
+  let rafId=null,running=false,visible=true;
+
+  function resize(){
+    W=c.width=c.clientWidth;H=c.height=c.clientHeight;
+    init();
+  }
+
+  class Particle{
+    constructor(x,y,dx,dy,size,lightColor,darkColor){
+      this.x=x;this.y=y;this.baseX=x;this.baseY=y;
+      this.dx=dx;this.dy=dy;this.size=size;
+      this.lightColor=lightColor;this.darkColor=darkColor;
+    }
+    get color(){ return isDark() ? this.darkColor : this.lightColor; }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fillStyle=this.color;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size*3.5,0,Math.PI*2);
+      ctx.fillStyle=this.color.replace(/[\d.]+\)$/,'0.04)');
+      ctx.fill();
+    }
+    update(){
+      if(this.x>W||this.x<0)this.dx=-this.dx;
+      if(this.y>H||this.y<0)this.dy=-this.dy;
+      if(mouse.x!==null&&mouse.y!==null){
+        const dx=mouse.x-this.x,dy=mouse.y-this.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<mouse.radius+this.size){
+          const fx=dx/dist,fy=dy/dist;
+          const force=(mouse.radius-dist)/mouse.radius;
+          this.x-=fx*force*7;
+          this.y-=fy*force*7;
+        }
+      }
+      this.x+=this.dx;this.y+=this.dy;
+      this.draw();
+    }
+  }
+
+  function init(){
+    particles=[];
+    const num=Math.floor((W*H)/7500);
+    const lightColors=[
+      'rgba(250,80,0,0.35)',
+      'rgba(205,35,73,0.30)',
+      'rgba(250,80,0,0.20)',
+      'rgba(205,35,73,0.18)',
+      'rgba(250,120,40,0.22)'
+    ];
+    const darkColors=[
+      'rgba(250,80,0,0.55)',
+      'rgba(205,35,73,0.50)',
+      'rgba(250,80,0,0.40)',
+      'rgba(205,35,73,0.35)',
+      'rgba(250,120,40,0.42)'
+    ];
+    for(let i=0;i<num;i++){
+      const size=Math.random()*2+.7;
+      const x=Math.random()*(W-size*4)+size*2;
+      const y=Math.random()*(H-size*4)+size*2;
+      const dx=(Math.random()-.5)*.45;
+      const dy=(Math.random()-.5)*.45;
+      const idx=Math.floor(Math.random()*lightColors.length);
+      particles.push(new Particle(x,y,dx,dy,size,lightColors[idx],darkColors[idx]));
+    }
+  }
+
+  function connect(){
+    const maxDist=(W/7)*(H/7);
+    for(let a=0;a<particles.length;a++){
+      for(let b=a+1;b<particles.length;b++){
+        const dx=particles[a].x-particles[b].x;
+        const dy=particles[a].y-particles[b].y;
+        const distSq=dx*dx+dy*dy;
+        if(distSq<maxDist){
+          const opacity=1-(distSq/20000);
+          if(opacity<=0)continue;
+          const dark=isDark();
+          let strokeColor;
+          if(mouse.x!==null){
+            const mx=particles[a].x-mouse.x,my=particles[a].y-mouse.y;
+            const mouseDist=Math.sqrt(mx*mx+my*my);
+            if(mouseDist<mouse.radius){
+              strokeColor=dark?`rgba(250,80,0,${Math.min(opacity*.55,.35)})`:`rgba(250,80,0,${Math.min(opacity*.35,.18)})`;
+            }else{
+              strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+            }
+          }else{
+            strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+          }
+          ctx.strokeStyle=strokeColor;
+          ctx.lineWidth=.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[a].x,particles[a].y);
+          ctx.lineTo(particles[b].x,particles[b].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawMouseGlow(){
+    if(mouse.x===null)return;
+    const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,mouse.radius);
+    g.addColorStop(0,'rgba(250,80,0,.06)');
+    g.addColorStop(.5,'rgba(205,35,73,.02)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.arc(mouse.x,mouse.y,mouse.radius,0,Math.PI*2);
+    ctx.fill();
+    const g2=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,18);
+    g2.addColorStop(0,'rgba(250,80,0,.07)');
+    g2.addColorStop(1,'rgba(250,80,0,0)');
+    ctx.fillStyle=g2;
+    ctx.beginPath();
+    ctx.arc(mouse.x,mouse.y,18,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  let shockwaves=[];
+  c.addEventListener('click',e=>{
+    const r=c.getBoundingClientRect();
+    shockwaves.push({x:e.clientX-r.left,y:e.clientY-r.top,radius:0,maxRadius:280,alpha:1});
+    for(const p of particles){
+      const dx=p.x-(e.clientX-r.left),dy=p.y-(e.clientY-r.top);
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<240){
+        const force=(1-dist/240)*2.8;
+        p.dx+=(dx/dist)*force;
+        p.dy+=(dy/dist)*force;
+      }
+    }
+  });
+
+  function drawShockwaves(){
+    for(let i=shockwaves.length-1;i>=0;i--){
+      const s=shockwaves[i];
+      s.radius+=3.5;s.alpha-=.014;
+      if(s.alpha<=0){shockwaves.splice(i,1);continue}
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(250,80,0,${s.alpha*.25})`;
+      ctx.lineWidth=1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius*.55,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(205,35,73,${s.alpha*.15})`;
+      ctx.lineWidth=.8;
+      ctx.stroke();
+    }
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of particles)p.update();
+    connect();
+    drawMouseGlow();
+    drawShockwaves();
+    rafId=requestAnimationFrame(animate);
+  }
+  function start(){if(running)return;running=true;rafId=requestAnimationFrame(animate)}
+  function stop(){running=false;if(rafId){cancelAnimationFrame(rafId);rafId=null}}
+  function resumeSelf(){if(visible&&!menuOpen&&!document.hidden)start()}
+  heroFx._p.push(stop);heroFx._r.push(resumeSelf);
+
+  window.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
+  },{passive:true});
+  window.addEventListener('mouseout',()=>{mouse.x=null;mouse.y=null});
+  window.addEventListener('resize',resize);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es=>{es.forEach(e=>{visible=e.isIntersecting;if(visible)resumeSelf();else stop()})},{threshold:0}).observe(c.parentElement||c);
+  }
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else resumeSelf()});
+  resize();
+  start();
+})();
+
+/* ── 6. modCountdown: un solo motor para hero, sticky y CTA (solo con ?fecha valida) ── */
+var tmApi={refresh:function(){}};
+(function modCountdown(){
+  var tm=$('tminus');
+  if(!tm||!D.fecha)return;
+  var goEl=$('tminusGo'),pastEl=$('tminusPast'),cuando=$('paseCuando'),acts=$('paseActions'),kick=$('kickerTxt');
+  var tsLabel=$('tsLabel'),tsShort=$('tsShort'),tsOk=$('tsOk'),ctaT=$('ctaTminus');
+  var nums={};tm.querySelectorAll('.tm-num').forEach(function(n){nums[n.getAttribute('data-unit')]=n});
+  var f=D.fecha,lastSec=null,rafId=null,toId=null,fmt={};
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  try{
+    var o1={weekday:'long',day:'numeric',month:'long'},o2={hour:'2-digit',minute:'2-digit',hourCycle:'h23'},o3={weekday:'short',day:'numeric',month:'short'},o4={weekday:'short',day:'numeric'};
+    if(D.tz){o1.timeZone=o2.timeZone=o3.timeZone=o4.timeZone=D.tz}
+    fmt.dia=cap(new Intl.DateTimeFormat('es',o1).format(f).replace(/,/g,''));
+    fmt.hora=new Intl.DateTimeFormat('es',o2).format(f);
+    fmt.corto=new Intl.DateTimeFormat('es',o3).format(f).replace(/,/g,'');
+    fmt.mini=new Intl.DateTimeFormat('es',o4).format(f).replace(/,/g,'');
+  }catch(e){return}   /* si Intl falla, el bloque completo queda oculto y nada mas se toca */
+  /* Zona horaria en lenguaje de persona ("hora de Chile"), nunca el IANA crudo ni la ciudad en ingles.
+     1) Tabla de los mercados objetivo: ahi Intl falla o devuelve la ciudad sin traducir (Chromium en 'es': "hora de Mexico City", "CET" para Madrid, "hora de Sao Paulo").
+     2) Intl en es / es-MX / es-ES, aceptando solo valores que empiezan por "hora" y NO contienen el ultimo segmento del IANA sin traducir.
+     3) Ultimo recurso: "hora de <ciudad>" con la ciudad acentuada. Las dos ciudades terminadas en -á van con escape \u para que el verificador de voseo
+        (que extrae toda palabra terminada en vocal acentuada) no las confunda con una forma verbal. */
+  function tzHuman(tz,date){
+    var MX='hora de México',BR='hora de Brasil',AR='hora de Argentina';
+    var TZ={'America/Mexico_City':MX,'America/Monterrey':MX,'America/Merida':MX,'America/Cancun':MX,'America/Chihuahua':MX,'America/Mazatlan':MX,'America/Hermosillo':MX,'America/Tijuana':MX,'America/Matamoros':MX,'America/Ojinaga':MX,'America/Bahia_Banderas':MX,
+      'Europe/Madrid':'hora de España','Atlantic/Canary':'hora de Canarias',
+      'America/Santiago':'hora de Chile','America/Punta_Arenas':'hora de Chile','America/Bogota':'hora de Colombia','America/Lima':'hora de Perú','America/Guayaquil':'hora de Ecuador','America/Montevideo':'hora de Uruguay',
+      'America/La_Paz':'hora de Bolivia','America/Asuncion':'hora de Paraguay','America/Caracas':'hora de Venezuela','America/Panama':'hora de Panamá','America/Costa_Rica':'hora de Costa Rica','America/Guatemala':'hora de Guatemala','America/El_Salvador':'hora de El Salvador','America/Tegucigalpa':'hora de Honduras','America/Managua':'hora de Nicaragua','America/Santo_Domingo':'hora de República Dominicana','America/Puerto_Rico':'hora de Puerto Rico','America/Havana':'hora de Cuba',
+      'America/Sao_Paulo':BR,'America/Bahia':BR,'America/Fortaleza':BR,'America/Recife':BR,'America/Belem':BR,'America/Manaus':BR,'America/Cuiaba':BR,'America/Campo_Grande':BR,
+      'America/Buenos_Aires':AR,'America/Cordoba':AR,'America/Mendoza':AR,'America/Catamarca':AR,'America/Jujuy':AR,'America/Rosario':AR,
+      'America/New_York':'hora del este de EE. UU.','America/Detroit':'hora del este de EE. UU.','America/Chicago':'hora del centro de EE. UU.','America/Denver':'hora de las Montañas de EE. UU.','America/Phoenix':'hora de Arizona','America/Los_Angeles':'hora del Pacífico de EE. UU.','America/Anchorage':'hora de Alaska','Pacific/Honolulu':'hora de Hawái'};
+    if(TZ[tz])return TZ[tz];
+    if(tz.indexOf('America/Argentina/')===0)return AR;
+    var seg=tz.split('/').pop().replace(/_/g,' '),locs=['es','es-MX','es-ES'];
+    for(var i=0;i<locs.length;i++){
+      try{
+        var tp=new Intl.DateTimeFormat(locs[i],{timeZone:tz,timeZoneName:'shortGeneric'}).formatToParts(date).filter(function(x){return x.type==='timeZoneName'})[0];
+        if(tp&&/^hora/i.test(tp.value)&&tp.value.toLowerCase().indexOf(seg.toLowerCase())<0)return tp.value;
+      }catch(e){}
+    }
+    var ACC={'Mexico':'México','Mexico City':'Ciudad de México','Bogota':'Bogot\u00e1','Panama':'Panamá','Asuncion':'Asunción','Cancun':'Cancún','Merida':'Mérida','Mazatlan':'Mazatlán','Cordoba':'Córdoba','Tucuman':'Tucumán','Sao Paulo':'São Paulo','Belem':'Belém','Cuiaba':'Cuiab\u00e1','Maceio':'Maceió','Santarem':'Santarém','Bahia':'Bahía','Guayaquil':'Guayaquil'};
+    return 'hora de '+(ACC[seg]||seg);
+  }
+  var tzLabel='tu hora local';
+  if(!D.tzDevice)tzLabel=tzHuman(D.tz,f);
+  window.HAPEE_DEMO.fmt=fmt;
+  tm.hidden=false;
+
+  function compute(){var s=Math.floor((f.getTime()-Date.now())/1000);return {s:s,st:s>0?'future':(s>-7200?'go':'past')}}
+  function short(s){
+    var d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),sec=s%60;
+    if(d>0)return d+' d '+pad(h)+' h '+pad(m)+' min';
+    if(h>0)return pad(h)+' h '+pad(m)+' min';
+    return pad(m)+' min '+pad(sec)+' s';
+  }
+  /* Version corta para el sticky (espacio fijo): con dias por delante los minutos sobran y el ✓ de la lista debe caber sin cortar el texto */
+  function shortTs(s){
+    var d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),sec=s%60;
+    if(d>0)return d+' d '+pad(h)+' h';
+    if(h>0)return pad(h)+' h '+pad(m)+' min';
+    return pad(m)+' min '+pad(sec)+' s';
+  }
+  function setNum(k,v){
+    var el=nums[k];if(!el)return;var t=pad(v);if(el.textContent===t)return;
+    el.textContent=t;
+    /* Sin .tick en los segundos (un salto por segundo distrae); dias, horas y minutos lo conservan */
+    if(!reduce&&k!=='s'){el.classList.remove('tick');void el.offsetWidth;el.classList.add('tick')}
+  }
+  Object.keys(nums).forEach(function(k){nums[k].addEventListener('animationend',function(){nums[k].classList.remove('tick')})});
+
+  function render(c){
+    var s=c.s,st=c.st;
+    if(st!==demoState){
+      demoState=st;
+      tm.classList.toggle('go',st==='go');tm.classList.toggle('past',st==='past');
+      tm.setAttribute('data-state',st);
+      if(goEl)goEl.hidden=st!=='go';
+      if(pastEl)pastEl.hidden=st!=='past';
+      if(acts)acts.hidden=st==='past';
+      if(cuando)cuando.textContent=st==='past'?('Tu demo fue el '+fmt.dia.toLowerCase()):(fmt.dia+' · '+fmt.hora+' · '+tzLabel);
+      if(kick)kick.textContent=st==='past'?'Reserva recibida':(st==='go'?'Tu demo es ahora':'Cuenta regresiva iniciada');
+      if(ctaT)ctaT.hidden=st==='past';
+      if(st!=='future')html.classList.remove('imminent');
+      try{document.dispatchEvent(new CustomEvent('hapee:demo-state',{detail:{state:st}}))}catch(e){}
+    }
+    if(st==='future'){
+      setNum('d',Math.floor(s/86400));setNum('h',Math.floor(s%86400/3600));setNum('m',Math.floor(s%3600/60));setNum('s',s%60);
+      tm.classList.toggle('urgent',s<3600);
+      html.classList.toggle('imminent',s<300);
+      if(tsLabel)tsLabel.textContent='Tu demo · '+(window.innerWidth<=900?fmt.mini:fmt.corto)+' · '+fmt.hora+' · faltan '+shortTs(s);
+      if(tsShort)tsShort.textContent=shortTs(s);   /* version plegada del chip fijo en desktop */
+      if(ctaT)ctaT.textContent='Tu demo en '+short(s);
+    }else if(st==='go'){
+      tm.classList.remove('urgent');
+      if(tsLabel)tsLabel.textContent='Tu demo es ahora · abre el enlace de Meet';
+      if(tsShort)tsShort.textContent='Es ahora';
+      if(ctaT)ctaT.textContent='Tu demo es ahora';
+    }
+    if(tsOk)tsOk.hidden=!html.classList.contains('preflight-done');
+  }
+  function frame(){
+    var c=compute();
+    if(c.s!==lastSec){lastSec=c.s;render(c)}
+    if(demoState==='past'){stop();return}
+    schedule();
+  }
+  /* rAF cuando la pestaña esta visible y no hay reduced-motion; si no, un tick por segundo */
+  function schedule(){if(!reduce&&!document.hidden)rafId=requestAnimationFrame(frame);else toId=setTimeout(frame,1000)}
+  function stop(){if(rafId)cancelAnimationFrame(rafId);if(toId)clearTimeout(toId);rafId=toId=null}
+  document.addEventListener('visibilitychange',function(){stop();if(demoState!=='past')frame()});
+  window.addEventListener('resize',function(){lastSec=null});
+  tmApi.refresh=function(){if(demoState==='past')return;stop();lastSec=null;frame()};
+  frame();
+})();
+
+/* ── 7. modCalendar: Google Calendar + .ics (data: URI), solo con fecha ── */
+(function modCalendar(){
+  var acts=$('paseActions'),g=$('btnGcal'),i=$('btnIcs'),tsCal=$('tsCal');
+  if(!acts||!D.fecha||!g||!i||!window.HAPEE_DEMO.fmt)return;
+  var ini=D.fecha,fin=new Date(ini.getTime()+30*60000);
+  function u(d){return d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
+  var det='Demo 1:1 con el equipo de Hapee por Google Meet. El enlace de la videollamada llega a tu correo. Prepárate: https://hapee.ai/preparate-demo';
+  var gcal='https://calendar.google.com/calendar/render?action=TEMPLATE&text=Demo%20Hapee%201%3A1&dates='+u(ini)+'/'+u(fin)+'&details='+encodeURIComponent(det)+'&location=Google%20Meet'+(D.tz?'&ctz='+encodeURIComponent(D.tz):'');
+  g.href=gcal;if(tsCal)tsCal.href=gcal;
+  function fold(line){var out=[];while(line.length>73){out.push(line.slice(0,73));line=' '+line.slice(73)}out.push(line);return out.join('\r\n')}
+  var lines=[
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Hapee//Demo 1:1//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'BEGIN:VEVENT','UID:demo-'+u(ini)+'@hapee.ai','DTSTAMP:'+u(new Date()),'DTSTART:'+u(ini),'DURATION:PT30M',
+    'SUMMARY:Demo Hapee 1:1',
+    fold('DESCRIPTION:Demo 1:1 con el equipo de Hapee por Google Meet. El enlace llega a tu correo. Prepárate: https://hapee.ai/preparate-demo'),
+    'LOCATION:Google Meet','URL:https://hapee.ai/preparate-demo',
+    'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Tu demo con Hapee empieza en 1 hora','END:VALARM',
+    'END:VEVENT','END:VCALENDAR'];
+  i.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(lines.join('\r\n')+'\r\n');
+  function sync(){acts.hidden=demoState==='past'}
+  document.addEventListener('hapee:demo-state',sync);sync();
+})();
+
+/* ── 8. modSticky: chip T-MENOS visible solo fuera del hero, del CTA y del footer ── */
+(function modSticky(){
+  var s=$('tminusSticky');if(!s)return;
+  if(!D.fecha||!window.HAPEE_DEMO.fmt){s.hidden=true;return}
+  var closed=false;try{closed=sessionStorage.getItem('hapee-tminus-closed')==='1'}catch(e){}
+  var inHero=true,inCta=false,inFoot=false,compactId=null;
+  function refresh(){
+    var show=!closed&&!!demoState&&demoState!=='past'&&!inHero&&!inCta&&!inFoot;
+    s.classList.toggle('visible',show);s.setAttribute('aria-hidden',show?'false':'true');
+    html.classList.toggle('tminus-active',!closed&&!!demoState&&demoState!=='past');   /* reserva el alto de la barra en los anchors (movil) */
+    /* Desktop: 4 s despues de aparecer por primera vez se pliega a "● 6 d 15 h" (el CSS lo despliega con hover/foco); en movil la clase no cambia nada */
+    if(show&&compactId===null)compactId=setTimeout(function(){s.classList.add('compact')},4000);
+  }
+  function obs(el,set){if(!el)return;new IntersectionObserver(function(es){es.forEach(function(e){set(e.isIntersecting);refresh()})},{threshold:.15,rootMargin:'-40px 0px -40px 0px'}).observe(el)}
+  if('IntersectionObserver' in window){obs($('hero'),function(v){inHero=v});obs($('canal-directo'),function(v){inCta=v});obs(document.querySelector('.footer'),function(v){inFoot=v})}
+  else{inHero=false}
+  var close=$('tsClose'),txt=$('tsTxt');
+  if(close)close.addEventListener('click',function(){closed=true;try{sessionStorage.setItem('hapee-tminus-closed','1')}catch(e){}refresh()});
+  if(txt)txt.addEventListener('click',function(){var h=$('hero');if(h)h.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})});
+  document.addEventListener('hapee:demo-state',refresh);refresh();
+})();
+
+/* ── 9. modPlan: renderPlan(p) + modos A (scrub GSAP, lo crea initG) / B (tween por IO) / C (estatico) ── */
+var planApi={render:function(){},progress:0,mode:'B',done:false};
+(function modPlan(){
+  var track=$('planTrack'),clock=$('planClock'),wrap=$('planTrackWrap');
+  var phases=Array.from(document.querySelectorAll('.phase'));
+  if(!track||!wrap)return;
+  function renderPlan(p){
+    p=Math.max(0,Math.min(1,p));planApi.progress=p;
+    track.style.setProperty('--p',p.toFixed(4));
+    var t=Math.round(p*1800);if(clock)clock.textContent=pad(Math.floor(t/60))+':'+pad(t%60);
+    phases.forEach(function(ph){ph.classList.toggle('lit',p>=parseFloat(ph.getAttribute('data-at')||'0')-0.0001)});
+    if(p>=1)planApi.done=true;
+  }
+  planApi.render=renderPlan;
+  if(reduce||!('IntersectionObserver' in window)){renderPlan(1);return}   /* Modo C */
+  var started=false;
+  function tween(){   /* Modo B: 2.4 s con easeOutCubic, una sola vez */
+    if(started)return;started=true;planApi.done=true;
+    var t0=null;
+    function step(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/2400);renderPlan(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step);
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      io.disconnect();
+      if(planApi.mode==='A'){setTimeout(function(){if(planApi.progress===0)renderPlan(1)},2500)}   /* safety del scrub: si no avanzo, se llena */
+      else tween();
+    });
+  },{threshold:.3});
+  io.observe(wrap);
+})();
+
+/* ── 10. modChecklist: 5 switches, medidor SVG, consejos, chips de dolor, persistencia, confeti ── */
+(function modChecklist(){
+  var KEY='hapee-preflight',CIRC=565.5;
+  var items=Array.from(document.querySelectorAll('.sw-item'));
+  if(items.length!==5)return;
+  var inputs=items.map(function(it){return it.querySelector('.sw-input')});
+  var tips=items.map(function(it){return it.querySelector('.sw-tip')});
+  var extras=items.map(function(it){return it.querySelector('.sw-extra')});
+  var arc=$('gaugeArc'),count=$('gaugeCount'),robot=$('prepRobot'),doneEl=$('prepDone'),reset=$('prepReset'),sec=$('preparacion');
+  var mini=$('prepMiniCount'),miniFill=$('prepMiniFill');
+  var chips=Array.from(document.querySelectorAll('.pain-chip'));
+  var done=false,restoring=false,prepEventSent=false;   /* dg_prep_completa: una sola vez por carga, aunque se desmarque y se vuelva a completar */
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,checks:inputs.map(function(i){return i.checked}),pain:painSel,done:done}))}catch(e){}}
+  function update(){
+    var n=inputs.filter(function(i){return i.checked}).length;
+    if(arc)arc.style.strokeDashoffset=(CIRC*(1-n/5)).toFixed(1);
+    if(count)count.textContent=n+'/5';
+    if(mini)mini.textContent=n+'/5';
+    if(miniFill)miniFill.style.width=(n/5*100)+'%';
+    if(reset)reset.hidden=n===0;   /* "Reiniciar" solo cuando hay algo que reiniciar */
+    items.forEach(function(it,i){
+      var on=inputs[i].checked;
+      it.classList.toggle('done',on);
+      if(tips[i])tips[i].hidden=!on;
+      if(extras[i])extras[i].hidden=!on&&!extras[i].querySelector('.pain-chips');
+    });
+    var complete=n===5;
+    if(complete&&!done){done=true;celebrate(!restoring)}
+    else if(!complete&&done){done=false;html.classList.remove('preflight-done');if(doneEl)doneEl.hidden=true;if(robot)robot.classList.remove('happy');tmApi.refresh()}
+    if(!restoring)save();
+  }
+  function celebrate(anim){
+    if(doneEl)doneEl.hidden=false;
+    if(robot)robot.classList.add('happy');
+    html.classList.add('preflight-done');   /* sello LISTO en el pase + ✓ en el sticky */
+    tmApi.refresh();
+    if(anim){
+      if(!reduce)confetti();
+      if(!prepEventSent){prepEventSent=true;if(typeof gtag==='function')gtag('event','dg_prep_completa')}   /* engagement, no conversion; una vez por carga */
+    }
+  }
+  inputs.forEach(function(inp){inp.addEventListener('change',update)});
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      painSel=ch.getAttribute('data-pain');
+      chips.forEach(function(c){c.setAttribute('aria-pressed',c===ch?'true':'false')});
+      if(!inputs[2].checked)inputs[2].checked=true;   /* elegir un dolor marca el item 3 */
+      update();
+      try{document.dispatchEvent(new CustomEvent('hapee:pain'))}catch(e){}
+    });
+  });
+  if(reset)reset.addEventListener('click',function(){
+    inputs.forEach(function(i){i.checked=false});
+    painSel=null;chips.forEach(function(c){c.setAttribute('aria-pressed','false')});
+    update();
+    try{document.dispatchEvent(new CustomEvent('hapee:pain'))}catch(e){}
+    if(inputs[0])inputs[0].focus();
+  });
+  /* Restauracion desde localStorage, sin animaciones ni confeti */
+  (function restore(){
+    var st=null;try{st=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+    if(!st||st.v!==1)return;
+    restoring=true;html.classList.add('prep-restoring');
+    if(Array.isArray(st.checks))st.checks.forEach(function(v,i){if(inputs[i])inputs[i].checked=!!v});
+    if(st.pain&&chips.some(function(c){return c.getAttribute('data-pain')===st.pain})){
+      painSel=st.pain;chips.forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-pain')===st.pain?'true':'false')});
+    }
+    update();
+    setTimeout(function(){html.classList.remove('prep-restoring');restoring=false},50);
+  })();
+  /* Confeti geometrico de marca (formas y colores del nebula del home): 120 formas, 1.6 s, una vez */
+  function confetti(){
+    if(!sec||!count)return;
+    var cv=document.createElement('canvas');cv.className='prep-confetti';cv.setAttribute('aria-hidden','true');
+    var ctx=cv.getContext?cv.getContext('2d'):null;if(!ctx)return;
+    var r=sec.getBoundingClientRect();cv.width=Math.round(r.width);cv.height=Math.round(r.height);
+    var g=count.getBoundingClientRect(),ox=g.left+g.width/2-r.left,oy=g.top+g.height/2-r.top;
+    sec.appendChild(cv);
+    var SHAPES=['circle','ring','triangle','diamond','hexagon','cross','star'];
+    var COLORS=['rgba(250,80,0,','rgba(255,120,40,','rgba(205,35,73,','rgba(255,160,60,','rgba(232,69,124,','rgba(255,200,100,','rgba(255,255,255,'];
+    var ps=[];
+    for(var i=0;i<120;i++){var a=Math.random()*Math.PI*2,v=4+Math.random()*9;ps.push({x:ox,y:oy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,sz:3+Math.random()*5,sh:SHAPES[i%SHAPES.length],cp:COLORS[Math.floor(Math.random()*COLORS.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,a:1})}
+    function drawS(p){
+      var s=p.sz,al=p.a;if(s<0.3||al<0.01)return;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=al;
+      ctx.fillStyle=p.cp+al+')';ctx.strokeStyle=p.cp+al+')';ctx.lineWidth=1.2;
+      switch(p.sh){
+        case 'circle':ctx.beginPath();ctx.arc(0,0,s,0,Math.PI*2);ctx.fill();break;
+        case 'ring':ctx.beginPath();ctx.arc(0,0,s,0,Math.PI*2);ctx.stroke();break;
+        case 'triangle':ctx.beginPath();for(var i=0;i<3;i++){var a2=(i/3)*Math.PI*2-Math.PI/2;if(i===0)ctx.moveTo(Math.cos(a2)*s,Math.sin(a2)*s);else ctx.lineTo(Math.cos(a2)*s,Math.sin(a2)*s)}ctx.closePath();ctx.fill();break;
+        case 'diamond':ctx.beginPath();ctx.moveTo(0,-s);ctx.lineTo(s*.6,0);ctx.lineTo(0,s);ctx.lineTo(-s*.6,0);ctx.closePath();ctx.fill();break;
+        case 'hexagon':ctx.beginPath();for(var j=0;j<6;j++){var a3=(j/6)*Math.PI*2;if(j===0)ctx.moveTo(Math.cos(a3)*s,Math.sin(a3)*s);else ctx.lineTo(Math.cos(a3)*s,Math.sin(a3)*s)}ctx.closePath();ctx.stroke();break;
+        case 'cross':var t=s*0.3;ctx.fillRect(-t,-s,t*2,s*2);ctx.fillRect(-s,-t,s*2,t*2);break;
+        case 'star':ctx.beginPath();for(var k=0;k<5;k++){var o=(k/5)*Math.PI*2-Math.PI/2,n=((k+.5)/5)*Math.PI*2-Math.PI/2;ctx.lineTo(Math.cos(o)*s,Math.sin(o)*s);ctx.lineTo(Math.cos(n)*s*.4,Math.sin(n)*s*.4)}ctx.closePath();ctx.fill();break;
+      }
+      ctx.restore();
+    }
+    var t0=null;
+    function step(ts){
+      if(t0===null)t0=ts;var k=(ts-t0)/1600;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      ps.forEach(function(p){p.vy+=.18;p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.rot+=p.rs;p.a=Math.max(0,1-k*k);drawS(p)});
+      if(k<1)requestAnimationFrame(step);else if(cv.parentNode)cv.parentNode.removeChild(cv);
+    }
+    requestAnimationFrame(step);
+  }
+})();
+
+/* ── 11. modCabina: pestañas accesibles, un solo <img> con src por pestaña, tilt y brillo ── */
+var cabApi={activate:function(){}};
+(function modCabina(){
+  var PANELS={
+    /* Composiciones de producto del repo (img/fabrica, 1600x1194), ya usadas en el home, con variante para tema oscuro.
+       setSrc resuelve src/srcDark por html.dark; el listener hapee:theme vuelve a llamarla al cambiar el tema. Son ilustrativas: los modulos que se veran en vivo. */
+    ia:{src:'img/fabrica/ia-light.webp',srcDark:'img/fabrica/ia-dark.webp',alt:'Composición del módulo de IA conversacional de Hapee: bandeja unificada de WhatsApp, Instagram y correo con agentes de IA respondiendo',min:'min 10–15'},
+    auto:{src:'img/fabrica/auto-light.webp',srcDark:'img/fabrica/auto-dark.webp',alt:'Composición del módulo de automatizaciones de Hapee: un workflow de nurturing de leads armado con arrastrar y soltar',min:'min 15–20'},
+    crm:{src:'img/fabrica/crm-light.webp',srcDark:'img/fabrica/crm-dark.webp',alt:'Composición del módulo CRM de Hapee: kanban de ventas por etapa, cotización y negocio ganado',min:'min 20–25'}
+  };
+  var tabs=Array.from(document.querySelectorAll('.cab-tabs [role="tab"]'));
+  var panels=Array.from(document.querySelectorAll('.cab-panel'));
+  var img=$('cabImg'),shine=$('cabShine'),minEl=$('cabMin'),frame=$('cabFrame'),list=document.querySelector('.cab-tabs');
+  var shot=$('cabShot');
+  if(!tabs.length||!img)return;
+  var current='ia';
+  function setSrc(mod,animate){
+    var p=PANELS[mod];if(!p)return;
+    var src=(p.srcDark&&isDark())?p.srcDark:p.src;
+    if(img.getAttribute('src')===src)return;
+    if(reduce){img.style.opacity='0';img.onload=function(){img.style.opacity='1'}}
+    img.src=src;img.alt=p.alt;
+    if(animate&&!reduce){
+      img.classList.remove('enter');void img.offsetWidth;img.classList.add('enter');
+      if(shine){shine.classList.remove('go');void shine.offsetWidth;shine.classList.add('go')}
+    }
+  }
+  function activate(mod,focus){
+    if(!PANELS[mod])return;
+    tabs.forEach(function(t){var on=t.getAttribute('data-mod')===mod;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;t.classList.toggle('on',on);if(on&&focus)t.focus()});
+    panels.forEach(function(p){var on=p.id==='panel-'+mod;p.hidden=!on;p.classList.toggle('on',on)});
+    if(minEl)minEl.textContent=PANELS[mod].min;
+    setSrc(mod,true);
+    current=mod;
+    if(shot)shot.setAttribute('data-mod',mod);   /* gancho de estado (sin efecto de layout: la composicion se muestra completa en todos los anchos) */
+  }
+  cabApi.activate=activate;
+  tabs.forEach(function(t){t.addEventListener('click',function(){activate(t.getAttribute('data-mod'),false)})});
+  if(list)list.addEventListener('keydown',function(e){
+    var i=tabs.indexOf(document.activeElement);if(i<0)return;
+    var n=null;
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%tabs.length;
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i-1+tabs.length)%tabs.length;
+    else if(e.key==='Home')n=0;
+    else if(e.key==='End')n=tabs.length-1;
+    if(n===null)return;
+    e.preventDefault();activate(tabs[n].getAttribute('data-mod'),true);
+  });
+  document.addEventListener('hapee:theme',function(){setSrc(current,false)});
+  var fine=false;try{fine=matchMedia('(hover:hover) and (pointer:fine)').matches}catch(e){}
+  if(frame&&fine&&!reduce){
+    var pend=false,tx=0,ty=0;
+    frame.addEventListener('pointermove',function(e){
+      var r=frame.getBoundingClientRect();
+      tx=((e.clientX-r.left)/r.width)*2-1;ty=((e.clientY-r.top)/r.height)*2-1;
+      if(!pend){pend=true;requestAnimationFrame(function(){pend=false;frame.classList.add('tilting');frame.style.setProperty('--tx',tx.toFixed(3));frame.style.setProperty('--ty',ty.toFixed(3))})}
+    },{passive:true});
+    frame.addEventListener('pointerleave',function(){frame.classList.remove('tilting');frame.style.setProperty('--tx','0');frame.style.setProperty('--ty','0')});
+  }
+  /* Chips data-mod de la fase 02 → abren la pestaña correspondiente */
+  document.querySelectorAll('.mod-chip').forEach(function(ch){
+    ch.addEventListener('click',function(){
+      var sec=$('cabina');if(sec)sec.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+      activate(ch.getAttribute('data-mod'),false);
+    });
+  });
+  setSrc('ia',false);
+})();
+
+/* ── 12b. modVoces: beam una sola vez al entrar en pantalla ── */
+(function modVoces(){
+  var v=$('voces');if(!v)return;
+  /* Un solo control de teclado para pausar la cinta (las tarjetas ya no son tab-stops) */
+  var btn=$('tqPause'),mq=v.querySelector('.tq-mq');
+  if(btn&&mq)btn.addEventListener('click',function(){var p=mq.classList.toggle('paused');btn.setAttribute('aria-pressed',p?'true':'false');btn.textContent=p?'Reanudar':'Pausar'});
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){v.classList.add('seen');io.disconnect()}})},{threshold:.2});
+  io.observe(v);
+})();
+
+/* ── 13. modFaq: acordeon exclusivo (fallback del atributo name) + destello al abrir ── */
+(function modFaq(){
+  var list=$('faqList');if(!list)return;
+  var items=Array.from(list.querySelectorAll('details.faq-item'));
+  items.forEach(function(d){
+    d.addEventListener('toggle',function(){
+      if(d.open){
+        items.forEach(function(o){if(o!==d&&o.open)o.open=false});
+        if(!reduce){d.classList.remove('flash');void d.offsetWidth;d.classList.add('flash');setTimeout(function(){d.classList.remove('flash')},600)}
+      }
+      list.classList.toggle('has-open',items.some(function(o){return o.open}));
+    });
+  });
+})();
+
+/* ── 14. modWhatsapp: mensaje prellenado con nombre, fecha corta y dolor elegido ── */
+(function modWhatsapp(){
+  var PHONE='56965349093';
+  var PAIN={leads:'leads que no responden',seguimiento:'seguimiento manual',pipeline:'falta de control del pipeline',otro:'otro tema'};
+  var cta=$('ctaWa'),goBtn=$('btnGoWa'),pastBtn=$('btnPastWa');
+  function fechaCorta(){
+    if(!D.fecha||demoState==='past')return '';
+    try{var o={day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'};if(D.tz)o.timeZone=D.tz;return new Intl.DateTimeFormat('es',o).format(D.fecha).replace(/,/g,'')}catch(e){return ''}
+  }
+  function msg(){
+    var m='Hola, tengo mi demo de Hapee agendada';
+    if(D.nombre)m+=' (soy '+D.nombre+')';
+    var fc=fechaCorta();if(fc)m+=' para el '+fc;
+    m+='.';
+    if(painSel&&PAIN[painSel])m+=' Mi mayor desafío es: '+PAIN[painSel]+'.';
+    m+=' Quiero hacer una pregunta antes de la videollamada.';
+    return m;
+  }
+  function wa(t){return 'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t)}
+  function build(){var h=wa(msg());if(cta)cta.href=h;if(pastBtn)pastBtn.href=h}
+  if(goBtn)goBtn.href=wa('Hola, tengo mi demo de Hapee ahora y no logro entrar al enlace de Meet');
+  build();
+  document.addEventListener('hapee:pain',build);
+  document.addEventListener('hapee:demo-state',build);
+  [cta,goBtn,pastBtn].forEach(function(a){if(!a)return;a.addEventListener('click',function(){build();if(typeof gtag==='function')gtag('event','dg_whatsapp')})});
+})();
+
+/* ── 15. initG: GSAP + ScrollTrigger solo como mejora (scrub del plan en desktop) ── */
+function initG(){
+  if(typeof gsap==='undefined'||typeof ScrollTrigger==='undefined')return;
+  if(reduce)return;
+  try{
+    gsap.registerPlugin(ScrollTrigger);
+    /* El H1 con GSAP solo si el CSS todavia no lo animo (con defer, GSAP llega despues del primer frame) */
+    if(!html.classList.contains('hero-ready')){
+      html.classList.add('gsap');html.classList.add('hero-ready');
+      gsap.from('.hero .w',{yPercent:110,duration:.9,stagger:.09,ease:'expo.out'});
+    }
+    var desk=false;try{desk=matchMedia('(min-width:1024px) and (pointer:fine)').matches}catch(e){}
+    if(desk&&!planApi.done){
+      planApi.mode='A';   /* scroll = tiempo */
+      ScrollTrigger.create({trigger:'#planTrackWrap',start:'top 75%',end:'bottom 35%',scrub:.6,onUpdate:function(st){planApi.render(st.progress)}});
+    }
+  }catch(e){}
+}
+if(typeof gsap!=='undefined')initG();else window.addEventListener('load',initG);
+
+})();
+</script>
+<!-- model-viewer se inyecta desde modHero solo cuando el robot 3D se va a usar (≥600px, sin reduced-motion, sin ahorro de datos ni conexion lenta) y recien 1,2 s despues del load (+ requestIdleCallback cuando existe): en movil no se descargan sus 913 KB y en desktop no compite con el primer render (el PNG ya esta en pantalla) -->
+<script src="/js/whatsapp.js" defer></script>
+</body>
+</html>
