@@ -109,6 +109,8 @@ All public copy (HTML text, JS strings, code comments inside docs examples) is *
 
 ## Landing-page conventions
 
+- **Every "Agendar demo" link on the site goes to `/agenda-tu-demo`** (same tab, no `target="_blank"`). Never link to `be.hapee.ai/agenda-tu-demo` — that is the retired GHL booking flow (owner's rule, 2026-09-14; 18 stale links were swept that day). `grep -rn "be.hapee.ai/agenda-tu-demo" --include=*.html --include=*.txt .` must return nothing.
+
 - **`agenda-tu-demo.html`** uses the **same full nav and `.mmenu` mobile menu as `index.html`** (owner's decision 2026-09-13, replacing the earlier minimal nav). Nav CTAs: "Reservar mi demo →" (scrolls to `#calendario`) + "Ver Planes". When editing menu items on the home, mirror them here.
 - **Section-per-screen** CSS rule applied on both `index.html` and `agenda-tu-demo.html`: `main > section { min-height: 100svh }` with exceptions for short sections (`midcta`, `video-section`). On mobile only key sections enforce full-viewport height to keep readability.
 - **Sticky demo CTAs** on `agenda-tu-demo.html`: full-width bottom bar on mobile + floating bottom-right pill on desktop. Auto-hide when hero or calendar section is in view (IntersectionObserver). Both scroll smoothly to `#calendario`.

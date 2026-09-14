@@ -89,7 +89,7 @@ Directo, técnico, sin fluff. Tono confianza experta + cercanía chilena. Habla 
 
 - **Web**: https://hapee.ai
 - **App**: https://be.hapee.ai
-- **Demo**: https://be.hapee.ai/agenda-tu-demo
+- **Demo**: https://hapee.ai/agenda-tu-demo
 - **Registro**: https://be.hapee.ai/registro
 - **WhatsApp ventas**: +56 9 5925 4546
 - **Email**: info@hapee.ai
