@@ -13,7 +13,7 @@ Landing site for **Hapee.ai** — an AI conversational platform + automation + C
 Main funnel:
 - `index.html` — Main landing (~3500 lines). CSS in `<style>`, JS in `<script>`. Hosts an interactive **Hapee AI chat** that streams through nginx → Anthropic + ElevenLabs. Also has orbital robot hero + platform showcase + Hapee Interact demo.
 - `agenda-tu-demo.html` — Demo booking landing. Same full nav + mobile menu as `index.html` (since 2026-09-13; keep both in sync). Includes VSL video, embedded Hapee booking calendar (`beta.hapee.ai`), home-page widgets, sticky demo CTAs (mobile bar + desktop pill).
-- `partners.html` — Reseller/partners program landing.
+- `partners.html` — Reseller/partners program landing. The application form is **hosted by the app**: `<div data-zentru-form="hapee/hapee-partners" data-mode="inline">` + `https://beta.hapee.ai/static/form-embed.js` (since 2026-09-14, replacing an in-page form that opened a `mailto:`). The script mounts the iframe, auto-resizes it by postMessage and syncs the theme by reading `html.dark`, so it follows the page toggle. Submissions land in the app, not in an inbox.
 - `comparativa.html` — Hapee vs. competitors table.
 - `planes.html` — Self-service pricing + Stripe checkout (see the pricing section at the bottom of this file).
 - `compra-exitosa.html` — Stripe checkout success page (polls the app; creates nothing).
