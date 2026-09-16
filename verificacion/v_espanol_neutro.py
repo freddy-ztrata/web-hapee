@@ -105,13 +105,36 @@ PRONOMBRES = ["vos", "sos"]
 PAT = re.compile(r"\b[A-Za-zÁÉÍÓÚÑáéíóúñ]{2,}(?:[áéí]|ás|és|ís)\b")
 
 
+#: Paginas que NO estan en espanol. Desde 2026-09-16 las dos paginas legales
+#: existen tambien en ingles y portugues, y el portugues dispara este detector
+#: de lleno: `ate`, `atraves`, `avisa-lo`, `revoga-la` terminan en vocal
+#: acentuada igual que el voseo. Se saltan por el `lang` que declara el propio
+#: archivo y no por una lista de nombres, para que una traduccion nueva quede
+#: cubierta sola.
+LANG = re.compile(r'<html[^>]*lang="([a-zA-Z-]+)"')
+
+
+def es_espanol(ruta: str) -> bool:
+    try:
+        with io.open(ruta, encoding="utf-8", errors="replace") as f:
+            cabeza = f.read(4096)
+    except OSError:
+        return True
+    m = LANG.search(cabeza)
+    return True if not m else m.group(1).lower().startswith("es")
+
+
 def archivos():
     for base, dirs, nombres in os.walk("."):
         if ".git" in base or "node_modules" in base:
             continue
         for n in sorted(nombres):
-            if n.endswith((".html", ".js")):
-                yield os.path.join(base, n).replace("\\", "/")
+            if not n.endswith((".html", ".js")):
+                continue
+            ruta = os.path.join(base, n).replace("\\", "/")
+            if ruta.endswith(".html") and not es_espanol(ruta):
+                continue
+            yield ruta
 
 
 def texto_visible(src: str) -> str:

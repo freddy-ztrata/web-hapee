@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260914-03
+ARG CACHE_BUST=20260916-01
 COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
@@ -18,6 +18,13 @@ COPY rrss-templates.html /usr/share/nginx/html/rrss-templates.html
 # las que a proposito no se publican (.paginas-locales).
 COPY politica-privacidad.html /usr/share/nginx/html/politica-privacidad.html
 COPY terminos.html /usr/share/nginx/html/terminos.html
+# Versiones EN y PT de las dos paginas legales (2026-09-16). Van UNA POR UNA
+# como todo lo demas: sin su linea COPY, nginx las sirve con el catch-all y
+# devuelven la HOME con 200 -- indistinguible de una URL inventada.
+COPY privacy-policy.html /usr/share/nginx/html/privacy-policy.html
+COPY politica-privacidade.html /usr/share/nginx/html/politica-privacidade.html
+COPY terms.html /usr/share/nginx/html/terms.html
+COPY termos.html /usr/share/nginx/html/termos.html
 COPY eliminacion-datos.html /usr/share/nginx/html/eliminacion-datos.html
 COPY gracias-compra.html /usr/share/nginx/html/gracias-compra.html
 COPY juego.html /usr/share/nginx/html/juego.html
