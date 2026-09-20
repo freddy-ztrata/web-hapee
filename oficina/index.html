@@ -788,7 +788,8 @@ const Z_ZONA={1:12,2:-14,3:-64,4:-94};
  window.__irA=irA;
  addEventListener('keydown',function(e){if(!window.__hqOn||chatCon)return;const n={'Digit1':1,'Digit2':2,'Digit3':3,'Digit4':4,'Numpad1':1,'Numpad2':2,'Numpad3':3,'Numpad4':4}[e.code];if(n){e.preventDefault();irA(n);}});}
 {const list=$('#plist');AGENTES.forEach(ag=>{const b=document.createElement('button');b.type='button';b.innerHTML='<i></i><span>'+ag.n+'</span><small>'+ag.mod+'</small>';b.dataset.id=ag.id;
- const ir=function(e){e.stopPropagation();e.preventDefault();if(!window.__hqOn)enter();P.x=ag.visita.x;P.z=ag.z;P.yaw=ag.lado<0?Math.PI/2:-Math.PI/2;P.pitch=-.05;if(ag.bot&&ag.bot.estado!=='trabaja')$('#hint').innerHTML='El '+ag.n+' salió del puesto · míralo en el minimapa';};
+ const ir=function(e){e.stopPropagation();e.preventDefault();if(!window.__hqOn)enter();P.x=ag.visita.x;P.z=ag.z;P.yaw=ag.lado<0?Math.PI/2:-Math.PI/2;P.pitch=-.05;if(!ag.bot)$('#hint').innerHTML='Los agentes están llegando a sus puestos…';
+  else if(ag.bot.estado!=='trabaja')$('#hint').innerHTML='El '+ag.n+' salió del puesto · míralo en el minimapa';};
  b.addEventListener('pointerdown',ir);list.appendChild(b);ag.btn=b;});}
 $('#qb').addEventListener('click',toggleQuality);
 if(isTouch){$('#touch').classList.add('on');const st=$('#stick'),knob=st.querySelector('i');let sid=null,lid=null,lx=0,ly=0;
