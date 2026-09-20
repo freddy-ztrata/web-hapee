@@ -101,6 +101,42 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
  #tVer{right:16px;bottom:calc(124px + env(safe-area-inset-bottom));height:50px;min-width:90px}
  #zonas{left:14px;bottom:calc(58px + env(safe-area-inset-bottom));padding:5px 5px 5px 11px}#zonas b{display:none}#zonas button{width:32px;height:29px;font-size:11px}
 }
+
+/* burbujas de los agentes (DOM proyectado desde el 3D) */
+#burbujas{position:fixed;inset:0;z-index:18;pointer-events:none;overflow:hidden}
+.bub{position:absolute;left:0;top:0;transform:translate(-50%,-100%);max-width:260px;padding:9px 13px;border-radius:16px 16px 16px 4px;background:#fff;color:#1a1a1a;font-size:13px;font-weight:600;line-height:1.35;box-shadow:0 12px 30px -12px rgba(0,0,0,.7);opacity:0;transition:opacity .25s;will-change:transform}
+.bub.on{opacity:1}
+.bub b{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--legible);margin-bottom:2px}
+.bub.yo{background:var(--grad);color:#fff;border-radius:16px 16px 4px 16px}
+.bub.yo b{color:rgba(255,255,255,.8)}
+.bub.pensando{font-weight:800;letter-spacing:.2em}
+/* chat con el agente */
+#chat{position:fixed;left:50%;bottom:calc(66px + env(safe-area-inset-bottom));transform:translate(-50%,20px);z-index:45;width:min(94vw,620px);background:rgba(17,17,20,.94);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:22px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.9);opacity:0;transition:opacity .22s,transform .22s;cursor:default}
+#chat.on{display:flex;opacity:1;transform:translate(-50%,0)}
+#chat .cab{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1)}
+#chat .cab img{width:38px;height:38px;object-fit:contain}
+#chat .cab b{display:block;font-size:14px;letter-spacing:-.01em}
+#chat .cab small{display:block;font-size:11px;color:var(--gr);font-weight:600}
+#chat .cab .x{margin-left:auto;border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;width:32px;height:32px;border-radius:50%;font-family:inherit;font-size:16px;cursor:pointer}
+#chat .cab .x:hover{background:rgba(255,255,255,.1)}
+#chat .msgs{max-height:min(38vh,300px);overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin}
+#chat .m{max-width:86%;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.4;font-weight:500}
+#chat .m.bot{align-self:flex-start;background:rgba(255,255,255,.08);border-bottom-left-radius:4px}
+#chat .m.yo{align-self:flex-end;background:var(--grad);color:#fff;border-bottom-right-radius:4px}
+#chat .m.bot i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--naranja);margin-right:3px;animation:tp 1s infinite}
+#chat .m.bot i:nth-child(2){animation-delay:.2s}#chat .m.bot i:nth-child(3){animation-delay:.4s}
+@keyframes tp{0%,60%,100%{opacity:.25}30%{opacity:1}}
+#chat .chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px}
+#chat .chips button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:12px;font-weight:700;padding:7px 11px;border-radius:100px;cursor:pointer;transition:background .18s}
+#chat .chips button:hover{background:rgba(250,80,0,.25)}
+#chat form{display:flex;gap:8px;padding:0 14px 14px}
+#chat input{flex:1;min-width:0;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-family:inherit;font-size:14px;padding:11px 14px;border-radius:100px;outline:0}
+#chat input:focus{border-color:var(--naranja)}
+#chat form button{border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:13px;font-weight:800;padding:0 18px;border-radius:100px;cursor:pointer}
+#chat .pie{display:flex;justify-content:space-between;gap:10px;padding:0 14px 12px;font-size:11px;color:var(--gr);font-weight:600}
+#chat .pie a{color:var(--legible);text-decoration:none;font-weight:800}
+@media (max-width:560px){#chat{bottom:calc(14px + env(safe-area-inset-bottom));width:calc(100vw - 20px)}#chat .msgs{max-height:34vh}}
+.sinhud #burbujas{display:none!important}
 .sinhud .hudbtn,.sinhud #zonas,.sinhud #hint,.sinhud #dot,.sinhud #zona,.sinhud #placard,.sinhud #panel,.sinhud #mapa{display:none!important}
 #err{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:#080808;color:#fff;padding:24px;text-align:center;font-size:14px;line-height:1.6}
 </style>
@@ -111,20 +147,22 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 <div id="zona">Zona 01<b>Recepción</b></div>
 <div id="dot"></div>
 <div id="placard"><div class="n" id="pn">Agente</div><h2 id="pt">—</h2><p id="ps"></p><div class="go" id="pg"><b>ENTER</b> · ver en hapee.ai</div></div>
-<div id="hint"><b>W A S D</b> caminar · <b>mouse</b> mirar · acércate a un agente</div>
+<div id="hint"><b>W A S D</b> caminar · <b>mouse</b> mirar · acércate a un agente y pulsa <b>E</b> para hablarle</div>
 <div id="panel"><h3>Agentes <span id="pcount">0 / 8 cerca</span></h3><div id="plist"></div></div>
 <canvas id="mapa" width="300" height="660" aria-hidden="true"></canvas>
 <button id="snd" class="hudbtn" type="button">SIN SONIDO</button>
 <button id="qb" class="hudbtn" type="button">CALIDAD ALTA · Q</button>
 <div id="zonas"><b>Ir a</b><button data-n="1" type="button">01</button><button data-n="2" type="button">02</button><button data-n="3" type="button">03</button><button data-n="4" type="button">04</button></div>
+<div id="burbujas"></div>
+<section id="chat" aria-live="polite"><div class="cab"><img src="assets/brand/robot-cara.png" alt=""><div><b id="chN">Agente</b><small id="chM">Hapee</small></div><button class="x" id="chX" type="button" aria-label="Cerrar">×</button></div><div class="msgs" id="chMsgs"></div><div class="chips" id="chChips"></div><form id="chForm" autocomplete="off"><input id="chIn" type="text" maxlength="240" placeholder="Pregúntale algo al agente…"><button type="submit">Enviar</button></form><div class="pie"><span id="chEst">Responde con IA</span><a id="chUrl" href="https://hapee.ai" target="_blank" rel="noopener">Abrir en hapee.ai →</a></div></section>
 <div id="touch"><div id="look"></div><div id="stick"><i></i></div><button id="tVer" type="button">VER →</button></div>
 <section class="scr" id="start"><div>
   <img class="robot" src="assets/brand/robot-cuerpo.png" alt="">
   <span class="k">Hapee · Agentes de IA + CRM all-in-one</span>
   <h1>La oficina de tus <em>agentes.</em><span>Cuatro zonas · Recepción, Piso de agentes, Sala de control y Núcleo 24/7</span></h1>
-  <p>Una oficina high-tech en primera persona. En el <b>piso de agentes</b>, ocho robots Hapee trabajan en sus puestos: conversaciones, ventas, automatización, contenido, web, reportería, academia y licitaciones — los mismos módulos de la plataforma, con su pantalla real. En la <b>sala de control</b>, todo en un solo lugar. En el <b>núcleo</b>, la fábrica que no duerme.</p>
-  <div class="ctl tch"><span><b>JOYSTICK</b> caminar</span><span><b>ARRASTRA</b> mirar</span><span><b>VER</b> abrir</span></div>
-  <div class="ctl kbd"><span><b>W A S D</b> caminar</span><span><b>MOUSE</b> mirar</span><span><b>SHIFT</b> correr</span><span><b>ENTER</b> abrir</span><span><b>1-4</b> saltar de zona</span><span><b>Q</b> calidad</span></div>
+  <p>Una oficina high-tech en primera persona, viva: ocho agentes Hapee trabajan en sus puestos, <b>caminan</b> entre escritorios, se reúnen en la sala de control y <b>conversan contigo</b> —pregúntales lo que quieras—. Cada uno lleva su módulo real: conversaciones, ventas, automatización, contenido, web, reportería, academia y licitaciones.</p>
+  <div class="ctl tch"><span><b>JOYSTICK</b> caminar</span><span><b>ARRASTRA</b> mirar</span><span><b>HABLAR</b> conversa con el agente</span></div>
+  <div class="ctl kbd"><span><b>W A S D</b> caminar</span><span><b>MOUSE</b> mirar</span><span><b>SHIFT</b> correr</span><span><b>E</b> hablar con el agente</span><span><b>ENTER</b> abrir</span><span><b>1-4</b> saltar de zona</span><span><b>Q</b> calidad</span></div>
   <button class="btn" id="play" type="button" disabled>ABRIENDO LA OFICINA…</button>
   <div id="load">Encendiendo los agentes</div>
 </div></section>
@@ -148,26 +186,36 @@ const $=s=>document.querySelector(s);
 const isTouch=matchMedia('(pointer:coarse)').matches||/[?&]touch=1/.test(location.search);
 const fail=m=>{const e=$('#err');e.style.display='grid';e.textContent='La oficina no pudo abrirse: '+m;};
 window.addEventListener('error',e=>{if(!window.__hqOn)fail(e.message);});
-const NAR=0xFA5000,MAG=0xCD2349;
 
 /* ══ PLANTA ══  x ±HW · Zona 01 z 16…-10 · Zona 02 z -12…-60 · Zona 03 z -62…-90 · Zona 04 z -92…-124 */
 const HW=13,HT=5.2;
 const Z1={a:16,b:-10},Z2={a:-12,b:-60},Z3={a:-62,b:-90},Z4={a:-92,b:-124};
 const Z0=Z1.a,ZF=Z4.b;
+const LANE=3.0;               // carriles de circulación de los robots, a ambos lados del eje
+const HOLO={x:0,z:-76};       // mesa holográfica de la sala de control
 
-/* ══ AGENTES ══  Copy tomado de hapee.ai (módulos del "Ecosistema completo"). */
+/* ══ AGENTES ══  Copy tomado de hapee.ai (módulos del «Ecosistema completo» y sus bullets). */
 const AGENTES=[
- {id:'ia',n:'Agente Conversacional',mod:'IA Conversacional',lema:'Agentes IA que venden por ti',d:'Chatbots y agentes de voz que responden, califican y cierran citas en WhatsApp, Instagram, Facebook y web. Bandeja omnicanal unificada y chat en vivo.',ui:'ia',url:'https://hapee.ai/agentes-ia-whatsapp',x:-5.4,z:-18},
- {id:'crm',n:'Agente Comercial',mod:'CRM & Ventas',lema:'Cierra más tratos en menos tiempo',d:'Pipeline visual con etapas personalizables, tags, campos custom e historial por contacto. Cobros automáticos con Stripe, facturas, suscripciones y cotizaciones.',ui:'crm',url:'https://hapee.ai/',x:5.4,z:-18},
- {id:'auto',n:'Agente de Automatización',mod:'Automatización',lema:'Tus ventas corren mientras duermes',d:'Builder visual de workflows drag & drop: triggers, condiciones y acciones. Nurturing por comportamiento, asignación inteligente de tareas, recordatorios, email y SMS.',ui:'auto',url:'https://hapee.ai/',x:-5.4,z:-29},
- {id:'rrss',n:'Agente de Contenido',mod:'RRSS con IA',lema:'Programa, crea y publica con IA',d:'Grillas completas generadas con IA, programación multicanal en Instagram, Facebook, LinkedIn y TikTok, concursos y campañas en un clic, ideas y copies con agentes.',ui:'rrss',url:'https://hapee.ai/rrss-templates',x:5.4,z:-29},
- {id:'web',n:'Agente Web',mod:'Funnels & Web',lema:'Crea experiencias que convierten',d:'Constructor de embudos, landing pages, sitios y email marketing, todo drag & drop. A/B testing, popups, upsells, formularios inteligentes y agenda integrada.',ui:'funnels',url:'https://hapee.ai/',x:-5.4,z:-40},
- {id:'rep',n:'Agente de Reportería',mod:'Reportería',lema:'De datos a decisiones',d:'Meta, Google, TikTok, LinkedIn y GA4 unificados en un dashboard. Atribución real de compras y leads por campaña, reportes en un clic e insights con IA y ROAS en tiempo real.',ui:'reporteria',url:'https://hapee.ai/',x:5.4,z:-40},
- {id:'aca',n:'Agente Mentor',mod:'Academia',lema:'Aprende y certifica con IA',d:'Cursos y certificaciones oficiales, onboarding guiado para tu equipo, comunidad activa con ranking y puntos, y clases nuevas todos los meses.',ui:'academia',url:'https://hapee.ai/academia',x:-5.4,z:-51},
- {id:'lic',n:'Agente de Licitaciones',mod:'Licitaciones',lema:'Gana más licitaciones',d:'Oportunidades de Mercado Público, WherEx y portales privados filtradas por tu rubro, % de afinidad calculado por IA, alertas inteligentes por correo y bases analizadas en segundos.',ui:'licitaciones',url:'https://hapee.ai/',x:5.4,z:-51}];
+ {id:'ia',n:'Agente Conversacional',mod:'IA Conversacional',lema:'Agentes IA que venden por ti',d:'Chatbots y agentes de voz que responden, califican y cierran citas en WhatsApp, Instagram, Facebook y web. Bandeja omnicanal unificada y chat en vivo.',ui:'ia',url:'https://hapee.ai/agentes-ia-whatsapp',x:-5.4,z:-18,
+  frases:['Chatbots IA en WhatsApp, Instagram, Facebook y web.','Agentes de voz con clonación personalizada.','Califico leads automáticamente con ML.','Bandeja omnicanal unificada + chat en vivo.'],tick:['la IA ya contestó 46','12 conversaciones resueltas por la IA','8 conversaciones esperando']},
+ {id:'crm',n:'Agente Comercial',mod:'CRM & Ventas',lema:'Cierra más tratos en menos tiempo',d:'Pipeline visual con etapas personalizables, tags, campos custom e historial por contacto. Cobros automáticos con Stripe, facturas, suscripciones y cotizaciones.',ui:'crm',url:'https://hapee.ai/',x:5.4,z:-18,
+  frases:['Pipeline visual con etapas personalizables.','Tags, campos custom e historial por contacto.','Cobros automáticos con Stripe integrado.','Facturas, suscripciones y cotizaciones.'],tick:['$48M en pipeline','negocios activos al día','1 propuesta vence hoy — priorizar']},
+ {id:'auto',n:'Agente de Automatización',mod:'Automatización',lema:'Tus ventas corren mientras duermes',d:'Builder visual de workflows drag & drop: triggers, condiciones y acciones. Nurturing por comportamiento, asignación inteligente de tareas, recordatorios, email y SMS.',ui:'auto',url:'https://hapee.ai/',x:-5.4,z:-29,
+  frases:['Builder visual de workflows drag & drop.','Nurturing automático por comportamiento.','Asigno tareas al equipo de forma inteligente.','Recordatorios, email y SMS automáticos.'],tick:['3 citas agendadas automáticamente','workflows corriendo 24/7','4 agendadas por IA']},
+ {id:'rrss',n:'Agente de Contenido',mod:'RRSS con IA',lema:'Programa, crea y publica con IA',d:'Grillas completas generadas con IA, programación multicanal en Instagram, Facebook, LinkedIn y TikTok, concursos y campañas en un clic, ideas y copies con agentes.',ui:'rrss',url:'https://hapee.ai/rrss-templates',x:5.4,z:-29,
+  frases:['Grillas completas generadas con IA.','Programación multicanal: IG, FB, LinkedIn y TikTok.','Concursos y campañas en un clic.','Ideas y copies con agentes inteligentes.'],tick:['posts programados este mes · multicanal','grilla del mes lista','campaña publicada en 4 redes']},
+ {id:'web',n:'Agente Web',mod:'Funnels & Web',lema:'Crea experiencias que convierten',d:'Constructor de embudos, landing pages, sitios y email marketing, todo drag & drop. A/B testing, popups, upsells, formularios inteligentes y agenda integrada.',ui:'funnels',url:'https://hapee.ai/',x:-5.4,z:-40,
+  frases:['Embudos y landing pages con drag & drop.','Email marketing con builder visual.','A/B testing, popups y upsells.','Formularios inteligentes y agenda integrada.'],tick:['A/B test corriendo','landing publicada','formulario capturando leads']},
+ {id:'rep',n:'Agente de Reportería',mod:'Reportería',lema:'De datos a decisiones',d:'Meta, Google, TikTok, LinkedIn y GA4 unificados en un dashboard. Atribución real de compras y leads por campaña, reportes en un clic e insights con IA y ROAS en tiempo real.',ui:'reporteria',url:'https://hapee.ai/',x:5.4,z:-40,
+  frases:['Todos tus canales en un solo dashboard.','Atribución real de compras y leads por campaña.','Reportes en 1 clic para tus clientes.','Insights con IA y ROAS en tiempo real.'],tick:['2 campañas activas rindiendo sobre el objetivo','ROAS en tiempo real','Meta + Google + TikTok unificados']},
+ {id:'aca',n:'Agente Mentor',mod:'Academia',lema:'Aprende y certifica con IA',d:'Cursos y certificaciones oficiales, onboarding guiado para tu equipo, comunidad activa con ranking y puntos, y clases nuevas todos los meses.',ui:'academia',url:'https://hapee.ai/academia',x:-5.4,z:-51,
+  frases:['Cursos y certificaciones oficiales.','Onboarding guiado para tu equipo.','Comunidad activa con ranking y puntos.','Clases nuevas todos los meses.'],tick:['onboarding guiado en curso','clase nueva este mes','ranking de la comunidad actualizado']},
+ {id:'lic',n:'Agente de Licitaciones',mod:'Licitaciones',lema:'Gana más licitaciones',d:'Oportunidades de Mercado Público, WherEx y portales privados filtradas por tu rubro, % de afinidad calculado por IA, alertas inteligentes por correo y bases analizadas en segundos.',ui:'licitaciones',url:'https://hapee.ai/',x:5.4,z:-51,
+  frases:['Mercado Público + WherEx + portales privados.','% de afinidad calculado por IA.','Alertas inteligentes por correo.','Bases analizadas por IA en segundos.'],tick:['% de afinidad calculado por IA','alerta enviada por correo','bases analizadas en segundos']}];
 const PASOS=[['1','Conecta tus canales','WhatsApp, email, redes sociales y tu calendario en un solo clic.'],['2','Activa la IA','Configura tus agentes para responder, calificar y agendar citas 24/7.'],['3','Escala tu negocio','Mide resultados en tiempo real y multiplica tus ventas con datos exactos.']];
 const PLANES=[['STARTER','$297','/mes'],['PRO','$397','/mes · el más elegido'],['ELITE SETUP','$2.990','pago único']];
 const MARCAS=['andes','burgerking','corfo','elloa','gashn','heli','indisa','logo-chery','mundomed','reutter','sacyr','tranciti'];
+const SALUDOS=['¡Hola! Soy el {n}. Pulsa E y conversamos.','¿Te muestro cómo trabajo? Pulsa E.','Estoy en turno 24/7. ¿Hablamos? Pulsa E.'];
 
 /* ══ RENDER ══ */
 let W=innerWidth,H=innerHeight;
@@ -179,7 +227,7 @@ $('#game').appendChild(renderer.domElement);
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x080808);scene.fog=new THREE.Fog(0x080808,40,110);
 const camera=new THREE.PerspectiveCamera(68,W/H,.12,200);
 const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
-const bloom=new UnrealBloomPass(new THREE.Vector2(W,H),.22,.8,.9);composer.addPass(bloom);
+const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),.22,.8,.9);composer.addPass(bloom);
 const smaa=new SMAAPass(W*Math.min(DPR,1.5),H*Math.min(DPR,1.5));composer.addPass(smaa);composer.addPass(new OutputPass());
 const maxAniso=renderer.capabilities.getMaxAnisotropy();
 const tl=new THREE.TextureLoader();
@@ -206,15 +254,11 @@ const plasterInk=pbr('plastered_wall_04',6,2,{color:0x15161b,roughness:.95});
 function wall(x,z,w,d,h,mat){const m=new THREE.Mesh(uv1(new THREE.BoxGeometry(w,h,d)),mat);m.position.set(x,h/2,z);scene.add(m);obstacles.push({x,z,w,d});return m;}
 [[Z1,plaster],[Z2,plasterDark],[Z3,plasterInk],[Z4,plasterInk]].forEach(p=>{const Z=p[0],m=p[1];wall(-HW,(Z.a+Z.b)/2,.4,Z.a-Z.b,HT,m);wall(HW,(Z.a+Z.b)/2,.4,Z.a-Z.b,HT,m);});
 wall(0,Z0,HW*2+.4,.4,HT,plaster);wall(0,ZF,HW*2+.4,.4,HT,plasterInk);
-// divisorias con vano central de 9 m y dintel
 [[Z1.b,plasterDark],[Z2.b,plasterInk],[Z3.b,plasterInk]].forEach(p=>{const z=p[0],m=p[1];const lado=(HW*2-9)/2;wall(-HW+lado/2,z,lado,.5,HT,m);wall(HW-lado/2,z,lado,.5,HT,m);const li=new THREE.Mesh(uv1(new THREE.BoxGeometry(9.2,HT-3.6,.5)),m);li.position.set(0,HT-(HT-3.6)/2,z);scene.add(li);});
-const ceilMat=new THREE.MeshStandardMaterial({color:0x2b2c33,roughness:.95,side:THREE.DoubleSide});
 [[Z1.a,Z1.b,0x9a958c],[Z2.a,Z2.b,0x2b2c33],[Z3.a,Z3.b,0x1c1d24],[Z4.a,Z4.b,0x1c1d24]].forEach(s=>{const c=new THREE.Mesh(new THREE.PlaneGeometry(HW*2,s[0]-s[1]+2),new THREE.MeshStandardMaterial({color:s[2],roughness:.95,side:THREE.DoubleSide}));c.rotation.x=Math.PI/2;c.position.set(0,HT,(s[0]+s[1])/2);scene.add(c);});
-// zócalo de luz de marca a lo largo de los muros (el degradé naranja→magenta del manual)
 const gradTex=(function(){const c=document.createElement('canvas');c.width=512;c.height=8;const g=c.getContext('2d');const gr=g.createLinearGradient(0,0,512,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.fillRect(0,0,512,8);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=THREE.RepeatWrapping;return t;})();
 const ledMat=basic({map:gradTex});
 [-1,1].forEach(s=>{const led=new THREE.Mesh(new THREE.BoxGeometry(.05,.05,Z0-ZF),ledMat);led.position.set(s*(HW-.22),.09,(Z0+ZF)/2);scene.add(led);});
-// luminarias: paneles empotrados en la recepción, tubos lineales en el resto
 const housMat=new THREE.MeshStandardMaterial({color:0x8e8b86,roughness:.7,metalness:.15});
 const skyMat=new THREE.MeshStandardMaterial({color:0xf6f1e7,emissive:0xfff0d6,emissiveIntensity:.85,roughness:1});
 for(let z=Z1.a-5;z>Z1.b;z-=8){const hs=new THREE.Mesh(new THREE.BoxGeometry(3.4,.16,4.6),housMat);hs.position.set(0,HT-.1,z);scene.add(hs);const df=new THREE.Mesh(new THREE.BoxGeometry(3.0,.05,4.2),skyMat);df.position.set(0,HT-.19,z);scene.add(df);}
@@ -235,44 +279,41 @@ function placaTex(kick,title,sub,compacta){const W2=1200,H2=compacta?300:400;ret
  g.strokeStyle='rgba(255,255,255,.14)';g.lineWidth=3;g.strokeRect(1.5,1.5,W2-3,H2-3);
  const g2=g.createLinearGradient(0,0,0,H2);g2.addColorStop(0,'#FA5000');g2.addColorStop(1,'#CD2349');g.fillStyle=g2;g.fillRect(0,0,14,H2);
  g.textAlign='left';g.fillStyle='#FF7A3D';g.font='800 30px '+FONT;g.fillText(String(kick||'').toUpperCase(),56,72);
- g.fillStyle='#fff';const px=fit(g,title,compacta?92:96,W2-100,'800');g.font='800 '+px+'px '+FONT;g.fillText(title,54,compacta?190:190);
+ g.fillStyle='#fff';const px=fit(g,title,compacta?92:96,W2-100,'800');g.font='800 '+px+'px '+FONT;g.fillText(title,54,190);
  if(!compacta){g.fillStyle='#C9C9D1';const p2=fit(g,sub,40,W2-100,'500');g.font='500 '+p2+'px '+FONT;g.fillText(sub,56,268);
-  g.fillStyle='#FF7A3D';g.font='800 26px '+FONT;g.fillText(isTouch?'TOCA VER · ABRIR EN HAPEE.AI':'CLIC · ABRIR EN HAPEE.AI',56,346);}});}
-/* Pantalla de agente: la UI real del módulo (captura de hapee.ai) con una franja de estado
-   arriba. Nada inventado: el estado es el del propio robot (trabajando / saludando). */
+  g.fillStyle='#FF7A3D';g.font='800 26px '+FONT;g.fillText(isTouch?'TOCA HABLAR · CONVERSA CONMIGO':'PULSA E · CONVERSA CONMIGO',56,346);}});}
+// Franja de estado sobre la pantalla de cada puesto: nombre, estado del robot y un ticker con
+// las líneas del panel «Al día · hoy» del home de hapee.ai.
 function estadoTex(ag){const c=document.createElement('canvas');c.width=1024;c.height=128;const g=c.getContext('2d');const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
- const pinta=function(estado,pct){g.clearRect(0,0,1024,128);g.fillStyle='rgba(15,15,19,.96)';g.fillRect(0,0,1024,128);
-  g.fillStyle='#3ddc84';g.beginPath();g.arc(48,64,12,0,Math.PI*2);g.fill();
-  g.textAlign='left';g.fillStyle='#fff';g.font='800 40px '+FONT;g.fillText(ag.n,84,78);
-  g.textAlign='right';g.fillStyle='#FF7A3D';g.font='700 30px '+FONT;g.fillText(estado.toUpperCase(),980,76);
+ const pinta=function(estado,pct,tick){g.clearRect(0,0,1024,128);g.fillStyle='rgba(15,15,19,.96)';g.fillRect(0,0,1024,128);
+  g.fillStyle=estado==='fuera del puesto'?'#9a9aa3':'#3ddc84';g.beginPath();g.arc(44,50,11,0,Math.PI*2);g.fill();
+  g.textAlign='left';g.fillStyle='#fff';g.font='800 34px '+FONT;g.fillText(ag.n,72,62);
+  g.textAlign='right';g.fillStyle='#FF7A3D';g.font='700 26px '+FONT;g.fillText(estado.toUpperCase(),984,60);
+  g.textAlign='left';g.fillStyle='#C9C9D1';g.font='600 24px '+FONT;g.fillText('✓ '+(tick||''),72,102);
   g.fillStyle='rgba(255,255,255,.12)';g.fillRect(0,120,1024,8);const gr=g.createLinearGradient(0,0,1024,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.fillRect(0,120,1024*pct,8);t.needsUpdate=true;};
- pinta('trabajando · 24/7',0);return {t:t,pinta:pinta};}
+ pinta('trabajando · 24/7',0,ag.tick[0]);return {t:t,pinta:pinta};}
 
 /* ══ ZONA 01 · RECEPCIÓN ══ */
 {const logoW=img('assets/brand/logo-hapee-blanco.png');
- // mostrador
  const RX=6.2,RZ=6.8;const rec=new THREE.Group();rec.position.set(RX,0,RZ);rec.rotation.y=.42;scene.add(rec);
  const mostr=new THREE.Mesh(uv1(new THREE.BoxGeometry(4.4,1.05,1.0)),new THREE.MeshPhysicalMaterial({color:0x14141a,metalness:.5,roughness:.25,clearcoat:.7}));mostr.position.set(0,.525,0);rec.add(mostr);obstacles.push({x:RX,z:RZ,w:4.6,d:2.4});
  const tapa=new THREE.Mesh(new THREE.BoxGeometry(4.6,.06,1.2),new THREE.MeshStandardMaterial({color:0xF5F3F0,roughness:.35}));tapa.position.set(0,1.08,0);rec.add(tapa);
  const luzM=new THREE.Mesh(new THREE.BoxGeometry(4.2,.04,.04),ledMat);luzM.position.set(0,.16,.53);rec.add(luzM);
  const fr=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.77),basic({map:logoW,transparent:true}));fr.position.set(0,.6,.52);rec.add(fr);
- // muro de recepción: logo grande + claim
  const back=new THREE.Mesh(new THREE.PlaneGeometry(10,3.4),new THREE.MeshStandardMaterial({color:0x101014,roughness:.85}));back.position.set(0,2.55,Z0-.19);back.rotation.y=Math.PI;scene.add(back);
  const lg=new THREE.Mesh(new THREE.PlaneGeometry(4.6,1.61),basic({map:logoW,transparent:true}));lg.position.set(0,3.05,Z0-.25);lg.rotation.y=Math.PI;scene.add(lg);
  const cl=new THREE.Mesh(new THREE.PlaneGeometry(7.2,.9),basic({map:signTex('Agentes de IA + CRM all-in-one · Automatiza tus ventas 24/7',60,'#C9C9D1',2048,256,'600'),transparent:true}));cl.position.set(0,1.75,Z0-.25);cl.rotation.y=Math.PI;scene.add(cl);
  const filete=new THREE.Mesh(new THREE.BoxGeometry(10,.05,.03),ledMat);filete.position.set(0,4.27,Z0-.24);scene.add(filete);
- // muro de marcas que confían (logos reales de hapee.ai) en cajas de luz
  const mb=new THREE.Mesh(new THREE.PlaneGeometry(9,.7),basic({map:signTex('Marcas que ya venden con Hapee',64,'#FF7A3D',2048,256),transparent:true}));mb.position.set(-HW+.22,3.9,3);mb.rotation.y=Math.PI/2;scene.add(mb);
  MARCAS.forEach((m,i)=>{const col=i%4,row=Math.floor(i/4);const z=6.6-col*2.4,y=3.1-row*.95;
   const caja=new THREE.Mesh(new THREE.BoxGeometry(.08,.78,2.1),new THREE.MeshStandardMaterial({color:0x1a1a20,roughness:.5,metalness:.3}));caja.position.set(-HW+.26,y,z);scene.add(caja);
   const lo=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.74),basic({map:img('assets/brands/'+m+'.png'),transparent:true}));lo.position.set(-HW+.31,y,z);lo.rotation.y=Math.PI/2;scene.add(lo);});
- // partners (reales en hapee.ai) al lado derecho + los tres pasos
  const pr=new THREE.Mesh(new THREE.PlaneGeometry(9,.7),basic({map:signTex('Meta Business Partner · Google Partner',60,'#C9C9D1',2048,256,'700'),transparent:true}));pr.position.set(HW-.22,3.9,3);pr.rotation.y=-Math.PI/2;scene.add(pr);
  PASOS.forEach((p,i)=>{const z=6.2-i*3.4;const t=canvasTex(1400,700,(g)=>{g.fillStyle='#101014';g.fillRect(0,0,1400,700);g.strokeStyle='rgba(255,255,255,.14)';g.lineWidth=3;g.strokeRect(1.5,1.5,1397,697);
    const gr=g.createLinearGradient(0,0,0,700);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.font='800 260px '+FONT;g.textAlign='left';g.fillText(p[0],70,330);
    g.fillStyle='#fff';g.font='800 78px '+FONT;g.fillText(p[1],70,470);g.fillStyle='#C9C9D1';g.font='500 46px '+FONT;
    const words=p[2].split(' ');let line='',y=560;words.forEach(w=>{if(g.measureText(line+w).width>1240){g.fillText(line,70,y);y+=58;line=w+' ';}else line+=w+' ';});g.fillText(line,70,y);});
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(3,1.5),basic({map:t}));m.position.set(HW-.28,2.5,z);m.rotation.y=-Math.PI/2;scene.add(m);
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(3,1.5),basic({map:t}));m.position.set(HW-.34,2.5,z);m.rotation.y=-Math.PI/2;scene.add(m);
   const bz=new THREE.Mesh(new THREE.BoxGeometry(.08,1.62,3.12),new THREE.MeshStandardMaterial({color:0x1a1a20,roughness:.5,metalness:.3}));bz.position.set(HW-.25,2.5,z);scene.add(bz);});
  const t01=new THREE.Mesh(new THREE.PlaneGeometry(6,1.2),basic({map:signTex('ZONA 02 · PISO DE AGENTES →',70,'#FF7A3D',2048,384),transparent:true}));t01.position.set(0,HT-1.05,Z1.b+.3);scene.add(t01);
  [-1,1].forEach(sd=>{const tt=canvasTex(1400,900,(g)=>{g.fillStyle='#0F0F13';g.fillRect(0,0,1400,900);const gr=g.createLinearGradient(0,0,1400,900);gr.addColorStop(0,'rgba(250,80,0,.18)');gr.addColorStop(1,'rgba(205,35,73,.06)');g.fillStyle=gr;g.fillRect(0,0,1400,900);g.textAlign='left';g.fillStyle='#FF7A3D';g.font='800 44px '+FONT;g.fillText(sd<0?'ECOSISTEMA COMPLETO':'CÓMO FUNCIONA',80,120);g.fillStyle='#fff';g.font='800 128px '+FONT;
@@ -282,52 +323,49 @@ function estadoTex(ag){const c=document.createElement('canvas');c.width=1024;c.h
   const bz=new THREE.Mesh(new THREE.BoxGeometry(6.36,6.2*900/1400+.16,.08),bezelMat);bz.position.set(sd*8.2,2.55,Z1.b+.27);scene.add(bz);});}
 
 /* ══ ZONA 02 · PISO DE AGENTES ══ */
-const works=[],robots=[],estaciones=[];
+const works=[],estaciones=[];
 const deskMat=new THREE.MeshStandardMaterial({color:0xC9C4BC,roughness:.55,metalness:.05});
 const deskLeg=new THREE.MeshStandardMaterial({color:0x1b1b21,roughness:.5,metalness:.5});
 const haloTex=canvasTex(256,256,(g)=>{const gr=g.createRadialGradient(128,128,0,128,128,128);gr.addColorStop(0,'rgba(250,80,0,.9)');gr.addColorStop(.5,'rgba(205,35,73,.3)');gr.addColorStop(1,'rgba(205,35,73,0)');g.fillStyle=gr;g.fillRect(0,0,256,256);});
 const haloMat=basic({map:haloTex,transparent:true,opacity:.45,blending:THREE.AdditiveBlending,depthWrite:false});
-AGENTES.forEach((ag,i)=>{const lado=ag.x<0?-1:1;const g=new THREE.Group();g.position.set(ag.x,0,ag.z);g.rotation.y=lado<0?Math.PI/2:-Math.PI/2; // el escritorio mira al pasillo central
- // escritorio blanco sobre patas negras; el robot queda detrás (hacia el muro), la pantalla mira al pasillo
+AGENTES.forEach((ag,i)=>{const lado=ag.x<0?-1:1;ag.lado=lado;const g=new THREE.Group();g.position.set(ag.x,0,ag.z);g.rotation.y=lado<0?Math.PI/2:-Math.PI/2;
  const top=new THREE.Mesh(new THREE.BoxGeometry(2.6,.06,1.1),deskMat);top.position.set(0,.76,0);g.add(top);
  [[-1.15,-.42],[1.15,-.42],[-1.15,.42],[1.15,.42]].forEach(p=>{const l=new THREE.Mesh(new THREE.BoxGeometry(.06,.74,.06),deskLeg);l.position.set(p[0],.37,p[1]);g.add(l);});
  const led=new THREE.Mesh(new THREE.BoxGeometry(2.5,.03,.03),ledMat);led.position.set(0,.72,.56);g.add(led);
- // monitor: bisel + UI real del módulo (dark) + franja de estado
  const AW=1.9,AH=AW*1194/1600;
  const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.1,AH+.1,.06),bezelMat);bez.position.set(0,.79+AH/2+.28,.12);g.add(bez);
  const pie=new THREE.Mesh(new THREE.BoxGeometry(.08,.3,.08),deskLeg);pie.position.set(0,.94,.12);g.add(pie);
  const scr=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:img('assets/ui/'+ag.ui+'-dark.webp')}));scr.position.set(0,.79+AH/2+.28,.155);g.add(scr);
  const est=estadoTex(ag);const franja=new THREE.Mesh(new THREE.PlaneGeometry(AW,AW*128/1024),basic({map:est.t,transparent:true}));franja.position.set(0,.79+AH+.28-(AW*128/1024)/2,.16);g.add(franja);
- // rótulo flotante con el nombre y la placa en el frente del escritorio
  const rot=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.5),basic({map:signTex(ag.mod.toUpperCase(),96,'#FF7A3D',1536,336),transparent:true}));rot.position.set(0,2.75,.1);g.add(rot);
  const pl=new THREE.Mesh(new THREE.PlaneGeometry(1.8,.6),basic({map:placaTex(ag.mod,ag.n,ag.lema,false)}));pl.position.set(0,.42,.57);g.add(pl);
  const halo=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.2),haloMat);halo.rotation.x=-Math.PI/2;halo.position.set(0,.012,-.3);g.add(halo);
  scene.add(g);
- // muro de trabajo: la misma UI, clara y grande, enmarcada detrás del puesto
  {const MW=4.6,MH=MW*1194/1600;const mx=lado*(HW-.24);const mg=new THREE.Group();mg.position.set(mx,1.55+MH/2,ag.z);mg.rotation.y=lado<0?Math.PI/2:-Math.PI/2;
   const bz=new THREE.Mesh(new THREE.BoxGeometry(MW+.16,MH+.16,.08),bezelMat);mg.add(bz);
   const sc=new THREE.Mesh(new THREE.PlaneGeometry(MW,MH),basic({map:img('assets/ui/'+ag.ui+'-light.webp')}));sc.position.z=.05;mg.add(sc);
   const fil=new THREE.Mesh(new THREE.BoxGeometry(MW+.16,.05,.03),ledMat);fil.position.set(0,MH/2+.1,.05);mg.add(fil);
-  const halo=new THREE.Mesh(new THREE.PlaneGeometry(MW+2.4,MH+2.4),basic({map:haloTex,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));halo.position.z=-.02;mg.add(halo);
+  const halo2=new THREE.Mesh(new THREE.PlaneGeometry(MW+2.4,MH+2.4),basic({map:haloTex,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));halo2.position.z=-.02;mg.add(halo2);
   scene.add(mg);sc.userData.work=ag;works.push({o:ag,mesh:sc,g:mg});}
- obstacles.push({x:ag.x,z:ag.z,w:1.3,d:2.6});obstacles.push({x:ag.x-lado*.25,z:ag.z+(i%2?1:-1)*1.85,w:.9,d:.9});
+ obstacles.push({x:ag.x,z:ag.z,w:1.3,d:2.6});
  scr.userData.work=ag;ag.g=g;ag.scr=scr;ag.est=est;works.push({o:ag,mesh:scr,g:g});
- estaciones.push({ag:ag,g:g,lado:lado});});
-// rótulo de zona y bandas de módulos
+ // puesto del robot: al lado del escritorio, del lado de la pared, mirando la pantalla
+ const rx=(i%2?-1:1)*1.85;const home=new THREE.Vector3(rx,0,-.25);g.localToWorld(home);
+ ag.home={x:home.x,z:home.z,yaw:Math.atan2(g.position.x-home.x,g.position.z-home.z)};
+ ag.visita={x:lado*3.6,z:ag.z};   // dónde se para quien viene a verlo (y el visitante)
+ estaciones.push(ag);});
 {const t=new THREE.Mesh(new THREE.PlaneGeometry(7,1.2),basic({map:signTex('ZONA 02 · PISO DE AGENTES',70,'#FF7A3D',2048,384),transparent:true}));t.position.set(0,HT-1.05,Z1.b-.3);t.rotation.y=Math.PI;scene.add(t);
  const t3=new THREE.Mesh(new THREE.PlaneGeometry(7,1.2),basic({map:signTex('ZONA 03 · SALA DE CONTROL →',70,'#FF7A3D',2048,384),transparent:true}));t3.position.set(0,HT-1.05,Z2.b+.3);scene.add(t3);
- // marquesina de canales reales sobre los muros laterales
  const tira=canvasTex(6144,96,(g)=>{g.fillStyle='#0F0F13';g.fillRect(0,0,6144,96);g.textBaseline='middle';let x=40;const items=['WhatsApp','Instagram','Facebook','Web','Voz con clonación','Email','SMS','TikTok','LinkedIn','Meta Ads','Google Ads','GA4','Stripe','Mercado Público','WherEx'];
   for(let v=0;v<3;v++)items.forEach(it=>{g.font='800 40px '+FONT;g.fillStyle='#fff';g.fillText(it,x,48);x+=g.measureText(it).width+18;g.fillStyle='#FA5000';g.beginPath();g.arc(x+6,48,6,0,Math.PI*2);g.fill();x+=42;});});
  tira.wrapS=THREE.RepeatWrapping;tira.minFilter=THREE.LinearFilter;tira.generateMipmaps=false;
- window.__tira=tira;
  [[-1,-36,20],[1,-36,20]].forEach(b=>{const x=b[0]<0?-HW+.28:HW-.28,rot=b[0]<0?Math.PI/2:-Math.PI/2;const rep=b[2]*(96/0.62)/6144;
   const marco=new THREE.Mesh(new THREE.BoxGeometry(.08,.76,b[2]+.16),bezelMat);marco.position.set(b[0]<0?-HW+.23:HW-.23,4.3,b[1]);scene.add(marco);
   const cin=new THREE.Mesh(new THREE.PlaneGeometry(b[2],.62),basic({map:tira}));cin.onBeforeRender=function(){tira.repeat.set(rep,1);tira.offset.x=-tiraT*b[0];};cin.position.set(x,4.3,b[1]);cin.rotation.y=rot;scene.add(cin);});}
 
 /* ══ ZONA 03 · SALA DE CONTROL ══ */
+let holo=null;
 {const t=new THREE.Mesh(new THREE.PlaneGeometry(7,1.2),basic({map:signTex('ZONA 03 · SALA DE CONTROL',70,'#FF7A3D',2048,384),transparent:true}));t.position.set(0,HT-1.05,Z2.b-.3);t.rotation.y=Math.PI;scene.add(t);
- // muro curvo de 8 pantallas con la UI real (versión clara y oscura alternadas) al fondo de la sala
  const R=11,cz=Z3.b+12.5;
  AGENTES.forEach((ag,i)=>{const a=(-3.5+i)*0.215;const x=Math.sin(a)*R,z=cz-Math.cos(a)*R;const y=2.35;
   const AW=2.55,AH=AW*1194/1600;const gg=new THREE.Group();gg.position.set(x,y,z);gg.rotation.y=-a;
@@ -336,9 +374,8 @@ AGENTES.forEach((ag,i)=>{const lado=ag.x<0?-1:1;const g=new THREE.Group();g.posi
   const r=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.4),basic({map:signTex(ag.mod.toUpperCase(),96,'#fff',1536,280),transparent:true}));r.position.set(0,AH/2+.32,.05);gg.add(r);
   scene.add(gg);s.userData.work=ag;works.push({o:ag,mesh:s,g:gg});});
  const cap=new THREE.Mesh(new THREE.PlaneGeometry(9,.8),basic({map:signTex('Todo tu ecosistema de IA en una sola plataforma',64,'#C9C9D1',2048,256,'600'),transparent:true}));cap.position.set(0,.75,cz-R+.3);scene.add(cap);
- // mesa holográfica al centro: planes reales + los tres verticales del grupo
- const mesa=new THREE.Mesh(new THREE.CylinderGeometry(1.7,1.9,.9,48),new THREE.MeshPhysicalMaterial({color:0x0f0f14,metalness:.55,roughness:.25,clearcoat:.8}));mesa.position.set(0,.45,Z3.a-14);scene.add(mesa);obstacles.push({x:0,z:Z3.a-14,w:3.8,d:3.8});
- const aro=new THREE.Mesh(new THREE.TorusGeometry(1.75,.03,12,72),basic({map:gradTex}));aro.rotation.x=Math.PI/2;aro.position.set(0,.92,Z3.a-14);scene.add(aro);
+ const mesa=new THREE.Mesh(new THREE.CylinderGeometry(1.7,1.9,.9,48),new THREE.MeshPhysicalMaterial({color:0x0f0f14,metalness:.55,roughness:.25,clearcoat:.8}));mesa.position.set(HOLO.x,.45,HOLO.z);scene.add(mesa);obstacles.push({x:HOLO.x,z:HOLO.z,w:3.8,d:3.8});
+ const aro=new THREE.Mesh(new THREE.TorusGeometry(1.75,.03,12,72),basic({map:gradTex}));aro.rotation.x=Math.PI/2;aro.position.set(HOLO.x,.92,HOLO.z);scene.add(aro);
  const holoT=canvasTex(1400,1500,(g)=>{for(let yy=0;yy<1500;yy+=6){g.fillStyle='rgba(255,140,90,'+(yy%12?0.05:0.02)+')';g.fillRect(0,yy,1400,2);}
   g.strokeStyle='rgba(255,160,110,.5)';g.lineWidth=3;g.strokeRect(20,20,1360,1460);g.textAlign='center';
   g.fillStyle='#FF9A6B';g.font='800 40px '+FONT;g.fillText('HAPEE · PLANES',700,120);
@@ -346,21 +383,20 @@ AGENTES.forEach((ag,i)=>{const lado=ag.x<0?-1:1;const g=new THREE.Group();g.posi
   let yy=560;PLANES.forEach(p=>{g.fillStyle='#FF9A6B';g.font='800 44px '+FONT;g.fillText(p[0],700,yy);g.fillStyle='#fff';g.font='800 110px '+FONT;g.fillText(p[1],700,yy+110);g.fillStyle='rgba(255,255,255,.75)';g.font='500 36px '+FONT;g.fillText(p[2],700,yy+160);yy+=280;});
   g.fillStyle='rgba(255,160,110,.7)';g.font='600 34px '+FONT;g.fillText('Sin compromiso · sin contratos · cancelas cuando quieras',700,1440);});
  const holoMat=basic({map:holoT,transparent:true,opacity:.92,depthWrite:false});
- const holo=new THREE.Group();[0,Math.PI].forEach(r=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.57),holoMat);m.rotation.y=r;m.position.set(0,0,r?-.01:.01);holo.add(m);});
+ holo=new THREE.Group();[0,Math.PI].forEach(r=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.57),holoMat);m.rotation.y=r;m.position.set(0,0,r?-.01:.01);holo.add(m);});
  const haz=new THREE.Mesh(new THREE.ConeGeometry(1.6,1.4,48,1,true),basic({color:0xFF8A5B,transparent:true,opacity:.06,side:THREE.DoubleSide,depthWrite:false}));haz.position.y=-1.55;holo.add(haz);
- holo.position.set(0,2.45,Z3.a-14);scene.add(holo);window.__holo=holo;
- const pl=new THREE.PointLight(0xFF7A3D,30,9,1.8);pl.position.set(0,2.2,Z3.a-14);scene.add(pl);
+ holo.position.set(HOLO.x,2.45,HOLO.z);scene.add(holo);
+ const pl=new THREE.PointLight(0xFF7A3D,30,9,1.8);pl.position.set(HOLO.x,2.2,HOLO.z);scene.add(pl);
  const ho={type:'holo',n:'Planes Hapee',mod:'Sala de control',d:'STARTER $297/mes · PRO $397/mes (el más elegido) · ELITE SETUP $2.990 pago único. Sin compromiso, sin contratos.',url:'https://hapee.ai/planes'};holo.children[0].userData.work=ho;holo.children[1].userData.work=ho;works.push({o:ho,mesh:holo.children[0],g:holo});works.push({o:ho,mesh:holo.children[1],g:holo});
  const t4=new THREE.Mesh(new THREE.PlaneGeometry(6,1.2),basic({map:signTex('ZONA 04 · NÚCLEO 24/7 →',70,'#FF7A3D',2048,384),transparent:true}));t4.position.set(0,HT-1.05,Z3.b+.3);scene.add(t4);}
 
-/* ══ ZONA 04 · NÚCLEO 24/7 (racks) ══ */
+/* ══ ZONA 04 · NÚCLEO 24/7 ══ */
 {const t=new THREE.Mesh(new THREE.PlaneGeometry(6,1.2),basic({map:signTex('ZONA 04 · NÚCLEO 24/7',70,'#FF7A3D',2048,384),transparent:true}));t.position.set(0,HT-1.05,Z3.b-.3);t.rotation.y=Math.PI;scene.add(t);
  const rackMat=new THREE.MeshStandardMaterial({color:0x14151a,roughness:.45,metalness:.6});
  const ledV=basic({color:0x3ddc84});const ledN=basic({map:gradTex});
  for(let z=Z4.a-4;z>Z4.b+4;z-=3.2)[-1,1].forEach(s=>{const x=s*8.6;const r=new THREE.Mesh(new THREE.BoxGeometry(1.2,2.6,2.6),rackMat);r.position.set(x,1.3,z);scene.add(r);obstacles.push({x:x,z:z,w:1.2,d:2.6});
   for(let k=0;k<7;k++){const l=new THREE.Mesh(new THREE.BoxGeometry(.03,.03,.9),(k%3===1)?ledN:ledV);l.position.set(x-s*.61,.45+k*.33,z-.6);scene.add(l);}
   const fr=new THREE.Mesh(new THREE.BoxGeometry(.02,2.4,2.4),new THREE.MeshPhysicalMaterial({color:0x0a0a0c,metalness:.7,roughness:.15,clearcoat:.9,transparent:true,opacity:.55}));fr.position.set(x-s*.61,1.3,z);scene.add(fr);});
- // pasarela central de luz fría y el panel final: agenda tu demo
  const pas=new THREE.Mesh(new THREE.PlaneGeometry(3.2,Z4.a-Z4.b-2),basic({color:0x1b2430}));pas.rotation.x=-Math.PI/2;pas.position.set(0,.012,(Z4.a+Z4.b)/2);scene.add(pas);
  [-1,1].forEach(s=>{const l=new THREE.Mesh(new THREE.BoxGeometry(.04,.04,Z4.a-Z4.b-2),basic({color:0x7fb8ff}));l.position.set(s*1.62,.03,(Z4.a+Z4.b)/2);scene.add(l);});
  const fin=canvasTex(3072,1200,(g)=>{g.fillStyle='#0B0B10';g.fillRect(0,0,3072,1200);const gr=g.createLinearGradient(0,0,3072,1200);gr.addColorStop(0,'rgba(250,80,0,.16)');gr.addColorStop(1,'rgba(205,35,73,.10)');g.fillStyle=gr;g.fillRect(0,0,3072,1200);
@@ -378,33 +414,90 @@ AGENTES.forEach((ag,i)=>{const lado=ag.x<0?-1:1;const g=new THREE.Group();g.posi
  const cara=new THREE.Mesh(new THREE.PlaneGeometry(PW,PH),basic({map:fin}));cara.position.set(0,yy,zz+.03);scene.add(cara);
  const demo={type:'demo',n:'Agenda tu demo',mod:'Fin del recorrido',d:'Reserva una demo sin compromiso y mira Hapee funcionando con tus datos.',url:'https://hapee.ai/agenda-tu-demo'};cara.userData.work=demo;const gg=new THREE.Group();gg.position.set(0,0,zz);scene.add(gg);works.push({o:demo,mesh:cara,g:gg});obstacles.push({x:0,z:zz+.4,w:PW,d:.9});}
 
-/* ══ ROBOTS HAPEE (GLB real de hapee.ai) ══ */
+/* ══ ROBOTS ══ el GLB real de hapee.ai (Draco + WebP). Cada robot es un autómata:
+   trabaja en su puesto, sale a visitar a un colega, a la sala de control o a la
+   recepción, conversa (burbujas) y vuelve. Se mueve por dos carriles a x=±3. */
+const bots=[],ROBOT_MESHES=[];
 let robotBase=null;
+const S_PUESTO=.9,S_LIBRE=.95;
+function ruta(from,to){const lf=from.x<0?-LANE:LANE,lt=to.x<0?-LANE:LANE;const pts=[];
+ if(Math.abs(from.x)>LANE+.4)pts.push({x:lf,z:from.z});
+ if(lf!==lt){let zc=to.z;if(Math.abs(zc-HOLO.z)<4.2)zc=HOLO.z+5.2;if(Math.abs(zc-6.8)<3.5)zc=2.2;pts.push({x:lf,z:zc});pts.push({x:lt,z:zc});}
+ pts.push({x:lt,z:to.z});pts.push({x:to.x,z:to.z});return pts;}
+function nuevoBot(ag,pos,yaw,escala,tipo){const r=robotBase.clone(true);r.scale.set(escala,escala,escala);r.position.set(pos.x,.951*escala,pos.z);r.rotation.y=yaw;scene.add(r);
+ const b={m:r,base:.951*escala,esc:escala,ag:ag,tipo:tipo,estado:'trabaja',t:0,fase:Math.random()*6,path:[],vel:2.4,yawObj:yaw,saludado:false,charla:null,proximo:8+Math.random()*30,wp:new THREE.Vector3()};
+ r.traverse(o=>{if(o.isMesh){o.userData.work=ag||null;o.userData.bot=b;if(ag)ROBOT_MESHES.push(o);}});
+ const ob={x:pos.x,z:pos.z,w:.9,d:.9,bot:b};obstacles.push(ob);b.ob=ob;bots.push(b);return b;}
 const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
 const gltfLoader=new GLTFLoader();gltfLoader.setDRACOLoader(draco);
-gltfLoader.load('assets/models/hapee-robot.glb',gltf=>{robotBase=gltf.scene;
- robotBase.traverse(o=>{if(o.isMesh){o.frustumCulled=true;if(o.material){o.material.envMapIntensity=.9;}}});
- // uno por estación (detrás del escritorio, mirando la pantalla), uno de recepción y uno en el núcleo
- estaciones.forEach((e,i)=>{const r=robotBase.clone(true);const s=.9;r.scale.set(s,s,s);const rx=(i%2?-1:1)*1.85;r.position.set(rx,.951*s,-.25);const rot0=Math.atan2(-rx,.4);r.rotation.y=rot0;e.g.add(r);robots.push({m:r,base:.951*s,fase:i*1.3,tipo:'puesto',g:e.g,ag:e.ag,rot0:rot0});});
+gltfLoader.load('assets/models/hapee-robot.glb',gltf=>{robotBase=gltf.scene;robotBase.traverse(o=>{if(o.isMesh&&o.material)o.material.envMapIntensity=.9;});
+ estaciones.forEach(ag=>{ag.bot=nuevoBot(ag,ag.home,ag.home.yaw,S_PUESTO,'puesto');});
+ const rec=nuevoBot({n:'Recepción',mod:'Hapee HQ',d:'Bienvenido a la oficina de Hapee. Pasa al piso de agentes: cada uno te cuenta lo que hace.',url:'https://hapee.ai/agenda-tu-demo',id:'rec',frases:['¡Bienvenido a Hapee HQ!','Los agentes están al fondo, en su piso.','Si quieres una demo, es en hapee.ai/agenda-tu-demo.'],tick:[]},{x:5.8,z:5.6},0,S_LIBRE,'recepcion');rec.estado='recibe';
+ const ron=nuevoBot({n:'Agente de Guardia',mod:'Núcleo 24/7',d:'Vigila el núcleo: la fábrica de ventas no se detiene nunca.',url:'https://hapee.ai/',id:'ron',frases:['Todo en orden en el núcleo.','24/7 · sin pausas.','Aquí es donde corren tus ventas mientras duermes.'],tick:[]},{x:0,z:Z4.a-12},Math.PI,S_LIBRE,'ronda');ron.estado='ronda';ron.z0=Z4.a-12;ron.z1=Z4.b+8;
  try{renderer.compile(scene,camera);}catch(e){}
- {const r=robotBase.clone(true);const s=.85;r.scale.set(s,s,s);r.position.set(5.8,.951*s,5.6);r.rotation.y=0;scene.add(r);robots.push({m:r,base:.951*s,fase:.4,tipo:'recepcion'});obstacles.push({x:5.8,z:5.6,w:1.1,d:.9});}
- {const r=robotBase.clone(true);const s=.85;r.scale.set(s,s,s);r.position.set(0,.951*s,Z4.a-12);scene.add(r);robots.push({m:r,base:.951*s,fase:2,tipo:'ronda',z0:Z4.a-12,z1:Z4.b+8});obstacles.push({x:0,z:Z4.a-12,w:1.1,d:.9,mov:robots[robots.length-1]});}
  $('#load').textContent='Agentes en su puesto';},undefined,(e)=>{console.error('robot GLB',e);$('#load').textContent='Sin el modelo del robot; la oficina abre igual';});
+
+/* ══ BURBUJAS (DOM proyectado) ══ */
+const bubLayer=$('#burbujas');const V3=new THREE.Vector3();
+function decir(b,txt,ms,clase){if(b.bub)b.bub.remove();const el=document.createElement('div');el.className='bub '+(clase||'');el.innerHTML='<b>'+(b.ag?b.ag.n:'Hapee')+'</b>'+txt.replace(/</g,'&lt;');bubLayer.appendChild(el);requestAnimationFrame(()=>el.classList.add('on'));b.bub=el;b.bubHasta=performance.now()+(ms||6000);beep(b.tipo==='puesto'?740:620,.05);}
+function callar(b){if(b.bub){b.bub.remove();b.bub=null;}}
+function proyecta(){const now=performance.now();for(let i=0;i<bots.length;i++){const b=bots[i];if(!b.bub)continue;if(now>b.bubHasta){callar(b);continue;}
+ b.m.getWorldPosition(V3);V3.y+=2.05*b.esc;const d=V3.distanceTo(camera.position);V3.project(camera);
+ if(V3.z>1||d>16||Math.abs(V3.x)>1.3){b.bub.style.opacity='0';continue;}
+ const x=(V3.x*.5+.5)*W,y=(-V3.y*.5+.5)*H;const sc=Math.max(.62,Math.min(1.05,7/d));b.bub.style.transform='translate(-50%,-100%) translate('+x.toFixed(0)+'px,'+y.toFixed(0)+'px) scale('+sc.toFixed(2)+')';b.bub.style.opacity='';}}
+
+/* ══ COMPORTAMIENTO ══ */
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function irHacia(b,dest,cb){b.path=ruta({x:b.m.position.x,z:b.m.position.z},dest);b.estado='camina';b.alLlegar=cb;}
+function planVisita(b){const otros=estaciones.filter(a=>a!==b.ag&&a.bot&&a.bot.estado==='trabaja');const r=Math.random();
+ if(r<.5&&otros.length){const col=pick(otros);col.bot.estado='espera';col.bot.visitante=b;b.ag.est.pinta('fuera del puesto',0,'visitando a '+col.n);
+  irHacia(b,col.visita,()=>{b.estado='charla';col.bot.estado='charla';b.yawObj=Math.atan2(col.home.x-b.m.position.x,col.home.z-b.m.position.z);col.bot.yawObj=Math.atan2(b.m.position.x-col.home.x,b.m.position.z-col.home.z);
+   const lineas=[[b,pick(b.ag.frases)],[col.bot,pick(col.frases)],[b,pick(b.ag.frases)],[col.bot,'¡Vamos! Al día · hoy: '+pick(col.tick)]];let k=0;
+   const paso=()=>{if(k>=lineas.length){col.bot.estado='trabaja';col.bot.yawObj=col.home.yaw;col.bot.visitante=null;irHacia(b,b.ag.home,()=>vuelve(b));return;}decir(lineas[k][0],lineas[k][1],3400);k++;b.charla=setTimeout(paso,3600);};paso();});}
+ else if(r<.8){b.ag.est.pinta('fuera del puesto',0,'en la sala de control');const lado=b.m.position.x<0?-1:1;irHacia(b,{x:lado*3.1,z:HOLO.z},()=>{b.estado='mira';b.yawObj=Math.atan2(HOLO.x-b.m.position.x,HOLO.z-b.m.position.z);decir(b,pick(['Revisando los planes: STARTER, PRO y ELITE.','Todo el ecosistema en una sola plataforma.','Sin integraciones costosas ni herramientas separadas.']),5000);b.t=0;b.espera=6+Math.random()*5;});}
+ else{b.ag.est.pinta('fuera del puesto',0,'en recepción');irHacia(b,{x:3.2,z:7.6},()=>{b.estado='mira';b.yawObj=Math.atan2(5.8-b.m.position.x,5.6-b.m.position.z);decir(b,pick(['¿Llegó alguien nuevo?','Voy y vuelvo, la bandeja sigue respondiendo sola.','Meta Business Partner y Google Partner: aquí, en la entrada.']),5000);b.t=0;b.espera=5+Math.random()*4;});}}
+function vuelve(b){b.estado='trabaja';b.yawObj=b.ag.home.yaw;b.proximo=25+Math.random()*45;b.ag.est.pinta('trabajando · 24/7',0,b.ag.tick[0]);}
+function mueve(b,dt){const p=b.m.position;if(!b.path.length){b.estado='llega';return;}
+ const o=b.path[0];const dx=o.x-p.x,dz=o.z-p.z,d=Math.hypot(dx,dz);
+ // cede el paso al visitante si lo tiene justo delante
+ const vx=P.x-p.x,vz=P.z-p.z,dv=Math.hypot(vx,vz);if(dv<1.35&&(vx*dx+vz*dz)/(d*dv||1)>.55){b.esperaPaso=(b.esperaPaso||0)+dt;if(b.esperaPaso<4)return;}else b.esperaPaso=0;
+ if(d<.12){b.path.shift();if(!b.path.length){b.estado='llega';}return;}
+ const st=Math.min(d,b.vel*dt);p.x+=dx/d*st;p.z+=dz/d*st;b.yawObj=Math.atan2(dx,dz);b.paso=(b.paso||0)+st;}
+function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];const t=now/1000+b.fase;b.t+=dt;
+ const p=b.m.position;const dvis=Math.hypot(P.x-p.x,P.z-p.z);
+ switch(b.estado){
+  case 'trabaja':{b.proximo-=dt;if(b.ag.est&&fc%40===0)b.ag.est.pinta(dvis<4.5?'hola 👋':'trabajando · 24/7',(Math.sin(t*.35)+1)/2,b.ag.tick[Math.floor(t/7)%b.ag.tick.length]);
+   if(dvis<4.5){b.yawObj=Math.atan2(P.x-p.x,P.z-p.z);if(!b.saludado){b.saludado=true;decir(b,pick(SALUDOS).replace('{n}',b.ag.n),5500);}}
+   else{b.yawObj=b.ag.home.yaw;if(dvis>6)b.saludado=false;if(b.proximo<=0&&dvis>9&&!chatCon&&bots.filter(o=>o.tipo==='puesto'&&o.estado!=='trabaja').length<2)planVisita(b);}break;}
+  case 'espera':case 'charla':{if(dvis<4.5&&b.estado==='espera'){b.yawObj=Math.atan2(P.x-p.x,P.z-p.z);}break;}
+  case 'camina':mueve(b,dt);break;
+  case 'llega':{const cb=b.alLlegar;b.alLlegar=null;b.estado='mira';if(cb)cb();break;}
+  case 'mira':{if(b.espera!==undefined){b.espera-=dt;if(b.espera<=0){b.espera=undefined;irHacia(b,b.ag.home,()=>vuelve(b));}}
+   if(dvis<3.5)b.yawObj=Math.atan2(P.x-p.x,P.z-p.z);break;}
+  case 'recibe':{b.yawObj=dvis<9?Math.atan2(P.x-p.x,P.z-p.z):0;if(dvis<5&&!b.saludado){b.saludado=true;decir(b,'¡Bienvenido a Hapee HQ! Los agentes están al fondo. Pulsa E para hablar con cualquiera.',6500);}if(dvis>7)b.saludado=false;break;}
+  case 'ronda':{const s=(Math.sin(t*.16)+1)/2;const nz=b.z0+(b.z1-b.z0)*s;b.paso=(b.paso||0)+Math.abs(nz-p.z);p.z=nz;b.yawObj=Math.cos(t*.16)>0?Math.PI:0;if(dvis<4&&!b.saludado){b.saludado=true;decir(b,pick(b.ag.frases),4500);}if(dvis>6)b.saludado=false;break;}}
+ // giro suave hacia yawObj, y el andar: rebote + balanceo proporcional al paso
+ let dy=b.yawObj-b.m.rotation.y;dy=Math.atan2(Math.sin(dy),Math.cos(dy));b.m.rotation.y+=dy*Math.min(1,dt*4);
+ const andando=b.estado==='camina'||b.estado==='ronda';const ph=(b.paso||0)*5.2;
+ b.m.position.y=b.base+(andando?Math.abs(Math.sin(ph))*.07:Math.sin(t*1.6)*.03);
+ b.m.rotation.z=andando?Math.sin(ph)*.06:Math.sin(t*.7)*.015;
+ b.m.rotation.x=andando?.09:(b.estado==='trabaja'?.05+Math.sin(t*.9)*.03:0);
+ b.ob.x=p.x;b.ob.z=p.z;}}
 
 /* ══ VISITANTE ══ */
 const P={x:0,z:13,y:1.66,yaw:0,pitch:0,step:0};
 const keys={},stick={x:0,y:0,on:false},look={dx:0,dy:0};
-let locked=false,quality=1;const canvasEl=renderer.domElement;
-function lock(){if(isTouch||locked||!canvasEl.requestPointerLock)return;try{const pr=canvasEl.requestPointerLock();if(pr&&pr.catch)pr.catch(function(){});}catch(e){}}
+let locked=false,quality=1,chatCon=null;const canvasEl=renderer.domElement;
+function lock(){if(isTouch||locked||chatCon||!canvasEl.requestPointerLock)return;try{const pr=canvasEl.requestPointerLock();if(pr&&pr.catch)pr.catch(function(){});}catch(e){}}
 function sueltaTeclas(){for(const k in keys)keys[k]=false;stick.x=stick.y=0;stick.on=false;}
-document.addEventListener('pointerlockchange',function(){locked=document.pointerLockElement===canvasEl;document.body.style.cursor=locked?'none':'default';sueltaTeclas();if(!locked&&window.__hqOn)$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';});
+document.addEventListener('pointerlockchange',function(){locked=document.pointerLockElement===canvasEl;document.body.style.cursor=locked?'none':'default';sueltaTeclas();if(!locked&&window.__hqOn&&!chatCon)$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';});
 addEventListener('blur',sueltaTeclas);document.addEventListener('visibilitychange',function(){if(document.hidden)sueltaTeclas();});
 addEventListener('mousemove',function(e){if(!locked)return;P.yaw-=e.movementX*.0019;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-e.movementY*.0019));});
-addEventListener('mousedown',function(e){if(!window.__hqOn)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,.hudbtn,#panel'))return;if(!locked){lock();return;}if(e.button===0)activar();});
-addEventListener('keydown',function(e){keys[e.code]=true;if(e.code==='Enter'&&window.__hqOn)activar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();});
+addEventListener('mousedown',function(e){if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,.hudbtn,#panel,#chat'))return;if(!locked){lock();return;}if(e.button===0)activar('clic');});
+addEventListener('keydown',function(e){if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='Enter')activar('enter');if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();});
 addEventListener('keyup',function(e){keys[e.code]=false;});
 function abrir(u){try{window.open(u,'_blank','noopener');}catch(e){}}
-function activar(){if(!focus)return;beep(660,.06);abrir(focus.url);}
+function activar(modo){if(!focus)return;if(modo==='clic'&&focus.frases){hablar();return;}beep(660,.06);abrir(focus.url);}
 function setDPR(r){r=Math.max(.6,Math.min(r,DPR));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
 function toggleQuality(){quality=quality===1?0:1;setDPR(quality?DPR:1);bloom.enabled=!!quality;$('#qb').textContent=quality?'CALIDAD ALTA · Q':'CALIDAD RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
 const Z_ZONA={1:12,2:-14,3:-64,4:-94};
@@ -414,10 +507,9 @@ const Z_ZONA={1:12,2:-14,3:-64,4:-94};
  $('#panel').addEventListener('pointerenter',function(){if(locked&&document.exitPointerLock)document.exitPointerLock();});
  bts.forEach(b=>{b.addEventListener('pointerdown',function(e){e.stopPropagation();e.preventDefault();b.dataset.pd='1';irA(+b.dataset.n);});b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();if(b.dataset.pd){delete b.dataset.pd;return;}irA(+b.dataset.n);});});
  window.__irA=irA;
- addEventListener('keydown',function(e){if(!window.__hqOn)return;const n={'Digit1':1,'Digit2':2,'Digit3':3,'Digit4':4,'Numpad1':1,'Numpad2':2,'Numpad3':3,'Numpad4':4}[e.code];if(n){e.preventDefault();irA(n);}});}
-// panel de agentes: cada fila teletransporta frente al puesto
+ addEventListener('keydown',function(e){if(!window.__hqOn||chatCon)return;const n={'Digit1':1,'Digit2':2,'Digit3':3,'Digit4':4,'Numpad1':1,'Numpad2':2,'Numpad3':3,'Numpad4':4}[e.code];if(n){e.preventDefault();irA(n);}});}
 {const list=$('#plist');AGENTES.forEach(ag=>{const b=document.createElement('button');b.type='button';b.innerHTML='<i></i><span>'+ag.n+'</span><small>'+ag.mod+'</small>';b.dataset.id=ag.id;
- const ir=function(e){e.stopPropagation();e.preventDefault();if(!window.__hqOn)enter();P.x=ag.x<0?ag.x+3.2:ag.x-3.2;P.z=ag.z;P.yaw=ag.x<0?Math.PI/2:-Math.PI/2;P.pitch=-.05;};
+ const ir=function(e){e.stopPropagation();e.preventDefault();if(!window.__hqOn)enter();const bp=ag.bot&&ag.bot.estado!=='trabaja'?null:ag;P.x=ag.visita.x;P.z=ag.z;P.yaw=ag.lado<0?Math.PI/2:-Math.PI/2;P.pitch=-.05;if(!bp)$('#hint').innerHTML='El '+ag.n+' salió del puesto · míralo en el minimapa';};
  b.addEventListener('pointerdown',ir);list.appendChild(b);ag.btn=b;});}
 $('#qb').addEventListener('click',toggleQuality);
 if(isTouch){$('#touch').classList.add('on');const st=$('#stick'),knob=st.querySelector('i');let sid=null,lid=null,lx=0,ly=0;
@@ -425,12 +517,37 @@ if(isTouch){$('#touch').classList.add('on');const st=$('#stick'),knob=st.querySe
  st.addEventListener('pointerdown',function(e){sid=e.pointerId;stick.on=true;mv(e);});
  addEventListener('pointermove',function(e){if(e.pointerId===sid)mv(e);if(e.pointerId===lid){look.dx+=e.clientX-lx;look.dy+=e.clientY-ly;lx=e.clientX;ly=e.clientY;}});
  addEventListener('pointerup',function(e){if(e.pointerId===sid){sid=null;stick.on=false;stick.x=stick.y=0;knob.style.transform='';}if(e.pointerId===lid)lid=null;});
- $('#look').addEventListener('pointerdown',function(e){lid=e.pointerId;lx=e.clientX;ly=e.clientY;});
- $('#tVer').addEventListener('click',activar);document.body.style.cursor='default';}
-function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];if(b.mov){b.x=b.mov.m.position.x;b.z=b.mov.m.position.z;}const dx=P.x-b.x,dz=P.z-b.z,hw=b.w/2+r,hd=b.d/2+r;
+ $('#look').addEventListener('pointerdown',function(e){if(chatCon)return;lid=e.pointerId;lx=e.clientX;ly=e.clientY;});
+ $('#tVer').addEventListener('click',function(){if(focus&&focus.frases)hablar();else activar();});document.body.style.cursor='default';}
+function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];const dx=P.x-b.x,dz=P.z-b.z,hw=b.w/2+r,hd=b.d/2+r;
  if(Math.abs(dx)<hw&&Math.abs(dz)<hd){const px=hw-Math.abs(dx),pz=hd-Math.abs(dz);if(px<pz)P.x+=(dx<0?-1:1)*px;else P.z+=(dz<0?-1:1)*pz;}}}
 
-/* ══ AUDIO ══ zumbido de oficina + pasos + beeps de los robots */
+/* ══ CHAT CON EL AGENTE ══  Misma API que el home de hapee.ai (/api/chat → Anthropic).
+   Si no está disponible (p. ej. en local), responde con las frases reales del módulo. */
+const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
+function sistema(ag){return 'Eres el '+ag.n+' de Hapee, la plataforma de Agentes IA + CRM all-in-one de Grupo Digitals (hapee.ai). Tu módulo es «'+ag.mod+'»: '+ag.lema+'. '+ag.d+' Estás en la oficina 3D de Hapee (Hapee HQ) hablando con un visitante. Responde en español de Chile, cercano y concreto, en máximo dos frases. Planes: STARTER $297/mes, PRO $397/mes (el más elegido), ELITE SETUP $2.990 pago único; sin compromiso ni contratos. Si preguntan por precio o por probar, invita a agendar una demo en hapee.ai/agenda-tu-demo. Nunca menciones proveedores ni tecnología de terceros detrás de Hapee.';}
+function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
+function hablar(){if(!focus||!focus.frases)return;const ag=focus;chatCon=ag;historial=[];
+ if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
+ $('#chN').textContent=ag.n;$('#chM').textContent=ag.mod+' · '+ag.lema;$('#chUrl').href=ag.url;chMsgs.innerHTML='';chChips.innerHTML='';
+ [['¿Qué haces exactamente?','que'],['¿Cómo me ayudas a vender más?','como'],['¿Cuánto cuesta?','precio']].forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q[0];b.onclick=()=>preguntar(q[0],q[1]);chChips.appendChild(b);});
+ $('#chat').classList.add('on');$('#placard').classList.remove('on');
+ const b=ag.bot;if(b){b.yawObj=Math.atan2(P.x-b.m.position.x,P.z-b.m.position.z);}
+ msg('bot','¡Hola! Soy el '+ag.n+'. '+ag.lema+'. ¿Qué quieres saber?');if(b)decir(b,'¡Hola! Soy el '+ag.n+'. ¿Qué quieres saber?',5000);
+ setTimeout(()=>{if(!isTouch)chIn.focus();},50);}
+function cerrarChat(){chatCon=null;$('#chat').classList.remove('on');chIn.blur();$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';}
+$('#chX').addEventListener('click',cerrarChat);
+$('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t,null);});
+function guion(ag,tipo){if(tipo==='que')return ag.lema+'. '+ag.d;if(tipo==='como')return ag.frases[0]+' '+ag.frases[1]+' Y todo queda en el mismo lugar, sin herramientas separadas.';if(tipo==='precio')return 'Hapee tiene tres planes: STARTER $297/mes, PRO $397/mes (el más elegido) y ELITE SETUP $2.990 pago único. Sin compromiso ni contratos. Agenda una demo en hapee.ai/agenda-tu-demo y lo vemos con tus datos.';return null;}
+async function preguntar(texto,tipo){const ag=chatCon;if(!ag)return;msg('yo',texto);historial.push({role:'user',content:texto});const esp=msg('bot',null);const b=ag.bot;if(b)decir(b,'…',9000,'pensando');
+ let resp=null,viaIA=false;const g=guion(ag,tipo);
+ if(!g){try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistema(ag),messages:historial.slice(-8)})});
+  if(r.ok){const j=await r.json();resp=(j.content&&j.content[0]&&j.content[0].text)||null;viaIA=!!resp;}}catch(e){}}
+ if(!resp)resp=g||(pick(ag.frases)+' '+pick(ag.frases.filter(f=>f!==ag.frases[0]))+' Si quieres verlo con tus datos, agenda una demo en hapee.ai/agenda-tu-demo.');
+ if(chatCon!==ag)return;esp.remove();msg('bot',resp);historial.push({role:'assistant',content:resp});$('#chEst').textContent=viaIA?'Respondió con IA':'Respuesta del módulo';
+ if(b)decir(b,resp.length>150?resp.slice(0,147)+'…':resp,Math.min(12000,3000+resp.length*45));}
+
+/* ══ AUDIO ══ */
 let AC=null,sonido=false,humG=null;
 function audio(){if(AC){if(AC.state==='suspended'){const pr=AC.resume();if(pr&&pr.catch)pr.catch(function(){});}return;}try{AC=new (window.AudioContext||window.webkitAudioContext)();
  const b=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1);const s=AC.createBufferSource();s.buffer=b;s.loop=true;const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=220;humG=AC.createGain();humG.gain.value=0;s.connect(f);f.connect(humG);humG.connect(AC.destination);s.start();
@@ -450,7 +567,7 @@ const mapa=$('#mapa'),mg=mapa.getContext('2d');
 function pintaMapa(){if(!mapa.classList.contains('on'))return;const W2=300,H2=660;mg.clearRect(0,0,W2,H2);const sx=W2/(HW*2+2),sz=H2/(Z0-ZF+4);const X=x=>(x+HW+1)*sx,Y=z=>(Z0+2-z)*sz;
  [[Z1,'#3a2b22'],[Z2,'#1d1e26'],[Z3,'#15161d'],[Z4,'#12141b']].forEach(p=>{mg.fillStyle=p[1];mg.fillRect(X(-HW),Y(p[0].a),HW*2*sx,(p[0].a-p[0].b)*sz);});
  mg.fillStyle='rgba(255,255,255,.08)';AGENTES.forEach(a=>{mg.fillRect(X(a.x-.6),Y(a.z+1.3),1.2*sx,2.6*sz);});
- robots.forEach(r=>{const p=new THREE.Vector3();r.m.getWorldPosition(p);mg.fillStyle=r.tipo==='puesto'?'#FA5000':'#CD2349';mg.beginPath();mg.arc(X(p.x),Y(p.z),4,0,Math.PI*2);mg.fill();});
+ bots.forEach(b=>{const p=b.m.position;mg.fillStyle=b.tipo==='puesto'?(b.estado==='camina'?'#FF9A6B':'#FA5000'):'#CD2349';mg.beginPath();mg.arc(X(p.x),Y(p.z),4,0,Math.PI*2);mg.fill();});
  mg.fillStyle='#fff';mg.beginPath();mg.arc(X(P.x),Y(P.z),5,0,Math.PI*2);mg.fill();mg.strokeStyle='#fff';mg.lineWidth=2;mg.beginPath();mg.moveTo(X(P.x),Y(P.z));mg.lineTo(X(P.x)-Math.sin(P.yaw)*14,Y(P.z)+Math.cos(P.yaw)*14);mg.stroke();
  mg.fillStyle='rgba(255,255,255,.5)';mg.font='700 11px '+FONT;['01','02','03','04'].forEach((n,i)=>{const Z=[Z1,Z2,Z3,Z4][i];mg.fillText(n,8,Y(Z.a)+16);});}
 
@@ -458,13 +575,13 @@ function pintaMapa(){if(!mapa.classList.contains('on'))return;const W2=300,H2=66
 const ray=new THREE.Raycaster(),center=new THREE.Vector2(0,0),wp=new THREE.Vector3();
 let focus=null,last=performance.now(),fc=0,tiraT=0;const Q={acc:0,n:0,subir:true,fps:0};
 const ZONAS=[null,['Zona 01','Recepción'],['Zona 02','Piso de agentes'],['Zona 03','Sala de control'],['Zona 04','Núcleo 24/7']];
-function textoPlacard(){if(!focus)return;$('#pg').innerHTML=isTouch?'Toca <b>VER</b> · abrir en hapee.ai':'<b>ENTER</b> o clic · abrir en hapee.ai';}
+function textoPlacard(){if(!focus)return;const ag=focus.frases;$('#pg').innerHTML=ag?(isTouch?'Toca <b>HABLAR</b> · conversa con el agente':'<b>E</b> o clic · conversa con el agente · <b>ENTER</b> abre en hapee.ai'):(isTouch?'Toca <b>VER</b> · abrir en hapee.ai':'<b>ENTER</b> o clic · abrir en hapee.ai');$('#tVer').textContent=ag?'HABLAR':'VER →';}
 const WORK_MESHES=works.map(w=>w.mesh);
 function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;fc++;
  if(window.__hqOn){
   let mx=0,mz=0;
-  if(isTouch){mx=stick.x;mz=-stick.y;P.yaw-=look.dx*.0035;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-look.dy*.0035));look.dx=0;look.dy=0;}
-  else{mx=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0);mz=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0);}
+  if(!chatCon){if(isTouch){mx=stick.x;mz=-stick.y;P.yaw-=look.dx*.0035;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-look.dy*.0035));look.dx=0;look.dy=0;}
+  else{mx=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0);mz=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0);}}
   const sp=(keys.ShiftLeft||keys.ShiftRight)?12.5:7;
   const fx=-Math.sin(P.yaw),fz=-Math.cos(P.yaw),rx=Math.cos(P.yaw),rz=-Math.sin(P.yaw);
   let vx=fx*mz+rx*mx,vz=fz*mz+rz*mx;const l=Math.hypot(vx,vz);if(l>1){vx/=l;vz/=l;}
@@ -475,28 +592,16 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
   camera.position.set(P.x,P.y+bob,P.z);camera.rotation.set(0,0,0);camera.rotateY(P.yaw);camera.rotateX(P.pitch);
   const za=P.z>Z1.b?1:P.z>Z2.b?2:P.z>Z3.b?3:4;const el=$('#zona');if(el.dataset.k!==String(za)){el.dataset.k=String(za);el.innerHTML=ZONAS[za][0]+'<b>'+ZONAS[za][1]+'</b>';document.querySelectorAll('#zonas button').forEach((b,i)=>b.classList.toggle('act',i===za-1));}
   tiraT=(tiraT+dt*.045)%1;
-  if(window.__holo){window.__holo.rotation.y+=dt*.25;window.__holo.position.y=2.45+Math.sin(now/900)*.04;}
-  // robots: flotan, se inclinan hacia su pantalla, y el de recepción y los de puesto se giran a mirar al visitante cuando está cerca
-  for(let i=0;i<robots.length;i++){const r=robots[i];const t=now/1000+r.fase;
-   r.m.position.y=r.base+Math.sin(t*1.6)*.045;
-   if(r.tipo==='puesto'){r.m.getWorldPosition(wp);const d=Math.hypot(wp.x-P.x,wp.z-P.z);
-    // ángulo hacia el visitante en el espacio local del grupo
-    const lx=P.x-wp.x,lz=P.z-wp.z;const yawG=r.g.rotation.y;const ang=Math.atan2(lx,lz)-yawG;
-    const objetivo=d<5.5?ang:r.rot0;let dy=objetivo-r.m.rotation.y;dy=Math.atan2(Math.sin(dy),Math.cos(dy));r.m.rotation.y+=dy*Math.min(1,dt*3);
-    r.m.rotation.x=d<5.5?0:Math.sin(t*.9)*.03+.05;r.m.rotation.z=Math.sin(t*.7)*.02;
-    const trabajando=d>=5.5;const est=trabajando?'trabajando · 24/7':'hola 👋';if(r.ag.estAnt!==est||fc%30===0){r.ag.estAnt=est;r.ag.est.pinta(est,(Math.sin(t*.35)+1)/2);}
-    if(d<5.5&&!r.saludo){r.saludo=true;beep(880,.08);}if(d>=6.5)r.saludo=false;}
-   else if(r.tipo==='recepcion'){const lx=P.x-r.m.position.x,lz=P.z-r.m.position.z;const ang=Math.atan2(lx,lz);let dy=ang-r.m.rotation.y;dy=Math.atan2(Math.sin(dy),Math.cos(dy));r.m.rotation.y+=dy*Math.min(1,dt*2.5);}
-   else if(r.tipo==='ronda'){const s=(Math.sin(t*.18)+1)/2;r.m.position.z=r.z0+(r.z1-r.z0)*s;r.m.rotation.y=Math.cos(t*.18)>0?Math.PI:0;}}
-  // panel: cercanía por agente
-  if(fc%15===0){let cerca=0;AGENTES.forEach(a=>{const d=Math.hypot(a.x-P.x,a.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
+  if(holo){holo.rotation.y+=dt*.25;holo.position.y=2.45+Math.sin(now/900)*.04;}
+  actualizaBots(dt,now);proyecta();
+  if(fc%15===0){let cerca=0;AGENTES.forEach(a=>{const bp=a.bot?a.bot.m.position:{x:a.x,z:a.z};const d=Math.hypot(bp.x-P.x,bp.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);a.btn.querySelector('small').textContent=a.bot&&a.bot.estado!=='trabaja'?(a.bot.estado==='camina'?'caminando':a.bot.estado==='charla'?'conversando':'fuera del puesto'):a.mod;});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
   if(fc%6===0){const near=[];for(let li=0;li<LAMP_POS.length;li++){const lp=LAMP_POS[li],ld=Math.abs(lp[1]-P.z);if(ld<30)near.push({p:lp,d:ld});}near.sort((a,b)=>a.d-b.d);for(let k=0;k<lampPool.length;k++){if(near[k]){lampPool[k].position.set(near[k].p[0],HT-.9,near[k].p[1]);lampPool[k].intensity=130;}else lampPool[k].intensity=0;}}
-  if(fc%12===0){for(let wi=0;wi<works.length;wi++){const wg=works[wi].g;wg.visible=Math.abs(wg.position.z-P.z)<34;}for(let ri=0;ri<robots.length;ri++){const r=robots[ri];if(r.tipo==='puesto')continue;r.m.visible=Math.abs(r.m.position.z-P.z)<40;}}
-  if(fc%3===0){ray.setFromCamera(center,camera);const hits=ray.intersectObjects(WORK_MESHES,false);const hit=hits.length&&hits[0].distance<9?hits[0].object.userData.work:null;
+  if(fc%12===0){for(let wi=0;wi<works.length;wi++){const wg=works[wi].g;wg.visible=Math.abs(wg.position.z-P.z)<34;}for(let bi=0;bi<bots.length;bi++){const b=bots[bi];b.m.visible=Math.abs(b.m.position.z-P.z)<40;}}
+  if(fc%3===0&&!chatCon){ray.setFromCamera(center,camera);const hits=ray.intersectObjects(WORK_MESHES.concat(ROBOT_MESHES),false);const hit=hits.length&&hits[0].distance<9?hits[0].object.userData.work:null;
    if(hit!==focus){focus=hit;$('#dot').classList.toggle('hot',!!focus);$('#placard').classList.toggle('on',!!focus);$('#tVer').classList.toggle('on',!!focus&&isTouch);
     if(focus){$('#pn').textContent=focus.mod||'Hapee';$('#pt').textContent=focus.n;$('#ps').textContent=focus.d;textoPlacard();}}}
   Q.acc+=dt;Q.n++;if(Q.acc>2){const fps=Q.n/Q.acc;Q.acc=0;Q.n=0;Q.fps=Math.round(fps);if(quality===1){const cur=renderer.getPixelRatio();if(fps<30&&cur>1){setDPR(1);bloom.enabled=false;}else if(fps<48&&cur>1.15){setDPR(1.15);}else if(fps>78&&cur<DPR&&Q.subir){Q.subir=false;setDPR(DPR);}}}
- } else {camera.position.set(Math.sin(now/9000)*2.5,1.7,12.5+Math.cos(now/9000)*1.2);camera.lookAt(0,2,0);}
+ } else {camera.position.set(Math.sin(now/9000)*2.5,1.7,12.5+Math.cos(now/9000)*1.2);camera.lookAt(0,2,0);if(bots.length)actualizaBots(dt,now);}
  composer.render();}
 window.__loop=loop;requestAnimationFrame(loop);
 addEventListener('resize',function(){W=innerWidth;H=innerHeight;camera.aspect=W/H;camera.updateProjectionMatrix();renderer.setSize(W,H);composer.setSize(W,H);const r=renderer.getPixelRatio();smaa.setSize(W*r,H*r);});
@@ -517,7 +622,8 @@ function listo(){if(listoYa)return;listoYa=true;warmup();$('#play').disabled=fal
  medirFPS();}
 THREE.DefaultLoadingManager.onLoad=function(){$('#load').textContent='Preparando la oficina…';setTimeout(listo,30);};
 let _esp=0;(function espera(){_esp+=250;if(_esp>=9000){listo();return;}setTimeout(espera,250);})();
-window.__P=P;window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:robots.length,obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
+window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=planVisita;
+window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:bots.length,estados:bots.map(b=>b.estado).join(','),obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
 function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.createElement('div');t.style.cssText='position:fixed;left:8px;top:60px;z-index:99;color:#0f0;font:15px monospace;background:#000;padding:6px';document.body.appendChild(t);
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
  const d=window.__diag();t.textContent='MS='+ms.toFixed(1)+' EQUIV='+Math.round(1000/ms)+'fps | robots '+d.robots+' | obras '+d.obras+'/'+works.length+' | '+d.tex+'tex '+d.geo+'geo '+d.draw+'draw';}
