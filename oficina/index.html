@@ -800,7 +800,18 @@ $('#chX').addEventListener('click',cerrarChat);
    GPU sea toda del widget. En local el origen es otro y se carga la web publicada. */
 const demoEl=$('#demo'),demoFrame=$('#dFrame');let demoAbierta=false,demoCargada=false;
 const DEMO_BASE=/(^|\.)hapee\.ai$/.test(location.hostname)?'/':'https://hapee.ai/';
-function alWidget(){try{const d=demoFrame.contentDocument;if(!d)return;const sec=d.getElementById('hapee-chat');if(sec)sec.scrollIntoView({block:'start'});}catch(e){}}
+function alWidget(){try{const d=demoFrame.contentDocument,w=demoFrame.contentWindow;if(!d)return;
+ const sec=d.getElementById('hapee-chat');if(!sec)return;
+ // en vez de pelear con el scroll de la home, se ocultan los hermanos de la rama que
+ // lleva a la sección: queda sólo el widget, con su propio DOM y su propio JS intactos
+ if(!d.__soloWidget){d.__soloWidget=true;
+  let n=sec;while(n&&n!==d.body&&n.parentElement){const par=n.parentElement;
+   for(let i=0;i<par.children.length;i++){const c=par.children[i];if(c!==n&&c.tagName!=='SCRIPT'&&c.tagName!=='STYLE')c.style.display='none';}
+   n=par;}
+  const st=d.createElement('style');st.textContent='html,body{background:#0d0d10!important;margin:0!important}#hapee-chat{margin:0!important}';
+  (d.head||d.documentElement).appendChild(st);}
+ if(w.history&&'scrollRestoration' in w.history)w.history.scrollRestoration='manual';
+ d.documentElement.style.scrollBehavior='auto';w.scrollTo(0,0);}catch(e){}}
 function abrirDemo(){if(demoAbierta)return;demoAbierta=true;
  if(sonandoVid){sonandoVid.el.muted=true;sonandoVid=null;hudSon();}
  if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
@@ -809,7 +820,7 @@ function abrirDemo(){if(demoAbierta)return;demoAbierta=true;
 function cerrarDemo(){if(!demoAbierta)return;demoAbierta=false;demoEl.classList.remove('on');
  setTimeout(function(){demoEl.hidden=true;},280);$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';}
 $('#dX').addEventListener('click',cerrarDemo);
-demoFrame.addEventListener('load',function(){$('#dLoad').hidden=true;alWidget();setTimeout(alWidget,700);setTimeout(alWidget,1800);});
+demoFrame.addEventListener('load',function(){$('#dLoad').hidden=true;alWidget();[250,700,1500,2800].forEach(function(ms){setTimeout(alWidget,ms);});});
 $('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t,null);});
 function guion(ag,tipo){if(tipo==='que')return ag.lema+'. '+ag.d;if(tipo==='como')return ag.frases[0]+' '+ag.frases[1]+' Y todo queda en el mismo lugar, sin herramientas separadas.';if(tipo==='precio')return 'Hapee tiene tres planes: STARTER $297/mes, PRO $397/mes (el más elegido) y ELITE SETUP $2.990 pago único. Sin compromiso ni contratos. Agenda una demo en hapee.ai/agenda-tu-demo y lo vemos con tus datos.';return null;}
 async function preguntar(texto,tipo){const ag=chatCon;if(!ag)return;msg('yo',texto);historial.push({role:'user',content:texto});const esp=msg('bot',null);const b=ag.bot;if(b)decir(b,'…',9000,'pensando');
@@ -906,7 +917,7 @@ function listo(){if(listoYa)return;listoYa=true;warmup();$('#play').disabled=fal
  medirFPS();}
 THREE.DefaultLoadingManager.onLoad=function(){$('#load').textContent='Preparando la oficina…';setTimeout(listo,30);};
 let _esp=0;(function espera(){_esp+=250;if(_esp>=12000){listo();return;}setTimeout(espera,250);})();
-window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
+window.__abrirDemo=abrirDemo;window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
 window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:bots.length,rig:!!RIG,clip:!!CLIP_TALK,anims:bots.map(b=>b.animName).join(','),estados:bots.map(b=>b.estado).join(','),obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
 function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.createElement('div');t.style.cssText='position:fixed;left:8px;top:60px;z-index:99;color:#0f0;font:15px monospace;background:#000;padding:6px';document.body.appendChild(t);
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
