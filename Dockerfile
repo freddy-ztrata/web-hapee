@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260916-02
+ARG CACHE_BUST=20260920-01
 COPY index.html /usr/share/nginx/html/index.html
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
 COPY blog.html /usr/share/nginx/html/blog.html
@@ -45,6 +45,8 @@ COPY webinar.html /usr/share/nginx/html/webinar.html
 # eliminacion-datos.html y con marca.html.
 COPY docs/ /usr/share/nginx/html/docs/
 COPY img/ /usr/share/nginx/html/img/
+# Hapee HQ: la oficina 3D de los agentes (three.js + GLB del robot), servida en /oficina
+COPY oficina/ /usr/share/nginx/html/oficina/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
