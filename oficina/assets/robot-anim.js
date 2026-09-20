@@ -64,6 +64,14 @@ export function pose(rig, estado, t, ph) {
     rArm = [P * .5, 0, -R * 1.7]; rFore = [P * .2, 0, -R * (.5 + w)];
     lArm = [0, 0, R * .1]; lFore = [-P * .15, 0, 0];
     spine = [resp, 0, -R * .05]; head = [0, .15, R * .06];
+  } else if (estado === 'fly') {   // vuelo: piernas recogidas atrás, brazos de estabilizador
+    const w = Math.sin(t * 2.6);
+    lUp = [P * .30, .10, 0]; rUp = [P * .30, -.10, 0];
+    lLeg = [-P * .46, 0, 0]; rLeg = [-P * .54, 0, 0];
+    lFoot = [-P * .24, 0, 0]; rFoot = [-P * .24, 0, 0];
+    lArm = [P * .14, 0, R * .74]; rArm = [P * .14, 0, -R * .74];
+    lFore = [-P * .3, 0, 0]; rFore = [-P * .3, 0, 0];
+    hips = [P * .1, 0, R * .05 * w]; spine = [P * .12 + resp, 0, 0]; head = [-P * .1, Math.sin(t * .5) * .08, 0];
   } else { // idle: de pie, brazos relajados, mirada viva
     lArm = [0, 0, R * .1]; rArm = [0, 0, -R * .1]; lFore = [-P * .18, 0, 0]; rFore = [-P * .18, 0, 0];
     hips = [0, 0, Math.sin(t * .5) * .012];
