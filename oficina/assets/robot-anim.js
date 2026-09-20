@@ -56,8 +56,8 @@ export function pose(rig, estado, t, ph) {
     lFoot = [P * .2, 0, 0]; rFoot = [P * .2, 0, 0];
     // brazos al teclado, con un tecleo sutil
     const tec = Math.sin(t * 9) * .05, tec2 = Math.cos(t * 8.3) * .05;
-    lArm = [-P * .55, .25, R * .15]; rArm = [-P * .55, -.25, -R * .15];
-    lFore = [-P * (.95 + tec), -.35, 0]; rFore = [-P * (.95 + tec2), .35, 0];
+    lArm = [-P * .7, .25, R * .15]; rArm = [-P * .7, -.25, -R * .15];
+    lFore = [-P * (1.1 + tec), -.35, 0]; rFore = [-P * (1.1 + tec2), .35, 0];
     spine = [P * .08 + resp, 0, 0]; head = [P * .12 + Math.sin(t * .6) * .03, Math.sin(t * .4) * .06, 0];
   } else if (estado === 'wave') {
     const w = Math.sin(t * 7) * .45;
