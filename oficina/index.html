@@ -248,6 +248,8 @@ const DPR=Math.min(devicePixelRatio||1,2);
 renderer.setPixelRatio(Math.min(DPR,1.5));renderer.setSize(W,H);
 renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.92;
 $('#game').appendChild(renderer.domElement);
+// enfocable por código: al cerrar la estación de prueba hay que quitarle el foco al iframe
+renderer.domElement.setAttribute('tabindex','-1');renderer.domElement.style.outline='none';
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xF2F4F8);scene.fog=new THREE.Fog(0xF2F4F8,80,165);
 const camera=new THREE.PerspectiveCamera(68,W/H,.12,200);
 const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
@@ -259,7 +261,13 @@ const tl=new THREE.TextureLoader();
 function tex(name,rx=1,ry=rx,srgb=false){const t=tl.load('assets/tex/'+name+'.jpg');t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rx,ry);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(8,maxAniso);return t;}
 function pbr(base,rx,ry,opts={}){return new THREE.MeshStandardMaterial(Object.assign({map:tex(base+'_diff',rx,ry,true),normalMap:tex(base+'_nor_gl',rx,ry),roughnessMap:tex(base+'_rough',rx,ry),aoMap:tex(base+'_ao',rx,ry)},opts));}
 const uv1=g=>{g.setAttribute('uv1',g.attributes.uv);return g;};
-function img(path,srgb=true){const t=tl.load(path);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.generateMipmaps=true;return t;}
+/* Las capturas de UI son de 1600×1194 y cada agente usa la suya en tres sitios: el
+   monitor del puesto, el mural del muro y el arco de control. Sin caché se cargaba y
+   subía a la GPU una copia por sitio. Se memoriza por ruta; tex() queda fuera porque
+   ésa sí ajusta repeat por uso. */
+const _imgCache=new Map();
+function img(path,srgb=true){const k=path+'|'+srgb;if(_imgCache.has(k))return _imgCache.get(k);
+ const t=tl.load(path);if(srgb)t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.generateMipmaps=true;_imgCache.set(k,t);return t;}
 new RGBELoader().load('assets/hdr/museum_1k.hdr',t=>{t.mapping=THREE.EquirectangularReflectionMapping;scene.environment=t;scene.environmentIntensity=.3;$('#load').textContent='Luz lista';});
 const obstacles=[];const PODS_FLOT=[];
 const basic=(o)=>new THREE.MeshBasicMaterial(Object.assign({toneMapped:false},o));
@@ -824,7 +832,9 @@ function abrirDemo(){if(demoAbierta)return;demoAbierta=true;
  if(!demoCargada){demoCargada=true;demoFrame.src=DEMO_BASE+'#hapee-chat';}
  vigilaWidget();}
 function cerrarDemo(){if(!demoAbierta)return;clearInterval(demoPoll);demoAbierta=false;demoEl.classList.remove('on');
- setTimeout(function(){demoEl.hidden=true;},280);$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';}
+ setTimeout(function(){demoEl.hidden=true;},280);$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';
+ try{demoFrame.blur();window.focus();canvasEl.focus&&canvasEl.focus();}catch(e){}
+ sueltaTeclas();last=performance.now();Q.acc=0;Q.n=0;}
 $('#dX').addEventListener('click',cerrarDemo);
 demoFrame.addEventListener('load',function(){alWidget();vigilaWidget();});
 $('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t,null);});
@@ -873,7 +883,7 @@ function textoPlacard(){if(!focus)return;
  const ag=focus.frases;$('#pg').innerHTML=ag?(isTouch?'Toca <b>HABLAR</b> · conversa con el agente':'<b>E</b> o clic · conversa con el agente · <b>ENTER</b> abre en hapee.ai'):(isTouch?'Toca <b>VER</b> · abrir en hapee.ai':'<b>ENTER</b> o clic · abrir en hapee.ai');$('#tVer').textContent=ag?'HABLAR':'VER →';}
 const WORK_MESHES=works.map(w=>w.mesh);
 function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;fc++;
- if(demoAbierta)return;
+ if(demoAbierta){Q.acc=0;Q.n=0;return;}
  if(window.__hqOn){
   let mx=0,mz=0;
   if(!chatCon){if(isTouch){mx=stick.x;mz=-stick.y;P.yaw-=look.dx*.0035;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-look.dy*.0035));look.dx=0;look.dy=0;}
@@ -894,7 +904,7 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
   if(fc%15===0){let cerca=0;AGENTES.forEach(a=>{const bp=a.bot?a.bot.m.position:{x:a.x,z:a.z};const d=Math.hypot(bp.x-P.x,bp.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);a.btn.querySelector('small').textContent=a.bot&&a.bot.estado!=='trabaja'?(a.bot.estado==='camina'?'caminando':a.bot.estado==='charla'?'conversando':'fuera del puesto'):a.mod;});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
   if(fc%6===0){const near=[];for(let li=0;li<LAMP_POS.length;li++){const lp=LAMP_POS[li],ld=Math.abs(lp[1]-P.z);if(ld<30)near.push({p:lp,d:ld});}near.sort((a,b)=>a.d-b.d);for(let k=0;k<lampPool.length;k++){if(near[k]){lampPool[k].position.set(near[k].p[0],HT-.9,near[k].p[1]);lampPool[k].intensity=48;}else lampPool[k].intensity=0;}}
   if(fc%20===0){const ks=Object.keys(CLIPS);for(let ki=0;ki<ks.length;ki++){const rc=CLIPS[ks[ki]];let cerca=false;
-   for(let zi=0;zi<rc.zs.length;zi++){if(Math.abs(rc.zs[zi]-P.z)<28){cerca=true;break;}}
+   for(let zi=0;zi<rc.zs.length;zi++){if(Math.abs(rc.zs[zi]-P.z)<20){cerca=true;break;}}
    if(cerca||sonandoVid===rc){if(rc.el.paused){const q=rc.el.play();if(q&&q.catch)q.catch(function(){});}}
    else if(!rc.el.paused)rc.el.pause();}}
  if(fc%12===0){for(let wi=0;wi<works.length;wi++){const wg=works[wi].g;wg.visible=Math.abs(wg.position.z-P.z)<34;}for(let bi=0;bi<bots.length;bi++){const b=bots[bi];b.m.visible=Math.abs(b.m.position.z-P.z)<40;}}
@@ -917,13 +927,19 @@ function warmup(){if(warmed)return;warmed=true;const px=camera.position.clone(),
  camera.fov=pf;camera.updateProjectionMatrix();camera.position.copy(px);camera.rotation.copy(pr);
  try{renderer.setSize(W,H);composer.setSize(W,H);const r=renderer.getPixelRatio();smaa.setSize(W*r,H*r);}catch(e){}$('#load').textContent='';}
 let listoYa=false;
-function listo(){if(listoYa)return;listoYa=true;warmup();$('#play').disabled=false;$('#play').textContent='ENTRAR A LA OFICINA';$('#load').textContent='';
+function listo(){if(listoYa)return;listoYa=true;$('#play').disabled=false;$('#play').textContent='ENTRAR A LA OFICINA';$('#load').textContent='';
+ // el precalentado va DESPUÉS de habilitar el botón: bloquea el hilo y no hay por qué
+ // hacer esperar a nadie mirándolo. Lo que falte por cargar entra sobre la marcha.
+ setTimeout(warmup,60);
  if(/hud=0/.test(location.search))document.body.classList.add('sinhud');
  if(/shot=1/.test(location.search)&&!window.__hqOn){enter();const m=/z=(-?\d+)/.exec(location.search);if(m)P.z=+m[1];const xm=/x=(-?[\d.]+)/.exec(location.search);if(xm)P.x=+xm[1];const yw=/yaw=(-?[\d.]+)/.exec(location.search);if(yw)P.yaw=+yw[1];const pt=/pitch=(-?[\d.]+)/.exec(location.search);if(pt)P.pitch=+pt[1];for(let i=0;i<30;i++)window.__loop(performance.now()+i*16.7);}
  medirFPS();}
-THREE.DefaultLoadingManager.onLoad=function(){$('#load').textContent='Preparando la oficina…';setTimeout(listo,30);};
-let _esp=0;(function espera(){_esp+=250;if(_esp>=12000){listo();return;}setTimeout(espera,250);})();
-window.__abrirDemo=abrirDemo;window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
+THREE.DefaultLoadingManager.onProgress=function(u,hechos,total){if(listoYa)return;$('#load').textContent='Cargando la oficina · '+Math.round(hechos/total*100)+'%';};
+THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent='Preparando la oficina…';setTimeout(listo,30);};
+// el tope va por reloj, no por conteo de ticks: mientras se decodifican texturas los
+// temporizadores se retrasan y el contador llegaba tarde a los 4,5 s.
+const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
+window.__irLejos=function(b){levanta(b);irHacia(b,{x:3.0,z:7.2},function(){b.estado='mira';anim(b,'idle');b.espera=3;});};window.__activar=activar;window.__sonando=function(){return sonandoVid;};window.__abrirDemo=abrirDemo;window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
 window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:bots.length,rig:!!RIG,clip:!!CLIP_TALK,anims:bots.map(b=>b.animName).join(','),estados:bots.map(b=>b.estado).join(','),obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
 function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.createElement('div');t.style.cssText='position:fixed;left:8px;top:60px;z-index:99;color:#0f0;font:15px monospace;background:#000;padding:6px';document.body.appendChild(t);
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
