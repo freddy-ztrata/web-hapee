@@ -800,8 +800,8 @@ $('#chX').addEventListener('click',cerrarChat);
    GPU sea toda del widget. En local el origen es otro y se carga la web publicada. */
 const demoEl=$('#demo'),demoFrame=$('#dFrame');let demoAbierta=false,demoCargada=false;
 const DEMO_BASE=/(^|\.)hapee\.ai$/.test(location.hostname)?'/':'https://hapee.ai/';
-function alWidget(){try{const d=demoFrame.contentDocument,w=demoFrame.contentWindow;if(!d)return;
- const sec=d.getElementById('hapee-chat');if(!sec)return;
+function alWidget(){try{const d=demoFrame.contentDocument,w=demoFrame.contentWindow;if(!d)return false;
+ const sec=d.getElementById('hapee-chat');if(!sec)return false;
  // en vez de pelear con el scroll de la home, se ocultan los hermanos de la rama que
  // lleva a la sección: queda sólo el widget, con su propio DOM y su propio JS intactos
  if(!d.__soloWidget){d.__soloWidget=true;
@@ -811,16 +811,21 @@ function alWidget(){try{const d=demoFrame.contentDocument,w=demoFrame.contentWin
   const st=d.createElement('style');st.textContent='html,body{background:#0d0d10!important;margin:0!important}#hapee-chat{margin:0!important}';
   (d.head||d.documentElement).appendChild(st);}
  if(w.history&&'scrollRestoration' in w.history)w.history.scrollRestoration='manual';
- d.documentElement.style.scrollBehavior='auto';w.scrollTo(0,0);}catch(e){}}
+ d.documentElement.style.scrollBehavior='auto';w.scrollTo(0,0);$('#dLoad').hidden=true;return true;}catch(e){return false;}}
+/* El evento load del iframe llega muy tarde en una home con muchas imágenes: para
+   entonces ya se vio la portada entera. Se sondea hasta que la sección exista. */
+let demoPoll=0;
+function vigilaWidget(){clearInterval(demoPoll);let n=0;demoPoll=setInterval(function(){n++;if(alWidget()||n>120)clearInterval(demoPoll);},200);}
 function abrirDemo(){if(demoAbierta)return;demoAbierta=true;
  if(sonandoVid){sonandoVid.el.muted=true;sonandoVid=null;hudSon();}
  if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
  demoEl.hidden=false;requestAnimationFrame(function(){demoEl.classList.add('on');});
- if(!demoCargada){demoCargada=true;demoFrame.src=DEMO_BASE+'#hapee-chat';}else{$('#dLoad').hidden=true;alWidget();}}
-function cerrarDemo(){if(!demoAbierta)return;demoAbierta=false;demoEl.classList.remove('on');
+ if(!demoCargada){demoCargada=true;demoFrame.src=DEMO_BASE+'#hapee-chat';}
+ vigilaWidget();}
+function cerrarDemo(){if(!demoAbierta)return;clearInterval(demoPoll);demoAbierta=false;demoEl.classList.remove('on');
  setTimeout(function(){demoEl.hidden=true;},280);$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';}
 $('#dX').addEventListener('click',cerrarDemo);
-demoFrame.addEventListener('load',function(){$('#dLoad').hidden=true;alWidget();[250,700,1500,2800].forEach(function(ms){setTimeout(alWidget,ms);});});
+demoFrame.addEventListener('load',function(){alWidget();vigilaWidget();});
 $('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t,null);});
 function guion(ag,tipo){if(tipo==='que')return ag.lema+'. '+ag.d;if(tipo==='como')return ag.frases[0]+' '+ag.frases[1]+' Y todo queda en el mismo lugar, sin herramientas separadas.';if(tipo==='precio')return 'Hapee tiene tres planes: STARTER $297/mes, PRO $397/mes (el más elegido) y ELITE SETUP $2.990 pago único. Sin compromiso ni contratos. Agenda una demo en hapee.ai/agenda-tu-demo y lo vemos con tus datos.';return null;}
 async function preguntar(texto,tipo){const ag=chatCon;if(!ag)return;msg('yo',texto);historial.push({role:'user',content:texto});const esp=msg('bot',null);const b=ag.bot;if(b)decir(b,'…',9000,'pensando');
