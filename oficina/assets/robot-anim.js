@@ -41,6 +41,7 @@ export function pose(rig, estado, t, ph) {
   let hips = [0, 0, 0], spine = [resp, 0, 0], head = [Math.sin(t * .6) * .04, Math.sin(t * .45) * .08, 0];
   let lUp = [0, 0, 0], lLeg = [0, 0, 0], lFoot = [0, 0, 0], rUp = [0, 0, 0], rLeg = [0, 0, 0], rFoot = [0, 0, 0];
   let lArm = [0, 0, 0], lFore = [0, 0, 0], rArm = [0, 0, 0], rFore = [0, 0, 0];
+  let lHand = [0, 0, 0], rHand = [0, 0, 0];
   if (estado === 'walk') {
     const s = Math.sin(ph), c = Math.cos(ph);
     lUp = [P * .62 * s, 0, 0]; rUp = [-P * .62 * s, 0, 0];
@@ -54,10 +55,13 @@ export function pose(rig, estado, t, ph) {
     lUp = [-P * 1.45, .12, 0]; rUp = [-P * 1.45, -.12, 0];
     lLeg = [P * 1.35, 0, 0]; rLeg = [P * 1.35, 0, 0];
     lFoot = [P * .2, 0, 0]; rFoot = [P * .2, 0, 0];
-    // brazos al teclado, con un tecleo sutil
-    const tec = Math.sin(t * 9) * .05, tec2 = Math.cos(t * 8.3) * .05;
-    lArm = [-P * .7, .25, R * .15]; rArm = [-P * .7, -.25, -R * .15];
-    lFore = [-P * (1.1 + tec), -.35, 0]; rFore = [-P * (1.1 + tec2), .35, 0];
+    // Tecleo: cada mano baja por turnos. Antes era un seno de amplitud .05 en el
+    // antebrazo y no se percibía ningún movimiento.
+    const k1 = Math.max(0, Math.sin(t * 10.5)), k2 = Math.max(0, Math.sin(t * 10.5 + 2.2));
+    const w1 = Math.max(0, Math.sin(t * 21)), w2 = Math.max(0, Math.sin(t * 21 + 1.1));
+    lArm = [-P * (.66 + k1 * .09), .25, R * .15]; rArm = [-P * (.66 + k2 * .09), -.25, -R * .15];
+    lFore = [-P * (1.02 + k1 * .26), -.35, 0]; rFore = [-P * (1.02 + k2 * .26), .35, 0];
+    lHand = [P * (.18 - w1 * .42), 0, 0]; rHand = [P * (.18 - w2 * .42), 0, 0];
     spine = [P * .08 + resp, 0, 0]; head = [P * .12 + Math.sin(t * .6) * .03, Math.sin(t * .4) * .06, 0];
   } else if (estado === 'wave') {
     const w = Math.sin(t * 7) * .45;
@@ -79,8 +83,8 @@ export function pose(rig, estado, t, ph) {
   if (B.Hips) aplica(rig, B.Hips, hips[0], hips[1], hips[2]);
   ['Spine02', 'Spine01', 'Spine'].forEach(n => { if (B[n]) aplica(rig, B[n], spine[0] / 3, spine[1] / 3, spine[2] / 3); });
   if (B.LeftShoulder) aplica(rig, B.LeftShoulder, 0, 0, 0); if (B.RightShoulder) aplica(rig, B.RightShoulder, 0, 0, 0);
-  if (B.LeftArm) aplica(rig, B.LeftArm, ...lArm); if (B.LeftForeArm) aplica(rig, B.LeftForeArm, ...lFore); if (B.LeftHand) aplica(rig, B.LeftHand, 0, 0, 0);
-  if (B.RightArm) aplica(rig, B.RightArm, ...rArm); if (B.RightForeArm) aplica(rig, B.RightForeArm, ...rFore); if (B.RightHand) aplica(rig, B.RightHand, 0, 0, 0);
+  if (B.LeftArm) aplica(rig, B.LeftArm, ...lArm); if (B.LeftForeArm) aplica(rig, B.LeftForeArm, ...lFore); if (B.LeftHand) aplica(rig, B.LeftHand, ...lHand);
+  if (B.RightArm) aplica(rig, B.RightArm, ...rArm); if (B.RightForeArm) aplica(rig, B.RightForeArm, ...rFore); if (B.RightHand) aplica(rig, B.RightHand, ...rHand);
   if (B.LeftUpLeg) aplica(rig, B.LeftUpLeg, ...lUp); if (B.LeftLeg) aplica(rig, B.LeftLeg, ...lLeg); if (B.LeftFoot) aplica(rig, B.LeftFoot, ...lFoot); if (B.LeftToeBase) aplica(rig, B.LeftToeBase, 0, 0, 0);
   if (B.RightUpLeg) aplica(rig, B.RightUpLeg, ...rUp); if (B.RightLeg) aplica(rig, B.RightLeg, ...rLeg); if (B.RightFoot) aplica(rig, B.RightFoot, ...rFoot); if (B.RightToeBase) aplica(rig, B.RightToeBase, 0, 0, 0);
   if (B.neck) aplica(rig, B.neck, head[0] / 2, head[1] / 2, head[2] / 2); if (B.Head) aplica(rig, B.Head, head[0] / 2, head[1] / 2, head[2] / 2);
