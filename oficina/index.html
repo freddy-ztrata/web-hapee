@@ -290,6 +290,8 @@ const bezelMat=new THREE.MeshPhysicalMaterial({color:0x2B2E36,metalness:.14,roug
 const gris=new THREE.MeshPhysicalMaterial({color:0xD9DBE1,metalness:.05,roughness:.45,clearcoat:.35,clearcoatRoughness:.25});
 const blanco=new THREE.MeshPhysicalMaterial({color:0xF2F2F4,roughness:.3,metalness:.03,clearcoat:.5,clearcoatRoughness:.2});
 const vidrio=new THREE.MeshPhysicalMaterial({color:0x9FB6C8,transparent:true,opacity:.12,roughness:.08,metalness:0,clearcoat:.8,clearcoatRoughness:.1,side:THREE.DoubleSide,depthWrite:false});
+// mampara del puesto: esmerilada de verdad, si no la placa de estado parece flotar
+const vidrioMate=new THREE.MeshPhysicalMaterial({color:0xC6D4E0,transparent:true,opacity:.30,roughness:.55,metalness:0,clearcoat:.4,transmission:0,side:THREE.DoubleSide,depthWrite:false,envMapIntensity:.4});
 const cromo=new THREE.MeshStandardMaterial({color:0xDCE0E8,metalness:.45,roughness:.32,envMapIntensity:.55});
 const gradTex=(function(){const c=document.createElement('canvas');c.width=512;c.height=8;const g=c.getContext('2d');const gr=g.createLinearGradient(0,0,512,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.fillRect(0,0,512,8);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=THREE.RepeatWrapping;return t;})();
 // LED de marca: emisivo por encima de 1 para que sea lo ÚNICO que florece
@@ -409,38 +411,38 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  const pata=new THREE.Mesh(new THREE.BoxGeometry(.9,.68,.08),cromo);pata.position.set(0,.37,-.18);g.add(pata);
  const colMat=new THREE.MeshStandardMaterial({color:0,emissive:ag.acc,emissiveIntensity:1.9,roughness:.5});
  const led=new THREE.Mesh(new THREE.BoxGeometry(2.5,.025,.025),colMat);led.position.set(0,.70,.49);g.add(led);
- const aroP=new THREE.Mesh(new THREE.TorusGeometry(.62,.018,10,48),colMat);aroP.rotation.x=Math.PI/2;aroP.position.set(0,.02,-1.02);g.add(aroP);
+ const aroP=new THREE.Mesh(new THREE.TorusGeometry(.62,.018,10,48),colMat);aroP.rotation.x=Math.PI/2;aroP.position.set(0,.02,-.74);g.add(aroP);
  const placaId=new THREE.Mesh(new THREE.BoxGeometry(.46,.46,.025),new THREE.MeshStandardMaterial({color:0x24262D,roughness:.45,metalness:.25,envMapIntensity:.35}));placaId.position.set(-1.5,1.62,-1.936);g.add(placaId);
  const disco=new THREE.Mesh(new THREE.CircleGeometry(.12,36),basic({color:ag.acc}));disco.position.set(-1.5,1.62,-1.92);g.add(disco);
  const anillo=new THREE.Mesh(new THREE.TorusGeometry(.19,.01,10,44),basic({color:ag.acc,transparent:true,opacity:.55}));anillo.position.set(-1.5,1.62,-1.92);g.add(anillo);
  // ── detalle fino del puesto: lo que hay de verdad sobre un escritorio ──
  const tapete=new THREE.Mesh(new THREE.BoxGeometry(.95,.008,.34),new THREE.MeshStandardMaterial({color:0x2B2E36,roughness:.85,metalness:.02,envMapIntensity:.15}));
- tapete.position.set(.36,.775,.15);g.add(tapete);
- const tecl=new THREE.Mesh(new THREE.BoxGeometry(.5,.022,.16),gris);tecl.position.set(.25,.79,.16);g.add(tecl);
+ tapete.position.set(.30,.775,-.04);g.add(tapete);
+ const tecl=new THREE.Mesh(new THREE.BoxGeometry(.5,.022,.16),gris);tecl.position.set(.22,.79,-.03);g.add(tecl);
  {const tt=canvasTex(512,164,function(q){q.fillStyle='#E7E9EE';q.fillRect(0,0,512,164);
    for(let r=0;r<4;r++)for(let c=0;c<15;c++){q.fillStyle='#CFD3DA';q.beginPath();q.roundRect(10+c*33+(r===3?14:0),10+r*38,26,30,5);q.fill();}
    q.fillStyle='#CFD3DA';q.beginPath();q.roundRect(150,124,210,30,5);q.fill();});
-  const teclas=new THREE.Mesh(new THREE.PlaneGeometry(.49,.157),basic({map:tt}));teclas.rotation.x=-Math.PI/2;teclas.position.set(.25,.8015,.16);g.add(teclas);}
- const raton=new THREE.Mesh(new THREE.SphereGeometry(.045,14,10),gris);raton.scale.set(1,.5,1.35);raton.position.set(.66,.79,.16);g.add(raton);
+  const teclas=new THREE.Mesh(new THREE.PlaneGeometry(.49,.157),basic({map:tt}));teclas.rotation.x=-Math.PI/2;teclas.position.set(.22,.8015,-.03);g.add(teclas);}
+ const raton=new THREE.Mesh(new THREE.SphereGeometry(.045,14,10),gris);raton.scale.set(1,.5,1.35);raton.position.set(.62,.79,-.03);g.add(raton);
  const tazaMat=new THREE.MeshStandardMaterial({color:0xF3F3F5,roughness:.35,metalness:.04,envMapIntensity:.4});
- const taza=new THREE.Mesh(new THREE.CylinderGeometry(.043,.038,.095,20),tazaMat);taza.position.set(-.55,.825,.2);g.add(taza);
- const asa=new THREE.Mesh(new THREE.TorusGeometry(.032,.008,8,18,Math.PI*1.2),tazaMat);asa.position.set(-.505,.825,.2);asa.rotation.y=Math.PI/2;g.add(asa);
- const cafe=new THREE.Mesh(new THREE.CircleGeometry(.04,18),basic({color:0x4A2C1B}));cafe.rotation.x=-Math.PI/2;cafe.position.set(-.55,.873,.2);g.add(cafe);
+ const taza=new THREE.Mesh(new THREE.CylinderGeometry(.043,.038,.095,20),tazaMat);taza.position.set(-.52,.825,.22);g.add(taza);
+ const asa=new THREE.Mesh(new THREE.TorusGeometry(.032,.008,8,18,Math.PI*1.2),tazaMat);asa.position.set(-.475,.825,.22);asa.rotation.y=Math.PI/2;g.add(asa);
+ const cafe=new THREE.Mesh(new THREE.CircleGeometry(.04,18),basic({color:0x4A2C1B}));cafe.rotation.x=-Math.PI/2;cafe.position.set(-.52,.873,.22);g.add(cafe);
  const movil=new THREE.Mesh(new THREE.BoxGeometry(.072,.009,.148),new THREE.MeshStandardMaterial({color:0x1C1E24,roughness:.3,metalness:.3,envMapIntensity:.4}));
- movil.position.set(.86,.7755,.02);movil.rotation.y=-.22;g.add(movil);
- const pant=new THREE.Mesh(new THREE.PlaneGeometry(.062,.132),basic({color:ag.acc,transparent:true,opacity:.5}));pant.rotation.x=-Math.PI/2;pant.rotation.z=-.22;pant.position.set(.86,.7805,.02);g.add(pant);
+ movil.position.set(.9,.7755,.22);movil.rotation.y=-.22;g.add(movil);
+ const pant=new THREE.Mesh(new THREE.PlaneGeometry(.062,.132),basic({color:ag.acc,transparent:true,opacity:.5}));pant.rotation.x=-Math.PI/2;pant.rotation.z=-.22;pant.position.set(.9,.7805,.22);g.add(pant);
  const bote=new THREE.Mesh(new THREE.CylinderGeometry(.035,.032,.1,16,1,true),new THREE.MeshStandardMaterial({color:0x3A3E47,roughness:.6,metalness:.2,side:THREE.DoubleSide,envMapIntensity:.25}));
- bote.position.set(-.86,.827,.02);g.add(bote);
+ bote.position.set(-.88,.827,-.06);g.add(bote);
  [[-.868,.1,0x1a1a1e],[-.852,.085,0xFA5000],[-.86,.095,0x2E86DE]].forEach(function(q,i){
   const lap=new THREE.Mesh(new THREE.CylinderGeometry(.0042,.0042,.16,7),new THREE.MeshStandardMaterial({color:q[2],roughness:.5}));
-  lap.position.set(q[0],.86+q[1]*.3,.02+(i-1)*.014);lap.rotation.z=(i-1)*.12;lap.rotation.x=(i-1)*.06;g.add(lap);});
+  lap.position.set(q[0]-.02,.86+q[1]*.3,-.06+(i-1)*.014);lap.rotation.z=(i-1)*.12;lap.rotation.x=(i-1)*.06;g.add(lap);});
  const hojas=new THREE.Mesh(new THREE.BoxGeometry(.22,.006,.3),new THREE.MeshStandardMaterial({color:0xF9F9F7,roughness:.9}));
- hojas.position.set(-.3,.7745,-.02);hojas.rotation.y=.14;g.add(hojas);
+ hojas.position.set(-.26,.7745,.24);hojas.rotation.y=.14;g.add(hojas);
  // cable del monitor, cayendo por detrás del tablero
  {const cur=new THREE.CatmullRomCurve3([new THREE.Vector3(-1.0,.72,-.1),new THREE.Vector3(-1.05,.5,-.22),new THREE.Vector3(-1.0,.22,-.3),new THREE.Vector3(-.92,.04,-.26)]);
   const cab=new THREE.Mesh(new THREE.TubeGeometry(cur,18,.009,7,false),new THREE.MeshStandardMaterial({color:0x22242A,roughness:.7}));g.add(cab);}
  // mampara de vidrio detrás del puesto (privacidad), con filete de luz
- const mam=new THREE.Mesh(new THREE.BoxGeometry(3.4,1.7,.04),vidrio);mam.position.set(0,1.05,-1.95);g.add(mam);
+ const mam=new THREE.Mesh(new THREE.BoxGeometry(3.4,1.7,.04),vidrioMate);mam.position.set(0,1.05,-1.95);g.add(mam);
  // el vidrio era casi invisible y la placa de estado parecía flotar: se le pone marco
  [[-1.71,0],[1.71,0]].forEach(function(q){const po=new THREE.Mesh(new THREE.BoxGeometry(.05,1.78,.07),gris);po.position.set(q[0],1.05,-1.95);g.add(po);});
  const rail=new THREE.Mesh(new THREE.BoxGeometry(3.47,.05,.07),gris);rail.position.set(0,.19,-1.95);g.add(rail);
@@ -453,10 +455,10 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  // franja de estado ENCIMA del monitor, sin tapar la UI
  const est=estadoTex(ag);const franja=new THREE.Mesh(new THREE.PlaneGeometry(AW+.06,(AW+.06)*128/1024),basic({map:est.t}));franja.position.set(0,1.28+AH-.35+.03+((AW+.06)*128/1024)/2,.02);mon.add(franja);
  // silla detrás del escritorio, mirando al pasillo
- const si=silla();si.position.set(0,0,-1.02);g.add(si);
+ const si=silla();si.position.set(0,0,-.74);g.add(si);
  const rot=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.34),basic({map:signTex(ag.mod.toUpperCase(),150,'#D44400',3072,550),transparent:true}));rot.position.set(0,2.6,.1);g.add(rot);
  const pl=new THREE.Mesh(new THREE.PlaneGeometry(1.7,1.7*400/1200),basic({map:placaTex(ag.mod,ag.n,ag.lema)}));pl.position.set(0,.42,.52);g.add(pl);
- const halo=new THREE.Mesh(new THREE.PlaneGeometry(4.2,3.2),haloDe(ag.acc));halo.rotation.x=-Math.PI/2;halo.position.set(0,.012,-.7);g.add(halo);
+ const halo=new THREE.Mesh(new THREE.PlaneGeometry(4.2,3.2),haloDe(ag.acc));halo.rotation.x=-Math.PI/2;halo.position.set(0,.012,-.48);g.add(halo);
  const kit=propKit(ag);kit.position.set(0,.77,0);g.add(kit);ag.kitG=kit;
  scene.add(g);
  // muro de trabajo: la UI clara, grande, con luz propia
@@ -468,7 +470,7 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  obstacles.push({x:ag.x,z:ag.z,w:1.9,d:2.7});
  scr.userData.work=ag;ag.g=g;ag.scr=scr;ag.est=est;works.push({o:ag,mesh:scr,g:g});
  // asiento: el robot se sienta en la silla mirando al pasillo
- const home=new THREE.Vector3(0,0,-1.02);g.localToWorld(home);const sal=new THREE.Vector3(1.75,0,-1.1);g.localToWorld(sal);
+ const home=new THREE.Vector3(0,0,-.74);g.localToWorld(home);const sal=new THREE.Vector3(1.75,0,-1.1);g.localToWorld(sal);
  ag.home={x:home.x,z:home.z,yaw:Math.atan2((ag.lado<0?1:-1),0)};ag.salida={x:sal.x,z:sal.z};
  ag.visita={x:lado*3.4,z:ag.z};ag.anfitrion={x:lado*4.2,z:ag.z+1.05};estaciones.push(ag);});
 {const t=new THREE.Mesh(new THREE.PlaneGeometry(5.4,.92),basic({map:signTex('ZONA 02 · PISO DE AGENTES',70,'#D44400',2048,384),transparent:true}));t.position.set(0,HT-1.05,Z1.b-.3);t.rotation.y=Math.PI;scene.add(t);
