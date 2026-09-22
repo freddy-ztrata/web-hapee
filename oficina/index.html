@@ -500,9 +500,13 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  const rail=new THREE.Mesh(new THREE.BoxGeometry(3.47,.05,.07),gris);rail.position.set(0,.19,-1.95);g.add(rail);
  const fil=new THREE.Mesh(new THREE.BoxGeometry(3.4,.03,.03),ledMat);fil.position.set(0,1.9,-1.95);g.add(fil);
  // monitor a un costado (35°), sobre brazo; la cara del robot queda libre
- const AW=.98,AH=AW*1194/1600;const mon=new THREE.Group();mon.position.set(-1.0,0,.02);mon.rotation.y=-.62;g.add(mon);
+ // El monitor mira AL ROBOT, no al pasillo: está a su izquierda en (-1.0,.02) y el
+ // robot se sienta en (0,-.74), así que la pantalla apunta a atan2(1.0,-.76)=2.20 rad.
+ // Antes quedaba de espaldas al robot, con la UI dando al visitante.
+ const AW=.98,AH=AW*1194/1600;const mon=new THREE.Group();mon.position.set(-1.0,0,.02);mon.rotation.y=2.20;g.add(mon);
  const brazo=new THREE.Mesh(new THREE.BoxGeometry(.05,.5,.05),cromo);brazo.position.set(0,.98,-.06);mon.add(brazo);
- const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.06,AH+.06,.04),gris);bez.position.set(0,1.28+AH/2-.35,0);mon.add(bez);
+ // El respaldo queda hacia el pasillo: con el gris claro leía como una tabla blanca.
+ const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.06,AH+.06,.04),bezelMat);bez.position.set(0,1.28+AH/2-.35,0);mon.add(bez);
  const scr=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde('assets/ui/'+ag.ui+'-light.webp'),color:0xF6F6F6}));scr.position.set(0,1.28+AH/2-.35,.025);mon.add(scr);
  // franja de estado ENCIMA del monitor, sin tapar la UI
  const est=estadoTex(ag);const franja=new THREE.Mesh(new THREE.PlaneGeometry(AW+.06,(AW+.06)*128/1024),basic({map:est.t}));franja.position.set(0,1.28+AH-.35+.03+((AW+.06)*128/1024)/2,.02);mon.add(franja);
@@ -723,7 +727,7 @@ function pintaCara(ca,gesto,ojo,boca){
  // El casquete estira el dibujo: medido con rejilla, un píxel vertical pesa 1,13
  // veces más que uno horizontal. Sin corregirlo los ojos salen achatados y la
  // boca se sube encima de ellos, que era justo lo que se veía.
- const cy=H*.351, dx=W*.127, rx=W*.060, ry=H*.115, my=H*.553;
+ const cy=H*.356, dx=W*.124, rx=W*.066, ry=H*.158, my=H*.560;
  g.save();g.translate(W/2,H*.50);g.scale(1,H/W*1.34);
  const gr=g.createRadialGradient(0,-W*.04,0,0,0,W*.50);
  gr.addColorStop(0,'rgba(64,29,38,1)');gr.addColorStop(.58,'rgba(52,24,32,1)');
@@ -732,20 +736,37 @@ function pintaCara(ca,gesto,ojo,boca){
  const bl=g.createLinearGradient(0,H*.16,0,H*.40);bl.addColorStop(0,'rgba(255,255,255,.12)');bl.addColorStop(1,'rgba(255,255,255,0)');
  g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.22,W*.23,H*.10,0,0,Math.PI*2);g.fill();
  g.lineCap='round';g.lineJoin='round';
- function ojoAbierto(cx,k){
+ /* Ojo amable: no es un óvalo cerrado. El párpado inferior sube hacia el centro y el
+    ojo se inclina un poco hacia afuera. Un óvalo perfecto lee como muñeco inquietante;
+    esta forma lee simpática incluso de lejos, que es como más se ve el robot. */
+ function ojoAbierto(cx,k,sd){
   const rry=Math.max(ry*.07,ry*k);
-  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(cx,cy,rx,rry,0,0,Math.PI*2);g.fill();
+  const forma=function(){
+   g.beginPath();
+   g.ellipse(cx,cy,rx,rry,0,Math.PI,0);                       // párpado superior, arco lleno
+   g.quadraticCurveTo(cx,cy+rry*.34,cx-rx,cy);                // párpado inferior, subido
+   g.closePath();
+  };
+  g.save();
+  g.translate(cx,cy);g.rotate(-sd*.10);g.translate(-cx,-cy);  // leve inclinación hacia afuera
+  g.fillStyle='#FFFFFF';forma();g.fill();
   if(k>.45){
-   g.save();g.beginPath();g.ellipse(cx,cy,rx,rry,0,0,Math.PI*2);g.clip();
-   const sg=g.createLinearGradient(0,cy-rry,0,cy+rry*.2);
-   sg.addColorStop(0,'rgba(108,70,86,.34)');sg.addColorStop(1,'rgba(255,255,255,0)');
-   g.fillStyle=sg;g.fillRect(cx-rx,cy-rry,rx*2,rry*2);g.restore();
-   g.fillStyle='rgba(255,255,255,.98)';g.beginPath();g.ellipse(cx-rx*.36,cy-rry*.44,rx*.27,rry*.21,-.5,0,Math.PI*2);g.fill();}}
+   g.save();forma();g.clip();
+   const sg=g.createLinearGradient(0,cy-rry,0,cy+rry*.25);
+   sg.addColorStop(0,'rgba(112,74,90,.30)');sg.addColorStop(1,'rgba(255,255,255,0)');
+   g.fillStyle=sg;g.fillRect(cx-rx*1.2,cy-rry*1.2,rx*2.4,rry*2.4);g.restore();
+   // dos brillos: el grande arriba y una chispa chica abajo, que es lo que da calidez
+   g.fillStyle='rgba(255,255,255,.99)';
+   g.beginPath();g.ellipse(cx-sd*rx*.30,cy-rry*.40,rx*.32,rry*.26,-.5,0,Math.PI*2);g.fill();
+   g.globalAlpha=.55;
+   g.beginPath();g.ellipse(cx+sd*rx*.34,cy+rry*.06,rx*.15,rry*.12,0,0,Math.PI*2);g.fill();
+   g.globalAlpha=1;}
+  g.restore();}
  function ojoFeliz(cx){
   g.strokeStyle='#FFFFFF';g.lineWidth=rx*.62;
   g.beginPath();g.arc(cx,cy+ry*.46,rx*1.06,Math.PI*1.10,Math.PI*1.90);g.stroke();}
  if(gesto==='feliz'){[-1,1].forEach(function(sd){ojoFeliz(W/2+sd*dx);});}
- else{const mira=gesto==='mira'?rx*.16:0;[-1,1].forEach(function(sd){ojoAbierto(W/2+sd*dx+mira,ojo);});}
+ else{const mira=gesto==='mira'?rx*.16:0;[-1,1].forEach(function(sd){ojoAbierto(W/2+sd*dx+mira,ojo,sd);});}
  if(boca>.08){ // boca abierta al hablar: interior y lengua
   const bw=W*.072+boca*W*.040,bh=H*.040+boca*H*.105;
   g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my,bw,bh,0,0,Math.PI*2);g.fill();
@@ -768,7 +789,7 @@ function nuevoBot(ag,pos,yaw,escala,tipo){let r,rig=null,mixer=null,talk=null;
  // escala ~1/100 y cualquier hijo suyo saldría cien veces más pequeño
  let cara=null,caraMesh=null;
  if(rig&&rig.head){cara=nuevaCara();
-  const capa=new THREE.SphereGeometry(CARA_R,48,36,Math.PI/2-1.46,2.92,.96,2.10);
+  const capa=new THREE.SphereGeometry(CARA_R,48,36,Math.PI/2-1.50,3.00,.96,2.10);
   caraMesh=new THREE.Mesh(capa,new THREE.MeshBasicMaterial({map:cara.t,transparent:true,toneMapped:false,depthWrite:false,
    polygonOffset:true,polygonOffsetFactor:-16,polygonOffsetUnits:-64}));
   caraMesh.renderOrder=3;caraMesh.frustumCulled=false;r.add(caraMesh);}

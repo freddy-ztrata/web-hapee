@@ -36,7 +36,10 @@ function base(rig) {
 export const S = { pitch: 1, roll: -1 };
 // Valores hallados barriendo y midiendo la posición de mundo de las manos:
 // quedan sobre el teclado (±.11 de separación, altura .833, alcance .285).
-export const SIT = { a: 1.32, f: .82, ay: .05, az: .85, fy: -.33, fz: .20, hx: .50, hy: .80, hz: -.90 };   // calibrado con qa/poses.html: roll -1 levanta el brazo derecho hacia afuera
+export const SIT = { a: 1.23, f: .96, ay: .16, az: .59, fy: -.10, fz: .20, hx: .50, hy: .80, hz: -.90 };
+// Recalibrado: antes las manos quedaban a ±.11 y los antebrazos cruzaban el torso,
+// así que de lejos parecía que las manos se metían dentro del robot. Ahora las manos
+// van a ±.16/.20 sobre el teclado y los codos quedan a ±.22/.26, por fuera de ellas.   // calibrado con qa/poses.html: roll -1 levanta el brazo derecho hacia afuera
 export function pose(rig, estado, t, ph) {
   base(rig);
   const B = rig.bones, P = S.pitch, R = S.roll;
