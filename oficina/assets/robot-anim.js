@@ -33,7 +33,10 @@ function base(rig) {
 }
 
 /* estado: 'idle' | 'walk' | 'sit' | 'wave' · t: tiempo (s) · ph: fase de paso (rad) · S: signos calibrados */
-export const S = { pitch: 1, roll: -1 };   // calibrado con qa/poses.html: roll -1 levanta el brazo derecho hacia afuera
+export const S = { pitch: 1, roll: -1 };
+// Valores hallados barriendo y midiendo la posición de mundo de las manos:
+// quedan sobre el teclado (±.11 de separación, altura .833, alcance .285).
+export const SIT = { a: 1.32, f: .82, ay: .05, az: .85, fy: -.33, fz: .20, hx: .50, hy: .80, hz: -.90 };   // calibrado con qa/poses.html: roll -1 levanta el brazo derecho hacia afuera
 export function pose(rig, estado, t, ph) {
   base(rig);
   const B = rig.bones, P = S.pitch, R = S.roll;
@@ -59,9 +62,14 @@ export function pose(rig, estado, t, ph) {
     // antebrazo y no se percibía ningún movimiento.
     const k1 = Math.max(0, Math.sin(t * 10.5)), k2 = Math.max(0, Math.sin(t * 10.5 + 2.2));
     const w1 = Math.max(0, Math.sin(t * 21)), w2 = Math.max(0, Math.sin(t * 21 + 1.1));
-    lArm = [-P * (.66 + k1 * .09), .25, R * .15]; rArm = [-P * (.66 + k2 * .09), -.25, -R * .15];
-    lFore = [-P * (1.02 + k1 * .26), -.35, 0]; rFore = [-P * (1.02 + k2 * .26), .35, 0];
-    lHand = [P * (.18 - w1 * .42), 0, 0]; rHand = [P * (.18 - w2 * .42), 0, 0];
+    // Los brazos se abrían de más y quedaban bajos: las manos caían 13 cm por debajo
+    // del teclado y 20 cm hacia afuera. Medido con las posiciones de mundo de los huesos.
+    // Calibrado midiendo la posición de mundo de las manos contra el teclado.
+    // globalThis.__SIT permite barrer valores desde el QA sin tocar el archivo.
+    const D = (typeof globalThis !== 'undefined' && globalThis.__SIT) || SIT;
+    lArm = [-P * (D.a + k1 * .08), D.ay, R * D.az]; rArm = [-P * (D.a + k2 * .08), -D.ay, -R * D.az];
+    lFore = [-P * (D.f + k1 * .22), -D.fy, D.fz]; rFore = [-P * (D.f + k2 * .22), D.fy, -D.fz];
+    lHand = [P * (D.hx - w1 * .42), D.hy, R * D.hz]; rHand = [P * (D.hx - w2 * .42), -D.hy, -R * D.hz];
     spine = [P * .08 + resp, 0, 0]; head = [P * .12 + Math.sin(t * .6) * .03, Math.sin(t * .4) * .06, 0];
   } else if (estado === 'wave') {
     const w = Math.sin(t * 7) * .45;

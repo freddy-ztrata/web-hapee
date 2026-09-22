@@ -72,9 +72,12 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 #mapa{position:fixed;right:22px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:20;width:150px;height:330px;border-radius:16px;background:rgba(17,17,20,.72);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);display:none}
 #mapa.on{display:block}
 @media(max-width:900px){#panel,#mapa{display:none!important}}
-.scr{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:radial-gradient(120% 90% at 20% 10%,rgba(250,80,0,.16),transparent 55%),radial-gradient(90% 80% at 85% 90%,rgba(205,35,73,.14),transparent 55%),rgba(245,243,240,.96);padding:24px;text-align:center;cursor:default;backdrop-filter:blur(8px);color:#1a1a1a}
+.scr{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:radial-gradient(120% 90% at 20% 10%,rgba(250,80,0,.16),transparent 55%),radial-gradient(90% 80% at 85% 90%,rgba(205,35,73,.14),transparent 55%),rgba(245,243,240,.96);padding:24px;text-align:center;cursor:default;backdrop-filter:blur(8px);color:#1a1a1a}
 .scr[hidden]{display:none}
-.scr>div{width:100%;max-width:720px;margin:0 auto}
+/* margin:auto en flex centra pero deja desplazar cuando el contenido no cabe:
+   con grid+place-items:center el sobrante se corta arriba y el botón ENTRAR
+   quedaba inalcanzable con el teléfono de lado (844x390). */
+.scr>div{width:100%;max-width:720px;margin:auto;padding:8px 0}
 .scr .k{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--legible);text-transform:uppercase}
 .scr .robot{height:min(26vh,190px);margin:0 auto 6px;filter:drop-shadow(0 30px 50px rgba(250,80,0,.35))}
 .scr h1{font-size:clamp(40px,8.6vw,96px);line-height:.95;letter-spacing:-.045em;font-weight:800;margin:10px 0 12px}
@@ -157,6 +160,13 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 /* ── Horizontal en móvil: con menos de 520 px de alto las piezas del HUD se pisaban
    entre sí, porque las reglas de móvil iban por ancho y en horizontal el ancho es
    grande. Estas van por ALTO. ── */
+@media (max-height:560px){
+ .scr .robot{height:min(16vh,90px);margin-bottom:2px}
+ .scr h1{font-size:clamp(20px,5.2vw,30px);line-height:1.05}
+ .scr .k{font-size:9.5px}
+ .scr p{font-size:12px;line-height:1.45;max-height:4.6em;overflow:hidden}
+ .scr .btn{padding:12px 24px;font-size:13px}
+}
 @media (max-height:520px){
  #panel,#mapa{display:none!important}
  #hint{display:none!important}
@@ -459,13 +469,13 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  const anillo=new THREE.Mesh(new THREE.TorusGeometry(.19,.01,10,44),basic({color:ag.acc,transparent:true,opacity:.55}));anillo.position.set(-1.5,1.62,-1.92);g.add(anillo);
  // ── detalle fino del puesto: lo que hay de verdad sobre un escritorio ──
  const tapete=new THREE.Mesh(new THREE.BoxGeometry(.95,.008,.34),new THREE.MeshStandardMaterial({color:0x2B2E36,roughness:.85,metalness:.02,envMapIntensity:.15}));
- tapete.position.set(.30,.775,-.04);g.add(tapete);
- const tecl=new THREE.Mesh(new THREE.BoxGeometry(.5,.022,.16),gris);tecl.position.set(.22,.79,-.03);g.add(tecl);
+ tapete.position.set(.12,.775,-.26);g.add(tapete);
+ const tecl=new THREE.Mesh(new THREE.BoxGeometry(.5,.022,.16),gris);tecl.position.set(0,.79,-.285);g.add(tecl);
  {const tt=canvasTex(512,164,function(q){q.fillStyle='#E7E9EE';q.fillRect(0,0,512,164);
    for(let r=0;r<4;r++)for(let c=0;c<15;c++){q.fillStyle='#CFD3DA';q.beginPath();q.roundRect(10+c*33+(r===3?14:0),10+r*38,26,30,5);q.fill();}
    q.fillStyle='#CFD3DA';q.beginPath();q.roundRect(150,124,210,30,5);q.fill();});
-  const teclas=new THREE.Mesh(new THREE.PlaneGeometry(.49,.157),basic({map:tt}));teclas.rotation.x=-Math.PI/2;teclas.position.set(.22,.8015,-.03);g.add(teclas);}
- const raton=new THREE.Mesh(new THREE.SphereGeometry(.045,14,10),gris);raton.scale.set(1,.5,1.35);raton.position.set(.62,.79,-.03);g.add(raton);
+  const teclas=new THREE.Mesh(new THREE.PlaneGeometry(.49,.157),basic({map:tt}));teclas.rotation.x=-Math.PI/2;teclas.position.set(0,.8015,-.285);g.add(teclas);}
+ const raton=new THREE.Mesh(new THREE.SphereGeometry(.045,14,10),gris);raton.scale.set(1,.5,1.35);raton.position.set(.42,.79,-.27);g.add(raton);
  const tazaMat=new THREE.MeshStandardMaterial({color:0xF3F3F5,roughness:.35,metalness:.04,envMapIntensity:.4});
  const taza=new THREE.Mesh(new THREE.CylinderGeometry(.043,.038,.095,20),tazaMat);taza.position.set(-.52,.825,.22);g.add(taza);
  const asa=new THREE.Mesh(new THREE.TorusGeometry(.032,.008,8,18,Math.PI*1.2),tazaMat);asa.position.set(-.475,.825,.22);asa.rotation.y=Math.PI/2;g.add(asa);
@@ -709,35 +719,42 @@ function nuevaCara(){const c=document.createElement('canvas');c.width=CARA_W;c.h
    que no se note dónde acaba. */
 function pintaCara(ca,gesto,ojo,boca){
  const f=gesto+'|'+ojo+'|'+boca;if(ca.firma===f)return;ca.firma=f;
-
  const g=ca.g,W=CARA_W,H=CARA_H;g.clearRect(0,0,W,H);
+ // El casquete estira el dibujo: medido con rejilla, un píxel vertical pesa 1,13
+ // veces más que uno horizontal. Sin corregirlo los ojos salen achatados y la
+ // boca se sube encima de ellos, que era justo lo que se veía.
+ const cy=H*.351, dx=W*.127, rx=W*.060, ry=H*.115, my=H*.553;
  g.save();g.translate(W/2,H*.50);g.scale(1,H/W*1.34);
  const gr=g.createRadialGradient(0,-W*.04,0,0,0,W*.50);
  gr.addColorStop(0,'rgba(64,29,38,1)');gr.addColorStop(.58,'rgba(52,24,32,1)');
  gr.addColorStop(.82,'rgba(42,19,26,1)');gr.addColorStop(.93,'rgba(42,19,26,.5)');gr.addColorStop(1,'rgba(42,19,26,0)');
  g.fillStyle=gr;g.beginPath();g.arc(0,0,W*.50,0,Math.PI*2);g.fill();g.restore();
- // reflejo del casco, arriba
- const bl=g.createLinearGradient(0,H*.26,0,H*.52);bl.addColorStop(0,'rgba(255,255,255,.10)');bl.addColorStop(1,'rgba(255,255,255,0)');
- g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.34,W*.21,H*.10,0,0,Math.PI*2);g.fill();
- const cy=H*.455,dx=W*.137,rx=W*.049,ry=H*.100;
+ const bl=g.createLinearGradient(0,H*.16,0,H*.40);bl.addColorStop(0,'rgba(255,255,255,.12)');bl.addColorStop(1,'rgba(255,255,255,0)');
+ g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.22,W*.23,H*.10,0,0,Math.PI*2);g.fill();
  g.lineCap='round';g.lineJoin='round';
  function ojoAbierto(cx,k){
-  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(cx,cy,rx,Math.max(ry*.09,ry*k),0,0,Math.PI*2);g.fill();
-  if(k>.45){ // sombra interior arriba y chispa: sin esto son dos manchas planas
-   const sg=g.createLinearGradient(0,cy-ry*k,0,cy+ry*k);sg.addColorStop(0,'rgba(120,80,95,.30)');sg.addColorStop(.45,'rgba(255,255,255,0)');
-   g.save();g.beginPath();g.ellipse(cx,cy,rx,ry*k,0,0,Math.PI*2);g.clip();g.fillStyle=sg;g.fillRect(cx-rx,cy-ry,rx*2,ry*2);g.restore();
-   g.fillStyle='rgba(255,255,255,.95)';g.beginPath();g.ellipse(cx-rx*.34,cy-ry*k*.42,rx*.30,ry*k*.26,-0.5,0,Math.PI*2);g.fill();}}
- if(gesto==='feliz'){g.strokeStyle='#FFFFFF';g.lineWidth=W*.025;
-  [-1,1].forEach(function(sd){g.beginPath();g.arc(W/2+sd*dx,cy+ry*.5,rx*1.25,Math.PI*1.12,Math.PI*1.88);g.stroke();});}
- else{const mira=gesto==='mira'?rx*.22:0;[-1,1].forEach(function(sd){ojoAbierto(W/2+sd*dx+mira,ojo);});}
- // boca: sonrisa cerrada, o abierta con interior y lengua cuando habla
- const my=H*.645;
- if(boca>.08){const bw=W*.066+boca*W*.044,bh=H*.042+boca*H*.135;
+  const rry=Math.max(ry*.07,ry*k);
+  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(cx,cy,rx,rry,0,0,Math.PI*2);g.fill();
+  if(k>.45){
+   g.save();g.beginPath();g.ellipse(cx,cy,rx,rry,0,0,Math.PI*2);g.clip();
+   const sg=g.createLinearGradient(0,cy-rry,0,cy+rry*.2);
+   sg.addColorStop(0,'rgba(108,70,86,.34)');sg.addColorStop(1,'rgba(255,255,255,0)');
+   g.fillStyle=sg;g.fillRect(cx-rx,cy-rry,rx*2,rry*2);g.restore();
+   g.fillStyle='rgba(255,255,255,.98)';g.beginPath();g.ellipse(cx-rx*.36,cy-rry*.44,rx*.27,rry*.21,-.5,0,Math.PI*2);g.fill();}}
+ function ojoFeliz(cx){
+  g.strokeStyle='#FFFFFF';g.lineWidth=rx*.62;
+  g.beginPath();g.arc(cx,cy+ry*.46,rx*1.06,Math.PI*1.10,Math.PI*1.90);g.stroke();}
+ if(gesto==='feliz'){[-1,1].forEach(function(sd){ojoFeliz(W/2+sd*dx);});}
+ else{const mira=gesto==='mira'?rx*.16:0;[-1,1].forEach(function(sd){ojoAbierto(W/2+sd*dx+mira,ojo);});}
+ if(boca>.08){ // boca abierta al hablar: interior y lengua
+  const bw=W*.072+boca*W*.040,bh=H*.040+boca*H*.105;
   g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my,bw,bh,0,0,Math.PI*2);g.fill();
-  g.fillStyle='#43141F';g.beginPath();g.ellipse(W/2,my+bh*.16,bw*.80,bh*.70,0,0,Math.PI*2);g.fill();
-  g.fillStyle='rgba(214,72,110,.85)';g.beginPath();g.ellipse(W/2,my+bh*.55,bw*.46,bh*.34,0,0,Math.PI*2);g.fill();
-  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my-bh*.72,bw*.86,bh*.22,0,0,Math.PI*2);g.fill();}
- else{g.strokeStyle='#FFFFFF';g.lineWidth=W*.021;g.beginPath();g.arc(W/2,my-H*.075,W*.064,Math.PI*.16,Math.PI*.84);g.stroke();}
+  g.fillStyle='#43141F';g.beginPath();g.ellipse(W/2,my+bh*.17,bw*.79,bh*.68,0,0,Math.PI*2);g.fill();
+  g.fillStyle='rgba(214,72,110,.85)';g.beginPath();g.ellipse(W/2,my+bh*.56,bw*.45,bh*.32,0,0,Math.PI*2);g.fill();
+  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my-bh*.70,bw*.84,bh*.21,0,0,Math.PI*2);g.fill();}
+ else{ // sonrisa cerrada: banda gruesa y ancha, como la del robot de marca
+  g.strokeStyle='#FFFFFF';g.lineWidth=H*.042;
+  g.beginPath();g.arc(W/2,my-H*.058,W*.098,Math.PI*.20,Math.PI*.80);g.stroke();}
  ca.t.needsUpdate=true;}
 // llamas de los propulsores: aditivas, compartidas por los diez robots
 const llamaMat=basic({color:0xFF7A2A,transparent:true,opacity:.8,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
@@ -751,8 +768,9 @@ function nuevoBot(ag,pos,yaw,escala,tipo){let r,rig=null,mixer=null,talk=null;
  // escala ~1/100 y cualquier hijo suyo saldría cien veces más pequeño
  let cara=null,caraMesh=null;
  if(rig&&rig.head){cara=nuevaCara();
-  const capa=new THREE.SphereGeometry(CARA_R,40,30,Math.PI/2-1.50,3.00,1.00,1.90);
-  caraMesh=new THREE.Mesh(capa,new THREE.MeshBasicMaterial({map:cara.t,transparent:true,toneMapped:false,depthWrite:false}));
+  const capa=new THREE.SphereGeometry(CARA_R,48,36,Math.PI/2-1.46,2.92,.96,2.10);
+  caraMesh=new THREE.Mesh(capa,new THREE.MeshBasicMaterial({map:cara.t,transparent:true,toneMapped:false,depthWrite:false,
+   polygonOffset:true,polygonOffsetFactor:-16,polygonOffsetUnits:-64}));
   caraMesh.renderOrder=3;caraMesh.frustumCulled=false;r.add(caraMesh);}
  const prop=new THREE.Group();prop.visible=false;r.add(prop);const llamas=[];
  [-.17,.17].forEach(function(dx){
