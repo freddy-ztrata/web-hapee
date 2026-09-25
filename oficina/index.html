@@ -721,61 +721,109 @@ function nuevaCara(){const c=document.createElement('canvas');c.width=CARA_W;c.h
 /* El casquete va pegado a la curva del casco, así que el dibujo no se lee como una
    calcomanía. El fondo repite el tono real del visor y se apaga hacia el borde para
    que no se note dónde acaba. */
-function pintaCara(ca,gesto,ojo,boca){
- const f=gesto+'|'+ojo+'|'+boca;if(ca.firma===f)return;ca.firma=f;
+/* ── La cara, versión 2 ────────────────────────────────────────────────────────
+   Lo anterior eran dos manchas blancas sin iris ni pupila sobre un visor color
+   sangre: un ojo blanco sin pupila es la cara de «poseído», y al parpadear
+   quedaban dos rendijas. Aquí hay anatomía de verdad —esclera, iris con anillo
+   limbal, pupila que se dilata, dos brillos que viajan con la mirada, párpados
+   que modelan el gesto y cejas— y la mirada sigue a la persona.
+   gx,gy ∈ [-1,1] es hacia dónde miran las pupilas. Firma compatible con las
+   llamadas viejas (gx,gy opcionales). */
+const EXPR={ // párpado sup (0 abierto…1 cerrado), párpado inf (0…1 sube), cejas: altura, ángulo interior, pupila (escala), boca: curva
+ normal:  {ps:.10, pi:.12, cej:.00, ang: .00, pup:1.00, son:.55},
+ mira:    {ps:.02, pi:.06, cej:.16, ang: .06, pup:1.10, son:.45},
+ feliz:   {ps:.00, pi:.00, cej:.22, ang:-.10, pup:1.05, son:1.00},   // ojos en arco
+ sorpresa:{ps:-.10,pi:-.04,cej:.42, ang: .00, pup:.78, son:.05},
+ piensa:  {ps:.22, pi:.10, cej:.06, ang: .22, pup:.92, son:.15},     // una ceja arriba
+ concentra:{ps:.34,pi:.28, cej:-.10,ang:-.22, pup:.85, son:.25},
+ guino:   {ps:.00, pi:.00, cej:.18, ang:-.06, pup:1.05, son:.95},
+};
+function pintaCara(ca,gesto,ojo,boca,gx,gy){
+ gx=gx||0;gy=gy||0;const e=EXPR[gesto]||EXPR.normal;
+ const f=gesto+'|'+ojo+'|'+boca+'|'+gx+'|'+gy;if(ca.firma===f)return;ca.firma=f;
  const g=ca.g,W=CARA_W,H=CARA_H;g.clearRect(0,0,W,H);
- // El casquete estira el dibujo: medido con rejilla, un píxel vertical pesa 1,13
- // veces más que uno horizontal. Sin corregirlo los ojos salen achatados y la
- // boca se sube encima de ellos, que era justo lo que se veía.
- const cy=H*.356, dx=W*.124, rx=W*.066, ry=H*.158, my=H*.560;
+ // El casquete estira el dibujo: un píxel vertical pesa 1,13 veces más que uno
+ // horizontal. Todas las medidas verticales van ya corregidas.
+ const cy=H*.372, dx=W*.132, rx=W*.082, ry=H*.166, my=H*.600;
+ // visor: mismo tono de familia que el casco, pero menos sangre y más ciruela
  g.save();g.translate(W/2,H*.50);g.scale(1,H/W*1.34);
- const gr=g.createRadialGradient(0,-W*.04,0,0,0,W*.50);
- gr.addColorStop(0,'rgba(64,29,38,1)');gr.addColorStop(.58,'rgba(52,24,32,1)');
- gr.addColorStop(.82,'rgba(42,19,26,1)');gr.addColorStop(.93,'rgba(42,19,26,.5)');gr.addColorStop(1,'rgba(42,19,26,0)');
+ const gr=g.createRadialGradient(0,-W*.05,0,0,0,W*.50);
+ gr.addColorStop(0,'rgb(58,30,44)');gr.addColorStop(.55,'rgb(46,24,36)');
+ gr.addColorStop(.82,'rgb(38,20,30)');gr.addColorStop(.93,'rgba(38,20,30,.5)');gr.addColorStop(1,'rgba(38,20,30,0)');
  g.fillStyle=gr;g.beginPath();g.arc(0,0,W*.50,0,Math.PI*2);g.fill();g.restore();
- const bl=g.createLinearGradient(0,H*.16,0,H*.40);bl.addColorStop(0,'rgba(255,255,255,.12)');bl.addColorStop(1,'rgba(255,255,255,0)');
- g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.22,W*.23,H*.10,0,0,Math.PI*2);g.fill();
+ const bl=g.createLinearGradient(0,H*.12,0,H*.36);bl.addColorStop(0,'rgba(255,255,255,.035)');bl.addColorStop(1,'rgba(255,255,255,0)');
+ g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.19,W*.24,H*.09,0,0,Math.PI*2);g.fill();
  g.lineCap='round';g.lineJoin='round';
- /* Ojo amable: no es un óvalo cerrado. El párpado inferior sube hacia el centro y el
-    ojo se inclina un poco hacia afuera. Un óvalo perfecto lee como muñeco inquietante;
-    esta forma lee simpática incluso de lejos, que es como más se ve el robot. */
- function ojoAbierto(cx,k,sd){
-  const rry=Math.max(ry*.07,ry*k);
-  const forma=function(){
-   g.beginPath();
-   g.ellipse(cx,cy,rx,rry,0,Math.PI,0);                       // párpado superior, arco lleno
-   g.quadraticCurveTo(cx,cy+rry*.34,cx-rx,cy);                // párpado inferior, subido
-   g.closePath();
-  };
-  g.save();
-  g.translate(cx,cy);g.rotate(-sd*.10);g.translate(-cx,-cy);  // leve inclinación hacia afuera
-  g.fillStyle='#FFFFFF';forma();g.fill();
-  if(k>.45){
-   g.save();forma();g.clip();
-   const sg=g.createLinearGradient(0,cy-rry,0,cy+rry*.25);
-   sg.addColorStop(0,'rgba(112,74,90,.30)');sg.addColorStop(1,'rgba(255,255,255,0)');
-   g.fillStyle=sg;g.fillRect(cx-rx*1.2,cy-rry*1.2,rx*2.4,rry*2.4);g.restore();
-   // dos brillos: el grande arriba y una chispa chica abajo, que es lo que da calidez
-   g.fillStyle='rgba(255,255,255,.99)';
-   g.beginPath();g.ellipse(cx-sd*rx*.30,cy-rry*.40,rx*.32,rry*.26,-.5,0,Math.PI*2);g.fill();
-   g.globalAlpha=.55;
-   g.beginPath();g.ellipse(cx+sd*rx*.34,cy+rry*.06,rx*.15,rry*.12,0,0,Math.PI*2);g.fill();
-   g.globalAlpha=1;}
+ const cierre=1-Math.max(0,Math.min(1,ojo));           // 0 abierto … 1 cerrado (parpadeo)
+ // ── un ojo ──
+ function ojoCompleto(cx,sd,cerradoExtra){
+  const ps=Math.max(-.12,Math.min(1,e.ps+cierre*(1-e.ps)+(cerradoExtra||0)));   // párpado superior
+  const pi=Math.max(0,Math.min(.9,e.pi+cierre*.55));                             // párpado inferior
+  const top=cy-ry*(1-ps*1.6), bot=cy+ry*(1-pi*1.25);
+  if(bot-top<ry*.18){ // cerrado: una línea de pestañas, no una rendija blanca
+   g.strokeStyle='#F2E9EE';g.lineWidth=H*.020;g.beginPath();
+   g.moveTo(cx-rx*.92,cy+ry*.05);g.quadraticCurveTo(cx,cy+ry*.30,cx+rx*.92,cy+ry*.05);g.stroke();return;}
+  g.save();g.translate(cx,cy);g.rotate(-sd*.07);g.translate(-cx,-cy);
+  const forma=function(){g.beginPath();g.moveTo(cx-rx,cy+ry*.05);
+   g.bezierCurveTo(cx-rx*.85,top,cx+rx*.85,top,cx+rx,cy+ry*.05);
+   g.bezierCurveTo(cx+rx*.85,bot,cx-rx*.85,bot,cx-rx,cy+ry*.05);g.closePath();};
+  // esclera
+  g.fillStyle='#F4F1EE';forma();g.fill();
+  g.save();forma();g.clip();
+  // sombra del párpado superior (oclusión) y tinte frío abajo: hace que el ojo se vea húmedo
+  const sg=g.createLinearGradient(0,top,0,top+ry*.55);sg.addColorStop(0,'rgba(60,26,44,.42)');sg.addColorStop(1,'rgba(60,26,44,0)');
+  g.fillStyle=sg;g.fillRect(cx-rx*1.2,top,rx*2.4,ry*2.4);
+  const cg=g.createLinearGradient(0,bot-ry*.35,0,bot);cg.addColorStop(0,'rgba(150,190,215,0)');cg.addColorStop(1,'rgba(150,190,215,.28)');
+  g.fillStyle=cg;g.fillRect(cx-rx*1.2,top,rx*2.4,ry*2.4);
+  // iris: sigue la mirada; ambos ojos convergen un poco hacia el centro
+  const ir=Math.min(rx,ry)*.66, px=cx+gx*rx*.42-sd*rx*.03, py=cy+gy*ry*.30;
+  const ig=g.createRadialGradient(px-ir*.25,py-ir*.25,ir*.1,px,py,ir);
+  ig.addColorStop(0,'#5FD3E3');ig.addColorStop(.45,'#2FB0C6');ig.addColorStop(.85,'#1B6F86');ig.addColorStop(1,'#123F4E');
+  g.fillStyle=ig;g.beginPath();g.arc(px,py,ir,0,Math.PI*2);g.fill();
+  // fibras del iris: rayos finos a baja alfa
+  g.save();g.translate(px,py);g.strokeStyle='rgba(230,250,255,.16)';g.lineWidth=1;
+  for(let k=0;k<26;k++){const an=k/26*Math.PI*2;g.beginPath();g.moveTo(Math.cos(an)*ir*.42,Math.sin(an)*ir*.42);g.lineTo(Math.cos(an)*ir*.94,Math.sin(an)*ir*.94);g.stroke();}
+  g.restore();
+  // anillo limbal
+  g.strokeStyle='rgba(12,40,52,.75)';g.lineWidth=ir*.11;g.beginPath();g.arc(px,py,ir*.95,0,Math.PI*2);g.stroke();
+  // pupila (se dilata con la expresión)
+  const pr=ir*.46*e.pup;g.fillStyle='#0E0F14';g.beginPath();g.arc(px,py,pr,0,Math.PI*2);g.fill();
+  // brillos: viajan con el iris, así el ojo se ve vivo y no pintado
+  g.fillStyle='rgba(255,255,255,.96)';g.beginPath();g.ellipse(px-ir*.30,py-ir*.34,ir*.24,ir*.19,-.6,0,Math.PI*2);g.fill();
+  g.fillStyle='rgba(255,255,255,.55)';g.beginPath();g.arc(px+ir*.36,py+ir*.30,ir*.10,0,Math.PI*2);g.fill();
+  g.restore();
+  // línea del párpado superior (pestañas): da forma al gesto
+  g.strokeStyle='rgba(40,16,30,.9)';g.lineWidth=H*.016;g.beginPath();
+  g.moveTo(cx-rx*1.02,cy+ry*.06);g.bezierCurveTo(cx-rx*.85,top-ry*.02,cx+rx*.85,top-ry*.02,cx+rx*1.02,cy+ry*.06);g.stroke();
   g.restore();}
- function ojoFeliz(cx){
-  g.strokeStyle='#FFFFFF';g.lineWidth=rx*.62;
-  g.beginPath();g.arc(cx,cy+ry*.46,rx*1.06,Math.PI*1.10,Math.PI*1.90);g.stroke();}
- if(gesto==='feliz'){[-1,1].forEach(function(sd){ojoFeliz(W/2+sd*dx);});}
- else{const mira=gesto==='mira'?rx*.16:0;[-1,1].forEach(function(sd){ojoAbierto(W/2+sd*dx+mira,ojo,sd);});}
- if(boca>.08){ // boca abierta al hablar: interior y lengua
-  const bw=W*.072+boca*W*.040,bh=H*.040+boca*H*.105;
-  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my,bw,bh,0,0,Math.PI*2);g.fill();
-  g.fillStyle='#43141F';g.beginPath();g.ellipse(W/2,my+bh*.17,bw*.79,bh*.68,0,0,Math.PI*2);g.fill();
-  g.fillStyle='rgba(214,72,110,.85)';g.beginPath();g.ellipse(W/2,my+bh*.56,bw*.45,bh*.32,0,0,Math.PI*2);g.fill();
-  g.fillStyle='#FFFFFF';g.beginPath();g.ellipse(W/2,my-bh*.70,bw*.84,bh*.21,0,0,Math.PI*2);g.fill();}
- else{ // sonrisa cerrada: banda gruesa y ancha, como la del robot de marca
-  g.strokeStyle='#FFFFFF';g.lineWidth=H*.042;
-  g.beginPath();g.arc(W/2,my-H*.058,W*.098,Math.PI*.20,Math.PI*.80);g.stroke();}
+ function ojoArco(cx){ // ojo feliz cerrado: arco grueso con las puntas hacia abajo
+  g.strokeStyle='#F4F1EE';g.lineWidth=rx*.52;g.beginPath();g.arc(cx,cy+ry*.40,rx*.98,Math.PI*1.12,Math.PI*1.88);g.stroke();}
+ function ceja(cx,sd,arriba,angulo){
+  const y=cy-ry*1.55-arriba*ry*.55, an=angulo*sd;  // angulo>0: extremo interior sube
+  g.strokeStyle='rgba(244,241,238,.92)';g.lineWidth=H*.030;g.beginPath();
+  g.moveTo(cx-sd*rx*.95,y+an*ry*.30);g.quadraticCurveTo(cx-sd*rx*.15,y-ry*.16,cx+sd*rx*.85,y+ry*.02-an*ry*.30);g.stroke();}
+ // ── ojos y cejas ──
+ if(gesto==='feliz'){[-1,1].forEach(function(sd){ojoArco(W/2+sd*dx);ceja(W/2+sd*dx,sd,e.cej,e.ang);});}
+ else if(gesto==='guino'){ojoArco(W/2-dx);ceja(W/2-dx,-1,e.cej+.05,e.ang);ojoCompleto(W/2+dx,1,0);ceja(W/2+dx,1,e.cej,e.ang);}
+ else{[-1,1].forEach(function(sd){ojoCompleto(W/2+sd*dx,sd,0);
+  ceja(W/2+sd*dx,sd,e.cej+(gesto==='piensa'&&sd===1?.30:0),e.ang);});}
+ // ── boca ──
+ if(boca>.08){ // hablando: labios, interior oscuro, dientes y lengua discretos
+  const bw=W*.066+boca*W*.046, bh=H*.030+boca*H*.110;
+  g.fillStyle='#F4F1EE';g.beginPath();g.ellipse(W/2,my,bw,bh,0,0,Math.PI*2);g.fill();
+  g.fillStyle='#3A1621';g.beginPath();g.ellipse(W/2,my+bh*.16,bw*.80,bh*.70,0,0,Math.PI*2);g.fill();
+  g.fillStyle='rgba(196,84,112,.75)';g.beginPath();g.ellipse(W/2,my+bh*.58,bw*.42,bh*.30,0,0,Math.PI*2);g.fill();
+  g.fillStyle='#F4F1EE';g.beginPath();g.ellipse(W/2,my-bh*.66,bw*.78,bh*.20,0,0,Math.PI*2);g.fill();}
+ else{ // cerrada: sonrisa con la curva del gesto, puntas redondas y un brillo
+  const cur=e.son, w=W*.095+cur*W*.02;
+  g.strokeStyle='#F4F1EE';g.lineWidth=H*.040;g.beginPath();
+  if(gesto==='sorpresa'){g.fillStyle='#3A1621';g.beginPath();g.ellipse(W/2,my,W*.034,H*.062,0,0,Math.PI*2);g.fill();
+   g.strokeStyle='#F4F1EE';g.lineWidth=H*.026;g.stroke();}
+  else{if(cur<.12){g.moveTo(W/2-w*.7,my);g.lineTo(W/2+w*.7,my);}                 // recta: piensa
+   else{g.moveTo(W/2-w,my-cur*H*.030);g.quadraticCurveTo(W/2,my+cur*H*.075,W/2+w,my-cur*H*.030);}
+   g.stroke();}
+  if(gesto==='feliz'||gesto==='guino'){ // mejillas: dos luces suaves bajo los ojos, la sonrisa se lee en toda la cara
+   g.fillStyle='rgba(255,255,255,.045)';[-1,1].forEach(function(sd){g.beginPath();g.ellipse(W/2+sd*dx*1.15,cy+ry*1.35,rx*.9,ry*.5,0,0,Math.PI*2);g.fill();});}}
  ca.t.needsUpdate=true;}
 // llamas de los propulsores: aditivas, compartidas por los diez robots
 const llamaMat=basic({color:0xFF7A2A,transparent:true,opacity:.8,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
@@ -798,7 +846,7 @@ function nuevoBot(ag,pos,yaw,escala,tipo){let r,rig=null,mixer=null,talk=null;
   const boq=new THREE.Mesh(new THREE.CylinderGeometry(.062,.078,.07,14),cromo);boq.position.set(dx,.06,.015);prop.add(boq);
   const ll=new THREE.Mesh(new THREE.ConeGeometry(.072,.52,14,1,true),llamaMat);ll.position.set(dx,-.25,.015);prop.add(ll);llamas.push(ll);
   const nu=new THREE.Mesh(new THREE.ConeGeometry(.034,.3,12,1,true),nucleoMat);nu.position.set(dx,-.14,.015);prop.add(nu);llamas.push(nu);});
- const b={m:r,esc:escala,ag:ag,tipo:tipo,estado:'trabaja',t:0,fase:Math.random()*6,path:[],vel:1.6,yawObj:yaw,saludado:false,charla:null,proximo:10+Math.random()*30,rig:rig,mixer:mixer,talk:talk,animName:'idle',blend:1,prev:null,ph:0,wp:new THREE.Vector3(),cara:cara,caraMesh:caraMesh,prop:prop,llamas:llamas,alt:0,vuela:false,pest:0,pestT:0,caraT:0};
+ const b={m:r,esc:escala,ag:ag,tipo:tipo,estado:'trabaja',t:0,fase:Math.random()*6,path:[],vel:1.6,yawObj:yaw,saludado:false,charla:null,proximo:10+Math.random()*30,rig:rig,mixer:mixer,talk:talk,animName:'idle',blend:1,prev:null,ph:0,wp:new THREE.Vector3(),cara:cara,caraMesh:caraMesh,prop:prop,llamas:llamas,alt:0,vuela:false,pest:0,pestT:-9999,pestDoble:false,caraT:0,gx:0,gy:0,sacT:0,sacX:0,sacY:0,microT:0,microHasta:0,micro:'normal'};
  r.traverse(o=>{if(o.isMesh){o.userData.work=ag||null;o.frustumCulled=false;if(ag)ROBOT_MESHES.push(o);}});
  const ob={x:pos.x,z:pos.z,w:.9,d:.9,bot:b};obstacles.push(ob);b.ob=ob;bots.push(b);return b;}
 // cambia de animación con fundido de .35 s entre la pose actual y la nueva
@@ -921,13 +969,33 @@ function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];co
   else if(b.ob.w!==.9){b.ob.w=.9;b.ob.d=.9;}}
  if(b.cara&&dvis<16&&!window.__sinCara){const hd=b.rig.head;
   const habla=b.animName==='talk'||(b.bub&&now<b.bubHasta);
-  if(now>b.pest){b.pest=now+2400+Math.random()*4200;b.pestT=now+160;}
-  const ojoF=now<b.pestT?Math.max(.05,Math.abs(((b.pestT-now)/160)*2-1)):1;
+  // ── parpadeo asimétrico: cierra rápido (70 ms), abre lento (150 ms); a veces doble ──
+  if(now>b.pest){b.pest=now+2600+Math.random()*4400;b.pestT=now;b.pestDoble=Math.random()<.18;}
+  let ojoF=1;{const e=now-b.pestT;const ciclo=function(x){return x<70?1-x/70:x<220?(x-70)/150:1;};
+   if(e<220)ojoF=ciclo(e);else if(b.pestDoble&&e<520)ojoF=ciclo(e-300);ojoF=Math.max(.02,ojoF);}
   let bocaF=0;
   if(b.vocal>.02)bocaF=Math.min(1,.12+b.vocal*1.25);            // boca movida por la voz real
   else if(habla)bocaF=Math.max(0,.3+(Math.sin(now/94+b.fase*3)*.5+Math.sin(now/61+b.fase)*.34)*.6);
-  const gesto=(b.animName==='wave'||b.estado==='charla'&&Math.sin(now/1900+b.fase)>.55)?'feliz':(b.animName==='sit'?'mira':'normal');
-  if(now>b.caraT){b.caraT=now+90;pintaCara(b.cara,gesto,Math.round(ojoF*5)/5,Math.round(bocaF*6)/6);}
+  // ── mirada: el iris busca a la persona, en el espacio de la propia cara ──
+  b.caraMesh.updateWorldMatrix(true,false);
+  _vo.set(P.x,P.y-.08,P.z);b.caraMesh.worldToLocal(_vo);
+  let gxO=0,gyO=0;
+  if(_vo.z>.3&&dvis<11){gxO=Math.max(-1,Math.min(1,Math.atan2(_vo.x,_vo.z)/.55));gyO=Math.max(-1,Math.min(1,-Math.atan2(_vo.y,_vo.z)/.45));}
+  if(now>b.sacT){b.sacT=now+1400+Math.random()*2600;b.sacX=(Math.random()-.5)*.5;b.sacY=(Math.random()-.5)*.3;}  // sacadas: la mirada nunca queda clavada
+  if(gxO===0&&gyO===0){gxO=b.sacX;gyO=b.sacY;}else{gxO+=b.sacX*.25;gyO+=b.sacY*.25;}
+  const kG=1-Math.pow(.0009,dt);b.gx+=(gxO-b.gx)*kG;b.gy+=(gyO-b.gy)*kG;
+  // ── expresión: base según lo que hace + microexpresiones que aparecen y se van ──
+  if(now>b.microT){b.microT=now+5500+Math.random()*9000;b.microHasta=now+900+Math.random()*900;
+   b.micro=pick(habla?['mira','feliz','mira']:dvis<4.5?['guino','feliz','sorpresa','mira']:['piensa','piensa','sorpresa','guino','mira']);}
+  let gesto;
+  if(b.animName==='wave')gesto='feliz';
+  else if(now<b.microHasta&&!(habla&&b.micro==='guino'))gesto=b.micro;
+  else if(habla)gesto=Math.sin(now/1900+b.fase)>.55?'feliz':'mira';
+  else if(b.estado==='charla')gesto='mira';
+  else if(dvis<4.5)gesto=Math.sin(now/2300+b.fase)>.3?'feliz':'mira';
+  else if(b.animName==='sit')gesto=Math.sin(now/3100+b.fase)>.45?'normal':'concentra';
+  else gesto='normal';
+  if(now>b.caraT){b.caraT=now+80;pintaCara(b.cara,gesto,Math.round(ojoF*6)/6,Math.round(bocaF*6)/6,Math.round(b.gx*12)/12,Math.round(b.gy*12)/12);}
   hd.updateWorldMatrix(true,false);
   _vf.setFromMatrixPosition(hd.matrixWorld);b.m.worldToLocal(_vf);
   hd.getWorldQuaternion(_q1);b.m.getWorldQuaternion(_q2);
