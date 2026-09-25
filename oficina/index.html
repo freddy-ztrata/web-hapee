@@ -319,6 +319,14 @@ renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFi
 $('#game').appendChild(renderer.domElement);
 // enfocable por código: al cerrar la estación de prueba hay que quitarle el foco al iframe
 renderer.domElement.setAttribute('tabindex','-1');renderer.domElement.style.outline='none';
+/* Si el sistema le quita la GPU a la pestaña (iOS lo hace bajo presión de memoria o
+   tras mucho rato en segundo plano) la escena quedaba congelada sin explicación. Se
+   avisa y se ofrece recargar; si el contexto vuelve solo, three lo reconstruye. */
+renderer.domElement.addEventListener('webglcontextlost',function(e){e.preventDefault();
+ const el=document.getElementById('err');if(!el)return;el.style.display='grid';
+ el.innerHTML='<div>La oficina se pausó porque el dispositivo necesitó memoria.<br><br><button class="btn" type="button" id="recargaHQ">VOLVER A ENTRAR</button></div>';
+ const b=document.getElementById('recargaHQ');if(b)b.addEventListener('click',function(){location.reload();});},false);
+renderer.domElement.addEventListener('webglcontextrestored',function(){const el=document.getElementById('err');if(el)el.style.display='none';},false);
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xF2F4F8);scene.fog=new THREE.Fog(0xF2F4F8,80,165);
 const camera=new THREE.PerspectiveCamera(68,W/H,.12,200);
 const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
@@ -1135,7 +1143,15 @@ let locked=false,quality=1,chatCon=null;const canvasEl=renderer.domElement;
 function lock(){if(isTouch||locked||chatCon||!canvasEl.requestPointerLock)return;try{const pr=canvasEl.requestPointerLock();if(pr&&pr.catch)pr.catch(function(){});}catch(e){}}
 function sueltaTeclas(){for(const k in keys)keys[k]=false;stick.x=stick.y=0;stick.on=false;}
 document.addEventListener('pointerlockchange',function(){locked=document.pointerLockElement===canvasEl;document.body.style.cursor=locked?'none':'default';sueltaTeclas();if(!locked&&window.__hqOn&&!chatCon)$('#hint').innerHTML='<b>CLIC</b> para seguir recorriendo';});
-addEventListener('blur',sueltaTeclas);document.addEventListener('visibilitychange',function(){if(document.hidden)sueltaTeclas();});
+addEventListener('blur',sueltaTeclas);
+/* Pestaña oculta o teléfono bloqueado: el bucle 3D se detiene solo (rAF), pero los
+   vídeos seguían decodificando y la voz sonando, gastando batería sin que nadie mire.
+   Al volver, el bucle retoma los vídeos cercanos en su próxima revisión. */
+document.addEventListener('visibilitychange',function(){if(!document.hidden){last=performance.now();Q.acc=0;Q.n=0;if(AC&&AC.state==='suspended'&&(sonido||sonandoVid)){try{AC.resume();}catch(e){}}return;}
+ sueltaTeclas();Object.keys(CLIPS).forEach(function(k){try{CLIPS[k].el.pause();}catch(e){}});
+ if(vozAudio){try{vozAudio.pause();}catch(e){}}
+ if(AC&&AC.state==='running'){try{AC.suspend();}catch(e){}}});
+addEventListener('pageshow',function(){if(AC&&AC.state==='suspended'&&sonido){try{AC.resume();}catch(e){}}});
 addEventListener('mousemove',function(e){if(!locked)return;P.yaw-=e.movementX*.0019;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-e.movementY*.0019));});
 addEventListener('mousedown',function(e){if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,.hudbtn,#panel,#chat,#demo'))return;if(!locked){lock();return;}if(e.button===0)activar('clic');});
 addEventListener('keydown',function(e){if(demoAbierta){if(e.code==='Escape')cerrarDemo();return;}if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='Enter')activar('enter');if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();});
@@ -1339,7 +1355,7 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
   actualizaBots(dt,now);proyecta();
   if(fc%15===0&&panelEl.offsetParent!==null){let cerca=0;AGENTES.forEach(a=>{const bp=a.bot?a.bot.m.position:{x:a.x,z:a.z};const d=Math.hypot(bp.x-P.x,bp.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);a.btn.querySelector('small').textContent=a.bot&&a.bot.estado!=='trabaja'?(a.bot.estado==='camina'?'caminando':a.bot.estado==='charla'?'conversando':'fuera del puesto'):a.mod;});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
   if(fc%6===0){const near=[];for(let li=0;li<LAMP_POS.length;li++){const lp=LAMP_POS[li],ld=Math.abs(lp[1]-P.z);if(ld<30)near.push({p:lp,d:ld});}near.sort((a,b)=>a.d-b.d);for(let k=0;k<lampPool.length;k++){if(near[k]){lampPool[k].position.set(near[k].p[0],HT-.9,near[k].p[1]);lampPool[k].intensity=48;}else lampPool[k].intensity=0;}}
-  if(fc%20===0){const ks=Object.keys(CLIPS);for(let ki=0;ki<ks.length;ki++){const rc=CLIPS[ks[ki]];let cerca=false;
+  if(fc%20===0&&!document.hidden){const ks=Object.keys(CLIPS);for(let ki=0;ki<ks.length;ki++){const rc=CLIPS[ks[ki]];let cerca=false;
    for(let zi=0;zi<rc.zs.length;zi++){if(Math.abs(rc.zs[zi]-P.z)<20){cerca=true;break;}}
    if(cerca||sonandoVid===rc){if(rc.el.paused){const q=rc.el.play();if(q&&q.catch)q.catch(function(){});}}
    else if(!rc.el.paused)rc.el.pause();}}
@@ -1434,7 +1450,7 @@ THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent
 // temporizadores se retrasan y el contador llegaba tarde a los 4,5 s.
 const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
 window.__irLejos=function(b){levanta(b);irHacia(b,{x:3.0,z:7.2},function(){b.estado='mira';anim(b,'idle');b.espera=3;});};window.__activar=activar;window.__sonando=function(){return sonandoVid;};window.__abrirDemo=abrirDemo;window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
-window.__hq={renderer:renderer,composer:composer,scene:scene,camera:camera,bloom:bloom,smaa:smaa};
+window.__hq={renderer:renderer,composer:composer,scene:scene,camera:camera,bloom:bloom,smaa:smaa,obstacles:obstacles,Q:Q,niveles:NIVELES,nivel:function(){return nivel;}};
 window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:bots.length,rig:!!RIG,clip:!!CLIP_TALK,anims:bots.map(b=>b.animName).join(','),estados:bots.map(b=>b.estado).join(','),obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
 function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.createElement('div');t.style.cssText='position:fixed;left:8px;top:60px;z-index:99;color:#0f0;font:15px monospace;background:#000;padding:6px';document.body.appendChild(t);
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
