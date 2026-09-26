@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=20260925-01
+ARG CACHE_BUST=20260926-01
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html

@@ -314,7 +314,13 @@ const DPR=Math.min(devicePixelRatio||1,2);
    el escritorio (1,5× con bloom y SMAA) y recién a los 2 s bajaba, con la escena
    ya a tirones. Ver NIVELES más abajo. */
 const MOVIL=isTouch||Math.min(screen.width||9999,screen.height||9999)<600;
-renderer.setPixelRatio(Math.min(DPR,MOVIL?1.25:1.5));renderer.setSize(W,H);
+/* Tope de resolución. En una pantalla común (devicePixelRatio 1: monitores externos,
+   Windows) la escena se dibujaba a 1× y sin margen para suavizar: letreros, bordes de
+   escritorios y las líneas del piso se veían dentados. En escritorio se permite dibujar
+   a 1,5× y dejar que el navegador reduzca (supermuestreo); la calidad automática baja
+   si el equipo no sostiene 55 fps. En teléfono se queda en su densidad real. */
+const DPR_TOPE=MOVIL?DPR:Math.max(DPR,1.5);
+renderer.setPixelRatio(Math.min(DPR_TOPE,MOVIL?1.25:1.5));renderer.setSize(W,H);
 renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.92;
 $('#game').appendChild(renderer.domElement);
 // enfocable por código: al cerrar la estación de prueba hay que quitarle el foco al iframe
@@ -329,7 +335,9 @@ renderer.domElement.addEventListener('webglcontextlost',function(e){e.preventDef
 renderer.domElement.addEventListener('webglcontextrestored',function(){const el=document.getElementById('err');if(el)el.style.display='none';},false);
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xF2F4F8);scene.fog=new THREE.Fog(0xF2F4F8,80,165);
 const camera=new THREE.PerspectiveCamera(68,W/H,.12,200);
-const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
+/* El compositor recibe su propio destino para poder activarle MSAA (ver setMSAA). */
+const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(W,H,{type:THREE.HalfFloatType}));composer.setSize(W,H);
+composer.addPass(new RenderPass(scene,camera));
 // en un espacio claro el bloom solo puede tocar lo que brilla de verdad (emisivos > 1): umbral alto
 const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),.16,.3,1.3);composer.addPass(bloom);
 const smaa=new SMAAPass(W*renderer.getPixelRatio(),H*renderer.getPixelRatio());composer.addPass(smaa);composer.addPass(new OutputPass());
@@ -350,7 +358,7 @@ const tl=new THREE.TextureLoader();
 const _texBase=new Map();
 function tex(name,rx=1,ry=rx,srgb=false){const k=name+'|'+srgb;let e=_texBase.get(k);
  if(!e){e={clones:[],listo:false};e.base=tl.load('assets/tex/'+name+'.jpg',function(){e.listo=true;e.clones.forEach(function(c){c.needsUpdate=true;});});
-  e.base.wrapS=e.base.wrapT=THREE.RepeatWrapping;if(srgb)e.base.colorSpace=THREE.SRGBColorSpace;e.base.anisotropy=Math.min(8,maxAniso);_texBase.set(k,e);}
+  e.base.wrapS=e.base.wrapT=THREE.RepeatWrapping;if(srgb)e.base.colorSpace=THREE.SRGBColorSpace;e.base.anisotropy=MOVIL?Math.min(8,maxAniso):maxAniso;_texBase.set(k,e);}
  const t=e.base.clone();t.repeat.set(rx,ry);if(e.listo)t.needsUpdate=true;else e.clones.push(t);return t;}
 function pbr(base,rx,ry,opts={}){return new THREE.MeshStandardMaterial(Object.assign({map:tex(base+'_diff',rx,ry,true),normalMap:tex(base+'_nor_gl',rx,ry),roughnessMap:tex(base+'_rough',rx,ry),aoMap:tex(base+'_ao',rx,ry)},opts));}
 const uv1=g=>{g.setAttribute('uv1',g.attributes.uv);return g;};
@@ -431,8 +439,10 @@ const FONT="'Plus Jakarta Sans', Arial, sans-serif";
    suficiente para que Safari de iPhone mate la pestaña. Ahora el lienzo se achica
    hasta `lim` y el dibujo se escala: quien dibuja sigue usando sus medidas lógicas. */
 const LIM_LIENZO=MOVIL?1024:2048;
-function canvasTex(w,h,draw,lim){lim=lim||LIM_LIENZO;const k=Math.min(1,lim/Math.max(w,h));const c=document.createElement('canvas');
- c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));const g=c.getContext('2d');if(k<1)g.scale(c.width/w,c.height/h);draw(g,w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(8,maxAniso);return t;}
+// En escritorio los lienzos chicos (placas 1200×400, tarjetas) se pintan a 1,5×: el
+// texto chico de las placas se leía borroso de cerca. Los grandes ya topan en LIM_LIENZO.
+function canvasTex(w,h,draw,lim){lim=lim||LIM_LIENZO;const k=Math.min(MOVIL||Math.max(w,h)>1200?1:1.5,lim/Math.max(w,h));const c=document.createElement('canvas');
+ c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));const g=c.getContext('2d');if(k!==1)g.scale(c.width/w,c.height/h);draw(g,w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=MOVIL?Math.min(8,maxAniso):maxAniso;return t;}
 function fit(g,txt,px,max,weight){g.font=weight+' '+px+'px '+FONT;while(g.measureText(txt).width>max&&px>18){px-=2;g.font=weight+' '+px+'px '+FONT;}return px;}
 function signTex(txt,size,color,w=2560,h=560,weight=800){return canvasTex(w,h,(g)=>{g.font=weight+' '+size+'px '+FONT;g.textAlign='center';g.textBaseline='middle';g.fillStyle=color;g.fillText(txt,w/2,h/2);});}
 // tarjeta clara: fondo blanco, texto tinta, acento naranja — las placas de la oficina
@@ -846,7 +856,60 @@ const EXPR={ // párpado sup (0 abierto…1 cerrado), párpado inf (0…1 sube),
  concentra:{ps:.34,pi:.28, cej:-.10,ang:-.22, pup:.85, son:.25},
  guino:   {ps:.00, pi:.00, cej:.18, ang:-.06, pup:1.05, son:.95},
 };
-function pintaCara(ca,gesto,ojo,boca,gx,gy){
+/* ── La cara, versión 3: ojos de línea láser ─────────────────────────────────────
+   Los ojos «de verdad» (iris, pupila, brillos) seguían leyéndose un poco inquietantes
+   en un robot. Ahora los ojos son líneas de luz, como un visor: cada gesto tiene su
+   trazo (línea, arco, cápsula que sigue la mirada, anillo, línea inclinada) y la boca
+   es una línea que se vuelve onda de sonido al hablar. Los ojos realistas siguen
+   disponibles con ?ojos=reales (pintaCaraReal). */
+const OJOS_REALES=/[?&]ojos=reales/.test(location.search);
+function pintaCara(ca,gesto,ojo,boca,gx,gy){if(OJOS_REALES)return pintaCaraReal(ca,gesto,ojo,boca,gx,gy);
+ gx=gx||0;gy=gy||0;
+ const f='L|'+gesto+'|'+ojo+'|'+boca+'|'+gx+'|'+gy;if(ca.firma===f)return;ca.firma=f;
+ const g=ca.g,W=CARA_W,H=CARA_H;g.clearRect(0,0,W,H);
+ // visor
+ g.save();g.translate(W/2,H*.50);g.scale(1,H/W*1.34);
+ const gr=g.createRadialGradient(0,-W*.05,0,0,0,W*.50);
+ gr.addColorStop(0,'rgb(40,24,44)');gr.addColorStop(.55,'rgb(30,18,32)');gr.addColorStop(.82,'rgb(24,14,26)');gr.addColorStop(.93,'rgba(24,14,26,.5)');gr.addColorStop(1,'rgba(24,14,26,0)');
+ g.fillStyle=gr;g.beginPath();g.arc(0,0,W*.50,0,Math.PI*2);g.fill();g.restore();
+ const bl=g.createLinearGradient(0,H*.12,0,H*.36);bl.addColorStop(0,'rgba(255,255,255,.035)');bl.addColorStop(1,'rgba(255,255,255,0)');
+ g.fillStyle=bl;g.beginPath();g.ellipse(W/2,H*.19,W*.24,H*.09,0,0,Math.PI*2);g.fill();
+ const cy=H*.40, dx=W*.135, rx=W*.078, ry=H*.13, my=H*.64;
+ const abre=Math.max(.08,Math.min(1,ojo));          // 1 abierto … ~0 parpadeo
+ const ox=gx*rx*.32, oy=gy*ry*.28;                  // la mirada corre los trazos
+ // trazo de luz: halo ancho y difuso + núcleo claro. `ancho` en px del lienzo
+ function luz(dibuja,ancho,alfa){g.lineCap='round';g.lineJoin='round';
+  g.save();g.globalAlpha=.30*alfa;g.strokeStyle='#2EC5FF';g.lineWidth=ancho*2.6;g.shadowColor='#2EC5FF';g.shadowBlur=18;g.beginPath();dibuja();g.stroke();g.restore();
+  g.save();g.globalAlpha=.85*alfa;g.strokeStyle='#8FE4FF';g.lineWidth=ancho*1.35;g.beginPath();dibuja();g.stroke();g.restore();
+  g.save();g.globalAlpha=alfa;g.strokeStyle='#F2FDFF';g.lineWidth=ancho*.62;g.beginPath();dibuja();g.stroke();g.restore();}
+ const grosor=H*.030*(.45+.55*abre);
+ // ── formas de ojo ──
+ const linea=function(cx,cyy,w,curva,incl){return function(){g.moveTo(cx-w,cyy+incl);g.quadraticCurveTo(cx,cyy+curva,cx+w,cyy-incl);};};
+ const arco=function(cx,cyy,w){return function(){g.moveTo(cx-w,cyy+ry*.22);g.quadraticCurveTo(cx,cyy-ry*.62,cx+w,cyy+ry*.22);};};
+ const capsula=function(cx,cyy,w){return function(){g.moveTo(cx-w,cyy);g.lineTo(cx+w,cyy);};};
+ const anillo=function(cx,cyy,r){return function(){g.moveTo(cx+r,cyy);g.arc(cx,cyy,r,0,Math.PI*2);};};
+ function ojoL(sd){const cx=W/2+sd*dx+ox, c=cy+oy;
+  if(abre<.35)return luz(capsula(cx,c,rx*.78),H*.018,.8);         // parpadeo: una línea fina
+  switch(gesto){
+   case 'feliz':return luz(arco(cx,c,rx*.82),grosor,1);
+   case 'guino':return sd<0?luz(arco(cx,c,rx*.82),grosor,1):luz(linea(cx,c,rx*.78,ry*.05,0),grosor,1);
+   case 'mira':return luz(capsula(cx,c,rx*.42),H*.052*(.5+.5*abre),1);    // cápsulas gruesas que siguen
+   case 'sorpresa':return luz(anillo(cx,c-ry*.05,rx*.42),grosor*.9,1);
+   case 'piensa':return sd>0?luz(linea(cx,c-ry*.28,rx*.72,-ry*.10,-sd*ry*.10),grosor,1):luz(linea(cx,c,rx*.72,0,0),grosor,1);
+   case 'concentra':return luz(linea(cx,c+ry*.04,rx*.62,0,sd*ry*.07),H*.040*(.5+.5*abre),1);   // cortas y gruesas, apenas hacia adentro: enfocado (en «/ \» se leía preocupado)
+   default:return luz(linea(cx,c,rx*.80,-ry*.14,0),grosor,1);          // normal: arco muy suave
+  }}
+ ojoL(-1);ojoL(1);
+ // ── boca: línea de luz; al hablar, onda de sonido ──
+ if(boca>.08){const w=W*.12,A=H*(.02+.075*boca);
+  luz(function(){for(let i=0;i<=40;i++){const u=i/40,x=W/2-w+u*2*w;const env=Math.sin(u*Math.PI);
+   const y=my+Math.sin(u*Math.PI*6)*A*env*(.65+.35*Math.sin(u*9+boca*7));if(i===0)g.moveTo(x,y);else g.lineTo(x,y);}},H*.020,1);}
+ else{const e=EXPR[gesto]||EXPR.normal,cur=e.son,w=W*.085+cur*W*.02;
+  if(gesto==='sorpresa')luz(anillo(W/2,my,W*.028),H*.018,1);
+  else if(cur<.12)luz(capsula(W/2+W*.012,my,w*.55),H*.022,1);
+  else luz(function(){g.moveTo(W/2-w,my-cur*H*.026);g.quadraticCurveTo(W/2,my+cur*H*.07,W/2+w,my-cur*H*.026);},H*.022,1);}
+ ca.t.needsUpdate=true;}
+function pintaCaraReal(ca,gesto,ojo,boca,gx,gy){
  gx=gx||0;gy=gy||0;const e=EXPR[gesto]||EXPR.normal;
  const f=gesto+'|'+ojo+'|'+boca+'|'+gx+'|'+gy;if(ca.firma===f)return;ca.firma=f;
  const g=ca.g,W=CARA_W,H=CARA_H;g.clearRect(0,0,W,H);
@@ -1096,7 +1159,7 @@ function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];co
  // no se nota y es la mitad de trabajo en la CPU del teléfono
  b.dtAcc=_vis?(b.dtAcc||0)+dt:0;const _toca=dvis<18||((fc+i)&1)===0;
  if(_vis&&_toca){const dA=b.dtAcc;b.dtAcc=0;if(b.rig)animaBot(b,dA,t);else{const andando=b.estado==='camina'||b.estado==='ronda';const ph=t*6;b.m.position.y=andando?Math.abs(Math.sin(ph))*.06:Math.sin(t*1.6)*.02;b.m.rotation.z=andando?Math.sin(ph)*.05:0;}}
- if(b.cara&&_vis&&dvis>=11&&b.cara.firma.indexOf('normal|1|0|')!==0){pintaCara(b.cara,'normal',1,0,0,0);}
+ if(b.cara&&_vis&&dvis>=11&&b.cara.firma!==(OJOS_REALES?'normal|1|0|0|0':'L|normal|1|0|0|0')){pintaCara(b.cara,'normal',1,0,0,0);}
  if(b.cara&&_vis&&dvis<24&&!window.__sinCara){const hd=b.rig.head;const _cerca=dvis<11;
   const habla=b.animName==='talk'||(b.bub&&now<b.bubHasta);
   // ── parpadeo asimétrico: cierra rápido (70 ms), abre lento (150 ms); a veces doble ──
@@ -1162,8 +1225,14 @@ function activar(modo){if(!focus)return;
  if(focus.vid&&modo==='clic'){beep(sonandoVid===focus.vid?420:760,.06);sonarVid(focus.vid);textoPlacard();return;}
  if(focus.demo3d){beep(760,.06);abrirDemo();return;}
  beep(660,.06);abrir(focus.url);}
-function setDPR(r){r=Math.max(.6,Math.min(r,DPR));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
-function aplicaNivel(n){nivel=Math.max(0,Math.min(NIVELES.length-1,n));const q=NIVELES[nivel];setDPR(Math.min(q.r,DPR));bloom.enabled=q.bloom;smaa.enabled=q.smaa;}
+/* MSAA en los destinos del compositor: suaviza bordes de geometría (escritorios, líneas
+   del piso, marcos) mejor que el SMAA, que es un filtro sobre la imagen ya hecha. En los
+   chips Apple, que dibujan por baldosas, 4× sale casi gratis. Cambiar samples obliga a
+   recrear el destino: se libera y three lo rehace en el próximo uso. */
+function setMSAA(n){if(!renderer.capabilities.isWebGL2)n=0;n=Math.min(n,renderer.capabilities.maxSamples||0);
+ [composer.renderTarget1,composer.renderTarget2].forEach(function(rt){if(rt.samples!==n){rt.samples=n;rt.dispose();}});}
+function setDPR(r){r=Math.max(.6,Math.min(r,DPR_TOPE));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
+function aplicaNivel(n){nivel=Math.max(0,Math.min(NIVELES.length-1,n));const q=NIVELES[nivel];setDPR(Math.min(q.r,DPR_TOPE));bloom.enabled=q.bloom;smaa.enabled=q.smaa;}
 // Q alterna automática (escalones medidos) ↔ rápida (el escalón más liviano con SMAA)
 function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.alto=0;$('#qb').textContent=quality?'CALIDAD AUTO · Q':'CALIDAD RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
 const Z_ZONA={1:12,2:-14,3:-64,4:-94};
@@ -1312,8 +1381,11 @@ function beep(fr,dur){if(!AC||!sonido||AC.state!=='running')return;const t=AC.cu
 
 /* ══ MINIMAPA ══ */
 const mapa=$('#mapa'),mg=mapa.getContext('2d'),panelEl=$('#panel');
-// en teléfono el panel y el minimapa van ocultos por CSS: no se pintan
-function pintaMapa(){if(!mapa.classList.contains('on')||mapa.offsetParent===null)return;const W2=300,H2=660;mg.clearRect(0,0,W2,H2);const sx=W2/(HW*2+2),sz=H2/(Z0-ZF+4);const X=x=>(x+HW+1)*sx,Y=z=>(Z0+2-z)*sz;
+// En teléfono el panel y el minimapa van ocultos por CSS: no se pintan. OJO: son
+// position:fixed, y un fixed tiene offsetParent null AUNQUE se vea; con esa prueba el
+// minimapa quedó en negro y el panel clavado en «0 / 8 cerca». Se mira el display real.
+const visible=function(el){return getComputedStyle(el).display!=='none';};
+function pintaMapa(){if(!mapa.classList.contains('on')||!visible(mapa))return;const W2=300,H2=660;mg.clearRect(0,0,W2,H2);const sx=W2/(HW*2+2),sz=H2/(Z0-ZF+4);const X=x=>(x+HW+1)*sx,Y=z=>(Z0+2-z)*sz;
  [[Z1,'#3a2b22'],[Z2,'#1d1e26'],[Z3,'#15161d'],[Z4,'#12141b']].forEach(p=>{mg.fillStyle=p[1];mg.fillRect(X(-HW),Y(p[0].a),HW*2*sx,(p[0].a-p[0].b)*sz);});
  mg.fillStyle='rgba(255,255,255,.08)';AGENTES.forEach(a=>{mg.fillRect(X(a.x-.6),Y(a.z+1.3),1.2*sx,2.6*sz);});
  bots.forEach(b=>{const p=b.m.position;mg.fillStyle=b.tipo==='puesto'?(b.estado==='camina'?'#FF9A6B':'#FA5000'):'#CD2349';mg.beginPath();mg.arc(X(p.x),Y(p.z),4,0,Math.PI*2);mg.fill();});
@@ -1353,7 +1425,7 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
   if(holo){holo.rotation.y=Math.sin(now/2600)*.2;holo.position.y=2.55+Math.sin(now/900)*.05;}
  for(let i=0;i<PODS_FLOT.length;i++){const q=PODS_FLOT[i];q.o.position.y=1.72+Math.sin(now/1100+q.f)*.075;q.o.rotation.y=Math.sin(now/2300+q.f)*.1;}
   actualizaBots(dt,now);proyecta();
-  if(fc%15===0&&panelEl.offsetParent!==null){let cerca=0;AGENTES.forEach(a=>{const bp=a.bot?a.bot.m.position:{x:a.x,z:a.z};const d=Math.hypot(bp.x-P.x,bp.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);a.btn.querySelector('small').textContent=a.bot&&a.bot.estado!=='trabaja'?(a.bot.estado==='camina'?'caminando':a.bot.estado==='charla'?'conversando':'fuera del puesto'):a.mod;});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
+  if(fc%15===0&&visible(panelEl)){let cerca=0;AGENTES.forEach(a=>{const bp=a.bot?a.bot.m.position:{x:a.x,z:a.z};const d=Math.hypot(bp.x-P.x,bp.z-P.z);const c=d<7;if(c)cerca++;a.btn.classList.toggle('cerca',c);a.btn.classList.toggle('foco',focus===a);a.btn.querySelector('small').textContent=a.bot&&a.bot.estado!=='trabaja'?(a.bot.estado==='camina'?'caminando':a.bot.estado==='charla'?'conversando':'fuera del puesto'):a.mod;});$('#pcount').textContent=cerca+' / 8 cerca';pintaMapa();}
   if(fc%6===0){const near=[];for(let li=0;li<LAMP_POS.length;li++){const lp=LAMP_POS[li],ld=Math.abs(lp[1]-P.z);if(ld<30)near.push({p:lp,d:ld});}near.sort((a,b)=>a.d-b.d);for(let k=0;k<lampPool.length;k++){if(near[k]){lampPool[k].position.set(near[k].p[0],HT-.9,near[k].p[1]);lampPool[k].intensity=48;}else lampPool[k].intensity=0;}}
   if(fc%20===0&&!document.hidden){const ks=Object.keys(CLIPS);for(let ki=0;ki<ks.length;ki++){const rc=CLIPS[ks[ki]];let cerca=false;
    for(let zi=0;zi<rc.zs.length;zi++){if(Math.abs(rc.zs[zi]-P.z)<20){cerca=true;break;}}
@@ -1377,7 +1449,7 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
   if(crudo>250||_calor.length||_subir.length||now-Q.entrada<4000)Q.sucio=true;
   Q.acc+=crudo/1000;Q.n++;
   if(Q.acc>(Q.primera?1.2:2)){const fps=Q.n/Q.acc,sucio=Q.sucio;Q.acc=0;Q.n=0;Q.sucio=false;Q.primera=false;Q.fps=Math.round(fps);
-   if(quality===1&&!sucio){
+   if(quality===1&&!sucio&&!Q.fijo){
     // bajo 55 fps ya se notan los tirones: en una pantalla de 60 Hz son cuadros de 17 ms
     // alternados con cuadros de 33 ms. Un escalón del que se bajó se vuelve a probar
     // recién a los 20 s (si no, oscilaría; y si fuera para siempre, no se recupera).
@@ -1450,7 +1522,7 @@ THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent
 // temporizadores se retrasan y el contador llegaba tarde a los 4,5 s.
 const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
 window.__irLejos=function(b){levanta(b);irHacia(b,{x:3.0,z:7.2},function(){b.estado='mira';anim(b,'idle');b.espera=3;});};window.__activar=activar;window.__sonando=function(){return sonandoVid;};window.__abrirDemo=abrirDemo;window.__CLIPS=CLIPS;window.__P=P;window.__bots=bots;window.__agentes=AGENTES;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;window.__planVisita=function(b){levanta(b);planVisita(b);};window.__anim=anim;window.__sienta=sienta;
-window.__hq={renderer:renderer,composer:composer,scene:scene,camera:camera,bloom:bloom,smaa:smaa,obstacles:obstacles,Q:Q,niveles:NIVELES,nivel:function(){return nivel;}};
+window.__hq={fijaCalidad:function(r,ms,sm){setDPR(r);setMSAA(ms);smaa.enabled=!!sm;},renderer:renderer,composer:composer,scene:scene,camera:camera,bloom:bloom,smaa:smaa,obstacles:obstacles,Q:Q,niveles:NIVELES,nivel:function(){return nivel;}};
 window.__diag=function(){return {z:+P.z.toFixed(2),x:+P.x.toFixed(2),on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),robots:bots.length,rig:!!RIG,clip:!!CLIP_TALK,anims:bots.map(b=>b.animName).join(','),estados:bots.map(b=>b.estado).join(','),obras:works.filter(w=>w.g.visible).length,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,draw:renderer.info.render.calls};};
 function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.createElement('div');t.style.cssText='position:fixed;left:8px;top:60px;z-index:99;color:#0f0;font:15px monospace;background:#000;padding:6px';document.body.appendChild(t);
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
