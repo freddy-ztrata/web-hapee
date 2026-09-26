@@ -319,7 +319,8 @@ const MOVIL=isTouch||Math.min(screen.width||9999,screen.height||9999)<600;
    escritorios y las líneas del piso se veían dentados. En escritorio se permite dibujar
    a 1,5× y dejar que el navegador reduzca (supermuestreo); la calidad automática baja
    si el equipo no sostiene 55 fps. En teléfono se queda en su densidad real. */
-const DPR_TOPE=MOVIL?DPR:Math.max(DPR,1.5);
+// Hasta 2× en escritorio: en un monitor 1080p eso es dibujar a ~3840×2160 (4K) y reducir.
+const DPR_TOPE=MOVIL?DPR:Math.max(DPR,2);
 renderer.setPixelRatio(Math.min(DPR_TOPE,MOVIL?1.25:1.5));renderer.setSize(W,H);
 renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.92;
 $('#game').appendChild(renderer.domElement);
@@ -340,11 +341,16 @@ const composer=new EffectComposer(renderer,new THREE.WebGLRenderTarget(W,H,{type
 composer.addPass(new RenderPass(scene,camera));
 // en un espacio claro el bloom solo puede tocar lo que brilla de verdad (emisivos > 1): umbral alto
 const bloom=new UnrealBloomPass(new THREE.Vector2(W/2,H/2),.16,.3,1.3);composer.addPass(bloom);
+// El brillo es un halo difuso: calcularlo a 2× no se nota y es de lo más caro. Tope de 1,25×
+// la pantalla; la mezcla final lo estira sobre la imagen grande.
+{const _bs=bloom.setSize.bind(bloom);bloom.setSize=function(w,h){const k=Math.min(1,(W*1.25)/Math.max(1,w));_bs(Math.round(w*k),Math.round(h*k));};}
 const smaa=new SMAAPass(W*renderer.getPixelRatio(),H*renderer.getPixelRatio());composer.addPass(smaa);composer.addPass(new OutputPass());
 /* Escalones de calidad, del más fino al más liviano. La calidad automática baja uno
    cuando la medición real da < 55 fps y sube uno si pasa de 58 dos veces seguidas,
    pero nunca vuelve a un escalón del que ya tuvo que bajar (así no oscila). */
-const NIVELES=[{r:2,bloom:true,smaa:true},{r:1.5,bloom:true,smaa:true},{r:1.25,bloom:true,smaa:true},
+// En el escalón 2× el SMAA sobra: el supermuestreo ya suaviza los bordes y así el 4K cuesta
+// tres pasadas menos de pantalla completa.
+const NIVELES=[{r:2,bloom:true,smaa:false},{r:1.5,bloom:true,smaa:true},{r:1.25,bloom:true,smaa:true},
  {r:1,bloom:true,smaa:true},{r:1,bloom:false,smaa:true},{r:.8,bloom:false,smaa:false}];
 let nivel=MOVIL?2:1;
 const maxAniso=renderer.capabilities.getMaxAnisotropy();
@@ -373,6 +379,9 @@ function img(path,srgb=true){const k=path+'|'+srgb;if(_imgCache.has(k))return _i
    ancho de banda: la oficina abría vacía y los agentes tardaban 36 s en aparecer. Lo
    que está en muros lejanos se pide en una segunda tanda, cuando el robot ya llegó. */
 const _tarde=[],_subir=[];let _abrirTarde=false;
+// UI de los módulos: en escritorio las mismas imágenes de hapee.ai (1600 px); en teléfono las
+// reducidas a 1100 (memoria). A 1100 el texto de las gráficas del muro era ilegible.
+const uiSrc=function(n){return 'assets/ui/'+n+(MOVIL?'-light.webp':'-light-1600.webp');};
 function imgTarde(path){const k='T|'+path;if(_imgCache.has(k))return _imgCache.get(k);
  const t=new THREE.Texture();t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;
  t.minFilter=THREE.LinearMipmapLinearFilter;t.magFilter=THREE.LinearFilter;t.generateMipmaps=true;
@@ -509,7 +518,7 @@ function propKit(ag){const g=new THREE.Group();const acc=new THREE.MeshStandardM
   case 'casco':{ // engranaje holográfico girando
    const gear=new THREE.Mesh(new THREE.TorusKnotGeometry(.11,.035,64,8,2,3),basic({color:ag.acc,transparent:true,opacity:.8}));gear.position.set(-.95,.32,-.12);gear.userData.gira=true;g.add(gear);break;}
   case 'lentes':{ // segundo monitor pequeño con la UI clara
-   const m2=new THREE.Mesh(new THREE.PlaneGeometry(.55,.55*1194/1600),basic({map:imgTarde('assets/ui/'+ag.ui+'-light.webp'),color:0xDADADA}));m2.position.set(-.9,.42,-.16);m2.rotation.y=.35;g.add(m2);const b2=new THREE.Mesh(new THREE.BoxGeometry(.6,.46,.03),gris);b2.position.set(-.9,.42,-.18);b2.rotation.y=.35;g.add(b2);break;}
+   const m2=new THREE.Mesh(new THREE.PlaneGeometry(.55,.55*1194/1600),basic({map:imgTarde(uiSrc(ag.ui)),color:0xDADADA}));m2.position.set(-.9,.42,-.16);m2.rotation.y=.35;g.add(m2);const b2=new THREE.Mesh(new THREE.BoxGeometry(.6,.46,.03),gris);b2.position.set(-.9,.42,-.18);b2.rotation.y=.35;g.add(b2);break;}
   case 'visor':{ // trofeo/placa de ventas
    const t=new THREE.Mesh(new THREE.CylinderGeometry(.05,.09,.22,16),acc);t.position.set(-.95,.14,-.14);g.add(t);const c=new THREE.Mesh(new THREE.SphereGeometry(.07,16,12),acc);c.position.set(-.95,.3,-.14);g.add(c);break;}
   case 'credencial':{ // bandeja de documentos
@@ -567,7 +576,7 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  const brazo=new THREE.Mesh(new THREE.BoxGeometry(.05,.5,.05),cromo);brazo.position.set(0,.98,-.06);mon.add(brazo);
  // El respaldo queda hacia el pasillo: con el gris claro leía como una tabla blanca.
  const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.06,AH+.06,.04),bezelMat);bez.position.set(0,1.28+AH/2-.35,0);mon.add(bez);
- const scr=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde('assets/ui/'+ag.ui+'-light.webp'),color:0xF6F6F6}));scr.position.set(0,1.28+AH/2-.35,.025);mon.add(scr);
+ const scr=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde(uiSrc(ag.ui)),color:0xF6F6F6}));scr.position.set(0,1.28+AH/2-.35,.025);mon.add(scr);
  // franja de estado ENCIMA del monitor, sin tapar la UI
  const est=estadoTex(ag);const franja=new THREE.Mesh(new THREE.PlaneGeometry(AW+.06,(AW+.06)*128/1024),basic({map:est.t}));franja.position.set(0,1.28+AH-.35+.03+((AW+.06)*128/1024)/2,.02);mon.add(franja);
  // silla detrás del escritorio, mirando al pasillo
@@ -580,7 +589,7 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  // muro de trabajo: la UI clara, grande, con luz propia
  {const MW=3.3,MH=MW*1194/1600;const mx=lado*(HW-.24);const mg=new THREE.Group();mg.position.set(mx,1.32+MH/2,ag.z);mg.rotation.y=lado<0?Math.PI/2:-Math.PI/2;
   const bz=new THREE.Mesh(new THREE.BoxGeometry(MW+.16,MH+.16,.06),bezelMat);mg.add(bz);
-  const sc=new THREE.Mesh(new THREE.PlaneGeometry(MW,MH),basic({map:imgTarde('assets/ui/'+ag.ui+'-light.webp'),color:0xF0F0F0}));sc.position.z=.04;mg.add(sc);
+  const sc=new THREE.Mesh(new THREE.PlaneGeometry(MW,MH),basic({map:imgTarde(uiSrc(ag.ui)),color:0xF0F0F0}));sc.position.z=.04;mg.add(sc);
   const fl=new THREE.Mesh(new THREE.BoxGeometry(MW+.16,.04,.03),ledMat);fl.position.set(0,MH/2+.1,.04);mg.add(fl);
   scene.add(mg);sc.userData.work=ag;works.push({o:ag,mesh:sc,g:mg});}
  obstacles.push({x:ag.x,z:ag.z,w:1.9,d:2.7});
@@ -607,7 +616,7 @@ let holo=null;
  AGENTES.forEach((ag,i)=>{const a=(i-(AGENTES.length-1)/2)*PASO;const x=Math.sin(a)*R,z=cz-Math.cos(a)*R;const y=2.5;
   const gg=new THREE.Group();gg.position.set(x,y,z);gg.rotation.y=-a;
   const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.12,AH+.12,.06),bezelMat);gg.add(bez);
-  const s=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde('assets/ui/'+ag.ui+'-light.webp'),color:0xF4F4F4}));s.position.z=.04;gg.add(s);
+  const s=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde(uiSrc(ag.ui)),color:0xF4F4F4}));s.position.z=.04;gg.add(s);
   const r=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.4),basic({map:signTex(ag.mod.toUpperCase(),96,'#1a1a1a',1536,280),transparent:true}));r.position.set(0,AH/2+.32,.05);gg.add(r);
   scene.add(gg);s.userData.work=ag;works.push({o:ag,mesh:s,g:gg});});
  const cap=new THREE.Mesh(new THREE.PlaneGeometry(9,.8),basic({map:signTex('Todo tu ecosistema de IA en una sola plataforma',64,'#4a4a4a',2048,256,'600'),transparent:true}));cap.position.set(0,4.4,cz-R+.35);scene.add(cap);
@@ -898,7 +907,7 @@ function pintaCara(ca,gesto,ojo,boca,gx,gy){if(OJOS_REALES)return pintaCaraReal(
    case 'mira':return luz(capsula(cx,c,rx*.42),H*.052*(.5+.5*abre),1);    // cápsulas gruesas que siguen
    case 'sorpresa':return luz(doble(cx,c-ry*.22,rx*.74,ry*.13),grosor*.8,1);   // alta y doble: asombro
    case 'piensa':return sd>0?luz(linea(cx,c-ry*.28,rx*.72,-ry*.10,-sd*ry*.10),grosor,1):luz(linea(cx,c,rx*.72,0,0),grosor,1);
-   case 'concentra':return luz(linea(cx,c+ry*.04,rx*.62,0,sd*ry*.07),H*.040*(.5+.5*abre),1);   // cortas y gruesas, apenas hacia adentro: enfocado (en «/ \» se leía preocupado)
+   case 'concentra':return luz(linea(cx,c+ry*.04,rx*.62,ry*.06,0),H*.036*(.5+.5*abre),1);   // cortas, planas y con una curva suave: enfocado y tranquilo. Nunca inclinadas hacia adentro: en «\ /» se leía enojado (Sebastián), en «/ \» preocupado
    default:return luz(linea(cx,c,rx*.80,-ry*.14,0),grosor,1);          // normal: arco muy suave
   }}
  ojoL(-1);ojoL(1);
@@ -1094,14 +1103,36 @@ function largoRuta(p0,pts){let d=0,x=p0.x,z=p0.z;for(let i=0;i<pts.length;i++){d
 function irHacia(b,dest,cb){b.path=ruta({x:b.m.position.x,z:b.m.position.z},dest);b.estado='camina';b.alLlegar=cb;
  // son robots: los trayectos largos los hacen volando, con propulsores
  b.vuela=!!b.rig&&largoRuta(b.m.position,b.path)>13;anim(b,b.vuela?'fly':'walk');}
+/* ══ CHARLA ENTRE AGENTES ══
+   Antes se decían las características de su módulo («Pipeline visual con etapas
+   personalizables»): sonaba a folleto. Ahora conversan como colegas que se cuentan el día:
+   uno cuenta en qué anda, el otro reacciona y cuenta lo suyo, un comentario y se despiden. */
+const DIA={
+ ia:['Hoy llevo 20 respuestas en Instagram y recién es media mañana.','Me escribieron 14 personas por WhatsApp a la hora de almuerzo. Todas atendidas.','Un cliente preguntó a las 3 de la mañana y le agendé la demo al tiro.','Ando con la bandeja al día: ni un mensaje sin responder.','Hoy me tocó contestar en inglés y en portugués, ¡todo bien!'],
+ crm:['Moví cuatro negocios a «propuesta enviada» esta mañana.','Me queda una cotización por cerrar hoy, pero ya está casi.','Cobré tres suscripciones solas, sin perseguir a nadie.','El pipeline está lindo hoy: dos negocios a punto de cerrar.','Actualicé el historial de todos los contactos de ayer.'],
+ auto:['Dejé corriendo el seguimiento de los leads de ayer. Se van solos.','Ya mandé los recordatorios de las citas de mañana.','Armé un flujo nuevo: si no abren el correo, les llega un WhatsApp.','Hoy agendé tres reuniones sin que nadie tocara nada.','Reasigné las tareas pendientes al equipo antes de las nueve.'],
+ rrss:['Dejé programada la grilla de toda la semana.','Me queda subir el reel de hoy, pero ya está editado.','El post de ayer va con harto alcance, ¡ojo!','Estoy armando el concurso de fin de mes.','Tengo listas las ideas de copies para la próxima campaña.'],
+ web:['Publiqué la landing nueva y ya entraron los primeros leads.','Tengo un A/B test corriendo: la versión B va ganando.','Me queda ajustar el formulario, pero ya casi.','Arreglé el popup que no cargaba bien en el celular.','Hoy mando el correo del newsletter a las 11.'],
+ rep:['Terminé el reporte del mes: te lo mando en un rato.','Dos campañas van sobre el objetivo hoy.','Encontré una campaña gastando de más y la avisé al tiro.','El ROAS de ayer salió bueno, ya está en el dashboard.','Estoy cruzando las ventas con las campañas para ver cuál rindió.'],
+ aca:['Hoy entraron cinco personas nuevas al onboarding.','Subí una clase nueva a la academia.','Tres del equipo sacaron su certificación esta semana.','Estoy preparando la clase del jueves.','Respondí todas las dudas de la comunidad de hoy.'],
+ lic:['Me queda una licitación de 8 clientes por subir hoy, pero ya está lista.','Revisé las licitaciones nuevas de Mercado Público: hay dos que calzan.','Una licitación que seguíamos se adjudicó hoy, ya avisé.','Estoy leyendo unas bases técnicas larguísimas.','Dejé las alertas de cierre de esta semana listas.']};
+const APERTURAS=['','Oye, ','¡Hola! ','Buenas. '];
+const REACCIONES=['¡Bien ahí! Por acá,','¡Buena! Por mi lado,','Qué ritmo. Por acá,','¡Qué bueno! Por mi lado,','Bacán. Acá,'];
+const COMENTARIOS=['¡Vamos que se puede! Si necesitas algo, avísame.','Buenísimo. Cualquier cosa me escribes.','¡Qué bien! Así da gusto.','Oye, qué semana. ¡Éxito con eso!','Excelente, me alegra harto.'];
+const CIERRES=['Dale, vuelvo a lo mío. ¡Nos vemos!','Te dejo, que me entró un lead.','Sigamos. ¡Buen día!','Vuelvo a mi puesto. ¡Éxito!','Listo, a seguir. ¡Hablamos!'];
+// «Por acá,» / «Oye,» + frase: se baja la mayúscula para que se lea como una sola oración
+function unir(a,b){return a+(a.endsWith(' ')?'':' ')+b.charAt(0).toLowerCase()+b.slice(1);}
+function charla(A,B){const da=DIA[A.id]||A.frases,db=DIA[B.id]||B.frases,ab=pick(APERTURAS),l1=pick(da);
+ return [ab===''?l1:ab.endsWith(', ')?unir(ab,l1):ab+l1,unir(pick(REACCIONES),pick(db)),pick(COMENTARIOS),pick(CIERRES)];}
 let citas=0;
 function planVisita(b){const otros=estaciones.filter(a=>a!==b.ag&&a.bot&&a.bot.estado==='trabaja');const r=Math.random();
  if(r<.5&&otros.length){const col=pick(otros);const h=col.bot;h.estado='espera';h.visitante=b;b.ag.est.pinta('fuera del puesto',0,'visitando a '+col.n);col.est.pinta('fuera del puesto',0,'recibiendo a '+b.ag.n);
   const cita={listos:0,t0:performance.now()};const llega=()=>{cita.listos++;if(cita.listos<2)return;
    b.estado='charla';h.estado='charla';b.yawObj=Math.atan2(h.m.position.x-b.m.position.x,h.m.position.z-b.m.position.z);h.yawObj=Math.atan2(b.m.position.x-h.m.position.x,b.m.position.z-h.m.position.z);
-   const lineas=[[b,pick(b.ag.frases)],[h,pick(col.frases)],[b,pick(b.ag.frases)],[h,'¡Vamos! Al día · hoy: '+pick(col.tick)]];let k=0;
+   const ch=charla(b.ag,col),lineas=[[b,ch[0]],[h,ch[1]],[b,ch[2]],[h,ch[3]]];let k=0;
    const paso=()=>{if(k>=lineas.length){h.estado='vuelveSilla';h.visitante=null;irHacia(h,col.salida,()=>sienta(h));irHacia(b,b.ag.salida,()=>sienta(b));return;}
-    decir(lineas[k][0],lineas[k][1],3400);anim(lineas[k][0],'talk');anim(lineas[k][0]===b?h:b,'idle');k++;b.charla=setTimeout(paso,3600);};paso();};
+    // frases de conversación: más tiempo en pantalla (se leen enteras)
+    const ms=Math.min(6500,2600+lineas[k][1].length*42);decir(lineas[k][0],lineas[k][1],ms);anim(lineas[k][0],'talk');anim(lineas[k][0]===b?h:b,'idle');k++;b.charla=setTimeout(paso,ms+250);};paso();};
   irHacia(b,col.visita,llega);levanta(h);setTimeout(()=>{if(h.estado==='espera')irHacia(h,col.anfitrion,llega);},900);
   // si alguno no llega (atascado), a los 45 s los dos vuelven
   setTimeout(()=>{if(cita.listos<2){[b,h].forEach(x=>{if(x.estado!=='trabaja'){x.estado='vuelveSilla';irHacia(x,x.ag.salida,()=>sienta(x));}});}},45000);}
@@ -1236,7 +1267,7 @@ function setMSAA(n){if(!renderer.capabilities.isWebGL2)n=0;n=Math.min(n,renderer
 function setDPR(r){r=Math.max(.6,Math.min(r,DPR_TOPE));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
 function aplicaNivel(n){nivel=Math.max(0,Math.min(NIVELES.length-1,n));const q=NIVELES[nivel];setDPR(Math.min(q.r,DPR_TOPE));bloom.enabled=q.bloom;smaa.enabled=q.smaa;}
 // Q alterna automática (escalones medidos) ↔ rápida (el escalón más liviano con SMAA)
-function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.alto=0;$('#qb').textContent=quality?'CALIDAD AUTO · Q':'CALIDAD RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
+function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.veces={};Q.alto=0;$('#qb').textContent=quality?'CALIDAD AUTO · Q':'CALIDAD RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
 const Z_ZONA={1:12,2:-14,3:-64,4:-94};
 {const cont=$('#zonas'),bts=[].slice.call(cont.querySelectorAll('button'));
  function irA(n){if(!window.__hqOn)enter();P.z=Z_ZONA[n];P.x=0;P.yaw=0;P.pitch=0;bts.forEach(o=>o.classList.toggle('act',+o.dataset.n===n));}
@@ -1396,7 +1427,7 @@ function pintaMapa(){if(!mapa.classList.contains('on')||!visible(mapa))return;co
 
 /* ══ LOOP ══ */
 const ray=new THREE.Raycaster(),center=new THREE.Vector2(0,0),wp=new THREE.Vector3();
-let focus=null,last=performance.now(),fc=0,tiraT=0;const Q={acc:0,n:0,fps:0,sucio:false,primera:true,alto:0,bajo:{},entrada:0};
+let focus=null,last=performance.now(),fc=0,tiraT=0;const Q={acc:0,n:0,fps:0,sucio:false,primera:true,alto:0,bajo:{},veces:{},entrada:0};
 const startEl=$('#start'),zonaEl=$('#zona'),tVerEl=$('#tVer');let RAY_OBJ=null,rayN=-1;
 const ZONAS=[null,['Zona 01','Recepción'],['Zona 02','Piso de agentes'],['Zona 03','Sala de control'],['Zona 04','Núcleo 24/7']];
 function textoPlacard(){if(!focus)return;
@@ -1455,8 +1486,10 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
     // bajo 55 fps ya se notan los tirones: en una pantalla de 60 Hz son cuadros de 17 ms
     // alternados con cuadros de 33 ms. Un escalón del que se bajó se vuelve a probar
     // recién a los 20 s (si no, oscilaría; y si fuera para siempre, no se recupera).
-    if(fps<55&&nivel<NIVELES.length-1){Q.bajo[nivel]=now;aplicaNivel(nivel+1);Q.alto=0;}
-    else if(fps>58&&nivel>0&&now-(Q.bajo[nivel-1]||-1e9)>20000){if(++Q.alto>=2){aplicaNivel(nivel-1);Q.alto=0;}}
+    if(fps<55&&nivel<NIVELES.length-1){Q.bajo[nivel]=now;Q.veces[nivel]=(Q.veces[nivel]||0)+1;aplicaNivel(nivel+1);Q.alto=0;}
+    // cada vez que un escalón falla, se espera el doble antes de volver a probarlo (20, 40, 80… hasta 160 s):
+    // si el equipo no da para 4K, no queda probando cada 20 s con un tirón
+    else if(fps>58&&nivel>0&&now-(Q.bajo[nivel-1]||-1e9)>20000*Math.min(8,Math.pow(2,(Q.veces[nivel-1]||1)-1))){if(++Q.alto>=2){aplicaNivel(nivel-1);Q.alto=0;}}
     else Q.alto=0;}}
  } else {camera.position.set(Math.sin(now/9000)*2.5,1.7,12.5+Math.cos(now/9000)*1.2);camera.lookAt(0,2,0);
   // tras la portada nadie ve a los robots: se animan sólo en los cuadros que se dibujan
