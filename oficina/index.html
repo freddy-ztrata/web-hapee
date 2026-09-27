@@ -1402,6 +1402,8 @@ async function preguntar(texto,tipo){const ag=chatCon;if(!ag)return;msg('yo',tex
  let resp=null,viaIA=false;const g=guion(ag,tipo);
  if(!g){try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistema(ag),messages:historial.slice(-8)})});
   if(r.ok){const j=await r.json();resp=(j.content&&j.content[0]&&j.content[0].text)||null;viaIA=!!resp;}}catch(e){}}
+ // el modelo a veces responde con markdown («**tú**»): en la burbuja y en la voz se veía/leía tal cual
+ if(resp)resp=resp.replace(/\*\*(.+?)\*\*/g,'$1').replace(/(^|\s)[*_](\S[^*_]*?)[*_](?=\s|[.,;:!?]|$)/g,'$1$2').replace(/^#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'• ');
  if(!resp){const f1=pick(ag.frases);const otras=ag.frases.filter(f=>f!==f1);
   resp=g||(f1+' '+pick(otras)+' Si quieres verlo con tus datos, agenda una demo en hapee.ai/agenda-tu-demo.');}
  if(chatCon!==ag)return;esp.remove();msg('bot',resp);historial.push({role:'assistant',content:resp});$('#chEst').textContent=viaIA?'Respondió con IA':'Respuesta del módulo';
