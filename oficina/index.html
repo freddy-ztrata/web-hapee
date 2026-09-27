@@ -348,9 +348,10 @@ const smaa=new SMAAPass(W*renderer.getPixelRatio(),H*renderer.getPixelRatio());c
 /* Escalones de calidad, del más fino al más liviano. La calidad automática baja uno
    cuando la medición real da < 55 fps y sube uno si pasa de 58 dos veces seguidas,
    pero nunca vuelve a un escalón del que ya tuvo que bajar (así no oscila). */
-// En el escalón 2× el SMAA sobra: el supermuestreo ya suaviza los bordes y así el 4K cuesta
-// tres pasadas menos de pantalla completa.
-const NIVELES=[{r:2,bloom:true,smaa:false},{r:1.5,bloom:true,smaa:true},{r:1.25,bloom:true,smaa:true},
+// Sobre 1× el SMAA sobra: el supermuestreo ya suaviza los bordes (comparado en recortes 1:1,
+// 1,25× y 1,5× sin SMAA se ven igual o más nítidos) y son tres pasadas menos de pantalla
+// completa: +15-20 % de fps, que es lo que decide si el escalón se sostiene a 60.
+const NIVELES=[{r:2,bloom:true,smaa:false},{r:1.5,bloom:true,smaa:false},{r:1.25,bloom:true,smaa:false},
  {r:1,bloom:true,smaa:true},{r:1,bloom:false,smaa:true},{r:.8,bloom:false,smaa:false}];
 let nivel=MOVIL?2:1;
 const maxAniso=renderer.capabilities.getMaxAnisotropy();
