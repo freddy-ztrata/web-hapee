@@ -32,10 +32,13 @@ function base(rig) {
   (function dfs(n, pr) { const r = n === rig.root ? new THREE.Quaternion() : pr.clone().multiply(n.quaternion); if (!n.isBone) rig.rel.set(n, r); n.children.forEach(c => dfs(c, r)); })(rig.root, new THREE.Quaternion());
 }
 
-/* estado: 'idle' | 'walk' | 'sit' | 'wave' · t: tiempo (s) · ph: fase de paso (rad) · S: signos calibrados */
+/* estado: 'idle' | 'walk' | 'sit' | 'wave' | 'sitwave' (saluda sentado) · t: tiempo (s) · ph: fase de paso (rad) · S: signos calibrados */
 export const S = { pitch: 1, roll: -1 };
 // Valores hallados barriendo y midiendo la posición de mundo de las manos:
 // quedan sobre el teclado (±.11 de separación, altura .833, alcance .285).
+// Saludo calibrado con qa/saludo.html (frente y tres cuartos): brazo arriba y afuera, la mano
+// oscila sin tocar los audífonos.
+export const WAVE = { ap: .2, ay: 0, ar: 1.7, fp: .1, fy: 0, fr: .8, amp: .3 };
 export const SIT = { a: 1.23, f: .96, ay: .16, az: .59, fy: -.10, fz: .20, hx: .50, hy: .80, hz: -.90 };
 // Recalibrado: antes las manos quedaban a ±.11 y los antebrazos cruzaban el torso,
 // así que de lejos parecía que las manos se metían dentro del robot. Ahora las manos
@@ -57,7 +60,7 @@ export function pose(rig, estado, t, ph) {
     lArm = [-P * .45 * s, 0, R * .08]; rArm = [P * .45 * s, 0, -R * .08];
     lFore = [-P * .25 * (1 - s) / 2 - P * .1, 0, 0]; rFore = [-P * .25 * (1 + s) / 2 - P * .1, 0, 0];
     hips = [0, .07 * s, R * .05 * s]; spine = [P * .06, -.08 * s, 0]; head = [0, .06 * s, 0];
-  } else if (estado === 'sit') {
+  } else if (estado === 'sit' || estado === 'sitwave') {
     lUp = [-P * 1.45, .12, 0]; rUp = [-P * 1.45, -.12, 0];
     lLeg = [P * 1.35, 0, 0]; rLeg = [P * 1.35, 0, 0];
     lFoot = [P * .2, 0, 0]; rFoot = [P * .2, 0, 0];
@@ -74,9 +77,18 @@ export function pose(rig, estado, t, ph) {
     lFore = [-P * (D.f + k1 * .22), -D.fy, D.fz]; rFore = [-P * (D.f + k2 * .22), D.fy, -D.fz];
     lHand = [P * (D.hx - w1 * .42), D.hy, R * D.hz]; rHand = [P * (D.hx - w2 * .42), -D.hy, -R * D.hz];
     spine = [P * .08 + resp, 0, 0]; head = [P * .12 + Math.sin(t * .6) * .03, Math.sin(t * .4) * .06, 0];
+    // sentado saludando: el cuerpo y la mano izquierda siguen en el puesto; solo el brazo
+    // derecho saluda. Antes se usaba 'wave', que estira las piernas, y el robot se «paraba»
+    // dentro del escritorio.
+    if (estado === 'sitwave') { const V = (typeof globalThis !== 'undefined' && globalThis.__WAVE) || WAVE; const w = Math.sin(t * 7) * V.amp;
+      rArm = [P * V.ap, V.ay, R * V.ar]; rFore = [P * V.fp, V.fy, R * (V.fr + w)]; rHand = [0, 0, 0]; head = [0, .12, R * .05]; }
   } else if (estado === 'wave') {
-    const w = Math.sin(t * 7) * .45;
-    rArm = [P * .5, 0, -R * 1.7]; rFore = [P * .2, 0, -R * (.5 + w)];
+    // globalThis.__WAVE permite barrer valores desde qa/saludo.html sin tocar el archivo
+    const V = (typeof globalThis !== 'undefined' && globalThis.__WAVE) || WAVE;
+    const w = Math.sin(t * 7) * V.amp;
+    // R·ar levanta el brazo derecho hacia AFUERA (roll −1 = afuera). Con −R el brazo se
+    // metía dentro del torso al saludar (lo vio Sebastián en el recepcionista y en los puestos).
+    rArm = [P * V.ap, V.ay, R * V.ar]; rFore = [P * V.fp, V.fy, R * (V.fr + w)];
     lArm = [0, 0, R * .1]; lFore = [-P * .15, 0, 0];
     spine = [resp, 0, -R * .05]; head = [0, .15, R * .06];
   } else if (estado === 'fly') {   // vuelo: piernas recogidas atrás, brazos de estabilizador
@@ -101,5 +113,5 @@ export function pose(rig, estado, t, ph) {
   if (B.neck) aplica(rig, B.neck, head[0] / 2, head[1] / 2, head[2] / 2); if (B.Head) aplica(rig, B.Head, head[0] / 2, head[1] / 2, head[2] / 2);
   if (B.head_end) aplica(rig, B.head_end, 0, 0, 0); if (B.headfront) aplica(rig, B.headfront, 0, 0, 0);
   // desplazamiento vertical de las caderas al caminar (rebote) y al sentarse
-  if (B.Hips) { const r0 = rig.hipsY === undefined ? (rig.hipsY = B.Hips.position.y) : rig.hipsY; B.Hips.position.y = r0 + (estado === 'walk' ? Math.abs(Math.sin(ph)) * .035 : 0) + (estado === 'sit' ? -.02 : 0); }
+  if (B.Hips) { const r0 = rig.hipsY === undefined ? (rig.hipsY = B.Hips.position.y) : rig.hipsY; B.Hips.position.y = r0 + (estado === 'walk' ? Math.abs(Math.sin(ph)) * .035 : 0) + (estado === 'sit' || estado === 'sitwave' ? -.02 : 0); }
 }

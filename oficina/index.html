@@ -268,7 +268,7 @@ import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {prepararRig,pose as poseRig} from './assets/robot-anim.js';
+import {prepararRig,pose as poseRig} from './assets/robot-anim.js?v=20260927';
 window.__hqBoot=true;
 
 const $=s=>document.querySelector(s);
@@ -402,6 +402,9 @@ setTimeout(sueltaTarde,6000);
 // el HDR (1,6 MB) va en la segunda tanda, ver sueltaTarde()
 const obstacles=[];const PODS_FLOT=[];const PILOTOS=[];const HOLOS=[];
 const basic=(o)=>new THREE.MeshBasicMaterial(Object.assign({toneMapped:false},o));
+// Monitores y sillas de los puestos: plástico blanco brillante (Sebastián: «el PC es negro por
+// atrás, debería ser blanco, todo lo más blanquito posible, las sillas también»).
+const plasticoBlanco=new THREE.MeshPhysicalMaterial({color:0xF3F4F7,roughness:.3,metalness:0,clearcoat:.6,clearcoatRoughness:.22,envMapIntensity:.55});
 const bezelMat=new THREE.MeshPhysicalMaterial({color:0x2B2E36,metalness:.14,roughness:.44,clearcoat:.45,envMapIntensity:.3});
 const gris=new THREE.MeshPhysicalMaterial({color:0xD9DBE1,metalness:.05,roughness:.45,clearcoat:.35,clearcoatRoughness:.25});
 const blanco=new THREE.MeshPhysicalMaterial({color:0xF2F2F4,roughness:.3,metalness:.03,clearcoat:.5,clearcoatRoughness:.2});
@@ -474,10 +477,16 @@ function estadoTex(ag){const c=document.createElement('canvas');c.width=1024;c.h
 {const logoW=img('assets/brand/logo-hapee-blanco.png'),logoN=img('assets/brand/logo-hapee.png');
  // mostrador curvo (segmento de cilindro) en el lado derecho
  const RX=4.4,RZ=1.6;const rec=new THREE.Group();rec.position.set(RX,0,RZ);rec.rotation.y=.62;scene.add(rec);
- const cur=new THREE.Mesh(new THREE.CylinderGeometry(2.6,2.6,1.05,48,1,false,-Math.PI*.42,Math.PI*.84),new THREE.MeshPhysicalMaterial({color:0x1a1a1e,metalness:.45,roughness:.3,clearcoat:.8}));cur.position.set(0,.525,-1.6);rec.add(cur);
- const tapa=new THREE.Mesh(new THREE.CylinderGeometry(2.72,2.72,.06,48,1,false,-Math.PI*.44,Math.PI*.88),blanco);tapa.position.set(0,1.08,-1.6);rec.add(tapa);
+ /* El mesón era un trozo de cilindro MACIZO (del centro al borde): el recepcionista, parado
+    detrás del frente, quedaba dentro del sólido y la cubierta le cruzaba la cintura. Ahora es
+    un sector de anillo extruido: pared de 2,05 a 2,6 m del centro y cubierta de 1,95 a 2,72. */
+ const sectorAnillo=function(rIn,rOut,alto,t0,t1){const f0=t0-Math.PI/2,f1=t1-Math.PI/2;const sh=new THREE.Shape();
+  sh.moveTo(rOut*Math.cos(f0),rOut*Math.sin(f0));sh.absarc(0,0,rOut,f0,f1,false);sh.lineTo(rIn*Math.cos(f1),rIn*Math.sin(f1));sh.absarc(0,0,rIn,f1,f0,true);sh.closePath();
+  const g=new THREE.ExtrudeGeometry(sh,{depth:alto,bevelEnabled:false,curveSegments:48});g.rotateX(-Math.PI/2);return g;};
+ const cur=new THREE.Mesh(sectorAnillo(2.05,2.6,1.05,-Math.PI*.42,Math.PI*.42),new THREE.MeshPhysicalMaterial({color:0x1a1a1e,metalness:.45,roughness:.3,clearcoat:.8}));cur.position.set(0,0,-1.6);rec.add(cur);
+ const tapa=new THREE.Mesh(sectorAnillo(1.95,2.72,.06,-Math.PI*.44,Math.PI*.44),blanco);tapa.position.set(0,1.05,-1.6);rec.add(tapa);
  const luzM=new THREE.Mesh(new THREE.TorusGeometry(2.62,.02,8,64,Math.PI*.84),ledMat);luzM.rotation.x=Math.PI/2;luzM.rotation.z=Math.PI*.08;luzM.position.set(0,.14,-1.6);rec.add(luzM);
- const fr=new THREE.Mesh(new THREE.PlaneGeometry(2.0,.7),basic({map:logoW,transparent:true}));fr.position.set(0,.62,1.02);rec.add(fr);
+ const fr=new THREE.Mesh(new THREE.CylinderGeometry(2.612,2.612,.7,40,1,true,-1.0/2.612,2.0/2.612),basic({map:logoW,transparent:true}));fr.position.set(0,.62,-1.6);rec.add(fr);
  obstacles.push({x:RX,z:RZ-1.2,w:5.2,d:3.4});
  // muro de recepción: blanco, logo en color, claim
  const lg=new THREE.Mesh(new THREE.PlaneGeometry(4.6,1.61),basic({map:logoN,transparent:true}));lg.position.set(0,3.05,Z0-.25);lg.rotation.y=Math.PI;scene.add(lg);
@@ -500,7 +509,7 @@ const works=[],estaciones=[];
 const haloTex=canvasTex(256,256,(g)=>{const gr=g.createRadialGradient(128,128,0,128,128,128);gr.addColorStop(0,'rgba(250,80,0,.55)');gr.addColorStop(.5,'rgba(205,35,73,.18)');gr.addColorStop(1,'rgba(205,35,73,0)');g.fillStyle=gr;g.fillRect(0,0,256,256);});
 const haloMat=basic({map:haloTex,transparent:true,opacity:.14,blending:THREE.AdditiveBlending,depthWrite:false});
 const haloDe=(c)=>basic({map:haloTex,color:c,transparent:true,opacity:.075,blending:THREE.AdditiveBlending,depthWrite:false});
-function silla(){const g=new THREE.Group();const neg=new THREE.MeshStandardMaterial({color:0x1c1c22,roughness:.5,metalness:.2});
+function silla(){const g=new THREE.Group();const neg=plasticoBlanco;
  const base=new THREE.Mesh(new THREE.CylinderGeometry(.32,.36,.03,24),cromo);base.position.y=.015;g.add(base);
  const col=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,.42,12),cromo);col.position.y=.24;g.add(col);
  const asiento=new THREE.Mesh(new THREE.BoxGeometry(.5,.07,.5),neg);asiento.position.y=.46;g.add(asiento);
@@ -519,7 +528,7 @@ function propKit(ag){const g=new THREE.Group();const acc=new THREE.MeshStandardM
   case 'casco':{ // engranaje holográfico girando
    const gear=new THREE.Mesh(new THREE.TorusKnotGeometry(.11,.035,64,8,2,3),basic({color:ag.acc,transparent:true,opacity:.8}));gear.position.set(-.95,.32,-.12);gear.userData.gira=true;g.add(gear);break;}
   case 'lentes':{ // segundo monitor pequeño con la UI clara
-   const m2=new THREE.Mesh(new THREE.PlaneGeometry(.55,.55*1194/1600),basic({map:imgTarde(uiSrc(ag.ui)),color:0xDADADA}));m2.position.set(-.9,.42,-.16);m2.rotation.y=.35;g.add(m2);const b2=new THREE.Mesh(new THREE.BoxGeometry(.6,.46,.03),gris);b2.position.set(-.9,.42,-.18);b2.rotation.y=.35;g.add(b2);break;}
+   const m2=new THREE.Mesh(new THREE.PlaneGeometry(.55,.55*1194/1600),basic({map:imgTarde(uiSrc(ag.ui)),color:0xDADADA}));m2.position.set(-.9,.42,-.16);m2.rotation.y=.35;g.add(m2);const b2=new THREE.Mesh(new THREE.BoxGeometry(.6,.46,.03),plasticoBlanco);b2.position.set(-.9,.42,-.18);b2.rotation.y=.35;g.add(b2);break;}
   case 'visor':{ // trofeo/placa de ventas
    const t=new THREE.Mesh(new THREE.CylinderGeometry(.05,.09,.22,16),acc);t.position.set(-.95,.14,-.14);g.add(t);const c=new THREE.Mesh(new THREE.SphereGeometry(.07,16,12),acc);c.position.set(-.95,.3,-.14);g.add(c);break;}
   case 'credencial':{ // bandeja de documentos
@@ -562,7 +571,7 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  hojas.position.set(-.26,.7745,.24);hojas.rotation.y=.14;g.add(hojas);
  // cable del monitor, cayendo por detrás del tablero
  {const cur=new THREE.CatmullRomCurve3([new THREE.Vector3(-1.0,.72,-.1),new THREE.Vector3(-1.05,.5,-.22),new THREE.Vector3(-1.0,.22,-.3),new THREE.Vector3(-.92,.04,-.26)]);
-  const cab=new THREE.Mesh(new THREE.TubeGeometry(cur,18,.009,7,false),new THREE.MeshStandardMaterial({color:0x22242A,roughness:.7}));g.add(cab);}
+  const cab=new THREE.Mesh(new THREE.TubeGeometry(cur,18,.009,7,false),new THREE.MeshStandardMaterial({color:0xDADCE2,roughness:.6}));g.add(cab);}
  // mampara de vidrio detrás del puesto (privacidad), con filete de luz
  const mam=new THREE.Mesh(new THREE.BoxGeometry(3.4,1.7,.04),vidrioMate);mam.position.set(0,1.05,-1.95);g.add(mam);
  // el vidrio era casi invisible y la placa de estado parecía flotar: se le pone marco
@@ -575,8 +584,10 @@ AGENTES.forEach((ag,i)=>{ag.voz=i%2?'m':'f';const lado=ag.x<0?-1:1;ag.lado=lado;
  // Antes quedaba de espaldas al robot, con la UI dando al visitante.
  const AW=.98,AH=AW*1194/1600;const mon=new THREE.Group();mon.position.set(-1.0,0,.02);mon.rotation.y=2.20;g.add(mon);
  const brazo=new THREE.Mesh(new THREE.BoxGeometry(.05,.5,.05),cromo);brazo.position.set(0,.98,-.06);mon.add(brazo);
- // El respaldo queda hacia el pasillo: con el gris claro leía como una tabla blanca.
- const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.06,AH+.06,.04),bezelMat);bez.position.set(0,1.28+AH/2-.35,0);mon.add(bez);
+ // El respaldo queda hacia el pasillo: blanco, con el logo de Hapee al centro para que se lea
+ // como un monitor y no como una tabla (antes era gris oscuro, «negro por atrás»).
+ const bez=new THREE.Mesh(new THREE.BoxGeometry(AW+.06,AH+.06,.04),plasticoBlanco);bez.position.set(0,1.28+AH/2-.35,0);mon.add(bez);
+ {const lg=new THREE.Mesh(new THREE.PlaneGeometry(.30,.105),basic({map:img('assets/brand/logo-hapee.png'),transparent:true}));lg.position.set(0,1.28+AH/2-.35,-.0215);lg.rotation.y=Math.PI;mon.add(lg);}
  const scr=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),basic({map:imgTarde(uiSrc(ag.ui)),color:0xF6F6F6}));scr.position.set(0,1.28+AH/2-.35,.025);mon.add(scr);
  // franja de estado ENCIMA del monitor, sin tapar la UI
  const est=estadoTex(ag);const franja=new THREE.Mesh(new THREE.PlaneGeometry(AW+.06,(AW+.06)*128/1024),basic({map:est.t}));franja.position.set(0,1.28+AH-.35+.03+((AW+.06)*128/1024)/2,.02);mon.add(franja);
@@ -1052,7 +1063,7 @@ function animaBot(b,dt,t){if(!b.rig)return;
 }
 function coloca(ag){const b=nuevoBot(ag,ag.home,ag.home.yaw,.95,'puesto');ag.bot=b;b.animName='sit';b.blend=1;}
 function arrancaRobots(){estaciones.forEach(coloca);
- const rec=nuevoBot({n:'Recepción',mod:'Hapee HQ',d:'Bienvenido a la oficina de Hapee. Pasa al piso de agentes: cada uno te cuenta lo que hace.',url:'https://hapee.ai/agenda-tu-demo',id:'rec',kit:'headset',acc:0xFA5000,frases:['¡Bienvenido a Hapee HQ!','Los agentes están al fondo, en su piso.','Si quieres una demo, es en hapee.ai/agenda-tu-demo.'],tick:[]},{x:2.6,z:2.2},0,1,'recepcion');rec.estado='recibe';
+ const rec=nuevoBot({n:'Recepción',mod:'Hapee HQ',d:'Bienvenido a la oficina de Hapee. Pasa al piso de agentes: cada uno te cuenta lo que hace.',url:'https://hapee.ai/agenda-tu-demo',id:'rec',kit:'headset',acc:0xFA5000,frases:['¡Bienvenido a Hapee HQ!','Los agentes están al fondo, en su piso.','Si quieres una demo, es en hapee.ai/agenda-tu-demo.'],tick:[]},{x:3.58,z:1.89},0,1,'recepcion');rec.estado='recibe';
  const ron=nuevoBot({n:'Agente de Guardia',mod:'Núcleo 24/7',d:'Vigila el núcleo: la fábrica de ventas no se detiene nunca.',url:'https://hapee.ai/',id:'ron',kit:'visor',acc:0x22c55e,frases:['Todo en orden en el núcleo.','24/7 · sin pausas.','Aquí es donde corren tus ventas mientras duermes.'],tick:[]},{x:0,z:Z4.a-12},Math.PI,1,'ronda');ron.estado='ronda';ron.z0=Z4.a-12;ron.z1=Z4.b+8;ron.animName='walk';
  // Tres mini Hapee de mantenimiento: la mitad de altos que un agente, siempre en el aire
  // con los propulsores encendidos, saltando de rack en rack para revisarlos.
@@ -1138,7 +1149,7 @@ function planVisita(b){const otros=estaciones.filter(a=>a!==b.ag&&a.bot&&a.bot.e
   // si alguno no llega (atascado), a los 45 s los dos vuelven
   setTimeout(()=>{if(cita.listos<2){[b,h].forEach(x=>{if(x.estado!=='trabaja'){x.estado='vuelveSilla';irHacia(x,x.ag.salida,()=>sienta(x));}});}},45000);}
  else if(r<.8){b.ag.est.pinta('fuera del puesto',0,'en la sala de control');const lado=b.m.position.x<0?-1:1;irHacia(b,{x:lado*3.1,z:HOLO.z},()=>{b.estado='mira';anim(b,'idle');b.yawObj=Math.atan2(HOLO.x-b.m.position.x,HOLO.z-b.m.position.z);decir(b,pick(['Revisando los planes: STARTER, PRO y ELITE.','Todo el ecosistema en una sola plataforma.','Sin integraciones costosas ni herramientas separadas.']),5000);b.t=0;b.espera=6+Math.random()*5;});}
- else{b.ag.est.pinta('fuera del puesto',0,'en recepción');irHacia(b,{x:0.6,z:4.4},()=>{b.estado='mira';anim(b,'idle');b.yawObj=Math.atan2(2.6-b.m.position.x,2.2-b.m.position.z);decir(b,pick(['¿Llegó alguien nuevo?','Voy y vuelvo, la bandeja sigue respondiendo sola.','Meta Business Partner y Google Partner: aquí, en la entrada.']),5000);b.t=0;b.espera=5+Math.random()*4;});}}
+ else{b.ag.est.pinta('fuera del puesto',0,'en recepción');irHacia(b,{x:0.6,z:4.4},()=>{b.estado='mira';anim(b,'idle');b.yawObj=Math.atan2(3.58-b.m.position.x,1.89-b.m.position.z);decir(b,pick(['¿Llegó alguien nuevo?','Voy y vuelvo, la bandeja sigue respondiendo sola.','Meta Business Partner y Google Partner: aquí, en la entrada.']),5000);b.t=0;b.espera=5+Math.random()*4;});}}
 function sienta(b){b.estado='trabaja';b.vuela=false;b.alt=0;b.m.position.set(b.ag.home.x,0,b.ag.home.z);b.yawObj=b.ag.home.yaw;b.m.rotation.y=b.ag.home.yaw;anim(b,'sit');b.proximo=25+Math.random()*45;b.ag.est.pinta('trabajando · 24/7',0,b.ag.tick[0]);}
 function levanta(b){b.vuela=false;b.alt=0;b.m.position.set(b.ag.salida.x,0,b.ag.salida.z);anim(b,'idle');}
 function mueve(b,dt){const p=b.m.position;if(!b.path.length){b.estado='llega';return;}
@@ -1152,7 +1163,7 @@ function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];co
  switch(b.estado){
   // la franja de estado (lienzo + subida a la GPU) sólo se repinta si se ve y está cerca
   case 'trabaja':{b.proximo-=dt;if(b.ag.est&&fc%40===0&&b.m.visible&&dvis<14)b.ag.est.pinta(dvis<4.5?'hola 👋':'trabajando · 24/7',(Math.sin(t*.35)+1)/2,b.ag.tick[Math.floor(t/7)%b.ag.tick.length]);
-   if(dvis<4.5){if(!b.saludado){b.saludado=true;decir(b,pick(SALUDOS).replace('{n}',b.ag.n),5500);anim(b,'wave');setTimeout(()=>{if(b.estado==='trabaja'&&b.animName==='wave')anim(b,'sit');},3000);}}
+   if(dvis<4.5){if(!b.saludado){b.saludado=true;decir(b,pick(SALUDOS).replace('{n}',b.ag.n),5500);anim(b,'sitwave');setTimeout(()=>{if(b.estado==='trabaja'&&b.animName==='sitwave')anim(b,'sit');},3000);}}
    else{if(dvis>6)b.saludado=false;if(b.proximo<=0&&dvis>9&&!chatCon&&bots.filter(o=>o.tipo==='puesto'&&o.estado!=='trabaja').length<2){levanta(b);planVisita(b);}}break;}
   case 'espera':case 'charla':case 'vuelveSilla':break;
   case 'camina':mueve(b,dt);break;
@@ -1215,7 +1226,7 @@ function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];co
   if(now>b.microT){b.microT=now+5500+Math.random()*9000;b.microHasta=now+900+Math.random()*900;
    b.micro=pick(habla?['mira','feliz','mira']:dvis<4.5?['guino','feliz','sorpresa','mira']:['piensa','piensa','sorpresa','guino','mira']);}
   let gesto;
-  if(b.animName==='wave')gesto='feliz';
+  if(b.animName==='wave'||b.animName==='sitwave')gesto='feliz';
   else if(now<b.microHasta&&!(habla&&b.micro==='guino'))gesto=b.micro;
   else if(habla)gesto=Math.sin(now/1900+b.fase)>.55?'feliz':'mira';
   else if(b.estado==='charla')gesto='mira';
