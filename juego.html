@@ -1600,5 +1600,12 @@ requestAnimationFrame(loop);
 </script>
 
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  .hud-top a.hud-back{font-size:12px;display:inline-flex;align-items:center;min-height:40px}
+  .hud-stat .l{font-size:10px}
+}
+</style>
 </body>
 </html>

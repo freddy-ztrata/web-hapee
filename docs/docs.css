@@ -213,3 +213,8 @@ code {
   .dv-main { padding-top: 26px; }
   .dv-nav-links { width: 100%; margin-left: 0; }
 }
+
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  .dv-nav-links a{display:inline-flex;align-items:center;min-height:40px}
+}

@@ -404,5 +404,13 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </footer>
 
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  .lg-lang a{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px}
+  .lg-nav-back{display:inline-flex;align-items:center;min-height:40px}
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+}
+</style>
 </body>
 </html>

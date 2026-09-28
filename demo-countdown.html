@@ -179,7 +179,8 @@ body{
   .top-bar,.bottom{padding:0 18px}
   .top-bar{top:14px}
   .bottom{bottom:14px}
-  .countdown{font-size:38vw}
+  /* «05:00» mide ~2,9 em: a 38vw se salía de la pantalla por los dos lados */
+  .countdown{font-size:26vw}
   .sub-line{font-size:.9rem;padding:0 18px;margin-bottom:24px}
   .eyebrow{font-size:.62rem;margin-top:24px}
 }
@@ -356,5 +357,11 @@ setInterval(() => {
 /* unlock audio on first interaction */
 addEventListener('click', () => { if(!audioCtx) try{audioCtx = new (window.AudioContext || window.webkitAudioContext)()}catch(e){}; }, {once:true});
 </script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  #sessionId,.eyebrow,.bottom .bottom-meta{font-size:11px}
+}
+</style>
 </body>
 </html>

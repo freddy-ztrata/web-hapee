@@ -295,10 +295,22 @@ tr.gr td{background:var(--bg-alt);font-weight:800;color:var(--heading);font-size
   .hd-search{display:none}
   .prog-pill .bar{display:none}
   .cta span.x{display:none}
+  /* en 390 px el encabezado sumaba ~530 px y el botón quedaba cortado: se compacta */
+  .cta .cta-l{display:none}
+  .cta{padding:9px 14px}
+  .hd-right{gap:8px}
+  .brand{gap:8px}
+  .brand .div{display:none}
+  .brand .word{letter-spacing:2px;font-size:.64rem}
+  .prog-pill{padding:6px 10px}
   .hero{padding-top:120px}
   .mrow .mt{width:auto;min-width:120px}
   .mrow{flex-wrap:wrap}
   .fband::after{font-size:7rem;bottom:-24px}
+}
+@media(max-width:400px){
+  header{padding:0 12px}
+  .brand img{height:22px}
 }
 
 /* ═══════════ PRINT ═══════════ */
@@ -332,7 +344,7 @@ tr.gr td{background:var(--bg-alt);font-weight:800;color:var(--heading);font-size
   <div class="hd-right">
     <div class="prog-pill"><span id="pnum">0/20</span><span class="bar"><i id="pbar"></i></span></div>
     <button class="tbtn" id="theme" aria-label="Cambiar tema">🌙</button>
-    <a class="cta" href="https://beta.hapee.ai" target="_blank" rel="noopener">Abrir mi plataforma<span class="x"> →</span></a>
+    <a class="cta" href="https://beta.hapee.ai" target="_blank" rel="noopener" aria-label="Abrir mi plataforma">Abrir<span class="cta-l"> mi plataforma</span><span class="x"> →</span></a>
   </div>
 </header>
 
@@ -416,7 +428,7 @@ tr.gr td{background:var(--bg-alt);font-weight:800;color:var(--heading);font-size
         <li>Revisa tu <b>foto de perfil y nombre</b> en tu cuenta personal: es lo que verán tus clientes cuando el equipo responda.</li>
         <li>Elige tu <b>tema</b>: el botón de la luna 🌙 en la barra superior alterna entre modo claro y oscuro. Es una preferencia por usuario — cada persona elige el suyo y la plataforma lo recuerda. El idioma también se cambia por usuario, abajo en el menú lateral.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m01"></span><div class="tx"><b>Listo cuando…</b> entras con tu contraseña propia y el logo de tu empresa aparece en el perfil.<span class="hint">Márcalo y tu progreso queda guardado en este navegador.</span></div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m01"></label><div class="tx"><b>Listo cuando…</b> entras con tu contraseña propia y el logo de tu empresa aparece en el perfil.<span class="hint">Márcalo y tu progreso queda guardado en este navegador.</span></div></div>
     </article>
 
     <!-- 02 -->
@@ -432,7 +444,7 @@ tr.gr td{background:var(--bg-alt);font-weight:800;color:var(--heading);font-size
         <li>Asigna el rol: <b>administrador</b> (configura y ve todo) o <b>miembro</b> (opera el día a día).</li>
         <li>Pide a cada uno aceptar la invitación y crear su contraseña.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m02"></span><div class="tx"><b>Listo cuando…</b> cada persona del equipo entra con su propio usuario.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m02"></label><div class="tx"><b>Listo cuando…</b> cada persona del equipo entra con su propio usuario.</div></div>
       <div class="ojo"><b>Ojo:</b> no compartan un usuario entre varios. Todo lo que Hapee mide por persona (respuestas, tareas, ventas) deja de servir si dos personas usan la misma cuenta.</div>
     </article>
 
@@ -478,7 +490,7 @@ con <span class="hl">[tu empresa]</span>. Si necesitas reagendar, respóndenos p
 Hola {{nombre}}, ¿pudiste revisar la cotización que te enviamos?
 Quedamos atentos a tus dudas — y si quieres, la vemos juntos en una
 llamada corta.</pre></div>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m03"></span><div class="tx"><b>Listo cuando…</b> escribes al número desde tu celular personal, el mensaje aparece en la bandeja de Hapee, y tus 3 plantillas base están enviadas a aprobación.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m03"></label><div class="tx"><b>Listo cuando…</b> escribes al número desde tu celular personal, el mensaje aparece en la bandeja de Hapee, y tus 3 plantillas base están enviadas a aprobación.</div></div>
       <div class="ojo"><b>Ojo:</b> si tu número ya está en la app normal de WhatsApp, hay que liberarlo primero (borrar la cuenta en la app). Si te complica este paso, es el momento exacto de escribirnos: lo hacemos contigo en una llamada corta.</div>
     </article>
 
@@ -496,7 +508,7 @@ llamada corta.</pre></div>
         <li>Crea tus primeras <b>etiquetas</b> (en Configuración → Etiquetas): por ejemplo «cotización», «postventa», «urgente». Pocas y claras rinde más que muchas.</li>
         <li>Prueba el flujo completo: mensaje entrante → asignar → responder → etiquetar.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m04"></span><div class="tx"><b>Listo cuando…</b> los mensajes de tus canales llegan a la bandeja y el equipo responde desde ahí, no desde los celulares.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m04"></label><div class="tx"><b>Listo cuando…</b> los mensajes de tus canales llegan a la bandeja y el equipo responde desde ahí, no desde los celulares.</div></div>
     </article>
 
     <!-- ════ FASE 2 ════ -->
@@ -520,7 +532,7 @@ llamada corta.</pre></div>
         <li>En <b>Configuración → Propiedades</b> agrega los campos propios de tu negocio. Los agentes IA pueden llenarlos conversando. Ejemplos por rubro — <b>inmobiliaria:</b> comuna de interés, dormitorios, pie disponible, primera vivienda sí/no · <b>clínica/salud:</b> previsión, tratamiento de interés, urgencia · <b>e-commerce/retail:</b> talla, categoría favorita, última compra · <b>servicios B2B:</b> tamaño de empresa, cargo, presupuesto estimado, fecha de renovación (esta última habilita el workflow de renovaciones del <a href="#m13">módulo 13</a>).</li>
         <li>Desde cualquier conversación de la bandeja, verifica que el contacto <b>se crea solo</b> al primer mensaje.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m05"></span><div class="tx"><b>Listo cuando…</b> buscas a un cliente por nombre y su ficha muestra sus datos y su última conversación.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m05"></label><div class="tx"><b>Listo cuando…</b> buscas a un cliente por nombre y su ficha muestra sus datos y su última conversación.</div></div>
       <div class="ojo"><b>Ojo:</b> importa una vez y bien. Dos importaciones de la misma planilla crean duplicados que después cuesta limpiar.</div>
     </article>
 
@@ -538,7 +550,7 @@ llamada corta.</pre></div>
         <li>Crea tus primeros <b>5 negocios reales</b> — los que hoy tienes en la cabeza o en un cuaderno.</li>
         <li>Acuerda con el equipo el rito semanal: <b>una pasada al pipeline</b> moviendo tarjetas y anotando el siguiente paso de cada una.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m06"></span><div class="tx"><b>Listo cuando…</b> el pipeline muestra tus ventas reales en curso y el monto total que suman.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m06"></label><div class="tx"><b>Listo cuando…</b> el pipeline muestra tus ventas reales en curso y el monto total que suman.</div></div>
     </article>
 
     <!-- 07 -->
@@ -560,7 +572,7 @@ llamada corta.</pre></div>
         <tr><td class="k">Gmail / casilla</td><td>Tus correos entran a la <b>bandeja omnicanal</b> y quedan en la ficha del contacto — la conversación completa en un solo hilo aunque salte de WhatsApp a correo.</td><td>Conversaciones → Bandeja</td></tr>
       </table></div>
       <p style="margin-top:14px">Ambas se autorizan con el botón de Google en dos clics — sin contraseñas compartidas: cada persona conecta SU cuenta, y puede desconectarla cuando quiera desde el mismo lugar.</p>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m07"></span><div class="tx"><b>Listo cuando…</b> una reunión creada en Google aparece en Hapee sola, sin copiarla a mano.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m07"></label><div class="tx"><b>Listo cuando…</b> una reunión creada en Google aparece en Hapee sola, sin copiarla a mano.</div></div>
       <div class="ojo"><b>Ojo:</b> este paso habilita también el notetaker (<a href="#m16">módulo 16</a>). Si el calendario no está conectado, el bot no puede entrar solo a tus reuniones.</div>
     </article>
 
@@ -677,7 +689,7 @@ completos y etiqueta "interesado_futuro".
 
       <div class="subt">Después del despegue: el tablero</div>
       <p>El <b>Tablero de agentes</b> muestra cada corrida: qué respondió, qué herramientas usó y dónde se trabó. Revísalo 10 minutos por semana las primeras 4 semanas: cada conversación floja te dice exactamente qué documento de conocimiento falta. Los agentes no se «reentrenan» — se les agrega el dato que no tenían y mejoran al instante.</p>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m08"></span><div class="tx"><b>Listo cuando…</b> pasó el checklist de 15 preguntas en modo sugerencia y llevas una semana aprobando sus respuestas casi sin editarlas.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m08"></label><div class="tx"><b>Listo cuando…</b> pasó el checklist de 15 preguntas en modo sugerencia y llevas una semana aprobando sus respuestas casi sin editarlas.</div></div>
       <div class="ojo"><b>Ojo:</b> si el agente responde vago, el 95% de las veces no es la IA: es que ese dato no está en su conocimiento. Antes de tocar las instrucciones, revisa qué documento le falta.</div>
     </article>
 
@@ -702,7 +714,7 @@ completos y etiqueta "interesado_futuro".
         <li>Crea tu primera campaña real con una regla simple: <b>un solo objetivo por correo</b> (una oferta, una noticia, un recordatorio — no las tres).</li>
         <li>Después de 48 horas, mira aperturas y clics en el mismo módulo.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m09"></span><div class="tx"><b>Listo cuando…</b> tu campaña de prueba llega a tu bandeja de entrada (no a spam) con tu remitente.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m09"></label><div class="tx"><b>Listo cuando…</b> tu campaña de prueba llega a tu bandeja de entrada (no a spam) con tu remitente.</div></div>
     </article>
 
     <!-- 10 -->
@@ -718,7 +730,7 @@ completos y etiqueta "interesado_futuro".
         <li>Conecta su workflow de bienvenida (receta 1 del <a href="#m13">módulo 13</a>): formulario sin respuesta automática es un cliente esperando.</li>
         <li>Envía una respuesta de prueba y confirma que el contacto aparece en el CRM.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m10"></span><div class="tx"><b>Listo cuando…</b> llenar el formulario crea un contacto nuevo en el CRM con su origen visible.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m10"></label><div class="tx"><b>Listo cuando…</b> llenar el formulario crea un contacto nuevo en el CRM con su origen visible.</div></div>
     </article>
 
     <!-- 11 -->
@@ -734,7 +746,7 @@ completos y etiqueta "interesado_futuro".
         <li>Verifica que se publiquen solas y aparezcan como «publicadas» en el calendario.</li>
         <li>Deja el rito: <b>una sesión mensual de 1 hora</b> deja la parrilla del mes programada. Publicar «cuando se pueda» es la muerte silenciosa de las redes de una pyme.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m11"></span><div class="tx"><b>Listo cuando…</b> una publicación programada sale sola a la hora indicada, sin que nadie toque el celular.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m11"></label><div class="tx"><b>Listo cuando…</b> una publicación programada sale sola a la hora indicada, sin que nadie toque el celular.</div></div>
     </article>
 
     <!-- 12 -->
@@ -748,7 +760,7 @@ completos y etiqueta "interesado_futuro".
         <li>Conecta el formulario del funnel (viene integrado — verifica con un envío de prueba).</li>
         <li>Si tu plan incluye blog, publica tu primer artículo respondiendo <b>la pregunta que más te hacen los clientes</b>. Es la que la gente ya está googleando.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m12"></span><div class="tx"><b>Listo cuando…</b> tu funnel está publicado en su URL y el envío de prueba llegó al CRM.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m12"></label><div class="tx"><b>Listo cuando…</b> tu funnel está publicado en su URL y el envío de prueba llegó al CRM.</div></div>
     </article>
 
     <!-- ════ FASE 5 ════ -->
@@ -847,7 +859,7 @@ completos y etiqueta "interesado_futuro".
         <tr><td class="k">Nombra por lo que hace</td><td>«Bienvenida formulario web» y no «Workflow 3». En seis meses lo vas a agradecer.</td></tr>
         <tr><td class="k">Revisa los enrolados</td><td>Cada workflow muestra cuántos contactos tiene dentro y dónde. Si hay 40 pegados en una espera, algo diseñaste mal.</td></tr>
       </table></div>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m13"></span><div class="tx"><b>Listo cuando…</b> llenas tu formulario de prueba y en menos de un minuto: te llega el WhatsApp, el contacto tiene responsable y el negocio está en el pipeline.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m13"></label><div class="tx"><b>Listo cuando…</b> llenas tu formulario de prueba y en menos de un minuto: te llega el WhatsApp, el contacto tiene responsable y el negocio está en el pipeline.</div></div>
       <div class="ojo"><b>Ojo:</b> workflows y agentes se complementan, no compiten. El workflow es la ruta fija (bienvenida, recordatorio); el agente es la conversación viva. La receta 5 los une: el workflow detecta el interés y el agente conversa.</div>
     </article>
 
@@ -878,7 +890,7 @@ completos y etiqueta "interesado_futuro".
         <tr><td class="k">ROAS</td><td>Retorno: por cada peso invertido, cuántos volvieron.</td><td>La cifra que resume todo. Bajo 1 pierdes plata; el objetivo sano depende de tu margen.</td></tr>
       </table></div>
       <p style="margin-top:14px">El informe llega con la <b>lectura escrita</b>: qué anda bien, qué anda mal y qué haríamos. Léela antes que los gráficos — los números sin interpretación solo dan ansiedad.</p>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m14"></span><div class="tx"><b>Listo cuando…</b> el tablero muestra tu inversión real del mes en curso.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m14"></label><div class="tx"><b>Listo cuando…</b> el tablero muestra tu inversión real del mes en curso.</div></div>
     </article>
 
     <!-- 15 -->
@@ -905,7 +917,7 @@ completos y etiqueta "interesado_futuro".
         <tr><td class="k">Visibilidad en IA</td><td>Cómo aparecen (y si apareces tú) cuando alguien le pregunta a ChatGPT o Gemini por tu rubro.</td><td>La batalla nueva: si no apareces, tu web necesita responder mejor las preguntas del rubro (<a href="#m12">módulo 12</a>, blog).</td></tr>
       </table></div>
       <p style="margin-top:14px"><b>El rito recomendado:</b> lunes, 10 minutos, informe en mano en la reunión comercial. Una decisión por semana basada en el radar («ellos subieron precios → destaquemos el nuestro esta semana») vale más que archivar diez informes leídos por encima.</p>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m15"></span><div class="tx"><b>Listo cuando…</b> tu primer informe muestra los anuncios activos de al menos un competidor.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m15"></label><div class="tx"><b>Listo cuando…</b> tu primer informe muestra los anuncios activos de al menos un competidor.</div></div>
     </article>
 
     <!-- 16 -->
@@ -928,7 +940,7 @@ completos y etiqueta "interesado_futuro".
         <tr><td class="k">Comercial</td><td>Suma el análisis de venta: <b>medidor de clima</b> de la reunión, intensidad de la conversación, insights sobre tu tono y presentación, objeciones que aparecieron y qué mejorar para la próxima. Es tener un coach comercial escuchando cada reunión.</td></tr>
       </table></div>
       <p style="margin-top:14px">El notetaker <b>escucha el audio real</b> — no depende de los subtítulos de la plataforma, así que funciona igual si la reunión es en Meet, Zoom, Teams u otra sala con enlace web. Con varios participantes, identifica quién dijo qué.</p>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m16"></span><div class="tx"><b>Listo cuando…</b> tu primera reunión tiene resumen y transcripción en el módulo minutos después de terminar.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m16"></label><div class="tx"><b>Listo cuando…</b> tu primera reunión tiene resumen y transcripción en el módulo minutos después de terminar.</div></div>
       <div class="ojo"><b>Ojo:</b> el bot necesita que lo admitas en la sala, igual que a cualquier invitado. Si nadie lo admite en 10 minutos, se retira y queda registrado el motivo.</div>
     </article>
 
@@ -943,7 +955,7 @@ completos y etiqueta "interesado_futuro".
         <li>Revisa la primera camada de oportunidades y marca las que te interesan — el filtro aprende de eso.</li>
         <li>Define quién del equipo revisa las alertas y con qué frecuencia (recomendado: diario, 5 minutos).</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m17"></span><div class="tx"><b>Listo cuando…</b> el módulo te muestra oportunidades con puntaje de afinidad y entiendes por qué cada una te calza.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m17"></label><div class="tx"><b>Listo cuando…</b> el módulo te muestra oportunidades con puntaje de afinidad y entiendes por qué cada una te calza.</div></div>
     </article>
 
     <!-- ════ FASE 7 ════ -->
@@ -971,7 +983,7 @@ completos y etiqueta "interesado_futuro".
         <li>Ordena las lecciones en la secuencia real de aprendizaje y <b>publica</b> el curso.</li>
         <li>Avisa por la <b>Comunidad</b> que está disponible — y en la inducción de cada persona nueva, su primera tarea es completarlo.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m18"></span><div class="tx"><b>Listo cuando…</b> cada persona del equipo completó el curso del módulo que usa a diario — y tu primer curso propio está publicado en el catálogo.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m18"></label><div class="tx"><b>Listo cuando…</b> cada persona del equipo completó el curso del módulo que usa a diario — y tu primer curso propio está publicado en el catálogo.</div></div>
     </article>
 
     <!-- 19 -->
@@ -984,7 +996,7 @@ completos y etiqueta "interesado_futuro".
         <li>Sube al <b>Repositorio</b> tu material de marca: logo, tipografías, fotos aprobadas. Es de donde el equipo (y el nuestro) tomará siempre la versión correcta.</li>
         <li>Revisa el <b>Roadmap</b> una vez al mes: ahí ves qué está en desarrollo y qué llegó.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m19"></span><div class="tx"><b>Listo cuando…</b> el material de marca vigente está en el repositorio y el equipo sabe que ahí se busca.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m19"></label><div class="tx"><b>Listo cuando…</b> el material de marca vigente está en el repositorio y el equipo sabe que ahí se busca.</div></div>
     </article>
 
     <!-- 20 -->
@@ -1008,7 +1020,7 @@ completos y etiqueta "interesado_futuro".
         <li><b>Dictado por voz para capturar.</b> Saliendo de una reunión, aprieta el micrófono y suéltale los compromisos: «créame tarea de enviar propuesta a X el jueves». Capturado.</li>
         <li><b>Bórrale el trabajo aburrido.</b> Primeros borradores de captions, correos y propuestas: él hace el 80% y tú pules el 20% que lleva tu firma.</li>
       </ol>
-      <div class="listo"><span class="ck"><input type="checkbox" data-mod="m20"></span><div class="tx"><b>Listo cuando…</b> le pediste tu primera métrica real y tu primera tarea creada por él apareció en el módulo de tareas.</div></div>
+      <div class="listo"><label class="ck"><input type="checkbox" data-mod="m20"></label><div class="tx"><b>Listo cuando…</b> le pediste tu primera métrica real y tu primera tarea creada por él apareció en el módulo de tareas.</div></div>
       <div class="ojo"><b>Ojo:</b> el asistente ve lo que TU usuario puede ver — ni más ni menos. Si un dato no te aparece, no es que lo esconda: es que tu rol no lo tiene asignado.</div>
     </article>
 
@@ -1199,5 +1211,13 @@ document.querySelectorAll('.rev').forEach(function(el){io.observe(el)});
 
 })();
 </script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  #theme{width:40px;height:40px}
+  .listo .ck{padding:8px;margin:-6px -8px -8px}
+}
+</style>
 </body>
 </html>

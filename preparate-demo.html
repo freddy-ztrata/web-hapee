@@ -2327,5 +2327,13 @@ if(typeof gsap!=='undefined')initG();else window.addEventListener('load',initG);
 </script>
 <!-- model-viewer se inyecta desde modHero solo cuando el robot 3D se va a usar (≥600px, sin reduced-motion, sin ahorro de datos ni conexion lenta) y recien 1,2 s despues del load (+ requestIdleCallback cuando existe): en movil no se descargan sus 913 KB y en desktop no compite con el primer render (el PNG ya esta en pantalla) -->
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  #kickerTxt{font-size:11px}
+  .pase-band span{font-size:11px}
+}
+</style>
 </body>
 </html>

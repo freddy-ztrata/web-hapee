@@ -670,7 +670,7 @@ html.dark .hi-phone{box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(250,80,
 
 /* Header */
 .hi-phone-header{display:flex;align-items:center;gap:10px;padding:12px 14px;flex-shrink:0;color:#fff;position:relative;z-index:3}
-.hi-ph-back{background:none;border:none;color:#fff;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
+.hi-ph-back{pointer-events:none;background:none;border:none;color:#fff;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex-shrink:0}
 .hi-ph-back svg{width:20px;height:20px}
 .hi-ph-avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#FA5000,#CD2349);flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .hi-ph-avatar img{width:80%;height:80%;object-fit:contain}
@@ -678,7 +678,7 @@ html.dark .hi-phone{box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 1px rgba(250,80,
 .hi-ph-name{font-family:var(--fb);font-size:.96rem;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hi-ph-status{font-size:.7rem;opacity:.85;margin-top:2px}
 .hi-ph-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
-.hi-ph-actions button{background:none;border:none;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;border-radius:50%;transition:background .2s}
+.hi-ph-actions button{pointer-events:none;background:none;border:none;color:#fff;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;border-radius:50%;transition:background .2s}
 .hi-ph-actions button:hover{background:rgba(255,255,255,.15)}
 .hi-ph-actions svg{width:18px;height:18px}
 
@@ -2401,7 +2401,7 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
     <div class="hi-phone wa" id="hiPhone">
       <!-- Header: avatar + brand + status + action icons -->
       <div class="hi-phone-header">
-        <button class="hi-ph-back" aria-label="Volver">
+        <button class="hi-ph-back" aria-label="Volver" tabindex="-1" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="hi-ph-avatar"><img src="img/robot.png" alt=""></div>
@@ -2410,9 +2410,9 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
           <span class="hi-ph-status" id="hiBrandStatus">en línea</span>
         </div>
         <div class="hi-ph-actions">
-          <button aria-label="Llamada de voz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></button>
-          <button aria-label="Videollamada"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
-          <button aria-label="Más opciones"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></button>
+          <button aria-label="Llamada de voz" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></button>
+          <button aria-label="Videollamada" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+          <button aria-label="Más opciones" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></button>
         </div>
       </div>
 
@@ -4140,5 +4140,12 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 <!-- GHL Calendar embed loader (auto-resize iframe) -->
 <script src="https://always.hapee.ai/js/form_embed.js" type="text/javascript"></script>
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  .hi-gender{height:40px}
+}
+</style>
 </body>
 </html>

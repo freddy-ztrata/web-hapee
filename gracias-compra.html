@@ -42,7 +42,8 @@ img{max-width:100%;display:block}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:#080808}
 ::-webkit-scrollbar-thumb{background:linear-gradient(#FA5000,#CD2349);border-radius:3px}
-.fw{width:100vw;margin-left:calc(-50vw + 50%);max-width:none!important;overflow:hidden}
+/* las secciones ya van a ancho completo: 100vw incluía la barra de scroll y desbordaba 3 px */
+.fw{width:100%;margin-left:0;max-width:none!important;overflow:hidden}
 .inner{max-width:1200px;margin:0 auto;padding:0 40px}
 .section{padding:96px 0}
 .tag{display:inline-flex;align-items:center;gap:8px;background:rgba(250,80,0,.1);border:1px solid rgba(250,80,0,.25);color:#FA5000;border-radius:100px;padding:6px 16px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
@@ -476,5 +477,12 @@ img{max-width:100%;display:block}
 (function(){var t=document.getElementById('tTrack');if(t)t.innerHTML+=t.innerHTML})();
 </script>
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  .step-card a.step-link{display:inline-flex;align-items:center;min-height:40px}
+}
+</style>
 </body>
 </html>

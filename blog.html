@@ -585,11 +585,11 @@ body.modal-open{overflow:hidden}
         <span class="mast-edition">Édition Mayo 2026 · El primer wire-feed editorial de IA en LATAM</span>
         <p class="mast-sub">Producto, IA y eventos por el equipo de Hapee. Noticias de la suite all-in-one de agentes IA, integraciones con los modelos más avanzados del mundo y <strong>casos reales desde Latam</strong>.</p>
         <div class="mast-cats">
-          <span class="cat-chip on" data-cat="all">Todos</span>
-          <span class="cat-chip" data-cat="producto">Producto</span>
-          <span class="cat-chip" data-cat="tech">Tech</span>
-          <span class="cat-chip" data-cat="eventos">Eventos</span>
-          <span class="cat-chip" data-cat="how-to">How-to</span>
+          <span class="cat-chip on" data-cat="all" role="button" tabindex="0">Todos</span>
+          <span class="cat-chip" data-cat="producto" role="button" tabindex="0">Producto</span>
+          <span class="cat-chip" data-cat="tech" role="button" tabindex="0">Tech</span>
+          <span class="cat-chip" data-cat="eventos" role="button" tabindex="0">Eventos</span>
+          <span class="cat-chip" data-cat="how-to" role="button" tabindex="0">How-to</span>
         </div>
       </div>
 
@@ -1009,6 +1009,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   // ============================
   const chips=document.querySelectorAll('.cat-chip');
   const allArts=document.querySelectorAll('.art, .feat-card');
+  // Enter o espacio activan el filtro (los chips son span con role=button)
+  chips.forEach(c=>c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}}));
   chips.forEach(c=>c.addEventListener('click',()=>{
     chips.forEach(x=>x.classList.remove('on'));
     c.classList.add('on');
@@ -1392,5 +1394,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 </script>
 <script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  .mast-cats .cat-chip{font-size:12px;min-height:40px;display:inline-flex;align-items:center}
+  #darkToggle{width:40px;height:40px}
+}
+</style>
 </body>
 </html>

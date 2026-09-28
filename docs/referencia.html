@@ -84,7 +84,7 @@
      la referencia. Por eso el enlace al archivo queda arriba, fuera del marco,
      y el estado de carga dice dónde está el contrato. */
   var configuration = {
-    spec: { url: 'https://beta.hapee.ai/api/v1/openapi.json' },
+    spec: { url: '/api/openapi.json' },   // mismo origen: pedido directo a beta.hapee.ai lo bloquea CORS
     theme: 'default',
     darkMode: true,
     hideDownloadButton: false,
@@ -92,7 +92,7 @@
     metaData: { title: 'Hapee API v1' }
   };
 </script>
-<script id="api-reference" data-url="https://beta.hapee.ai/api/v1/openapi.json"></script>
+<script id="api-reference" data-url="/api/openapi.json"></script>
 <script>
   document.getElementById('api-reference').dataset.configuration =
     JSON.stringify(configuration);
