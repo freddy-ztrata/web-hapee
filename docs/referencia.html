@@ -84,7 +84,7 @@
      la referencia. Por eso el enlace al archivo queda arriba, fuera del marco,
      y el estado de carga dice dónde está el contrato. */
   var configuration = {
-    spec: { url: '/api/openapi.json' },   // mismo origen: pedido directo a beta.hapee.ai lo bloquea CORS
+    url: '/api/openapi.json',             // mismo origen: pedido directo a beta.hapee.ai lo bloquea CORS
     theme: 'default',
     darkMode: true,
     hideDownloadButton: false,
@@ -92,11 +92,27 @@
     metaData: { title: 'Hapee API v1' }
   };
 </script>
-<script id="api-reference" data-url="/api/openapi.json"></script>
-<script>
-  document.getElementById('api-reference').dataset.configuration =
-    JSON.stringify(configuration);
-</script>
 <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+<script>
+  /* Se monta DENTRO del marco (#referencia-api). Con el script data-url, Scalar
+     se dibujaba donde estaba la etiqueta, bajo el pie, y el marco quedaba en
+     «Cargando…» para siempre. */
+  (function () {
+    var aviso = document.getElementById('ref-cargando');
+    function falla() {
+      if (aviso) aviso.innerHTML = 'No pudimos cargar la referencia en este momento.<br>' +
+        '<a href="https://beta.hapee.ai/api/v1/openapi.json">Descarga el contrato OpenAPI</a> o vuelve a intentarlo en unos minutos.';
+    }
+    if (!window.Scalar || !window.Scalar.createApiReference) { falla(); return; }
+    fetch(configuration.url).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (spec) {
+        if (aviso) aviso.remove();
+        var c = Object.assign({}, configuration, { content: spec });
+        delete c.url;
+        window.Scalar.createApiReference('#referencia-api', c);
+      })
+      .catch(falla);
+  })();
+</script>
 </body>
 </html>
