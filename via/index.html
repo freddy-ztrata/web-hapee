@@ -88,8 +88,55 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 #chat input:focus{border-color:var(--naranja)}
 #chat form button{border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:13px;font-weight:800;padding:0 18px;border-radius:100px;cursor:pointer}
 #chat .pie{padding:0 14px 11px;font-size:11px;color:var(--gr);font-weight:600}
-.sinhud #burbujas,.sinhud #zonas,.sinhud #hint,.sinhud #dot,.sinhud #zona,.sinhud #placard,.sinhud .brand,.sinhud #snd{display:none!important}
+.sinhud #burbujas,.sinhud #zonas,.sinhud #hint,.sinhud #dot,.sinhud #zona,.sinhud #placard,.sinhud .brand,.sinhud #snd,.sinhud #linea,.sinhud #waBtn{display:none!important}
 #err{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:#0B0A0D;color:#fff;padding:24px;text-align:center;font-size:14px;line-height:1.6}
+/* ── viaje: indicador de la Línea 1 y chat estilo WhatsApp (simulación) ── */
+#linea{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:40;display:none;align-items:center;gap:9px;padding:6px 14px 6px 7px;font-size:11.5px;font-weight:700;color:#fff;pointer-events:none;width:min(470px,calc(100vw - 620px));min-width:300px}
+#linea.on{display:flex}
+#linea .l1{flex:none;width:22px;height:22px;border-radius:50%;background:#E1251B;font-size:9.5px;font-weight:800;display:grid;place-items:center}
+#linea .de,#linea .a{flex:0 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+#linea .a{color:rgba(255,255,255,.72)}
+#linea .riel{flex:1 1 80px;min-width:56px;position:relative;height:4px;border-radius:2px;background:rgba(225,37,27,.55)}
+#linea .riel:before,#linea .riel:after{content:'';position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#fff;border:2px solid #E1251B;box-sizing:border-box}
+#linea .riel:before{left:-5px}#linea .riel:after{right:-5px}
+#linea .pt{position:absolute;top:50%;left:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#FFB020;box-shadow:0 0 0 3px rgba(255,176,32,.3);transition:left .45s linear;z-index:1}
+#wa{position:fixed;right:24px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:46;width:350px;height:min(620px,calc(100vh - 150px));border-radius:32px;border:7px solid #0d0d10;background:#efeae2;box-shadow:0 30px 80px -24px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.14);display:none;flex-direction:column;overflow:hidden;cursor:default;color:#111b21}
+#wa.on{display:flex}
+#wa .wcab{flex:none;display:flex;align-items:center;gap:9px;padding:13px 12px 10px 6px;background:#075E54;color:#fff;position:relative}
+#wa .wx{border:0;background:transparent;color:#fff;font-family:inherit;font-size:26px;line-height:1;width:28px;height:34px;cursor:pointer;padding:0}
+#wa .wav{flex:none;width:36px;height:36px;border-radius:50%;display:block}
+#wa .wcab b{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
+#wa .wcab small{display:block;font-size:11.5px;font-weight:500;color:rgba(255,255,255,.8)}
+#wa .wsim{position:absolute;right:10px;top:9px;font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:2px 5px}
+#wa .wmsgs{flex:1;min-height:0;overflow-y:auto;padding:10px 10px 6px;display:flex;flex-direction:column;gap:5px;background-color:#efeae2;background-image:radial-gradient(rgba(0,0,0,.04) 1.2px,transparent 1.4px);background-size:18px 18px;scrollbar-width:thin}
+#wa .wm{max-width:84%;padding:6px 8px 5px 9px;border-radius:8px;font-size:13.5px;line-height:1.36;font-weight:500;box-shadow:0 1px .5px rgba(11,20,26,.13);word-wrap:break-word;flex:none}
+#wa .wm.in{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+#wa .wm.out{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}
+#wa .wt{float:right;margin:6px 0 -4px 10px;font-size:10.5px;color:#667781;display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+#wa .ck{display:inline-flex;color:#8696a0;font-style:normal}#wa .wm.leido .ck{color:#53bdeb}
+#wa .wsys{align-self:center;max-width:90%;text-align:center;background:#fff;color:#54656f;font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:8px;box-shadow:0 1px .5px rgba(11,20,26,.13);margin:3px 0;flex:none}
+#wa .wsys.aviso{background:#fff3c4;color:#5c4a00}
+#wa .wact{align-self:center;margin:2px 0 4px;flex:none}
+#wa .wact button{border:0;background:#00a884;color:#fff;font-family:inherit;font-size:13px;font-weight:800;padding:9px 18px;border-radius:100px;cursor:pointer;box-shadow:0 6px 16px -8px rgba(0,168,132,.9)}
+#wa .wact button[disabled]{background:#b9c5c1;box-shadow:none;cursor:default}
+#wa .wesc i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8696a0;margin:0 2px;animation:tp 1s infinite}
+#wa .wesc i:nth-child(2){animation-delay:.2s}#wa .wesc i:nth-child(3){animation-delay:.4s}
+#wa .wchips{flex:none;display:flex;gap:6px;overflow-x:auto;padding:6px 8px 4px;background:#efeae2;scrollbar-width:none}
+#wa .wchips::-webkit-scrollbar{display:none}
+#wa .wchips{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent);padding-right:28px}
+#wa .wchips button{flex:none;border:1px solid #d1d7db;background:#fff;color:#007a63;font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 11px;border-radius:100px;cursor:pointer;white-space:nowrap}
+#wa form{flex:none;display:flex;gap:7px;align-items:center;padding:5px 8px 6px;background:#efeae2}
+#wa input{flex:1;min-width:0;border:0;background:#fff;color:#111b21;font-family:inherit;font-size:14.5px;padding:11px 15px;border-radius:24px;outline:0;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+#wa form button{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:#00a884;display:grid;place-items:center;cursor:pointer}
+#wa form svg{width:20px;height:20px}
+#wa .wpie{flex:none;font-size:10px;color:#667781;text-align:center;padding:0 8px 7px;background:#efeae2;font-weight:600}
+#waBtn{position:fixed;right:16px;bottom:calc(62px + env(safe-area-inset-bottom));z-index:41;height:38px;padding:0 14px 0 12px;color:#fff;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.03em;cursor:pointer;display:none;align-items:center;gap:8px}
+#waBtn.on{display:flex}
+#waBtn i{width:8px;height:8px;border-radius:50%;background:#00a884;box-shadow:0 0 0 3px rgba(0,168,132,.3);display:none}
+#waBtn.nuevo i{display:block}
+.bub.noti{background:#fff;color:#111b21;border-radius:12px;max-width:220px;font-size:12px;padding:7px 10px;border:0;box-shadow:0 10px 26px -10px rgba(0,0,0,.6)}
+.bub.noti b{color:#007a63;text-transform:none;letter-spacing:0;font-size:11px}
+@media (min-width:561px) and (max-width:1120px){#linea{top:56px;width:min(470px,calc(100vw - 40px))}}
 /* ── portada ── */
 .scr{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;overflow-y:auto;background:radial-gradient(90% 70% at 12% 8%,rgba(250,80,0,.24),transparent 60%),radial-gradient(80% 70% at 92% 96%,rgba(205,35,73,.22),transparent 60%),rgba(11,10,13,.93);padding:24px 16px;text-align:center;cursor:default}
 .scr[hidden]{display:none}
@@ -116,6 +163,11 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
  #zonas{bottom:calc(10px + env(safe-area-inset-bottom))}#zonas button{padding:0 12px;height:30px}#zonas button span{display:none}#zonas button b{margin:0}
  #snd{bottom:calc(14px + env(safe-area-inset-bottom));right:10px;height:30px;padding:0 11px;font-size:10px}
  #chat{bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100vw - 20px)}#chat .msgs{max-height:32vh}
+ #wa{left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));width:auto;height:58vh;border-radius:20px;border-width:0}
+ #waBtn{right:18px;bottom:calc(178px + env(safe-area-inset-bottom));height:34px;font-size:10.5px}
+ #linea{top:calc(58px + env(safe-area-inset-top));left:10px;right:10px;transform:none;width:auto;min-width:0}
+ body.viajando #placard{top:calc(102px + env(safe-area-inset-top))}
+ body.chateando #zonas,body.chateando #snd{display:none!important}
  .scr .logo{margin-bottom:22px}
 }
 @media (max-height:520px){
@@ -128,12 +180,14 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
  #tVer{bottom:calc(20px + env(safe-area-inset-bottom))}
  #snd{bottom:auto;top:46px}
  #chat{bottom:8px;max-height:80vh}#chat .msgs{max-height:28vh}
+ #wa{top:8px;bottom:8px;height:auto;width:330px;left:auto;right:8px;border-radius:18px;border-width:0}
+ #linea{top:44px}
  .scr h1{font-size:clamp(34px,9vw,64px)}.scr .logo{margin-bottom:12px}.scr p{margin-top:10px}.btn{margin-top:16px}
 }
 @media (pointer:coarse){
  .pill,#chat{backdrop-filter:none;-webkit-backdrop-filter:none}
  .pill{background:rgba(14,13,18,.84)}#chat{background:rgba(17,16,21,.98)}
- body.chateando #burbujas,body.chateando #touch{display:none!important}
+ body.chateando #burbujas,body.chateando #touch,body.chateando #waBtn{display:none!important}
 }
 </style>
 </head>
@@ -147,6 +201,9 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 <div id="zonas" class="pill"><button data-n="1" type="button" title="Acceso"><b>1</b><span>Acceso</span></button><button data-n="2" type="button" title="Mesanina"><b>2</b><span>Mesanina</span></button><button data-n="3" type="button" title="Andén 1"><b>3</b><span>Andén 1</span></button><button data-n="4" type="button" title="Andén 2"><b>4</b><span>Andén 2</span></button></div>
 <button id="snd" class="pill" type="button">SONIDO · NO</button>
 <div id="burbujas"></div>
+<div id="linea" class="pill" aria-hidden="true"><b class="l1">L1</b><span class="de" id="lnDe"></span><span class="riel"><i class="pt" id="lnPt"></i></span><span class="a" id="lnA"></span></div>
+<section id="wa" aria-label="Chat con Vía by Hapee (simulación)"><div class="wcab"><button class="wx" id="waX" type="button" aria-label="Cerrar chat">‹</button><svg class="wav" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="wag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs><circle cx="18" cy="18" r="18" fill="url(#wag)"/><rect x="6.5" y="9" width="23" height="17" rx="8.5" fill="#1e1222"/><path d="M11 16.4q2.2-1.6 4.4 0M20.6 16.4q2.2-1.6 4.4 0" stroke="#8FE4FF" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M15.4 21q2.6 1.7 5.2 0" stroke="#8FE4FF" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><div><b>Vía by Hapee</b><small id="waEst">en línea</small></div><span class="wsim">Simulación de chat</span></div><div class="wmsgs" id="waMsgs" aria-live="polite"></div><div class="wchips" id="waChips"></div><form id="waForm" autocomplete="off"><input id="waIn" type="text" maxlength="240" placeholder="Escribe un mensaje" aria-label="Mensaje para Vía"><button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.3 10l12.6 2-12.6 2z" fill="#fff"/></svg></button></form><div class="wpie" id="waPie">Vía by Hapee · simulación</div></section>
+<button id="waBtn" class="pill" type="button"><i></i>CHAT CON VÍA</button>
 <section id="chat" aria-live="polite"><div class="cab"><img src="assets/brand/favicon.png" alt=""><div><b id="chN">Vía</b><small id="chM">Asistente de viaje con IA</small></div><button class="x" id="chX" type="button" aria-label="Cerrar">×</button></div><div class="msgs" id="chMsgs"></div><div class="chips" id="chChips"></div><form id="chForm" autocomplete="off"><input id="chIn" type="text" maxlength="240" placeholder="Pregúntale a Vía…"><button type="submit">Enviar</button></form><div class="pie" id="chEst">Vía by Hapee · demo</div></section>
 <div id="touch"><div id="look"></div><div id="stick"><i></i></div><button id="tVer" type="button">HABLAR</button></div>
 <section class="scr" id="start"><div>
@@ -154,8 +211,8 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
   <h1><em>Vía</em> <span>by Hapee</span></h1>
   <p>Una estación de Metro donde los agentes de Hapee acompañan a cada pasajero</p>
   <button class="btn" id="play" type="button" disabled>Abriendo la estación…</button>
-  <div class="ctl kbd"><b>W A S D</b> caminar · <b>mouse</b> mirar · <b>Shift</b> correr · <b>E</b> conversar · <b>1-4</b> zonas</div>
-  <div class="ctl tch"><b>Joystick</b> caminar · <b>arrastra</b> para mirar · <b>Hablar</b> conversa con Vía</div>
+  <div class="ctl kbd"><b>W A S D</b> caminar · <b>mouse</b> mirar · <b>Shift</b> correr · <b>E</b> conversar, escanear y subir · <b>1-4</b> zonas</div>
+  <div class="ctl tch"><b>Joystick</b> caminar · <b>arrastra</b> mirar · <b>Hablar</b>, <b>Escanear</b> o <b>Subir</b></div>
   <div id="load">Encendiendo la estación</div>
 </div></section>
 <div id="err"></div>
@@ -205,6 +262,17 @@ const rampaA=x=>YM*Math.min(1,Math.max(0,(x-EX0)/(EX1-EX0)));
 const rampaC=x=>YM+(YC-YM)*Math.min(1,Math.max(0,(x-AC0)/(AC1-AC0)));
 const PASILLOS=[-3.15,-2.25,-1.35,-.45,.45,1.35,2.25,3.15];
 const PUERTA_ANCHA=4.4;
+/* ══ LÍNEA 1 ══ orden real de poniente (San Pablo) a oriente (Los Dominicos); sólo se afirman las combinaciones confirmadas */
+const L1=['San Pablo','Neptuno','Pajaritos','Las Rejas','Ecuador','San Alberto Hurtado','Universidad de Santiago','Estación Central','Unión Latinoamericana','República','Los Héroes','La Moneda','Universidad de Chile','Santa Lucía','Universidad Católica','Baquedano','Salvador','Manuel Montt','Pedro de Valdivia','Los Leones','Tobalaba','El Golf','Alcántara','Escuela Militar','Manquehue','Hernando de Magallanes','Los Dominicos'];
+const COMBINA={'Los Héroes':'Línea 2','Universidad de Chile':'Línea 3','Baquedano':'Línea 5'};
+const EN_ALAMEDA=new Set(['Los Héroes','La Moneda','Universidad de Chile','Santa Lucía','Universidad Católica']);
+const I_UCH=L1.indexOf('Universidad de Chile');
+let EST=I_UCH;   // estación donde está el visitante: la geometría es la misma, cambian nombres y letreros
+const estN=()=>L1[EST];
+function proxDe(i,anden){const j=anden===1?i-1:i+1;return j>=0&&j<L1.length?j:-1;}   // andén 1 va al poniente
+function txtProxEst(a){const j=proxDe(EST,a);return j<0?'Estación terminal':'Próxima estación: '+L1[j];}
+const calleDe=()=>EN_ALAMEDA.has(estN())?'Alameda':'Calle';
+const dirDe=a=>a===1?'San Pablo':'Los Dominicos';
 
 /* ══ RENDER ══ */
 let W=innerWidth,H=innerHeight;
@@ -250,6 +318,9 @@ const FONT="'Plus Jakarta Sans', Helvetica, Arial, sans-serif";
 const LIM_LIENZO=MOVIL?1024:2048;
 function canvasTex(w,h,draw,lim){lim=lim||LIM_LIENZO;const k=Math.min(MOVIL||Math.max(w,h)>1200?1:1.5,lim/Math.max(w,h));const c=document.createElement('canvas');
  c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));const g=c.getContext('2d');if(k!==1)g.scale(c.width/w,c.height/h);draw(g,w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=MOVIL?Math.min(8,maxAniso):maxAniso;t.userData.lienzo=c;return t;}
+// lienzos que cambian con la estación (franja del nombre, letreros, plano): se repintan sobre el mismo canvas
+const DINAMICAS=[];
+function canvasTexDin(w,h,draw,lim){const t=canvasTex(w,h,draw,lim);t.userData.repinta=function(){const c=t.userData.lienzo,g=c.getContext('2d');g.save();g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,c.width,c.height);g.restore();draw(g,w,h);t.needsUpdate=true;};DINAMICAS.push(t);return t;}
 function fit(g,txt,px,max,weight){g.font=weight+' '+px+'px '+FONT;while(g.measureText(txt).width>max&&px>14){px-=2;g.font=weight+' '+px+'px '+FONT;}return px;}
 function rnd(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 const rep=t=>{t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;};
@@ -400,10 +471,10 @@ LAMP_POS.push([20,YM+3.4,0]);
   // testero y pisos más allá del andén
   plano(g,matHormigon,AX+1,TX,zi,zf,0,2);plano(g,matHormigon,-TX,-AX-1,zi,zf,0,2);});
  // franja del nombre: «UNIVERSIDAD DE CHILE» en blanco sobre el rojo de la línea, cada 20 m
- const texNombre=rep(canvasTex(2048,128,(g2)=>{g2.fillStyle='#E1251B';g2.fillRect(0,0,2048,128);
+ const texNombre=rep(canvasTexDin(2048,128,(g2)=>{g2.fillStyle='#E1251B';g2.fillRect(0,0,2048,128);
   g2.fillStyle='rgba(255,255,255,.92)';g2.fillRect(0,8,2048,4);g2.fillRect(0,116,2048,4);
   bolitaL1(g2,560,64,38,'#fff','#E1251B');
-  g2.fillStyle='#fff';g2.textAlign='left';g2.textBaseline='middle';g2.font='800 72px '+FONT;g2.fillText('UNIVERSIDAD DE CHILE',626,67);},2048));
+  const nom=estN().toUpperCase();const px=fit(g2,nom,72,1380,'800');g2.fillStyle='#fff';g2.textAlign='left';g2.textBaseline='middle';g2.font='800 '+px+'px '+FONT;g2.fillText(nom,626,67);},2048));
  const matNombre=basic({map:texNombre});
  [1,-1].forEach(s=>{const geo=new THREE.PlaneGeometry(2*TX,1.25);const uv=geo.attributes.uv;for(let i=0;i<uv.count;i++)uv.setX(i,uv.getX(i)*(2*TX/20)+(s>0?.13:.63));
   if(s>0)geo.rotateY(Math.PI);geo.translate(0,2.875,s*(FZ-.012));g.add(new THREE.Mesh(geo,matNombre));});
@@ -590,7 +661,7 @@ const DIN={}; // piezas animadas de la mesanina
  {const t=canvasTex(512,96,(q)=>{q.fillStyle='#16181d';q.fillRect(0,0,512,96);q.fillStyle='#fff';q.font='800 44px '+FONT;q.textAlign='center';q.textBaseline='middle';q.fillText('Autoservicio',256,50);});
   cartel(g,t,1.9,.36,8.9,YM+2.0,8.49,Math.PI);}
  // ── plano de red (esquema propio con los colores de cada línea, no el plano oficial) ──
- const texPlano=canvasTex(1600,720,(q)=>{q.fillStyle='#14161b';q.fillRect(0,0,1600,720);
+ const texPlano=canvasTexDin(1600,720,(q)=>{q.fillStyle='#14161b';q.fillRect(0,0,1600,720);
   q.fillStyle='#fff';q.font='800 40px '+FONT;q.textAlign='left';q.fillText('Red de Metro',56,74);q.fillStyle='rgba(255,255,255,.55)';q.font='600 24px '+FONT;q.fillText('Esquema de líneas',56,108);
   const C={L1:'#E1251B',L2:'#FFC20E',L3:'#8A5A2B',L4:'#1F5FBF',L4A:'#56B8E6',L5:'#16A34A',L6:'#8B3FB0'};
   const linea=(col,pts,w)=>{q.strokeStyle=col;q.lineWidth=w||14;q.lineJoin='round';q.lineCap='round';q.beginPath();pts.forEach((p,i)=>i?q.lineTo(p[0],p[1]):q.moveTo(p[0],p[1]));q.stroke();};
@@ -600,10 +671,13 @@ const DIN={}; // piezas animadas de la mesanina
   linea(C.L1,[[140,360],[1500,360]],18);
   const est=[[140,'San Pablo',1,0],[420,'Los Héroes',1,1],[560,'La Moneda',0,0],[700,'Universidad de Chile',1,1],[820,'Santa Lucía',0,0],[960,'Baquedano',1,1],[1140,'Los Leones',1,0],[1250,'Tobalaba',1,1],[1500,'Los Dominicos',0,0]];
   for(let x=190;x<1490;x+=44){if(est.some(e=>Math.abs(e[0]-x)<26))continue;q.fillStyle='#fff';q.fillRect(x-2,350,4,20);}
-  est.forEach(e=>{const aqui=e[1]==='Universidad de Chile';q.fillStyle='#fff';q.beginPath();q.arc(e[0],360,e[2]?15:11,0,Math.PI*2);q.fill();if(e[2]){q.strokeStyle='#14161b';q.lineWidth=5;q.beginPath();q.arc(e[0],360,8,0,Math.PI*2);q.stroke();}
+  est.forEach(e=>{const aqui=e[1]===estN();q.fillStyle='#fff';q.beginPath();q.arc(e[0],360,e[2]?15:11,0,Math.PI*2);q.fill();if(e[2]){q.strokeStyle='#14161b';q.lineWidth=5;q.beginPath();q.arc(e[0],360,8,0,Math.PI*2);q.stroke();}
    q.font=(aqui?'800 30px ':'700 24px ')+FONT;q.textAlign='center';const tw=q.measureText(e[1]).width;let cx=e[0];if(cx-tw/2<20)cx=20+tw/2;if(cx+tw/2>1580)cx=1580-tw/2;const ty=e[3]?414:316;
    q.fillStyle='#14161b';q.fillRect(cx-tw/2-8,ty-(aqui?28:23),tw+16,aqui?38:32);q.fillStyle=aqui?'#FFB020':'#fff';q.fillText(e[1],cx,ty);});
-  q.beginPath();q.arc(700,360,30,0,Math.PI*2);q.lineWidth=5;q.strokeStyle='#FFB020';q.stroke();q.font='800 26px '+FONT;q.textAlign='center';q.fillStyle='#14161b';q.fillRect(636,436,128,34);q.fillStyle='#FFB020';q.fillText('Estás aquí',700,462);
+  // «Estás aquí»: posición por índice en la línea, interpolando entre las estaciones dibujadas
+  const ANC=[[0,140],[10,420],[11,560],[12,700],[13,820],[15,960],[19,1140],[20,1250],[26,1500]];let xa=700;for(let k=0;k<ANC.length-1;k++){const A=ANC[k],B=ANC[k+1];if(EST>=A[0]&&EST<=B[0]){xa=A[1]+(B[1]-A[1])*(EST-A[0])/(B[0]-A[0]);break;}}
+  const enLista=est.some(e=>e[1]===estN());const et=enLista?'Estás aquí':'Estás aquí · '+estN();
+  q.beginPath();q.arc(xa,360,30,0,Math.PI*2);q.lineWidth=5;q.strokeStyle='#FFB020';q.stroke();q.font='800 26px '+FONT;q.textAlign='center';const ew=q.measureText(et).width+24;let ex=Math.max(20+ew/2,Math.min(1580-ew/2,xa));q.fillStyle='#14161b';q.fillRect(ex-ew/2,enLista?436:470,ew,34);q.fillStyle='#FFB020';q.fillText(et,ex,enLista?462:496);
   [['L1',C.L1],['L2',C.L2],['L3',C.L3],['L4',C.L4],['L4A',C.L4A],['L5',C.L5],['L6',C.L6]].forEach((l,i)=>{const x=1000+i*82,y=78;q.fillStyle=l[1];q.beginPath();q.arc(x,y,30,0,Math.PI*2);q.fill();q.fillStyle=l[0]==='L2'||l[0]==='L4A'?'#14161b':'#fff';q.font='800 '+(l[0].length>2?22:26)+'px '+FONT;q.textBaseline='middle';q.fillText(l[0],x,y+1);q.textBaseline='alphabetic';});});
  caja(g,matMarco,6.7,12.1,YM+1.15,YM+3.65,-FZ+.02,-FZ+.1);cartel(g,texPlano,5.2,2.34,9.4,YM+2.4,-FZ+.115,0);
  // ── Punto Vía: tótem liviano con el QR de Vía (decorativo, no apunta a nada) ──
@@ -643,7 +717,7 @@ const DIN={}; // piezas animadas de la mesanina
   caja(g,matMarco,MX0+.02,MX0+.12,YM+.9,YM+3.1,-2.75,2.75);cartel(g,t,5.3,2.12,MX0+.135,YM+2.0,0,Math.PI/2,{color:new THREE.Color(1.12,1.12,1.12)});
   plano(g,matTubo,MX0+.12,MX0+.2,-2.7,2.7,YM+3.16,0,true);}
 }
-function pintaQR(g,x,y,tam){const N=29,m=tam/N,r=rnd(2026);const M=[];for(let i=0;i<N;i++){M.push([]);for(let j=0;j<N;j++)M[i].push(r()<.5);}
+function pintaQR(g,x,y,tam,seed){const N=29,m=tam/N,r=rnd(seed||2026);const M=[];for(let i=0;i<N;i++){M.push([]);for(let j=0;j<N;j++)M[i].push(r()<.5);}
  const fp=(ox,oy)=>{for(let i=-1;i<8;i++)for(let j=-1;j<8;j++){const X=ox+i,Y=oy+j;if(X<0||Y<0||X>=N||Y>=N)continue;const d=Math.max(Math.abs(i-3),Math.abs(j-3));M[X][Y]=d===3||d<=1;}};
  fp(0,0);fp(N-7,0);fp(0,N-7);for(let k=8;k<N-8;k++){M[k][6]=k%2===0;M[6][k]=k%2===0;}
  const ax=N-9;for(let i=-2;i<=2;i++)for(let j=-2;j<=2;j++){const d=Math.max(Math.abs(i),Math.abs(j));M[ax+i][ax+j]=d!==1;}
@@ -656,7 +730,7 @@ function pintaQR(g,x,y,tam){const N=29,m=tam/N,r=rnd(2026);const M=[];for(let i=
   tubo(g,matAcero,AC0-.3,YM+.95,s*(ACZ-.06),AC0,YM+.95,s*(ACZ-.06),.025);tubo(g,matAcero,AC0,YM+.95,s*(ACZ-.06),AC1,YC+.95,s*(ACZ-.06),.025);});
  tubo(g,matAcero,AC0,YM+.95,0,AC1,YC+.95,0,.025);for(let k=0;k<=5;k++){const x=AC0+.5+k*1.8;tubo(g,matAcero,x,rampaC(x),0,x,rampaC(x)+.95,0,.02);}
  plano(g,matCielo,AC0-.1,HUECO,-ACZ,ACZ,TC,1.2,true);caja(g,matPanel,HUECO-.3,HUECO,TC-.1,YC,-ACZ-.3,ACZ+.3,1.2);
- obst(AC0,AC1+.4,ACZ-.12,ACZ+.4,-1,20);obst(AC0,AC1+.4,-ACZ-.4,-ACZ+.12,-1,20);
+ obst(AC0,AC1+.4,ACZ-.12,ACZ+.4,YM-.5,20);obst(AC0,AC1+.4,-ACZ-.4,-ACZ+.12,YM-.5,20);
 }
 
 /* ══ VEREDA, ALAMEDA Y ATARDECER ══ */
@@ -673,15 +747,15 @@ const CIELO=new THREE.Mesh(new THREE.SphereGeometry(380,32,16),basic({map:texCie
  caja(g,matNariz,HUECO-.3,HUECO,YC,YC+.45,-ACZ-.3,ACZ+.3,1.2);tubo(g,matAcero,HUECO-.15,YC+1.05,-ACZ-.15,HUECO-.15,YC+1.05,ACZ+.15,.03);for(let z=-ACZ;z<=ACZ+.01;z+=1.6)tubo(g,matAcero,HUECO-.15,YC+.45,z,HUECO-.15,YC+1.05,z,.025);
  obst(HUECO-.3,AC1,ACZ,ACZ+.32,YC-.5,YC+1.1);obst(HUECO-.3,AC1,-ACZ-.32,-ACZ,YC-.5,YC+1.1);obst(HUECO-.32,HUECO,-ACZ-.3,ACZ+.3,YC-.5,YC+1.1);
  // letrero de acceso sobre la boca: nombre de la estación y la bolita roja L1, retroiluminado
- const tAcc=canvasTex(1100,240,(q)=>{q.fillStyle='#15161a';q.fillRect(0,0,1100,240);bolitaL1(q,120,120,74);
-  q.textAlign='left';q.textBaseline='alphabetic';q.fillStyle='#fff';q.font='800 76px '+FONT;q.fillText('Universidad de Chile',230,122);
-  q.fillStyle='rgba(255,255,255,.66)';q.font='600 36px '+FONT;q.fillText('Línea 1 · Acceso Alameda',232,180);});
+ const tAcc=canvasTexDin(1100,240,(q)=>{q.fillStyle='#15161a';q.fillRect(0,0,1100,240);bolitaL1(q,120,120,74);
+  q.textAlign='left';q.textBaseline='alphabetic';q.fillStyle='#fff';const px=fit(q,estN(),76,840,'800');q.font='800 '+px+'px '+FONT;q.fillText(estN(),230,122);
+  q.fillStyle='rgba(255,255,255,.66)';q.font='600 36px '+FONT;q.fillText('Línea 1 · '+(EN_ALAMEDA.has(estN())?'Acceso Alameda':'Acceso a la estación'),232,180);});
  [-1,1].forEach(s=>{caja(g,matMarco,AC1+.25,AC1+.4,YC,YC+3.3,s*(ACZ+.05)-.07,s*(ACZ+.05)+.07);});
  caja(g,matMarco,AC1+.22,AC1+.44,YC+2.35,YC+3.45,-ACZ-.1,ACZ+.1);
  cartel(g,tAcc,6.2,1.0,AC1+.455,YC+2.9,0,Math.PI/2,{color:new THREE.Color(1.25,1.25,1.25)});
  cartel(g,tAcc,6.2,1.0,AC1+.205,YC+2.9,0,-Math.PI/2,{color:new THREE.Color(1.25,1.25,1.25)});
  // tótem de vereda con la bolita L1 (visible a lo largo de la Alameda)
- {const tt=canvasTex(300,1000,(q)=>{q.fillStyle='#15161a';q.fillRect(0,0,300,1000);bolitaL1(q,150,150,98);q.save();q.translate(150,560);q.rotate(-Math.PI/2);q.fillStyle='#fff';q.font='800 70px '+FONT;q.textAlign='center';q.textBaseline='middle';q.fillText('Universidad de Chile',0,0);q.restore();
+ {const tt=canvasTexDin(300,1000,(q)=>{q.fillStyle='#15161a';q.fillRect(0,0,300,1000);bolitaL1(q,150,150,98);q.save();q.translate(150,600);q.rotate(-Math.PI/2);q.fillStyle='#fff';const px=fit(q,estN(),70,660,'800');q.font='800 '+px+'px '+FONT;q.textAlign='center';q.textBaseline='middle';q.fillText(estN(),0,0);q.restore();
    q.fillStyle='#E1251B';q.fillRect(0,980,300,20);});
   const x=22.2,z=5.2;caja(g,matMarco,x-.24,x+.24,YC,YC+3.6,z-.24,z+.24);
   [0,Math.PI/2,Math.PI,-Math.PI/2].forEach(r=>cartel(g,tt,.42,1.4*1.0,x+Math.sin(r)*.245,YC+2.65,z+Math.cos(r)*.245,r,{color:new THREE.Color(1.2,1.2,1.2)}));obst(x-.3,x+.3,z-.3,z+.3,YC-.5,YC+4);}
@@ -701,25 +775,25 @@ const CIELO=new THREE.Mesh(new THREE.SphereGeometry(380,32,16),basic({map:texCie
 }
 
 /* ══ SEÑALÉTICA Y PANTALLAS ══ estilo propio y genérico: bolita L1, nombre, flechas */
-function texLetrero(o){return canvasTex(1024,200,(g)=>{g.fillStyle='#16181d';g.fillRect(0,0,1024,200);g.fillStyle='#E1251B';g.fillRect(0,0,1024,8);
+function texLetrero(o0){const din=typeof o0==='function';const dib=(g)=>{const o=din?o0():o0;g.fillStyle='#16181d';g.fillRect(0,0,1024,200);g.fillStyle='#E1251B';g.fillRect(0,0,1024,8);
  let x=40;if(o.l1){bolitaL1(g,x+48,104,46);x+=120;}
  if(o.izq){flecha(g,x+34,104,IZQ,56);x+=100;}
  const fin=(o.der||o.arriba||o.abajo)?880:990;g.textAlign='left';g.textBaseline='alphabetic';g.fillStyle='#fff';
  const px=fit(g,o.t,o.s?64:72,fin-x,'800');g.font='800 '+px+'px '+FONT;g.fillText(o.t,x,o.s?98:128);
  if(o.s){g.fillStyle='rgba(255,255,255,.66)';const p2=fit(g,o.s,38,fin-x,'600');g.font='600 '+p2+'px '+FONT;g.fillText(o.s,x,156);}
- if(o.der)flecha(g,950,104,DER,56);if(o.arriba)flecha(g,950,104,ARRIBA,56);if(o.abajo)flecha(g,950,104,ABAJO,56);});}
+ if(o.der)flecha(g,950,104,DER,56);if(o.arriba)flecha(g,950,104,ARRIBA,56);if(o.abajo)flecha(g,950,104,ABAJO,56);};return din?canvasTexDin(1024,200,dib):canvasTex(1024,200,dib);}
 function colgante(g,x,y,z,ry,w,h,tF,tB,techo){const fr=new THREE.Mesh(new THREE.BoxGeometry(w+.08,h+.08,.08),matMarco);fr.position.set(x,y,z);fr.rotation.y=ry;g.add(fr);
  const sx=Math.sin(ry),sz=Math.cos(ry);cartel(g,tF,w,h,x+sx*.05,y,z+sz*.05,ry,{color:new THREE.Color(1.1,1.1,1.1)});if(tB)cartel(g,tB,w,h,x-sx*.05,y,z-sz*.05,ry+Math.PI,{color:new THREE.Color(1.1,1.1,1.1)});
  const lx=Math.cos(ry),lz=-Math.sin(ry);[-1,1].forEach(t=>{const px=x+lx*t*w*.36,pz=z+lz*t*w*.36;caja(g,matMarco,px-.015,px+.015,y+h/2+.04,techo,pz-.015,pz+.015);});}
 {const gm=ZG.mes,ga=ZG.and;
- colgante(gm,7.4,YM+2.75,0,Math.PI/2,3.6,.7,texLetrero({l1:1,t:'Andenes',s:'Dirección San Pablo · Dirección Los Dominicos',abajo:1}),texLetrero({t:'Salida · Alameda',s:'Escalera de acceso',arriba:1}),TM);
+ colgante(gm,7.4,YM+2.75,0,Math.PI/2,3.6,.7,texLetrero({l1:1,t:'Andenes',s:'Dirección San Pablo · Dirección Los Dominicos',abajo:1}),texLetrero(()=>({t:'Salida · '+calleDe(),s:'Escalera de acceso',arriba:1})),TM);
  colgante(gm,1.4,YM+2.75,-3.3,Math.PI/2,3.2,.62,texLetrero({l1:1,t:'Andén 1',s:'Dirección San Pablo',der:1}),null,TM);
  colgante(gm,1.4,YM+2.75,3.3,Math.PI/2,3.2,.62,texLetrero({l1:1,izq:1,t:'Andén 2',s:'Dirección Los Dominicos'}),null,TM);
- colgante(gm,-1.3,YM+2.85,-6.8,Math.PI/2,2.6,.5,texLetrero({l1:1,t:'Andén 1 · San Pablo',s:'Próxima estación: La Moneda',abajo:1}),null,TM);
- colgante(gm,-1.3,YM+2.85,6.8,Math.PI/2,2.6,.5,texLetrero({l1:1,t:'Andén 2 · Los Dominicos',s:'Próxima estación: Santa Lucía',abajo:1}),null,TM);
+ colgante(gm,-1.3,YM+2.85,-6.8,Math.PI/2,2.6,.5,texLetrero(()=>({l1:1,t:'Andén 1 · San Pablo',s:txtProxEst(1),abajo:1})),null,TM);
+ colgante(gm,-1.3,YM+2.85,6.8,Math.PI/2,2.6,.5,texLetrero(()=>({l1:1,t:'Andén 2 · Los Dominicos',s:txtProxEst(2),abajo:1})),null,TM);
  // andenes: dirección (y salida hacia la escalera) en tableros perpendiculares al andén
- [[1,'San Pablo','La Moneda'],[2,'Los Dominicos','Santa Lucía']].forEach(a=>{const s=a[0]===1?-1:1;
-  const tD=texLetrero({l1:1,t:'Andén '+a[0]+' · Dirección '+a[1],s:'Próxima estación: '+a[2]});const tS=texLetrero({l1:1,t:'Andén '+a[0]+' · Dirección '+a[1],s:'Salida a la mesanina',arriba:1});
+ [[1,'San Pablo'],[2,'Los Dominicos']].forEach(a=>{const s=a[0]===1?-1:1;
+  const tD=texLetrero(()=>({l1:1,t:'Andén '+a[0]+' · Dirección '+a[1],s:txtProxEst(a[0])}));const tS=texLetrero({l1:1,t:'Andén '+a[0]+' · Dirección '+a[1],s:'Salida a la mesanina',arriba:1});
   colgante(ga,-26,3.75,s*6.1,Math.PI/2,3.0,.58,tD,tS,TA);colgante(ga,22,3.75,s*6.1,Math.PI/2,3.0,.58,tS,tD,TA);});
 }
 // pantallas: un lienzo por andén (y uno para la mesanina), compartido por todas sus pantallas
@@ -757,6 +831,80 @@ const SENALES=[];
  // luces de túnel: puntos que se pierden en la oscuridad
  const iL=new THREE.InstancedMesh(new THREE.BoxGeometry(.1,.1,.06),basic({color:new THREE.Color(1.8,1.6,1.2)}),40);let k=0;
  [1,-1].forEach(sx=>{for(let d=8;d<110;d+=12)[1,-1].forEach(t=>{_me.makeTranslation(sx*(TX+d),2.4,t*(BZ-.05));iL.setMatrixAt(k++,_me);});});iL.count=k;g.add(iL);iL.computeBoundingSphere();}
+
+/* ══ PUNTOS QR Y SEÑALÉTICA DE VÍA ══ placas, colgantes y cajas de luz salen de un solo lienzo: se hornean en una llamada por zona.
+   Los QR son decorativos (no apuntan a nada). Íconos propios: celular y burbuja; «WhatsApp» y «app de Metro» sólo como texto */
+function iconoCel(g,x,y,s,col){g.save();g.translate(x,y);g.scale(s/40,s/40);g.strokeStyle=col;g.lineWidth=3.4;g.beginPath();g.roundRect(-11,-19,22,38,5);g.stroke();g.fillStyle=col;g.fillRect(-4,12.5,8,2.8);g.restore();}
+function iconoBurbuja(g,x,y,s,col,fondo){g.save();g.translate(x,y);g.scale(s/40,s/40);g.fillStyle=col;g.beginPath();g.roundRect(-19,-16,38,26,9);g.fill();g.beginPath();g.moveTo(-9,8);g.lineTo(-15,19);g.lineTo(2,8);g.closePath();g.fill();
+ g.fillStyle=fondo||'#16181d';[-9,0,9].forEach(d=>{g.beginPath();g.arc(d,-3,2.8,0,Math.PI*2);g.fill();});g.restore();}
+function marcaVia(g,x,y,px,blanco){g.save();g.textAlign='left';g.textBaseline='alphabetic';g.font='800 '+px+'px '+FONT;if(blanco)g.fillStyle='#fff';else{const gv=g.createLinearGradient(x,0,x+px*1.7,0);gv.addColorStop(0,'#FF6A1A');gv.addColorStop(1,'#E8457C');g.fillStyle=gv;}
+ g.fillText('Vía',x,y);const w=g.measureText('Vía').width;g.font='600 '+Math.round(px*.36)+'px '+FONT;g.fillStyle='rgba(255,255,255,.88)';g.fillText('by Hapee',x+w+px*.16,y-px*.04);g.restore();}
+function pintaPlacaQR(g,x0,y0,q,seed){const w=300,h=420;g.save();g.translate(x0,y0);
+ g.fillStyle='#fff';g.beginPath();g.roundRect(0,0,w,h,16);g.fill();
+ const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.beginPath();g.roundRect(0,0,w,70,[16,16,0,0]);g.fill();
+ marcaVia(g,20,50,40,true);iconoBurbuja(g,262,36,32,'#fff','#E5452A');
+ g.textAlign='center';g.textBaseline='alphabetic';g.fillStyle='#16171b';const p1=fit(g,'Escanea y habla con Vía',26,266,'800');g.font='800 '+p1+'px '+FONT;g.fillText('Escanea y habla con Vía',150,106);
+ pintaQR(g,72,120,156,seed);
+ g.fillStyle='#C2241B';const p2=fit(g,q.lugar,16,272,'800');g.font='800 '+p2+'px '+FONT;g.fillText(q.lugar,150,306);
+ g.fillStyle='#3b3d44';const qq='«'+q.preg+'»';const p3=fit(g,qq,18,276,'600');g.font='600 '+p3+'px '+FONT;g.fillText(qq,150,334);
+ g.fillStyle='rgba(0,0,0,.1)';g.fillRect(24,356,252,2);
+ iconoCel(g,50,388,26,'#5b5e66');iconoBurbuja(g,78,387,24,'#5b5e66','#fff');
+ g.textAlign='left';g.fillStyle='#5b5e66';g.font='700 15px '+FONT;g.fillText('App de Metro · WhatsApp',98,393);g.restore();}
+function pintaColganteVia(g,x0,y0){g.save();g.translate(x0,y0);g.fillStyle='#16181d';g.fillRect(0,0,1024,200);
+ const gr=g.createLinearGradient(0,0,1024,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.fillRect(0,0,1024,8);
+ g.beginPath();g.arc(98,104,56,0,Math.PI*2);g.fill();iconoBurbuja(g,98,102,60,'#fff','#E5452A');
+ g.textAlign='left';g.textBaseline='alphabetic';g.fillStyle='#fff';const t='Habla con Vía by Hapee';const px=fit(g,t,62,700,'800');g.font='800 '+px+'px '+FONT;g.fillText(t,186,98);
+ g.fillStyle='rgba(255,255,255,.7)';const p2=fit(g,'En la app de Metro y por WhatsApp',36,700,'600');g.font='600 '+p2+'px '+FONT;g.fillText('En la app de Metro y por WhatsApp',188,152);
+ iconoCel(g,958,104,62,'rgba(255,255,255,.85)');g.restore();}
+function pintaCajaLuzVia(g,x0,y0){const w=960,h=380;g.save();g.translate(x0,y0);
+ const bg=g.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#1c0f13');bg.addColorStop(1,'#120d18');g.fillStyle=bg;g.fillRect(0,0,w,h);
+ const gl=g.createRadialGradient(790,90,0,790,90,470);gl.addColorStop(0,'rgba(250,80,0,.5)');gl.addColorStop(1,'rgba(205,35,73,0)');g.fillStyle=gl;g.fillRect(0,0,w,h);
+ marcaVia(g,56,132,104,false);
+ g.textAlign='left';g.textBaseline='alphabetic';g.fillStyle='#fff';g.font='800 52px '+FONT;g.fillText('Habla con Vía',58,222);
+ g.fillStyle='rgba(255,255,255,.75)';g.font='600 31px '+FONT;g.fillText('En la app de Metro y por WhatsApp',58,268);
+ g.fillStyle='rgba(255,255,255,.5)';g.font='600 21px '+FONT;g.fillText('Busca el código QR en la estación y pregúntale lo que quieras',58,330);
+ g.save();g.translate(808,196);g.rotate(-.08);g.fillStyle='#0b0b0f';g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=5;g.beginPath();g.roundRect(-68,-126,136,252,22);g.fill();g.stroke();
+ g.fillStyle='#fff';g.beginPath();g.roundRect(-50,-90,80,28,10);g.fill();
+ const gb=g.createLinearGradient(-26,0,50,0);gb.addColorStop(0,'#FA5000');gb.addColorStop(1,'#CD2349');g.fillStyle=gb;g.beginPath();g.roundRect(-26,-50,76,28,10);g.fill();
+ g.fillStyle='#fff';g.beginPath();g.roundRect(-50,-10,90,28,10);g.fill();g.fillStyle='rgba(255,255,255,.35)';g.beginPath();g.roundRect(-50,30,60,28,10);g.fill();g.restore();
+ g.restore();}
+// cada punto: dónde está la placa (x,y,z sobre la superficie, ry = hacia dónde mira), su soporte, el nivel del piso y qué ofrece el chat
+const QRS=[
+ {id:'acceso',corto:'Acceso',lugar:'ACCESO A LA ESTACIÓN',preg:'¿Esta estación tiene ascensor?',g:'calle',nivel:YC,x:AC1+.422,y:YC+1.45,z:-(ACZ+.05),ry:Math.PI/2,soporte:'muro',npc:true,vuelta:{x:27.5,z:-2.1},
+  chips:['¿Esta estación tiene ascensor?','¿Cómo llego a Baquedano?','¿Dónde cargo mi bip!?'],noti:'Hola, ¿para dónde vas?'},
+ {id:'boleteria',corto:'Boletería',lugar:'ANTES DE LA BOLETERÍA',preg:'¿Dónde cargo mi bip!?',g:'mes',nivel:YM,x:14.6,y:YM+1.45,z:5.9,ry:2.6,soporte:'pie',npc:true,
+  chips:['¿Dónde cargo mi bip!?','¿Cómo consulto mi saldo?','¿Hay retrasos?'],noti:'Te ayudo a cargar tu bip!'},
+ {id:'torniquetes',corto:'Torniquetes',lugar:'JUNTO A LOS TORNIQUETES',preg:'¿Cómo cargo mi bip!?',g:'mes',nivel:YM,x:7.3,y:YM+1.45,z:-5.3,ry:Math.PI/2,soporte:'pie',npc:true,
+  chips:['¿Cómo cargo mi bip!?','¿Por dónde paso con maleta?','¿Qué andén me sirve?'],noti:'Acerca la bip! al lector'},
+ {id:'bajada',corto:'Bajada a andenes',lugar:'BAJADA A LOS ANDENES',preg:'¿Qué andén me sirve?',g:'mes',nivel:YM,x:-3.718,y:YM+1.45,z:0,ry:Math.PI/2,soporte:'muro',
+  chips:['¿Qué andén me sirve?','¿Cómo llego a Baquedano?','¿Hay ascensor?'],noti:'Andén 2, Los Dominicos, a la izquierda'},
+ {id:'anden1',corto:'Andén 1',lugar:'ANDÉN 1 · SAN PABLO',preg:'¿Cuánto falta para el tren?',g:'and',nivel:0,x:-22.4,y:1.45,z:-(FZ-.022),ry:0,soporte:'muro',anden:1,
+  chips:['¿Cuánto falta para el tren?','¿Cómo llego a Los Héroes?','¿Hay retrasos?'],noti:'Te aviso cuando venga tu tren'},
+ {id:'anden2',corto:'Andén 2',lugar:'ANDÉN 2 · LOS DOMINICOS',preg:'¿Cuánto falta para el tren?',g:'and',nivel:0,x:-22.4,y:1.45,z:FZ-.022,ry:Math.PI,soporte:'muro',anden:2,
+  chips:['¿Cuánto falta para el tren?','¿Dónde me bajo para el GAM?','¿En cuánto llego a Baquedano?'],noti:'Te aviso cuando venga tu tren'}];
+const QR_TREN={id:'tren',corto:'En el tren',lugar:'VIAJE EN TREN · LÍNEA 1',preg:'¿En cuánto llego a Baquedano?',nivel:0,
+ chips:['¿En cuánto llego a Baquedano?','¿Dónde me bajo para el GAM?','¿Hay retrasos?','Avísame cuando llegue']};
+const QR_AT=i=>[i*310+4,4,300,420],AT_COLG=[0,440,1024,200],AT_LUZ=[1050,440,960,380];
+const texAtlas=canvasTex(2048,1024,(g)=>{g.fillStyle='#16181d';g.fillRect(0,0,2048,1024);QRS.forEach((q,i)=>{const c=QR_AT(i);pintaPlacaQR(g,c[0],c[1],q,2026+i*7);});pintaColganteVia(g,AT_COLG[0],AT_COLG[1]);pintaCajaLuzVia(g,AT_LUZ[0],AT_LUZ[1]);},2048);
+function geoAtlas(w,h,c){const geo=new THREE.PlaneGeometry(w,h);const uv=geo.attributes.uv;for(let i=0;i<uv.count;i++){const u=uv.getX(i),v=uv.getY(i);uv.setXY(i,(c[0]+u*c[2])/2048,1-(c[1]+(1-v)*c[3])/1024);}return geo;}
+const matAtlas=basic({map:texAtlas}),matLuzVia=basic({map:texAtlas,color:new THREE.Color(1.16,1.16,1.16)});
+QRS.forEach((q,i)=>{const g=ZG[q.g];const nx=Math.sin(q.ry),nz=Math.cos(q.ry);q.nx=nx;q.nz=nz;q.pie={x:q.x+nx*.85,z:q.z+nz*.85};
+ if(q.soporte==='pie'){const pg=new THREE.Mesh(new THREE.BoxGeometry(.46,1.74,.08),matNegro);pg.position.set(q.x-nx*.045,q.nivel+.87,q.z-nz*.045);pg.rotation.y=q.ry;g.add(pg);
+  const pb=new THREE.Mesh(new THREE.BoxGeometry(.58,.06,.32),matMarco);pb.position.set(q.x-nx*.045,q.nivel+.03,q.z-nz*.045);pb.rotation.y=q.ry;g.add(pb);
+  obst(q.x-.32,q.x+.32,q.z-.32,q.z+.32,q.nivel-.5,q.nivel+1.8);}
+ else{const fr=new THREE.Mesh(new THREE.BoxGeometry(.39,.534,.02),matMarco);fr.position.set(q.x-nx*.012,q.y,q.z-nz*.012);fr.rotation.y=q.ry;g.add(fr);}
+ const m=new THREE.Mesh(geoAtlas(.36,.504,QR_AT(i)),matAtlas);m.position.set(q.x+nx*.004,q.y,q.z+nz*.004);m.rotation.y=q.ry;g.add(m);});
+// el tótem del Punto Vía también se escanea
+const QRZ=QRS.concat([{id:'totem',corto:'Punto Vía',nivel:YM,x:12.9,y:YM+1.4,z:-5.7,ry:1.0,nx:Math.sin(1.0),nz:Math.cos(1.0),pie:{x:12.9+Math.sin(1.0)*1.0,z:-5.7+Math.cos(1.0)*1.0},
+ chips:['¿Cómo llego a Baquedano?','¿Hay retrasos?','¿Dónde cargo mi bip!?'],noti:'Hola, ¿en qué te ayudo?'}]);
+// colgantes «Habla con Vía» (mesanina y andenes, lejos de los de dirección) y cajas de luz en el muro de los andenes
+function colganteVia(g,x,y,z,ry,w,techo){const h=w*200/1024;const fr=new THREE.Mesh(new THREE.BoxGeometry(w+.08,h+.08,.08),matMarco);fr.position.set(x,y,z);fr.rotation.y=ry;g.add(fr);
+ const sx=Math.sin(ry),sz=Math.cos(ry);[1,-1].forEach(t=>{const m=new THREE.Mesh(geoAtlas(w,h,AT_COLG),matAtlas);m.position.set(x+sx*t*.042,y,z+sz*t*.042);m.rotation.y=ry+(t<0?Math.PI:0);g.add(m);});
+ const lx=Math.cos(ry),lz=-Math.sin(ry);[-1,1].forEach(t=>{const px=x+lx*t*w*.36,pz=z+lz*t*w*.36;caja(g,matMarco,px-.015,px+.015,y+h/2+.04,techo,pz-.015,pz+.015);});}
+colganteVia(ZG.mes,10.2,YM+2.75,-3.6,Math.PI/2,2.4,TM);
+[-34,5.5].forEach(x=>[1,-1].forEach(s=>colganteVia(ZG.and,x,3.75,s*6.1,Math.PI/2,2.4,TA)));
+[11,27].forEach(x=>[1,-1].forEach(s=>{const zf=s*FZ,g=ZG.and;caja(g,matMarco,x-1.26,x+1.26,1.1,2.14,zf-s*.07,zf);
+ const m=new THREE.Mesh(geoAtlas(2.4,.95,AT_LUZ),matLuzVia);m.position.set(x,1.62,zf-s*.074);m.rotation.y=s>0?Math.PI:0;g.add(m);}));
 
 /* ══ HORNEADO ══ se juntan las mallas quietas que comparten material, por zona */
 function unaPasada(raiz){raiz.traverse(function(o){if(!o.material)return;(Array.isArray(o.material)?o.material:[o.material]).forEach(function(m){if(m.transparent&&m.side===THREE.DoubleSide&&!m.forceSinglePass)m.forceSinglePass=true;});});}
@@ -851,12 +999,133 @@ function actualizaTrenes(dt){for(const tr of TRENES){const stop=tr.dir*PARADA;
   tr.abreObj=(e>1.2&&e<T_PARADO-3.2)?1:0;
   if(e>2.6&&!tr.eventos.abrio){tr.eventos.abrio=true;evento('abrio',tr);}
   if(e>T_PARADO-3.6&&!tr.eventos.cierra){tr.eventos.cierra=true;evento('cierra',tr);}
-  if(e>=T_PARADO){tr.fase='sale';tr.tS=tsEsc;AG[tr.anden]=Math.max(AG[tr.anden]+2*INTERVALO,tsEsc+40);evento('sale',tr);}}
+  if(e>=T_PARADO){tr.fase='sale';tr.tS=tsEsc;AG[tr.anden]=Math.max(Math.min(AG[tr.anden]+2*INTERVALO,tsEsc+(EST!==I_UCH?48:1e9)),tsEsc+40);evento('sale',tr);}}
  else if(tr.fase==='sale'){const e=tsEsc-tr.tS;const s=.5*A_SALE*e*e;tr.v=A_SALE*e;ubicaTren(tr,stop+tr.dir*s);tintaTren(tr);
-  if(s>200){tr.fase='fuera';tr.g.visible=false;evento('fuera',tr);}}
+  if(s>200&&!(VIAJE.on&&VIAJE.tr===tr)){tr.fase='fuera';tr.g.visible=false;PERS.forEach(p=>{if(p.on&&p.tren===tr)apaga(p);});evento('fuera',tr);}}
+ if(tr.fase==='tunel')continue;
  const prev=tr.abre;tr.abre+=(tr.abreObj-tr.abre)*Math.min(1,dt*2.6);if(Math.abs(tr.abre-prev)>.0005)puertasTren(tr,tr.abre);}}
 function proxTren(anden){const tr=TRENES[anden-1];if(tr.fase==='parado')return {en:true,s:0};if(tr.fase==='llega')return {llegando:true,s:Math.max(0,tr.t0+T_LLEGA-tsEsc)};return {s:Math.max(0,AG[anden]-tsEsc)};}
 function minutos(s){return Math.max(1,Math.ceil(s/60));}
+
+/* ══ VIAJE EN TREN ══ el visitante sube, el tren cierra, parte y corre por un túnel; entra a la estación siguiente
+   (la misma geometría con otros nombres). Puede bajar en cualquier estación; las teclas 1–4 lo devuelven a Universidad de Chile */
+const YTUN=-60;
+function cxCoche(i){return -(CAR_L/2)-i*(CAR_L+CAR_G);}
+function mundoTren(tr,i,lx,lz,o){o=o||{};o.x=tr.g.position.x+tr.dir*(cxCoche(i)+lx);o.z=tr.g.position.z+tr.dir*lz;o.y=tr.g.position.y;return o;}
+function cocheDe(tr,x){const xl=(x-tr.x)*tr.dir;return Math.max(0,Math.min(N_CAR-1,Math.round((-xl-CAR_L/2)/(CAR_L+CAR_G))));}
+// interior liviano: un solo coche, se cuelga del tren donde va el visitante (z local + = lado del andén)
+const INTER=new THREE.Group();INTER.visible=false;
+{const L=CAR_L/2-.18,ZW=CAR_W/2-.1,DW=.68,YV0=1.22,YV1=2.2,YT=2.36;
+ const G={pared:[],suelo:[],asiento:[],tubo:[],luz:[],oscuro:[],vidrio:[]};
+ const bx=(k,x0,x1,y0,y1,z0,z1)=>{const g=new THREE.BoxGeometry(Math.abs(x1-x0),Math.abs(y1-y0),Math.abs(z1-z0));g.translate((x0+x1)/2,(y0+y1)/2,(z0+z1)/2);G[k].push(g);};
+ const tb=(ax,ay,az,bx_,by,bz,r)=>{_ta.set(ax,ay,az);_tb.set(bx_-ax,by-ay,bz-az);const Lt=_tb.length();_tb.normalize();const g=new THREE.CylinderGeometry(r,r,Lt,8);_tq.setFromUnitVectors(_ty,_tb);_tm.compose(_ta.clone().addScaledVector(_tb,Lt/2),_tq,new THREE.Vector3(1,1,1));g.applyMatrix4(_tm);G.tubo.push(g);};
+ bx('suelo',-L,L,-.02,.03,-ZW,ZW);bx('pared',-L,L,YT,YT+.04,-ZW,ZW);
+ [-.55,.55].forEach(z=>bx('luz',-L+.4,L-.4,YT-.025,YT,z-.08,z+.08));
+ const tramos=[[-L,-5.18],[-3.82,-.68],[.68,3.82],[5.18,L]],vent=[[-7.0,-5.4],[-3.6,-.85],[.85,3.6],[5.4,7.0]];
+ [1,-1].forEach(s=>{const z0=s*ZW,z1=s*(ZW+.06);
+  tramos.forEach((t,i)=>{const a=Math.max(t[0],vent[i][0]),b=Math.min(t[1],vent[i][1]);
+   bx('pared',t[0],t[1],.03,YV0,z0,z1);bx('pared',t[0],t[1],YV1,YT,z0,z1);if(a>t[0])bx('pared',t[0],a,YV0,YV1,z0,z1);if(b<t[1])bx('pared',b,t[1],YV0,YV1,z0,z1);
+   bx('vidrio',a,b,YV0,YV1,s*(ZW+.04),s*(ZW+.046));
+   const sa=t[0]+.12,sb=t[1]-.12;bx('asiento',sa,sb,.4,.47,s*(ZW-.46),s*ZW);bx('asiento',sa,sb,.47,.98,s*(ZW-.07),s*ZW);bx('oscuro',sa+.05,sb-.05,.03,.4,s*(ZW-.4),s*(ZW-.05));
+   tb(sa,1.9,s*(ZW-.4),sb,1.9,s*(ZW-.4),.016);});
+  PUERTAS.forEach(d=>bx('pared',d-DW,d+DW,2.15,YT,z0,z1));});
+ [1,-1].forEach(s=>{const x0=s*L,x1=s*(L+.06);bx('pared',x0,x1,.03,YT,-ZW,-.45);bx('pared',x0,x1,.03,YT,.45,ZW);bx('pared',x0,x1,2.0,YT,-.45,.45);bx('oscuro',x0,x1,.03,2.0,-.45,.45);});
+ PUERTAS.forEach(d=>[1,-1].forEach(s=>[-1,1].forEach(t=>tb(d+t*.8,.03,s*.66,d+t*.8,YT,s*.66,.02))));
+ [-2.25,2.25,-6.2,6.2].forEach(x=>tb(x,.03,0,x,YT,0,.02));
+ [-.4,.4].forEach(z=>tb(-L+.3,2.06,z,L-.3,2.06,z,.016));
+ // reflejo bajo como el resto de la estación: con el entorno claro del celular el interior se lavaba
+ const M={pared:std({color:0xd9dde1,roughness:.6,envMapIntensity:.3}),suelo:std({color:0x59616c,roughness:.85,envMapIntensity:.25}),asiento:std({color:0x2c4f86,roughness:.6,envMapIntensity:.3}),tubo:matAcero,luz:basic({color:new THREE.Color(1.9,1.95,2.0)}),
+  oscuro:std({color:0x1d2128,roughness:.5,envMapIntensity:.3}),vidrio:std({color:0x0b0f15,transparent:true,opacity:.34,roughness:.05,metalness:.3,depthWrite:false,envMapIntensity:.6})};
+ for(const k in G){if(!G[k].length)continue;const m=new THREE.Mesh(mergeGeometries(G[k],false),M[k]);m.frustumCulled=false;if(k==='vidrio')m.renderOrder=1;INTER.add(m);G[k].forEach(g=>g.dispose());}
+ // adhesivo de Vía pegado en el vidrio, junto a la puerta central (a ambos lados)
+ const tP=canvasTex(300,420,(g)=>pintaPlacaQR(g,0,0,QR_TREN,2099));
+ const geoP=mergeGeometries([new THREE.PlaneGeometry(.24,.336).rotateY(Math.PI).translate(1.16,1.6,ZW+.036),new THREE.PlaneGeometry(.24,.336).translate(1.16,1.6,-ZW-.036)]);
+ const pg=new THREE.Mesh(geoP,basic({map:tP}));pg.frustumCulled=false;INTER.add(pg);}
+// lugares para pasajeros dentro del coche (locales al coche)
+const ASIENTOS=[];
+[1,-1].forEach(s=>{[[-6.55,-5.95],[-3.45,-1.05],[1.05,3.45],[5.95,6.55]].forEach(t=>{for(let x=t[0];x<=t[1]+.01;x+=.6)ASIENTOS.push({lx:x,lz:s*.86,lyaw:s>0?Math.PI:0,sienta:true,ocup:null});});});
+[[-2.25,.34],[2.25,-.34],[-6.2,.34],[6.2,-.34],[-1.6,-.22],[1.7,.24]].forEach(q=>ASIENTOS.push({lx:q[0],lz:q[1],lyaw:q[1]>0?Math.PI*.8:-Math.PI*.2,sienta:false,ocup:null}));
+// túnel del viaje: lejos de la estación (y = −60), muros oscuros y luces que corren por las ventanas
+const TUNV=new THREE.Group();TUNV.visible=false;scene.add(TUNV);
+{const L=260,mT=basic({color:0x0e0f12}),mS=basic({color:0x060607});
+ [1,-1].forEach(s=>{const geo=new THREE.PlaneGeometry(L,5.6);if(s>0)geo.rotateY(Math.PI);geo.translate(0,1.8,s*2.4);TUNV.add(new THREE.Mesh(geo,mT));});
+ TUNV.add(new THREE.Mesh(new THREE.PlaneGeometry(L,4.8).rotateX(Math.PI/2).translate(0,4.6,0),mS));
+ TUNV.add(new THREE.Mesh(new THREE.PlaneGeometry(L,4.8).rotateX(-Math.PI/2).translate(0,-1.0,0),mS));
+ const mc=basic({color:0x1c1d21});[1,-1].forEach(s=>[.85,1.0].forEach(y=>{const c=new THREE.Mesh(new THREE.BoxGeometry(L,.035,.035),mc);c.position.set(0,y,s*2.36);TUNV.add(c);}));
+ const iL=new THREE.InstancedMesh(new THREE.BoxGeometry(.55,.1,.05),basic({color:new THREE.Color(2.8,2.3,1.6)}),52);iL.instanceMatrix.setUsage(THREE.DynamicDrawUsage);TUNV.add(iL);TUNV.userData.iL=iL;
+ TUNV.traverse(o=>{o.frustumCulled=false;});}
+function mueveTunel(dist,dir){const iL=TUNV.userData.iL,n=iL.count,SP=10,half=n>>1,Lr=half*SP;for(let k=0;k<n;k++){const side=k&1?1:-1,j=k>>1;const x=((j*SP-dir*dist)%Lr+Lr)%Lr-Lr/2;_m4.makeTranslation(x,2.55,side*2.33);iL.setMatrixAt(k,_m4);}iL.instanceMatrix.needsUpdate=true;}
+const VIAJE={on:false,tr:null,car:2,lx:0,lz:0,fase:'',t0:0,dist:0,v:0,dur:15,paro:0,retoma:false,de:I_UCH,a:-1};
+const _wv={};
+function ubicaVisitante(){const w=mundoTren(VIAJE.tr,VIAJE.car,VIAJE.lx,VIAJE.lz,_wv);P.x=w.x;P.z=w.z;P.y=w.y+.03;}
+// tren detenido con las puertas abiertas en el andén del visitante, con una puerta cerca
+function puertaCerca(){if(VIAJE.on||Math.abs(P.y)>.5)return null;const a=P.z<0?1:2,az=Math.abs(P.z);if(az<BZ-.05||az>BZ+1.7)return null;
+ const tr=TRENES[a-1];if(tr.fase!=='parado'||tr.abre<.7||tr.abreObj!==1)return null;
+ const pm=puertasMundo(tr);let k=-1,md=1.05;pm.forEach((x,i)=>{const d=Math.abs(x-P.x);if(d<md){md=d;k=i;}});if(k<0)return null;
+ return {tr:tr,a:a,k:k,term:proxDe(EST,a)<0};}
+function subirTren(pc){if(!pc||pc.term||VIAJE.on)return;const tr=pc.tr,i=Math.floor(pc.k/PUERTAS.length),j=pc.k%PUERTAS.length;
+ if(chatCon&&chatCon!==WA_AG)cerrarChat();
+ Object.assign(VIAJE,{on:true,tr:tr,car:i,lx:PUERTAS[j],lz:.55,fase:'andén',dist:0,v:0,paro:0,retoma:false,de:EST,a:proxDe(EST,tr.anden)});
+ tr.viaje=true;INTER.position.set(cxCoche(i),0,0);tr.g.add(INTER);INTER.visible=true;
+ // si falta mucho para que cierre, cierra pronto (unos 4 s)
+ const e=tsEsc-tr.tP;if(e<T_PARADO-7.5)tr.tP=tsEsc-(T_PARADO-7.5);
+ const s=sideZ(tr.anden);P.yaw=(s>0?0:Math.PI)+.35;P.pitch=-.04;sueltaTeclas();
+ creaPax(tr,i);document.body.classList.add('viajando');placa(null,null);ubicaVisitante();marcaZona(true);waEvento('sube');}
+function enPuertaL(lx){for(const d of PUERTAS)if(Math.abs(lx-d)<.52)return true;return false;}
+function mueveEnTren(dx,dz){const T=VIAJE,tr=T.tr,d=tr.dir;const abierta=tr.fase==='parado'&&tr.abre>.85;
+ let lx=T.lx+d*dx,lz=T.lz+d*dz;const Lc=CAR_L/2-.5;lx=Math.max(-Lc,Math.min(Lc,lx));
+ if(!enPuertaL(lx)&&Math.abs(lz)>.52)lx=T.lx;            // los asientos hacen de muro
+ const pu=enPuertaL(lx);
+ if(pu&&abierta&&lz>1.12){T.lx=lx;T.lz=lz;bajarTren();return;}   // bajar caminando por la puerta abierta
+ lz=Math.max(pu?-.98:-.5,Math.min(pu?(abierta?1.2:.98):.5,lz));
+ for(const p of PERS){if(!p.on||p.estado!=='viaja'||p.tren!==tr||p.car!==T.car||p.pose==='sienta')continue;const ex=lx-p.lx,ez=lz-p.lz,dd=Math.hypot(ex,ez);if(dd<.46&&dd>1e-4){lx=p.lx+ex/dd*.46;lz=p.lz+ez/dd*.46;}}
+ T.lx=lx;T.lz=Math.max(-.98,Math.min(1.2,lz));}
+function entraTunel(tr){const T=VIAJE;T.fase='tunel';T.t0=tsEsc;T.v=tr.v;T.dist=0;T.paro=0;T.retoma=false;T.dur=13+Math.random()*4;
+ tr.fase='tunel';tr.x=0;tr.g.position.set(0,YTUN,tr.g.position.z);TUNV.visible=true;ubicaVisitante();visZonas(P.x,P.y,P.z);}
+function saleTunel(tr){const T=VIAJE,a=tr.anden,j=proxDe(EST,a);if(j<0){terminaViaje(true);return;}
+ EST=j;aplicaEstacion();T.fase='llega';TUNV.visible=false;
+ tr.g.position.y=0;tr.fase='llega';tr.t0=tsEsc;AG[a]=tsEsc+T_LLEGA;tr.eventos={};ubicaTren(tr,tr.dir*PARADA-tr.dir*D_LLEGA);tintaTren(tr);
+ const o=a===1?2:1;if(TRENES[o-1].fase==='fuera')AG[o]=Math.min(AG[o],tsEsc+45);
+ ubicaVisitante();visZonas(P.x,P.y,P.z);evento('llega',tr);waEvento('llega');marcaZona(true);}
+function bajarTren(){const T=VIAJE,tr=T.tr;if(!T.on||!tr||!(tr.fase==='parado'&&tr.abre>.5))return;
+ let best=PUERTAS[0];for(const d of PUERTAS)if(Math.abs(d-T.lx)<Math.abs(best-T.lx))best=d;
+ const w=mundoTren(tr,T.car,best,0,{});const s=sideZ(tr.anden);
+ terminaViaje(false);P.x=w.x;P.z=s*(BZ+.75);P.y=0;P.yaw=s>0?Math.PI:0;P.pitch=-.03;placa(null,null);waEvento('baja');marcaZona(true);}
+function terminaViaje(abortar){const T=VIAJE,tr=T.tr;T.on=false;T.fase='';if(INTER.parent)INTER.parent.remove(INTER);INTER.visible=false;TUNV.visible=false;
+ document.body.classList.remove('viajando');$('#waBtn').classList.remove('on');
+ if(tr){tr.viaje=false;if(abortar){PERS.forEach(p=>{if(p.on&&p.tren===tr)apaga(p);});
+  if(tr.fase!=='parado'){tr.fase='fuera';tr.g.visible=false;tr.g.position.y=0;tr.v=0;ubicaTren(tr,-tr.dir*400);AG[tr.anden]=Math.max(AG[tr.anden],tsEsc+30);}}}
+ T.tr=null;}
+// vuelve a Universidad de Chile (teclas de zona): corta el viaje si lo hay
+function volverUCH(){if(VIAJE.on)terminaViaje(true);if(chatCon===WA_AG)cerrarWA();if(EST!==I_UCH){EST=I_UCH;aplicaEstacion();}}
+function actualizaViaje(dt){
+ for(let i=0;i<NP;i++){const p=PERS[i];if(p.on&&p.estado==='viaja'&&p.tren)ubicaPax(p);}
+ if(!VIAJE.on)return;const T=VIAJE,tr=T.tr;
+ if(tr.fase==='sale'&&T.fase!=='tunel'&&tr.dir*(tr.x+tr.dir*cxCoche(T.car))>TX+26)entraTunel(tr);
+ if(T.fase==='tunel'){const e=tsEsc-T.t0;let vObj=15.8;
+  if(CONT.on&&!T.paro&&T.dist>55&&tsEsc-CONT.t0>4.5){T.paro=tsEsc;waEvento('paro');}
+  if(T.paro){if(tsEsc-T.paro<7)vObj=0;else if(!T.retoma){T.retoma=true;waEvento('retoma');}}
+  T.v+=(vObj-T.v)*Math.min(1,dt*(vObj<T.v?.8:.45));tr.v=T.v;T.dist+=T.v*dt;
+  TUNV.position.set(tr.dir*cxCoche(T.car),YTUN,tr.g.position.z);mueveTunel(T.dist,tr.dir);
+  const dur=T.dur+(T.paro?9:0);if(e>dur&&T.v>14.5&&(!WA.esperando||e>dur+15))saleTunel(tr);}
+ if(!VIAJE.on)return;
+ // estación terminal: el tren no sigue con pasajeros
+ if(tr.fase==='parado'&&proxDe(EST,tr.anden)<0&&tsEsc-tr.tP>T_PARADO-5.5){bajarTren();return;}
+ ubicaVisitante();}
+// pasajeros dentro del coche: siguen al tren con coordenadas locales
+function ubicaPax(p){const tr=p.tren;p.x=tr.g.position.x+tr.dir*(cxCoche(p.car)+p.lx);p.z=tr.g.position.z+tr.dir*p.lz;p.y=tr.g.position.y+.03;p.yawObj=p.lyaw+(tr.dir<0?Math.PI:0);p.yaw=p.yawObj;}
+function paxEn(p,tr,i,sl){sl.ocup=p;p.slot=sl;p.estado='viaja';p.tren=tr;p.car=i;p.lx=sl.lx;p.lz=sl.lz;p.lyaw=sl.lyaw;p.pose=sl.sienta?'sienta':'quieto';p.ruta=[];p.anden=tr.anden;p.abordando=false;p.hy=0;ubicaPax(p);}
+function slotLibre(sienta){const l=ASIENTOS.filter(a=>!a.ocup&&(sienta===undefined||a.sienta===sienta));return l.length?pick(l):null;}
+function creaPax(tr,i){const n=3+Math.floor(Math.random()*2);for(let k=0;k<n;k++){const sl=slotLibre(k<2)||slotLibre();if(!sl)break;const p=nuevaPersona({mochila:Math.random()<.3});if(!p)break;paxEn(p,tr,i,sl);if(!sl.sienta&&Math.random()<.6)p.cel=true;}}
+function paxBaja(p,tr){if(!p.on||p.tren!==tr||tr.fase!=='parado')return;const s=sideZ(tr.anden);let best=PUERTAS[0];for(const d of PUERTAS)if(Math.abs(d-p.lx)<Math.abs(best-p.lx))best=d;
+ const a0=mundoTren(tr,p.car,p.lx,0,{}),a1=mundoTren(tr,p.car,best,0,{}),a2=mundoTren(tr,p.car,best,1.0,{});
+ if(p.slot){p.slot.ocup=null;p.slot=null;}p.tren=null;p.estado='camina';p.pose='camina';p.cel=false;p.anden=tr.anden;
+ p.ruta=[{x:a0.x,z:a0.z,y:0},{x:a1.x,z:a1.z,y:0},{x:a2.x,z:a2.z,y:0},{x:a2.x,z:s*(BZ+.5),y:0}].concat(rutaSalida(tr.anden,a2.x));p.destino='calle';}
+function aplicaEstacion(){DINAMICAS.forEach(t=>t.userData.repinta());$('.brand span').innerHTML='<b>Vía</b> · Estación '+estN();ZONAS[1][1]=calleDe();
+ PANT.a1.firma=PANT.a2.firma=PANT.mes.firma='';bots.forEach(b=>{b.saludado=false;});document.title='Vía by Hapee · Estación '+estN();marcaZona(true);}
+function pintaLinea(){const el=$('#linea'),T=VIAJE;if(!T.on){if(el.classList.contains('on'))el.classList.remove('on');return;}el.classList.add('on');const tr=T.tr;let k=0;
+ if(T.fase==='tunel')k=.22+.53*Math.min(1,(tsEsc-T.t0)/Math.max(1,T.dur+(T.paro?9:0)));else if(tr.fase==='sale')k=Math.min(.22,.22*(tsEsc-tr.tS)/11);else if(tr.fase==='llega')k=.75+.25*Math.min(1,(tsEsc-tr.t0)/T_LLEGA);
+ const de=T.de>=0?L1[T.de]:'',aa=T.a>=0?L1[T.a]:'Fin del recorrido',l=(k*100).toFixed(1)+'%';if(el.dataset.f!==de+aa){el.dataset.f=de+aa;$('#lnDe').textContent=de;$('#lnA').textContent=aa;}const pt=$('#lnPt');if(pt.style.left!==l)pt.style.left=l;}
 
 /* ══ CONTINGENCIA ══ escena de ejemplo: retraso en la Línea 1, Vía avisa y los robots dan alternativas */
 const CONT={on:false,t0:0,prox:95,dur:46,fin:-99,veces:0};
@@ -865,8 +1134,8 @@ function iniciaContingencia(){if(CONT.on)return;CONT.on=true;CONT.t0=tsEsc;CONT.
  PERS.forEach(p=>{if(p.on&&(p.estado==='espera')&&Math.random()<.55){p.cel=true;}});
  bots.forEach(b=>{if(b.ag&&b.ag.cont)b.proxFrase=performance.now()+600+Math.random()*2500;});
  [1,2].forEach(a=>{const b=botRol('a'+a);if(b)planContingencia(b);});
- $('#zona').classList.add('cont');marcaZona(true);}
-function terminaContingencia(){CONT.on=false;CONT.fin=tsEsc;CONT.prox=tsEsc+190+Math.random()*40;PERS.forEach(p=>{p.cel=false;});$('#zona').classList.remove('cont');marcaZona(true);}
+ $('#zona').classList.add('cont');marcaZona(true);if(VIAJE.on)waEvento('cont');}
+function terminaContingencia(){CONT.on=false;CONT.fin=tsEsc;CONT.prox=tsEsc+190+Math.random()*40;PERS.forEach(p=>{if(p.estado!=='escanea'&&!(p.estado==='viaja'&&p.slot&&!p.slot.sienta))p.cel=false;});$('#zona').classList.remove('cont');marcaZona(true);if(VIAJE.on)waEvento('normal');}
 function actualizaContingencia(){if(!CONT.on&&tsEsc>CONT.prox&&TRENES.every(t=>t.fase==='fuera'))iniciaContingencia();if(CONT.on&&tsEsc>CONT.t0+CONT.dur)terminaContingencia();}
 
 /* ══ PANTALLAS ══ reloj real de Santiago y próximo tren (cifras de ejemplo que avanzan con la propia escena) */
@@ -874,8 +1143,16 @@ const fmtHora=new Intl.DateTimeFormat('es-CL',{timeZone:'America/Santiago',hour:
 function horaSantiago(){try{return fmtHora.format(new Date());}catch(e){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}}
 function txtProx(a){const p=proxTren(a);if(p.en)return 'En andén';if(p.llegando||p.s<35)return 'Llegando';return minutos(p.s)+' min';}
 function pintaPantalla(P_,modo){const g=P_.g,w=P_.w,h=P_.h,hora=horaSantiago();const normal=tsEsc-CONT.fin<9;
- let firma;if(modo==='mes')firma=['m',hora,CONT.on,normal,txtProx(1),txtProx(2)].join('|');else firma=[modo,hora,CONT.on,normal,txtProx(modo==='a1'?1:2),(modo==='a1'?1:2)].join('|');
+ // cada 32 s, 8 s de aviso «Habla con Vía» (nunca en contingencia ni con el tren llegando)
+ const via=!CONT.on&&!normal&&Math.floor(tsEsc/8)%4===3&&(modo==='mes'||!(function(){const p=proxTren(modo==='a1'?1:2);return p.en||p.llegando||p.s<35;})());
+ let firma;if(modo==='mes')firma=['m',hora,CONT.on,normal,via,EST,txtProx(1),txtProx(2)].join('|');else firma=[modo,hora,CONT.on,normal,via,EST,txtProx(modo==='a1'?1:2),(modo==='a1'?1:2)].join('|');
  if(P_.firma===firma)return;P_.firma=firma;
+ if(via){g.fillStyle='#120d14';g.fillRect(0,0,w,h);const gr=g.createLinearGradient(0,0,w,0);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');g.fillStyle=gr;g.fillRect(0,0,w,10);
+  const gl=g.createRadialGradient(w-90,h*.4,0,w-90,h*.4,h*1.1);gl.addColorStop(0,'rgba(250,80,0,.32)');gl.addColorStop(1,'rgba(205,35,73,0)');g.fillStyle=gl;g.fillRect(0,0,w,h);
+  const cy=h/2+6;g.fillStyle=gr;g.beginPath();g.arc(72,cy,40,0,Math.PI*2);g.fill();iconoBurbuja(g,72,cy-2,44,'#fff','#E5452A');
+  g.textAlign='left';g.textBaseline='alphabetic';g.fillStyle='#fff';const t='Habla con Vía by Hapee';const px=fit(g,t,40,w-210,'800');g.font='800 '+px+'px '+FONT;g.fillText(t,132,cy-6);
+  g.fillStyle='rgba(255,255,255,.75)';g.font='600 23px '+FONT;g.fillText('En la app de Metro y por WhatsApp',134,cy+28);
+  iconoCel(g,w-46,cy,46,'rgba(255,255,255,.8)');g.textAlign='right';g.fillStyle='rgba(255,255,255,.6)';g.font='700 20px '+FONT;g.fillText(hora,w-24,40);P_.t.needsUpdate=true;return;}
  g.fillStyle='#0b0c10';g.fillRect(0,0,w,h);
  if(CONT.on){g.fillStyle='#1d1305';g.fillRect(0,0,w,h);g.fillStyle='#FFB020';g.fillRect(0,0,w,10);
   g.textAlign='left';g.textBaseline='alphabetic';bolitaL1(g,46,62,24);g.fillStyle='#FFB020';g.font='800 22px '+FONT;g.fillText('AVISO DE SERVICIO',84,54);g.fillStyle='rgba(255,255,255,.6)';g.font='600 17px '+FONT;g.fillText('Simulación de contingencia',84,78);
@@ -894,7 +1171,7 @@ function pintaPantalla(P_,modo){const g=P_.g,w=P_.w,h=P_.h,hora=horaSantiago();c
  g.fillStyle='rgba(255,255,255,.1)';g.fillRect(28,128,w-56,2);
  g.textAlign='left';g.fillStyle='#fff';g.font='700 26px '+FONT;g.fillText(hora,28,172);
  const p=proxTren(a);const sig=p.en||p.llegando||p.s<35?minutos(2*INTERVALO):minutos(p.s+2*INTERVALO);
- g.textAlign='right';g.fillStyle=normal?'#7CF2A6':'rgba(255,255,255,.7)';g.font='700 24px '+FONT;g.fillText(normal?'Servicio normalizándose':'Siguiente · '+sig+' min',w-28,172);
+ g.textAlign='right';g.fillStyle=normal?'#7CF2A6':'rgba(255,255,255,.7)';g.font='700 24px '+FONT;g.fillText(normal?'Servicio normalizándose':(proxDe(EST,a)<0?'Estación terminal':'Siguiente · '+sig+' min'),w-28,172);
  P_.t.needsUpdate=true;}
 
 /* ══ AUTOS EN LA ALAMEDA ══ */
@@ -957,10 +1234,11 @@ function nuevaPersona(o){const p=PERS.find(q=>!q.on);if(!p)return null;const i=p
  IMP.torso.setColorAt(i,torso);IMP.faldon.setColorAt(i,Math.random()<.5?torso:pierna);IMP.cabeza.setColorAt(i,piel);IMP.pelo.setColorAt(i,pelo);
  const mangaCorta=Math.random()<.15;for(let k=0;k<2;k++){IMP.brazo.setColorAt(i*2+k,mangaCorta?piel:torso);IMP.mano.setColorAt(i*2+k,piel);IMP.zapato.setColorAt(i*2+k,new THREE.Color(pick(ZAP)));}
  for(let k=0;k<4;k++)IMP.pierna.setColorAt(i*4+k,pierna);
- IMP.mochila.setColorAt(i,new THREE.Color(pick(ACCC)));IMP.maleta.setColorAt(i,new THREE.Color(pick(['#1d2a44','#7a1f22','#2a2a2e','#3b5f8a'])));IMP.baston.setColorAt(i,new THREE.Color('#3a2a1e'));
+ IMP.celular.setColorAt(i,_c.setRGB(1,1,1));IMP.mochila.setColorAt(i,new THREE.Color(pick(ACCC)));IMP.maleta.setColorAt(i,new THREE.Color(pick(['#1d2a44','#7a1f22','#2a2a2e','#3b5f8a'])));IMP.baston.setColorAt(i,new THREE.Color('#3a2a1e'));
  for(const k in IMP)if(IMP[k].instanceColor)IMP[k].instanceColor.needsUpdate=true;
  return p;}
-function apaga(p){p.on=false;if(p.bub){p.bub.remove();p.bub=null;}if(p.espacio){p.espacio.libre=true;p.espacio=null;}if(p.banca){p.banca.libre=true;p.banca=null;}}
+function brilloCel(p,on){const k=on?2.1:1;IMP.celular.setColorAt(p.i,_c.setRGB(k,k,k));IMP.celular.instanceColor.needsUpdate=true;}
+function apaga(p){p.on=false;if(p.slot){p.slot.ocup=null;p.slot=null;}p.tren=null;if(p.estado==='escanea')brilloCel(p,false);if(p.bub){p.bub.remove();p.bub=null;}if(p.espacio){p.espacio.libre=true;p.espacio=null;}if(p.banca){p.banca.libre=true;p.banca=null;}}
 // pose y escritura de matrices (cada persona usa siempre los mismos índices: sin recolorear)
 function pintaPersona(p){const i=p.i;
  if(!p.on){IMP.torso.setMatrixAt(i,_Z);IMP.faldon.setMatrixAt(i,_Z);IMP.cabeza.setMatrixAt(i,_Z);IMP.pelo.setMatrixAt(i,_Z);IMP.mochila.setMatrixAt(i,_Z);IMP.maleta.setMatrixAt(i,_Z);IMP.baston.setMatrixAt(i,_Z);IMP.celular.setMatrixAt(i,_Z);
@@ -972,6 +1250,7 @@ function pintaPersona(p){const i=p.i;
  else{const t=performance.now()/1000+p.fase;arL=.03*Math.sin(t*1.1);arR=-.03*Math.sin(t*1.1);bob=.004*Math.sin(t*1.7);}
  if(p.cel&&!anda){arR=-1.12;opR=-.12;}
  if(p.estado==='duda'){arR=-1.0-.08*Math.sin(performance.now()/260);opR=-.06;}
+ if(p.estado==='escanea'){arR=-1.42;opR=-.18;}
  if(p.maleta){arR=anda?.32:.18;opR=.1;}
  if(p.baston){arR=-.3+(anda?.1*Math.sin(ph):0);opR=.08;}
  if(p.mano){arL=-.12;opL=.5;}       // niño: brazo hacia la mano del adulto
@@ -984,7 +1263,7 @@ function pintaPersona(p){const i=p.i;
  if(p.mochila){_M3.copy(_M2).multiply(_T.makeTranslation(0,.34,-.165));IMP.mochila.setMatrixAt(i,_M3);}else IMP.mochila.setMatrixAt(i,_Z);
  if(p.faldon&&!sent){IMP.faldon.setMatrixAt(i,_M2);}else IMP.faldon.setMatrixAt(i,_Z);
  // cabeza y pelo
- _M3.copy(_M).multiply(_T.makeTranslation(0,.72,0)).multiply(_R.makeRotationY(p.hy)).multiply(_T.makeRotationX(p.hp+(p.cel&&!anda?.38:0)));IMP.cabeza.setMatrixAt(i,_M3);
+ _M3.copy(_M).multiply(_T.makeTranslation(0,.72,0)).multiply(_R.makeRotationY(p.hy)).multiply(_T.makeRotationX(p.hp+(p.cel&&!anda&&p.estado!=='escanea'?.38:0)));IMP.cabeza.setMatrixAt(i,_M3);
  if(p.pelo===1)_M3.multiply(_T.makeTranslation(0,-.02,-.022)).multiply(_R.makeRotationX(-.32)).multiply(_T.makeScale(1.05,1.3,1.06));else _M3.multiply(_T.makeTranslation(0,.014,-.014)).multiply(_R.makeRotationX(-.42));
  IMP.pelo.setMatrixAt(i,_M3);
  // brazos y manos
@@ -1059,7 +1338,9 @@ function avanzaPersona(p,dt){
  if(p.estado==='sigue'){const a=p.sigue;if(!a||!a.on){apaga(p);return;}const rx=-Math.cos(a.yaw),rz=Math.sin(a.yaw);const tx=a.x+rx*.46,tz=a.z+rz*.46;
   const dx=tx-p.x,dz=tz-p.z,d=Math.hypot(dx,dz);const st=Math.min(d,(a.pose==='camina'?a.vel*1.25:1.2)*dt+d*.08);if(d>.01){p.x+=dx/d*st;p.z+=dz/d*st;p.ph+=st*(2*Math.PI/1.35)/(p.h/1.72);}
   p.pose=a.pose==='camina'||d>.08?'camina':(a.pose==='sienta'?'quieto':'quieto');p.yawObj=a.yaw;const y=pisoEn(p.x,p.z,p.y);p.y=y===y?y:a.y;return;}
- if(p.estado==='fijo'||p.estado==='cabina'||p.estado==='escolta-quieto')return;
+ if(p.estado==='fijo'||p.estado==='cabina'||p.estado==='escolta-quieto'||p.estado==='viaja')return;
+ // escanea un QR con el celular: el celular brilla y llega la notificación de Vía
+ if(p.estado==='escanea'){p.pose='quieto';if(!p.notiDicha&&tsEsc>p.escHasta-2.7){p.notiDicha=true;decir(p,p.qrObj.noti,3000,'noti');}if(tsEsc>p.escHasta){p.estado='camina';p.cel=false;brilloCel(p,false);}return;}
  if(p.estado==='duda'){p.pose='quieto';p.yawObj=-Math.PI/2;if(tsEsc>p.dudaHasta-1.1&&DIN.giro[p.pasI].rojo){DIN.giro[p.pasI].rojo=0;DIN.giro[p.pasI].luz=1.4;}if(tsEsc>p.dudaHasta){p.estado='camina';p.duda=false;}return;}
  if(p.estado==='monta'){const s=sideZ(p.anden||1);p.x+=(ESC_V+(p.subeAndando?.55:0))*dt*((p.x>EX0&&p.x<EX1)?ESC_COS:1);p.z+=(s*EEC-p.z)*Math.min(1,dt*4);p.yawObj=Math.PI/2;p.y=rampaA(p.x);p.pose=p.subeAndando?'camina':'quieto';if(p.subeAndando)p.ph+=dt*5;
   if(p.x>=EX1+.6){p.estado='camina';p.y=YM;}return;}
@@ -1073,14 +1354,17 @@ function avanzaPersona(p,dt){
  const o=p.ruta[0];const dx=o.x-p.x,dz=o.z-p.z,d=Math.hypot(dx,dz);
  if(o.torn&&!o.hecho){ // antes del torniquete: duda con la bip!, o la puerta ancha
   if(d<.55){o.hecho=true;const i=PASILLOS.indexOf(o.z);if(p.duda&&i>=0){p.estado='duda';p.dudaHasta=tsEsc+3.6;p.pasI=i;DIN.giro[i].rojo=1;const b=botRol('torn');if(b)ayudaRobot(b,p,'Acerca la bip! al lector y espera la luz verde.','point');return;}}}
- if(d<.14){p.ruta.shift();p.ultimo=o;if(o.monta){p.estado='monta';p.subeAndando=Math.random()<.25;p.yawObj=Math.PI/2;}if(o.fin){apaga(p);}return;}
+ if(d<.14){p.ruta.shift();p.ultimo=o;if(o.monta){p.estado='monta';p.subeAndando=Math.random()<.25;p.yawObj=Math.PI/2;}
+  if(o.qr){const q=o.qr;p.estado='escanea';p.escHasta=tsEsc+3.6;p.qrObj=q;p.notiDicha=false;p.yawObj=Math.atan2(-q.nx,-q.nz);p.cel=true;brilloCel(p,true);if(q.vuelta)p.ruta.unshift({x:q.vuelta.x,z:q.vuelta.z,y:q.nivel});}
+  if(o.fin){const T=VIAJE;if(p.destino==='tren'&&T.on&&T.tr&&T.tr.anden===p.anden&&T.tr.fase==='parado'&&cocheDe(T.tr,p.x)===T.car){const lx=(p.x-T.tr.g.position.x)*T.tr.dir-cxCoche(T.car);
+    const l=ASIENTOS.filter(a=>!a.ocup);if(l.length){l.sort((a,b)=>Math.abs(a.lx-lx)-Math.abs(b.lx-lx));paxEn(p,T.tr,T.car,l[0]);return;}}apaga(p);}return;}
  let vel=p.vel;if(p.lleva)vel=Math.min(vel,1.0);if(p.abordando)vel*=1.25;
  const st=Math.min(d,vel*dt);p.x+=dx/d*st;p.z+=dz/d*st;p.yawObj=Math.atan2(dx,dz);p.ph+=st*(2*Math.PI/1.36)/(p.h/1.72);p.pose='camina';
  const y=pisoEn(p.x,p.z,p.y);if(y===y)p.y=y;else if(o.y!==undefined&&Math.abs(o.y-p.y)<.7)p.y+=(o.y-p.y)*Math.min(1,dt*3);
  // cruce de torniquete: el trípode gira y el lector se pone verde
  const prevX=p.x-dx/d*st;if((prevX-TORN)*(p.x-TORN)<=0&&Math.abs(p.y-YM)<.5){const i=PASILLOS.findIndex(z=>Math.abs(z-p.z)<.4);if(i>=0){DIN.giro[i].obj+=Math.PI*2/3;DIN.giro[i].luz=1;}}}
 // separación suave: que no se atraviesen entre ellos ni al visitante
-function separa(dt){for(let i=0;i<NP;i++){const a=PERS[i];if(!a.on||a.pose==='sienta'||a.estado==='fijo'||a.estado==='cabina'||a.estado==='monta'||a.estado==='sigue')continue;
+function separa(dt){for(let i=0;i<NP;i++){const a=PERS[i];if(!a.on||a.pose==='sienta'||a.estado==='fijo'||a.estado==='cabina'||a.estado==='monta'||a.estado==='sigue'||a.estado==='viaja')continue;
  for(let j=i+1;j<NP;j++){const b=PERS[j];if(!b.on||Math.abs(a.y-b.y)>1||b.estado==='cabina'||b.sigue===a||a.sigue===b)continue;const dx=a.x-b.x,dz=a.z-b.z,d2=dx*dx+dz*dz;if(d2>.36||d2<1e-6)continue;const d=Math.sqrt(d2),k=(.6-d)*.5*Math.min(1,dt*6)/d;
   if(a.pose==='camina'){a.x+=dx*k;a.z+=dz*k;}if(b.pose==='camina'&&b.estado!=='sigue'&&b.estado!=='monta'){b.x-=dx*k;b.z-=dz*k;}}
  if(Math.abs(a.y-P.y)<1&&a.pose==='camina'){const dx=a.x-P.x,dz=a.z-P.z,d=Math.hypot(dx,dz);if(d<.7&&d>1e-4){const k=(.7-d)*Math.min(1,dt*5);a.x+=dx/d*k;a.z+=dz/d*k;}}
@@ -1091,16 +1375,20 @@ function pintaPersonas(){for(let i=0;i<NP;i++)pintaPersona(PERS[i]);for(const k 
 
 /* ── trenes ↔ pasajeros: bajan, después suben («deja bajar antes de subir») ── */
 function evento(tipo,tr){const a=tr.anden,s=sideZ(a);const b=botRol('a'+a);
- if(tipo==='llega'){if(b&&!b.contingencia)hablaRobot(b,'Ya viene el tren a '+(a===1?'San Pablo':'Los Dominicos')+'. Detrás de la línea amarilla, por favor.','talk',null,5200);sonidoLlegada(tr);}
+ const mio=VIAJE.on&&VIAJE.tr===tr;
+ if(tipo==='llega'){if(b&&!b.contingencia)hablaRobot(b,'Ya viene el tren a '+dirDe(a)+'. Detrás de la línea amarilla, por favor.','talk',null,5200);sonidoLlegada(tr);}
+ // con el visitante arriba, la detención en estaciones intermedias es más corta (unos 12 s)
+ if(tipo==='para'&&mio){VIAJE.de=EST;VIAJE.a=proxDe(EST,a);VIAJE.fase='andén';tr.tP=tsEsc-9;}
  if(tipo==='abrio'){chime(true);const puertas=puertasMundo(tr);let n=0;const max=6+Math.floor(Math.random()*7);
-  puertas.forEach(xd=>{const k=Math.random()<.45?(Math.random()<.35?2:1):0;for(let j=0;j<k&&n<max;j++){n++;setTimeout(()=>{if(tr.fase!=='parado')return;const p=nuevaPersona({});if(!p)return;p.anden=a;p.x=xd+(Math.random()-.5)*.6;p.z=s*(BZ-.1);p.y=0;p.yaw=p.yawObj=s>0?0:Math.PI;p.ruta=rutaSalida(a,p.x);p.destino='calle';},300+j*900+Math.random()*1400);}});
-  if(b&&!b.contingencia)setTimeout(()=>hablaRobot(b,'Deja bajar antes de subir. Este tren va a '+(a===1?'San Pablo; próxima estación, La Moneda.':'Los Dominicos; próxima estación, Santa Lucía.'),'point',null,6200),900);
-  setTimeout(()=>{if(tr.fase!=='parado')return;PERS.forEach(p=>{if(!p.on||p.anden!==a||p.y>1||(p.estado!=='espera'&&p.estado!=='sienta'))return;if(p.sigue)return;if(Math.random()<.12&&!p.viejo)return;
+  if(mio){PERS.forEach(p=>{if(p.on&&p.tren===tr&&Math.random()<.5)setTimeout(()=>paxBaja(p,tr),500+Math.random()*2600);});waEvento('abrio');}
+  puertas.forEach((xd,ix)=>{if(mio&&Math.floor(ix/PUERTAS.length)===VIAJE.car)return;const k=Math.random()<.45?(Math.random()<.35?2:1):0;for(let j=0;j<k&&n<max;j++){n++;setTimeout(()=>{if(tr.fase!=='parado')return;const p=nuevaPersona({});if(!p)return;p.anden=a;p.x=xd+(Math.random()-.5)*.6;p.z=s*(BZ-.1);p.y=0;p.yaw=p.yawObj=s>0?0:Math.PI;p.ruta=rutaSalida(a,p.x);p.destino='calle';},300+j*900+Math.random()*1400);}});
+  if(b&&!b.contingencia)setTimeout(()=>hablaRobot(b,proxDe(EST,a)<0?'Estación terminal: este tren termina aquí.':'Deja bajar antes de subir. Este tren va a '+dirDe(a)+'. '+txtProxEst(a)+'.','point',null,6200),900);
+  setTimeout(()=>{if(tr.fase!=='parado'||proxDe(EST,a)<0)return;PERS.forEach(p=>{if(!p.on||p.anden!==a||p.y>1||(p.estado!=='espera'&&p.estado!=='sienta'))return;if(p.sigue)return;if(Math.random()<.12&&!p.viejo)return;
    const pd=puertasMundo(tr);let best=pd[0];for(const xd of pd)if(Math.abs(xd-p.x)<Math.abs(best-p.x))best=xd;if(Math.abs(best-p.x)>14)return;
    p.estado='camina';p.abordando=true;p.cel=false;if(p.banca){p.banca.libre=true;p.banca=null;}
    p.ruta=(Math.abs(p.z)>5.3?[{x:p.x,z:s*4.4,y:0}]:[]).concat([{x:best+(Math.random()-.5)*.5,z:s*3.95,y:0},{x:best,z:s*(BZ+.05),y:0},{x:best,z:s*(VZ+.3),y:0,fin:true}]);p.destino='tren';});},2800);}
- if(tipo==='cierra'){chime(false);PERS.forEach(p=>{if(!p.on||!p.abordando||p.anden!==a)return;if(Math.abs(p.z)>BZ+.9){p.abordando=false;p.ruta=rutaEspera(p,a);p.destino='espera';}});}
- if(tipo==='sale'){PERS.forEach(p=>{if(!p.on||!p.abordando||p.anden!==a)return;if(Math.abs(p.z)<BZ+.8)apaga(p);else{p.abordando=false;p.ruta=rutaEspera(p,a);p.destino='espera';}});}}
+ if(tipo==='cierra'){chime(false);if(mio)waEvento('cierra');PERS.forEach(p=>{if(!p.on||!p.abordando||p.anden!==a)return;if(Math.abs(p.z)>BZ+.9){p.abordando=false;p.ruta=rutaEspera(p,a);p.destino='espera';}});}
+ if(tipo==='sale'){PERS.forEach(p=>{if(!p.on||!p.abordando||p.anden!==a)return;if(Math.abs(p.z)<BZ+.8){if(mio&&cocheDe(tr,p.x)===VIAJE.car){const sl=slotLibre();if(sl){paxEn(p,tr,VIAJE.car,sl);return;}}apaga(p);}else{p.abordando=false;p.ruta=rutaEspera(p,a);p.destino='espera';}});}}
 function botRol(id){return bots.find(b=>b.ag&&b.ag.id===id)||null;}
 
 /* ══ ROBOTS HAPEE ══ el mismo rig de la oficina, con sus caras láser */
@@ -1173,21 +1461,23 @@ const ROLES=[
  {id:'torn',n:'Vía · Torniquetes',linea:'Ayuda con la bip! y la puerta ancha',pos:{x:7.75,y:YM,z:5.95},yaw:Math.PI/2,
   saludo:'Hola. Si la bip! no te pasa, avísame y lo vemos.',
   amb:['Acerca la bip! al lector y espera la luz verde.','Con coche, maleta o silla de ruedas, mejor por la puerta ancha.','Si a tu bip! le falta saldo, la cargas aquí al lado.'],
-  cont:['Ojo, hay retraso en la Línea 1. Si vas apurado, aquí mismo combinas con la Línea 3.','Vía te avisa por WhatsApp apenas se normalice.']},
+  cont:['Ojo, hay retraso en la Línea 1. Si vas apurado, {combina}.','Ojo, hay retraso en la Línea 1. Vía te avisa por WhatsApp apenas se normalice.']},
  {id:'mes',n:'Vía · Mesanina',linea:'Te orienta hacia tu andén',pos:{x:-.4,y:YM,z:.35},yaw:Math.PI/2,
   saludo:'Andén 1, San Pablo, a la derecha. Andén 2, Los Dominicos, a la izquierda.',
   amb:['Andén 1, San Pablo, a la derecha. Andén 2, Los Dominicos, a la izquierda.','¿Necesitas ascensor? Está aquí, junto a cada escalera.','Las mecánicas suben; para bajar, la escalera de al lado.'],
-  cont:['Te conviene esperar el próximo: viene en camino.','Si vas apurado, aquí mismo combinas con la Línea 3.']},
+  cont:['Te conviene esperar el próximo: viene en camino.','Si vas apurado, {combina}.']},
  {id:'a1',n:'Vía · Andén 1',linea:'Próximo tren a San Pablo',pos:{x:-17.6,y:0,z:-6.75},yaw:0,anden:1,dest:'San Pablo',prox:'La Moneda',
-  amb:[],cont:['Hay un retraso en la Línea 1. Te conviene esperar el próximo: viene en camino.','Si vas apurado, aquí mismo combinas con la Línea 3.','Vía te avisa por WhatsApp apenas se normalice.']},
+  amb:[],cont:['Hay un retraso en la Línea 1. Te conviene esperar el próximo: viene en camino.','Si vas apurado, {combina}.','Vía te avisa por WhatsApp apenas se normalice.']},
  {id:'a2',n:'Vía · Andén 2',linea:'Próximo tren a Los Dominicos',pos:{x:-17.6,y:0,z:6.75},yaw:Math.PI,anden:2,dest:'Los Dominicos',prox:'Santa Lucía',
-  amb:[],cont:['Hay un retraso en la Línea 1. Te conviene esperar el próximo: viene en camino.','Si vas apurado, aquí mismo combinas con la Línea 3.','Vía te avisa por WhatsApp apenas se normalice.']},
+  amb:[],cont:['Hay un retraso en la Línea 1. Te conviene esperar el próximo: viene en camino.','Si vas apurado, {combina}.','Vía te avisa por WhatsApp apenas se normalice.']},
  {id:'comp',n:'Vía · Acompañante',linea:'Acompaña a quien lo necesite, a su ritmo',pos:{x:9.9,y:YM,z:5.6},yaw:Math.PI/2,
   saludo:'Hola. Acompaño a quien necesite ayuda para llegar al andén.',amb:['Si necesitas el ascensor, te acompaño.'],
   cont:['Hay retraso en la Línea 1: si necesitas ayuda, te acompaño mientras tanto.']}];
 ROLES.forEach(r=>{r.frases=r.amb;r.mod='Vía by Hapee';});
 function saludoHora(){let h=12;try{h=+new Intl.DateTimeFormat('es-CL',{timeZone:'America/Santiago',hour:'2-digit',hour12:false}).format(new Date());}catch(e){}return h<12&&h>=5?'¡Buenos días!':h<20&&h>=12?'¡Buenas tardes!':'¡Buenas noches!';}
-function lineaAnden(r){const p=proxTren(r.anden);if(CONT.on)return pick(r.cont);if(p.en)return 'Este tren va a '+r.dest+'. Próxima estación: '+r.prox+'.';if(p.llegando||p.s<35)return 'Ya viene el tren a '+r.dest+'. Detrás de la línea amarilla.';
+// frases de contingencia según la estación: la combinación sólo donde existe
+function contDe(ag){const c=COMBINA[estN()];const l=ag.cont.filter(t=>c||t.indexOf('{combina}')<0).map(t=>t.replace('{combina}','aquí mismo combinas con la '+c));return l.length?l:['Hay un retraso en la Línea 1. Vía te avisa por WhatsApp apenas se normalice.'];}
+function lineaAnden(r){const p=proxTren(r.anden);if(CONT.on)return pick(contDe(r));const fin=proxDe(EST,r.anden)<0;if(fin&&(p.en||p.llegando))return 'Estación terminal: este tren termina aquí.';if(p.en)return 'Este tren va a '+r.dest+'. '+txtProxEst(r.anden)+'.';if(p.llegando||p.s<35)return 'Ya viene el tren a '+r.dest+'. Detrás de la línea amarilla.';
  const m=minutos(p.s);return 'El próximo a '+r.dest+' llega en '+m+(m===1?' minuto.':' minutos.');}
 function arrancaRobots(){ROLES.forEach(r=>nuevoBot(r,r.pos,r.yaw));unaPasada(scene);compilaComposer();$('#load').textContent='Vía en su puesto';}
 const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
@@ -1197,7 +1487,7 @@ gltfLoader.load('assets/rig/hapee-rig-d.glb',gltf=>{RIG=gltf.scene;RIG.traverse(
 
 /* ══ BURBUJAS ══ */
 const bubLayer=$('#burbujas'),V3=new THREE.Vector3();const HABLAN=new Set();
-function decir(e,txt,ms,clase){if(e.bub)e.bub.remove();const el=document.createElement('div');el.className='bub '+(clase||'');el.innerHTML=(e.ag?'<b>'+e.ag.n+'</b>':'')+txt.replace(/</g,'&lt;');bubLayer.appendChild(el);requestAnimationFrame(()=>el.classList.add('on'));e.bub=el;e.bubHasta=performance.now()+(ms||6000);HABLAN.add(e);if(e.ag)beep(660,.05);}
+function decir(e,txt,ms,clase){if(e.bub)e.bub.remove();const el=document.createElement('div');el.className='bub '+(clase||'');el.innerHTML=(e.ag?'<b>'+e.ag.n+'</b>':clase==='noti'?'<b>Vía</b>':'')+txt.replace(/</g,'&lt;');bubLayer.appendChild(el);requestAnimationFrame(()=>el.classList.add('on'));e.bub=el;e.bubHasta=performance.now()+(ms||6000);HABLAN.add(e);if(e.ag)beep(660,.05);}
 function decirP(p,txt,ms){decir(p,txt,ms,'per');}
 function proyecta(){const now=performance.now();HABLAN.forEach(e=>{if(!e.bub){HABLAN.delete(e);return;}if(now>e.bubHasta||(e.on===false)){e.bub.remove();e.bub=null;HABLAN.delete(e);return;}
  let y0;if(e.m){const head=e.rig&&e.rig.head;if(head)head.getWorldPosition(V3);else{e.m.getWorldPosition(V3);V3.y+=1.4;}V3.y+=.62;y0=e.m.position.y;}else{V3.set(e.x,e.y+e.h+.28,e.z);y0=e.y;}
@@ -1226,7 +1516,7 @@ function planContingencia(b){const r=b.ag,s=sideZ(r.anden);const esperan=PERS.fi
  const sig=()=>{if(!CONT.on||k>=pasos.length){irRobot(b,rutaRobotAnden(s,b.m.position.x,b.home.x,b.home.z),1.25,()=>{b.contingencia=false;b.yawObj=b.home.yaw;});return;}
   const p=pasos[k];const tx=Math.max(-37,Math.min(37,p.x+(p.x<b.m.position.x?1.1:-1.1))),tz=s*Math.min(6.9,Math.max(4.3,Math.abs(p.z)+.2));
   const ruta=rutaRobotAnden(s,b.m.position.x,tx,tz);
-  irRobot(b,ruta,1.3,()=>{hablaRobot(b,r.cont[k%r.cont.length],k===1?'point':'talk',p,6400);if(p.estado==='espera'&&Math.random()<.7)p.cel=true;k++;setTimeout(sig,6800);});};
+  irRobot(b,ruta,1.3,()=>{{const cl=contDe(r);hablaRobot(b,cl[k%cl.length],k===1?'point':'talk',p,6400);}if(p.estado==='espera'&&Math.random()<.7)p.cel=true;k++;setTimeout(sig,6800);});};
  sig();}
 
 /* ── escena del acompañante: una persona mayor, del Punto Vía al andén 2 por la puerta ancha y el ascensor ── */
@@ -1258,7 +1548,7 @@ function escoltaPaso(dt){const b=botRol('comp');if(!b)return;const v=ESC.viejo;
   case 'baja':v.y=ASCN.y;bp.y=ASCN.y;b.enCabina=true;anim(b,'idle');break;
   case 'sale':acompaña();if(!v.ruta.length){const banca=BANCAS.find(q=>Math.abs(q.x-6.72)<.1&&q.s>0);if(banca&&banca.libre){banca.libre=false;v.banca=banca;v.ruta=[{x:banca.x,z:banca.z,y:0,sienta:true}];v.destino='espera';v.ultimo=null;}
     else{v.destino='espera';v.ruta=[];}v.estado='camina';ESC.fase='despide';ESC.t=tsEsc;}break;
-  case 'despide':if(tsEsc-ESC.t<1.2){acompaña();break;}if(!ESC.dijo){ESC.dijo=true;const r=lineaAnden({anden:2,dest:'Los Dominicos',prox:'Santa Lucía',cont:['Hay retraso, pero el próximo viene en camino. Aquí lo espera tranquilo.']});hablaRobot(b,'Llegamos. '+r,'talk',v,6200);}
+  case 'despide':if(tsEsc-ESC.t<1.2){acompaña();break;}if(!ESC.dijo){ESC.dijo=true;const r=lineaAnden({anden:2,dest:'Los Dominicos',cont:['Hay retraso, pero el próximo viene en camino. Aquí lo espera tranquilo.']});hablaRobot(b,'Llegamos. '+r,'talk',v,6200);}
    if(tsEsc-ESC.t>7){ESC.dijo=false;ESC.fase='vuelve';irRobot(b,[{x:3.95,z:7.4}],1.1,()=>{b.estado='escolta';ESC.fase='sube';ascAbrir(ASCN);ascLuego(ASCN,()=>{irRobot(b,[{x:2.1,z:7.6}],.8,()=>{b.estado='escolta';b.enCabina=true;ascCerrar(ASCN);ascIr(ASCN,YM);ascAbrir(ASCN);ascLuego(ASCN,()=>{b.enCabina=false;irRobot(b,[{x:4.1,z:7.6},{x:4.6,z:PUERTA_ANCHA},{x:7.8,z:PUERTA_ANCHA},{x:b.home.x,z:b.home.z}],1.2,()=>{b.yawObj=b.home.yaw;ESC.fase='espera';ESC.prox=tsEsc+40;});});});});});}
    break;
   case 'vuelve':case 'sube':if(b.enCabina){bp.y=ASCN.y;}break;}
@@ -1273,11 +1563,11 @@ function actualizaBots(dt,now){for(let i=0;i<bots.length;i++){const b=bots[i];co
   if(chatCon===b.ag){b.yawObj=ang(P.x-p.x,P.z-p.z);}
   else if(now<b.ocupadoHasta){}
   else{
-   if(dvis<5.2){b.yawObj=ang(P.x-p.x,P.z-p.z);if(!b.saludado){b.saludado=true;const txt=b.ag.anden?lineaAnden(b.ag):(CONT.on?pick(b.ag.cont):b.ag.saludo.replace('{saludo}',saludoHora()));hablaRobot(b,txt,'wave',null,5600);b.yawObj=ang(P.x-p.x,P.z-p.z);}}
+   if(dvis<5.2){b.yawObj=ang(P.x-p.x,P.z-p.z);if(!b.saludado){b.saludado=true;const txt=b.ag.anden?lineaAnden(b.ag):(CONT.on?pick(contDe(b.ag)):b.ag.saludo.replace('{saludo}',saludoHora()));hablaRobot(b,txt,'wave',null,5600);b.yawObj=ang(P.x-p.x,P.z-p.z);}}
    else{if(dvis>8)b.saludado=false;b.yawObj=b.home.yaw;}
    if(now>b.proxFrase){b.proxFrase=now+(CONT.on?9000:13000)+Math.random()*11000;
     let per=null,md=4.6;PERS.forEach(q=>{if(!q.on||Math.abs(q.y-p.y)>1)return;const d=Math.hypot(q.x-p.x,q.z-p.z);if(d<md){md=d;per=q;}});
-    if(per||dvis<8){const txt=CONT.on?pick(b.ag.cont):(b.ag.anden?lineaAnden(b.ag):pick(b.ag.amb));const gesto=/aquí|derecha|izquierda|lado/.test(txt)?'point':'talk';hablaRobot(b,txt,gesto,per||(dvis<8?P:null));}}
+    if(per||dvis<8){const txt=CONT.on?pick(contDe(b.ag)):(b.ag.anden?lineaAnden(b.ag):pick(b.ag.amb));const gesto=/aquí|derecha|izquierda|lado/.test(txt)?'point':'talk';hablaRobot(b,txt,gesto,per||(dvis<8?P:null));}}
    // ayudas puntuales: maleta en los torniquetes, alguien despistado frente al Punto Vía
    if(b.ag.id==='torn'){const q=PERS.find(q=>q.on&&q.maleta&&!q.ayudada&&Math.abs(q.y-YM)<.5&&q.x>TORN+.4&&q.x<TORN+4.2&&Math.abs(q.z-PUERTA_ANCHA)<3);if(q){q.ayudada=true;hablaRobot(b,'Con maleta, mejor por la puerta ancha: aquí al lado.','point',{x:TORN,z:PUERTA_ANCHA},5200);}}
    if(b.ag.id==='qr'){const q=PERS.find(q=>q.on&&q.anden===2&&!q.orientada&&q.estado==='camina'&&Math.abs(q.y-YM)<.5&&Math.hypot(q.x-p.x,q.z-p.z)<3.2&&q.x>p.x);if(q&&Math.random()<.02){q.orientada=true;hablaRobot(b,'¿Vas a Los Dominicos? Andén 2, bajando por aquí.','point',{x:4,z:4},5600);}}}
@@ -1319,14 +1609,14 @@ document.addEventListener('pointerlockchange',function(){locked=document.pointer
 addEventListener('blur',sueltaTeclas);
 document.addEventListener('visibilitychange',function(){if(!document.hidden){last=performance.now();Q.acc=0;Q.n=0;if(AC&&AC.state==='suspended'&&sonido){try{AC.resume();}catch(e){}}return;}sueltaTeclas();if(vozAudio){try{vozAudio.pause();}catch(e){}}if(AC&&AC.state==='running'){try{AC.suspend();}catch(e){}}});
 addEventListener('mousemove',function(e){if(!locked)return;P.yaw-=e.movementX*.0019;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-e.movementY*.0019));});
-addEventListener('mousedown',function(e){if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,#snd,#chat'))return;if(!locked){lock();if(focus)hablar();return;}if(e.button===0&&focus)hablar();});
+addEventListener('mousedown',function(e){if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,#snd,#chat,#wa,#waBtn,#tVer,#stick,#look'))return;if(!locked){lock();if(focusBot)hablar();return;}if(e.button===0&&focus)hablar();});
 addEventListener('keydown',function(e){if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();if(e.code==='KeyC'&&e.shiftKey){if(CONT.on)terminaContingencia();else iniciaContingencia();}});
 addEventListener('keyup',function(e){keys[e.code]=false;});
 function setDPR(r){r=Math.max(.6,Math.min(r,DPR_TOPE));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
 function aplicaNivel(n){nivel=Math.max(0,Math.min(NIVELES.length-1,n));const q=NIVELES[nivel];setDPR(Math.min(q.r,DPR_TOPE));bloom.enabled=q.bloom;smaa.enabled=q.smaa;}
 function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.veces={};Q.alto=0;}
 const Z_ZONA={1:{x:36,z:1.6,y:YC,yaw:Math.PI/2,pitch:-.06},2:{x:14.8,z:.6,y:YM,yaw:Math.PI/2-.22,pitch:-.05},3:{x:-14.6,z:-4.4,y:0,yaw:Math.PI-.95,pitch:-.02},4:{x:-14.6,z:4.4,y:0,yaw:.95,pitch:-.02}};
-function irA(n){if(!window.__hqOn)enter();const z=Z_ZONA[n];P.x=z.x;P.z=z.z;P.y=z.y;P.yaw=z.yaw;P.pitch=z.pitch;marcaZona(true);}
+function irA(n){if(!window.__hqOn)enter();volverUCH();placa(null,null);const z=Z_ZONA[n];P.x=z.x;P.z=z.z;P.y=z.y;P.yaw=z.yaw;P.pitch=z.pitch;marcaZona(true);}
 {const cont=$('#zonas'),bts=[].slice.call(cont.querySelectorAll('button'));
  cont.addEventListener('pointerenter',function(){if(locked&&document.exitPointerLock)document.exitPointerLock();});
  bts.forEach(b=>{b.addEventListener('pointerdown',function(e){e.stopPropagation();e.preventDefault();b.dataset.pd='1';irA(+b.dataset.n);});b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();if(b.dataset.pd){delete b.dataset.pd;return;}irA(+b.dataset.n);});});
@@ -1342,7 +1632,7 @@ if(isTouch){$('#touch').classList.add('on');const st=$('#stick'),knob=st.querySe
  $('#tVer').addEventListener('click',function(){hablar();});document.body.style.cursor='default';}
 function resolver(r){const b0=P.y+.3,b1=P.y+1.75;for(let i=0;i<OBS.length;i++){const o=OBS[i];const y1=o.rampa?o.rampa(P.x):o.y1;if(b1<o.y0||b0>y1)continue;
  const dx=P.x-o.x,dz=P.z-o.z,hw=o.w/2+r,hd=o.d/2+r;if(Math.abs(dx)<hw&&Math.abs(dz)<hd){const px=hw-Math.abs(dx),pz=hd-Math.abs(dz);if(px<pz)P.x+=(dx<0?-1:1)*px;else P.z+=(dz<0?-1:1)*pz;}}
- for(let i=0;i<NP;i++){const q=PERS[i];if(!q.on||Math.abs(q.y-P.y)>1||q.estado==='cabina')continue;const dx=P.x-q.x,dz=P.z-q.z,d=Math.hypot(dx,dz),m=r+.2*(q.h/1.72);if(d<m&&d>1e-4){P.x+=dx/d*(m-d)*.6;P.z+=dz/d*(m-d)*.6;}}}
+ for(let i=0;i<NP;i++){const q=PERS[i];if(!q.on||Math.abs(q.y-P.y)>1||q.estado==='cabina'||q.estado==='viaja')continue;const dx=P.x-q.x,dz=P.z-q.z,d=Math.hypot(dx,dz),m=r+.2*(q.h/1.72);if(d<m&&d>1e-4){P.x+=dx/d*(m-d)*.6;P.z+=dz/d*(m-d)*.6;}}}
 function paso(dx,dz){const ox=P.x,oz=P.z,oy=P.y;let nx=P.x+dx,nz=P.z+dz,y=pisoEn(nx,nz,P.y);
  if(y===y){P.x=nx;P.z=nz;P.y=y;}else{y=pisoEn(nx,P.z,P.y);if(y===y){P.x=nx;P.y=y;}else{y=pisoEn(P.x,nz,P.y);if(y===y){P.z=nz;P.y=y;}}}
  resolver(.26);const y2=pisoEn(P.x,P.z,P.y);if(y2===y2)P.y=y2;else{P.x=ox;P.z=oz;P.y=oy;}}
@@ -1350,29 +1640,34 @@ function paso(dx,dz){const ox=P.x,oz=P.z,oy=P.y;let nx=P.x+dx,nz=P.z+dz,y=pisoEn
 /* ══ CHAT CON VÍA ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
 function sistema(ag){return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Acompañas al pasajero en tiempo real, con foco especial en los momentos de contingencia (un tren detenido, un desvío o un cambio de servicio). Eres un solo cerebro para toda la red: el mismo asistente vive en la app, en WhatsApp y en un punto QR físico en la estación (touchpoint vía Linkd). '+
- 'Ahora hablas con una persona dentro de una demo 3D de la estación Universidad de Chile, Línea 1, como el robot «'+ag.n+'». Andén 1: dirección San Pablo (próxima estación La Moneda). Andén 2: dirección Los Dominicos (próxima estación Santa Lucía; Baquedano queda a tres estaciones: Santa Lucía, Universidad Católica y Baquedano). Esta estación combina con la Línea 3. En la mesanina están el Punto de carga bip!, dos máquinas de autoservicio, los torniquetes con una puerta ancha accesible y un ascensor junto a cada escalera; la salida es por la escalera ancha a la Alameda. '+
- (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1: puedes sugerir esperar el próximo tren o, si la persona va apurada, combinar con la Línea 3 en esta misma estación, y ofrecer avisarle por WhatsApp. ':'En esta escena simulada el servicio funciona con normalidad. ')+
+ 'Ahora hablas con una persona dentro de una demo 3D de la estación '+estN()+', Línea 1, como el robot «'+ag.n+'». Andén 1: dirección San Pablo ('+txtProxEst(1).toLowerCase()+'). Andén 2: dirección Los Dominicos ('+txtProxEst(2).toLowerCase()+'). Orden de la Línea 1, de poniente a oriente: '+L1.join(', ')+'. '+(COMBINA[estN()]?'Esta estación combina con la '+COMBINA[estN()]+'. ':'')+'Sólo afirma estas combinaciones: Los Héroes con Línea 2, Universidad de Chile con Línea 3 y Baquedano con Línea 5. En la mesanina están el Punto de carga bip!, dos máquinas de autoservicio, los torniquetes con una puerta ancha accesible y un ascensor junto a cada escalera; la salida es por la escalera ancha a la Alameda. '+
+ (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1: puedes sugerir esperar el próximo tren'+(COMBINA[estN()]?' o, si la persona va apurada, combinar con la '+COMBINA[estN()]+' en esta misma estación':'')+', y ofrecer avisarle por WhatsApp. ':'En esta escena simulada el servicio funciona con normalidad. ')+
  'Responde en español de Chile, cercano y concreto, en máximo dos frases cortas. Nunca inventes horarios, frecuencias ni estados reales del servicio: si no lo sabes, di que en una implementación real lo leerías de los feeds de estado de la operación. No uses markdown ni emojis.';}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 function robotCercano(max){let md=max,b0=null;for(const b of bots){if(!b.m.visible||Math.abs(b.m.position.y-P.y)>2.6)continue;const d=Math.hypot(b.m.position.x-P.x,b.m.position.z-P.z);if(d<md){md=d;b0=b;}}return b0;}
-function hablar(){let b=focusBot||robotCercano(4.2);if(!b)return;const ag=b.ag;chatCon=ag;historial=[];
+// E / clic / botón táctil: conversar con un robot, escanear un QR, subir o bajar del tren
+let _ultHablar=0;
+function hablar(){const ahora=performance.now();if(ahora-_ultHablar<450)return;_ultHablar=ahora;if(focusBot)return hablarBot(focusBot);const acc=focusAcc;
+ if(acc){if(acc.tipo==='qr')return abrirWA(acc.q);if(acc.tipo==='subir')return subirTren(acc.pc);if(acc.tipo==='bajar')return bajarTren();if(acc.tipo==='termina')return;}
+ if(VIAJE.on)return abrirWA(null);const b=robotCercano(4.2);if(b)hablarBot(b);}
+function hablarBot(b){if(!b||VIAJE.on)return;if(chatCon===WA_AG)cerrarWA();const ag=b.ag;chatCon=ag;historial=[];
  if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
- $('#chN').textContent='Vía';$('#chM').textContent=ag.n.replace('Vía · ','')+' · Estación Universidad de Chile';chMsgs.innerHTML='';chChips.innerHTML='';$('#chEst').textContent='Vía by Hapee · demo';
+ $('#chN').textContent='Vía';$('#chM').textContent=ag.n.replace('Vía · ','')+' · Estación '+estN();chMsgs.innerHTML='';chChips.innerHTML='';$('#chEst').textContent='Vía by Hapee · demo';
  ['¿Cómo llego a Baquedano?','¿Hay retrasos?','¿Dónde cargo mi bip!?'].forEach(q=>{const bt=document.createElement('button');bt.type='button';bt.textContent=q;bt.onclick=()=>preguntar(q);chChips.appendChild(bt);});
  $('#chat').classList.add('on');$('#placard').classList.remove('on');document.body.classList.add('chateando');
  const saludo=CONT.on?'Hola, soy Vía. Ojo: en esta escena hay un retraso de ejemplo en la Línea 1. ¿Para dónde vas?':'Hola, soy Vía. ¿Para dónde vas? Te acompaño en todo el viaje.';
  msg('bot',saludo);decir(b,saludo,5200);anim(b,'talk');hablarVoz(saludo,b);
  setTimeout(()=>{if(!isTouch)chIn.focus();},50);}
-function cerrarChat(){pararVoz();chatCon=null;$('#chat').classList.remove('on');$('#chat').style.bottom='';document.body.classList.remove('chateando');chIn.blur();}
+function cerrarChat(){if(chatCon===WA_AG){cerrarWA();return;}pararVoz();chatCon=null;focusKey='';$('#chat').classList.remove('on');$('#chat').style.bottom='';document.body.classList.remove('chateando');chIn.blur();}
 $('#chX').addEventListener('click',cerrarChat);
 $('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t);});
 function guionVia(t){t=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
- if(/baquedano/.test(t))return 'Baja al Andén 2, dirección Los Dominicos. Son tres estaciones: Santa Lucía, Universidad Católica y Baquedano.';
- if(/retras|demora|atras|contingenc|falla|problema|detenid|desvi|estado/.test(t))return CONT.on?'En esta escena hay un retraso de ejemplo en la Línea 1: te conviene esperar el próximo, que viene en camino, o combinar aquí con la Línea 3 si vas apurado. En una implementación real lo leería de los feeds de la operación y te avisaría por WhatsApp.':'Desde esta demo no tengo conexión con la operación, así que no puedo confirmarte el estado real. En una implementación real lo leería de los feeds de estado del servicio y te avisaría por WhatsApp si algo cambia.';
+ {const d=estacionEn(t);if(d>=0&&d!==EST&&!/combin|linea [2-6]/.test(t))return rutaA(d,t);}
+ if(/retras|demora|atras|contingenc|falla|problema|detenid|desvi|estado/.test(t))return CONT.on?'En esta escena hay un retraso de ejemplo en la Línea 1: te conviene esperar el próximo, que viene en camino'+(COMBINA[estN()]?', o combinar aquí con la '+COMBINA[estN()]+' si vas apurado':'')+'. En una implementación real lo leería de los feeds de la operación y te avisaría por WhatsApp.':'Desde esta demo no tengo conexión con la operación, así que no puedo confirmarte el estado real. En una implementación real lo leería de los feeds de estado del servicio y te avisaría por WhatsApp si algo cambia.';
  if(/bip|carg|recarg|saldo|tarjeta/.test(t))return 'Aquí mismo en la mesanina, antes de los torniquetes: en el Punto de carga bip! o en las dos máquinas de autoservicio que están al lado.';
- if(/san pablo|la moneda|los heroes|poniente/.test(t))return 'Para San Pablo es el Andén 1: pasando los torniquetes, la escalera de la derecha. La próxima estación es La Moneda.';
- if(/dominicos|oriente|santa lucia|catolica|tobalaba/.test(t))return 'Para Los Dominicos es el Andén 2: pasando los torniquetes, la escalera de la izquierda. La próxima estación es Santa Lucía.';
- if(/linea 3|l3|combin/.test(t))return 'Esta estación combina con la Línea 3. En la operación real te guiaría por el pasillo de combinación con la información oficial.';
+ if(/poniente/.test(t))return 'Hacia el poniente es el Andén 1, dirección San Pablo: pasando los torniquetes, la escalera de la derecha. '+txtProxEst(1)+'.';
+ if(/oriente/.test(t))return 'Hacia el oriente es el Andén 2, dirección Los Dominicos: pasando los torniquetes, la escalera de la izquierda. '+txtProxEst(2)+'.';
+ if(/linea [2-6]|l[2-6]\b|combin/.test(t))return textoCombina();
  if(/ascensor|silla|movilidad|maleta|coche|accesib/.test(t))return 'Por la puerta ancha de los torniquetes y luego el ascensor, junto a cada escalera. Si quieres, te acompaño.';
  if(/salida|alameda|calle|salir/.test(t))return 'La salida a la Alameda es por la escalera ancha del extremo oriente de la mesanina.';
  if(/horario|hora|cierra|abre|frecuencia|cada cuanto/.test(t))return 'No quiero darte un horario inventado: en una implementación real lo leería de la información oficial de la operación.';
@@ -1387,6 +1682,124 @@ async function preguntar(texto){const ag=chatCon;if(!ag)return;msg('yo',texto);h
  if(!resp)resp=guionVia(texto);
  if(chatCon!==ag)return;esp.remove();msg('bot',resp);historial.push({role:'assistant',content:resp});$('#chEst').textContent=viaIA?'Respondió Vía con IA':'Respuesta guionada de la demo';
  if(b){anim(b,'talk');decir(b,resp.length>150?resp.slice(0,147)+'…':resp,Math.min(12000,3000+resp.length*45));}hablarVoz(resp,b);}
+/* ══ RUTAS POR LA LÍNEA 1 ══ (respuestas guionadas: cuentan estaciones, nunca inventan minutos reales) */
+const normT=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const L1N=L1.map(normT);
+const ALIAS=[['gam','Universidad Católica'],['plaza italia','Baquedano'],['usach','Universidad de Santiago'],['u de chile','Universidad de Chile'],['uchile','Universidad de Chile'],['moneda','La Moneda'],['catolica','Universidad Católica'],['heroes','Los Héroes'],['lucia','Santa Lucía'],['dominicos','Los Dominicos'],['magallanes','Hernando de Magallanes'],['militar','Escuela Militar'],['leones','Los Leones'],['valdivia','Pedro de Valdivia'],['montt','Manuel Montt'],['ula','Unión Latinoamericana']];
+function estacionEn(t){t=normT(t);let best=-1,bl=0;L1N.forEach((n,i)=>{if(t.includes(n)&&n.length>bl){bl=n.length;best=i;}});
+ if(best<0)for(const al of ALIAS){if(new RegExp('\\b'+al[0]+'\\b').test(t)){best=L1.indexOf(al[1]);break;}}return best;}
+const listaY=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' y '+a[a.length-1];
+const proxNom=a=>{const j=proxDe(EST,a);return j<0?'estación terminal':'próxima: '+L1[j];};
+// dónde está la persona: en marcha, la referencia es la estación a la que todavía no llega
+function posRef(){const T=VIAJE;if(T.on&&T.tr){const tr=T.tr;if(T.fase==='tunel'||tr.fase==='sale'){const j=proxDe(EST,tr.anden);return {cur:j>=0?j:EST,a:tr.anden,tren:true,mov:true};}
+  return {cur:EST,a:tr.anden,tren:true,mov:tr.fase==='llega'};}return {cur:EST,a:0,tren:false,mov:false};}
+function rutaA(dest,t){t=normT(t);const R=posRef(),cur=R.cur,nom=L1[dest];const nota=/cuant|demor|tiempo|tard|minut/.test(t)?' En una implementación real te daría el tiempo estimado con los datos de la operación.':'';
+ const comb=COMBINA[nom]?' Ahí combinas con la '+COMBINA[nom]+'.':'';
+ if(dest===cur&&!R.mov)return 'Ya estás en '+nom+'.'+comb;
+ const a=dest>cur?2:dest<cur?1:R.a,paso=a===2?1:-1;
+ if(R.tren&&R.a===a){const e=[];for(let k=R.mov?cur:cur+paso;a===2?k<=dest:k>=dest;k+=paso)e.push(L1[k]);const n=e.length;
+  if(n===1)return 'Es la próxima estación: '+nom+'. Bájate ahí.'+comb+nota;
+  return 'Vas bien: '+nom+' está a '+n+' estaciones ('+(n<=4?listaY(e):'pasando por '+e[0]+' y '+e[1])+').'+comb+nota;}
+ const n=Math.abs(dest-cur);
+ if(R.tren)return 'Vas en dirección '+dirDe(R.a)+' y '+nom+' queda para el otro lado. Bájate en '+(R.mov?L1[cur]:'esta estación')+' y toma el Andén '+a+', dirección '+dirDe(a)+': desde ahí '+(n===1?'es una estación.':'son '+n+' estaciones.')+comb+nota;
+ const e=[];for(let k=cur+paso;a===2?k<=dest:k>=dest;k+=paso)e.push(L1[k]);
+ return 'Toma el Andén '+a+', dirección '+dirDe(a)+'. '+(n===1?'Es la próxima estación.':'Son '+n+' estaciones'+(n<=4?': '+listaY(e):'')+'.')+comb+nota;}
+function textoCombina(){const c=COMBINA[estN()];return c?'En '+estN()+' combinas con la '+c+'. En la operación real te guiaría por el pasillo de combinación con la información oficial.':'En esta demo te confirmo las combinaciones de Los Héroes (Línea 2), Universidad de Chile (Línea 3) y Baquedano (Línea 5); las demás te las diría con la información oficial.';}
+function trenTxt(){if(VIAJE.on){const tr=VIAJE.tr;return 'Ya vas en el tren a '+dirDe(tr.anden)+'. '+(VIAJE.a>=0?'La próxima estación es '+L1[VIAJE.a]+'.':'Este tren termina en esta estación.');}
+ const f=a=>{if(proxDe(EST,a)<0)return null;const p=proxTren(a);if(p.en)return 'el tren a '+dirDe(a)+' está en el andén';if(p.llegando||p.s<35)return 'el tren a '+dirDe(a)+' ya viene llegando';const m=minutos(p.s);return 'el próximo a '+dirDe(a)+' llega en '+m+(m===1?' minuto':' minutos');};
+ const a=WA.punto&&WA.punto.anden;const l=(a?[f(a)]:[f(1),f(2)]).filter(Boolean);
+ return 'En esta simulación, '+(l.length?l.join(' y '):'esta es la estación terminal')+'. En una implementación real lo leería del estado de la operación.'+(CONT.on?' Ojo: hay un retraso de ejemplo en la Línea 1.':'');}
+
+/* ══ CHAT ESTILO WHATSAPP ══ simulación: Vía responde por /api/chat con el contexto del viaje o, si falla, con guion */
+const WA_AG={id:'wa',n:'Vía by Hapee',linea:''};
+const WA={on:false,hist:[],esperando:false,punto:null,meta:-1,avisar:false,dia:false,ultDest:-1};
+const waMsgs=$('#waMsgs'),waIn=$('#waIn'),waChips=$('#waChips');
+const CHECK='<svg viewBox="0 0 18 11" width="16" height="11" aria-hidden="true"><path d="M1 6.2l3 3 6.2-7.4M7.2 9.2l1 1 6.4-7.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function waScroll(){waMsgs.scrollTop=waMsgs.scrollHeight;}
+function waPoda(){while(waMsgs.children.length>90)waMsgs.removeChild(waMsgs.firstChild);}
+function waMsg(rol,txt){const d=document.createElement('div');d.className='wm '+rol;const t=document.createElement('span');t.textContent=txt;d.appendChild(t);const m=document.createElement('span');m.className='wt';m.innerHTML=horaSantiago()+(rol==='out'?' <i class="ck">'+CHECK+'</i>':'');d.appendChild(m);
+ if(waTyping&&waTyping.parentNode)waMsgs.insertBefore(d,waTyping);else waMsgs.appendChild(d);waPoda();waScroll();return d;}
+function waSis(txt,aviso){const d=document.createElement('div');d.className='wsys'+(aviso?' aviso':'');d.textContent=txt;waMsgs.appendChild(d);waPoda();waScroll();return d;}
+function waAccion(txt,fn){waMsgs.querySelectorAll('.wact button').forEach(b=>b.disabled=true);const d=document.createElement('div');d.className='wact';const b=document.createElement('button');b.type='button';b.textContent=txt;
+ b.addEventListener('click',function(e){e.stopPropagation();if(b.disabled)return;b.disabled=true;fn();});d.appendChild(b);waMsgs.appendChild(d);waScroll();if(!WA.on)$('#waBtn').classList.add('nuevo');return b;}
+let waTyping=null;
+function waEscribe(on){$('#waEst').textContent=on?'escribiendo…':'en línea';if(on&&!waTyping){waTyping=document.createElement('div');waTyping.className='wm in wesc';waTyping.innerHTML='<i></i><i></i><i></i>';waMsgs.appendChild(waTyping);waScroll();}if(!on&&waTyping){waTyping.remove();waTyping=null;}}
+function waHist(rol,txt){const h=WA.hist;if(h.length&&h[h.length-1].role===rol)h[h.length-1].content+='\n'+txt;else h.push({role:rol,content:txt});if(h.length>16)h.splice(0,h.length-16);}
+function waBot(txt,demora){const va=()=>{if(!WA.esperando)waEscribe(false);waMsg('in',txt);waHist('assistant',txt);if(!WA.on)$('#waBtn').classList.add('nuevo');};if(demora===0){va();return;}waEscribe(true);setTimeout(va,demora||750);}
+function waChipsSet(l){waChips.innerHTML='';l.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',function(e){e.stopPropagation();waPreguntar(q);});waChips.appendChild(b);});waChips.scrollLeft=0;}
+function chipsActuales(){if(VIAJE.on)return QR_TREN.chips;return WA.punto&&WA.punto.chips?WA.punto.chips:['¿Cómo llego a Baquedano?','¿Hay retrasos?','¿Dónde cargo mi bip!?'];}
+function saludoQR(q){const ojo=CONT.on?' Ojo: en esta simulación hay un retraso de ejemplo en la Línea 1.':'';
+ switch(q.id){case 'acceso':return 'Hola, soy Vía. Estás en el acceso de '+estN()+'. ¿Para dónde vas?'+ojo;
+  case 'boleteria':return 'Hola, soy Vía. Aquí al lado está el Punto de carga bip!. ¿Te ayudo con tu tarjeta o con tu viaje?'+ojo;
+  case 'torniquetes':return 'Hola, soy Vía. Si la bip! no te pasa, te ayudo; con maleta o coche, usa la puerta ancha.'+ojo;
+  case 'bajada':return 'Hola, soy Vía. El Andén 1 va a San Pablo y el Andén 2 a Los Dominicos. ¿Para dónde vas?'+ojo;
+  case 'anden1':case 'anden2':return 'Hola, soy Vía. Estás en el Andén '+q.anden+', dirección '+dirDe(q.anden)+' ('+proxNom(q.anden)+'). ¿Te aviso cuando venga tu tren?'+ojo;
+  case 'tren':return 'Hola, soy Vía. Vas en dirección '+dirDe(VIAJE.tr?VIAJE.tr.anden:2)+'. ¿En qué te ayudo durante el viaje?'+ojo;
+  default:return 'Hola, soy Vía. ¿Para dónde vas? Te acompaño en todo el viaje.'+ojo;}}
+function abrirWA(q){if(chatCon&&chatCon!==WA_AG)cerrarChat();
+ chatCon=WA_AG;WA.on=true;if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
+ $('#wa').classList.add('on');$('#placard').classList.remove('on');document.body.classList.add('chateando');$('#waBtn').classList.remove('on','nuevo');
+ if(!WA.dia){WA.dia=true;waSis('HOY');waSis('Simulación de chat: nada de esto se envía a un número real.');}
+ if(q){if(q.id!=='tren')WA.punto=q;waSis(q.id==='tren'?'Escaneaste el QR del tren':'Escaneaste el QR · '+q.corto);beep(880,.06);waBot(saludoQR(q),650);waChipsSet(q.chips);}
+ else waChipsSet(chipsActuales());
+ setTimeout(()=>{if(!isTouch&&WA.on)waIn.focus();},60);}
+function cerrarWA(){if(!WA.on)return;WA.on=false;focusKey='';if(chatCon===WA_AG)chatCon=null;$('#wa').classList.remove('on');document.body.classList.remove('chateando');waIn.blur();if(VIAJE.on)$('#waBtn').classList.add('on');}
+$('#waX').addEventListener('click',function(e){e.stopPropagation();cerrarWA();});
+$('#waBtn').addEventListener('click',function(e){e.stopPropagation();abrirWA(null);});
+$('#waForm').addEventListener('submit',function(e){e.preventDefault();const t=waIn.value.trim();if(!t)return;waIn.value='';waPreguntar(t);});
+function sistemaWA(){const T=VIAJE;let ctx;
+ if(T.on&&T.tr){const tr=T.tr;ctx='La persona va arriba de un tren de la Línea 1, dirección '+dirDe(tr.anden)+'. '+(tr.fase==='parado'?'El tren está detenido en '+estN()+' con las puertas abiertas. ':'Va entre '+L1[T.de]+' y '+(T.a>=0?L1[T.a]:'el final del recorrido')+'. ');}
+ else ctx='La persona está en la estación '+estN()+(WA.punto?', junto al punto QR «'+WA.punto.corto+'»':'')+'. ';
+ return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Esta conversación es una simulación de chat estilo WhatsApp dentro de una demo 3D: el mismo asistente vive en la app de Metro, en WhatsApp y en los puntos QR de las estaciones. '+ctx+
+  'Línea 1, de poniente a oriente: '+L1.join(', ')+'. El Andén 1 va hacia San Pablo y el Andén 2 hacia Los Dominicos. Sólo afirma estas combinaciones: Los Héroes con Línea 2, Universidad de Chile con Línea 3 y Baquedano con Línea 5; cualquier otra la confirmarías con la información oficial. El GAM queda junto a la estación Universidad Católica. '+
+  (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1. ':'En esta escena simulada el servicio funciona con normalidad. ')+
+  'Responde en español de Chile, cercano y concreto, en máximo dos frases cortas, como en WhatsApp. Puedes contar estaciones, pero nunca inventes minutos, horarios ni frecuencias reales: si preguntan cuánto se demora, di cuántas estaciones son y que en una implementación real darías el tiempo estimado con los datos de la operación. No uses markdown ni emojis.';}
+function guionWA(texto){const t=normT(texto),R=posRef(),d=estacionEn(t);if(d>=0)WA.ultDest=d;
+ const adelante=x=>VIAJE.on&&x>=0&&(VIAJE.tr.anden===2?x>EST:x<EST);
+ if(/avis/.test(t)&&!/whatsapp|\bapp\b/.test(t)){const m=d>=0?d:adelante(WA.ultDest)?WA.ultDest:(VIAJE.on?(R.mov?R.cur:proxDe(EST,VIAJE.tr.anden)):-1);WA.avisar=true;WA.meta=m;
+  if(!VIAJE.on)return 'Listo. Cuando subas al tren, te aviso por aquí antes de llegar'+(m>=0?' a '+L1[m]:' a tu estación')+'.';
+  return m<0?'Este tren termina aquí: te aviso cuando subas al próximo.':'Listo: te aviso por aquí cuando lleguemos a '+L1[m]+'.';}
+ if(/\bgam\b/.test(t)){const uc=L1.indexOf('Universidad Católica');return 'El GAM queda junto a la estación Universidad Católica. '+rutaA(uc,t);}
+ if(/retras|atras|contingenc|falla|problema|detenid|desvi|estado del servicio|funcionando/.test(t))return CONT.on?'En esta simulación hay un retraso de ejemplo en la Línea 1: '+(VIAJE.on?'el tren puede detenerse un momento entre estaciones, pero sigue su recorrido.':'te conviene esperar el próximo, que viene en camino.'+(COMBINA[estN()]?' Si vas apurado, aquí combinas con la '+COMBINA[estN()]+'.':''))+' Te aviso por aquí apenas se normalice.':'En esta simulación el servicio va normal. En una implementación real lo leería de los feeds de estado de la operación y te avisaría por aquí si algo cambia.';
+ if(d>=0&&!/combin|linea [2-6]/.test(t))return rutaA(d,t);
+ if(/cuanto falta|proximo tren|cuando (viene|llega|pasa)|demora el tren|falta para el tren/.test(t))return trenTxt();
+ if(/ascensor|silla|movilidad|accesib/.test(t))return 'En esta estación de la demo hay un ascensor junto a cada escalera, entre la mesanina y los andenes, y una puerta ancha en los torniquetes. Qué accesos de calle tienen ascensor te lo diría con la información oficial.';
+ if(/maleta|coche|bulto|bicicleta/.test(t))return 'Con maleta o coche, pasa por la puerta ancha de los torniquetes, al costado. Para bajar al andén, usa el ascensor junto a cada escalera.';
+ if(/saldo/.test(t))return 'Puedes consultar tu saldo en las máquinas de autoservicio de la mesanina, antes de los torniquetes, o en el Punto de carga bip!.';
+ if(/bip|carg|recarg|tarjeta/.test(t))return 'En la mesanina, antes de los torniquetes: en el Punto de carga bip! o en las máquinas de autoservicio de al lado.';
+ if(/que anden|cual anden|anden me sirve|que lado/.test(t))return 'El Andén 1 va a San Pablo ('+proxNom(1)+') y el Andén 2 a Los Dominicos ('+proxNom(2)+'). ¿Para qué estación vas?';
+ if(/combin|linea [2-6]/.test(t))return textoCombina();
+ if(/salida|salir|calle/.test(t))return 'La salida a la calle es por la escalera ancha del extremo oriente de la mesanina, pasando los torniquetes.';
+ if(/horario|hora|cierra|abre|frecuencia/.test(t))return 'No quiero darte un horario inventado: en una implementación real lo leería de la información oficial de la operación.';
+ if(/quien eres|que eres|como funcionas|whatsapp|\bapp\b/.test(t))return 'Soy Vía, el asistente de viaje con IA de Hapee. Soy el mismo en la app de Metro, en WhatsApp y en los QR de las estaciones, y te aviso si hay contingencias.';
+ if(/gracias|\bok\b|vale|listo/.test(t))return 'De nada. Aquí estoy si necesitas algo más en el viaje.';
+ return VIAJE.on?'Te acompaño en el viaje: pregúntame cuántas estaciones te faltan, dónde bajarte o si hay contingencias.':'Te ayudo a llegar a tu destino, a cargar tu bip! o a enterarte si hay contingencias. ¿Para dónde vas?';}
+const limpiaMd=r=>r.replace(/\*\*(.+?)\*\*/g,'$1').replace(/(^|\s)[*_](\S[^*_]*?)[*_](?=\s|[.,;:!?]|$)/g,'$1$2').replace(/^#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'· ').trim();
+function histAPI(){let h=WA.hist.slice(-10);while(h.length&&h[0].role!=='user')h=h.slice(1);return h;}
+async function waPreguntar(texto){texto=String(texto||'').trim();if(!texto||WA.esperando)return;const out=waMsg('out',texto);setTimeout(()=>out.classList.add('leido'),650);waHist('user',texto);
+ const guion=guionWA(texto);WA.esperando=true;const t0=performance.now();setTimeout(()=>{if(WA.esperando)waEscribe(true);},450);
+ let resp=null,ia=false;
+ try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),9000);
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistemaWA(),messages:histAPI()})});clearTimeout(to);
+  if(r.ok){const j=await r.json();resp=(j.content&&j.content[0]&&j.content[0].text)||null;ia=!!resp;}}catch(e){}
+ if(resp)resp=limpiaMd(resp);if(!resp)resp=guion;
+ const falta=1000-(performance.now()-t0);if(falta>0)await new Promise(r=>setTimeout(r,falta));
+ WA.esperando=false;waEscribe(false);waMsg('in',resp);waHist('assistant',resp);$('#waPie').textContent=ia?'Respondió Vía con IA · simulación':'Respuesta guionada de la demo · simulación';if(!WA.on)$('#waBtn').classList.add('nuevo');}
+// mensajes que Vía manda solo durante el viaje
+function waEvento(tipo){const T=VIAJE,tr=T.tr;
+ if(tipo==='sube'){const a=tr.anden;abrirWA(null);waSis('Subiste en '+estN()+' · Dirección '+dirDe(a));waChipsSet(QR_TREN.chips);
+  waBot('Vas en dirección '+dirDe(a)+'. '+txtProxEst(a)+'. Pregúntame lo que necesites en el viaje.'+(CONT.on?' Ojo: en esta simulación hay un retraso de ejemplo en la Línea 1.':''),700);return;}
+ if(tipo==='llega'){waSis('Llegando a '+estN());const m=WA.meta,c=COMBINA[estN()];
+  if(WA.avisar&&(m<0||m===EST)){WA.avisar=false;WA.meta=-1;waBot('Estamos llegando a '+estN()+'. Prepárate para bajar por la puerta más cercana.'+(c?' Aquí combinas con la '+c+'.':''),400);}
+  else if(WA.avisar&&m>=0){const n=Math.abs(m-EST);waBot('Vamos llegando a '+estN()+'. Para '+L1[m]+' '+(n===1?'falta una estación.':'faltan '+n+' estaciones.'),400);}
+  if(proxDe(EST,tr.anden)<0)waBot(estN()+' es la estación terminal: este tren termina aquí.',1300);return;}
+ if(tipo==='abrio'){waAccion('Bajar en '+estN(),()=>bajarTren());return;}
+ if(tipo==='cierra'){waMsgs.querySelectorAll('.wact button').forEach(b=>b.disabled=true);return;}
+ if(tipo==='baja'){waMsgs.querySelectorAll('.wact button').forEach(b=>b.disabled=true);waSis('Bajaste en '+estN());if(WA.on)setTimeout(()=>{if(WA.on&&!VIAJE.on)cerrarWA();},1200);return;}
+ if(tipo==='paro'){waSis('Tren detenido entre estaciones',true);waBot('El tren se detuvo un momento por la contingencia de esta simulación. Tranquilo: ya retoma la marcha.',500);return;}
+ if(tipo==='retoma'){waBot('Retomamos la marcha hacia '+(T.a>=0?L1[T.a]:'la próxima estación')+'.',300);return;}
+ if(tipo==='cont'){waSis('Aviso de servicio · simulación',true);waBot('Aviso: en esta simulación hay un retraso en la Línea 1. Puede que el tren se detenga un momento entre estaciones; te voy contando por aquí.',600);return;}
+ if(tipo==='normal'){waBot('El servicio de la Línea 1 se está normalizando.',400);}}
 /* voz: sólo en hapee.ai (mismo /api/tts que la oficina); en local el chat sigue en texto */
 const VOZ_ID='lLsDvdl6OjtZfLJPM2HA';const VOZ_ON=/(^|\.)hapee\.ai$/.test(location.hostname);
 let vozAudio=null,vozAnal=null,vozDatos=null,vozBot=null;
@@ -1405,7 +1818,7 @@ function audio(){if(AC){if(AC.state==='suspended'){const pr=AC.resume();if(pr&&p
  TRENES.forEach(()=>{const s2=AC.createBufferSource();s2.buffer=b;s2.loop=true;const f2=AC.createBiquadFilter();f2.type='lowpass';f2.frequency.value=180;const g2=AC.createGain();g2.gain.value=0;s2.connect(f2);f2.connect(g2);g2.connect(AC.destination);s2.start();RUIDO.push({f:f2,g:g2});});}catch(e){}}
 function toggleSonido(){sonido=!sonido;if(sonido)audio();if(humG)humG.gain.value=sonido?.018:0;const b=$('#snd');b.textContent=sonido?'SONIDO · SÍ':'SONIDO · NO';b.classList.toggle('si',sonido);}
 $('#snd').addEventListener('click',function(e){e.stopPropagation();toggleSonido();});
-function sonidoTrenes(){if(!AC||!RUIDO.length)return;TRENES.forEach((tr,i)=>{const R=RUIDO[i];if(!R)return;let g=0;if(sonido&&tr.fase!=='fuera'){const cx=tr.x-tr.dir*TREN_L/2;const d=Math.max(4,Math.abs(cx-P.x)-TREN_L/2)+Math.abs(P.y)*2;g=Math.min(.22,(.02+tr.v*.012)*12/(d+6));}
+function sonidoTrenes(){if(!AC||!RUIDO.length)return;TRENES.forEach((tr,i)=>{const R=RUIDO[i];if(!R)return;let g=0;if(sonido&&VIAJE.on&&tr===VIAJE.tr)g=Math.min(.2,.03+tr.v*.0095);else if(sonido&&tr.fase!=='fuera'){const cx=tr.x-tr.dir*TREN_L/2;const d=Math.max(4,Math.abs(cx-P.x)-TREN_L/2)+Math.abs(P.y)*2;g=Math.min(.22,(.02+tr.v*.012)*12/(d+6));}
  R.g.gain.setTargetAtTime(g,AC.currentTime,.25);R.f.frequency.setTargetAtTime(140+tr.v*28,AC.currentTime,.3);});}
 function sonidoLlegada(){}
 function chime(abre){if(!AC||!sonido||AC.state!=='running'||P.y>4)return;const t=AC.currentTime;(abre?[659,880]:[880,698,523]).forEach((fr,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(.0001,t+i*.32);g.gain.linearRampToValueAtTime(.07,t+i*.32+.02);g.gain.exponentialRampToValueAtTime(.0005,t+i*.32+.6);o.connect(g);g.connect(AC.destination);o.start(t+i*.32);o.stop(t+i*.32+.7);});}
@@ -1420,25 +1833,50 @@ function beep(fr,dur){if(!AC||!sonido||AC.state!=='running')return;const t=AC.cu
 const ZONAS={1:['Acceso','Alameda'],2:['Mesanina','Boletería y torniquetes'],3:['Andén 1','Dirección San Pablo'],4:['Andén 2','Dirección Los Dominicos']};
 function zonaDe(x,y,z){if(y>9.3)return 1;if(x>AC0-.4&&Math.abs(z)<ACZ+.5&&y>5.5)return 1;if(y>5.0)return 2;return z<0?3:4;}
 let zonaAct=0;
-function marcaZona(forzar){const za=zonaDe(P.x,P.y,P.z);if(!forzar&&za===zonaAct)return;zonaAct=za;const el=$('#zona');
+function marcaZona(forzar){const za=VIAJE.on?9:zonaDe(P.x,P.y,P.z);if(!forzar&&za===zonaAct)return;zonaAct=za;const el=$('#zona');
+ if(za===9){const a=VIAJE.tr?VIAJE.tr.anden:2;el.innerHTML='<i></i>En tren<small>'+(CONT.on?'Contingencia simulada':'Dirección '+dirDe(a))+'</small>';document.querySelectorAll('#zonas button').forEach(b=>b.classList.remove('act'));return;}
  el.innerHTML='<i></i>'+ZONAS[za][0]+'<small>'+(CONT.on?'Contingencia simulada':ZONAS[za][1])+'</small>';
  document.querySelectorAll('#zonas button').forEach((b,i)=>b.classList.toggle('act',i===za-1));}
 let forzarVis=false;
-function visZonas(x,y,z){const za=zonaDe(x,y,z);const f=forzarVis;
+function visZonas(x,y,z){if(VIAJE.on&&VIAJE.fase==='tunel'){for(const k in ZG)ZG[k].visible=false;CIELO.visible=false;for(const b of bots)b.m.visible=false;TRENES.forEach(tr=>{tr.g.visible=tr===VIAJE.tr;});return;}
+ const za=zonaDe(x,y,z);const f=forzarVis;
  ZG.calle.visible=f||za===1||(za===2&&x>5);
  ZG.acceso.visible=f||za<=2;
  ZG.mes.visible=f||za===2||za>=3||(za===1&&(x<31||y<10));
  ZG.and.visible=f||za>=3||(za===2&&x<9);
  CIELO.visible=ZG.calle.visible;
  for(const b of bots){const p=b.m.position;const bz=zonaDe(p.x,p.y,p.z);const g=bz===1?(p.y>9.3?ZG.calle:ZG.acceso):bz===2?ZG.mes:ZG.and;b.m.visible=f||(g.visible&&Math.hypot(p.x-x,p.z-z)<46);}
- TRENES.forEach(tr=>{tr.g.visible=f||(ZG.and.visible&&tr.fase!=='fuera');});}
+ TRENES.forEach(tr=>{tr.g.visible=f||(ZG.and.visible&&tr.fase!=='fuera')||(VIAJE.on&&tr===VIAJE.tr);});}
 
 /* ══ LOOP ══ */
 const ray=new THREE.Raycaster(),center=new THREE.Vector2(0,0);
 let focus=null,focusBot=null,last=performance.now(),fc=0;const Q={acc:0,n:0,fps:0,sucio:false,primera:true,alto:0,bajo:{},veces:{},entrada:0};
 const startEl=$('#start'),tVerEl=$('#tVer');
-function placa(b){focusBot=b;focus=b?b.ag:null;$('#dot').classList.toggle('hot',!!b);$('#placard').classList.toggle('on',!!b&&!chatCon);
- if(b){$('#pt').textContent=b.ag.n;$('#ps').textContent=b.ag.linea;$('#pg').textContent=isTouch?'TOCA HABLAR PARA CONVERSAR':'E PARA CONVERSAR';}}
+let focusAcc=null,focusKey='';
+function claveFoco(b,acc){return b?'b'+b.ag.id:acc?acc.tipo+(acc.q?acc.q.id:'')+(acc.pc?acc.pc.a+'-'+acc.pc.k:'')+'@'+EST:'';}
+function placa(b,acc){focusBot=b||null;focusAcc=b?null:(acc||null);focus=b?b.ag:(acc||null);focusKey=claveFoco(b,acc);const on=!!(b||acc);$('#dot').classList.toggle('hot',on);$('#placard').classList.toggle('on',on&&!chatCon);
+ if(!on)return;apagaHint();let t,s_,g,bt='HABLAR';
+ if(b){t=b.ag.n;s_=b.ag.linea;g=isTouch?'TOCA HABLAR PARA CONVERSAR':'E PARA CONVERSAR';}
+ else if(acc.tipo==='qr'){t='Punto QR · '+acc.q.corto;s_='Escanea y habla con Vía';g=isTouch?'TOCA ESCANEAR':'E PARA ESCANEAR';bt='ESCANEAR';}
+ else if(acc.tipo==='subir'){const a=acc.pc.tr.anden;t='Tren a '+dirDe(a);s_=txtProxEst(a);g=isTouch?'TOCA SUBIR':'E PARA SUBIR';bt='SUBIR';}
+ else if(acc.tipo==='termina'){t='Este tren termina aquí';s_='Estación terminal';g='';}
+ else{t='Bajar en '+estN();s_='Puertas abiertas';g=isTouch?'TOCA BAJAR':'E PARA BAJAR';bt='BAJAR';}
+ $('#pt').textContent=t;$('#ps').textContent=s_;$('#pg').textContent=g;$('#pg').style.display=g?'':'none';tVerEl.textContent=bt;}
+// punto QR al frente del visitante (de frente a la placa, no por detrás)
+function qrCerca(){let best=null,bd=1.9;const fx=-Math.sin(P.yaw),fz=-Math.cos(P.yaw);
+ for(const q of QRZ){if(Math.abs(P.y-q.nivel)>.6)continue;const dx=q.x-P.x,dz=q.z-P.z,d=Math.hypot(dx,dz);if(d>bd)continue;if(dx*q.nx+dz*q.nz>0)continue;if(!isTouch&&d>.6&&(dx*fx+dz*fz)/d<.35)continue;bd=d;best=q;}return best;}
+/* ── QR: de vez en cuando alguien se detiene, levanta el celular y le llega la notificación de Vía ── */
+const QRN={prox:9};
+function npcEscanea(){if(tsEsc<QRN.prox)return;let act=0;for(const p of PERS)if(p.on&&p.estado==='escanea')act++;if(act>=2){QRN.prox=tsEsc+2;return;}
+ const cands=[];
+ for(const p of PERS){if(!p.on||p.estado!=='camina'||p.escaneo||p.maleta||p.viejo||p.niño||p.lleva||p.sigue||p.abordando||p.escolta||p.duda||!p.ruta.length||p.ruta[0].qr||p.ruta[0].monta)continue;
+  for(const q of QRS){if(!q.npc||Math.abs(p.y-q.nivel)>.4)continue;const d=Math.hypot(p.x-q.pie.x,p.z-q.pie.z);if(d<(q.id==='boleteria'?3.8:2.6)&&d>.5){cands.push([p,q]);break;}}}
+ if(cands.length){const c=pick(cands),p=c[0],q=c[1];p.escaneo=true;p.ruta.unshift({x:q.pie.x+(Math.random()-.5)*.3,z:q.pie.z+(Math.random()-.5)*.3,y:q.nivel,qr:q});QRN.prox=tsEsc+5+Math.random()*6;return;}
+ // en los andenes: alguien que espera se acerca a leer el QR de su andén y vuelve a su lugar
+ const ws=PERS.filter(p=>p.on&&p.estado==='espera'&&!p.escaneo&&!p.niño&&!p.lleva&&!p.viejo&&!p.mirandoTren&&!p.banca&&p.y<.5&&p.dx!==undefined);
+ for(let k=0;k<4&&ws.length;k++){const p=pick(ws);const q=QRS.find(q=>q.anden===p.anden);if(!q||Math.abs(p.x-q.x)>13)continue;const pt=proxTren(p.anden);if(pt.en||pt.llegando||pt.s<30)continue;
+  p.escaneo=true;p.estado='camina';p.destino='espera';p.ultimo=null;p.ruta=[{x:q.pie.x+(Math.random()-.5)*.4,z:q.pie.z,y:0,qr:q},{x:p.dx,z:p.dz,y:0}];QRN.prox=tsEsc+7+Math.random()*7;return;}
+ QRN.prox=tsEsc+2;}
 let hintOff=false;function apagaHint(){if(hintOff)return;hintOff=true;$('#hint').classList.add('fuera');}
 function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);const dt=Math.min(.05,crudo/1000);last=now;fc++;
  tsEsc+=dt;
@@ -1449,20 +1887,26 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
   const sp=(keys.ShiftLeft||keys.ShiftRight)?8.6:4.8;
   const fx=-Math.sin(P.yaw),fz=-Math.cos(P.yaw),rx=Math.cos(P.yaw),rz=-Math.sin(P.yaw);
   let vx=fx*mz+rx*mx,vz=fz*mz+rz*mx;const l=Math.hypot(vx,vz);if(l>1){vx/=l;vz/=l;}
-  {const av=Math.hypot(vx,vz)*sp*dt,tr=Math.max(1,Math.min(12,Math.ceil(av/.18)));for(let k=0;k<tr;k++)paso(vx*sp*dt/tr,vz*sp*dt/tr);}
+  if(VIAJE.on){const sv=Math.min(sp,2.6);mueveEnTren(vx*sv*dt,vz*sv*dt);if(VIAJE.on)ubicaVisitante();}
+  else{{const av=Math.hypot(vx,vz)*sp*dt,tr=Math.max(1,Math.min(12,Math.ceil(av/.18)));for(let k=0;k<tr;k++)paso(vx*sp*dt/tr,vz*sp*dt/tr);}
   // escalera mecánica: lleva al visitante hacia arriba
-  if(Math.abs(Math.abs(P.z)-EEC)<.55&&P.x>EX0-1.3&&P.x<EX1+.4&&Math.abs(P.y-rampaA(P.x))<.3)paso(ESC_V*dt*((P.x>EX0&&P.x<EX1)?ESC_COS:1),0);
+  if(Math.abs(Math.abs(P.z)-EEC)<.55&&P.x>EX0-1.3&&P.x<EX1+.4&&Math.abs(P.y-rampaA(P.x))<.3)paso(ESC_V*dt*((P.x>EX0&&P.x<EX1)?ESC_COS:1),0);}
   const moving=l>.05;if(moving){if(!movido){movido=true;setTimeout(apagaHint,1500);}P.step+=sp*dt;if(P.step>2.2){P.step=0;footstep();}}
-  const bob=moving?Math.sin(now/1000*(sp>6?12:9))*.022:0;
+  const bob=moving&&!VIAJE.on?Math.sin(now/1000*(sp>6?12:9))*.022:0;
   camera.position.set(P.x,P.y+OJO+bob,P.z);camera.rotation.set(0,0,0);camera.rotateY(P.yaw);camera.rotateX(P.pitch);
   if(fc%8===0)marcaZona(false);
   if(vozAnal&&vozBot&&vozDatos){vozAnal.getByteTimeDomainData(vozDatos);let ac=0;for(let i=0;i<vozDatos.length;i+=4){const dd=(vozDatos[i]-128)/128;ac+=dd*dd;}vozBot.vocal=Math.min(1,Math.sqrt(ac/(vozDatos.length/4))*6.2);}
   if(fc%6===0){const near=[];for(const lp of LAMP_POS){const ld=Math.hypot(lp[0]-P.x,(lp[1]-P.y-2.5)*1.6,lp[2]-P.z);if(ld<26)near.push({p:lp,d:ld});}near.sort((a,b)=>a.d-b.d);
    for(let k=0;k<lampPool.length;k++){if(near[k]){lampPool[k].position.set(near[k].p[0],near[k].p[1],near[k].p[2]);lampPool[k].intensity=near[k].p[1]>YC?18:26;}else lampPool[k].intensity=0;}}
-  if(fc%3===0&&!chatCon){ray.setFromCamera(center,camera);const objs=ROBOT_MESHES.filter(m=>m.parent&&m.parent.visible&&Math.abs(m.userData.bot.m.position.y-P.y)<2.6);
-   const hits=ray.intersectObjects(objs,false);const hb=hits.length&&hits[0].distance<7.5?hits[0].object.userData.bot:null;let b=hb;
-   if(!b&&isTouch)b=robotCercano(3.4);if(b!==focusBot)placa(b);
-   if(isTouch){const on=!!b;if(tVerEl.classList.contains('on')!==on)tVerEl.classList.toggle('on',on);}}
+  if(fc%3===0&&!chatCon){let acc=null,b=null;
+   if(VIAJE.on){const tr=VIAJE.tr;if(tr.fase==='parado'&&tr.abre>.85)acc={tipo:'bajar'};else if(Math.abs(VIAJE.lx-1.16)<1.0&&Math.abs(VIAJE.lz)>.25)acc={tipo:'qr',q:QR_TREN};}
+   else{ray.setFromCamera(center,camera);const objs=ROBOT_MESHES.filter(m=>m.parent&&m.parent.visible&&Math.abs(m.userData.bot.m.position.y-P.y)<2.6);
+    const hits=ray.intersectObjects(objs,false);b=hits.length&&hits[0].distance<7.5?hits[0].object.userData.bot:null;
+    if(!b){const pc=puertaCerca();if(pc)acc={tipo:pc.term?'termina':'subir',pc:pc};else{const q=qrCerca();if(q)acc={tipo:'qr',q:q};}}
+    if(!b&&!acc&&isTouch)b=robotCercano(3.4);}
+   if(claveFoco(b,acc)!==focusKey)placa(b,acc);
+   if(isTouch){const on=!!(b||(acc&&acc.tipo!=='termina'));if(tVerEl.classList.contains('on')!==on)tVerEl.classList.toggle('on',on);}}
+  if(fc%6===0)pintaLinea();if(fc%15===0)npcEscanea();
   if(crudo>250||_calor.length||now-Q.entrada<4000)Q.sucio=true;
   Q.acc+=crudo/1000;Q.n++;
   if(Q.acc>(Q.primera?1.2:2)){const fps=Q.n/Q.acc,sucio=Q.sucio;Q.acc=0;Q.n=0;Q.sucio=false;Q.primera=false;Q.fps=Math.round(fps);
@@ -1473,7 +1917,10 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
  if(fc%10===0||forzarVis)visZonas(cx,cy,cz);
  CIELO.position.copy(camera.position);
  // mundo vivo: trenes, gente, robots, escaleras, ascensor, torniquetes, pantallas
- actualizaTrenes(dt);actualizaContingencia();generador();actualizaPersonas(dt);escoltaPaso(dt);if(bots.length)actualizaBots(dt,now);
+ actualizaTrenes(dt);actualizaViaje(dt);
+ // dentro del tren la cámara se ubica después de mover el tren (si no, queda un cuadro atrás)
+ if(VIAJE.on&&window.__hqOn){camera.position.set(P.x,P.y+OJO,P.z);CIELO.position.copy(camera.position);}
+ actualizaContingencia();generador();actualizaPersonas(dt);escoltaPaso(dt);if(bots.length)actualizaBots(dt,now);
  ASCS.forEach(A=>actualizaAscensor(A,dt));
  if(ZG.and.visible)mueveEscaleras(tsEsc);
  if(ZG.calle.visible)mueveAutos(dt);
@@ -1514,13 +1961,15 @@ function enter(){audio();window.__hqOn=true;Q.entrada=performance.now();Q.acc=0;
 $('#play').addEventListener('click',enter);
 /* precalentado contra un búfer como el del compositor, una vista por cuadro */
 const rtCalor=new THREE.WebGLRenderTarget(64,64,{type:THREE.HalfFloatType});
-function compilaComposer(){let pr=null;const antes=forzarVis;forzarVis=true;visZonas(0,YM,0);renderer.setRenderTarget(rtCalor);try{if(renderer.compileAsync){pr=renderer.compileAsync(scene,camera);if(pr&&pr.catch)pr.catch(function(){});}else renderer.compile(scene,camera);}catch(e){}renderer.setRenderTarget(null);
- forzarVis=antes||_calor.length>0;if(!forzarVis){TRENES.forEach(tr=>{if(tr.fase==='fuera'){ubicaTren(tr,-tr.dir*400);}});}visZonas(camera.position.x,window.__hqOn?P.y:YM,camera.position.z);return pr;}
+// el interior del coche y el túnel del viaje se compilan y calientan junto con la estación (sin tirón al subir)
+function calientaViaje(on){if(VIAJE.on)return;if(on){TRENES[1].g.add(INTER);INTER.position.set(cxCoche(2),0,0);INTER.visible=true;TUNV.position.set(0,YTUN,0);TUNV.visible=true;}else{if(INTER.parent)INTER.parent.remove(INTER);INTER.visible=false;TUNV.visible=false;}}
+function compilaComposer(){let pr=null;const antes=forzarVis;forzarVis=true;calientaViaje(true);visZonas(0,YM,0);renderer.setRenderTarget(rtCalor);try{if(renderer.compileAsync){pr=renderer.compileAsync(scene,camera);if(pr&&pr.catch)pr.catch(function(){});}else renderer.compile(scene,camera);}catch(e){}renderer.setRenderTarget(null);
+ forzarVis=antes||_calor.length>0;if(!forzarVis){calientaViaje(false);TRENES.forEach(tr=>{if(tr.fase==='fuera'){ubicaTren(tr,-tr.dir*400);}});}visZonas(camera.position.x,window.__hqOn?P.y:YM,camera.position.z);return pr;}
 const camCalor=new THREE.PerspectiveCamera(110,1,.1,430);const _calor=[];let warmed=false;
 function warmup(){if(warmed)return;warmed=true;const empuja=function(){const PT=[[36,YC+OJO,0],[14,YM+OJO,0],[0,YM+OJO,0],[-20,OJO,-6],[-20,OJO,6],[20,OJO,-6],[20,OJO,6]];const YW=[0,Math.PI/2,-Math.PI/2,Math.PI];
  TRENES.forEach(tr=>{tr.g.visible=true;ubicaTren(tr,tr.dir*PARADA);});for(const p of PT)for(const y of YW)_calor.push([p,y]);_calor.push(null);};
  const pr=compilaComposer();if(pr&&pr.then)pr.then(empuja,empuja);else empuja();}
-function calientaUna(){const v=_calor.shift();if(!v){forzarVis=false;TRENES.forEach(tr=>{if(tr.fase==='fuera'){tr.g.visible=false;ubicaTren(tr,-tr.dir*400);}});visZonas(camera.position.x,window.__hqOn?P.y:YM,camera.position.z);return;}
+function calientaUna(){const v=_calor.shift();if(!v){forzarVis=false;calientaViaje(false);TRENES.forEach(tr=>{if(tr.fase==='fuera'){tr.g.visible=false;ubicaTren(tr,-tr.dir*400);}});visZonas(camera.position.x,window.__hqOn?P.y:YM,camera.position.z);return;}
  forzarVis=true;camCalor.position.set(v[0][0],v[0][1],v[0][2]);camCalor.rotation.set(0,0,0);camCalor.rotateY(v[1]);camCalor.updateMatrixWorld();renderer.setRenderTarget(rtCalor);try{renderer.render(scene,camCalor);}catch(e){}renderer.setRenderTarget(null);}
 function fuerzaTren(tq){const tr=TRENES[tq-1];tr.fase='parado';tr.tP=tsEsc-3;tr.g.visible=true;ubicaTren(tr,tr.dir*PARADA);tintaTren(tr);tr.abreObj=1;tr.abre=1;puertasTren(tr,1);tr.eventos={abrio:true};}
 window.__tren=fuerzaTren;
@@ -1539,11 +1988,14 @@ THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent
 const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
 poblar();
 window.__P=P;window.__obs=OBS;window.__bots=bots;window.__personas=PERS;window.__trenes=TRENES;window.__cont=CONT;window.__esc=ESC;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;
+window.__viaje=VIAJE;window.__wa=WA;window.__waPreguntar=waPreguntar;window.__abrirWA=abrirWA;window.__qrs=QRZ;window.__bajar=bajarTren;
+window.__est=function(i){EST=i;aplicaEstacion();return estN();};
+window.__subir=function(){const pc=puertaCerca();if(pc)subirTren(pc);return !!pc;};
 window.__contingencia=function(on){if(on===false)terminaContingencia();else iniciaContingencia();};
 window.__hq={renderer:renderer,composer:composer,scene:scene,camera:camera,bloom:bloom,smaa:smaa,Q:Q,niveles:NIVELES,nivel:()=>nivel,fijaCalidad:function(r){Q.fijo=true;setDPR(r);},zonas:ZG};
 window.__diag=function(){return {x:+P.x.toFixed(2),z:+P.z.toFixed(2),y:+P.y.toFixed(2),zona:zonaAct,on:!!window.__hqOn,fps:Q.fps,dpr:renderer.getPixelRatio(),nivel:nivel,robots:bots.length,rig:!!RIG,
  personas:PERS.filter(p=>p.on).length,trenes:TRENES.map(t=>t.fase+'@'+t.x.toFixed(0)).join(','),cont:CONT.on,esc:ESC.fase,ts:+tsEsc.toFixed(1),estados:bots.map(b=>b.ag.id+':'+b.estado+':'+b.animName+'@'+b.m.position.x.toFixed(1)+','+b.m.position.y.toFixed(1)+','+b.m.position.z.toFixed(1)+' yaw '+b.m.rotation.y.toFixed(2)+'/'+b.yawObj.toFixed(2)).join(' | '),
- draw:renderer.info.render.calls,tri:renderer.info.render.triangles,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,horneado:window.__horneado};};
+ est:estN(),inter:INTER.visible,tunv:TUNV.visible,viaje:VIAJE.on?VIAJE.fase+'/'+(VIAJE.tr?VIAJE.tr.fase:'')+'@'+VIAJE.lx.toFixed(1)+','+VIAJE.lz.toFixed(2):'',wa:WA.on,draw:renderer.info.render.calls,tri:renderer.info.render.triangles,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,horneado:window.__horneado};};
 </script>
 </body>
 </html>

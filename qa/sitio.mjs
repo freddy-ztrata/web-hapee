@@ -4,6 +4,7 @@
 // chicos para el dedo (< 40 px) y texto < 11 px. Junta los links internos para revisarlos.
 //   node qa/sitio.mjs <base> <salida-dir> [paginas separadas por coma] [tamaños 360,390,...]
 // Abre UN Chrome headless propio y lo cierra siempre (también si algo se cuelga).
+import {rmSync as __rm} from 'node:fs';
 import {spawn} from 'node:child_process'; import {mkdtempSync, writeFileSync, mkdirSync} from 'node:fs'; import {tmpdir} from 'node:os'; import {join} from 'node:path';
 const BASE = (process.argv[2] || 'https://hapee.ai').replace(/\/$/, ''), OUT = process.argv[3] || '/tmp/qa-sitio';
 const PAGS = (process.argv[4] || '/').split(',');
@@ -11,6 +12,8 @@ const VPS = {360: [360, 740, 1], 390: [390, 844, 1], 414: [414, 896, 1], 768: [7
 const TAM = (process.argv[5] || '360,390,414,768,1440').split(',');
 mkdirSync(OUT, {recursive: true});
 const CH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; const ud = mkdtempSync(join(tmpdir(), 'hqpg-')); const port = 9200 + Math.floor(Math.random() * 300);
+
+process.on('exit',function __borraPerfil(){try{__rm(ud,{recursive:true,force:true});}catch(e){}});
 const ch = spawn(CH, ['--headless=new', '--disable-gpu-sandbox', '--no-first-run', '--user-data-dir=' + ud, '--window-size=1440,900', '--remote-debugging-port=' + port, '--autoplay-policy=no-user-gesture-required', 'about:blank'], {stdio: 'ignore'});
 process.on('exit', () => { try { ch.kill('SIGKILL'); } catch (e) {} });
 setTimeout(() => { console.log('TOPE GLOBAL'); process.exit(2); }, 55 * 60000);
