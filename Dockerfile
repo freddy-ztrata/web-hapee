@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-09-30-oficina-hud
+ARG CACHE_BUST=2026-09-30-via-estacion
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -48,6 +48,7 @@ COPY docs/ /usr/share/nginx/html/docs/
 COPY img/ /usr/share/nginx/html/img/
 # Hapee HQ: la oficina 3D de los agentes (three.js + GLB del robot), servida en /oficina
 COPY oficina/ /usr/share/nginx/html/oficina/
+COPY via/ /usr/share/nginx/html/via/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
