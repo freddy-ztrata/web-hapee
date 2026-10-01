@@ -79,7 +79,7 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
    quedaba inalcanzable con el teléfono de lado (844x390). */
 .scr>div{width:100%;max-width:720px;margin:auto;padding:8px 0}
 .scr .k{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--legible);text-transform:uppercase}
-.scr .robot{height:min(26vh,190px);margin:0 auto 6px;filter:drop-shadow(0 30px 50px rgba(250,80,0,.35))}
+.scr .robot{display:block;width:auto;height:min(26vh,190px);margin:0 auto 6px;filter:drop-shadow(0 30px 50px rgba(250,80,0,.35))}
 .scr h1{font-size:clamp(40px,8.6vw,96px);line-height:.95;letter-spacing:-.045em;font-weight:800;margin:10px 0 12px}
 .scr h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .scr h1 span{display:block;font-weight:500;color:#6b6b74;font-size:.36em;letter-spacing:-.01em;margin-top:12px}
@@ -215,6 +215,32 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
  #zonas{top:calc(8px + env(safe-area-inset-top))}
  #placard{bottom:calc(62px + env(safe-area-inset-bottom))}
 }
+
+/* ── HUD liviano (30-09-2026, «widgets con demasiada info»): el panel de agentes parte
+   plegado (solo la cabecera con el conteo), el minimapa es chico y se abre con MAPA/N,
+   la ayuda se desvanece sola y la placa muestra máximo dos líneas. ── */
+#panel{width:212px;padding:5px}
+#panel.plegado{width:auto}
+#panel.plegado #plist{display:none}
+#pcab{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:rgba(255,255,255,.72);font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-radius:14px;cursor:pointer}
+#pcab:hover{background:rgba(255,255,255,.08)}
+#pcab span{color:var(--legible)}
+#pcab::after{content:'+';font-size:14px;line-height:1;color:rgba(255,255,255,.6)}
+#panel:not(.plegado) #pcab::after{content:'–'}
+#plist{margin-top:2px}
+#panel button small{font-size:10px}
+#mapa{width:118px;height:260px}
+#mapa.on.oculto{display:none}
+#qb{right:134px}#mb{right:236px}
+#mb[aria-pressed="true"]{background:rgba(250,80,0,.85);border-color:transparent}
+@media (max-width:900px){#mb{display:none}}
+#hint{transition:opacity .8s ease}
+#hint.fuera{opacity:0}
+#placard{min-width:260px;max-width:min(92vw,440px);padding:12px 16px}
+#placard h2{font-size:18px}
+#placard p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#placard .go{margin-top:8px}
+@media (pointer:coarse){#qb{display:none}}
 </style>
 </head>
 <body>
@@ -224,10 +250,11 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 <div id="dot"></div>
 <div id="placard"><div class="n" id="pn">Agente</div><h2 id="pt">—</h2><p id="ps"></p><div class="go" id="pg"><b>ENTER</b> · ver en hapee.ai</div></div>
 <div id="hint"><b>W A S D</b> caminar · <b>mouse</b> mirar · acércate a un agente y pulsa <b>E</b> para hablarle</div>
-<div id="panel"><h3>Agentes <span id="pcount">0 / 8 cerca</span></h3><div id="plist"></div></div>
+<div id="panel" class="plegado"><button id="pcab" type="button" aria-expanded="false" aria-controls="plist">Agentes <span id="pcount">0 / 8 cerca</span></button><div id="plist"></div></div>
 <canvas id="mapa" width="300" height="660" aria-hidden="true"></canvas>
 <button id="snd" class="hudbtn" type="button">SIN SONIDO</button>
-<button id="qb" class="hudbtn" type="button">CALIDAD AUTO · Q</button>
+<button id="qb" class="hudbtn" type="button">CALIDAD · Q</button>
+<button id="mb" class="hudbtn" type="button" aria-pressed="false">MAPA · N</button>
 <div id="zonas"><b>Ir a</b><button data-n="1" type="button">01</button><button data-n="2" type="button">02</button><button data-n="3" type="button">03</button><button data-n="4" type="button">04</button></div>
 <div id="burbujas"></div>
 <div id="demo" hidden>
@@ -242,12 +269,12 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 <section id="chat" aria-live="polite"><div class="cab"><img src="assets/brand/robot-cara.png" alt=""><div><b id="chN">Agente</b><small id="chM">Hapee</small></div><button class="x" id="chX" type="button" aria-label="Cerrar">×</button></div><div class="msgs" id="chMsgs"></div><div class="chips" id="chChips"></div><form id="chForm" autocomplete="off"><input id="chIn" type="text" maxlength="240" placeholder="Pregúntale algo al agente…"><button type="submit">Enviar</button></form><div class="pie"><span id="chEst">Responde con IA</span><a id="chUrl" href="https://hapee.ai" target="_blank" rel="noopener">Abrir en hapee.ai →</a></div></section>
 <div id="touch"><div id="look"></div><div id="stick"><i></i></div><button id="tVer" type="button">VER →</button></div>
 <section class="scr" id="start"><div>
-  <img class="robot" src="assets/brand/robot-cuerpo.png" alt="">
+  <img class="robot" src="assets/brand/robot-cuerpo-p.webp" alt="">
   <span class="k">Hapee · Agentes de IA + CRM all-in-one</span>
-  <h1>La oficina de tus <em>agentes.</em><span>Cuatro zonas · Recepción, Piso de agentes, Sala de control y Núcleo 24/7</span></h1>
-  <p>Una oficina luminosa y futurista en primera persona, viva: ocho agentes Hapee, cada uno distinto, trabajan sentados en su estación, se levantan, <b>caminan</b> a visitar a un colega, se reúnen en la sala de control y <b>conversan contigo</b> —pregúntales lo que quieras—. Cada uno lleva su módulo real: conversaciones, ventas, automatización, contenido, web, reportería, academia y licitaciones.</p>
-  <div class="ctl tch"><span><b>JOYSTICK</b> caminar</span><span><b>ARRASTRA</b> mirar</span><span><b>HABLAR</b> conversa con el agente</span></div>
-  <div class="ctl kbd"><span><b>W A S D</b> caminar</span><span><b>MOUSE</b> mirar</span><span><b>SHIFT</b> correr</span><span><b>E</b> hablar con el agente</span><span><b>ENTER</b> abrir</span><span><b>1-4</b> saltar de zona</span><span><b>Q</b> calidad</span></div>
+  <h1>La oficina de tus <em>agentes.</em><span>Cuatro zonas · ocho agentes trabajando</span></h1>
+  <p>Camina entre los agentes de Hapee, mira cómo trabajan con su módulo real y <b>conversa con cualquiera</b>: pregúntale lo que quieras.</p>
+  <div class="ctl tch"><span><b>JOYSTICK</b> caminar</span><span><b>ARRASTRA</b> mirar</span><span><b>HABLAR</b> conversa</span></div>
+  <div class="ctl kbd"><span><b>W A S D</b> caminar</span><span><b>MOUSE</b> mirar</span><span><b>E</b> hablar</span><span><b>1-4</b> zonas</span></div>
   <button class="btn" id="play" type="button" disabled>ABRIENDO LA OFICINA…</button>
   <div id="load">Encendiendo los agentes</div>
 </div></section>
@@ -396,7 +423,7 @@ function sueltaTarde(){if(_abrirTarde)return;_abrirTarde=true;
  if(MOVIL){const hazlo=function(){try{const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(new RoomEnvironment(renderer),.04).texture;scene.environmentIntensity=.3;pm.dispose();}catch(e){}};
   // en un rato libre del hilo, no en medio de la llegada del robot
   if(window.requestIdleCallback)requestIdleCallback(hazlo,{timeout:2500});else setTimeout(hazlo,400);}
- else new RGBELoader().load('assets/hdr/museum_1k.hdr',function(t){t.mapping=THREE.EquirectangularReflectionMapping;scene.environment=t;scene.environmentIntensity=.3;});
+ else new RGBELoader().load('assets/hdr/museum_512.hdr',function(t){t.mapping=THREE.EquirectangularReflectionMapping;scene.environment=t;scene.environmentIntensity=.3;});
  for(let i=0;i<_tarde.length;i++)_tarde[i]();_tarde.length=0;}
 setTimeout(sueltaTarde,6000);
 // el HDR (1,6 MB) va en la segunda tanda, ver sueltaTarde()
@@ -634,14 +661,14 @@ let holo=null;
  const cap=new THREE.Mesh(new THREE.PlaneGeometry(9,.8),basic({map:signTex('Todo tu ecosistema de IA en una sola plataforma',64,'#4a4a4a',2048,256,'600'),transparent:true}));cap.position.set(0,4.4,cz-R+.35);scene.add(cap);
  const mesa=new THREE.Mesh(new THREE.CylinderGeometry(1.7,1.9,.9,48),new THREE.MeshPhysicalMaterial({color:0xC9CBD1,roughness:.35,metalness:.1,clearcoat:.5}));mesa.position.set(HOLO.x,.45,HOLO.z);scene.add(mesa);obstacles.push({x:HOLO.x,z:HOLO.z,w:3.8,d:3.8});
  const aro=new THREE.Mesh(new THREE.TorusGeometry(1.75,.03,12,72),ledMat);aro.rotation.x=Math.PI/2;aro.position.set(HOLO.x,.92,HOLO.z);scene.add(aro);
- const holoT=canvasTex(1400,1500,(g)=>{const gf=g.createLinearGradient(0,0,0,1500);gf.addColorStop(0,'rgba(13,13,18,.94)');gf.addColorStop(.5,'rgba(22,18,22,.90)');gf.addColorStop(1,'rgba(13,13,18,.94)');g.fillStyle=gf;g.fillRect(0,0,1400,1500);
+ const holoT=canvasTex(1400,1500,(g)=>{const gf=g.createLinearGradient(0,0,0,1500);gf.addColorStop(0,'#0d0d12');gf.addColorStop(.5,'#161216');gf.addColorStop(1,'#0d0d12');g.fillStyle=gf;g.fillRect(0,0,1400,1500);
   for(let yy=0;yy<1500;yy+=6){g.fillStyle='rgba(255,150,100,'+(yy%12?0.055:0.02)+')';g.fillRect(0,yy,1400,2);}
   g.strokeStyle='rgba(255,130,70,.8)';g.lineWidth=6;g.strokeRect(16,16,1368,1468);g.textAlign='center';
   g.fillStyle='#FFB48A';g.font='800 46px '+FONT;g.fillText('HAPEE · PLANES',700,124);
   g.fillStyle='#FFFFFF';g.font='800 126px '+FONT;g.fillText('Tu fábrica de',700,286);g.fillText('ventas 24/7',700,418);
   let yy=590;PLANES.forEach(p=>{g.fillStyle='#FF8A4C';g.font='800 48px '+FONT;g.fillText(p[0],700,yy);g.fillStyle='#FFFFFF';g.font='800 116px '+FONT;g.fillText(p[1],700,yy+114);g.fillStyle='#DCDCE4';g.font='600 40px '+FONT;g.fillText(p[2],700,yy+168);yy+=278;});
   g.fillStyle='#DCDCE4';g.font='600 38px '+FONT;g.fillText('Sin compromiso · sin contratos · cancelas cuando quieras',700,1444);});
- const holoMat=basic({map:holoT,transparent:true,opacity:.98});
+ const holoMat=basic({map:holoT}); // opaco: con .98 se transparentaba el letrero del arco detrás de los precios
  holo=new THREE.Group();[0,Math.PI].forEach(r=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(2.55,2.73),holoMat);m.rotation.y=r;m.position.set(0,0,r?-.02:.02);holo.add(m);});
  const holoBorde=new THREE.Mesh(new THREE.BoxGeometry(2.62,.04,.05),ledMat);holoBorde.position.set(0,1.4,0);holo.add(holoBorde);
  const holoBorde2=new THREE.Mesh(new THREE.BoxGeometry(2.62,.04,.05),ledMat);holoBorde2.position.set(0,-1.4,0);holo.add(holoBorde2);
@@ -1262,7 +1289,7 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden){las
 addEventListener('pageshow',function(){if(AC&&AC.state==='suspended'&&sonido){try{AC.resume();}catch(e){}}});
 addEventListener('mousemove',function(e){if(!locked)return;P.yaw-=e.movementX*.0019;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-e.movementY*.0019));});
 addEventListener('mousedown',function(e){if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,.hudbtn,#panel,#chat,#demo'))return;if(!locked){lock();return;}if(e.button===0)activar('clic');});
-addEventListener('keydown',function(e){if(demoAbierta){if(e.code==='Escape')cerrarDemo();return;}if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='Enter')activar('enter');if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();});
+addEventListener('keydown',function(e){if(demoAbierta){if(e.code==='Escape')cerrarDemo();return;}if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='Enter')activar('enter');if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();if(e.code==='KeyN')toggleMapa();if(!$('#hint').classList.contains('fuera')&&/^(KeyW|KeyA|KeyS|KeyD|Arrow)/.test(e.code))window.__ayuda&&window.__ayuda(1500);});
 addEventListener('keyup',function(e){keys[e.code]=false;});
 function abrir(u){try{window.open(u,'_blank','noopener');}catch(e){}}
 function activar(modo){if(!focus)return;
@@ -1279,7 +1306,7 @@ function setMSAA(n){if(!renderer.capabilities.isWebGL2)n=0;n=Math.min(n,renderer
 function setDPR(r){r=Math.max(.6,Math.min(r,DPR_TOPE));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
 function aplicaNivel(n){nivel=Math.max(0,Math.min(NIVELES.length-1,n));const q=NIVELES[nivel];setDPR(Math.min(q.r,DPR_TOPE));bloom.enabled=q.bloom;smaa.enabled=q.smaa;}
 // Q alterna automática (escalones medidos) ↔ rápida (el escalón más liviano con SMAA)
-function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.veces={};Q.alto=0;$('#qb').textContent=quality?'CALIDAD AUTO · Q':'CALIDAD RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
+function toggleQuality(){quality=quality===1?0:1;if(quality)aplicaNivel(MOVIL?2:1);else aplicaNivel(4);Q.bajo={};Q.veces={};Q.alto=0;$('#qb').textContent=quality?'CALIDAD · Q':'RÁPIDA · Q';$('#qb').classList.toggle('low',!quality);}
 const Z_ZONA={1:12,2:-14,3:-64,4:-94};
 {const cont=$('#zonas'),bts=[].slice.call(cont.querySelectorAll('button'));
  function irA(n){if(!window.__hqOn)enter();P.z=Z_ZONA[n];P.x=0;P.yaw=0;P.pitch=0;bts.forEach(o=>o.classList.toggle('act',+o.dataset.n===n));}
@@ -1291,7 +1318,15 @@ const Z_ZONA={1:12,2:-14,3:-64,4:-94};
 {const list=$('#plist');AGENTES.forEach(ag=>{const b=document.createElement('button');b.type='button';b.innerHTML='<i></i><span>'+ag.n+'</span><small>'+ag.mod+'</small>';b.dataset.id=ag.id;
  const ir=function(e){e.stopPropagation();e.preventDefault();if(!window.__hqOn)enter();P.x=ag.visita.x;P.z=ag.z;P.yaw=ag.lado<0?Math.PI/2:-Math.PI/2;P.pitch=-.05;if(!ag.bot)$('#hint').innerHTML='Los agentes están llegando a sus puestos…';
   else if(ag.bot.estado!=='trabaja')$('#hint').innerHTML='El '+ag.n+' salió del puesto · míralo en el minimapa';};
- b.addEventListener('pointerdown',ir);list.appendChild(b);ag.btn=b;});}
+ b.addEventListener('pointerdown',function(e){ir(e);plegarPanel(true);});list.appendChild(b);ag.btn=b;});}
+function plegarPanel(si){const pn=$('#panel');pn.classList.toggle('plegado',si);$('#pcab').setAttribute('aria-expanded',si?'false':'true');}
+$('#pcab').addEventListener('pointerdown',function(e){e.stopPropagation();e.preventDefault();plegarPanel(!$('#panel').classList.contains('plegado'));});
+function toggleMapa(){const m=$('#mapa'),oc=!m.classList.contains('oculto');m.classList.toggle('oculto',oc);$('#mb').setAttribute('aria-pressed',oc?'false':'true');}
+$('#mb').addEventListener('pointerdown',function(e){e.stopPropagation();e.preventDefault();toggleMapa();});
+/* la línea de ayuda se va sola: a los 9 s de entrar o al primer paso; cuando el código
+   escribe un aviso nuevo en ella, vuelve 5 s y se va otra vez */
+{const h=$('#hint');let tH=0;const vete=function(ms){clearTimeout(tH);tH=setTimeout(function(){h.classList.add('fuera');},ms);};
+ window.__ayuda=vete;new MutationObserver(function(){h.classList.remove('fuera');vete(5000);}).observe(h,{childList:true,characterData:true,subtree:true});}
 $('#qb').addEventListener('click',toggleQuality);
 if(isTouch){$('#touch').classList.add('on');const st=$('#stick'),knob=st.querySelector('i');let sid=null,lid=null,lx=0,ly=0;
  const mv=function(e){const r=st.getBoundingClientRect();let dx=(e.clientX-r.left-r.width/2)/(r.width/2),dy=(e.clientY-r.top-r.height/2)/(r.height/2);const l=Math.hypot(dx,dy);if(l>1){dx/=l;dy/=l;}stick.x=dx;stick.y=dy;knob.style.transform='translate('+(dx*34)+'px,'+(dy*34)+'px)';};
@@ -1534,7 +1569,7 @@ function ajustaChat(){const ch=$('#chat');if(!window.visualViewport||!ch)return;
 if(window.visualViewport){visualViewport.addEventListener('resize',function(){dimensiona();ajustaChat();},{passive:true});visualViewport.addEventListener('scroll',function(){dimensiona();ajustaChat();},{passive:true});}
 addEventListener('load',function(){dimensiona();setTimeout(dimensiona,300);setTimeout(dimensiona,1200);});
 [120,600,1500,3000].forEach(function(ms){setTimeout(dimensiona,ms);});
-function enter(){audio();window.__hqOn=true;Q.entrada=performance.now();Q.acc=0;Q.n=0;$('#zonas').classList.add('on');$('#panel').classList.add('on');$('#mapa').classList.add('on');
+function enter(){audio();window.__hqOn=true;Q.entrada=performance.now();Q.acc=0;Q.n=0;$('#zonas').classList.add('on');$('#panel').classList.add('on');plegarPanel(true);$('#mapa').classList.add('on','oculto');$('#mb').setAttribute('aria-pressed','false');window.__ayuda&&window.__ayuda(9000);
  const ds=/[?&]zona=([1-4])/.exec(location.search);$('#start').hidden=true;P.x=0;P.z=ds?Z_ZONA[ds[1]]:13;P.yaw=0;P.pitch=0;if(!isTouch)lock();}
 $('#play').addEventListener('click',enter);
 /* Precalentado. Antes compilaba y dibujaba 36 vistas DIRECTO en la pantalla, con tono
