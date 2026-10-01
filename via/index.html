@@ -320,7 +320,11 @@ function canvasTex(w,h,draw,lim){lim=lim||LIM_LIENZO;const k=Math.min(MOVIL||Mat
  c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));const g=c.getContext('2d');if(k!==1)g.scale(c.width/w,c.height/h);draw(g,w,h);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=MOVIL?Math.min(8,maxAniso):maxAniso;t.userData.lienzo=c;return t;}
 // lienzos que cambian con la estación (franja del nombre, letreros, plano): se repintan sobre el mismo canvas
 const DINAMICAS=[];
-function canvasTexDin(w,h,draw,lim){const t=canvasTex(w,h,draw,lim);t.userData.repinta=function(){const c=t.userData.lienzo,g=c.getContext('2d');g.save();g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,c.width,c.height);g.restore();draw(g,w,h);t.needsUpdate=true;};DINAMICAS.push(t);return t;}
+function canvasTexDin(w,h,draw,lim){const t=canvasTex(w,h,draw,lim);t.userData.est=EST;t.userData.repinta=function(){const c=t.userData.lienzo,g=c.getContext('2d');g.save();g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,c.width,c.height);g.restore();draw(g,w,h);t.needsUpdate=true;t.userData.est=EST;};DINAMICAS.push(t);return t;}
+// en el túnel la estación no se ve: se adelanta el repintado de la siguiente, un lienzo por cuadro y ya subido a la GPU,
+// para que la llegada no se trabe (en un teléfono lento repintar todo de golpe tomaba ~1 s)
+function prePinta(){const T=VIAJE;let obj=EST;if(T.on&&T.fase==='tunel'&&T.tr){const j=proxDe(EST,T.tr.anden);if(j>=0)obj=j;}
+ for(const t of DINAMICAS){if(t.userData.est===obj)continue;const e0=EST;EST=obj;try{t.userData.repinta();}finally{EST=e0;}renderer.initTexture(t);return;}}
 function fit(g,txt,px,max,weight){g.font=weight+' '+px+'px '+FONT;while(g.measureText(txt).width>max&&px>14){px-=2;g.font=weight+' '+px+'px '+FONT;}return px;}
 function rnd(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 const rep=t=>{t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;};
@@ -1090,14 +1094,16 @@ function saleTunel(tr){const T=VIAJE,a=tr.anden,j=proxDe(EST,a);if(j<0){terminaV
 function bajarTren(){const T=VIAJE,tr=T.tr;if(!T.on||!tr||!(tr.fase==='parado'&&tr.abre>.5))return;
  let best=PUERTAS[0];for(const d of PUERTAS)if(Math.abs(d-T.lx)<Math.abs(best-T.lx))best=d;
  const w=mundoTren(tr,T.car,best,0,{});const s=sideZ(tr.anden);
- terminaViaje(false);P.x=w.x;P.z=s*(BZ+.75);P.y=0;P.yaw=s>0?Math.PI:0;P.pitch=-.03;placa(null,null);waEvento('baja');marcaZona(true);}
+ terminaViaje(false);P.x=w.x;P.z=s*(BZ+.75);P.y=0;
+ for(const p of PERS){if(!p.on||p.pose==='sienta'||/viaja|monta|cabina|fijo|sigue/.test(p.estado)||Math.abs(p.y)>1)continue;const dx=p.x-P.x;if(Math.hypot(dx,p.z-P.z)<.85)p.x=P.x+(dx>=0?1:-1)*.9;}   // abren paso a quien baja
+ P.yaw=s>0?Math.PI:0;P.pitch=-.03;placa(null,null);waEvento('baja');marcaZona(true);}
 function terminaViaje(abortar){const T=VIAJE,tr=T.tr;T.on=false;T.fase='';if(INTER.parent)INTER.parent.remove(INTER);INTER.visible=false;TUNV.visible=false;
  document.body.classList.remove('viajando');$('#waBtn').classList.remove('on');
  if(tr){tr.viaje=false;if(abortar){PERS.forEach(p=>{if(p.on&&p.tren===tr)apaga(p);});
   if(tr.fase!=='parado'){tr.fase='fuera';tr.g.visible=false;tr.g.position.y=0;tr.v=0;ubicaTren(tr,-tr.dir*400);AG[tr.anden]=Math.max(AG[tr.anden],tsEsc+30);}}}
  T.tr=null;}
 // vuelve a Universidad de Chile (teclas de zona): corta el viaje si lo hay
-function volverUCH(){if(VIAJE.on)terminaViaje(true);if(chatCon===WA_AG)cerrarWA();if(EST!==I_UCH){EST=I_UCH;aplicaEstacion();}}
+function volverUCH(){if(VIAJE.on)terminaViaje(true);if(chatCon===WA_AG)cerrarWA();if(EST!==I_UCH){EST=I_UCH;aplicaEstacion();}else DINAMICAS.forEach(t=>{if(t.userData.est!==EST)t.userData.repinta();});}
 function actualizaViaje(dt){
  for(let i=0;i<NP;i++){const p=PERS[i];if(p.on&&p.estado==='viaja'&&p.tren)ubicaPax(p);}
  if(!VIAJE.on)return;const T=VIAJE,tr=T.tr;
@@ -1121,7 +1127,7 @@ function paxBaja(p,tr){if(!p.on||p.tren!==tr||tr.fase!=='parado')return;const s=
  const a0=mundoTren(tr,p.car,p.lx,0,{}),a1=mundoTren(tr,p.car,best,0,{}),a2=mundoTren(tr,p.car,best,1.0,{});
  if(p.slot){p.slot.ocup=null;p.slot=null;}p.tren=null;p.estado='camina';p.pose='camina';p.cel=false;p.anden=tr.anden;
  p.ruta=[{x:a0.x,z:a0.z,y:0},{x:a1.x,z:a1.z,y:0},{x:a2.x,z:a2.z,y:0},{x:a2.x,z:s*(BZ+.5),y:0}].concat(rutaSalida(tr.anden,a2.x));p.destino='calle';}
-function aplicaEstacion(){DINAMICAS.forEach(t=>t.userData.repinta());$('.brand span').innerHTML='<b>Vía</b> · Estación '+estN();ZONAS[1][1]=calleDe();
+function aplicaEstacion(){DINAMICAS.forEach(t=>{if(t.userData.est!==EST)t.userData.repinta();});$('.brand span').innerHTML='<b>Vía</b> · Estación '+estN();ZONAS[1][1]=calleDe();
  PANT.a1.firma=PANT.a2.firma=PANT.mes.firma='';bots.forEach(b=>{b.saludado=false;});document.title='Vía by Hapee · Estación '+estN();marcaZona(true);}
 function pintaLinea(){const el=$('#linea'),T=VIAJE;if(!T.on){if(el.classList.contains('on'))el.classList.remove('on');return;}el.classList.add('on');const tr=T.tr;let k=0;
  if(T.fase==='tunel')k=.22+.53*Math.min(1,(tsEsc-T.t0)/Math.max(1,T.dur+(T.paro?9:0)));else if(tr.fase==='sale')k=Math.min(.22,.22*(tsEsc-tr.tS)/11);else if(tr.fase==='llega')k=.75+.25*Math.min(1,(tsEsc-tr.t0)/T_LLEGA);
@@ -1368,6 +1374,7 @@ function separa(dt){for(let i=0;i<NP;i++){const a=PERS[i];if(!a.on||a.pose==='si
  for(let j=i+1;j<NP;j++){const b=PERS[j];if(!b.on||Math.abs(a.y-b.y)>1||b.estado==='cabina'||b.sigue===a||a.sigue===b)continue;const dx=a.x-b.x,dz=a.z-b.z,d2=dx*dx+dz*dz;if(d2>.36||d2<1e-6)continue;const d=Math.sqrt(d2),k=(.6-d)*.5*Math.min(1,dt*6)/d;
   if(a.pose==='camina'){a.x+=dx*k;a.z+=dz*k;}if(b.pose==='camina'&&b.estado!=='sigue'&&b.estado!=='monta'){b.x-=dx*k;b.z-=dz*k;}}
  if(Math.abs(a.y-P.y)<1&&a.pose==='camina'){const dx=a.x-P.x,dz=a.z-P.z,d=Math.hypot(dx,dz);if(d<.7&&d>1e-4){const k=(.7-d)*Math.min(1,dt*5);a.x+=dx/d*k;a.z+=dz/d*k;}}
+ else if(Math.abs(a.y-P.y)<1){const dx=a.x-P.x,d=Math.hypot(dx,a.z-P.z);if(d<.6){const k=(.6-d)*Math.min(1,dt*4);a.x+=(dx>=0?1:-1)*k;}}   // quien espera de pie da un paso al costado (paralelo al borde, nunca hacia la vía)
  if(a.pose==='camina'&&!a.escolta)for(let k=0;k<bots.length;k++){const bp=bots[k].m.position;if(Math.abs(bp.y-a.y)>1)continue;const dx=a.x-bp.x,dz=a.z-bp.z,d=Math.hypot(dx,dz);if(d<.75&&d>1e-4){const kk=(.75-d)*Math.min(1,dt*14);a.x+=dx/d*kk;a.z+=dz/d*kk;}}}}
 function actualizaPersonas(dt){for(let i=0;i<NP;i++){const p=PERS[i];if(!p.on)continue;avanzaPersona(p,dt);if(!p.on)continue;let dy=p.yawObj-p.yaw;dy=Math.atan2(Math.sin(dy),Math.cos(dy));p.yaw+=dy*Math.min(1,dt*(p.pose==='camina'?6:2.5));}
  separa(dt);}
@@ -1639,10 +1646,13 @@ function paso(dx,dz){const ox=P.x,oz=P.z,oy=P.y;let nx=P.x+dx,nz=P.z+dz,y=pisoEn
 
 /* ══ CHAT CON VÍA ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
-function sistema(ag){return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Acompañas al pasajero en tiempo real, con foco especial en los momentos de contingencia (un tren detenido, un desvío o un cambio de servicio). Eres un solo cerebro para toda la red: el mismo asistente vive en la app, en WhatsApp y en un punto QR físico en la estación (touchpoint vía Linkd). '+
+/* la IA recibe la respuesta que la demo ya calculó (estaciones, andenes, combinaciones): así no se equivoca contando */
+const DATO_DEMO=g=>g?' Dato que la demo ya calculó para esta pregunta (es correcto): «'+g+'». Si responde la pregunta, usa exactamente esas estaciones, andenes, conteos y combinaciones, sin cambiar ningún número; si no la responde, ignóralo.':'';
+const ESTILO_VIA='Responde en español de Chile, amable, cercano y concreto, tuteando con «tú» y sin modismos (nada de «estai», «vay», «po» ni «cachai»)';
+function sistema(ag,g){return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Acompañas al pasajero en tiempo real, con foco especial en los momentos de contingencia (un tren detenido, un desvío o un cambio de servicio). Eres un solo cerebro para toda la red: el mismo asistente vive en la app, en WhatsApp y en un punto QR físico en la estación (touchpoint vía Linkd). '+
  'Ahora hablas con una persona dentro de una demo 3D de la estación '+estN()+', Línea 1, como el robot «'+ag.n+'». Andén 1: dirección San Pablo ('+txtProxEst(1).toLowerCase()+'). Andén 2: dirección Los Dominicos ('+txtProxEst(2).toLowerCase()+'). Orden de la Línea 1, de poniente a oriente: '+L1.join(', ')+'. '+(COMBINA[estN()]?'Esta estación combina con la '+COMBINA[estN()]+'. ':'')+'Sólo afirma estas combinaciones: Los Héroes con Línea 2, Universidad de Chile con Línea 3 y Baquedano con Línea 5. En la mesanina están el Punto de carga bip!, dos máquinas de autoservicio, los torniquetes con una puerta ancha accesible y un ascensor junto a cada escalera; la salida es por la escalera ancha a la Alameda. '+
  (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1: puedes sugerir esperar el próximo tren'+(COMBINA[estN()]?' o, si la persona va apurada, combinar con la '+COMBINA[estN()]+' en esta misma estación':'')+', y ofrecer avisarle por WhatsApp. ':'En esta escena simulada el servicio funciona con normalidad. ')+
- 'Responde en español de Chile, cercano y concreto, en máximo dos frases cortas. Nunca inventes horarios, frecuencias ni estados reales del servicio: si no lo sabes, di que en una implementación real lo leerías de los feeds de estado de la operación. No uses markdown ni emojis.';}
+ ESTILO_VIA+', en máximo dos frases cortas. Nunca inventes horarios, frecuencias ni estados reales del servicio: si no lo sabes, di que en una implementación real lo leerías de los feeds de estado de la operación. No uses markdown ni emojis.'+DATO_DEMO(g);}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 function robotCercano(max){let md=max,b0=null;for(const b of bots){if(!b.m.visible||Math.abs(b.m.position.y-P.y)>2.6)continue;const d=Math.hypot(b.m.position.x-P.x,b.m.position.z-P.z);if(d<md){md=d;b0=b;}}return b0;}
 // E / clic / botón táctil: conversar con un robot, escanear un QR, subir o bajar del tren
@@ -1675,11 +1685,11 @@ function guionVia(t){t=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
  if(/quien eres|que eres|via\b|como funcionas/.test(t))return 'Soy Vía, el asistente de viaje con IA de Hapee: te acompaño en tiempo real, sobre todo cuando hay contingencias, por WhatsApp, en la app o en el punto QR de la estación.';
  return 'Te puedo ayudar a llegar a tu destino, a cargar tu bip! o a enterarte si hay contingencias. El estado del servicio, en una implementación real, lo leería de los feeds de la operación.';}
 async function preguntar(texto){const ag=chatCon;if(!ag)return;msg('yo',texto);historial.push({role:'user',content:texto});const esp=msg('bot',null);const b=bots.find(x=>x.ag===ag);if(b)decir(b,'…',9000,'pensando');
- let resp=null,viaIA=false;
- try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistema(ag),messages:historial.slice(-8)})});
+ let resp=null,viaIA=false;const guion=guionVia(texto);
+ try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistema(ag,guion),messages:historial.slice(-8)})});
   if(r.ok){const j=await r.json();resp=(j.content&&j.content[0]&&j.content[0].text)||null;viaIA=!!resp;}}catch(e){}
  if(resp)resp=resp.replace(/\*\*(.+?)\*\*/g,'$1').replace(/(^|\s)[*_](\S[^*_]*?)[*_](?=\s|[.,;:!?]|$)/g,'$1$2').replace(/^#+\s*/gm,'').replace(/^\s*[-*]\s+/gm,'· ');
- if(!resp)resp=guionVia(texto);
+ if(!resp)resp=guion;
  if(chatCon!==ag)return;esp.remove();msg('bot',resp);historial.push({role:'assistant',content:resp});$('#chEst').textContent=viaIA?'Respondió Vía con IA':'Respuesta guionada de la demo';
  if(b){anim(b,'talk');decir(b,resp.length>150?resp.slice(0,147)+'…':resp,Math.min(12000,3000+resp.length*45));}hablarVoz(resp,b);}
 /* ══ RUTAS POR LA LÍNEA 1 ══ (respuestas guionadas: cuentan estaciones, nunca inventan minutos reales) */
@@ -1747,13 +1757,13 @@ function cerrarWA(){if(!WA.on)return;WA.on=false;focusKey='';if(chatCon===WA_AG)
 $('#waX').addEventListener('click',function(e){e.stopPropagation();cerrarWA();});
 $('#waBtn').addEventListener('click',function(e){e.stopPropagation();abrirWA(null);});
 $('#waForm').addEventListener('submit',function(e){e.preventDefault();const t=waIn.value.trim();if(!t)return;waIn.value='';waPreguntar(t);});
-function sistemaWA(){const T=VIAJE;let ctx;
+function sistemaWA(g){const T=VIAJE;let ctx;
  if(T.on&&T.tr){const tr=T.tr;ctx='La persona va arriba de un tren de la Línea 1, dirección '+dirDe(tr.anden)+'. '+(tr.fase==='parado'?'El tren está detenido en '+estN()+' con las puertas abiertas. ':'Va entre '+L1[T.de]+' y '+(T.a>=0?L1[T.a]:'el final del recorrido')+'. ');}
  else ctx='La persona está en la estación '+estN()+(WA.punto?', junto al punto QR «'+WA.punto.corto+'»':'')+'. ';
  return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Esta conversación es una simulación de chat estilo WhatsApp dentro de una demo 3D: el mismo asistente vive en la app de Metro, en WhatsApp y en los puntos QR de las estaciones. '+ctx+
   'Línea 1, de poniente a oriente: '+L1.join(', ')+'. El Andén 1 va hacia San Pablo y el Andén 2 hacia Los Dominicos. Sólo afirma estas combinaciones: Los Héroes con Línea 2, Universidad de Chile con Línea 3 y Baquedano con Línea 5; cualquier otra la confirmarías con la información oficial. El GAM queda junto a la estación Universidad Católica. '+
   (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1. ':'En esta escena simulada el servicio funciona con normalidad. ')+
-  'Responde en español de Chile, cercano y concreto, en máximo dos frases cortas, como en WhatsApp. Puedes contar estaciones, pero nunca inventes minutos, horarios ni frecuencias reales: si preguntan cuánto se demora, di cuántas estaciones son y que en una implementación real darías el tiempo estimado con los datos de la operación. No uses markdown ni emojis.';}
+  ESTILO_VIA+', en máximo dos frases cortas, como en WhatsApp. Puedes contar estaciones, pero nunca inventes minutos, horarios ni frecuencias reales: si preguntan cuánto se demora, di cuántas estaciones son y que en una implementación real darías el tiempo estimado con los datos de la operación. No uses markdown ni emojis.'+DATO_DEMO(g);}
 function guionWA(texto){const t=normT(texto),R=posRef(),d=estacionEn(t);if(d>=0)WA.ultDest=d;
  const adelante=x=>VIAJE.on&&x>=0&&(VIAJE.tr.anden===2?x>EST:x<EST);
  if(/avis/.test(t)&&!/whatsapp|\bapp\b/.test(t)){const m=d>=0?d:adelante(WA.ultDest)?WA.ultDest:(VIAJE.on?(R.mov?R.cur:proxDe(EST,VIAJE.tr.anden)):-1);WA.avisar=true;WA.meta=m;
@@ -1780,7 +1790,7 @@ async function waPreguntar(texto){texto=String(texto||'').trim();if(!texto||WA.e
  const guion=guionWA(texto);WA.esperando=true;const t0=performance.now();setTimeout(()=>{if(WA.esperando)waEscribe(true);},450);
  let resp=null,ia=false;
  try{const ctl=new AbortController();const to=setTimeout(()=>ctl.abort(),9000);
-  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistemaWA(),messages:histAPI()})});clearTimeout(to);
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},signal:ctl.signal,body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistemaWA(guion),messages:histAPI()})});clearTimeout(to);
   if(r.ok){const j=await r.json();resp=(j.content&&j.content[0]&&j.content[0].text)||null;ia=!!resp;}}catch(e){}
  if(resp)resp=limpiaMd(resp);if(!resp)resp=guion;
  const falta=1000-(performance.now()-t0);if(falta>0)await new Promise(r=>setTimeout(r,falta));
@@ -1917,7 +1927,7 @@ function loop(now){requestAnimationFrame(loop);const crudo=Math.max(0,now-last);
  if(fc%10===0||forzarVis)visZonas(cx,cy,cz);
  CIELO.position.copy(camera.position);
  // mundo vivo: trenes, gente, robots, escaleras, ascensor, torniquetes, pantallas
- actualizaTrenes(dt);actualizaViaje(dt);
+ actualizaTrenes(dt);actualizaViaje(dt);prePinta();
  // dentro del tren la cámara se ubica después de mover el tren (si no, queda un cuadro atrás)
  if(VIAJE.on&&window.__hqOn){camera.position.set(P.x,P.y+OJO,P.z);CIELO.position.copy(camera.position);}
  actualizaContingencia();generador();actualizaPersonas(dt);escoltaPaso(dt);if(bots.length)actualizaBots(dt,now);
