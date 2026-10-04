@@ -2007,6 +2007,20 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
   .vsl-meta-item{font-size:.78rem}
 }
 </style>
+<!-- Meta Pixel (conjunto de datos 955108270238616). Se declara en la política de
+     privacidad (§2.9 y §13). El Schedule de la reserva lo dispara agenda-tu-demo con el
+     MISMO eventID que el servidor (apt.<id>), para que Meta cuente una sola reserva. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '955108270238616');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 
@@ -2275,6 +2289,12 @@ html.dark .section-divider{background:linear-gradient(90deg,transparent,rgba(250
             fired = true; /* una sola conversión por carga de página */
             if(typeof gtag === 'function'){
               gtag('event', 'dg_agendar_demo');
+            }
+            /* Meta: el mismo eventID que manda el servidor por la API de Conversiones
+               (apt.<id de la cita>) — Meta deduplica y cuenta UNA reserva. Sin eventID
+               no se dispara: un Schedule sin él se sumaría al del servidor. */
+            if(typeof fbq === 'function' && d.eventId){
+              fbq('track', 'Schedule', {}, { eventID: String(d.eventId) });
             }
           });
         })();
