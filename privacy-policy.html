@@ -70,7 +70,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 
 <main class="lg">
 <h1>Privacy Policy</h1>
-<p class="updated">Last updated: October 5, 2026</p>
+<p class="updated">Last updated: October 6, 2026</p>
 
 <p>This policy describes how <strong>WM Digital, LLC</strong> and <strong>WM Digital SpA</strong> (hereinafter "Hapee", "we" or "the platform") collect, use, store and protect the personal data of users who access the platform through the website <a href="https://hapee.ai">hapee.ai</a>, the iOS mobile app, the Android mobile app and the desktop app for Windows and macOS.</p>
 <p>By using any of these channels, you accept the practices described in this document. If you do not agree, we ask that you not use the platform.</p>
@@ -148,7 +148,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>2.9. People who visit hapee.ai or request a demo (Hapee's own marketing)</h3>
 <p>This section covers only Hapee's own marketing — when you visit our site <strong>hapee.ai</strong> or request a demo of the platform, through the web, WhatsApp or Instagram. It does not cover the data our customers manage inside Hapee, to which we never apply any of this.</p>
 <ul>
-  <li><strong>Meta Pixel and Google tag:</strong> our site loads the Meta Pixel (Facebook and Instagram) and the Google tag (Google Ads and Analytics). They record the pages you visit and whether you book a demo, and use those platforms' own cookies (for example Meta's <code>_fbp</code> and <code>_fbc</code>) to relate that visit to the ads you saw. See section 13.</li>
+  <li><strong>Meta Pixel and Google tag:</strong> our site loads the Meta Pixel (Facebook and Instagram) and the Google tag (Google Ads and Analytics). They record the pages you visit and whether you book a demo, and use those platforms' own cookies (for example Meta's <code>_fbp</code> and <code>_fbc</code>) to relate that visit to the ads you saw. See section 14.</li>
   <li><strong>Meta Conversions API:</strong> when you book a demo, when you attend it and if you subscribe to Hapee, our servers send Meta a notice of that event. The notice includes your email and phone <strong>irreversibly hashed (SHA-256)</strong>, the ad click identifier if you came from an ad, and the IP address and browser you booked from. We never send the content of your conversations or your answers to our questions.</li>
   <li><strong>How we contact you:</strong> if you request a demo, we write to you by WhatsApp, SMS or email to schedule it (confirmation and reminders). News and promotions <strong>by SMS only reach you if you checked the SMS box</strong> on the form. You can opt out at any time: with the link in the email or by replying <strong>STOP</strong>. When you accept on a form, we keep the text you accepted, the date, the page, your IP and your browser as proof.</li>
   <li><strong>Why:</strong> to measure which ads bring us demos and customers, and so the platforms show our ads to people with a similar profile. Meta and Google also process this information as controllers, under their own policies (<a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Meta</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google</a>).</li>
@@ -364,7 +364,23 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>8.5 Compliance with TikTok's policies</h3>
 <p>Data is exchanged with <strong>TikTok Pte. Ltd.</strong> and its affiliates, providers of the TikTok for Business APIs, solely for the purposes described. We comply with the <a href="https://www.tiktok.com/legal/page/global/terms-of-service/en" target="_blank" rel="noopener noreferrer">TikTok Terms of Service</a>, with the TikTok for Business developer terms and with their data use policies. We do not sell data obtained from TikTok nor use it for advertising unrelated to your own account.</p>
 
-<h2>9. Mobile applications (iOS and Android)</h2>
+<h2>9. Online store integrations (Shopify and WooCommerce)</h2>
+<p>When you connect your store to Hapee — by installing the Hapee app on Shopify or the Hapee plugin on WooCommerce — we receive from it, on your behalf, the data needed to run your CRM. This integration is <strong>optional</strong> and is activated by the store owner or an authorized administrator.</p>
+
+<h3>9.1 Data we receive</h3>
+<ul>
+  <li><strong>Orders and checkouts</strong>: products, quantities, amounts, currency, and payment, fulfillment, cancellation and refund status</li>
+  <li><strong>About your buyers</strong>: name, email, phone number, and billing and shipping address</li>
+  <li><strong>From your catalog</strong>: products, variants, prices, images and availability, so the AI agent recommends what you actually sell</li>
+</ul>
+
+<h3>9.2 Purpose of processing</h3>
+<p>We use this data solely to create or update your contacts, show you their order and conversation history, run the automations you set up (for example, confirming a payment or recovering an abandoned checkout) and let the AI agent you enable serve your customers, build their cart and generate the payment link. The agent never charges on its own. We act as a <strong>data processor</strong> on behalf of the merchant. <strong>We do not sell this data or use it for advertising or to train artificial intelligence models</strong>, and we only share it with the providers listed in section 4.</p>
+
+<h3>9.3 Retention and deletion</h3>
+<p>If you uninstall the Shopify app or disconnect the plugin, we stop receiving data immediately. We honor Shopify's privacy requests: we delete the data received from the store within 48 hours of the store deletion request (<code>shop/redact</code>), and we respond to a buyer's access or deletion requests (<code>customers/data_request</code>, <code>customers/redact</code>) within 30 days. The contacts that are already part of your CRM are managed by you in Hapee, and you can request their deletion by writing to <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+
+<h2>10. Mobile applications (iOS and Android)</h2>
 <p>Hapee's mobile app is an integrated experience that loads the web platform inside a native container. It uses the following operating system permissions, when you authorize them:</p>
 <ul>
   <li><strong>Push notifications</strong> — to notify you of new messages, assignments and relevant events</li>
@@ -373,7 +389,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>You can revoke any of these permissions at any time from your device's system settings.</p>
 
-<h2>10. Storage, security and retention</h2>
+<h2>11. Storage, security and retention</h2>
 <ul>
   <li>Data is stored on AWS servers located primarily in United States regions. It may be transferred internationally in transit to the processors listed in section 4.</li>
   <li>Passwords are stored with a one-way <em>bcrypt</em> hash (never in plain text)</li>
@@ -384,7 +400,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li>We keep your data while your account is active. After deletion, your identifiable personal data is anonymized or deleted within a maximum of 90 days, except when we must retain it due to a legal obligation (for example, tax records)</li>
 </ul>
 
-<h2>11. Your rights</h2>
+<h2>12. Your rights</h2>
 <p>As a data subject, you may exercise at any time the rights of:</p>
 <ul>
   <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
@@ -395,10 +411,10 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>To exercise any of these rights, write to us at <a href="mailto:info@hapee.ai">info@hapee.ai</a>. We will respond within a maximum of 30 days. The application has a dedicated option to request the deletion of your account at <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
-<h2>12. Minors</h2>
+<h2>13. Minors</h2>
 <p>The platform is aimed at professionals and companies. We do not intentionally collect personal data from children under 13. If we become aware that a child under 13 has provided us with data without verifiable parental consent, we will delete that information. If you suspect this may have happened, contact us at <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
 
-<h2>13. Cookies and similar technologies</h2>
+<h2>14. Cookies and similar technologies</h2>
 <p>We use two kinds of cookies:</p>
 <ul>
   <li><strong>Strictly necessary</strong> — inside the platform, to keep your session authenticated and remember preferences (language, theme). Hapee does not work without them.</li>
@@ -406,13 +422,13 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>You can block or delete the measurement cookies in your browser settings without affecting your use of Hapee.</p>
 
-<h2>14. Changes to this policy</h2>
+<h2>15. Changes to this policy</h2>
 <p>We may update this policy to reflect legal, operational or functional changes. When changes are significant, we will notify you by email or through a prominent notice within the platform. The date at the top indicates the last revision.</p>
 
-<h2>15. Governing law</h2>
+<h2>16. Governing law</h2>
 <p>This policy is governed by Law 19.628 on the Protection of Private Life of the Republic of Chile, currently in force, and by <strong>Law 21.719</strong> on the protection of personal data, which replaces it and comes fully into force in <strong>December 2026</strong>. From that date, and with respect to the data our customers entrust to us, Hapee acts as a <strong>processor</strong> and the customer as controller. All other relevant Chilean regulations also apply. Where applicable, we also respect the requirements of the European Union's General Data Protection Regulation (GDPR) for users residing in that territory.</p>
 
-<h2>16. Contact</h2>
+<h2>17. Contact</h2>
 <p>For any query or complaint related to your privacy, you can write to us at <a href="mailto:info@hapee.ai">info@hapee.ai</a> or by postal mail to the address indicated in section 1.</p>
 </main>
 
