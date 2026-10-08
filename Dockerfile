@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-10-07-shopify-review
+ARG CACHE_BUST=2026-10-08-search-console
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -27,6 +27,8 @@ COPY politica-privacidade.html /usr/share/nginx/html/politica-privacidade.html
 COPY terms.html /usr/share/nginx/html/terms.html
 COPY termos.html /usr/share/nginx/html/termos.html
 COPY eliminacion-datos.html /usr/share/nginx/html/eliminacion-datos.html
+# Verificación de propiedad de Google Search Console (la exige Play Console). NO borrar.
+COPY google88e8bcc2e3eec4c4.html /usr/share/nginx/html/google88e8bcc2e3eec4c4.html
 COPY gracias-compra.html /usr/share/nginx/html/gracias-compra.html
 COPY juego.html /usr/share/nginx/html/juego.html
 COPY agenda-tu-demo.html /usr/share/nginx/html/agenda-tu-demo.html
