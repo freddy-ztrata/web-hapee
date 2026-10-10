@@ -71,7 +71,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <main class="lg">
 
 <h1>Política de Privacidad</h1>
-<p class="updated">Última actualización: 6 de octubre de 2026</p>
+<p class="updated">Última actualización: 10 de octubre de 2026</p>
 
 <p>Esta política describe cómo <strong>WM Digital, LLC</strong> y <strong>WM Digital SpA</strong> (en adelante, "Hapee", "nosotros" o "la plataforma") recopila, utiliza, almacena y protege los datos personales de los usuarios que acceden a la plataforma a través del sitio web <a href="https://hapee.ai">hapee.ai</a>, la aplicación móvil para iOS, la aplicación móvil para Android y la aplicación de escritorio para Windows y macOS.</p>
 <p>Al usar cualquiera de estos canales, aceptas las prácticas descritas en este documento. Si no estás de acuerdo, te pedimos que no utilices la plataforma.</p>
@@ -149,7 +149,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>2.9. Quienes visitan hapee.ai o solicitan una demo (marketing propio de Hapee)</h3>
 <p>Esta sección trata solo del marketing del propio Hapee —cuando visitas nuestro sitio <strong>hapee.ai</strong> o pides una demostración de la plataforma, por la web, por WhatsApp o por Instagram—. No se refiere a los datos que nuestros clientes gestionan dentro de Hapee, a los que nunca aplicamos esto.</p>
 <ul>
-  <li><strong>Píxel de Meta y etiqueta de Google:</strong> nuestro sitio carga el píxel de Meta (Facebook e Instagram) y la etiqueta de Google (Google Ads y Analytics). Registran las páginas que visitas y si agendas una demo, y usan cookies propias de esas plataformas (por ejemplo <code>_fbp</code> y <code>_fbc</code> de Meta) para relacionar esa visita con los anuncios que viste. Ver la sección 14.</li>
+  <li><strong>Píxel de Meta y etiqueta de Google:</strong> nuestro sitio carga el píxel de Meta (Facebook e Instagram) y la etiqueta de Google (Google Ads y Analytics). Registran las páginas que visitas y si agendas una demo, y usan cookies propias de esas plataformas (por ejemplo <code>_fbp</code> y <code>_fbc</code> de Meta) para relacionar esa visita con los anuncios que viste. Ver la sección 15.</li>
   <li><strong>API de Conversiones de Meta:</strong> cuando agendas una demo, cuando asistes a ella y si contratas Hapee, enviamos a Meta un aviso de ese hecho desde nuestros servidores. El aviso incluye tu correo y tu teléfono <strong>cifrados de forma irreversible (hash SHA-256)</strong>, el identificador del clic en el anuncio si llegaste desde uno, y la dirección IP y el navegador desde los que agendaste. Nunca enviamos el contenido de tus conversaciones ni tus respuestas a nuestras preguntas.</li>
   <li><strong>Cómo te contactamos:</strong> si pides una demo, te escribimos por WhatsApp, SMS o correo para coordinarla (confirmación y recordatorios). Las novedades y promociones <strong>por SMS solo te llegan si marcaste la casilla de SMS</strong> del formulario. Puedes darte de baja cuando quieras: con el enlace del correo o respondiendo <strong>BAJA o STOP</strong>. Cuando aceptas en un formulario, guardamos el texto que aceptaste, la fecha, la página, tu IP y tu navegador como prueba.</li>
   <li><strong>Para qué:</strong> medir qué anuncios nos traen demostraciones y clientes, y que las plataformas muestren nuestros anuncios a personas con un perfil parecido. Meta y Google tratan esa información también como responsables, según sus propias políticas (<a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Meta</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google</a>).</li>
@@ -186,7 +186,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li><strong>ElevenLabs</strong> — síntesis de voz para agentes de IA y asistente de voz</li>
   <li><strong>Meta (Facebook), Google y plataformas publicitarias</strong> — solo cuando conectas esas cuentas mediante OAuth para extraer métricas publicitarias</li>
   <li><strong>Meta Platforms (WhatsApp Business Platform)</strong> — envío y recepción de mensajes de WhatsApp cuando conectas un número de WhatsApp Business a Hapee (ver sección 6)</li>
-  <li><strong>Meta Platforms (píxel de Meta y API de Conversiones) y Google (etiqueta de Google Ads y Analytics)</strong> — medición de los anuncios del propio Hapee sobre quienes visitan hapee.ai o solicitan una demo (ver 2.9 y 13)</li>
+  <li><strong>Meta Platforms (píxel de Meta y API de Conversiones) y Google (etiqueta de Google Ads y Analytics)</strong> — medición de los anuncios del propio Hapee sobre quienes visitan hapee.ai o solicitan una demo (ver 2.9 y 15)</li>
   <li><strong>Google Firebase</strong> — autenticación social (Google, Apple) y notificaciones push (FCM) en aplicaciones móviles</li>
   <li><strong>Apple Inc.</strong> — Sign in with Apple en aplicación iOS</li>
   <li><strong>Zoom Video Communications</strong> — creación y lectura de reuniones, únicamente cuando conectas tu cuenta de Zoom para que las citas agendadas en Hapee generen su enlace de reunión</li>
@@ -381,7 +381,42 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 <h3>9.3 Retención y eliminación</h3>
 <p>Si desinstalas la app de Shopify o desconectas el plugin, dejamos de recibir datos de inmediato. Atendemos las solicitudes de privacidad de Shopify: borramos los datos recibidos de la tienda dentro de las 48 horas siguientes a la solicitud de eliminación de la tienda (<code>shop/redact</code>), y respondemos las solicitudes de acceso o eliminación de un comprador (<code>customers/data_request</code>, <code>customers/redact</code>) dentro de 30 días. Los contactos que ya forman parte de tu CRM los administras tú desde Hapee, y puedes pedir su eliminación escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
 
-<h2>10. Aplicaciones móviles (iOS y Android)</h2>
+<h2 id="conector-mcp">10. Conector MCP para asistentes de IA</h2>
+<p>Hapee ofrece un conector MCP (<em>Model Context Protocol</em>) que te permite usar la plataforma desde un asistente de inteligencia artificial que tú eliges y conectas, por ejemplo Claude, ChatGPT o Grok Bot. Para conectarlo inicias sesión con tu propio usuario de Hapee y apruebas la conexión en una pantalla de consentimiento. Las instrucciones están en <a href="/docs/mcp">hapee.ai/docs/mcp</a>.</p>
+
+<h3>10.1 Datos a los que accede</h3>
+<p>El conector accede únicamente a los datos que tu propio usuario puede ver o modificar en Hapee, según tu rol, tu perfil de permisos, los módulos activos y la subcuenta con la que trabajas. Cada acción es una llamada a la API de Hapee hecha con tu autorización. Solo puede crear, editar o eliminar información si en la pantalla de consentimiento apruebas el permiso de escritura (<code>hapee:write</code>); sin él, solo consulta (<code>hapee:read</code>). El acceso ocurre cuando tu asistente usa una herramienta del conector.</p>
+
+<h3>10.2 Qué guarda el servidor del conector</h3>
+<p>El servidor del conector <strong>no almacena de forma persistente datos de Hapee</strong>: no tiene base de datos y lo que consulta en la API lo entrega a tu asistente sin guardarlo. Solo mantiene en memoria, y de forma temporal:</p>
+<ul>
+  <li>el resultado de validar tu autorización, durante un máximo de 60 segundos y nunca más allá de su vencimiento, identificado por una huella SHA-256 del token (no el token): tu identificador de usuario, rol, agencia, las subcuentas a las que tienes acceso (identificador y nombre), tus permisos sobre la API y los permisos aprobados;</li>
+  <li>el vínculo entre cada sesión del conector y una huella de tu identidad, y la subcuenta que elegiste para esa sesión. Se pierde al reiniciarse el servidor y no supera las 10.000 sesiones simultáneas.</li>
+</ul>
+<p>Como cualquier servicio web, el servidor genera registros técnicos de operación (fecha, ruta, código de respuesta y tipo de solicitud), sin el contenido de las consultas ni los tokens.</p>
+
+<h3>10.3 Qué guarda la plataforma Hapee</h3>
+<p>La plataforma Hapee actúa como servidor de autorización del conector y guarda, en su base de datos en AWS:</p>
+<ul>
+  <li><strong>Aplicaciones registradas</strong>: los asistentes se registran solos al conectarse; se guarda el nombre que declaran, sus direcciones de retorno, el sitio y logo que informen, la dirección IP desde la que se registraron y las fechas de registro y último uso.</li>
+  <li><strong>Autorizaciones</strong>: qué usuario autorizó a qué aplicación, para qué agencia y subcuenta, con qué permisos, y las fechas de creación, último uso y revocación (con su motivo).</li>
+  <li><strong>Códigos y tokens</strong>: solo como huella SHA-256, nunca en texto plano, con su vencimiento y su estado.</li>
+  <li><strong>Registros de auditoría</strong>: la emisión y la revocación de cada autorización y, como para cualquier uso de la API, una bitácora de cada llamada (método, ruta sin parámetros, código de respuesta, dirección IP enmascarada, fecha y duración).</li>
+</ul>
+
+<h3>10.4 Retención</h3>
+<p>El token de acceso dura 1 hora. El token de renovación dura 30 días desde su último uso, cambia en cada renovación y la autorización vence a los 90 días de aprobada, como máximo. El código de autorización es de un solo uso y vence a los 5 minutos. Los registros de autorizaciones vencidas o revocadas se conservan como registro de seguridad según lo indicado en la sección 12.</p>
+
+<h3>10.5 Datos que llegan a tu asistente de IA</h3>
+<p>La información que el conector devuelve se entrega al asistente de IA que tú conectaste. Ese asistente lo opera un tercero que tú eliges, y el tratamiento que haga de esa información (almacenamiento, retención o uso para entrenar modelos) se rige por sus propios términos y su política de privacidad, no por esta política. Ese proveedor no es un procesador contratado por Hapee. Antes de conectarlo, revisa que su política sea compatible con los datos que manejas en Hapee.</p>
+
+<h3>10.6 Cómo revocar el acceso</h3>
+<p>Puedes desconectar el conector desde tu asistente. Además, cambiar tu contraseña o tu verificación en dos pasos revoca automáticamente todas tus autorizaciones, y lo mismo ocurre si cambian tu rol, tu perfil de permisos, tu agencia o tu subcuenta, o si tu usuario se desactiva. La persona dueña de la agencia puede revocar cualquier autorización de su agencia desde la pantalla de API keys de Hapee. También puedes pedirlo escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+
+<h3>10.7 Contacto</h3>
+<p>Para consultas sobre el conector y tus datos, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+
+<h2>11. Aplicaciones móviles (iOS y Android)</h2>
 <p>La aplicación móvil de Hapee es una experiencia integrada que carga la plataforma web dentro de un contenedor nativo. Usa los siguientes permisos del sistema operativo, cuando los autorizas:</p>
 <ul>
   <li><strong>Notificaciones push</strong> — para avisarte de nuevos mensajes, asignaciones y eventos relevantes</li>
@@ -390,7 +425,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>Puedes revocar cualquiera de estos permisos en cualquier momento desde los ajustes del sistema de tu dispositivo.</p>
 
-<h2>11. Almacenamiento, seguridad y retención</h2>
+<h2>12. Almacenamiento, seguridad y retención</h2>
 <ul>
   <li>Los datos se almacenan en servidores AWS ubicados principalmente en regiones de Estados Unidos. Pueden transferirse internacionalmente en tránsito hacia los procesadores listados en la sección 4.</li>
   <li>Las contraseñas se almacenan con hash <em>bcrypt</em> de un solo sentido (nunca en texto plano)</li>
@@ -401,7 +436,7 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
   <li>Conservamos tus datos mientras tu cuenta esté activa. Tras la eliminación, tus datos personales identificables se anonimizan o eliminan en un plazo máximo de 90 días, salvo cuando debamos conservarlos por obligación legal (por ejemplo, registros tributarios)</li>
 </ul>
 
-<h2>12. Tus derechos</h2>
+<h2>13. Tus derechos</h2>
 <p>Como titular de los datos, puedes ejercer en cualquier momento los derechos de:</p>
 <ul>
   <li><strong>Acceso</strong> — solicitar copia de los datos personales que tenemos sobre ti</li>
@@ -412,10 +447,10 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>Para ejercer cualquiera de estos derechos, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>. Responderemos en un plazo máximo de 30 días. La aplicación cuenta con una opción dedicada para solicitar la eliminación de tu cuenta en <a href="/eliminacion-datos.html">hapee.ai/eliminacion-datos</a>.</p>
 
-<h2>13. Menores de edad</h2>
+<h2>14. Menores de edad</h2>
 <p>La plataforma está dirigida a profesionales y empresas. No recopilamos intencionalmente datos personales de menores de 13 años. Si tomamos conocimiento de que un menor de 13 años nos ha proporcionado datos sin consentimiento parental verificable, procederemos a eliminar dicha información. Si sospechas que esto pudo ocurrir, contactanos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
 
-<h2>14. Cookies y tecnologías similares</h2>
+<h2>15. Cookies y tecnologías similares</h2>
 <p>Usamos dos tipos de cookies:</p>
 <ul>
   <li><strong>Estrictamente necesarias</strong> — dentro de la plataforma, para mantener tu sesión autenticada y recordar preferencias (idioma, tema). Sin ellas Hapee no funciona.</li>
@@ -423,13 +458,13 @@ a{color:#FA5000;text-decoration:none}a:hover{text-decoration:underline}
 </ul>
 <p>Puedes bloquear o eliminar las cookies de medición desde la configuración de tu navegador sin que eso afecte tu uso de Hapee.</p>
 
-<h2>15. Cambios a esta política</h2>
+<h2>16. Cambios a esta política</h2>
 <p>Podemos actualizar esta política para reflejar cambios legales, operativos o funcionales. Cuando los cambios sean significativos, te notificaremos por correo electrónico o mediante un aviso destacado dentro de la plataforma. La fecha en la parte superior indica la última revisión.</p>
 
-<h2>16. Legislación aplicable</h2>
+<h2>17. Legislación aplicable</h2>
 <p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile, hoy vigente, y por la <strong>Ley 21.719</strong> sobre protección de datos personales, que la sustituye y entra en plena vigencia en <strong>diciembre de 2026</strong>. Desde esa fecha, y respecto de los datos que nuestros clientes nos encomiendan, Hapee actúa como <strong>encargado de tratamiento</strong> y el cliente como responsable. Aplica además la demás normativa chilena pertinente. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p>
 
-<h2>17. Contacto</h2>
+<h2>18. Contacto</h2>
 <p>Para cualquier consulta o reclamo relacionado con tu privacidad, puedes escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p>
 
 </main>
