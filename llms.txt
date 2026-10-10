@@ -105,6 +105,7 @@ software a medida) con una subcuenta.
 - **Empezar en 15 minutos**: https://hapee.ai/docs/empezar
 - **Integrar un ERP**: https://hapee.ai/docs/erp
 - **Webhooks**: https://hapee.ai/docs/webhooks
+- **Conector MCP (Claude, ChatGPT, Grok Bot; OAuth por usuario)**: https://hapee.ai/docs/mcp
 - **Referencia completa**: https://hapee.ai/docs/referencia
 - **Contrato OpenAPI 3.1**: https://beta.hapee.ai/api/v1/openapi.json
 

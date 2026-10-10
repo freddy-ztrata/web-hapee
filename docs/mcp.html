@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Conector MCP de Hapee — Usa Hapee desde tu asistente de IA</title>
+<meta name="description" content="Conecta Claude, ChatGPT, Grok Bot u otro asistente compatible con MCP a tu cuenta de Hapee. Inicias sesión con tu propio usuario y el asistente trabaja con exactamente tus permisos.">
+<link rel="canonical" href="https://hapee.ai/docs/mcp">
+<meta property="og:title" content="Conector MCP de Hapee">
+<meta property="og:description" content="Usa Hapee desde tu asistente de IA, con tu propio usuario y tus permisos. Sin claves compartidas.">
+<meta property="og:url" content="https://hapee.ai/docs/mcp">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hapee.ai/img/hapee-mcp-icon.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Ícono de Hapee: una h blanca sobre degradado naranja a burdeo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hapee.ai/img/hapee-mcp-icon-512.png">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/docs/">Inicio</a>
+      <a href="/docs/empezar">Empezar</a>
+      <a href="/docs/erp">Integrar un ERP</a>
+      <a href="/docs/webhooks">Webhooks</a>
+      <a href="/docs/mcp" class="activo">Conector MCP</a>
+      <a href="/docs/referencia">Referencia</a>
+      <a href="/">← Volver al sitio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>En esta página</h4>
+      <a href="#que-es">Qué es</a>
+      <a href="#url">La URL del conector</a>
+      <a href="#conectar">Conectarlo a tu asistente</a>
+      <a href="#login">Inicio de sesión y consentimiento</a>
+      <a href="#permisos">Qué puede hacer</a>
+      <a href="#subcuenta">Agencias y subcuentas</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#escritura">Herramientas que modifican</a>
+      <a href="#duracion">Cuánto dura la conexión</a>
+      <a href="#desconectar">Desconectarlo</a>
+      <a href="#limites">Límites</a>
+      <a href="#tecnico">Detalle técnico</a>
+      <a href="#privacidad">Privacidad</a>
+      <h4>Ver también</h4>
+      <a href="/docs/">API de Hapee</a>
+      <a href="/politica-privacidad.html#conector-mcp">Política de privacidad</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <div class="dv-titulo-icono">
+      <img src="/img/hapee-mcp-icon-256.png" srcset="/img/hapee-mcp-icon-256.png 1x, /img/hapee-mcp-icon-512.png 2x" width="64" height="64" alt="Ícono del conector Hapee">
+      <h1>Conector MCP de Hapee</h1>
+    </div>
+    <p class="dv-bajada">Usa Hapee desde tu asistente de IA. Inicias sesión con tu propio usuario y el asistente trabaja con exactamente tus permisos: ve lo que tú ves y cambia solo lo que tú puedes cambiar.</p>
+
+    <h2 id="que-es">Qué es</h2>
+
+    <p>El conector es un servidor <strong>MCP</strong> (<em>Model Context Protocol</em>, el estándar abierto con el que los asistentes de IA se conectan a herramientas externas). Al agregarlo a un asistente compatible —Claude, ChatGPT, Grok Bot u otro que acepte conectores MCP remotos— puedes pedirle en lenguaje natural cosas como «muéstrame los negocios abiertos de esta semana», «crea un contacto con estos datos» o «agenda una cita para mañana a las 10».</p>
+
+    <p>El conector no guarda tus datos de Hapee: cada herramienta es una llamada a la <a href="/docs/">API v1 de Hapee</a> hecha <strong>con tu propia sesión</strong>. No hay claves compartidas ni URL secretas: cada persona se conecta con su usuario de Hapee.</p>
+
+    <h2 id="url">La URL del conector</h2>
+
+    <div class="dv-code" data-lang="url" id="url-conector">
+<pre><code>https://mcp-oauth.hapee.ai/mcp</code></pre>
+    </div>
+
+    <p>Es la única dirección que necesitas. No lleva ninguna credencial: el inicio de sesión ocurre después, en una pantalla de Hapee.</p>
+
+    <div class="dv-aviso">
+      <p><strong>Esta dirección va a cambiar a una más corta.</strong> Cuando la anunciemos, la conexión actual seguirá funcionando durante la transición y te bastará con volver a agregar el conector con la dirección nueva. Si antes usabas una URL personal terminada en <code>/c/…</code>, esa es la forma de conexión anterior: reemplázala por esta.</p>
+    </div>
+
+    <h2 id="conectar">Conectarlo a tu asistente</h2>
+
+    <p>Cada asistente ubica la opción en un lugar distinto de su configuración, y esos menús cambian seguido, así que aquí van los pasos genéricos. En todos el procedimiento es el mismo:</p>
+
+    <ol>
+      <li>En la configuración de tu asistente, <strong>agrega un conector personalizado (o remoto) MCP</strong> con la URL de arriba. Si te pide un nombre, usa «Hapee».</li>
+      <li>Si te pregunta por el tipo de autenticación, elige <strong>OAuth</strong>. No hace falta escribir ningún <em>client ID</em> ni secreto: el asistente se registra solo.</li>
+      <li>El asistente abre una ventana de Hapee. <strong>Inicia sesión con tu usuario</strong> y aprueba la conexión (ver el punto siguiente).</li>
+      <li>Vuelves al asistente con el conector activo. Pídele, por ejemplo, «¿quién soy en Hapee?» para comprobar con qué usuario y subcuenta estás conectado.</li>
+    </ol>
+
+    <ul>
+      <li><strong>Claude</strong>: agrega un conector personalizado con la URL del conector.</li>
+      <li><strong>ChatGPT</strong>: agrega un conector MCP remoto con la URL del conector.</li>
+      <li><strong>Grok Bot</strong>: agrega un conector MCP remoto con la URL del conector.</li>
+    </ul>
+
+    <p>Si tu organización administra los conectores de forma centralizada, puede que la persona administradora tenga que agregarlo primero.</p>
+
+    <h2 id="login">Inicio de sesión y consentimiento</h2>
+
+    <p>La ventana que abre el asistente es la de <strong>beta.hapee.ai</strong>, la misma en la que entras a Hapee todos los días. Ahí inicias sesión como siempre:</p>
+
+    <ul>
+      <li>con tu <strong>correo y contraseña</strong>, más tu <strong>verificación en dos pasos</strong> si la tienes activa, o</li>
+      <li>con <strong>Google</strong>, si así entras normalmente.</li>
+    </ul>
+
+    <p>El asistente <strong>nunca ve tu contraseña</strong>: solo recibe un permiso temporal que Hapee emite cuando tú lo apruebas. Después del inicio de sesión aparece la pantalla de consentimiento, que muestra qué aplicación pide acceso, a qué dirección te va a devolver, con qué cuenta y agencia te estás conectando y qué podrá hacer. Ahí puedes <strong>quitar el permiso de escritura</strong> si quieres que el asistente solo pueda consultar.</p>
+
+    <h2 id="permisos">Qué puede hacer</h2>
+
+    <p>La conexión pide estos permisos (<em>scopes</em>):</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Permiso</th><th>Qué permite</th></tr>
+        <tr><td><code>hapee:read</code></td><td>Consultar la información que tú puedes ver en Hapee. Siempre se incluye: sin él la conexión no sirve.</td></tr>
+        <tr><td><code>hapee:write</code></td><td>Además, crear, editar y borrar donde tu perfil lo permite. Si lo quitas en la pantalla de consentimiento, las herramientas que modifican datos no aparecen y la API rechaza cualquier escritura.</td></tr>
+        <tr><td><code>offline_access</code></td><td>Mantener la conexión sin que tengas que iniciar sesión cada hora (ver <a href="#duracion">cuánto dura la conexión</a>). Hoy Hapee entrega el permiso de renovación en toda conexión aprobada, la aplicación lo pida o no.</td></tr>
+      </table>
+    </div>
+
+    <p><strong>Los permisos solo restan, nunca suman.</strong> Por encima de los <em>scopes</em> manda tu usuario real de Hapee: tu rol, tu perfil de permisos, los módulos activos y, si tu perfil es «solo lo asignado», solo lo que tienes asignado. Si tu administrador cambia los permisos de tu perfil, rigen desde la llamada siguiente; si te asigna otro rol u otro perfil, la conexión se desconecta y tienes que volver a conectar. Ninguna conexión puede hacer algo que tú no puedas hacer desde la pantalla.</p>
+
+    <p>La lista de herramientas que ve el asistente también se arma <strong>para ti</strong>: solo aparecen las que tus permisos permiten usar, y las de escritura solo si aprobaste <code>hapee:write</code>.</p>
+
+    <h2 id="subcuenta">Agencias y subcuentas</h2>
+
+    <ul>
+      <li><strong>Equipo de una agencia</strong> (dueño, administrador o miembro del equipo de la agencia): la conexión es de tu agencia y eliges la subcuenta en cada conversación con la herramienta <code>elegir_subcuenta</code>. Sin argumentos te lista las subcuentas que puedes ver; con un <code>cliente_id</code> fija esa subcuenta para el resto de la conversación. Solo acepta subcuentas que tu usuario ya puede ver en Hapee.</li>
+      <li><strong>Usuario de una subcuenta</strong> (cliente): la conexión queda atada a tu subcuenta. Si tienes acceso a más de una, eliges cuál en la pantalla de consentimiento; para cambiarla, vuelve a conectar.</li>
+      <li>Los accesos de administración de plataforma <strong>no</strong> se extienden al conector: por MCP, una cuenta de plataforma opera solo como equipo de su propia agencia.</li>
+    </ul>
+
+    <h2 id="herramientas">Herramientas</h2>
+
+    <p>El conector ofrece <strong>255 herramientas</strong> sobre la API de Hapee, más <code>elegir_subcuenta</code>: <strong>102 de consulta y 153 que modifican datos</strong>. Cuántas ves tú depende de tus permisos.</p>
+
+    <div class="dv-tabla-wrap">
+      <table id="tabla-herramientas">
+        <tr><th>Familia</th><th>Total</th><th>Consulta</th><th>Modifican</th></tr>
+        <tr><td>CRM: contactos, empresas, negocios, embudos, etapas, propiedades, objetos, etiquetas y tareas</td><td>69</td><td>22</td><td>47</td></tr>
+        <tr><td>Tareas y proyectos internos de la agencia</td><td>38</td><td>12</td><td>26</td></tr>
+        <tr><td>Productos, categorías y cotizaciones</td><td>25</td><td>8</td><td>17</td></tr>
+        <tr><td>Automatizaciones (workflows) y agentes de IA</td><td>24</td><td>8</td><td>16</td></tr>
+        <tr><td>Implementaciones y roadmap</td><td>23</td><td>10</td><td>13</td></tr>
+        <tr><td>Formularios, sitios, blog, publicaciones y medios</td><td>21</td><td>11</td><td>10</td></tr>
+        <tr><td>Agencia: subcuentas, equipo, departamentos, snapshots y estimaciones</td><td>17</td><td>12</td><td>5</td></tr>
+        <tr><td>Conversaciones, WhatsApp y campañas de email</td><td>16</td><td>7</td><td>9</td></tr>
+        <tr><td>Calendarios y citas</td><td>15</td><td>5</td><td>10</td></tr>
+        <tr><td>Informes, prospección y licitaciones</td><td>5</td><td>5</td><td>0</td></tr>
+        <tr><td>Identidad (<code>quien_soy</code>) y catálogo de diseño</td><td>2</td><td>2</td><td>0</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>255</strong></td><td><strong>102</strong></td><td><strong>153</strong></td></tr>
+      </table>
+    </div>
+
+    <p>Las herramientas de administración de la agencia (tareas internas, proyectos, subcuentas, snapshots) solo aparecen para el equipo de la agencia; un usuario de subcuenta no las ve.</p>
+
+    <h2 id="escritura">Herramientas que modifican</h2>
+
+    <p>Cada herramienta declara su naturaleza con las anotaciones estándar de MCP, para que tu asistente pueda pedirte confirmación antes de ejecutar algo:</p>
+
+    <ul>
+      <li><strong>Consulta</strong> (<code>readOnlyHint: true</code>): las 102 de lectura, más <code>elegir_subcuenta</code>. No cambian nada.</li>
+      <li><strong>Crean o agregan</strong> (<code>readOnlyHint: false</code>, <code>destructiveHint: false</code>): 41 herramientas, como crear una nota, una tarea o un embudo.</li>
+      <li><strong>Editan o borran</strong> (<code>readOnlyHint: false</code>, <code>destructiveHint: true</code>): 112 herramientas que cambian o eliminan algo que ya existe, o que actúan hacia afuera, como enviar un mensaje.</li>
+    </ul>
+
+    <div class="dv-aviso ojo">
+      <p><strong>Lo que el asistente hace con <code>hapee:write</code> queda hecho en tu cuenta real.</strong> Un mensaje enviado llega al contacto y un registro borrado se borra. Revisa lo que tu asistente te propone antes de confirmarlo, y si solo necesitas consultar, conéctalo sin el permiso de escritura.</p>
+    </div>
+
+    <h2 id="duracion">Cuánto dura la conexión</h2>
+
+    <ul>
+      <li>El <strong>permiso de acceso</strong> que usa el asistente dura <strong>1 hora</strong>.</li>
+      <li>El asistente lo renueva solo con un <strong>permiso de renovación</strong> que dura <strong>30 días desde su último uso</strong> y que cambia en cada renovación (el anterior deja de servir). Si alguien intentara reutilizar uno ya usado, Hapee corta la conexión completa.</li>
+      <li>Pase lo que pase, a los <strong>90 días</strong> desde que la aprobaste la conexión vence y tienes que iniciar sesión otra vez.</li>
+    </ul>
+
+    <h2 id="desconectar">Desconectarlo</h2>
+
+    <p>Tienes varias formas de cortar el acceso:</p>
+
+    <ul>
+      <li><strong>Desde tu asistente</strong>: quita o desconecta el conector en su configuración. Si el asistente avisa a Hapee al desconectar, la conexión se revoca en el momento; si no, deja de usarse y vence sola en los plazos de arriba.</li>
+      <li><strong>Cambiando tu contraseña o tu verificación en dos pasos</strong>: desconecta automáticamente todas tus conexiones de asistentes.</li>
+      <li><strong>Cambios en tu usuario</strong>: si tu administrador te cambia el rol, el perfil de permisos, la agencia o la subcuenta, o desactiva tu usuario, tus conexiones se desconectan solas.</li>
+      <li><strong>La persona dueña de la agencia</strong> puede revocar cualquier conexión de su agencia desde la pantalla de API keys de Hapee: aparecen como «OAuth: &lt;nombre de la aplicación&gt;».</li>
+      <li>Si necesitas ayuda para cortar un acceso, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</li>
+    </ul>
+
+    <h2 id="limites">Límites</h2>
+
+    <ul>
+      <li>Cada conexión tiene el mismo límite que cualquier credencial de la API: <strong>100 llamadas por minuto</strong>. Si tu asistente lo supera, recibe un error temporal y basta con esperar unos segundos.</li>
+      <li>El registro automático de aplicaciones está limitado a <strong>20 registros por hora</strong> desde una misma dirección IP.</li>
+      <li>Las listas devuelven hasta 100 elementos por página, igual que la API.</li>
+    </ul>
+
+    <h2 id="tecnico">Detalle técnico</h2>
+
+    <p>Para quien integra un cliente MCP propio o revisa el conector:</p>
+
+    <ul>
+      <li><strong>Transporte</strong>: MCP sobre <em>Streamable HTTP</em> en la URL del conector.</li>
+      <li><strong>Descubrimiento</strong>: un request sin token recibe <code>401</code> con <code>WWW-Authenticate: Bearer resource_metadata=…</code>, que apunta a <code>/.well-known/oauth-protected-resource</code> en el mismo host (RFC 9728).</li>
+      <li><strong>Servidor de autorización</strong>: <code>https://beta.hapee.ai</code>, con su metadata en <code>/.well-known/oauth-authorization-server</code> (RFC 8414).</li>
+      <li><strong>OAuth 2.1</strong>: registro dinámico de clientes públicos (RFC 7591), PKCE obligatorio solo con <code>S256</code>, rotación del permiso de renovación con detección de reutilización, revocación (RFC 7009) y audiencia ligada al recurso (RFC 8707). Las direcciones de retorno tienen que ser <code>https</code>, o <code>http</code> solo hacia la propia máquina.</li>
+      <li><strong>Sesiones</strong>: cada sesión MCP queda atada a la persona que la abrió; un token de otra persona en la misma sesión se rechaza.</li>
+    </ul>
+
+    <h2 id="privacidad">Privacidad</h2>
+
+    <p>El conector solo accede a lo que tus propios permisos te dejan ver, y el servidor MCP no guarda tus datos de Hapee: lo que consulta pasa hacia tu asistente y queda sujeto a la política de privacidad de ese asistente. El detalle de qué se guarda, dónde y por cuánto tiempo está en la sección <a href="/politica-privacidad.html#conector-mcp">«Conector MCP para asistentes de IA» de nuestra política de privacidad</a>.</p>
+
+    <div class="dv-aviso">
+      <p>¿Dudas, o algo que no funciona como dice aquí? Escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/politica-privacidad.html">Política de privacidad</a> · <a href="/terminos.html">Términos</a></p>
+  <p>Conector MCP · Documentación actualizada al 10 de octubre de 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

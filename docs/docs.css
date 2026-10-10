@@ -218,3 +218,12 @@ code {
 @media (hover:none),(max-width:760px){
   .dv-nav-links a{display:inline-flex;align-items:center;min-height:40px}
 }
+
+/* Encabezado con ícono (guía del conector MCP). El ícono es el de las apps
+   (h blanca sobre degradado naranja → burdeo): proporción fija, nunca deformado
+   ni con filtros de color. */
+.dv-titulo-icono { display: flex; align-items: center; gap: 16px; }
+.dv-titulo-icono img { display: block; width: 64px; height: 64px; flex-shrink: 0;
+  object-fit: contain; border-radius: 14px; }
+.dv-titulo-icono h1 { margin-bottom: 0; }
+.dv-titulo-icono + .dv-bajada { margin-top: 14px; }

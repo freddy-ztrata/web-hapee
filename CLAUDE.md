@@ -27,7 +27,7 @@ Main funnel:
 
 Content:
 - `blog.html` + `blog/*.html` — Blog index plus articles. Articles share `blog/article.css` and `blog/article.js`. Add new articles to `blog.html` and `sitemap.xml`.
-- `docs/` — Public API documentation (`hapee.ai/docs`): `index`, `empezar`, `referencia`, `webhooks`, `erp`, sharing `docs/docs.css` + `docs/docs.js`. Copied as a whole directory, so a new guide needs no `COPY` line; `py docs/_verificar_docs.py` asserts that and checks internal links.
+- `docs/` — Public API documentation (`hapee.ai/docs`): `index`, `empezar`, `referencia`, `webhooks`, `erp`, `mcp` (MCP connector guide, OAuth per user; its URL lives ONLY in the `#url-conector` block and in `URL_CONECTOR` of `_verificar_docs.py` — change both at the cutover to `mcp.hapee.ai`), sharing `docs/docs.css` + `docs/docs.js`. Copied as a whole directory, so a new guide needs no `COPY` line; `py docs/_verificar_docs.py` asserts that and checks internal links.
 - `rrss-templates.html` — Social media template gallery.
 - `transformacion.html` — Before/after transformation showcase (uses `img/transformacion-*.mp4`).
 - `juego.html` — Interactive game/entertainment page. Served at `/juego` (clean URL).
@@ -40,6 +40,7 @@ Legal:
 Assets:
 - `js/whatsapp.js` — Site-wide floating WhatsApp button (loaded via `<script src="/js/whatsapp.js" defer>` on every deployed page except `demo-countdown.html`). Single source of truth for contact number + prefilled message.
 - `img/vsl-hapee.mp4` (86MB) — VSL video used in `agenda-tu-demo.html`. Above GitHub's 50MB recommended limit; if adding more videos consider CDN hosting instead of bundling.
+- `img/hapee-mcp-icon.png` (1024) + `-512` / `-256` — official **app icon** (white `h` on orange→burdeo gradient, same as the iOS/Android/desktop apps, source `hapee-mobile/assets/icon.png`). Used as the MCP connector logo and `og:image` on `docs/mcp.html`. Distinct from the wordmark `img/logo-hapee.png`; same rules (never deform or recolor).
 - `llms.txt` — LLM-optimized index at root, for AI crawlers.
 
 **Not deployed (workspace only, listed in `.paginas-locales`):** `_render.html` (render helper), `blog-hero-variants.html`, `juego-cathedral.html`, `widget-opciones.html`, `widget-reemplaza-opciones.html` (design explorations). To publish one: remove it from `.paginas-locales` **and** add its `COPY` line.

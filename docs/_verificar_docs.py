@@ -40,7 +40,7 @@ def titulo(t):
 
 
 PAGINAS = ["docs/index.html", "docs/empezar.html", "docs/erp.html",
-           "docs/webhooks.html", "docs/referencia.html"]
+           "docs/webhooks.html", "docs/mcp.html", "docs/referencia.html"]
 ESTATICOS = ["docs/docs.css", "docs/docs.js"]
 
 
@@ -258,6 +258,94 @@ _aviso_4xx = next((a for a in _parrafos if "_http_status" in a), "")
 # un nodo que no va a encontrar, y ahi concluye que el aviso esta vencido.
 chk(bool(_aviso_4xx) and "«Si / Si no»" in _aviso_4xx,
     "y dice QUE hacer, nombrando el nodo como se llama en la pantalla")
+
+# ══════════════════════════════════════════════════════════════════════════
+titulo("H. El conector MCP: lo que un revisor del directorio va a comprobar")
+# ══════════════════════════════════════════════════════════════════════════
+# La URL del conector vive en UN solo lugar de la pagina (el bloque
+# `#url-conector`); el resto del texto dice «la URL del conector». Cuando se
+# haga el corte a mcp.hapee.ai se cambia esta constante y ese bloque, nada mas:
+# si la URL apareciera repetida, una copia vieja quedaria mandando gente al
+# servidor retirado sin que nada falle.
+URL_CONECTOR = "https://mcp-oauth.hapee.ai/mcp"
+
+mcp = leer("docs/mcp.html")
+_bloque_url = re.search(r'id="url-conector">\s*<pre><code>([^<]+)</code>', mcp)
+chk(bool(_bloque_url) and _bloque_url.group(1).strip() == URL_CONECTOR,
+    "la guia MCP publica la URL vigente del conector en su bloque #url-conector")
+_urls_mcp = re.findall(r"https://[a-z0-9.-]*hapee\.ai/mcp\b", mcp)
+chk(_urls_mcp == [URL_CONECTOR],
+    "y la URL aparece UNA sola vez (un solo lugar que cambiar en el corte)")
+# La forma vieja (URL secreta por persona, via el proxy por-slug) no se
+# documenta: es justamente lo que el conector OAuth reemplaza.
+chk("hapee-mcp.digitals.cl" not in mcp and "/c/zmcp_" not in mcp,
+    "la guia no ofrece la conexion vieja con credencial en la URL")
+
+# Los numeros de la tabla tienen que cuadrar: total = consulta + modifican por
+# fila, la fila Total es la suma, y el texto dice lo mismo que la tabla. Los
+# valores salen de las anotaciones reales del MCP (255 = 102 + 153).
+_tabla = re.search(r'<table id="tabla-herramientas">(.*?)</table>', mcp, re.S)
+_filas = []
+if _tabla:
+    for fila in re.findall(r"<tr>(.*?)</tr>", _tabla.group(1), re.S):
+        celdas = [re.sub(r"<[^>]+>", "", c).strip()
+                  for c in re.findall(r"<td>(.*?)</td>", fila, re.S)]
+        if len(celdas) == 4 and all(c.isdigit() for c in celdas[1:]):
+            _filas.append((celdas[0], int(celdas[1]), int(celdas[2]), int(celdas[3])))
+_cuerpo = [f for f in _filas if f[0] != "Total"]
+_total = next((f for f in _filas if f[0] == "Total"), None)
+chk(bool(_cuerpo) and all(t == r + w for _, t, r, w in _cuerpo),
+    "cada familia de herramientas suma consulta + modifican = total")
+chk(_total is not None and _total[1:] == (sum(f[1] for f in _cuerpo),
+                                          sum(f[2] for f in _cuerpo),
+                                          sum(f[3] for f in _cuerpo)),
+    "la fila Total es la suma de las familias")
+chk(_total is not None and _total[1:] == (255, 102, 153),
+    "y coincide con el MCP real: 255 herramientas, 102 de consulta, 153 que modifican")
+chk("<strong>255 herramientas</strong>" in mcp
+    and "<strong>102 de consulta y 153 que modifican datos</strong>" in mcp,
+    "el texto dice los mismos numeros que la tabla")
+
+for _scope in ("hapee:read", "hapee:write", "offline_access"):
+    chk("<td><code>%s</code></td>" % _scope in mcp,
+        "la tabla de permisos explica el scope %s" % _scope)
+chk("elegir_subcuenta" in mcp, "explica como elige subcuenta el equipo de agencia")
+chk("<strong>1 hora</strong>" in mcp and "<strong>30 días desde su último uso</strong>" in mcp
+    and "<strong>90 días</strong>" in mcp,
+    "dice cuanto duran el acceso (1 h), la renovacion (30 d) y el tope (90 d)")
+chk("mailto:info@hapee.ai" in mcp and "soporte@" not in mcp,
+    "el contacto es info@hapee.ai (soporte@ esta retirado)")
+
+# El icono del conector es el de las apps (h blanca sobre degradado). El
+# bloque C no mira <img> ni <meta>, y nginx da 404 real a un .png que falta:
+# la tarjeta del directorio y la vista previa saldrian sin imagen, sin error.
+def _png_lado(ruta):
+    try:
+        b = io.open(ruta, "rb").read(24)
+    except OSError:
+        return None
+    if b[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+
+
+for _ico, _lado in (("img/hapee-mcp-icon.png", 1024), ("img/hapee-mcp-icon-512.png", 512),
+                    ("img/hapee-mcp-icon-256.png", 256)):
+    chk(_png_lado(_ico) == (_lado, _lado), "%s existe y es un PNG de %dx%d" % (_ico, _lado, _lado))
+_refs_ico = re.findall(r'(?:src|content)="(?:https://hapee\.ai)?(/img/hapee-mcp-icon[^" ]*\.png)"', mcp)
+_refs_ico += re.findall(r'(/img/hapee-mcp-icon[^" ]*\.png) \dx', mcp)
+chk('property="og:image" content="https://hapee.ai/img/hapee-mcp-icon.png"' in mcp,
+    "la guia declara el icono del conector como og:image")
+chk(bool(_refs_ico) and all(os.path.exists(r.lstrip("/")) for r in _refs_ico),
+    "toda referencia al icono del conector apunta a un archivo real")
+
+# El enlace a la politica lleva ancla, y el bloque C la recorta: hay que
+# mirar que el id exista en la politica, y en sus dos traducciones.
+chk('href="/politica-privacidad.html#conector-mcp"' in mcp,
+    "la guia enlaza la seccion del conector en la politica de privacidad")
+for _pol in ("politica-privacidad.html", "privacy-policy.html", "politica-privacidade.html"):
+    chk('id="conector-mcp"' in leer(_pol),
+        "%s tiene la seccion #conector-mcp" % _pol)
 
 # ══════════════════════════════════════════════════════════════════════════
 print("\n" + "=" * 72)
