@@ -264,10 +264,10 @@ titulo("H. El conector MCP: lo que un revisor del directorio va a comprobar")
 # ══════════════════════════════════════════════════════════════════════════
 # La URL del conector vive en UN solo lugar de la pagina (el bloque
 # `#url-conector`); el resto del texto dice «la URL del conector». Cuando se
-# haga el corte a mcp.hapee.ai se cambia esta constante y ese bloque, nada mas:
+# hizo el corte a mcp.hapee.ai (2026-10-12) se cambio esta constante y ese bloque:
 # si la URL apareciera repetida, una copia vieja quedaria mandando gente al
 # servidor retirado sin que nada falle.
-URL_CONECTOR = "https://mcp-oauth.hapee.ai/mcp"
+URL_CONECTOR = "https://mcp.hapee.ai/mcp"
 
 mcp = leer("docs/mcp.html")
 _bloque_url = re.search(r'id="url-conector">\s*<pre><code>([^<]+)</code>', mcp)
@@ -283,7 +283,7 @@ chk("hapee-mcp.digitals.cl" not in mcp and "/c/zmcp_" not in mcp,
 
 # Los numeros de la tabla tienen que cuadrar: total = consulta + modifican por
 # fila, la fila Total es la suma, y el texto dice lo mismo que la tabla. Los
-# valores salen de las anotaciones reales del MCP (255 = 102 + 153).
+# valores salen de las anotaciones reales del MCP oficial, repo hapee-mcp (240 = 85 + 155).
 _tabla = re.search(r'<table id="tabla-herramientas">(.*?)</table>', mcp, re.S)
 _filas = []
 if _tabla:
@@ -300,16 +300,16 @@ chk(_total is not None and _total[1:] == (sum(f[1] for f in _cuerpo),
                                           sum(f[2] for f in _cuerpo),
                                           sum(f[3] for f in _cuerpo)),
     "la fila Total es la suma de las familias")
-chk(_total is not None and _total[1:] == (255, 102, 153),
-    "y coincide con el MCP real: 255 herramientas, 102 de consulta, 153 que modifican")
-chk("<strong>255 herramientas</strong>" in mcp
-    and "<strong>102 de consulta y 153 que modifican datos</strong>" in mcp,
+chk(_total is not None and _total[1:] == (240, 85, 155),
+    "y coincide con el MCP real: 240 herramientas, 85 de consulta, 155 que modifican")
+chk("<strong>240 herramientas</strong>" in mcp
+    and "<strong>85 de consulta y 155 que modifican datos</strong>" in mcp,
     "el texto dice los mismos numeros que la tabla")
 
 for _scope in ("hapee:read", "hapee:write", "offline_access"):
     chk("<td><code>%s</code></td>" % _scope in mcp,
         "la tabla de permisos explica el scope %s" % _scope)
-chk("elegir_subcuenta" in mcp, "explica como elige subcuenta el equipo de agencia")
+chk("select_subaccount" in mcp, "explica como elige subcuenta el equipo de agencia")
 chk("<strong>1 hora</strong>" in mcp and "<strong>30 días desde su último uso</strong>" in mcp
     and "<strong>90 días</strong>" in mcp,
     "dice cuanto duran el acceso (1 h), la renovacion (30 d) y el tope (90 d)")

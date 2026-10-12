@@ -58,8 +58,8 @@ MUTACIONES = [
      "una segunda URL del conector se cuela en el texto: dos lugares que cambiar",
      MCP),
 
-    ('<pre><code>https://mcp-oauth.hapee.ai/mcp</code></pre>',
-     '<pre><code>https://mcp.hapee.ai/mcp</code></pre>',
+    ('<pre><code>https://mcp.hapee.ai/mcp</code></pre>',
+     '<pre><code>https://mcp-oauth.hapee.ai/mcp</code></pre>',
      "el bloque publica una URL que no es la vigente",
      MCP),
 
@@ -73,13 +73,13 @@ MUTACIONES = [
      "una familia deja de cuadrar consulta + modifican = total",
      MCP),
 
-    ('<td><strong>255</strong></td><td><strong>102</strong></td><td><strong>153</strong></td>',
-     '<td><strong>254</strong></td><td><strong>102</strong></td><td><strong>152</strong></td>',
+    ('<td><strong>240</strong></td><td><strong>85</strong></td><td><strong>155</strong></td>',
+     '<td><strong>239</strong></td><td><strong>85</strong></td><td><strong>154</strong></td>',
      "la fila Total ya no es la suma de las familias",
      MCP),
 
-    ('<strong>102 de consulta y 153 que modifican datos</strong>',
-     '<strong>110 de consulta y 145 que modifican datos</strong>',
+    ('<strong>85 de consulta y 155 que modifican datos</strong>',
+     '<strong>95 de consulta y 145 que modifican datos</strong>',
      "el texto contradice a la tabla",
      MCP),
 
