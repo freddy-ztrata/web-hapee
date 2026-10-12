@@ -130,6 +130,34 @@ body{position:fixed;inset:0;width:100%;font-family:'Plus Jakarta Sans',-apple-sy
 #wa form button{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:#00a884;display:grid;place-items:center;cursor:pointer}
 #wa form svg{width:20px;height:20px}
 #wa .wpie{flex:none;font-size:10px;color:#667781;text-align:center;padding:0 8px 7px;background:#efeae2;font-weight:600}
+#wa .wtabs{flex:none;display:flex;gap:6px;padding:0 10px 8px;background:#075E54}
+#wa .wtabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;height:36px;border:0;border-radius:100px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.82);font-family:inherit;font-size:12.5px;font-weight:800;cursor:pointer;padding:0 10px}
+#wa .wtabs button[aria-selected=true]{background:#fff;color:#075E54}
+#wa .wtabs svg{width:16px;height:16px;flex:none}
+#wa.dm{background:#fff;color:#000}
+#wa.dm .wcab{background:#fff;color:#000;border-bottom:0}
+#wa.dm .wx{color:#000}
+#wa.dm .wcab small{color:#737373}
+#wa.dm .wav{box-shadow:0 0 0 2px #fff,0 0 0 4px #D62976}
+#wa.dm .wsim{color:#737373;border-color:#dbdbdb}
+#wa.dm .wtabs{background:#fff;border-bottom:1px solid #efefef}
+#wa.dm .wtabs button{background:#f2f2f2;color:#4a4a4a}
+#wa.dm .wtabs button[aria-selected=true]{background:#000;color:#fff}
+#wa.dm .wmsgs{background:#fff;background-image:none;gap:4px}
+#wa.dm .wm{border-radius:20px;padding:8px 13px;box-shadow:none;font-size:14px}
+#wa.dm .wm.in{background:#efefef;border-top-left-radius:20px}
+#wa.dm .wm.out{background:linear-gradient(135deg,#A033FF,#5B51F6 55%,#3797F0);color:#fff;border-top-right-radius:20px}
+#wa.dm .wt{display:none}
+#wa.dm .wsys{background:transparent;box-shadow:none;color:#737373}
+#wa.dm .wsys.aviso{background:#fff3c4;color:#5c4a00}
+#wa.dm .wact button{background:#3797F0;box-shadow:none}
+#wa.dm .wchips,#wa.dm form,#wa.dm .wpie{background:#fff}
+#wa.dm .wchips button{border-color:#dbdbdb;color:#000}
+#wa.dm input{border:1px solid #dbdbdb;box-shadow:none}
+#wa.dm form button{background:#3797F0}
+#wa.dm .wpie{color:#737373}
+#wa.dm .wesc i{background:#a8a8a8}
+body.sobreGlobo{cursor:pointer!important}
 #waBtn{position:fixed;right:16px;bottom:calc(62px + env(safe-area-inset-bottom));z-index:41;height:38px;padding:0 14px 0 12px;color:#fff;font-family:inherit;font-size:11px;font-weight:800;letter-spacing:.03em;cursor:pointer;display:none;align-items:center;gap:8px}
 #waBtn.on{display:flex}
 #waBtn i{width:8px;height:8px;border-radius:50%;background:#00a884;box-shadow:0 0 0 3px rgba(0,168,132,.3);display:none}
@@ -219,7 +247,7 @@ html.emb.tour.lista #embCta{display:inline-flex;position:fixed;left:50%;bottom:c
 <button id="snd" class="pill" type="button">SONIDO · NO</button>
 <div id="burbujas"></div>
 <div id="linea" class="pill" aria-hidden="true"><b class="l1">L1</b><span class="de" id="lnDe"></span><span class="riel"><i class="pt" id="lnPt"></i></span><span class="a" id="lnA"></span></div>
-<section id="wa" aria-label="Chat con Vía by Hapee (simulación)"><div class="wcab"><button class="wx" id="waX" type="button" aria-label="Cerrar chat">‹</button><svg class="wav" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="wag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs><circle cx="18" cy="18" r="18" fill="url(#wag)"/><rect x="6.5" y="9" width="23" height="17" rx="8.5" fill="#1e1222"/><path d="M11 16.4q2.2-1.6 4.4 0M20.6 16.4q2.2-1.6 4.4 0" stroke="#8FE4FF" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M15.4 21q2.6 1.7 5.2 0" stroke="#8FE4FF" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><div><b>Vía by Hapee</b><small id="waEst">en línea</small></div><span class="wsim">Simulación de chat</span></div><div class="wmsgs" id="waMsgs" aria-live="polite"></div><div class="wchips" id="waChips"></div><form id="waForm" autocomplete="off"><input id="waIn" type="text" maxlength="240" placeholder="Escribe un mensaje" aria-label="Mensaje para Vía"><button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.3 10l12.6 2-12.6 2z" fill="#fff"/></svg></button></form><div class="wpie" id="waPie">Vía by Hapee · simulación</div></section>
+<section id="wa" aria-label="Chat con Vía by Hapee (simulación)"><div class="wcab"><button class="wx" id="waX" type="button" aria-label="Cerrar chat">‹</button><svg class="wav" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="wag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs><circle cx="18" cy="18" r="18" fill="url(#wag)"/><rect x="6.5" y="9" width="23" height="17" rx="8.5" fill="#1e1222"/><path d="M11 16.4q2.2-1.6 4.4 0M20.6 16.4q2.2-1.6 4.4 0" stroke="#8FE4FF" stroke-width="1.9" fill="none" stroke-linecap="round"/><path d="M15.4 21q2.6 1.7 5.2 0" stroke="#8FE4FF" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg><div><b>Vía by Hapee</b><small id="waEst">en línea</small></div><span class="wsim">Simulación de chat</span></div><div class="wtabs" role="tablist" aria-label="Canal del chat simulado"><button id="waTabWA" type="button" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M12 2.2a9.8 9.8 0 0 0-8.4 14.8L2.2 21.8l4.9-1.3A9.8 9.8 0 1 0 12 2.2zm0 1.8a8 8 0 1 1-4.2 14.8l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4z"/><path fill="currentColor" transform="translate(6.4 6.4) scale(.47)" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>WhatsApp</button><button id="waTabDM" type="button" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 2.5 11 13M21.5 2.5 15 21.5 11 13 2.5 9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>DM</button></div><div class="wmsgs" id="waMsgs" aria-live="polite"></div><div class="wchips" id="waChips"></div><form id="waForm" autocomplete="off"><input id="waIn" type="text" maxlength="240" placeholder="Escribe un mensaje" aria-label="Mensaje para Vía"><button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.3 10l12.6 2-12.6 2z" fill="#fff"/></svg></button></form><div class="wpie" id="waPie">Vía by Hapee · simulación</div></section>
 <button id="waBtn" class="pill" type="button"><i></i>CHAT CON VÍA</button>
 <section id="chat" aria-live="polite"><div class="cab"><img src="assets/brand/favicon.png" alt=""><div><b id="chN">Vía</b><small id="chM">Asistente de viaje con IA</small></div><button class="x" id="chX" type="button" aria-label="Cerrar">×</button></div><div class="msgs" id="chMsgs"></div><div class="chips" id="chChips"></div><form id="chForm" autocomplete="off"><input id="chIn" type="text" maxlength="240" placeholder="Pregúntale a Vía…"><button type="submit">Enviar</button></form><div class="pie" id="chEst">Vía by Hapee · demo</div></section>
 <div id="touch"><div id="look"></div><div id="stick"><i></i></div><button id="tVer" type="button">HABLAR</button></div>
@@ -1508,7 +1536,7 @@ function saludoHora(){let h=12;try{h=+new Intl.DateTimeFormat('es-CL',{timeZone:
 function contDe(ag){const c=COMBINA[estN()];const l=ag.cont.filter(t=>c||t.indexOf('{combina}')<0).map(t=>t.replace('{combina}','aquí mismo combinas con la '+c));return l.length?l:['Hay un retraso en la Línea 1. Vía te avisa por WhatsApp apenas se normalice.'];}
 function lineaAnden(r){const p=proxTren(r.anden);if(CONT.on)return pick(contDe(r));const fin=proxDe(EST,r.anden)<0;if(fin&&(p.en||p.llegando))return 'Estación terminal: este tren termina aquí.';if(p.en)return 'Este tren va a '+r.dest+'. '+txtProxEst(r.anden)+'.';if(p.llegando||p.s<35)return 'Ya viene el tren a '+r.dest+'. Detrás de la línea amarilla.';
  const m=minutos(p.s);return 'El próximo a '+r.dest+' llega en '+m+(m===1?' minuto.':' minutos.');}
-function arrancaRobots(){ROLES.forEach(r=>nuevoBot(r,r.pos,r.yaw));unaPasada(scene);compilaComposer();$('#load').textContent='Vía en su puesto';}
+function arrancaRobots(){ROLES.forEach(r=>nuevoBot(r,r.pos,r.yaw));creaGlobos();unaPasada(scene);compilaComposer();$('#load').textContent='Vía en su puesto';}
 const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/');
 const gltfLoader=new GLTFLoader();gltfLoader.setDRACOLoader(draco);
 gltfLoader.load('assets/rig/hapee-rig-d.glb',gltf=>{RIG=gltf.scene;RIG.traverse(o=>{if(o.isMesh&&o.material){o.material.envMapIntensity=.8;o.material.roughness=Math.min(o.material.roughness,.7);}});
@@ -1521,8 +1549,84 @@ function decirP(p,txt,ms){decir(p,txt,ms,'per');}
 function proyecta(){const now=performance.now();HABLAN.forEach(e=>{if(!e.bub){HABLAN.delete(e);return;}if(now>e.bubHasta||(e.on===false)){e.bub.remove();e.bub=null;HABLAN.delete(e);return;}
  let y0;if(e.m){const head=e.rig&&e.rig.head;if(head)head.getWorldPosition(V3);else{e.m.getWorldPosition(V3);V3.y+=1.4;}V3.y+=.62;y0=e.m.position.y;}else{V3.set(e.x,e.y+e.h+.28,e.z);y0=e.y;}
  const d=V3.distanceTo(camera.position);const nivel=Math.abs(y0-P.y)<3.2;V3.project(camera);
- if(!nivel||V3.z>1||d>17||Math.abs(V3.x)>1.25||(e.m&&!e.m.visible)){e.bub.style.opacity='0';return;}
- const sc=Math.max(.62,Math.min(1.05,7/d));const mw=(e.bub.offsetWidth||200)*sc/2+10;const x=Math.max(mw,Math.min(W-mw,(V3.x*.5+.5)*W)),y=Math.max(70,(-V3.y*.5+.5)*H);e.bub.style.transform='translate(-50%,-100%) translate('+x.toFixed(0)+'px,'+y.toFixed(0)+'px) scale('+sc.toFixed(2)+')';e.bub.style.opacity='';});}
+ if(!nivel||V3.z>1||d>17||Math.abs(V3.x)>1.25||(e.m&&!e.m.visible)){e.bub.style.opacity='0';e.bubTop=NaN;return;}
+ const sc=Math.max(.62,Math.min(1.05,7/d));const mw=(e.bub.offsetWidth||200)*sc/2+10;const x=Math.max(mw,Math.min(W-mw,(V3.x*.5+.5)*W)),y=Math.max(70,(-V3.y*.5+.5)*H);e.bub.style.transform='translate(-50%,-100%) translate('+x.toFixed(0)+'px,'+y.toFixed(0)+'px) scale('+sc.toFixed(2)+')';e.bub.style.opacity='';e.bubTop=y-(e.bub.offsetHeight||60)*sc;});}
+
+/* ══ GLOBOS «¡Háblame por tu celular!» ══ uno sobre cada robot: UNA malla instanciada (1 dibujo) con UNA textura compartida.
+   Mira siempre a la cámara, flota y respira; cerca se ve entero (tamaño fijo en pantalla, legible en el celular),
+   lejos se achica como un objeto real y se atenúa. Clic o toque: el ícono de WhatsApp abre el chat simulado en estilo
+   WhatsApp, el de DM en estilo mensaje directo; el texto abre WhatsApp. Íconos dibujados aquí, en silueta, sin placas. */
+const GLB_CW=1024,GLB_CH=512,GLB_ALTO=2.0,GLB_TOPE=1.5,GLB_QUIETO=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const GLB={mesh:null,est:[],tex:null};
+const _gp=new THREE.Vector3(),_gv=new THREE.Vector3(),_gu=new THREE.Vector3(),_gm=new THREE.Matrix4(),_gs=new THREE.Vector3();
+const glbS=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
+const PATH_FONO='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z';
+function glifoWA(s){const c=document.createElement('canvas');c.width=c.height=s;const g=c.getContext('2d');const R=s*.36,X=s*.53,Y=s*.46;
+ const a0=Math.PI*.60,a1=Math.PI*.86;g.fillStyle='#25D366';g.beginPath();
+ g.arc(X,Y,R,a1,a0+Math.PI*2,false);g.lineTo(X-R*1.08,Y+R*1.1);g.closePath();
+ g.moveTo(X+R*.79,Y);g.arc(X,Y,R*.79,0,Math.PI*2,true);g.fill('evenodd');
+ const k=R*1.0/18;g.translate(X,Y);g.scale(k,k);g.translate(-12,-12);g.fill(new Path2D(PATH_FONO));return c;}
+function glifoDM(s){const c=document.createElement('canvas');c.width=c.height=s;const g=c.getContext('2d');const k=s*.80/20;
+ g.translate(s/2,s/2);g.scale(k,k);g.translate(-12,-12);
+ const gr=g.createLinearGradient(3,21,21,3);gr.addColorStop(0,'#FEDA75');gr.addColorStop(.28,'#FA7E1E');gr.addColorStop(.55,'#D62976');gr.addColorStop(.8,'#962FBF');gr.addColorStop(1,'#4F5BD5');
+ g.fillStyle=gr;g.lineJoin='round';g.beginPath();g.moveTo(22,2);g.lineTo(15,22);g.lineTo(11,13);g.lineTo(2,9);g.closePath();g.fill();g.strokeStyle=gr;g.lineWidth=.8;g.stroke();
+ g.globalCompositeOperation='destination-out';g.lineWidth=1.9;g.lineCap='round';g.beginPath();g.moveTo(11.4,12.6);g.lineTo(18.4,5.6);g.stroke();return c;}
+function pintaGlobo(g){const W_=GLB_CW,x0=44,y0=26,x1=W_-44,y1=400,r=104,cx=W_/2,tip=486;g.clearRect(0,0,W_,GLB_CH);
+ const forma=()=>{g.beginPath();g.moveTo(x0+r,y0);g.lineTo(x1-r,y0);g.arcTo(x1,y0,x1,y0+r,r);g.lineTo(x1,y1-r);g.arcTo(x1,y1,x1-r,y1,r);
+  g.lineTo(cx+50,y1);g.quadraticCurveTo(cx+12,y1+34,cx,tip);g.quadraticCurveTo(cx-12,y1+34,cx-50,y1);
+  g.lineTo(x0+r,y1);g.arcTo(x0,y1,x0,y1-r,r);g.lineTo(x0,y0+r);g.arcTo(x0,y0,x0+r,y0,r);g.closePath();};
+ g.save();g.shadowColor='rgba(0,0,0,.5)';g.shadowBlur=22;g.shadowOffsetY=6;forma();g.fillStyle='rgba(17,15,22,.95)';g.fill();g.restore();
+ const gr=g.createLinearGradient(x0,y0,x1,y1);gr.addColorStop(0,'#FA5000');gr.addColorStop(1,'#CD2349');forma();g.lineWidth=7;g.strokeStyle=gr;g.stroke();
+ const S=168;g.drawImage(glifoWA(S),cx-122-S/2,160-S/2);g.drawImage(glifoDM(S),cx+122-S/2,160-S/2);
+ g.strokeStyle='rgba(255,255,255,.16)';g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(cx,108);g.lineTo(cx,212);g.stroke();
+ const txt='¡Háblame por tu celular!';let fs=80;g.font='800 '+fs+'px '+FONT;while(g.measureText(txt).width>x1-x0-64&&fs>40){fs-=2;g.font='800 '+fs+'px '+FONT;}
+ g.fillStyle='#fff';g.textAlign='center';g.textBaseline='middle';g.fillText(txt,cx,318);}
+function creaGlobos(){if(GLB.mesh||!bots.length)return;const c=document.createElement('canvas');c.width=GLB_CW;c.height=GLB_CH;pintaGlobo(c.getContext('2d'));
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=maxAniso;GLB.tex=t;
+ const n=bots.length,geo=new THREE.PlaneGeometry(1,GLB_CH/GLB_CW);geo.translate(0,GLB_CH/GLB_CW/2,0);
+ const op=new THREE.InstancedBufferAttribute(new Float32Array(n),1);op.setUsage(THREE.DynamicDrawUsage);geo.setAttribute('aOp',op);
+ const mat=new THREE.ShaderMaterial({uniforms:{map:{value:t}},transparent:true,depthWrite:false,depthTest:true,toneMapped:false,
+  vertexShader:'attribute float aOp;varying vec2 vUv;varying float vOp;void main(){vUv=uv;vOp=aOp;gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.0);}',
+  fragmentShader:'uniform sampler2D map;varying vec2 vUv;varying float vOp;void main(){vec4 c=texture2D(map,vUv);float a=c.a*vOp;if(a<.004)discard;gl_FragColor=vec4(c.rgb,a);}'});
+ const m=new THREE.InstancedMesh(geo,mat,n);m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);m.frustumCulled=false;m.renderOrder=20;m.name='globos';
+ _gs.set(0,0,0);for(let i=0;i<n;i++){_gm.compose(_gp.set(0,-99,0),camera.quaternion,_gs);m.setMatrixAt(i,_gm);}
+ scene.add(m);GLB.mesh=m;GLB.est=bots.map((b,i)=>({b:b,vis:0,cerca:false,pop:0,lift:0,ph:i*1.7,sx:0,sy:0,w:0,h:0,op:0,d:99}));
+ // la fuente puede llegar tarde: se repinta cuando esté
+ try{document.fonts.load("800 64px 'Plus Jakarta Sans'").then(function(){pintaGlobo(c.getContext('2d'));t.needsUpdate=true;});}catch(e){}}
+function actualizaGlobos(dt,t){if(!GLB.mesh)return;camera.updateMatrixWorld();
+ const tanF=2*Math.tan(camera.fov*Math.PI/360),wCerca=Math.max(200,Math.min(250,Math.min(W,H)*.56));
+ const activo=(window.__hqOn||(TOUR.on&&!!TOUR.curva))&&!chatCon&&!VIAJE.on;_gu.set(0,1,0).applyQuaternion(camera.quaternion);
+ const op=GLB.mesh.geometry.attributes.aOp;let alguno=false;
+ for(let i=0;i<GLB.est.length;i++){const e=GLB.est[i],b=e.b,p=b.m.position;
+  const flota=GLB_QUIETO?0:Math.sin(t*1.5+e.ph)*.045;_gp.set(p.x,p.y+GLB_ALTO+flota,p.z);
+  _gv.copy(_gp).applyMatrix4(camera.matrixWorldInverse);const prof=-_gv.z;const d=Math.hypot(p.x-camera.position.x,p.z-camera.position.z);
+  const obj=activo&&b.m.visible&&!b.enCabina&&Math.abs(p.y-P.y)<2.6&&prof>.35&&d<26?1:0;
+  const k=1-glbS(4,12,d);
+  if(obj&&k>.75&&e.vis>.5&&!e.cerca){e.cerca=true;e.pop=1;}else if(k<.4)e.cerca=false;
+  e.vis+=(obj-e.vis)*Math.min(1,dt*(obj?4.5:9));e.pop=Math.max(0,e.pop-dt*2.2);
+  const habla=!!(b.bub&&HABLAN.has(b));
+  // si el robot está hablando, el globo se apila sobre su burbuja de diálogo (no la tapa) y se achica un poco
+  const pxMundo=tanF*Math.max(prof,.35)/H;
+  let liftObj=0;if(habla&&b.bubTop===b.bubTop){_gv.copy(_gp).project(camera);const sy=(-_gv.y*.5+.5)*H;liftObj=Math.max(0,sy-(b.bubTop-8));}
+  e.lift+=(liftObj-e.lift)*Math.min(1,dt*10);if(e.lift>.5)_gp.addScaledVector(_gu,e.lift*pxMundo);
+  const pop=e.pop>0?1+Math.sin((1-e.pop)*Math.PI)*.14*e.pop:1,resp=GLB_QUIETO?1:1+Math.sin(t*2.2+e.ph)*.024;
+  const wW=Math.min(wCerca*pxMundo,GLB_TOPE)*pop*resp*(habla?.84:1)*(.82+.18*e.vis);
+  const o=e.vis*(.5+.5*k)*(1-glbS(20,26,d));
+  _gs.set(o>.01?wW:0,o>.01?wW:0,1);_gm.compose(_gp,camera.quaternion,_gs);GLB.mesh.setMatrixAt(i,_gm);op.array[i]=o;e.op=o;e.d=d;
+  if(o>.01){alguno=true;_gv.copy(_gp).project(camera);e.sx=(_gv.x*.5+.5)*W;e.sy=(-_gv.y*.5+.5)*H;e.w=wW/pxMundo;e.h=e.w*GLB_CH/GLB_CW;}else e.w=e.h=0;}
+ GLB.mesh.instanceMatrix.needsUpdate=true;op.needsUpdate=true;GLB.mesh.visible=alguno;}
+// qué globo (y qué ícono) hay bajo un punto de la pantalla; si se tapan, gana el más cercano
+function globoEn(x,y){let m=null;for(const e of GLB.est){if(e.op<.3||!e.w)continue;const u=(x-(e.sx-e.w/2))/e.w,v=(e.sy-y)/e.h;
+  if(u<.03||u>.97||v<0||v>.97)continue;if(v<1-400/GLB_CH&&Math.abs(u-.5)>.08)continue;
+  const arriba=v>1-232/GLB_CH;if(!m||e.d<m.e.d)m={e:e,canal:arriba&&u>.5?'dm':'wa'};}
+ return m?{b:m.e.b,canal:m.canal}:null;}
+// cada robot abre el chat con el contexto de su punto QR más cercano
+const GLB_PUNTO={acceso:'acceso',qr:'totem',torn:'torniquetes',mes:'bajada',a1:'anden1',a2:'anden2'};
+let _ultGlobo=0;
+function abrirGlobo(b,canal){const a=performance.now();if(a-_ultGlobo<500||!b||VIAJE.on)return;_ultGlobo=a;
+ const q=QRZ.find(z=>z.id===GLB_PUNTO[b.ag.id])||null;abrirWA(q,canal==='dm'?'dm':'wa',b);}
+window.__globos=function(){return GLB.est.map(e=>({id:e.b.ag.id,op:+e.op.toFixed(2),x:Math.round(e.sx),y:Math.round(e.sy),w:Math.round(e.w),h:Math.round(e.h),d:+e.d.toFixed(1),
+ wa:{x:Math.round(e.sx-e.w*.119),y:Math.round(e.sy-e.h*.69)},dm:{x:Math.round(e.sx+e.w*.119),y:Math.round(e.sy-e.h*.69)},texto:{x:Math.round(e.sx),y:Math.round(e.sy-e.h*.38)}}));};
 
 /* ══ COMPORTAMIENTO DE LOS ROBOTS ══ */
 const ang=(x,z)=>Math.atan2(x,z);
@@ -1638,7 +1742,7 @@ document.addEventListener('pointerlockchange',function(){locked=document.pointer
 addEventListener('blur',sueltaTeclas);
 document.addEventListener('visibilitychange',function(){if(!document.hidden){last=performance.now();Q.acc=0;Q.n=0;if(AC&&AC.state==='suspended'&&sonido){try{AC.resume();}catch(e){}}return;}sueltaTeclas();if(vozAudio){try{vozAudio.pause();}catch(e){}}if(AC&&AC.state==='running'){try{AC.suspend();}catch(e){}}});
 addEventListener('mousemove',function(e){if(!locked)return;P.yaw-=e.movementX*.0019;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-e.movementY*.0019));});
-addEventListener('mousedown',function(e){if(EMB){embAbajo(e);return;}if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,#snd,#chat,#wa,#waBtn,#tVer,#stick,#look,.brand'))return;if(!locked){lock();if(focusBot)hablar();return;}if(e.button===0&&focus)hablar();});
+addEventListener('mousedown',function(e){if(EMB){embAbajo(e);return;}if(!window.__hqOn||chatCon)return;if(e.target&&e.target.closest&&e.target.closest('#zonas,#snd,#chat,#wa,#waBtn,#tVer,#stick,#look,.brand'))return;if(!locked){const gb=globoEn(e.clientX,e.clientY);if(gb){abrirGlobo(gb.b,gb.canal);return;}lock();if(focusBot)hablar();return;}if(e.button===0&&focus)hablar();});
 addEventListener('keydown',function(e){if(chatCon){if(e.code==='Escape')cerrarChat();return;}keys[e.code]=true;if(!window.__hqOn)return;if(e.code==='KeyE')hablar();if(e.code==='KeyM')toggleSonido();if(e.code==='KeyQ')toggleQuality();if(e.code==='KeyC'&&e.shiftKey){if(CONT.on)terminaContingencia();else iniciaContingencia();}});
 addEventListener('keyup',function(e){keys[e.code]=false;});
 function setDPR(r){r=Math.max(.6,Math.min(r,DPR_TOPE));renderer.setPixelRatio(r);composer.setPixelRatio(r);composer.setSize(W,H);smaa.setSize(W*r,H*r);}
@@ -1680,7 +1784,7 @@ function robotCercano(max){let md=max,b0=null;for(const b of bots){if(!b.m.visib
 // E / clic / botón táctil: conversar con un robot, escanear un QR, subir o bajar del tren
 let _ultHablar=0;
 function hablar(){const ahora=performance.now();if(ahora-_ultHablar<450)return;_ultHablar=ahora;if(focusBot)return hablarBot(focusBot);const acc=focusAcc;
- if(acc){if(acc.tipo==='qr')return abrirWA(acc.q);if(acc.tipo==='subir')return subirTren(acc.pc);if(acc.tipo==='bajar')return bajarTren();if(acc.tipo==='termina')return;}
+ if(acc){if(acc.tipo==='globo')return abrirGlobo(acc.b,acc.canal);if(acc.tipo==='qr')return abrirWA(acc.q,'wa');if(acc.tipo==='subir')return subirTren(acc.pc);if(acc.tipo==='bajar')return bajarTren();if(acc.tipo==='termina')return;}
  if(VIAJE.on)return abrirWA(null);const b=robotCercano(4.2);if(b)hablarBot(b);}
 function hablarBot(b){if(!b||VIAJE.on)return;if(chatCon===WA_AG)cerrarWA();const ag=b.ag;chatCon=ag;historial=[];
  if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
@@ -1744,7 +1848,7 @@ function trenTxt(){if(VIAJE.on){const tr=VIAJE.tr;return 'Ya vas en el tren a '+
 
 /* ══ CHAT ESTILO WHATSAPP ══ simulación: Vía responde por /api/chat con el contexto del viaje o, si falla, con guion */
 const WA_AG={id:'wa',n:'Vía by Hapee',linea:''};
-const WA={on:false,hist:[],esperando:false,punto:null,meta:-1,avisar:false,dia:false,ultDest:-1};
+const WA={on:false,hist:[],esperando:false,punto:null,meta:-1,avisar:false,dia:false,ultDest:-1,canal:'wa'};
 const waMsgs=$('#waMsgs'),waIn=$('#waIn'),waChips=$('#waChips');
 const CHECK='<svg viewBox="0 0 18 11" width="16" height="11" aria-hidden="true"><path d="M1 6.2l3 3 6.2-7.4M7.2 9.2l1 1 6.4-7.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function waScroll(){waMsgs.scrollTop=waMsgs.scrollHeight;}
@@ -1755,7 +1859,7 @@ function waSis(txt,aviso){const d=document.createElement('div');d.className='wsy
 function waAccion(txt,fn){waMsgs.querySelectorAll('.wact button').forEach(b=>b.disabled=true);const d=document.createElement('div');d.className='wact';const b=document.createElement('button');b.type='button';b.textContent=txt;
  b.addEventListener('click',function(e){e.stopPropagation();if(b.disabled)return;b.disabled=true;fn();});d.appendChild(b);waMsgs.appendChild(d);waScroll();if(!WA.on)$('#waBtn').classList.add('nuevo');return b;}
 let waTyping=null;
-function waEscribe(on){$('#waEst').textContent=on?'escribiendo…':'en línea';if(on&&!waTyping){waTyping=document.createElement('div');waTyping.className='wm in wesc';waTyping.innerHTML='<i></i><i></i><i></i>';waMsgs.appendChild(waTyping);waScroll();}if(!on&&waTyping){waTyping.remove();waTyping=null;}}
+function waEscribe(on){$('#waEst').textContent=on?'escribiendo…':(WA.canal==='dm'?'Activo ahora':'en línea');if(on&&!waTyping){waTyping=document.createElement('div');waTyping.className='wm in wesc';waTyping.innerHTML='<i></i><i></i><i></i>';waMsgs.appendChild(waTyping);waScroll();}if(!on&&waTyping){waTyping.remove();waTyping=null;}}
 function waHist(rol,txt){const h=WA.hist;if(h.length&&h[h.length-1].role===rol)h[h.length-1].content+='\n'+txt;else h.push({role:rol,content:txt});if(h.length>16)h.splice(0,h.length-16);}
 function waBot(txt,demora){const va=()=>{if(!WA.esperando)waEscribe(false);waMsg('in',txt);waHist('assistant',txt);if(!WA.on)$('#waBtn').classList.add('nuevo');};if(demora===0){va();return;}waEscribe(true);setTimeout(va,demora||750);}
 function waChipsSet(l){waChips.innerHTML='';l.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',function(e){e.stopPropagation();waPreguntar(q);});waChips.appendChild(b);});waChips.scrollLeft=0;}
@@ -1768,11 +1872,21 @@ function saludoQR(q){const ojo=CONT.on?' Ojo: en esta simulación hay un retraso
   case 'anden1':case 'anden2':return 'Hola, soy Vía. Estás en el Andén '+q.anden+', dirección '+dirDe(q.anden)+' ('+proxNom(q.anden)+'). ¿Te aviso cuando venga tu tren?'+ojo;
   case 'tren':return 'Hola, soy Vía. Vas en dirección '+dirDe(VIAJE.tr?VIAJE.tr.anden:2)+'. ¿En qué te ayudo durante el viaje?'+ojo;
   default:return 'Hola, soy Vía. ¿Para dónde vas? Te acompaño en todo el viaje.'+ojo;}}
-function abrirWA(q){if(chatCon&&chatCon!==WA_AG)cerrarChat();
+// el mismo Vía en dos canales simulados: WhatsApp o mensaje directo (DM); la conversación es una sola
+function waCanal(c,callado){c=c==='dm'?'dm':'wa';if(WA.canal===c)return;WA.canal=c;const el=$('#wa');el.classList.toggle('dm',c==='dm');
+ el.setAttribute('aria-label','Chat con Vía by Hapee por '+(c==='dm'?'DM':'WhatsApp')+' (simulación)');
+ $('#waTabWA').setAttribute('aria-selected',String(c==='wa'));$('#waTabDM').setAttribute('aria-selected',String(c==='dm'));
+ waIn.placeholder=c==='dm'?'Envía un mensaje…':'Escribe un mensaje';if(!WA.esperando)$('#waEst').textContent=c==='dm'?'Activo ahora':'en línea';
+ if(!callado&&WA.dia)waSis(c==='dm'?'Ahora por DM · el mismo Vía, la misma conversación':'Ahora por WhatsApp · el mismo Vía, la misma conversación');}
+$('#waTabWA').addEventListener('click',function(e){e.stopPropagation();waCanal('wa');});
+$('#waTabDM').addEventListener('click',function(e){e.stopPropagation();waCanal('dm');});
+function abrirWA(q,canal,bot){if(chatCon&&chatCon!==WA_AG)cerrarChat();
+ if(canal)waCanal(canal,true);
  chatCon=WA_AG;WA.on=true;if(locked&&document.exitPointerLock)document.exitPointerLock();sueltaTeclas();
  $('#wa').classList.add('on');$('#placard').classList.remove('on');document.body.classList.add('chateando');$('#waBtn').classList.remove('on','nuevo');
- if(!WA.dia){WA.dia=true;waSis('HOY');waSis('Simulación de chat: nada de esto se envía a un número real.');}
- if(q){if(q.id!=='tren')WA.punto=q;waSis(q.id==='tren'?'Escaneaste el QR del tren':'Escaneaste el QR · '+q.corto);beep(880,.06);waBot(saludoQR(q),650);waChipsSet(q.chips);}
+ if(!WA.dia){WA.dia=true;waSis('HOY');waSis(WA.canal==='dm'?'Simulación de chat: nada de esto se envía a una cuenta real.':'Simulación de chat: nada de esto se envía a un número real.');}
+ if(bot){if(q)WA.punto=q;waSis('Le escribiste a '+bot.ag.n+' por '+(WA.canal==='dm'?'DM':'WhatsApp'));beep(880,.06);waBot(saludoQR(q||{id:''}),650);waChipsSet(q?q.chips:chipsActuales());}
+ else if(q){if(q.id!=='tren')WA.punto=q;waSis(q.id==='tren'?'Escaneaste el QR del tren':'Escaneaste el QR · '+q.corto);beep(880,.06);waBot(saludoQR(q),650);waChipsSet(q.chips);}
  else waChipsSet(chipsActuales());
  setTimeout(()=>{if(!isTouch&&WA.on)waIn.focus();},60);}
 function cerrarWA(){if(!WA.on)return;WA.on=false;focusKey='';if(chatCon===WA_AG)chatCon=null;$('#wa').classList.remove('on');document.body.classList.remove('chateando');waIn.blur();if(VIAJE.on)$('#waBtn').classList.add('on');}
@@ -1782,10 +1896,10 @@ $('#waForm').addEventListener('submit',function(e){e.preventDefault();const t=wa
 function sistemaWA(g){const T=VIAJE;let ctx;
  if(T.on&&T.tr){const tr=T.tr;ctx='La persona va arriba de un tren de la Línea 1, dirección '+dirDe(tr.anden)+'. '+(tr.fase==='parado'?'El tren está detenido en '+estN()+' con las puertas abiertas. ':'Va entre '+L1[T.de]+' y '+(T.a>=0?L1[T.a]:'el final del recorrido')+'. ');}
  else ctx='La persona está en la estación '+estN()+(WA.punto?', junto al punto QR «'+WA.punto.corto+'»':'')+'. ';
- return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Esta conversación es una simulación de chat estilo WhatsApp dentro de una demo 3D: el mismo asistente vive en la app de Metro, en WhatsApp y en los puntos QR de las estaciones. '+ctx+
+ return 'Eres Vía, el asistente de viaje con IA de Hapee para el pasajero del Metro de Santiago. Esta conversación es una simulación de chat '+(WA.canal==='dm'?'por mensaje directo (DM)':'estilo WhatsApp')+' dentro de una demo 3D: el mismo asistente vive en la app de Metro, en WhatsApp y en los puntos QR de las estaciones. '+ctx+
   'Línea 1, de poniente a oriente: '+L1.join(', ')+'. El Andén 1 va hacia San Pablo y el Andén 2 hacia Los Dominicos. Sólo afirma estas combinaciones: Los Héroes con Línea 2, Universidad de Chile con Línea 3 y Baquedano con Línea 5; cualquier otra la confirmarías con la información oficial. El GAM queda junto a la estación Universidad Católica. '+
   (CONT.on?'En esta escena simulada hay un retraso de ejemplo en la Línea 1. ':'En esta escena simulada el servicio funciona con normalidad. ')+
-  ESTILO_VIA+', en máximo dos frases cortas, como en WhatsApp. Puedes contar estaciones, pero nunca inventes minutos, horarios ni frecuencias reales: si preguntan cuánto se demora, di cuántas estaciones son y que en una implementación real darías el tiempo estimado con los datos de la operación. No uses markdown ni emojis.'+DATO_DEMO(g);}
+  ESTILO_VIA+', en máximo dos frases cortas, como en un chat. Puedes contar estaciones, pero nunca inventes minutos, horarios ni frecuencias reales: si preguntan cuánto se demora, di cuántas estaciones son y que en una implementación real darías el tiempo estimado con los datos de la operación. No uses markdown ni emojis.'+DATO_DEMO(g);}
 function guionWA(texto){const t=normT(texto),R=posRef(),d=estacionEn(t);if(d>=0)WA.ultDest=d;
  const adelante=x=>VIAJE.on&&x>=0&&(VIAJE.tr.anden===2?x>EST:x<EST);
  if(/avis/.test(t)&&!/whatsapp|\bapp\b/.test(t)){const m=d>=0?d:adelante(WA.ultDest)?WA.ultDest:(VIAJE.on?(R.mov?R.cur:proxDe(EST,VIAJE.tr.anden)):-1);WA.avisar=true;WA.meta=m;
@@ -1885,10 +1999,11 @@ const ray=new THREE.Raycaster(),center=new THREE.Vector2(0,0);
 let focus=null,focusBot=null,last=performance.now(),fc=0;const Q={acc:0,n:0,fps:0,sucio:false,primera:true,alto:0,bajo:{},veces:{},entrada:0};
 const startEl=$('#start'),tVerEl=$('#tVer');
 let focusAcc=null,focusKey='';
-function claveFoco(b,acc){return b?'b'+b.ag.id:acc?acc.tipo+(acc.q?acc.q.id:'')+(acc.pc?acc.pc.a+'-'+acc.pc.k:'')+'@'+EST:'';}
+function claveFoco(b,acc){return b?'b'+b.ag.id:acc?acc.tipo+(acc.b?acc.b.ag.id+acc.canal:'')+(acc.q?acc.q.id:'')+(acc.pc?acc.pc.a+'-'+acc.pc.k:'')+'@'+EST:'';}
 function placa(b,acc){focusBot=b||null;focusAcc=b?null:(acc||null);focus=b?b.ag:(acc||null);focusKey=claveFoco(b,acc);const on=!!(b||acc);$('#dot').classList.toggle('hot',on);$('#placard').classList.toggle('on',on&&!chatCon);
  if(!on)return;apagaHint();let t,s_,g,bt='HABLAR';
  if(b){t=b.ag.n;s_=b.ag.linea;g=isTouch?'TOCA HABLAR PARA CONVERSAR':'E PARA CONVERSAR';}
+ else if(acc.tipo==='globo'){t=acc.canal==='dm'?'Vía por DM':'Vía por WhatsApp';s_='¡Háblame por tu celular! · Simulación';g=isTouch?'TOCA CHAT':'E PARA ABRIR EL CHAT';bt='CHAT';}
  else if(acc.tipo==='qr'){t='Punto QR · '+acc.q.corto;s_='Escanea y habla con Vía';g=isTouch?'TOCA ESCANEAR':'E PARA ESCANEAR';bt='ESCANEAR';}
  else if(acc.tipo==='subir'){const a=acc.pc.tr.anden;t='Tren a '+dirDe(a);s_=txtProxEst(a);g=isTouch?'TOCA SUBIR':'E PARA SUBIR';bt='SUBIR';}
  else if(acc.tipo==='termina'){t='Este tren termina aquí';s_='Estación terminal';g='';}
@@ -1935,7 +2050,8 @@ function loop(now){requestAnimationFrame(loop);if(embPausa){last=now;return;}con
    if(VIAJE.on){const tr=VIAJE.tr;if(tr.fase==='parado'&&tr.abre>.85)acc={tipo:'bajar'};else if(Math.abs(VIAJE.lx-1.16)<1.0&&Math.abs(VIAJE.lz)>.25)acc={tipo:'qr',q:QR_TREN};}
    else{ray.setFromCamera(center,camera);const objs=ROBOT_MESHES.filter(m=>m.parent&&m.parent.visible&&Math.abs(m.userData.bot.m.position.y-P.y)<2.6);
     const hits=ray.intersectObjects(objs,false);b=hits.length&&hits[0].distance<7.5?hits[0].object.userData.bot:null;
-    if(!b){const pc=puertaCerca();if(pc)acc={tipo:pc.term?'termina':'subir',pc:pc};else{const q=qrCerca();if(q)acc={tipo:'qr',q:q};}}
+    {const gc=globoEn(W/2,H/2);if(gc){b=null;acc={tipo:'globo',b:gc.b,canal:gc.canal};}}
+    if(!b&&!acc){const pc=puertaCerca();if(pc)acc={tipo:pc.term?'termina':'subir',pc:pc};else{const q=qrCerca();if(q)acc={tipo:'qr',q:q};}}
     if(!b&&!acc&&isTouch)b=robotCercano(3.4);}
    if(claveFoco(b,acc)!==focusKey)placa(b,acc);
    if(isTouch){const on=!!(b||(acc&&acc.tipo!=='termina'));if(tVerEl.classList.contains('on')!==on)tVerEl.classList.toggle('on',on);}}
@@ -1968,6 +2084,7 @@ function loop(now){requestAnimationFrame(loop);if(embPausa){last=now;return;}con
  sonidoTrenes();
  pintaPersonas();
  proyecta();
+ actualizaGlobos(dt,now/1000);
  if(_calor.length)calientaUna();
  if(!window.__hqOn&&!startEl.hidden&&fc%30!==0)return;
  composer.render();}
@@ -2021,8 +2138,8 @@ function embAbajo(e){if(e.button!==0||!window.__hqOn||chatCon||isTouch)return;if
 if(EMB){
  addEventListener('mousemove',function(e){if(!ARR.on)return;if(!(e.buttons&1)){ARR.on=false;document.body.classList.remove('arrastra');return;}
   const dx=e.clientX-ARR.x,dy=e.clientY-ARR.y;ARR.x=e.clientX;ARR.y=e.clientY;ARR.mov+=Math.abs(dx)+Math.abs(dy);P.yaw-=dx*.0045;P.pitch=Math.max(-1.2,Math.min(1.2,P.pitch-dy*.0045));});
- addEventListener('mouseup',function(){if(!ARR.on)return;ARR.on=false;document.body.classList.remove('arrastra');if(ARR.mov<6&&focus)hablar();});
- addEventListener('click',function(){if(TOUR.on)tomaControl();});
+ addEventListener('mouseup',function(e){if(!ARR.on)return;ARR.on=false;document.body.classList.remove('arrastra');if(ARR.mov<6){const gb=globoEn(e.clientX,e.clientY);if(gb)abrirGlobo(gb.b,gb.canal);else if(focus)hablar();}});
+ addEventListener('click',function(e){if(!TOUR.on)return;const gb=globoEn(e.clientX,e.clientY);tomaControl();if(gb)abrirGlobo(gb.b,gb.canal);});
  addEventListener('keydown',function(e){if(TOUR.on&&/^(Key[WASDE]|Arrow|Digit[1-4])/.test(e.code))tomaControl();});
  $('#embCta').addEventListener('click',function(e){e.stopPropagation();tomaControl();});
  // la landing pausa el render cuando el marco sale de la pantalla
@@ -2044,6 +2161,12 @@ function enter(desdeTour){if(!EMB)audio();window.__hqOn=true;Q.entrada=performan
  const h=$('#hint');h.innerHTML=isTouch?'<b>Joystick</b> para caminar · <b>arrastra</b> para mirar · acércate a Vía y toca <b>Hablar</b>':EMB?'<b>W A S D</b> caminar · <b>arrastra</b> para mirar · <b>E</b> conversar con Vía':'<b>W A S D</b> caminar · <b>mouse</b> mirar · acércate a un robot y pulsa <b>E</b> para conversar con Vía';h.classList.add('on');setTimeout(apagaHint,8000);
  marcaZona(true);if(!isTouch)lock();}
 $('#play').addEventListener('click',enter);
+// toque corto sobre un globo (celular, también en el recorrido embebido) y cursor de mano encima en escritorio
+{const tap={id:null,x:0,y:0,t:0};const UI='#zonas,#snd,#chat,#wa,#waBtn,#tVer,#stick,#embCta,.brand,.scr';
+ addEventListener('pointerdown',function(e){if(e.pointerType==='mouse')return;const el=e.target;if(el&&el.closest&&el.closest(UI))return;tap.id=e.pointerId;tap.x=e.clientX;tap.y=e.clientY;tap.t=performance.now();},true);
+ addEventListener('pointerup',function(e){if(e.pointerId!==tap.id)return;tap.id=null;if(chatCon||Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>12||performance.now()-tap.t>450)return;
+  const gb=globoEn(e.clientX,e.clientY);if(!gb)return;if(EMB&&TOUR.on)tomaControl();abrirGlobo(gb.b,gb.canal);},true);
+ addEventListener('mousemove',function(e){if(locked||isTouch||ARR.on)return;const on=!chatCon&&!!globoEn(e.clientX,e.clientY);if(document.body.classList.contains('sobreGlobo')!==on)document.body.classList.toggle('sobreGlobo',on);},{passive:true});}
 /* precalentado contra un búfer como el del compositor, una vista por cuadro */
 const rtCalor=new THREE.WebGLRenderTarget(64,64,{type:THREE.HalfFloatType});
 // el interior del coche y el túnel del viaje se compilan y calientan junto con la estación (sin tirón al subir)
@@ -2074,7 +2197,7 @@ THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent
 const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
 poblar();
 window.__P=P;window.__obs=OBS;window.__bots=bots;window.__personas=PERS;window.__trenes=TRENES;window.__cont=CONT;window.__esc=ESC;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;
-window.__viaje=VIAJE;window.__wa=WA;window.__waPreguntar=waPreguntar;window.__abrirWA=abrirWA;window.__qrs=QRZ;window.__bajar=bajarTren;
+window.__viaje=VIAJE;window.__wa=WA;window.__waCanal=waCanal;window.__abrirGlobo=abrirGlobo;window.__waPreguntar=waPreguntar;window.__abrirWA=abrirWA;window.__qrs=QRZ;window.__bajar=bajarTren;
 window.__est=function(i){EST=i;aplicaEstacion();return estN();};
 window.__subir=function(){const pc=puertaCerca();if(pc)subirTren(pc);return !!pc;};
 window.__contingencia=function(on){if(on===false)terminaContingencia();else iniciaContingencia();};
