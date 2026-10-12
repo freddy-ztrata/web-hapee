@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-CL">
 <head>
-<meta name="estacion-version" content="v3-realista-20261012-830359a6">
+<meta name="estacion-version" content="v3-realista-20261012-fc66497b">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Vía by Hapee · Estación Universidad de Chile</title>
@@ -371,7 +371,10 @@ const CAJAS={and:[[-42,-1.05,-9.25],[42,TA,9.25],[0,1.7,0]],mes:[[MX0,YM,-9.25],
 let sondaAct='';const ENV_MATS=new Set();const conEnv=m=>{ENV_MATS.add(m);return m;};
 function eligeSonda(forzar){const z=P.y<3?'and':(P.y<8&&P.x<AC0+.5)?'mes':'calle';if(z===sondaAct&&!forzar)return;if(!SONDAS[z])return;sondaAct=z;
  ENV_MATS.forEach(m=>{const nuevo=!m.envMap;m.envMap=SONDAS[z];if(nuevo)m.needsUpdate=true;});const c=CAJAS[z];SONDA.uBoxMin.value.set(c[0][0],c[0][1],c[0][2]);SONDA.uBoxMax.value.set(c[1][0],c[1][1],c[1][2]);SONDA.uProbe.value.set(c[2][0],c[2][1],c[2][2]);}
-function capturaSondas(){if(capturaSondas.ya)return;capturaSondas.ya=true;if(QS.get('sinenv')==='1')return;
+// si la portada se habilitó antes de que llegaran todas las texturas (respaldo de 4,5 s), las sondas se vuelven a
+// capturar cuando la carga termina: si no, el piso reflejaría para siempre una estación sin texturas
+let cargaCompleta=false;
+function capturaSondas(){if(capturaSondas.ya)return;capturaSondas.ya=true;capturaSondas.completa=cargaCompleta;if(QS.get('sinenv')==='1')return;
  try{const pm=new THREE.PMREMGenerator(renderer);const rt=new THREE.WebGLCubeRenderTarget(MOVIL?128:256,{type:THREE.HalfFloatType});const cc=new THREE.CubeCamera(.08,260,rt);scene.add(cc);
   const ocultos=[].concat(TRENES.map(t=>t.g),Object.values(IMP),[IMS,TUNV,INTER],bots.map(b=>b.m),GLB.mesh?[GLB.mesh]:[]);const vis=ocultos.map(o=>o.visible);ocultos.forEach(o=>{o.visible=false;});
   const vz={};for(const k in ZG){vz[k]=ZG[k].visible;ZG[k].visible=true;}const cv=CIELO.visible;CIELO.visible=true;
@@ -2506,7 +2509,9 @@ function listo(){if(listoYa)return;listoYa=true;$('#play').disabled=false;$('#pl
   if(QS.get('conting')==='1')iniciaContingencia();
   marcaZona(true);for(let i=0;i<30;i++)window.__loop(performance.now()+i*16.7);}}
 THREE.DefaultLoadingManager.onProgress=function(u,h_,t_){if(listoYa)return;$('#load').textContent='Cargando la estación · '+Math.round(h_/t_*100)+'%';};
-THREE.DefaultLoadingManager.onLoad=function(){if(!listoYa)$('#load').textContent='Preparando la estación…';setTimeout(listo,30);};
+THREE.DefaultLoadingManager.onLoad=function(){cargaCompleta=true;if(!listoYa)$('#load').textContent='Preparando la estación…';setTimeout(listo,30);
+ if(capturaSondas.ya&&!capturaSondas.completa){const viejas=Object.values(SONDAS);capturaSondas.ya=false;
+  setTimeout(function(){capturaSondas();viejas.forEach(t=>{try{t.dispose();}catch(e){}});},60);}};
 const _t0carga=performance.now();(function espera(){if(performance.now()-_t0carga>=4500){listo();return;}setTimeout(espera,200);})();
 poblar();
 window.__P=P;window.__obs=OBS;window.__bots=bots;window.__personas=PERS;window.__trenes=TRENES;window.__cont=CONT;window.__esc=ESC;window.__hablar=hablar;window.__cerrarChat=cerrarChat;window.__preguntar=preguntar;
