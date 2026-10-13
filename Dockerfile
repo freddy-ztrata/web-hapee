@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-10-12-mcp-oficial
+ARG CACHE_BUST=2026-10-12-review-video
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -47,6 +47,8 @@ COPY webinar.html /usr/share/nginx/html/webinar.html
 # defecto que este archivo advierte arriba y que ya paso con
 # eliminacion-datos.html y con marca.html.
 COPY docs/ /usr/share/nginx/html/docs/
+# Material para revisores de directorios (video de demostración del plugin).
+COPY review/ /usr/share/nginx/html/review/
 COPY img/ /usr/share/nginx/html/img/
 # Hapee HQ: la oficina 3D de los agentes (three.js + GLB del robot), servida en /oficina
 COPY oficina/ /usr/share/nginx/html/oficina/
