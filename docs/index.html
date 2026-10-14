@@ -121,22 +121,10 @@
       <li><strong>Escrituras</strong>: manda <code>Idempotency-Key</code> y un reintento no duplica nada.</li>
     </ul>
 
-    <h2>Dos ambientes, dos URLs base</h2>
-
-    <div class="dv-tabla-wrap">
-      <table>
-        <tr><th>Ambiente</th><th>URL base</th><th>Credencial</th></tr>
-        <tr><td>Sandbox</td><td><code>https://staging.hapee.ai/api/v1</code></td><td><code>hp_test_…</code></td></tr>
-        <tr><td>Producción</td><td><code>https://beta.hapee.ai/api/v1</code></td><td><code>hp_live_…</code></td></tr>
-      </table>
-    </div>
-
-    <p>Los ejemplos de esta documentación usan la URL de <strong>sandbox</strong>, porque van con una credencial <code>hp_test_</code>. Al pasar a producción cambias <strong>las dos cosas</strong>: la credencial y la URL base.</p>
-
     <h2>Tu primer request</h2>
 
     <div class="dv-code" data-lang="curl">
-<pre><code>curl https://staging.hapee.ai/api/v1/me \
+<pre><code>curl https://beta.hapee.ai/api/v1/me \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
     </div>
 
@@ -192,7 +180,7 @@
 
     <p>Las emite la agencia que administra tu cuenta de Hapee. Pide una credencial <strong><code>hp_test_</code></strong> primero: apunta a una subcuenta de prueba con datos ficticios, así puedes desarrollar sin tocar nada real.</p>
 
-    <p>Pasar a producción es cambiar <strong>tres cosas</strong>: la credencial, la <strong>URL base</strong> (<code>staging.hapee.ai</code> → <code>beta.hapee.ai</code>) y la URL del webhook. Nada más: los dos ambientes exponen la misma API, con los mismos endpoints y los mismos cuerpos.</p>
+    <p>Pasar a producción es <strong>cambiar la credencial y la URL del webhook</strong>. Nada más: el sandbox y producción hablan la misma API.</p>
 
     <div class="dv-aviso">
       <p>¿Dudas o algo que no está documentado? Escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>

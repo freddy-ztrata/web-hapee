@@ -78,15 +78,11 @@
     </ol>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl https://staging.hapee.ai/api/v1/me \
+<pre><code>curl https://beta.hapee.ai/api/v1/me \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
     </div>
 
     <p>Si esto anda, el resto anda.</p>
-
-    <div class="dv-aviso">
-      <p><strong>Dos ambientes, dos URLs base.</strong> Los ejemplos de esta guía usan <code>https://staging.hapee.ai/api/v1</code> porque van con una credencial <code>hp_test_</code>. En producción la URL es <code>https://beta.hapee.ai/api/v1</code> y la credencial <code>hp_live_</code>: al pasar a live cambias <strong>las dos cosas</strong>.</p>
-    </div>
 
     <h2 id="caminos">¿API o workflows?</h2>
 
@@ -175,7 +171,7 @@
     <p>Una sola vez, al conectar. Usa <code>POST /{recurso}/batch</code> con hasta <strong>100 items</strong> por llamada. El lote <strong>no se aborta</strong> ante un item malo: entran los que puede y te dice cuáles fallaron.</p>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl -X POST https://staging.hapee.ai/api/v1/companies/batch \
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/companies/batch \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: carga-inicial-empresas-lote-001" \
@@ -224,7 +220,7 @@
     <p>Se prueba <strong>un criterio a la vez</strong>, en orden, y gana el primero que encuentra algo. Puedes fijarlo con <code>match_by</code>:</p>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl -X POST https://staging.hapee.ai/api/v1/contacts/upsert \
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/contacts/upsert \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: sync-contacto-CON-991-v3" \
@@ -251,7 +247,7 @@
     <p>Dos opciones, mismos datos. <strong>Opción 1 — Webhooks</strong> (recomendada si puedes exponer una URL <code>https</code>):</p>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl -X POST https://staging.hapee.ai/api/v1/webhooks/endpoints \
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/webhooks/endpoints \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -H "Content-Type: application/json" \
   -d '{
@@ -266,7 +262,7 @@
     <p><strong>Opción 2 — <code>GET /events</code></strong> (si el ERP está instalado en la empresa, sin puerto abierto):</p>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl "https://staging.hapee.ai/api/v1/events?cursor=10432&amp;limit=100" \
+<pre><code>curl "https://beta.hapee.ai/api/v1/events?cursor=10432&amp;limit=100" \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL"</code></pre>
     </div>
 
@@ -315,7 +311,7 @@
     <h3>Paso 2 — Escribes de vuelta</h3>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl -X PATCH https://staging.hapee.ai/api/v1/deals/5521 \
+<pre><code>curl -X PATCH https://beta.hapee.ai/api/v1/deals/5521 \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: folio-F-8842" \
@@ -329,7 +325,7 @@
     <p>Así el ejecutivo ve la factura sin salir de Hapee:</p>
 
     <div class="dv-code" data-lang="bash">
-<pre><code>curl -X POST https://staging.hapee.ai/api/v1/custom-objects/{objeto_id}/records \
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/custom-objects/{objeto_id}/records \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -H "Content-Type: application/json" \
   -d '{
@@ -348,17 +344,17 @@
 
     <div class="dv-code" data-lang="bash">
 <pre><code># 1. El ERP avisa que el documento venció impago
-curl -X PATCH https://staging.hapee.ai/api/v1/deals/5521 \
+curl -X PATCH https://beta.hapee.ai/api/v1/deals/5521 \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -d '{"custom_fields": {"payment_status": "overdue", "amount_paid": "0"}}'
 
 # 2. Se etiqueta al contacto
-curl -X POST https://staging.hapee.ai/api/v1/contacts/8821/tags \
+curl -X POST https://beta.hapee.ai/api/v1/contacts/8821/tags \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -d '{"tag": "cobranza-vencida"}'
 
 # 3. Se lo inscribe en el workflow de cobranza
-curl -X POST https://staging.hapee.ai/api/v1/workflows/44/enroll \
+curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
   -H "Authorization: Bearer hp_test_TU_CREDENCIAL" \
   -d '{"contacto_id": 8821}'</code></pre>
     </div>
@@ -432,12 +428,12 @@ curl -X POST https://staging.hapee.ai/api/v1/workflows/44/enroll \
     <h3>El cambio a producción</h3>
     <ol>
       <li>Pedile a la agencia una credencial <code>hp_live_</code> de la subcuenta real</li>
-      <li>Cambia la credencial, la <strong>URL base de la API</strong> (<code>staging.hapee.ai</code> → <code>beta.hapee.ai</code>) y la URL del webhook</li>
+      <li>Cambia la credencial y la URL del webhook</li>
       <li>Corre la carga inicial <strong>una vez</strong></li>
       <li>Verifica con <code>GET /events</code> que los eventos están llegando</li>
     </ol>
 
-    <p><strong>Fuera de eso no hace falta cambiar nada más.</strong> Sandbox y producción exponen la misma API: los mismos endpoints, los mismos cuerpos y las mismas respuestas. Lo que cambia es adónde apunta y con qué credencial.</p>
+    <p><strong>No hace falta cambiar nada más.</strong> El sandbox y producción hablan la misma API.</p>
 
     <h2 id="errores">Errores frecuentes</h2>
 
