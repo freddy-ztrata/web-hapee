@@ -13,7 +13,7 @@
   // Shadow DOM: la escena usa clases cortas (.hero, .ring, .chips…) que la
   // página también usa; aislarla evita que los estilos se pisen en ambos sentidos.
   var R = stage.attachShadow ? stage.attachShadow({ mode: 'open' }) : stage;
-  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=31"><div class="sc-canvas" id="scCanvas"></div>';
+  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=33"><div class="sc-canvas" id="scCanvas"></div>';
   var canvas = R.getElementById ? R.getElementById('scCanvas') : stage.querySelector('#scCanvas'), tabsEl = d.getElementById('psTabs'), capEl = d.getElementById('psCap'), urlEl = d.getElementById('psUrl'), frame = d.getElementById('psFrame');
   var ROBOT = '/img/robot.png', LOGO = '/img/logo-hapee.png';
 
@@ -39,6 +39,49 @@
     node.classList.add('fly');
     node.style.transform = 'translate(' + ((b.left - a.left) / s) + 'px,' + ((b.top - a.top) / s) + 'px) rotate(-2deg)';
     at(950, function () { node.style.transition = 'none'; node.style.transform = ''; node.classList.remove('fly'); after(); void node.offsetWidth; node.style.transition = ''; });
+  }
+  // posición de un nodo en coordenadas del lienzo (sin escala)
+  function pos(n) {
+    var s = parseFloat(getComputedStyle(canvas).getPropertyValue('--sc')) || 1, c = canvas.getBoundingClientRect(), r = n.getBoundingClientRect();
+    return { x: (r.left - c.left) / s, y: (r.top - c.top) / s, w: r.width / s, h: r.height / s };
+  }
+  // lleva el cursor al centro de un elemento y, si se pide, hace clic al llegar
+  function point(el, click, dx, dy) {
+    var p = pos(el); cursor.classList.add('on');
+    cursor.style.transform = 'translate(' + (p.x + p.w / 2 + (dx || 0)) + 'px,' + (p.y + p.h / 2 + (dy || 0)) + 'px)';
+    if (click) at(1150, function () { cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click'); });
+  }
+  /* Arrastre como lo haría una persona: el cursor va a la tarjeta, la toma
+     (se levanta), en la columna destino se abre el espacio, la lleva hasta
+     ahí y la suelta. La tarjeta original queda como «fantasma» punteado
+     mientras tanto, así nada salta de lugar. Duración total ≈ 3 s. */
+  function drag(card, toCol, onDrop) {
+    var p = pos(card), grab = { x: p.x + p.w * .55, y: p.y + 28 };
+    cursor.classList.add('on');
+    cursor.style.transform = 'translate(' + grab.x + 'px,' + grab.y + 'px)';
+    at(1150, function () {
+      cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click', 'grab');
+      // la copia vive dentro de la escena (hereda sus estilos) y se ubica relativa a ella
+      var root = body.firstElementChild, o = pos(root);
+      var g = card.cloneNode(true); g.removeAttribute('id'); g.classList.add('drag-ghost');
+      g.style.cssText = 'position:absolute;left:' + (p.x - o.x) + 'px;top:' + (p.y - o.y) + 'px;width:' + p.w + 'px;margin:0;z-index:25';
+      root.appendChild(g); card.classList.add('drag-src');
+      var slot = h('<div class="drop-slot"></div>'); toCol.appendChild(slot);
+      requestAnimationFrame(function () { slot.style.height = p.h + 'px'; });
+      at(380, function () {
+        var t = pos(slot), dx = t.x - p.x, dy = t.y - p.y;
+        g.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(-2.5deg) scale(1.04)';
+        cursor.style.transform = 'translate(' + (grab.x + dx) + 'px,' + (grab.y + dy) + 'px)';
+        at(1200, function () {
+          g.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+          at(220, function () {
+            cursor.classList.remove('grab');
+            g.remove(); slot.replaceWith(card); card.classList.remove('drag-src'); card.classList.add('sc-flash');
+            if (onDrop) onDrop();
+          });
+        });
+      });
+    });
   }
   var cursor, toast;
   function cur(x, y, click) {
@@ -145,12 +188,9 @@
       run: function () {
         reveal($$('.s-pipe .deal'), 200, 90);
         var A = R.getElementById('dA');
-        at(1500, function () { cur(120, 210, true); });
-        at(2700, function () { var ph = h('<div class="sc-card deal" style="opacity:0;height:0;padding:0;margin:0"></div>'); R.getElementById('colC').appendChild(ph); flyTo(A, ph, function () { ph.replaceWith(A); R.getElementById('c0').textContent = '(1)'; R.getElementById('c1').textContent = '(1)'; }); cur(330, 160); });
-        at(4200, function () { say('✨', 'El agente calificó el negocio', 'Andes Retail · B2B · presupuesto confirmado'); });
-        at(4900, function () { var target = R.getElementById('colR'); var ph = h('<div class="sc-card deal" style="opacity:0;height:0;padding:0;margin:0"></div>'); target.appendChild(ph); flyTo(A, ph, function () { ph.replaceWith(A); A.classList.add('sc-flash'); R.getElementById('c1').textContent = '(0)'; R.getElementById('c2').textContent = '(2)'; }); cur(560, 260); });
-        at(6300, function () { count(R.getElementById('pW'), 36490000, 900, '$'); });
-        at(6900, function () { var N = R.getElementById('dN'); N.classList.add('won', 'sc-flash'); N.querySelector('p').innerHTML = 'Valor: $9.600.000<br><b style="display:inline;color:#15803d">✓ Ganado</b>'; R.getElementById('pWon').textContent = '4 · $40.500.000'; say('🎉', 'Negocio ganado: Clínica Vitalis', '$9.600.000 · Camila Soto'); bell(4); });
+        at(900, function () { drag(A, R.getElementById('colC'), function () { R.getElementById('c0').textContent = '(1)'; R.getElementById('c1').textContent = '(1)'; say('✨', 'El agente calificó el negocio', 'Andes Retail · B2B · presupuesto confirmado'); }); });
+        at(4100, function () { drag(A, R.getElementById('colR'), function () { R.getElementById('c1').textContent = '(0)'; R.getElementById('c2').textContent = '(2)'; count(R.getElementById('pW'), 36490000, 900, '$'); }); });
+        at(7300, function () { cursor.classList.remove('on'); var N = R.getElementById('dN'); N.classList.add('won', 'sc-flash'); N.querySelector('p').innerHTML = 'Valor: $9.600.000<br><b style="display:inline;color:#15803d">✓ Ganado</b>'; R.getElementById('pWon').textContent = '4 · $40.500.000'; say('🎉', 'Negocio ganado: Clínica Vitalis', '$9.600.000 · Camila Soto'); bell(4); });
       } },
 
     { k: 'ag', t: 'Centro de agentes', cap: '<b>Agentes IA.</b> Un equipo de agentes con rol propio (SDR, soporte, recepción, cobranza, marketing) que toman tareas, las resuelven y muestran su actividad en vivo.',
@@ -181,31 +221,40 @@
       } },
 
     { k: 'wf', t: 'Workflows', cap: '<b>Automatizaciones.</b> Flujos visuales sin código: un disparador, esperas, envíos y condiciones que trabajan mientras duermes.',
-      html: '<div class="s-wf"><div class="tb"><b>Post-demo comercial</b><span class="t on">Creador</span><span class="t">Configuración</span><span class="t">Historial</span><span class="t">Registros</span><div class="r"><span class="live"><span class="dot-live"></span>Activo</span><span class="sc-btn ghost" style="height:26px">▷ Probar</span><span class="sc-btn" style="height:26px">Publicar</span></div></div>' +
-        '<svg class="edges" viewBox="0 0 1000 628" preserveAspectRatio="none"><path class="edge" d="M90 250 H240"/><path class="edge" d="M240 250 H390"/><path class="edge" d="M390 250 H540"/><path class="edge" d="M540 250 H680"/><path class="edge" d="M680 250 C720 250 720 170 750 170"/><path class="edge dash" d="M680 250 C720 250 720 330 750 330"/><circle class="pulse" r="6" cx="90" cy="250" id="pls"/></svg>' +
-        '<div class="node trg" id="n0" style="left:9%;top:40%"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></svg></div><b>Etiqueta agregada</b><small>«demo realizada»</small></div>' +
-        '<div class="node" id="n1" style="left:24%;top:40%"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><b>Esperar 1 día</b><small>1d</small></div>' +
-        '<div class="node mail" id="n2" style="left:39%;top:40%"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></div><b>Enviar propuesta</b><small>«Tu propuesta personalizada»</small></div>' +
-        '<div class="node" id="n3" style="left:54%;top:40%"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><b>Esperar 2 días</b><small>2d</small></div>' +
-        '<div class="node" id="n4" style="left:68%;top:40%"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M6 8.5v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-2M12 13.5v2"/></svg></div><b>¿Respondió la propuesta?</b><small>condición</small></div>' +
-        '<div class="sc-card br" id="bY" style="left:75%;top:27%"><span class="sc-tag" style="background:#dcfce7;color:#15803d">Sí</span><b>Agendar reunión de cierre</b><small>pasa a Negociación</small></div>' +
-        '<div class="sc-card br" style="left:75%;top:53%"><span class="sc-tag">No</span><b>Email «¿Lo dejamos aquí?»</b><small>y etiqueta como frío</small></div>' +
-        '<div class="sc-card log"><div class="sc-k">Registro de ejecución</div><div id="log"></div></div>' +
-        '<div class="sc-card cnt"><div class="sc-k">Contactos en el flujo</div><div class="sc-n" id="wfN">128</div><span class="sc-up" id="wfR">62% respondió</span></div></div>',
+      html: (function () {
+        // área de dibujo = cuerpo de la app: 978 × 608 px; los nodos y las líneas comparten estas coordenadas
+        var Y = 268, X = [96, 254, 412, 570, 728], N = [
+          ['trg', '<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/>', 'Etiqueta agregada', '«demo realizada»'],
+          ['', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 'Esperar 1 día', '1 d'],
+          ['mail', '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>', 'Enviar propuesta', 'plantilla «Propuesta»'],
+          ['', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 'Esperar 2 días', '2 d'],
+          ['', '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M6 8.5v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-2M12 13.5v2"/>', '¿Respondió?', 'condición']];
+        var edges = '';
+        for (var i = 0; i < 4; i++) edges += '<path class="edge" d="M' + (X[i] + 26) + ' ' + Y + ' H' + (X[i + 1] - 26) + '"/>';
+        edges += '<path class="edge" id="eY" d="M' + (X[4] + 26) + ' ' + Y + ' C' + (X[4] + 60) + ' ' + Y + ' ' + (X[4] + 40) + ' 178 790 178"/>' +
+                 '<path class="edge dash" d="M' + (X[4] + 26) + ' ' + Y + ' C' + (X[4] + 60) + ' ' + Y + ' ' + (X[4] + 40) + ' 358 790 358"/>';
+        return '<div class="s-wf"><div class="tb"><b>Post-demo comercial</b><span class="t on">Creador</span><span class="t">Configuración</span><span class="t">Historial</span><span class="t">Registros</span><div class="r"><span class="live"><span class="dot-live"></span>Activo</span><span class="sc-btn ghost" style="height:26px">▷ Probar</span><span class="sc-btn" style="height:26px">Publicar</span></div></div>' +
+          '<svg class="edges" viewBox="0 0 978 608" width="978" height="608">' + edges + '<circle class="pulse" r="6" cx="' + X[0] + '" cy="' + Y + '" id="pls"/></svg>' +
+          N.map(function (n, i) { return '<div class="node ' + n[0] + '" id="n' + i + '" style="left:' + X[i] + 'px;top:' + (Y - 26) + 'px"><span class="ok">✓</span><div class="ic"><svg viewBox="0 0 24 24">' + n[1] + '</svg></div><b>' + n[2] + '</b><small>' + n[3] + '</small></div>'; }).join('') +
+          '<div class="sc-card br" id="bY" style="left:790px;top:146px"><span class="sc-tag" style="background:#dcfce7;color:#15803d">Sí</span><b>Agendar reunión de cierre</b><small>pasa a Negociación</small></div>' +
+          '<div class="sc-card br" style="left:790px;top:326px"><span class="sc-tag">No</span><b>Email «¿Lo dejamos aquí?»</b><small>y etiqueta como frío</small></div>' +
+          '<div class="sc-card cnt"><div class="sc-k">Contactos en el flujo</div><div class="sc-n" id="wfN">128</div><span class="sc-up">62% respondió</span></div>' +
+          '<div class="sc-card log"><div class="sc-k">Registro de ejecución · Valentina Rojas</div><div id="log"></div></div></div>';
+      })(),
       run: function () {
-        var pls = R.getElementById('pls'), log = R.getElementById('log'), xs = [90, 240, 390, 540, 680];
-        function line(t, s) { log.appendChild(h('<div class="sc-pop"><em>' + t + '</em>' + s + '</div>')); while (log.children.length > 4) log.removeChild(log.firstChild); }
+        var X = [96, 254, 412, 570, 728], pls = R.getElementById('pls'), log = R.getElementById('log');
+        var L = [['20:01', 'Entró al flujo: etiqueta «demo realizada»'], ['20:01', 'Esperando 1 día'], ['día 2', 'Propuesta enviada · abierta 2 veces'], ['día 2', 'Esperando 2 días'], ['día 4', 'Respondió → rama «Sí»']];
+        function line(t, s) { log.appendChild(h('<div class="sc-pop"><em>' + t + '</em>' + s + '</div>')); while (log.children.length > 3) log.removeChild(log.firstChild); }
         reveal($$('.s-wf .node, .s-wf .br'), 150, 90);
-        xs.forEach(function (x, i) {
-          at(900 + i * 1150, function () {
+        if (!reduce) pls.style.transition = 'cx 1s cubic-bezier(.65,0,.35,1)';
+        X.forEach(function (x, i) {
+          at(700 + i * 1250, function () {
             $$('.s-wf .node').forEach(function (n) { n.classList.remove('lit'); });
-            var n = R.getElementById('n' + i); n.classList.add('lit', 'done');
-            pls.setAttribute('cx', x);
-            line(['20:01', '20:01', 'día 2', 'día 2', 'día 4'][i], ['Valentina Rojas entró al flujo', 'Esperando 1 día', 'Propuesta enviada ✓ abierta', 'Esperando 2 días', 'Respondió → Sí'][i]);
+            R.getElementById('n' + i).classList.add('lit', 'done');
+            pls.setAttribute('cx', x); line(L[i][0], L[i][1]);
           });
         });
-        if (!reduce) at(900, function () { pls.style.transition = 'cx 1.1s cubic-bezier(.65,0,.35,1)'; });
-        at(6700, function () { R.getElementById('bY').classList.add('win', 'sc-flash'); count(R.getElementById('wfN'), 129, 400); say('⚡', 'Reunión de cierre agendada por el flujo', 'Valentina Rojas · pasa a Negociación'); });
+        at(6100, function () { $$('.s-wf .node').forEach(function (n) { n.classList.remove('lit'); }); pls.style.opacity = 0; R.getElementById('eY').classList.add('hot'); R.getElementById('bY').classList.add('win', 'sc-flash'); count(R.getElementById('wfN'), 129, 400); say('⚡', 'Reunión de cierre agendada por el flujo', 'Valentina Rojas · pasa a Negociación'); });
       } },
 
     { k: 'mkt', t: 'Email marketing', cap: '<b>Email marketing.</b> Plantillas listas por objetivo (re-engagement, encuestas, reseñas, carrito abandonado). Elige una, edítala y prográmala en minutos.',
@@ -220,13 +269,15 @@
         '<div class="side"><div class="sc-k">Campaña</div><label>Asunto</label><div class="in car" id="subj"></div><label>Audiencia</label><div class="in">Inactivos 60 días · 1.284 contactos</div><label>Envío</label><div class="in" id="when">—</div><div style="margin-top:14px"><span class="sc-btn" id="prog">Guardar y programar</span></div></div></div></div>',
       run: function () {
         reveal($$('.s-mail .tp'), 200, 120);
-        at(1300, function () { cur(380, 150, true); });
-        at(2450, function () { R.getElementById('chA').classList.remove('on'); R.getElementById('chM').classList.add('on'); $$('.s-mail .tp').forEach(function (t, i) { t.classList.remove('sc-show'); void t.offsetWidth; at(i * 90, function () { t.classList.add('sc-show'); }); }); });
-        at(3100, function () { R.getElementById('tp1').classList.add('pick'); cur(560, 470, true); });
-        at(4300, function () { R.getElementById('ed').classList.add('on'); cursor.classList.remove('on'); });
+        var chM = R.getElementById('chM'), tp = R.getElementById('tp1');
+        at(700, function () { point(chM, true); });
+        at(1950, function () { R.getElementById('chA').classList.remove('on'); chM.classList.add('on'); $$('.s-mail .tp').forEach(function (t, i) { t.classList.remove('sc-show'); void t.offsetWidth; at(i * 90, function () { t.classList.add('sc-show'); }); }); });
+        at(2700, function () { tp.classList.add('pick'); point(tp.querySelector('.sc-btn'), true); });
+        at(4050, function () { cursor.classList.remove('on'); R.getElementById('ed').classList.add('on'); });
         var s = 'Te extrañamos, {nombre} 👋', subj = R.getElementById('subj');
-        at(4700, function () { var i = 0; (function ty() { subj.textContent = s.slice(0, ++i); if (i < s.length) timers.push(setTimeout(ty, reduce ? 0 : 55)); })(); });
-        at(6500, function () { subj.classList.remove('car'); R.getElementById('when').textContent = 'Mañana 10:00 (mejor hora de apertura)'; R.getElementById('prog').textContent = '✓ Programada'; say('✉', 'Campaña programada', '1.284 contactos · mañana 10:00'); });
+        at(4500, function () { var i = 0; (function ty() { subj.textContent = s.slice(0, ++i); if (i < s.length) timers.push(setTimeout(ty, reduce ? 0 : 55)); })(); });
+        at(6100, function () { point(R.getElementById('prog'), true); });
+        at(7300, function () { cursor.classList.remove('on'); subj.classList.remove('car'); R.getElementById('when').textContent = 'Mañana 10:00 (mejor hora de apertura)'; R.getElementById('prog').textContent = '✓ Programada'; say('✉', 'Campaña programada', '1.284 contactos · mañana 10:00'); });
       } },
 
     { k: 'aca', t: 'Academia', cap: '<b>Academia.</b> Cursos cortos para dejar Hapee funcionando, con avance por persona y un ranking que motiva a todo el equipo.',
@@ -251,17 +302,24 @@
         at(6200, function () { say('🔥', 'Tu equipo completó 12 lecciones esta semana', '+38% frente a la semana pasada'); });
       } },
 
-    { k: 'rep', t: 'Reportería', cap: '<b>Reportería.</b> Meta Ads, Google Ads, TikTok, LinkedIn y GA4 en un solo tablero: inversión, impresiones, clics y conversiones, día a día.',
-      html: '<div class="s-rep"><div class="sub"><div class="sc-k">ORGÁNICO</div><a><i style="background:#1877f2"></i>Facebook</a><a><i style="background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af)"></i>Instagram</a><a><i style="background:#111"></i>TikTok</a><a><i style="background:#0a66c2"></i>LinkedIn</a><a><i style="background:#f9ab00"></i>GA4</a><div class="sc-k" style="margin-top:10px">PUBLICITARIO</div><a class="on"><i style="background:#fff"></i>Resumen</a><a><i style="background:#0866ff"></i>Meta Ads</a><a><i style="background:#34a853"></i>Google Ads</a><a><i style="background:#111"></i>TikTok Ads</a></div>' +
-        '<div><div class="hd"><small>DASHBOARD</small><b>Resumen general</b><span class="dt">📅 1 oct 2026 → 15 oct 2026 ▾</span></div>' +
-        '<div class="charts">' + chart('Inversión', 'rInv', '$', '#0866ff', '#34a853', '$5.261.070', '$1.676.664') + chart('Impresiones', 'rImp', '', '#0866ff', '#34a853', '1.186.073', '170.862') + '</div>' +
-        '<div class="mini"><div class="sc-card"><div class="sc-k">Clics</div><div class="sc-n" data-c="27058">0</div><span class="sc-up">▲ 36,4%</span></div><div class="sc-card"><div class="sc-k">Conversiones</div><div class="sc-n" data-c="643">0</div><span class="sc-up">▲ 36,8%</span></div><div class="sc-card"><div class="sc-k">CPC</div><div class="sc-n" data-c="256" data-pre="$">0</div><span class="sc-up">▼ 8,1%</span></div><div class="sc-card"><div class="sc-k">ROAS</div><div class="sc-n" data-c="18" data-suf="×">0</div><span class="sc-up">▲ 12%</span></div></div></div></div>',
+    { k: 'rep', t: 'Reportería', cap: '<b>Reportería.</b> Meta Ads, Google Ads, TikTok, LinkedIn y GA4 en un solo tablero: inversión, resultados por canal, embudo y retorno, día a día.',
+      html: '<div class="s-rep2">' +
+        '<div class="hd"><div class="tabs"><span class="on">Resumen</span><span>Meta Ads</span><span>Google Ads</span><span>TikTok</span><span>LinkedIn</span><span>GA4</span></div><span class="dt">📅 1 oct → 15 oct 2026 ▾</span></div>' +
+        '<div class="kp">' + [['Inversión', 6937734, '$', '', '▲ 47,2%'], ['Leads', 2148, '', '', '▲ 36,8%'], ['Costo por lead', 3230, '$', '', '▼ 7,4%'], ['Ventas', 312, '', '', '▲ 29,1%'], ['ROAS', 18, '', '×', '▲ 12%']].map(function (k) { return '<div class="sc-card"><div class="sc-k">' + k[0] + '</div><div class="sc-n" data-c="' + k[1] + '" data-pre="' + k[2] + '" data-suf="' + k[3] + '">0</div><span class="sc-up">' + k[4] + '</span></div>'; }).join('') + '</div>' +
+        '<div class="row1"><div class="sc-card big"><div class="t"><span class="sc-k">Inversión vs. leads por día</span><span class="lg"><i style="background:#f25a1f"></i>Inversión <i style="background:#7c3aed"></i>Leads</span></div>' + area() + '</div>' +
+        '<div class="sc-card donut"><div class="t"><span class="sc-k">Leads por canal</span></div>' + donut() + '</div></div>' +
+        '<div class="row2"><div class="sc-card bars"><div class="t"><span class="sc-k">Ventas por canal</span></div>' + hbars() + '</div>' +
+        '<div class="sc-card funnel"><div class="t"><span class="sc-k">Embudo del mes</span></div>' + funnel() + '</div>' +
+        '<div class="sc-card heat"><div class="t"><span class="sc-k">Mejores horas para responder</span></div>' + heat() + '</div></div></div>',
       run: function () {
-        at(300, function () { $$('.s-rep .ln').forEach(function (l, i) { setTimeout(function () { l.classList.add('go'); }, reduce ? 0 : i * 250); }); });
-        at(300, function () { count(R.getElementById('rInv'), 6937734, 2200, '$'); count(R.getElementById('rImp'), 1356935, 2200); });
-        at(1600, function () { $$('.s-rep .mini [data-c]').forEach(function (n) { count(n, +n.dataset.c, 1500, n.dataset.pre, n.dataset.suf); }); });
-        at(4200, function () { say('📈', 'Nova: el CTR de Meta subió 18% esta semana', 'Sugiere mover $300.000 a la campaña ganadora'); });
-        at(6400, function () { var a = $$('.s-rep .sub a'); a[6].classList.remove('on'); a[7].classList.add('on'); });
+        at(200, function () { $$('.s-rep2 [data-c]').forEach(function (n) { count(n, +n.dataset.c, 1600, n.dataset.pre, n.dataset.suf); }); });
+        at(300, function () { $$('.s-rep2 .ln').forEach(function (l, i) { setTimeout(function () { l.classList.add('go'); }, reduce ? 0 : i * 300); }); var ar = $('.s-rep2 .ar'); if (ar) ar.classList.add('go'); });
+        at(700, function () { $$('.s-rep2 .seg').forEach(function (g, i) { setTimeout(function () { g.style.strokeDasharray = g.dataset.d + ' 999'; }, reduce ? 0 : i * 200); }); count(R.getElementById('dTot'), 2148, 1500); });
+        at(1100, function () { $$('.s-rep2 .hb i').forEach(function (b, i) { setTimeout(function () { b.style.width = b.dataset.w + '%'; }, reduce ? 0 : i * 140); }); });
+        at(1500, function () { $$('.s-rep2 .fn i').forEach(function (b, i) { setTimeout(function () { b.style.width = b.dataset.w + '%'; }, reduce ? 0 : i * 160); }); });
+        at(1800, function () { $$('.s-rep2 .hm i').forEach(function (c, i) { setTimeout(function () { c.style.opacity = c.dataset.o; }, reduce ? 0 : (i % 12) * 40); }); });
+        at(4400, function () { say('📈', 'Nova: Meta Ads trae los leads más baratos esta semana', 'Sugiere mover $300.000 desde Google Ads'); });
+        at(6600, function () { var t = $$('.s-rep2 .tabs span'); t[0].classList.remove('on'); t[1].classList.add('on'); });
       } },
 
     { k: 'lic', t: 'Licitaciones', cap: '<b>Licitaciones.</b> Mercado Público filtrado para tu rubro: la IA calcula la afinidad de cada licitación, te explica el porqué y te avisa cuando aparece una nueva.',
@@ -282,14 +340,35 @@
       } }
   ];
 
-  function chart(name, id, pre, c1, c2, v1, v2) {
-    var W = 420, H = 140, pts = function (seed, base, amp) { var p = [], y; for (var i = 0; i <= 14; i++) { y = base + Math.sin(i * .9 + seed) * amp + Math.cos(i * 1.7 + seed) * amp * .5; p.push([30 + i * (W - 40) / 14, y]); } return p; };
-    var path = function (p) { return p.map(function (q, i) { return (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join(' '); };
-    var a = pts(1, 45, 16), b = pts(3, 105, 7), len = 900;
-    return '<div class="sc-card ch"><div class="t"><span class="sc-k">' + name + '</span><span class="sc-n" id="' + id + '">0</span></div><div class="lg"><span><i style="background:' + c1 + '"></i>' + v1 + ' Meta Ads</span><span><i style="background:' + c2 + '"></i>' + v2 + ' Google Ads</span></div>' +
-      '<svg viewBox="0 0 ' + W + ' ' + (H + 18) + '"><g class="gl">' + [20, 50, 80, 110, 140].map(function (y) { return '<line x1="30" x2="' + (W - 10) + '" y1="' + y + '" y2="' + y + '"/>'; }).join('') + '</g>' +
-      '<path class="ln" style="--len:' + len + ';stroke:' + c1 + '" d="' + path(a) + '"/><path class="ln" style="--len:' + len + ';stroke:' + c2 + '" d="' + path(b) + '"/>' +
-      ['01-oct', '05-oct', '09-oct', '13-oct'].map(function (t, i) { return '<text class="ax" x="' + (30 + i * 120) + '" y="' + (H + 14) + '">' + t + '</text>'; }).join('') + '</svg></div>';
+  function area() {
+    var W = 560, H = 150, n = 15, inv = [], lead = [];
+    for (var i = 0; i < n; i++) { inv.push(70 + Math.sin(i * .8) * 22 + i * 2.2); lead.push(60 + Math.cos(i * .7 + 1) * 18 + i * 2.8); }
+    var x = function (i) { return 34 + i * (W - 44) / (n - 1); }, y = function (v) { return H - v * .8; };
+    var path = function (a) { return a.map(function (v, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' '); };
+    var areaP = path(inv) + ' L' + x(n - 1) + ' ' + H + ' L' + x(0) + ' ' + H + ' Z';
+    return '<svg viewBox="0 0 ' + W + ' ' + (H + 18) + '"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f25a1f" stop-opacity=".28"/><stop offset="1" stop-color="#f25a1f" stop-opacity="0"/></linearGradient></defs>' +
+      '<g class="gl">' + [30, 60, 90, 120, 150].map(function (v) { return '<line x1="34" x2="' + (W - 10) + '" y1="' + v + '" y2="' + v + '"/>'; }).join('') + '</g>' +
+      '<path class="ar" d="' + areaP + '" fill="url(#gA)"/>' +
+      '<path class="ln" style="--len:900;stroke:#f25a1f" d="' + path(inv) + '"/><path class="ln" style="--len:900;stroke:#7c3aed;stroke-dasharray:var(--len)" d="' + path(lead) + '"/>' +
+      ['01 oct', '05 oct', '09 oct', '13 oct'].map(function (t, i) { return '<text class="ax" x="' + (30 + i * 168) + '" y="' + (H + 14) + '">' + t + '</text>'; }).join('') + '</svg>';
+  }
+  function donut() {
+    var D = [['Meta Ads', 46, '#0866ff'], ['Google Ads', 24, '#34a853'], ['WhatsApp orgánico', 17, '#25d366'], ['TikTok', 13, '#1f1915']], C = 2 * Math.PI * 46, off = 0, segs = '', lg = '';
+    D.forEach(function (d) { var len = C * d[1] / 100; segs += '<circle class="seg" data-d="' + (len - 2).toFixed(1) + '" cx="60" cy="60" r="46" stroke="' + d[2] + '" stroke-dashoffset="' + (-off).toFixed(1) + '"/>'; off += len; lg += '<li><i style="background:' + d[2] + '"></i>' + d[0] + '<b>' + d[1] + '%</b></li>'; });
+    return '<div class="dn"><svg viewBox="0 0 120 120">' + segs + '</svg><div class="ct"><b id="dTot">0</b><small>leads</small></div></div><ul class="dl">' + lg + '</ul>';
+  }
+  function hbars() {
+    return [['Meta Ads', 132, 100, '#0866ff'], ['Google Ads', 81, 61, '#34a853'], ['WhatsApp', 64, 48, '#25d366'], ['TikTok', 35, 27, '#1f1915']].map(function (b) {
+      return '<div class="hb"><span>' + b[0] + '</span><div><i data-w="' + b[2] + '" style="background:' + b[3] + '"></i></div><b>' + b[1] + '</b></div>'; }).join('');
+  }
+  function funnel() {
+    return [['Visitas', '48.210', 100], ['Leads', '2.148', 68], ['Calificados por IA', '1.034', 46], ['Reuniones', '418', 30], ['Ventas', '312', 20]].map(function (f) {
+      return '<div class="fn"><i data-w="' + f[2] + '"></i><span>' + f[0] + '</span><b>' + f[1] + '</b></div>'; }).join('');
+  }
+  function heat() {
+    var cells = '', days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    days.forEach(function (d, r) { cells += '<em>' + d + '</em>'; for (var c = 0; c < 12; c++) { var v = Math.max(.08, Math.min(1, (Math.sin((c - 3) / 2.4) * .5 + .45) * (r > 4 ? .55 : 1) + ((r * 7 + c * 3) % 5) * .05)); cells += '<i data-o="' + v.toFixed(2) + '"></i>'; } });
+    return '<div class="hm">' + cells + '</div><div class="hx"><span>8h</span><span>14h</span><span>20h</span></div>';
   }
   function op(o) {
     return '<div class="sc-card op"><div class="ring"><svg viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="20"/><circle class="fg" data-v="' + o[0] + '" cx="23" cy="23" r="20"/></svg><b>' + o[0] + '</b></div><div><h6>' + o[1] + '</h6><p>' + o[2] + '</p><div class="m"><em>💰 ' + Math.round(o[0] * .82) + '</em>' + o[3] + '</div><span class="fit">' + o[4] + '</span></div></div>';

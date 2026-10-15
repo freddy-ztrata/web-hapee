@@ -13,8 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/robot.png" fetchpriority="high">
 <link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=31">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=32">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=31">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=33">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=33">
 <script>
   /* Tema antes del primer pintado: oscuro por defecto, respeta la elección guardada. */
   try{var t=localStorage.getItem('hapee-prop-theme');if(t==='light')document.documentElement.classList.remove('dark')}catch(e){}
@@ -143,9 +143,15 @@
       <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
       <div class="bot" id="bot">
         <div class="bot-tilt" id="botTilt">
-          <img class="bot-img" src="/img/robot.png" alt="" width="435" height="800" fetchpriority="high">
-          <span class="bot-sheen"></span>
+          <model-viewer id="robot3d" class="bot-3d" src="/img/3d/hapee-robot.glb" poster="/img/robot.png" alt="Robot Hapee en 3D. Arrástralo para girarlo."
+            camera-controls disable-zoom disable-pan interaction-prompt="none" touch-action="pan-y"
+            auto-rotate auto-rotate-delay="0" rotation-per-second="22deg"
+            camera-orbit="0deg 80deg 104%" min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 100deg auto"
+            environment-image="neutral" tone-mapping="neutral" exposure="1.05" shadow-intensity="0" loading="eager">
+            <img slot="poster" src="/img/robot.png" alt="" width="435" height="800" style="width:100%;height:100%;object-fit:contain">
+          </model-viewer>
         </div>
+        <span class="bot-hint" aria-hidden="true">↺ Arrástrame</span>
       </div>
       <span class="robot-floor" aria-hidden="true"></span>
       <!-- tarjetas flotantes: ilustran el producto, NO son actividad real -->
@@ -157,7 +163,7 @@
 
   <a class="scroll-cue" href="#marcas" aria-label="Seguir bajando"><span></span></a>
 
-  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot con el render oficial (colores y logo exactos) animado en 2.5D: se inclina siguiendo el cursor, flota y lo recorre un brillo de luz. Más liviano que el 3D, que lavaba los colores y deformaba el logo del pecho. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
+  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot 3D que gira 360° solo, se puede arrastrar para girarlo, flota y se inclina hacia el cursor. Usa el modelo estático (sin esqueleto) para que el logo del pecho no se deforme, con el color corregido para acercarse al render oficial. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
 </section>
 
 <!-- ═════════════ 2 · MARCAS ═════════════ -->
@@ -485,7 +491,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="/propuesta-2026-r8x4/home.js?v=31" defer></script>
-<script src="/propuesta-2026-r8x4/showcase.js?v=31" defer></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="/propuesta-2026-r8x4/home.js?v=33" defer></script>
+<script src="/propuesta-2026-r8x4/showcase.js?v=33" defer></script>
 </body>
 </html>

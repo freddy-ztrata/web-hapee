@@ -554,3 +554,12 @@ body.show-notes section{outline:1px dashed rgba(245,166,35,.35);outline-offset:-
 @media (prefers-reduced-motion:reduce){.bot,.bot-sheen{animation:none}}
 
 .ps-view{position:relative;overflow:hidden}
+
+/* Robot 3D (modelo estático, gira 360°). El GLB trae la textura algo lavada
+   frente al render oficial: se compensa con saturación y contraste. */
+.bot-3d{display:block;width:100%;height:100%;--poster-color:transparent;background:transparent;cursor:grab;
+  filter:saturate(1.38) contrast(1.07) brightness(1.03) drop-shadow(0 34px 38px rgba(0,0,0,.42)) drop-shadow(0 0 60px rgba(250,80,0,.18))}
+.bot-3d:active{cursor:grabbing}
+.bot-hint{position:absolute;left:50%;bottom:-6%;transform:translateX(-50%);font:600 .74rem/1 var(--f-body);color:var(--text-muted);padding:7px 11px;border-radius:var(--r-pill);
+  background:var(--glass);border:1px solid var(--border);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:.85;white-space:nowrap}
+@media (pointer:coarse){.bot-hint{display:none}}
