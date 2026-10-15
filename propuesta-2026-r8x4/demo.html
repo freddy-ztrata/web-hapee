@@ -52,18 +52,26 @@
   .host-alt img:first-child{margin-left:0}
 
   /* ── Calendario + lateral ── */
-  .cal-sec{padding-top:var(--s-12)}
+  .cal-sec{padding-top:calc(var(--s-12) + 64px)}
   .cal-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-12);align-items:start}
   /* el widget del calendario necesita todo el ancho: en una columna angosta cae a su diseño de celular y se estira */
-  .cal-grid>.side{position:static;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}
+  .cal-grid>.side{position:static;margin-top:var(--s-12);grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}
   .cal-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:var(--s-6)}
   .cal-head>div{display:grid;gap:14px}
   .cal-head h2{font-size:var(--t-h2)}
   .cal-head p{color:var(--text-muted);font-size:.93rem;max-width:46ch}
   .cal-stage{position:relative;min-height:680px}
-  /* el iframe pinta un rectángulo blanco con esquinas rectas detrás de la tarjeta redondeada del widget: se recorta al mismo radio */
-  .cal-embed{position:relative;z-index:1;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(250,80,0,.35),0 0 0 1px rgba(255,255,255,.06)}
-  .cal-embed iframe{display:block;border-radius:16px;background:transparent;color-scheme:normal}
+  .cal-embed{position:relative;z-index:1}
+  /* Sin contenedor: el widget trae su tarjeta blanca (configurada en la app) y sobre el fondo oscuro se leía como
+     una caja encima de otra. El bloque del calendario va sobre una franja blanca a todo el ancho, así la tarjeta
+     se funde con el fondo; el recorte de 2 px quita su borde. */
+  .cal-grid>.cal-main{position:relative;background:#fff;box-shadow:0 0 0 100vmax #fff;clip-path:inset(-64px -100vmax -48px);color:#2B2722}
+  .cal-main .cal-head h2{color:#151210}
+  .cal-main .cal-head p,.cal-main .cal-alt{color:#6b625a}
+  .cal-main .cal-alt a{color:#c2410c}
+  .cal-main .eyebrow{color:#c2410c}
+  .cal-embed iframe{display:block;clip-path:inset(3px round 18px)}
+  .cal-main .cal-skel{background:#fff;border-color:#EDE6DC}
   .cal-skel{position:absolute;inset:0;z-index:0;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);padding:28px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px;transition:opacity var(--d-slow) var(--ease-out)}
   .cal-skel.off{opacity:0;pointer-events:none}
   .sk{border-radius:10px;background:linear-gradient(90deg,var(--surface-2) 0%,rgba(250,80,0,.08) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:sk 1.6s linear infinite}
@@ -212,7 +220,7 @@
   <!-- ═════════════ 2 · CALENDARIO REAL ═════════════ -->
   <section class="sec cal-sec" id="calendario">
     <div class="ctn cal-grid">
-      <div>
+      <div class="cal-main">
         <div class="cal-head">
           <div><p class="eyebrow">Paso único</p><h2 class="display">Elige día y hora.</h2></div>
           <p>Los horarios se muestran en tu zona horaria. Al confirmar te llega el enlace de Google Meet y un recordatorio antes de la llamada.</p>
