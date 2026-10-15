@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Todas las páginas · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  .grp{margin-top:var(--s-16)}
+  .grp h2{font-size:var(--t-h2);margin-bottom:6px}
+  .grp>p{color:var(--text-muted);margin-bottom:var(--s-6)}
+  .pages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .pg{display:flex;flex-direction:column;overflow:hidden;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
+  .pg:hover{border-color:rgba(250,80,0,.45);transform:translateY(-3px)}
+  .pg .shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--border)}
+  .pg .shot iframe{position:absolute;left:0;top:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none;background:#080808}
+  .pg .shot .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--text-muted);font-size:.85rem}
+  .pg .b{padding:18px 20px;display:grid;gap:6px}
+  .pg .b b{color:var(--heading);font-size:1.05rem}
+  .pg .b small{color:var(--text-muted);font-size:.86rem;line-height:1.45}
+  .pg .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .t-new{background:rgba(34,197,94,.14);color:#22c55e}.t-rep{background:var(--grad-soft);color:var(--link)}.t-fus{background:rgba(139,92,246,.15);color:#a78bfa}
+  .tg{display:inline-block;font:700 .7rem/1 var(--f-body);padding:4px 8px;border-radius:6px;letter-spacing:.02em}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:var(--s-6);font-size:.88rem;color:var(--text-muted);justify-content:center}
+  @media(max-width:1100px){.pages{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:700px){.pages{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-page="mapa">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/">Auditoría y plan</a><span>/</span>Todas las páginas</nav>
+      <div class="sec-head center" style="margin:0 auto">
+        <p class="eyebrow">Propuesta 2026 · revisión</p>
+        <h1 class="display">El sitio <span class="grad-text">completo.</span></h1>
+        <p class="lead">Cada página del nuevo hapee.ai, con el mismo sistema de diseño, menú y footer. Las vistas previas son las páginas reales: haz clic para recorrerlas.</p>
+        <div class="legend"><span><span class="tg t-rep">Reemplaza</span> rediseño de una página actual</span><span><span class="tg t-fus">Fusiona</span> une páginas actuales</span><span><span class="tg t-new">Nueva</span> no existe hoy</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="ctn" id="groups"></div>
+  <section class="sec"><div class="ctn"><div class="cta-band">
+    <h2 class="display">¿Qué sigue?</h2>
+    <p>Revisen cada página con «Notas de diseño» activado. Lo marcado como [confirmar] necesita un dato real antes de publicar.</p>
+    <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/">Volver a la auditoría y el plan</a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home">Ver la home</a></div>
+  </div></div></section>
+</main>
+<script>
+(function(){
+  var P='/propuesta-2026-r8x4/';
+  var G=[
+    ['Inicio y conversión','La puerta de entrada y el camino a la venta.',[
+      ['home','Home','Hero con agente en vivo, la plataforma viva, calculadora, precios y equipo.','rep','index.html'],
+      ['precios','Precios','Planes con mensual/anual, «¿cuál es para mí?», tabla comparativa y checkout.','rep','planes.html'],
+      ['demo','Agendar demo','Calendario real embebido, qué verás en la demo y quién te atiende.','rep','agenda-tu-demo.html'],
+      ['demo-confirmada','Demo confirmada','Cuenta regresiva, agregar al calendario y checklist de preparación.','rep','preparate-demo.html'],
+      ['compra-exitosa','Compra exitosa','Estado del alta después de pagar y próximos pasos.','rep','compra-exitosa.html']]],
+    ['Producto y soluciones','Qué hace Hapee y para quién.',[
+      ['producto','Plataforma','Todos los módulos con su ancla: agentes, bandeja, CRM, workflows, email, RRSS, web, voz, reportería, licitaciones, academia y API.','new',''],
+      ['whatsapp','Ventas por WhatsApp','Landing de campaña del agente IA para WhatsApp, con la demo única.','rep','agentes-ia-whatsapp.html'],
+      ['soluciones','Soluciones','Pymes, agencias, proveedores del Estado y empresas.','new',''],
+      ['integraciones','Integraciones','Directorio filtrable de todo lo que conecta Hapee, más API y MCP.','new','']]],
+    ['Confianza y empresa','Lo que mira un cliente grande y un inversionista.',[
+      ['nosotros','Nosotros','Historia, fundadores, equipo, valores e inversionistas.','new',''],
+      ['seguridad','Seguridad','Cumplimiento, datos, subprocesadores, roles y estado del servicio.','new',''],
+      ['casos','Casos de éxito','Estructura de casos de clientes de Hapee y trabajos del equipo, separados.','new',''],
+      ['partners','Partners','Programa de agencias y formulario de postulación.','rep','partners.html'],
+      ['por-que-hapee','Por qué Hapee','Antes/después y comparación con alternativas.','fus','comparativa.html + transformacion.html']]],
+    ['Recursos','Contenido que educa y posiciona.',[
+      ['blog','Blog','Destacado, categorías, buscador y newsletter.','rep','blog.html'],
+      ['blog-articulo','Artículo del blog','Plantilla de artículo con índice, progreso de lectura y CTA contextual.','rep','blog/*.html'],
+      ['docs','Documentación API','Portada de docs con guía rápida, ejemplos de código y MCP.','rep','docs/'],
+      ['academia','Academia','Módulos por fase, progreso y plantillas copiables.','rep','academia.html'],
+      ['eventos','Eventos y webinars','Próximo evento con horarios por país y grabaciones.','rep','webinar.html'],
+      ['changelog','Novedades','Lo último que lanzó el producto, mes a mes.','new',''],
+      ['demos','Demos interactivas','Oficina 3D, juego y Vía: fuera del menú principal, en un hub.','fus','juego + oficina + via']]],
+    ['Legal y sistema','Páginas de soporte.',[
+      ['legal','Legales','Términos, privacidad y eliminación de datos con índice.','rep','terminos + politica-privacidad + eliminacion-datos'],
+      ['404','Página no encontrada','Con buscador de páginas y salida útil.','new',''],
+      ['','Auditoría y plan','El documento de auditoría, decisiones y roadmap.','new','']]]
+  ];
+  var lbl={rep:['t-rep','Reemplaza'],fus:['t-fus','Fusiona'],new:['t-new','Nueva']};
+  var out=document.getElementById('groups');
+  G.forEach(function(g){
+    var html='<section class="grp"><h2 class="display">'+g[0]+'</h2><p>'+g[1]+'</p><div class="pages">';
+    g[2].forEach(function(p){
+      var l=lbl[p[3]];
+      html+='<a class="card pg rv" href="'+P+p[0]+'"><div class="shot" data-src="'+P+p[0]+'"><span class="ph">Cargando vista previa…</span></div><div class="b"><b>'+p[1]+'</b><small>'+p[2]+'</small><div class="tags"><span class="tg '+l[0]+'">'+l[1]+'</span>'+(p[4]?'<span class="tg" style="background:var(--surface-2);color:var(--text-muted)">'+p[4]+'</span>':'')+'</div></div></a>';
+    });
+    out.insertAdjacentHTML('beforeend',html+'</div></section>');
+  });
+  // vistas previas vivas, cargadas solo cuando se acercan a la pantalla
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var s=e.target;io.unobserve(s);
+    var f=document.createElement('iframe');f.src=s.dataset.src;f.loading='lazy';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.title='';
+    f.style.transform='scale('+(s.clientWidth/1440)+')';f.onload=function(){var ph=s.querySelector('.ph');if(ph)ph.remove();};s.appendChild(f);});},{rootMargin:'300px'});
+  document.querySelectorAll('.shot').forEach(function(s){io.observe(s);});
+  addEventListener('resize',function(){document.querySelectorAll('.shot iframe').forEach(function(f){f.style.transform='scale('+(f.parentNode.clientWidth/1440)+')';});});
+  document.querySelectorAll('.rv').forEach(function(n){n.classList.add('in');});
+})();
+</script>
+</body>
+</html>

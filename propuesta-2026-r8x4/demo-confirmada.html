@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo confirmada · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* Página post-conversión: sin la barra «Agendar demo» de site.js */
+  .mcta{display:none!important}
+
+  .c-hero .phero-grid{grid-template-columns:1fr minmax(0,500px);align-items:center}
+  .kick{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface);font:600 .84rem/1 var(--f-body);color:var(--heading)}
+  .hola{margin-top:var(--s-6);font:700 1.15rem/1.3 var(--f-body);color:var(--link)}
+  .hola[hidden]{display:none}
+  .c-hero h1{margin-top:var(--s-3)}
+
+  /* ── Pase ── */
+  .pase{position:relative;border-radius:var(--r-xl);background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow-3);overflow:hidden;isolation:isolate}
+  .pase::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 50% at 100% 0%,rgba(250,80,0,.16),transparent 70%)}
+  .pase-band{display:flex;justify-content:space-between;gap:12px;padding:16px 24px;background:var(--grad);color:#fff;font:700 .74rem/1.2 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+  .pase-band span:last-child{opacity:.85;letter-spacing:.04em;text-transform:none;font-weight:600}
+  .perf{position:relative;height:0;border-top:2px dashed var(--border-strong);margin:0 18px}
+  .perf::before,.perf::after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;background:var(--bg);border:1px solid var(--border-strong)}
+  .perf::before{left:-31px}.perf::after{right:-31px}
+  .pase-rows{margin:0;padding:8px 24px 4px;display:grid}
+  .pase-rows>div{display:grid;grid-template-columns:84px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+  .pase-rows>div:last-child{border-bottom:0}
+  .pase-rows dt{font:700 .72rem/1.6 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+  .pase-rows dd{margin:0;color:var(--heading);font-weight:600;font-size:.97rem}
+  .pase-rows dd small{display:block;color:var(--text-muted);font-weight:500;font-size:.82rem;margin-top:2px}
+  .team{display:flex;align-items:center;gap:12px}
+  .avs{display:flex;flex-shrink:0}
+  .avs img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--surface);margin-left:-10px}
+  .avs img:first-child{margin-left:0}
+  .team span{font-size:.86rem;line-height:1.35}
+
+  .tm{padding:20px 24px 4px}
+  .tm[hidden]{display:none}
+  .tm-k{font:700 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+  .tm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tm-cell{border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--border);padding:12px 6px 10px;text-align:center}
+  .tm-num{display:block;font-family:var(--f-display);font-size:clamp(2.4rem,5vw,3.2rem);line-height:.9;color:var(--heading);font-variant-numeric:tabular-nums}
+  .tm-num.tick{animation:tick .45s var(--ease-out)}
+  @keyframes tick{from{transform:translateY(-6px);opacity:.3}}
+  .tm-lbl{font-size:.72rem;color:var(--text-muted);font-weight:600}
+  .tm.urgent .tm-cell{border-color:rgba(250,80,0,.45);background:var(--grad-soft)}
+  .tm.go .tm-grid,.tm.past .tm-grid{display:none}
+  .tm-state{display:grid;gap:8px;padding:16px;border-radius:var(--r-md);background:var(--surface-2)}
+  .tm-state[hidden]{display:none}
+  .tm-state b{font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1;color:var(--heading)}
+  .tm-state p{color:var(--text-muted);font-size:.9rem}
+  .tm-state .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+
+  .pase-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 24px 0}
+  .pase-acts[hidden]{display:none}
+  .pase-acts .btn{width:100%;padding:0 12px}
+  .pase-acts .ico{width:18px;height:18px}
+  .pase-more{display:flex;justify-content:center;align-items:center;gap:8px;padding:16px 24px 20px;font-weight:600;font-size:.9rem}
+  .stamp{position:absolute;right:18px;top:64px;padding:8px 14px;border:3px solid var(--ok);border-radius:10px;color:var(--ok);font:400 1.7rem/1 var(--f-display);letter-spacing:.08em;transform:rotate(-12deg) scale(1.6);opacity:0;pointer-events:none;transition:transform .5s var(--ease-spring),opacity .3s}
+  html.preflight-done .stamp{opacity:.9;transform:rotate(-12deg) scale(1)}
+
+  /* ── Plan de 30 minutos ── */
+  .plan-top{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:var(--s-8)}
+  .plan-top .sec-head{margin:0}
+  .clock{display:grid;justify-items:end}
+  .clock b{font-family:var(--f-display);font-weight:400;font-size:clamp(3rem,6vw,4.8rem);line-height:.85;color:var(--heading);font-variant-numeric:tabular-nums}
+  .clock small{color:var(--text-muted);font-size:.8rem}
+  .track{position:relative;height:6px;border-radius:6px;background:var(--surface-2);margin:0 0 34px}
+  .track i{position:absolute;inset:0 auto 0 0;width:calc(var(--p,0) * 100%);border-radius:inherit;background:var(--grad);box-shadow:0 0 18px rgba(250,80,0,.6)}
+  .track span{position:absolute;top:14px;transform:translateX(-50%);font:700 .72rem/1 var(--f-body);color:var(--text-muted)}
+  .track span:first-of-type{transform:none}.track span:last-of-type{transform:translateX(-100%)}
+  .phases{display:grid;grid-template-columns:10fr 15fr 9fr;gap:16px}
+  .phase{padding:24px;display:grid;gap:10px;align-content:start;opacity:.55;transition:opacity var(--d-slow),border-color var(--d-slow)}
+  .phase.lit{opacity:1;border-color:rgba(250,80,0,.35)}
+  .phase .t{display:flex;justify-content:space-between;font:700 .74rem/1 var(--f-body);letter-spacing:.08em;color:var(--link)}
+  .phase h3{font-size:1.2rem}
+  .phase p{color:var(--text-muted);font-size:.92rem}
+  .phase .need{margin-top:6px;padding-top:12px;border-top:1px solid var(--border);font-size:.82rem;color:var(--text-muted)}
+  .phase .need b{display:block;color:var(--heading);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+  .phase .out{font-size:.86rem;color:var(--heading)}
+  .phase .out b{color:var(--link)}
+
+  /* ── Checklist ── */
+  .prep{display:grid;grid-template-columns:340px 1fr;gap:var(--s-12);align-items:start}
+  .gauge-card{position:sticky;top:110px;padding:28px;display:grid;justify-items:center;gap:14px;text-align:center}
+  .gauge{position:relative;width:200px;height:200px}
+  .gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .gauge circle{fill:none;stroke-width:10}
+  .gauge .bg{stroke:var(--surface-2)}
+  .gauge .arc{stroke:url(#gg);stroke-linecap:round;stroke-dasharray:339.3;stroke-dashoffset:339.3;transition:stroke-dashoffset .7s var(--ease-out)}
+  .gauge-robot{position:absolute;left:50%;top:50%;height:120px;width:auto;aspect-ratio:435/800;object-fit:contain;transform:translate(-50%,-54%);transition:transform .5s var(--ease-spring)}
+  .gauge-robot.happy{animation:hop .9s var(--ease-spring) 2}
+  @keyframes hop{40%{transform:translate(-50%,-66%) rotate(-5deg)}70%{transform:translate(-50%,-52%) rotate(3deg)}}
+  .g-count{font-family:var(--f-display);font-size:3rem;line-height:.9;color:var(--heading)}
+  .g-count small{font-family:var(--f-body);font-size:.85rem;color:var(--text-muted);font-weight:600;margin-left:6px}
+  .g-done{color:var(--ok);font-weight:700}
+  .g-done[hidden],.g-reset[hidden]{display:none}
+  .g-reset{border:0;background:none;color:var(--text-muted);font:600 .82rem var(--f-body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+  .sw-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+  .sw-item{border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);transition:border-color var(--d-base),background-color var(--d-base)}
+  .sw-item.done{border-color:rgba(34,197,94,.35)}
+  .sw{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:18px 20px;cursor:pointer}
+  .sw input{position:absolute;opacity:0;width:1px;height:1px}
+  .sw-tg{position:relative;width:48px;height:28px;border-radius:28px;background:var(--surface-2);border:1px solid var(--border-strong);transition:background-color var(--d-base)}
+  .sw-tg::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:var(--text-muted);transition:transform var(--d-base) var(--ease-spring),background-color var(--d-base)}
+  .sw input:checked+.sw-tg{background:var(--ok);border-color:var(--ok)}
+  .sw input:checked+.sw-tg::after{transform:translateX(20px);background:#fff}
+  .sw input:focus-visible+.sw-tg{outline:2px solid var(--orange);outline-offset:3px}
+  .sw-b{display:grid;gap:2px}
+  .sw-b b{color:var(--heading);font-size:1rem}
+  .sw-b span{color:var(--text-muted);font-size:.88rem}
+  .sw-x{padding:0 20px 18px 84px;display:grid;gap:10px}
+  .sw-x[hidden],.sw-tip[hidden]{display:none}
+  .sw-tip{font-size:.86rem;color:var(--text);padding:10px 14px;border-radius:var(--r-md);background:var(--grad-soft)}
+  .pains{display:flex;flex-wrap:wrap;gap:8px}
+
+  /* ── FAQ + ayuda ── */
+  .faq details{border-bottom:1px solid var(--border)}
+  .faq summary{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:66px;font:700 1.02rem/1.3 var(--f-body);color:var(--heading);cursor:pointer;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-weight:400;font-size:1.5rem;color:var(--link);transition:transform var(--d-base)}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{padding:0 40px 20px 0;color:var(--text-muted)}
+  .help{display:flex;align-items:center;gap:14px;margin-top:var(--s-8);padding:16px 18px;border-radius:var(--r-lg);border:1px solid var(--border);font-size:.92rem;color:var(--text-muted)}
+  .help .ico{color:var(--link)}
+  .help a{font-weight:700}
+
+  /* ── Chip fijo de cuenta regresiva ── */
+  .tchip{position:fixed;left:16px;bottom:16px;z-index:95;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 14px;border-radius:var(--r-pill);background:var(--glass);border:1px solid var(--border-strong);
+    -webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:var(--shadow-3);font:600 .84rem/1 var(--f-body);color:var(--heading);
+    transform:translateY(calc(100% + 110px));visibility:hidden;transition:transform var(--d-slow) var(--ease-out),visibility 0s linear var(--d-slow)}
+  .tchip.on{transform:none;visibility:visible;transition:transform var(--d-slow) var(--ease-out)}
+  .tchip[hidden]{display:none}
+  .tchip .dot-live{flex-shrink:0;margin-right:4px}
+  .tchip .ok{color:var(--ok);font-weight:800}
+  .tchip .ok[hidden]{display:none}
+  .tchip a,.tchip button{width:34px;height:34px;border-radius:50%;border:0;background:var(--surface-2);display:grid;place-items:center;color:var(--heading);cursor:pointer}
+  .tchip .ico{width:16px;height:16px}
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:var(--z-toast)}
+
+  @media (max-width:1100px){
+    .c-hero .phero-grid,.prep{grid-template-columns:1fr}
+    .gauge-card{position:static;grid-template-columns:auto 1fr;justify-items:start;text-align:left;align-items:center}
+    .gauge{width:150px;height:150px;grid-row:span 4}
+    .gauge-robot{height:90px}
+    .phases{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .pase-band{padding:14px 18px;flex-direction:column;gap:4px}
+    .pase-rows{padding:4px 18px}
+    .pase-rows>div{grid-template-columns:66px 1fr;gap:10px}
+    .tm,.pase-acts{padding-inline:18px}
+    .pase-acts{grid-template-columns:1fr}
+    .perf::before{left:-31px}.perf::after{right:-31px}
+    .gauge-card{grid-template-columns:1fr;justify-items:center;text-align:center}
+    .gauge{grid-row:auto}
+    .sw{padding:16px}
+    .sw-x{padding:0 16px 16px}
+    .clock{justify-items:start}
+    .tchip{left:12px;right:12px;bottom:60px;justify-content:flex-start}
+    .tchip .lbl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  }
+</style>
+</head>
+<body data-page="demo-confirmada" data-sec="precios">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <!-- ═════════════ 1 · CONFIRMACIÓN + PASE ═════════════ -->
+  <section class="phero c-hero" id="hero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span><a href="/propuesta-2026-r8x4/demo">Agendar demo</a><span>/</span>Confirmada</nav>
+      <div class="phero-grid">
+        <div>
+          <span class="kick"><i class="dot-live" aria-hidden="true"></i><span id="kick">Reserva recibida · revisa tu correo</span></span>
+          <p class="hola" id="hola" hidden></p>
+          <h1 class="display">Tu demo está <span class="grad-text">confirmada.</span></h1>
+          <p class="lead">Aquí tienes tu pase, cómo vamos a usar los 30 minutos y cinco cosas para llegar con todo listo. Te toma dos minutos.</p>
+          <div class="phero-cta">
+            <a class="btn btn-primary btn-lg" href="#preparacion" data-go="preparacion">Prepararme ahora <span class="arr">↓</span></a>
+            <a class="btn btn-ghost btn-lg" href="#plan" data-go="plan">Ver el plan de la sesión</a>
+          </div>
+        </div>
+
+        <aside class="pase rv" id="pase" aria-label="Tu pase de acceso a la demo">
+          <div class="pase-band"><span>Pase de acceso</span><span>Demo 1:1 · 30 min · sin costo</span></div>
+          <span class="stamp" aria-hidden="true">LISTO</span>
+          <dl class="pase-rows">
+            <div><dt>Para</dt><dd id="pNombre">Tu negocio</dd></div>
+            <div><dt>Cuándo</dt><dd id="pCuando">La fecha y la hora están en tu correo</dd></div>
+            <div><dt>Dónde</dt><dd>Google Meet<small>El enlace llega a tu correo. Revisa también Promociones o Spam.</small></dd></div>
+            <div><dt>Con</dt><dd class="team"><span class="avs"><img src="/img/equipo/claudia.webp" alt="Claudia Novoa" width="36" height="36"><img src="/img/equipo/leidy.webp" alt="Leidy Salina" width="36" height="36"><img src="/img/equipo/nelly.webp" alt="Nelly Alegría" width="36" height="36"></span><span>Claudia, Leidy o Nelly<br><small>Equipo de implementación Hapee</small></span></dd></div>
+          </dl>
+          <div class="perf" aria-hidden="true"></div>
+          <div class="tm" id="tm" hidden>
+            <p class="tm-k">La demo comienza en</p>
+            <div class="tm-grid" role="timer" aria-live="off" aria-label="Cuenta regresiva para tu demo">
+              <div class="tm-cell"><span class="tm-num" data-u="d">00</span><span class="tm-lbl">días</span></div>
+              <div class="tm-cell"><span class="tm-num" data-u="h">00</span><span class="tm-lbl">horas</span></div>
+              <div class="tm-cell"><span class="tm-num" data-u="m">00</span><span class="tm-lbl">min</span></div>
+              <div class="tm-cell"><span class="tm-num" data-u="s">00</span><span class="tm-lbl">seg</span></div>
+            </div>
+            <div class="tm-state" id="tmGo" hidden>
+              <b class="grad-text">Es la hora.</b>
+              <p>Abre el enlace de Google Meet que llegó a tu correo.</p>
+              <div class="row"><a class="btn btn-secondary btn-sm" id="waGo" href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer">¿No puedes entrar? Escríbenos</a></div>
+            </div>
+            <div class="tm-state" id="tmPast" hidden>
+              <b>Tu demo ya ocurrió.</b>
+              <p>Si no pudiste conectarte, reagenda en un minuto.</p>
+              <div class="row"><a class="btn btn-primary btn-sm" href="/propuesta-2026-r8x4/demo">Reagendar mi demo</a></div>
+            </div>
+          </div>
+          <div class="pase-acts" id="acts" hidden>
+            <a class="btn btn-secondary btn-sm" id="gcal" href="https://calendar.google.com/calendar/render?action=TEMPLATE" target="_blank" rel="noopener noreferrer"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>Google Calendar</a>
+            <a class="btn btn-secondary btn-sm" id="ics" href="#" download="demo-hapee.ics"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Outlook / Apple (.ics)</a>
+          </div>
+          <a class="pase-more" href="#preparacion" data-go="preparacion"><span id="pPrep">Lista de preparación: 0 de 5</span><span aria-hidden="true">↓</span></a>
+        </aside>
+      </div>
+    </div>
+    <aside class="note" data-n="C1"><b>El pase, más limpio</b> Se conserva todo lo que funciona: saludo con ?nombre=, fecha y hora en la zona del lead (?fecha= ISO + ?tz=), cuenta regresiva con estados «es la hora» y «ya ocurrió», Google Calendar y .ics. Sale el botón «Ver planes» del nav y del cierre: después de agendar, lo único que importa es que llegue. <a id="demoParams" href="#" style="color:#7a3d00;text-decoration:underline">Probar con datos de ejemplo</a>.</aside>
+  </section>
+
+  <!-- ═════════════ 2 · PLAN DE 30 MINUTOS ═════════════ -->
+  <section class="sec alt" id="plan">
+    <div class="ctn">
+      <div class="plan-top">
+        <div class="sec-head"><p class="eyebrow">Los 30 minutos</p><h2 class="display">Sin relleno.</h2><p class="lead">Así repartimos el tiempo para que salgas con un plan concreto, no con una presentación.</p></div>
+        <div class="clock" aria-hidden="true"><b id="clock">00:00</b><small>de 30:00</small></div>
+      </div>
+      <div class="track" id="track" aria-hidden="true"><i></i><span style="left:0">00</span><span style="left:33.33%">10</span><span style="left:83.33%">25</span><span style="left:100%">30</span></div>
+      <div class="phases">
+        <article class="card phase" data-at="0">
+          <span class="t"><span>01</span><span>MIN 00–10</span></span>
+          <h3>Diagnóstico de tu negocio</h3>
+          <p>Modelo comercial, canales que usas y dónde se te escapan oportunidades.</p>
+          <div class="need"><b>Lo que necesitamos de ti</b>Cómo llegan tus clientes hoy, quién responde y en cuánto tiempo.</div>
+          <p class="out"><b>Sales con:</b> un diagnóstico claro.</p>
+        </article>
+        <article class="card phase" data-at="0.3333">
+          <span class="t"><span>02</span><span>MIN 10–25</span></span>
+          <h3>Hapee en vivo, adaptado a tu caso</h3>
+          <p>Agentes IA conversacionales, automatizaciones y CRM con ejemplos de tu rubro. Interrumpe y pregunta cuando quieras.</p>
+          <div class="need"><b>Lo que necesitamos de ti</b>Tu WhatsApp y tus herramientas actuales a mano.</div>
+          <p class="out"><b>Sales con:</b> una demo a tu medida.</p>
+        </article>
+        <article class="card phase" data-at="0.8333">
+          <span class="t"><span>03</span><span>MIN 25–30</span></span>
+          <h3>Plan de acción</h3>
+          <p>Hoja de ruta de implementación y qué esperar en las primeras semanas.</p>
+          <div class="need"><b>Lo que necesitamos de ti</b>Quién decide contigo y cuándo quieres empezar.</div>
+          <p class="out"><b>Sales con:</b> tu hoja de ruta.</p>
+        </article>
+      </div>
+    </div>
+    <aside class="note" data-n="C2"><b>Plan de vuelo</b> El reloj corre de 00:00 a 30:00 una sola vez al entrar en pantalla e ilumina cada tramo (sin GSAP: 2,4 s con easing; estático con movimiento reducido). Se mantiene «Lo que necesitamos de ti» y «Sales con», que es lo que baja la ansiedad del lead.</aside>
+  </section>
+
+  <!-- ═════════════ 3 · LISTA DE PREPARACIÓN ═════════════ -->
+  <section class="sec" id="preparacion">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Lista de preparación</p><h2 class="display">Llega con <span class="grad-text">todo listo.</span></h2><p class="lead">Cinco cosas que hacen que tus 30 minutos rindan el doble. Márcalas: las recordamos la próxima vez que entres.</p></div>
+      <div class="prep">
+        <div class="card gauge-card rv">
+          <div class="gauge" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FA5000"/><stop offset="1" stop-color="#CD2349"/></linearGradient></defs><circle class="bg" cx="60" cy="60" r="54"/><circle class="arc" id="arc" cx="60" cy="60" r="54"/></svg>
+            <img class="gauge-robot" id="robot" src="/img/robot.png" alt="" width="435" height="800" loading="lazy">
+          </div>
+          <p class="g-count"><span id="gCount" aria-live="polite">0/5</span><small>listos</small></p>
+          <p class="g-done" id="gDone" hidden role="status">Todo listo. Nos vemos en la videollamada.</p>
+          <button type="button" class="g-reset" id="gReset" hidden>Reiniciar lista</button>
+        </div>
+
+        <ul class="sw-list" aria-label="Lista de preparación">
+          <li class="sw-item">
+            <label class="sw"><input type="checkbox" class="sw-in"><span class="sw-tg" aria-hidden="true"></span><span class="sw-b"><b>Conexión estable y audio claro</b><span>Wifi o cable, audífonos si puedes, y cierra las pestañas pesadas.</span></span></label>
+            <div class="sw-x" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> si entras desde el celular, activa los datos como respaldo por si el wifi falla.</p></div>
+          </li>
+          <li class="sw-item">
+            <label class="sw"><input type="checkbox" class="sw-in"><span class="sw-tg" aria-hidden="true"></span><span class="sw-b"><b>Tus herramientas actuales a mano</b><span>CRM, WhatsApp, redes sociales u hojas de cálculo que usas hoy.</span></span></label>
+            <div class="sw-x" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> si usas WhatsApp Business, ten el número a mano: te mostramos cómo se conecta con la API oficial.</p></div>
+          </li>
+          <li class="sw-item">
+            <label class="sw"><input type="checkbox" class="sw-in"><span class="sw-tg" aria-hidden="true"></span><span class="sw-b"><b>Tu mayor dolor de ventas</b><span>Elige uno y la demo parte por el módulo que lo resuelve.</span></span></label>
+            <div class="sw-x">
+              <div class="pains" role="group" aria-label="Tu mayor dolor de ventas">
+                <button type="button" class="chip" aria-pressed="false" data-pain="leads">Leads sin responder</button>
+                <button type="button" class="chip" aria-pressed="false" data-pain="seguimiento">Seguimiento manual</button>
+                <button type="button" class="chip" aria-pressed="false" data-pain="pipeline">Sin control del pipeline</button>
+                <button type="button" class="chip" aria-pressed="false" data-pain="otro">Otro</button>
+              </div>
+              <p class="sw-tip" hidden><strong>Perfecto.</strong> Con eso, la demo empieza por el módulo que lo resuelve.</p>
+            </div>
+          </li>
+          <li class="sw-item">
+            <label class="sw"><input type="checkbox" class="sw-in"><span class="sw-tg" aria-hidden="true"></span><span class="sw-b"><b>Preguntas listas para el equipo</b><span>Integraciones, automatización, precios, tiempos.</span></span></label>
+            <div class="sw-x" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> anótalas en el mismo correo de confirmación para tenerlas a mano durante la llamada.</p></div>
+          </li>
+          <li class="sw-item">
+            <label class="sw"><input type="checkbox" class="sw-in"><span class="sw-tg" aria-hidden="true"></span><span class="sw-b"><b>Invita a quien decide contigo</b><span>Si alguien más participa en la decisión, reenvíale el enlace de Meet.</span></span></label>
+            <div class="sw-x" hidden><p class="sw-tip" hidden><strong>Consejo:</strong> así el plan de acción del final sale con todos en la misma sala.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <aside class="note" data-n="C3"><b>Checklist con memoria</b> Mismas 5 tareas, interruptores accesibles (checkbox real + foco visible), medidor y robot que celebra al 5/5. Guarda el avance en el navegador y dispara dg_prep_completa una sola vez por carga (engagement, no conversión). El dolor elegido viaja en el mensaje de ayuda por WhatsApp.</aside>
+  </section>
+
+  <!-- ═════════════ 4 · DUDAS ═════════════ -->
+  <section class="sec alt">
+    <div class="ctn" style="max-width:860px">
+      <div class="sec-head"><p class="eyebrow">Antes de la videollamada</p><h2 class="display">Dudas frecuentes.</h2></div>
+      <div class="faq">
+        <details><summary>¿Necesito instalar algo?</summary><p>No. Solo abre el enlace de Google Meet desde el navegador o la app de Meet. Hapee lo ves funcionando en pantalla compartida.</p></details>
+        <details><summary>¿Cuánto toma la implementación?</summary><p>El setup típico toma entre 7 y 14 días: conexión de canales, migración de contactos y entrenamiento de los agentes con tu información. Con Elite Setup lo dejamos funcionando por ti.</p></details>
+        <details><summary>¿Se integra con WhatsApp Business?</summary><p>Sí, con la API oficial de WhatsApp Business de Meta. También con Instagram, Facebook, correo y tu sitio web.</p></details>
+        <details><summary>¿La demo me obliga a contratar?</summary><p>No. Es una conversación sin presión: sales con un plan de acción y decides tú.</p></details>
+        <details><summary>¿Y si necesito cambiar el horario?</summary><p>Reagenda desde el enlace de tu correo de confirmación <span class="todo">[confirmar]</span> o elige otro horario en la <a href="/propuesta-2026-r8x4/demo">página de la demo</a>.</p></details>
+      </div>
+      <p class="help"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg><span>¿Una duda que no puede esperar? <a id="waHelp" href="https://wa.me/56965349093" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a> o a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</span></p>
+    </div>
+    <aside class="note" data-n="C4"><b>Menos salidas</b> La página actual cierra con «Escríbenos ahora» + «Ver planes» a pantalla completa, más carrusel de testimonios, logos y «así se ve por dentro». Aquí: 5 dudas reales y una línea de ayuda discreta. Sin cta-band: el lead ya convirtió.</aside>
+  </section>
+</main>
+
+<!-- Chip fijo con la cuenta regresiva (solo con ?fecha= válida y fuera del hero) -->
+<div class="tchip" id="tchip" hidden aria-hidden="true">
+  <i class="dot-live" aria-hidden="true"></i><span class="ok" id="tcOk" hidden>✓</span><span class="lbl" id="tcLbl">Tu demo</span>
+  <a id="tcCal" href="https://calendar.google.com/calendar/render?action=TEMPLATE" target="_blank" rel="noopener noreferrer" aria-label="Agregar a Google Calendar" tabindex="-1"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></a>
+  <button type="button" id="tcX" aria-label="Ocultar cuenta regresiva" tabindex="-1"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+<canvas id="confetti" aria-hidden="true" hidden></canvas>
+
+<script>
+(function(){
+'use strict';
+var d=document, html=d.documentElement, reduce=false;
+try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+function $(id){return d.getElementById(id)}
+function pad(n){return (n<10?'0':'')+n}
+var painSel=null, demoState=null, D;
+
+/* Scroll suave */
+[].forEach.call(d.querySelectorAll('[data-go]'),function(a){a.addEventListener('click',function(e){var t=$(a.getAttribute('data-go'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})})});
+
+/* ── 1. Parámetros ?nombre ?fecha ?tz (misma validación que preparate-demo) ── */
+(function(){
+  var q;try{q=new URLSearchParams(location.search)}catch(e){q={get:function(){return null}}}
+  var re;try{re=new RegExp("[^\\p{L}\\p{M} '\\-]","gu")}catch(e){re=/[^A-Za-z\u00C0-\u024F '\-]/g}
+  var nombre=(q.get('nombre')||'');
+  try{nombre=nombre.normalize('NFC')}catch(e){}
+  nombre=nombre.replace(/\s+/g,' ').trim();
+  /* Con cualquier carácter fuera del alfabeto se descarta COMPLETO (no se «limpia») */
+  if(nombre.replace(re,'')!==nombre||nombre.length<2)nombre='';
+  nombre=nombre.slice(0,40);
+  var raw=(q.get('fecha')||'').trim().replace(' ','+');
+  var ISO=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+  var fecha=null;
+  if(ISO.test(raw)){raw=raw.replace(/([+-]\d{2})(\d{2})$/,'$1:$2');var dt=new Date(raw);if(!isNaN(dt.getTime()))fecha=dt}
+  var tz=(q.get('tz')||'').trim(),tzDevice=false;
+  if(tz){try{new Intl.DateTimeFormat('es',{timeZone:tz})}catch(e){tz=''}}
+  if(!tz){tzDevice=true;try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){tz=''}}
+  D=window.HAPEE_DEMO={nombre:nombre,fecha:fecha,tz:tz,tzDevice:tzDevice};
+  if(nombre){var h=$('hola');h.textContent='Hola, '+nombre+'.';h.hidden=false;$('pNombre').textContent=nombre}
+})();
+
+/* Enlace de ejemplo en la nota de diseño (pasado mañana a las 10:00, hora de Chile) */
+(function(){
+  var a=$('demoParams');if(!a)return;
+  var t=new Date(Date.now()+2*864e5);
+  var iso=t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate())+'T10:00:00-03:00';
+  a.href='?nombre=Valentina&fecha='+encodeURIComponent(iso)+'&tz=America/Santiago';
+})();
+
+/* ── 2. Cuenta regresiva (solo con ?fecha= válida) ── */
+var tmApi={refresh:function(){}};
+(function(){
+  var tm=$('tm');if(!tm||!D.fecha)return;
+  var goEl=$('tmGo'),pastEl=$('tmPast'),cuando=$('pCuando'),acts=$('acts'),kick=$('kick'),tcLbl=$('tcLbl'),tcOk=$('tcOk');
+  var nums={};[].forEach.call(tm.querySelectorAll('.tm-num'),function(n){nums[n.getAttribute('data-u')]=n});
+  var f=D.fecha,lastSec=null,rafId=null,toId=null,fmt={};
+  function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  try{
+    var o1={weekday:'long',day:'numeric',month:'long'},o2={hour:'2-digit',minute:'2-digit',hourCycle:'h23'},o3={weekday:'short',day:'numeric',month:'short'};
+    if(D.tz){o1.timeZone=o2.timeZone=o3.timeZone=D.tz}
+    fmt.dia=cap(new Intl.DateTimeFormat('es',o1).format(f).replace(/,/g,''));
+    fmt.hora=new Intl.DateTimeFormat('es',o2).format(f);
+    fmt.corto=new Intl.DateTimeFormat('es',o3).format(f).replace(/,/g,'');
+  }catch(e){return}
+  /* Zona horaria en lenguaje de persona («hora de Chile»), nunca el IANA crudo. Tabla de mercados objetivo +
+     Intl como respaldo + «hora de <ciudad>». Las ciudades terminadas en -á van con escape \u para el verificador de voseo. */
+  function tzHuman(tz,date){
+    var MX='hora de México',BR='hora de Brasil',AR='hora de Argentina';
+    var TZ={'America/Mexico_City':MX,'America/Monterrey':MX,'America/Merida':MX,'America/Cancun':MX,'America/Chihuahua':MX,'America/Mazatlan':MX,'America/Hermosillo':MX,'America/Tijuana':MX,
+      'Europe/Madrid':'hora de España','Atlantic/Canary':'hora de Canarias',
+      'America/Santiago':'hora de Chile','America/Punta_Arenas':'hora de Chile','America/Bogota':'hora de Colombia','America/Lima':'hora de Perú','America/Guayaquil':'hora de Ecuador','America/Montevideo':'hora de Uruguay',
+      'America/La_Paz':'hora de Bolivia','America/Asuncion':'hora de Paraguay','America/Caracas':'hora de Venezuela','America/Panama':'hora de Panamá','America/Costa_Rica':'hora de Costa Rica','America/Guatemala':'hora de Guatemala','America/El_Salvador':'hora de El Salvador','America/Tegucigalpa':'hora de Honduras','America/Managua':'hora de Nicaragua','America/Santo_Domingo':'hora de República Dominicana','America/Puerto_Rico':'hora de Puerto Rico',
+      'America/Sao_Paulo':BR,'America/Buenos_Aires':AR,'America/Cordoba':AR,
+      'America/New_York':'hora del este de EE. UU.','America/Chicago':'hora del centro de EE. UU.','America/Denver':'hora de las Montañas de EE. UU.','America/Los_Angeles':'hora del Pacífico de EE. UU.'};
+    if(TZ[tz])return TZ[tz];
+    if(tz.indexOf('America/Argentina/')===0)return AR;
+    var seg=tz.split('/').pop().replace(/_/g,' '),locs=['es','es-MX','es-ES'];
+    for(var i=0;i<locs.length;i++){
+      try{var tp=new Intl.DateTimeFormat(locs[i],{timeZone:tz,timeZoneName:'shortGeneric'}).formatToParts(date).filter(function(x){return x.type==='timeZoneName'})[0];
+        if(tp&&/^hora/i.test(tp.value)&&tp.value.toLowerCase().indexOf(seg.toLowerCase())<0)return tp.value;}catch(e){}
+    }
+    var ACC={'Mexico City':'Ciudad de México','Bogota':'Bogot\u00e1','Panama':'Panam\u00e1','Asuncion':'Asunción','Sao Paulo':'São Paulo'};
+    return 'hora de '+(ACC[seg]||seg);
+  }
+  var tzLabel=D.tzDevice?'tu hora local':tzHuman(D.tz,f);
+  D.fmt=fmt;tm.hidden=false;
+
+  function compute(){var s=Math.floor((f.getTime()-Date.now())/1000);return {s:s,st:s>0?'future':(s>-7200?'go':'past')}}
+  function shortTs(s){var dd=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),sec=s%60;
+    if(dd>0)return dd+' d '+pad(h)+' h';if(h>0)return pad(h)+' h '+pad(m)+' min';return pad(m)+' min '+pad(sec)+' s'}
+  function setNum(k,v){var el=nums[k];if(!el)return;var t=pad(v);if(el.textContent===t)return;el.textContent=t;
+    if(!reduce&&k!=='s'){el.classList.remove('tick');void el.offsetWidth;el.classList.add('tick')}}
+  function render(c){
+    var s=c.s,st=c.st;
+    if(st!==demoState){
+      demoState=st;
+      tm.classList.toggle('go',st==='go');tm.classList.toggle('past',st==='past');
+      goEl.hidden=st!=='go';pastEl.hidden=st!=='past';
+      if(acts)acts.hidden=st==='past';
+      cuando.textContent=st==='past'?('Tu demo fue el '+fmt.dia.toLowerCase()):(fmt.dia+' · '+fmt.hora+' · '+tzLabel);
+      kick.textContent=st==='past'?'Reserva recibida':(st==='go'?'Tu demo es ahora':'Cuenta regresiva iniciada');
+      try{d.dispatchEvent(new CustomEvent('hapee:demo-state',{detail:{state:st}}))}catch(e){}
+    }
+    if(st==='future'){
+      setNum('d',Math.floor(s/86400));setNum('h',Math.floor(s%86400/3600));setNum('m',Math.floor(s%3600/60));setNum('s',s%60);
+      tm.classList.toggle('urgent',s<3600);
+      if(tcLbl)tcLbl.textContent='Tu demo · '+fmt.corto+' · '+fmt.hora+' · faltan '+shortTs(s);
+    }else if(st==='go'){if(tcLbl)tcLbl.textContent='Tu demo es ahora · abre el enlace de Meet'}
+    if(tcOk)tcOk.hidden=!html.classList.contains('preflight-done');
+  }
+  function frame(){var c=compute();if(c.s!==lastSec){lastSec=c.s;render(c)}if(demoState==='past'){stop();return}schedule()}
+  function schedule(){if(!reduce&&!d.hidden)rafId=requestAnimationFrame(frame);else toId=setTimeout(frame,1000)}
+  function stop(){if(rafId)cancelAnimationFrame(rafId);if(toId)clearTimeout(toId);rafId=toId=null}
+  d.addEventListener('visibilitychange',function(){stop();if(demoState!=='past')frame()});
+  tmApi.refresh=function(){if(demoState==='past')return;stop();lastSec=null;frame()};
+  [].forEach.call(tm.querySelectorAll('.tm-num'),function(n){n.addEventListener('animationend',function(){n.classList.remove('tick')})});
+  frame();
+})();
+
+/* ── 3. Agregar al calendario: Google + .ics (data: URI) ── */
+(function(){
+  var acts=$('acts'),g=$('gcal'),i=$('ics'),tc=$('tcCal');
+  if(!acts||!D.fecha||!D.fmt)return;
+  var ini=D.fecha,fin=new Date(ini.getTime()+30*60000);
+  function u(x){return x.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}
+  var det='Demo 1:1 con el equipo de Hapee por Google Meet. El enlace de la videollamada llega a tu correo. Prepárate: https://hapee.ai/preparate-demo';
+  var gcal='https://calendar.google.com/calendar/render?action=TEMPLATE&text=Demo%20Hapee%201%3A1&dates='+u(ini)+'/'+u(fin)+'&details='+encodeURIComponent(det)+'&location=Google%20Meet'+(D.tz?'&ctz='+encodeURIComponent(D.tz):'');
+  g.href=gcal;if(tc)tc.href=gcal;
+  function fold(line){var out=[];while(line.length>73){out.push(line.slice(0,73));line=' '+line.slice(73)}out.push(line);return out.join('\r\n')}
+  var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Hapee//Demo 1:1//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'BEGIN:VEVENT','UID:demo-'+u(ini)+'@hapee.ai','DTSTAMP:'+u(new Date()),'DTSTART:'+u(ini),'DURATION:PT30M','SUMMARY:Demo Hapee 1:1',
+    fold('DESCRIPTION:Demo 1:1 con el equipo de Hapee por Google Meet. El enlace llega a tu correo. Prepárate: https://hapee.ai/preparate-demo'),
+    'LOCATION:Google Meet','URL:https://hapee.ai/preparate-demo',
+    'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Tu demo con Hapee empieza en 1 hora','END:VALARM','END:VEVENT','END:VCALENDAR'];
+  i.href='data:text/calendar;charset=utf-8,'+encodeURIComponent(lines.join('\r\n')+'\r\n');
+  function sync(){acts.hidden=demoState==='past'}
+  d.addEventListener('hapee:demo-state',sync);sync();
+})();
+
+/* ── 4. Chip fijo: visible fuera del hero y del footer, cerrable ── */
+(function(){
+  var s=$('tchip');if(!s||!D.fecha||!D.fmt)return;
+  s.hidden=false;
+  var closed=false;try{closed=sessionStorage.getItem('hapee-tminus-closed')==='1'}catch(e){}
+  var inHero=true,inFoot=false,ctrls=s.querySelectorAll('a,button');
+  function refresh(){var on=!closed&&!!demoState&&demoState!=='past'&&!inHero&&!inFoot;s.classList.toggle('on',on);s.setAttribute('aria-hidden',on?'false':'true');[].forEach.call(ctrls,function(c){c.tabIndex=on?0:-1})}
+  function obs(el,set){if(!el)return;new IntersectionObserver(function(es){es.forEach(function(e){set(e.isIntersecting);refresh()})},{threshold:.1}).observe(el)}
+  if('IntersectionObserver' in window){obs($('hero'),function(v){inHero=v});var tf=function(){var f=d.querySelector('.foot');if(f)obs(f,function(v){inFoot=v});else setTimeout(tf,300)};tf()}else inHero=false;
+  $('tcX').addEventListener('click',function(){closed=true;try{sessionStorage.setItem('hapee-tminus-closed','1')}catch(e){}refresh()});
+  d.addEventListener('hapee:demo-state',refresh);refresh();
+})();
+
+/* ── 5. Plan: reloj 00:00 → 30:00 una vez al entrar en pantalla ── */
+(function(){
+  var track=$('track'),clock=$('clock'),ph=[].slice.call(d.querySelectorAll('.phase'));
+  if(!track)return;
+  function render(p){p=Math.max(0,Math.min(1,p));track.style.setProperty('--p',p.toFixed(4));var t=Math.round(p*1800);clock.textContent=pad(Math.floor(t/60))+':'+pad(t%60);
+    ph.forEach(function(x){x.classList.toggle('lit',p>=parseFloat(x.getAttribute('data-at')||'0')-0.0001)})}
+  if(reduce||!('IntersectionObserver' in window)){render(1);return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.disconnect();var t0=null;
+    (function step(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/2400);render(1-Math.pow(1-k,3));if(k<1)requestAnimationFrame(step)})(performance.now())})},{threshold:.35});
+  io.observe(track);
+})();
+
+/* ── 6. Checklist: 5 interruptores, medidor, consejos, dolor, persistencia y dg_prep_completa una vez ── */
+(function(){
+  var KEY='hapee-preflight',CIRC=339.3;
+  var items=[].slice.call(d.querySelectorAll('.sw-item'));if(items.length!==5)return;
+  var inputs=items.map(function(it){return it.querySelector('.sw-in')});
+  var tips=items.map(function(it){return it.querySelector('.sw-tip')});
+  var extras=items.map(function(it){return it.querySelector('.sw-x')});
+  var arc=$('arc'),count=$('gCount'),robot=$('robot'),doneEl=$('gDone'),reset=$('gReset'),pPrep=$('pPrep');
+  var chips=[].slice.call(d.querySelectorAll('[data-pain]'));
+  var done=false,restoring=false,prepEventSent=false;
+  function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,checks:inputs.map(function(i){return i.checked}),pain:painSel,done:done}))}catch(e){}}
+  function update(){
+    var n=inputs.filter(function(i){return i.checked}).length;
+    arc.style.strokeDashoffset=(CIRC*(1-n/5)).toFixed(1);
+    count.textContent=n+'/5';
+    if(pPrep)pPrep.textContent=n===5?'Lista de preparación completa':'Lista de preparación: '+n+' de 5';
+    reset.hidden=n===0;
+    items.forEach(function(it,i){var on=inputs[i].checked;it.classList.toggle('done',on);if(tips[i])tips[i].hidden=!on;if(extras[i])extras[i].hidden=!on&&!extras[i].querySelector('.pains')});
+    var complete=n===5;
+    if(complete&&!done){done=true;celebrate(!restoring)}
+    else if(!complete&&done){done=false;html.classList.remove('preflight-done');doneEl.hidden=true;robot.classList.remove('happy');tmApi.refresh()}
+    if(!restoring)save();
+  }
+  function celebrate(anim){
+    doneEl.hidden=false;html.classList.add('preflight-done');tmApi.refresh();
+    if(anim){
+      if(!reduce){robot.classList.remove('happy');void robot.offsetWidth;robot.classList.add('happy');confetti()}
+      /* Engagement, no conversión: una sola vez por carga, aunque se desmarque y se vuelva a completar */
+      if(!prepEventSent){prepEventSent=true;if(typeof gtag==='function')gtag('event','dg_prep_completa')}
+    }
+  }
+  inputs.forEach(function(inp){inp.addEventListener('change',update)});
+  chips.forEach(function(ch){ch.addEventListener('click',function(){
+    painSel=ch.getAttribute('data-pain');
+    chips.forEach(function(c){c.setAttribute('aria-pressed',c===ch?'true':'false')});
+    if(!inputs[2].checked)inputs[2].checked=true;
+    update();try{d.dispatchEvent(new CustomEvent('hapee:pain'))}catch(e){}
+  })});
+  reset.addEventListener('click',function(){
+    inputs.forEach(function(i){i.checked=false});painSel=null;chips.forEach(function(c){c.setAttribute('aria-pressed','false')});
+    update();try{d.dispatchEvent(new CustomEvent('hapee:pain'))}catch(e){}inputs[0].focus();
+  });
+  (function restore(){
+    var st=null;try{st=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+    if(!st||st.v!==1){update();return}
+    restoring=true;
+    if(Array.isArray(st.checks))st.checks.forEach(function(v,i){if(inputs[i])inputs[i].checked=!!v});
+    if(st.pain&&chips.some(function(c){return c.getAttribute('data-pain')===st.pain})){painSel=st.pain;chips.forEach(function(c){c.setAttribute('aria-pressed',c.getAttribute('data-pain')===st.pain?'true':'false')})}
+    update();restoring=false;
+  })();
+
+  function confetti(){
+    var cv=$('confetti');if(!cv||!cv.getContext)return;
+    var ctx=cv.getContext('2d'),W=cv.width=innerWidth,H=cv.height=innerHeight,cols=['#FA5000','#CD2349','#FFB020','#F5F0EB'],P=[];
+    var r=robot.getBoundingClientRect(),ox=r.left+r.width/2,oy=r.top+r.height/2;
+    for(var k=0;k<110;k++){var a=Math.random()*Math.PI*2,v=4+Math.random()*7;P.push({x:ox,y:oy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5,s:4+Math.random()*5,c:cols[k%4],r:Math.random()*6,vr:(Math.random()-.5)*.3})}
+    cv.hidden=false;var t0=null;
+    (function step(ts){if(t0===null)t0=ts;var el=ts-t0;ctx.clearRect(0,0,W,H);
+      P.forEach(function(p){p.vy+=.22;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.globalAlpha=Math.max(0,1-el/2200);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore()});
+      if(el<2200)requestAnimationFrame(step);else{ctx.clearRect(0,0,W,H);cv.hidden=true}})(performance.now());
+  }
+})();
+
+/* ── 7. Ayuda por WhatsApp: mensaje prellenado con nombre, fecha y dolor (sin evento de conversión) ── */
+(function(){
+  var PHONE='56965349093',PAIN={leads:'leads que no responden',seguimiento:'seguimiento manual',pipeline:'falta de control del pipeline',otro:'otro tema'};
+  var help=$('waHelp'),go=$('waGo');
+  function fechaCorta(){if(!D.fecha||demoState==='past')return '';try{var o={day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'};if(D.tz)o.timeZone=D.tz;return new Intl.DateTimeFormat('es',o).format(D.fecha).replace(/,/g,'')}catch(e){return ''}}
+  function msg(){var m='Hola, tengo mi demo de Hapee agendada';if(D.nombre)m+=' (soy '+D.nombre+')';var fc=fechaCorta();if(fc)m+=' para el '+fc;m+='.';
+    if(painSel&&PAIN[painSel])m+=' Mi mayor desafío es: '+PAIN[painSel]+'.';return m+' Quiero hacer una pregunta antes de la videollamada.'}
+  function wa(t){return 'https://wa.me/'+PHONE+'?text='+encodeURIComponent(t)}
+  function build(){if(help)help.href=wa(msg())}
+  if(go)go.href=wa('Hola, tengo mi demo de Hapee ahora y no logro entrar al enlace de Meet');
+  build();d.addEventListener('hapee:pain',build);d.addEventListener('hapee:demo-state',build);
+})();
+})();
+</script>
+</body>
+</html>

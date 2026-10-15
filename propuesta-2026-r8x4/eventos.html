@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eventos y webinars · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Próximo evento ── */
+  .next{display:grid;grid-template-columns:1.15fr .85fr;gap:0;overflow:hidden}
+  .next .nx-main{padding:clamp(28px,4vw,52px);display:grid;gap:20px;align-content:start;position:relative;isolation:isolate}
+  .next .nx-main::before{content:"";position:absolute;left:-20%;top:-60%;width:90%;height:160%;background:radial-gradient(circle,rgba(250,80,0,.22),transparent 60%);filter:blur(40px);z-index:-1}
+  .next h2{font-size:clamp(2.6rem,5vw,4.4rem)}
+  .live{display:inline-flex;align-items:center;gap:10px;font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--heading)}
+  .kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+  .kv div{background:var(--surface);padding:14px 16px;display:grid;gap:4px}
+  .kv small{font:700 .7rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+  .kv b{color:var(--heading);font-size:.95rem;line-height:1.35}
+  .kv .todo{justify-self:start}
+  .cd{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .cd div{padding:16px 8px 12px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--border);text-align:center}
+  .cd b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,5vw,3.8rem);line-height:.9;color:var(--heading);font-variant-numeric:tabular-nums}
+  .cd small{font-size:.74rem;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase}
+  .local{font-size:.9rem;color:var(--text-muted)}
+  .local b{color:var(--heading)}
+  .speakers{display:flex;flex-wrap:wrap;gap:18px}
+  .spk{display:flex;align-items:center;gap:12px}
+  .spk img{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--surface-2)}
+  .spk b{display:block;color:var(--heading);font-size:.92rem}
+  .spk small{color:var(--text-muted);font-size:.8rem}
+
+  .nx-side{border-left:1px solid var(--border);padding:clamp(24px,3vw,36px);display:grid;gap:16px;align-content:start;background:var(--surface-2)}
+  html.dark .nx-side{background:#0c0b0a}
+  .nx-side h3{font-size:1.05rem}
+  .tz{display:grid;gap:2px}
+  .tz-row{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:var(--r-md);font-size:.92rem}
+  .tz-row img{width:22px;height:16px;object-fit:cover;border-radius:3px}
+  .tz-row b{font-variant-numeric:tabular-nums;color:var(--heading)}
+  .tz-row small{color:var(--text-muted);font-size:.76rem;margin-left:6px}
+  .tz-row.me{background:var(--grad-soft);box-shadow:inset 0 0 0 1px rgba(250,80,0,.35)}
+  .tz-row .me-tag{font:700 .66rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--link);margin-left:8px}
+
+  /* temario */
+  .topics{counter-reset:tp;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .topic{padding:26px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+  .topic::before{counter-increment:tp;content:counter(tp,decimal-leading-zero);font-family:var(--f-display);font-size:2.4rem;line-height:.9;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .topic h3{font-size:1.1rem;margin-bottom:6px}
+  .topic p{color:var(--text-muted);font-size:.94rem}
+
+  /* inscripción */
+  .reg{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s-16);align-items:start}
+  .reg-box{padding:clamp(24px,3vw,36px)}
+  .reg-box .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .reg-ok{display:grid;gap:14px;justify-items:start}
+  .reg-ok[hidden],.form[hidden]{display:none}
+  .reg-ok .ic{background:rgba(34,197,94,.14);color:var(--ok)}
+  .perks{list-style:none;margin:var(--s-6) 0 0;padding:0;display:grid;gap:14px}
+  .perks li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+  .perks b{display:block;color:var(--heading)}
+  .perks span{color:var(--text-muted);font-size:.93rem}
+
+  /* pasados */
+  .past-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--s-8)}
+  .ev{display:flex;flex-direction:column;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
+  .ev:hover{border-color:rgba(250,80,0,.4);transform:translateY(-3px)}
+  .ev[hidden]{display:none}
+  .ev .cv{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface-2)}
+  .ev .cv img{width:100%;height:100%;object-fit:cover;transition:transform var(--d-slow) var(--ease-out)}
+  .ev:hover .cv img{transform:scale(1.04)}
+  .ev .play{position:absolute;inset:auto auto 14px 14px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px 8px 8px;border-radius:var(--r-pill);background:rgba(8,8,8,.75);color:#fff;font:700 .76rem/1 var(--f-body);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .ev .play i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--grad)}
+  .ev .play .ico{width:12px;height:12px;fill:#fff;stroke:none}
+  .ev .type{position:absolute;right:14px;top:14px;padding:6px 10px;border-radius:var(--r-pill);background:rgba(8,8,8,.72);color:#fff;font:700 .68rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+  .ev .bd{padding:22px;display:grid;gap:8px;flex:1;align-content:start}
+  .ev .dt{font-size:.8rem;color:var(--text-muted);display:flex;gap:8px;align-items:center}
+  .ev .dt .ico{width:14px;height:14px}
+  .ev h3{font-size:1.15rem;line-height:1.3}
+  .ev p{color:var(--text-muted);font-size:.92rem}
+  .ev .lk{margin-top:auto;padding:0 22px 22px;font-weight:700;font-size:.88rem;color:var(--link)}
+
+  /* invítanos */
+  .host{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:clamp(24px,4vw,40px)}
+  .host h2{font-size:clamp(2rem,3.4vw,2.8rem)}
+
+  @media (max-width:1100px){
+    .next,.reg{grid-template-columns:1fr}
+    .nx-side{border-left:0;border-top:1px solid var(--border)}
+    .host{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .kv{grid-template-columns:1fr}
+    .cd{gap:6px}.cd div{padding:12px 4px 10px}
+    .topics{grid-template-columns:1fr}
+    .reg-box .row2{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body data-page="eventos" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Recursos<span>/</span>Eventos</nav>
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Eventos y webinars</p>
+        <h1 class="display">IA aplicada, <span class="grad-text">en vivo.</span></h1>
+        <p class="lead">Webinars gratuitos de una hora con el equipo de Hapee y especialistas invitados: agentes de IA, ventas por WhatsApp, licitaciones y automatización, explicados para aplicarlos al día siguiente.</p>
+        <div class="phero-cta"><a class="btn btn-primary btn-lg" href="#inscripcion">Reservar mi cupo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="#grabaciones">Ver eventos pasados</a></div>
+      </div>
+    </div>
+    <aside class="note" data-n="E1"><b>Una página para todos los eventos</b> Hoy cada webinar es una landing suelta (webinar.html) que nadie enlaza desde el menú y que caduca al día siguiente. Aquí vive el próximo evento y el archivo de los anteriores, con grabación.</aside>
+  </section>
+
+  <!-- Próximo evento -->
+  <section class="sec" style="padding-top:0" id="proximo">
+    <div class="ctn">
+      <article class="card next rv">
+        <div class="nx-main">
+          <span class="live"><span class="dot-live"></span>Próximo webinar · online y gratis</span>
+          <h2 class="display">Agentes de IA para equipos comerciales: <span class="grad-text">del primer mensaje a la venta.</span></h2>
+          <p class="muted">Cómo se arma un agente que responde, califica y agenda en WhatsApp sin perder el tono de tu marca. Con una implementación real de punta a punta y preguntas al final. <span class="todo">[confirmar tema]</span></p>
+          <div class="kv">
+            <div><small>Cuándo</small><b id="evDate">Miércoles 18 de noviembre</b><span class="todo">[confirmar fecha]</span></div>
+            <div><small>Hora</small><b>19:00 Chile · 60 min</b></div>
+            <div><small>Dónde</small><b>Google Meet, con enlace al inscribirte</b></div>
+          </div>
+          <div class="cd" role="timer" aria-live="off" aria-label="Cuenta regresiva al evento">
+            <div><b id="cdD">--</b><small>días</small></div><div><b id="cdH">--</b><small>horas</small></div><div><b id="cdM">--</b><small>min</small></div><div><b id="cdS">--</b><small>seg</small></div>
+          </div>
+          <p class="local" id="local">Calculando tu hora local…</p>
+          <div class="speakers">
+            <div class="spk"><img src="/img/equipo/sebastian.webp" alt="" width="48" height="48"><span><b>Sebastián Figueroa</b><small>Cofundador y CEO de Hapee</small></span></div>
+            <div class="spk"><img src="/img/equipo/claudia.webp" alt="" width="48" height="48"><span><b>Claudia Novoa</b><small>Product Manager de Hapee</small></span></div>
+          </div>
+          <div class="phero-cta" style="margin-top:4px"><a class="btn btn-primary" href="#inscripcion">Reservar mi cupo <span class="arr">→</span></a><a class="btn btn-secondary" id="gcal" href="https://calendar.google.com/calendar/render" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>Agregar a Google Calendar</a></div>
+        </div>
+        <div class="nx-side">
+          <h3>A qué hora te toca</h3>
+          <p class="muted" style="font-size:.86rem">Calculada desde el instante real del evento, con el horario de verano de cada país. Tu zona aparece marcada.</p>
+          <div class="tz" id="tz"></div>
+        </div>
+      </article>
+    </div>
+    <aside class="note" data-n="E2"><b>Horarios que no se contradicen</b> Se conserva la mejor idea de webinar.html: una sola hora (instante UTC) de la que salen la cuenta regresiva, tu hora local y la tabla por país. Se amplía de 5 a los 8 mercados de Hapee e incluye España. El tema, la fecha y los expositores del próximo evento están por definir.</aside>
+  </section>
+
+  <!-- Temario -->
+  <section class="sec alt">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">El temario</p><h2 class="display">Lo que vas a poder hacer al día siguiente.</h2><p class="lead">No es una charla de tendencias: es lo que hacemos en cada implementación de Hapee, explicado para que lo apliques en tu negocio.</p></div>
+      <div class="topics">
+        <div class="card topic rv"><div><h3>Qué es un agente y dónde poner el primero</h3><p>En qué se diferencia de un chatbot y por qué conviene partir por atención, ventas o postventa según tu embudo.</p></div></div>
+        <div class="card topic rv"><div><h3>Entrenarlo con tu información</h3><p>Productos, precios, preguntas frecuentes y tu forma de hablar. Qué darle y qué no, para que no invente.</p></div></div>
+        <div class="card topic rv"><div><h3>Calificar y agendar sin intervención</h3><p>Preguntas de calificación, etapas del pipeline y citas directo en tu calendario, con traspaso a una persona cuando hace falta.</p></div></div>
+        <div class="card topic rv"><div><h3>Medir si está vendiendo</h3><p>Tiempo de respuesta, conversaciones que terminan en cita y ventas atribuidas al agente, en un solo tablero.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inscripción -->
+  <section class="sec" id="inscripcion">
+    <div class="ctn reg">
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Inscripción</p>
+        <h2 class="display">Reserva tu cupo.</h2>
+        <p class="lead">Es gratis. Te llega el enlace de Google Meet, un recordatorio antes de empezar y la grabación después.</p>
+        <ul class="perks">
+          <li><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span><span><b>Grabación para inscritos</b>Si no llegas, la ves cuando quieras.</span></li>
+          <li><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span><b>Preguntas al final</b>Todas se responden en vivo, en el Q&amp;A.</span></li>
+          <li><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></span><span><b>Material descargable</b>La presentación y las plantillas que mostramos.</span></li>
+        </ul>
+      </div>
+      <div class="card reg-box rv">
+        <form class="form" id="regForm" novalidate>
+          <div class="row2">
+            <div class="field"><label for="rN">Nombre y apellido</label><input id="rN" autocomplete="name" placeholder="Valentina Rojas" required></div>
+            <div class="field"><label for="rE">Correo de trabajo</label><input id="rE" type="email" autocomplete="email" placeholder="valentina@andesretail.cl" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="rC">Empresa</label><input id="rC" autocomplete="organization" placeholder="Andes Retail"></div>
+            <div class="field"><label for="rP">País</label><select id="rP"><option>Chile</option><option>Argentina</option><option>Colombia</option><option>Ecuador</option><option>España</option><option>México</option><option>Perú</option><option>Uruguay</option><option>Otro</option></select></div>
+          </div>
+          <div class="field"><label for="rQ">¿Qué te gustaría que respondiéramos? <span class="muted" style="font-weight:500">(opcional)</span></label><textarea id="rQ" placeholder="Por ejemplo: cómo conectar el agente con mi catálogo"></textarea></div>
+          <label class="check"><input type="checkbox" id="rOk" required> <span>Acepto la <a href="/propuesta-2026-r8x4/legal#privacidad">política de privacidad</a> y recibir el enlace y la grabación por correo.</span></label>
+          <button class="btn btn-primary btn-lg" type="submit">Reservar mi cupo <span class="arr">→</span></button>
+          <p class="muted" style="font-size:.82rem">Cupos limitados. Sin costo.</p>
+        </form>
+        <div class="reg-ok" id="regOk" role="status" hidden>
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <h3 style="font-size:1.4rem">Tu cupo está reservado.</h3>
+          <p class="muted">Propuesta: aquí el registro entra a Hapee (formulario embebible + calendario) y dispara el correo con el enlace de Meet y los recordatorios.</p>
+          <a class="btn btn-secondary" id="gcal2" href="https://calendar.google.com/calendar/render" target="_blank" rel="noopener">Agregar a mi calendario</a>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="E3"><b>Inscripción dentro del sitio</b> Hoy la inscripción salta a Luma en otra pestaña. Aquí el formulario queda en la página y, en producción, lo monta el embebible de formularios de la app: cada inscrito entra al CRM de Hapee con su país y su pregunta, y los recordatorios salen de sus automatizaciones.</aside>
+  </section>
+
+  <!-- Pasados -->
+  <section class="sec alt" id="grabaciones">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Archivo</p><h2 class="display">Eventos anteriores.</h2><p class="lead">Webinars, charlas y encuentros donde hemos mostrado Hapee. Los webinars quedan grabados.</p></div>
+      <div class="past-bar" role="group" aria-label="Filtrar eventos">
+        <button class="chip" aria-pressed="true" data-t="all">Todos</button>
+        <button class="chip" aria-pressed="false" data-t="webinar">Webinars</button>
+        <button class="chip" aria-pressed="false" data-t="presencial">Presenciales</button>
+        <button class="chip" aria-pressed="false" data-t="podcast">Podcasts</button>
+      </div>
+      <div class="grid g3" id="past">
+        <a class="card ev rv" data-t="webinar" href="#grabaciones" aria-label="Ver grabación del webinar Aprende todo sobre IA">
+          <div class="cv"><img src="/img/webinar-og.jpg" alt="" loading="lazy" width="640" height="336"><span class="type">Webinar</span><span class="play"><i><svg class="ico" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i>Ver grabación</span></div>
+          <div class="bd"><span class="dt"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>30 sep 2026 · Online · 60 min</span><h3>Aprende todo sobre IA: agentes, AEO y que los modelos hablen de tu marca</h3><p>Sebastián Figueroa (Hapee) y Hussam Sufan (SearchBrand.ai) sobre agentes de IA, posicionamiento en asistentes y automatización sin romper el equipo.</p></div>
+          <span class="lk">Grabación disponible <span class="todo">[confirmar enlace]</span></span>
+        </a>
+        <a class="card ev rv" data-t="presencial" href="/propuesta-2026-r8x4/blog-articulo?a=via-by-hapee-metro">
+          <div class="cv"><img src="/img/via-metro-demoday.jpg" alt="" loading="lazy" width="640" height="494"><span class="type">Presencial</span></div>
+          <div class="bd"><span class="dt"><svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Ago 2026 · Santiago</span><h3>Demo Day 2026 de Metro de Santiago</h3><p>Presentamos Vía by Hapee, el asistente de viaje con IA para el pasajero. El proyecto avanzó de fase.</p></div>
+          <span class="lk">Leer la nota →</span>
+        </a>
+        <a class="card ev rv" data-t="podcast" href="/propuesta-2026-r8x4/blog-articulo?a=expo-compra-publica-podcast">
+          <div class="cv"><img src="/img/blog/expo-compra-publica-podcast.jpg" alt="" loading="lazy" width="640" height="336"><span class="type">Podcast</span><span class="play"><i><svg class="ico" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i>Escuchar</span></div>
+          <div class="bd"><span class="dt"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Ago 2026 · Expo Compra Pública</span><h3>IA aplicada a compras públicas</h3><p>Por qué el cuello de botella no es la falta de licitaciones sino el tiempo para filtrarlas, y qué conviene automatizar.</p></div>
+          <span class="lk">Leer la nota →</span>
+        </a>
+        <a class="card ev rv" data-t="presencial" href="/propuesta-2026-r8x4/blog-articulo?a=aws-chile">
+          <div class="cv"><img src="/img/eventos/aws-stgo-team.jpeg" alt="Equipo de Hapee en las oficinas de AWS en Santiago" loading="lazy" width="640" height="853" style="object-position:50% 35%"><span class="type">Presencial</span></div>
+          <div class="bd"><span class="dt"><svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>3 may 2026 · AWS Santiago</span><h3>Jornada técnica en las oficinas de AWS Chile</h3><p>Arquitectura multirregión, Bedrock y el camino al AWS Partner Network con el equipo regional.</p></div>
+          <span class="lk">Leer la nota →</span>
+        </a>
+        <a class="card ev rv" data-t="presencial" href="/propuesta-2026-r8x4/blog-articulo?a=hapee-aperol-lanzamiento">
+          <div class="cv"><img src="/img/eventos/hapee-podcast-launch.jpeg" alt="Lanzamiento de Hapee con podcast en vivo" loading="lazy" width="640" height="857" style="object-position:50% 40%"><span class="type">Presencial</span><span class="play"><i><svg class="ico" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i>Podcast en vivo</span></div>
+          <div class="bd"><span class="dt"><svg class="ico" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>28 abr 2026 · Santiago</span><h3>Lanzamiento oficial de Hapee SaaS</h3><p>Podcast en vivo y cóctel con cerca de 50 asistentes entre clientes, partners y founders del ecosistema de IA.</p></div>
+          <span class="lk">Leer la nota →</span>
+        </a>
+        <div class="card ev pending rv" data-t="webinar">
+          <div class="bd" style="align-content:center;justify-items:start;min-height:100%">
+            <span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
+            <h3>Próxima grabación</h3>
+            <p>Aquí entra la grabación del webinar de noviembre, con capítulos y la presentación descargable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="E4"><b>El archivo como prueba</b> Eventos reales del blog (lanzamiento, AWS, Expo Compra Pública, Demo Day de Metro) y el webinar del 30 de septiembre, hoy perdido en una landing vencida. Para un comprador o un VC, la constancia de eventos es señal de tracción.</aside>
+  </section>
+
+  <section class="sec">
+    <div class="ctn">
+      <div class="card host rv">
+        <div><p class="eyebrow">¿Organizas un evento?</p><h2 class="display" style="margin-top:12px">Llevamos una demo en vivo de agentes de IA.</h2><p class="muted" style="margin-top:10px">Charlas para cámaras de comercio, universidades, aceleradoras y comunidades de ventas. Escríbenos con la fecha y la audiencia.</p></div>
+        <a class="btn btn-secondary btn-lg" href="mailto:info@hapee.ai?subject=Invitación%20a%20evento">Escribir a info@hapee.ai</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">¿No quieres esperar al webinar?</h2>
+      <p>Agenda 30 minutos y te mostramos Hapee con tu caso, sin compromiso.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home#demo">Hablar con el agente</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document;
+  var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  /* Instante real del evento: 18-11-2026, 19:00 en Chile (UTC-3 en verano) = 22:00 UTC. [confirmar]
+     Cuenta regresiva, hora local y tabla por país salen de este único valor. */
+  var EV=new Date(Date.UTC(2026,10,18,22,0,0)), DUR=60*60*1000;
+  var TITLE='Webinar Hapee: Agentes de IA para equipos comerciales';
+
+  function two(n){ return n<10?'0'+n:''+n; }
+  var D=d.getElementById('cdD'),H=d.getElementById('cdH'),M=d.getElementById('cdM'),S=d.getElementById('cdS');
+  function tick(){
+    var t=EV-new Date(); if(t<0) t=0; var s=Math.floor(t/1000);
+    if(D){ D.textContent=two(Math.floor(s/86400)); H.textContent=two(Math.floor(s%86400/3600)); M.textContent=two(Math.floor(s%3600/60)); S.textContent=two(s%60); }
+  }
+  tick(); setInterval(tick, reduce?60000:1000);
+
+  var myTz=''; try{ myTz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; }catch(e){}
+  try{
+    var f=new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit',hour12:false});
+    var loc=d.getElementById('local'); if(loc) loc.innerHTML='En tu zona horaria empieza el <b>'+f.format(EV)+'</b>'+(myTz?' ('+myTz.replace(/_/g,' ')+')':'')+'.';
+  }catch(e){}
+
+  var C=[['cl','Chile','America/Santiago'],['ar','Argentina','America/Argentina/Buenos_Aires'],['uy','Uruguay','America/Montevideo'],['co','Colombia','America/Bogota'],
+         ['pe','Perú','America/Lima'],['ec','Ecuador','America/Guayaquil'],['mx','México','America/Mexico_City'],['es','España','Europe/Madrid']];
+  var box=d.getElementById('tz');
+  if(box){
+    var out='';
+    C.forEach(function(c){
+      var h='',dd='';
+      try{ h=new Intl.DateTimeFormat('es-CL',{timeZone:c[2],hour:'2-digit',minute:'2-digit',hour12:false}).format(EV); dd=new Intl.DateTimeFormat('es-CL',{timeZone:c[2],day:'numeric',month:'short'}).format(EV); }catch(e){ return; }
+      var me=c[2]===myTz;
+      out+='<div class="tz-row'+(me?' me':'')+'"><img src="/img/flags/'+c[0]+'.png" alt="" width="22" height="16" loading="lazy"><span>'+c[1]+(me?'<span class="me-tag">Tu zona</span>':'')+'</span><span><b>'+h+'</b><small>'+dd+'</small></span></div>';
+    });
+    box.innerHTML=out;
+  }
+
+  // enlace para agregar a Google Calendar
+  function gfmt(x){ return x.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''); }
+  var gurl='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(TITLE)+'&dates='+gfmt(EV)+'/'+gfmt(new Date(EV.getTime()+DUR))+'&details='+encodeURIComponent('Webinar gratuito de Hapee. El enlace de Google Meet llega al inscribirte en hapee.ai/eventos.');
+  ['gcal','gcal2'].forEach(function(id){ var a=d.getElementById(id); if(a) a.href=gurl; });
+
+  // inscripción (maqueta)
+  var fm=d.getElementById('regForm');
+  if(fm) fm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=d.getElementById('rN'), em=d.getElementById('rE'), ok=d.getElementById('rOk');
+    if(!n.value.trim()){ n.focus(); n.setAttribute('aria-invalid','true'); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value)){ em.focus(); em.setAttribute('aria-invalid','true'); return; }
+    if(!ok.checked){ ok.focus(); return; }
+    fm.hidden=true; var r=d.getElementById('regOk'); r.hidden=false; r.setAttribute('tabindex','-1'); r.focus();
+  });
+
+  // filtro de eventos pasados
+  var chips=[].slice.call(d.querySelectorAll('.past-bar .chip')), evs=[].slice.call(d.querySelectorAll('#past .ev'));
+  chips.forEach(function(c){ c.addEventListener('click',function(){
+    var t=c.getAttribute('data-t'); chips.forEach(function(o){ o.setAttribute('aria-pressed',o===c?'true':'false'); });
+    evs.forEach(function(ev){ ev.hidden=!(t==='all'||ev.getAttribute('data-t')===t); if(!ev.hidden) ev.classList.add('in'); });
+  }); });
+})();
+</script>
+</body>
+</html>

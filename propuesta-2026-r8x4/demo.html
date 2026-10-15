@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agendar demo · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* La barra «Agendar demo» genérica de site.js no tiene sentido aquí: esta página ES la demo */
+  .mcta{display:none!important}
+
+  /* ── Hero ── */
+  .d-hero .phero-grid{grid-template-columns:1.05fr .95fr;align-items:start}
+  .d-hero h1{font-size:clamp(3.2rem,7vw,6.6rem)}
+  .d-trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:var(--s-6);font-size:.88rem;color:var(--text-muted)}
+  .d-trust span{display:inline-flex;align-items:center;gap:8px}
+  .d-trust .ico{width:16px;height:16px;color:var(--ok)}
+
+  .agenda{padding:28px;display:grid;gap:22px}
+  .agenda-h{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .agenda-h b{font:700 .74rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .agenda-h .badge .ico{width:14px;height:14px}
+  .bar30{position:relative;height:8px;border-radius:8px;background:var(--surface-2);overflow:hidden;display:grid;grid-template-columns:10fr 15fr 5fr;gap:3px}
+  .bar30 i{display:block;background:var(--grad);opacity:.25;transform-origin:left;transition:opacity var(--d-slow)}
+  .bar30 i.on{opacity:1}
+  .steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:12px;margin:0 -12px;border-radius:var(--r-md);transition:background-color var(--d-base)}
+  .step:hover,.step.on{background:var(--surface-2)}
+  .step .n{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--grad-soft);color:var(--link)}
+  .step .n .ico{width:20px;height:20px}
+  .step small{display:block;font:700 .72rem/1 var(--f-body);letter-spacing:.08em;color:var(--link);margin-bottom:6px}
+  .step b{display:block;color:var(--heading);font-size:1.02rem;margin-bottom:2px}
+  .step p{color:var(--text-muted);font-size:.9rem}
+
+  .host{display:flex;align-items:center;gap:16px;padding-top:20px;border-top:1px solid var(--border)}
+  .host-ph{position:relative;flex-shrink:0;width:68px;height:68px}
+  .host-ph img{width:68px;height:68px;border-radius:50%;object-fit:cover;border:2px solid var(--surface)}
+  .host-ph::before{content:"";position:absolute;inset:-3px;border-radius:50%;background:var(--grad);z-index:-1}
+  .host-ph .dot-live{position:absolute;right:2px;bottom:4px;border:2px solid var(--surface);width:14px;height:14px}
+  .host-tx{display:grid;gap:2px;min-width:0}
+  .host-tx small{color:var(--text-muted);font-size:.8rem}
+  .host-tx b{color:var(--heading);font-size:1.05rem}
+  .host-tx span{color:var(--text-muted);font-size:.86rem}
+  .host-alt{margin-left:auto;display:flex;align-items:center}
+  .host-alt img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--surface);margin-left:-10px}
+  .host-alt img:first-child{margin-left:0}
+
+  /* ── Calendario + lateral ── */
+  .cal-sec{padding-top:var(--s-12)}
+  .cal-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.85fr);gap:var(--s-12);align-items:start}
+  .cal-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:var(--s-6)}
+  .cal-head>div{display:grid;gap:14px}
+  .cal-head h2{font-size:var(--t-h2)}
+  .cal-head p{color:var(--text-muted);font-size:.93rem;max-width:46ch}
+  .cal-stage{position:relative;min-height:680px}
+  .cal-embed{position:relative;z-index:1}
+  .cal-skel{position:absolute;inset:0;z-index:0;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);padding:28px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px;transition:opacity var(--d-slow) var(--ease-out)}
+  .cal-skel.off{opacity:0;pointer-events:none}
+  .sk{border-radius:10px;background:linear-gradient(90deg,var(--surface-2) 0%,rgba(250,80,0,.08) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:sk 1.6s linear infinite}
+  @keyframes sk{to{background-position:-200% 0}}
+  .sk-col{display:grid;gap:14px;align-content:start}
+  .sk-days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  .sk-days .sk{aspect-ratio:1}
+  .cal-alt{margin-top:14px;font-size:.86rem;color:var(--text-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cal-alt .ico{width:16px;height:16px}
+
+  .side{position:sticky;top:110px;display:grid;gap:16px}
+  .proof{padding:26px;display:grid;gap:16px}
+  .proof-n{display:flex;align-items:baseline;gap:12px}
+  .proof-n b{font-family:var(--f-display);font-weight:400;font-size:4.2rem;line-height:.85;color:var(--heading)}
+  .proof-n span{color:var(--heading);font-weight:700;line-height:1.25}
+  .proof p{color:var(--text-muted);font-size:.88rem}
+  .proof-logos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px;align-items:center;padding-top:16px;border-top:1px solid var(--border)}
+  /* Los PNG de /img/brands son blancos: en oscuro van tal cual, en claro se invierten a negro */
+  .proof-logos img{height:46px;width:100%;object-fit:contain;filter:invert(1);opacity:.55;transition:opacity var(--d-base)}
+  html.dark .proof-logos img{filter:none;opacity:.6}
+  .proof-logos img:hover{opacity:1}
+  .proof-cap{font-size:.76rem!important;letter-spacing:.02em}
+
+  .faq-s{padding:8px 22px}
+  .faq-s details{border-bottom:1px solid var(--border)}
+  .faq-s details:last-child{border-bottom:0}
+  .faq-s summary{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;font:700 .93rem/1.3 var(--f-body);color:var(--heading);cursor:pointer;list-style:none}
+  .faq-s summary::-webkit-details-marker{display:none}
+  .faq-s summary::after{content:"+";font-weight:400;font-size:1.3rem;color:var(--link);transition:transform var(--d-base)}
+  .faq-s details[open] summary::after{transform:rotate(45deg)}
+  .faq-s details p{padding:0 0 16px;color:var(--text-muted);font-size:.88rem}
+  .faq-k{padding:18px 0 4px;font:700 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+
+  /* ── VSL ── */
+  .vsl{position:relative;max-width:980px;margin:0 auto;border-radius:var(--r-xl);padding:1.5px;background:conic-gradient(from var(--va,0deg),rgba(250,80,0,.1),#FA5000,#CD2349,rgba(205,35,73,.1),rgba(250,80,0,.1));animation:va 8s linear infinite;box-shadow:0 40px 120px -40px rgba(250,80,0,.45)}
+  @property --va{syntax:"<angle>";inherits:false;initial-value:0deg}
+  @keyframes va{to{--va:360deg}}
+  .vsl-in{position:relative;border-radius:calc(var(--r-xl) - 1.5px);overflow:hidden;background:#080808;aspect-ratio:16/9}
+  .vsl video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#080808}
+  .vsl-face{position:absolute;inset:0;z-index:2;border:0;padding:0;cursor:pointer;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:0 clamp(24px,6vw,72px);text-align:left;color:#f5f0eb;
+    background:radial-gradient(60% 90% at 78% 60%,rgba(250,80,0,.38),transparent 60%),radial-gradient(40% 60% at 20% 20%,rgba(205,35,73,.22),transparent 60%),#0b0a09}
+  .vsl-face[hidden]{display:none}
+  .vsl-face .t{display:grid;gap:14px;max-width:30ch}
+  .vsl-face .t small{font:700 .74rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:#FF7A3D}
+  .vsl-face .t b{font-family:var(--f-display);font-weight:400;font-size:clamp(2rem,5vw,4rem);line-height:.92;text-transform:uppercase;color:#fff}
+  .vsl-face .t span{color:#c9c1b8;font-size:.95rem}
+  .vsl-face .rb{height:min(88%,420px);aspect-ratio:435/800;width:auto;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.5));animation:flt 5s var(--ease-in-out) infinite}
+  @keyframes flt{50%{transform:translateY(-10px)}}
+  .vsl-play{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--grad);display:grid;place-items:center;box-shadow:0 0 0 0 rgba(250,80,0,.5);animation:ring 2.2s var(--ease-out) infinite;transition:transform var(--d-base) var(--ease-spring)}
+  .vsl-face:hover .vsl-play{transform:scale(1.08)}
+  .vsl-play svg{width:30px;height:30px;fill:#fff;margin-left:4px}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(250,80,0,.55)}100%{box-shadow:0 0 0 28px rgba(250,80,0,0)}}
+  .vsl-meta{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:.84rem;color:var(--text-muted)}
+
+  /* ── Después de agendar ── */
+  .next .tile .k{font:700 .72rem/1 var(--f-body);letter-spacing:.1em;color:var(--link)}
+
+  /* ── Barra fija móvil ── */
+  .dbar{display:none}
+  @media (max-width:760px){
+    .dbar{display:flex;align-items:center;gap:12px;position:fixed;left:12px;right:12px;bottom:60px;z-index:90;padding:10px 10px 10px 16px;border-radius:var(--r-pill);
+      background:var(--glass);border:1px solid var(--border-strong);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:var(--shadow-3);
+      transform:translateY(calc(100% + 80px));transition:transform var(--d-slow) var(--ease-out)}
+    .dbar.on{transform:none}
+    .dbar .tx{display:grid;line-height:1.25;min-width:0}
+    .dbar .tx b{color:var(--heading);font-size:.9rem}
+    .dbar .tx small{color:var(--text-muted);font-size:.76rem}
+    .dbar .btn{margin-left:auto;flex-shrink:0}
+  }
+
+  @media (max-width:1100px){
+    .d-hero .phero-grid,.cal-grid{grid-template-columns:1fr}
+    .side{position:static}
+  }
+  @media (max-width:760px){
+    .agenda{padding:20px}
+    .host-alt{display:none}
+    .cal-stage{min-height:620px}
+    .cal-skel{grid-template-columns:1fr;padding:20px}
+    .cal-skel .sk-col:first-child{display:none}
+    .vsl-in{aspect-ratio:4/5}
+    .vsl-face{grid-template-columns:1fr;align-content:end;padding:28px 24px 32px;gap:12px}
+    .vsl-face .rb{position:absolute;right:4%;top:6%;height:56%}
+    .vsl-face .t{position:relative}
+    .vsl-play{left:auto;right:28px;top:auto;bottom:32px;margin:0;width:68px;height:68px}
+  }
+</style>
+</head>
+<body data-page="demo" data-sec="precios">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <!-- ═════════════ 1 · PROPUESTA ═════════════ -->
+  <section class="phero d-hero" id="top">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Agendar demo</nav>
+      <div class="phero-grid">
+        <div>
+          <p class="eyebrow">Demo 1:1 · Google Meet</p>
+          <h1 class="display">30 minutos, con tu <span class="grad-text">caso.</span></h1>
+          <p class="lead">Una videollamada con alguien del equipo que implementa Hapee todos los días. Partimos por cómo vendes hoy, te mostramos solo los módulos que te sirven y terminas con un plan concreto. Sin costo y sin compromiso de compra.</p>
+          <div class="phero-cta">
+            <a class="btn btn-primary btn-lg" href="#calendario" data-go="calendario">Elegir horario <span class="arr">→</span></a>
+            <a class="btn btn-secondary btn-lg" href="#video" data-go="video">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m10 7 5 3-5 3z"/></svg>
+              Ver el video de 5 min</a>
+          </div>
+          <div class="d-trust">
+            <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sin costo</span>
+            <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Confirmación inmediata en tu correo</span>
+            <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Una persona real, no un bot</span>
+          </div>
+        </div>
+
+        <article class="card agenda rv" aria-labelledby="agT">
+          <div class="agenda-h">
+            <b id="agT">Qué vas a ver</b>
+            <span class="badge"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>30 min</span>
+          </div>
+          <div class="bar30" aria-hidden="true"><i></i><i></i><i></i></div>
+          <ol class="steps">
+            <li class="step" data-i="0">
+              <span class="n"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+              <div><small>MIN 00–10</small><b>Diagnóstico de tu negocio</b><p>Cómo llegan tus clientes, quién responde y en cuánto tiempo, y dónde se te escapan ventas.</p></div>
+            </li>
+            <li class="step" data-i="1">
+              <span class="n"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m10 7 5 3-5 3z"/></svg></span>
+              <div><small>MIN 10–25</small><b>Hapee en vivo, con tu rubro</b><p>Agentes IA en WhatsApp e Instagram, bandeja, pipeline y automatizaciones con ejemplos de tu industria.</p></div>
+            </li>
+            <li class="step" data-i="2">
+              <span class="n"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span>
+              <div><small>MIN 25–30</small><b>Tu plan de acción</b><p>Qué implementar primero, en cuánto tiempo y qué plan calza con tu equipo.</p></div>
+            </li>
+          </ol>
+          <div class="host">
+            <span class="host-ph"><img src="/img/equipo/claudia.webp" alt="Claudia Novoa" width="68" height="68"><i class="dot-live" aria-hidden="true"></i></span>
+            <div class="host-tx"><small>Te atiende</small><b>Claudia Novoa</b><span>Product Manager · o Leidy o Nelly, del equipo de implementación</span></div>
+            <span class="host-alt" aria-hidden="true"><img src="/img/equipo/leidy.webp" alt="" width="34" height="34"><img src="/img/equipo/nelly.webp" alt="" width="34" height="34"></span>
+          </div>
+        </article>
+      </div>
+    </div>
+    <aside class="note" data-n="D1"><b>Propuesta clara arriba</b> Antes: «Agenda tu demo», constelación animada, 17 logos orbitando y «Demo gratuita» sin decir qué pasa en la llamada. Ahora: duración, qué vas a ver minuto a minuto y la cara de quien te atiende (se retoma del pase de la página de confirmación). El CTA lleva directo al calendario.</aside>
+  </section>
+
+  <!-- ═════════════ 2 · CALENDARIO REAL ═════════════ -->
+  <section class="sec cal-sec" id="calendario">
+    <div class="ctn cal-grid">
+      <div>
+        <div class="cal-head">
+          <div><p class="eyebrow">Paso único</p><h2 class="display">Elige día y hora.</h2></div>
+          <p>Los horarios se muestran en tu zona horaria. Al confirmar te llega el enlace de Google Meet y un recordatorio antes de la llamada.</p>
+        </div>
+
+        <div class="cal-stage">
+          <div class="cal-embed">
+            <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
+            <noscript>
+              <p style="padding:20px;text-align:center">Tu navegador tiene JavaScript desactivado. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener">Abre el calendario en una nueva pestaña →</a></p>
+            </noscript>
+            <script>
+            /* === UTM / Click-ID forwarder al widget de calendario Hapee ===
+               Problema: el iframe lee window.location.search desde su propio origin (beta.hapee.ai),
+               no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al calendario.
+               Fix: tomamos los UTMs del parent URL y los inyectamos en data-hapee-calendar (el loader
+               calendar-embed.js acepta una URL completa y le agrega ?embed=1) ANTES de que monte el iframe.
+               Este script corre síncrono; el loader (async, al final del body) monta después.
+               Persistencia en sessionStorage para sobrevivir navegación interna (hero CTA → calendar). */
+            (function(){
+              var FRAME_ID = 'hapeeCalendar';
+              var STORAGE_KEY = 'hapee_attribution';
+              var TRACK = [
+                'utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id',
+                'utm_source_platform','utm_creative_format','utm_marketing_tactic',
+                'fbclid','gclid','ttclid','msclkid','dclid','twclid','yclid','wbraid','gbraid',
+                'li_fat_id','epik','irclickid','mc_cid','mc_eid'
+              ];
+
+              var iframe = document.getElementById(FRAME_ID);
+              if(!iframe) return;
+              var baseSrc = iframe.getAttribute('data-base-src');
+
+              /* 1) Captura UTMs del URL parent actual */
+              var urlParams = new URLSearchParams(window.location.search);
+              var fromUrl = {};
+              TRACK.forEach(function(k){
+                var v = urlParams.get(k);
+                if(v) fromUrl[k] = v;
+              });
+
+              /* 2) Recupera sessionStorage (last-click sobrevive a navegación interna) */
+              var stored = {};
+              try { stored = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+              /* 3) Si el URL actual trae UTMs, son el nuevo last-click → persistimos */
+              var hasNewUtms = Object.keys(fromUrl).length > 0;
+              var attribution = hasNewUtms ? fromUrl : stored;
+
+              if(hasNewUtms){
+                try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fromUrl)); } catch(e) {}
+              }
+
+              /* 4) Referrer extra (señal adicional de atribución) */
+              if(document.referrer && !attribution.referrer){
+                attribution.referrer = document.referrer;
+              }
+
+              /* 5) Setea la URL que montará el loader (solo si hay atribución; si no, queda el slug) */
+              var qs = new URLSearchParams(attribution).toString();
+              if(qs) iframe.setAttribute('data-hapee-calendar', baseSrc + '?' + qs);
+
+              /* 6) Debug opcional: descomenta para chequear en consola */
+              /* console.log('[Hapee Attribution]', attribution, '\\ncalendar →', iframe.getAttribute('data-hapee-calendar')); */
+            })();
+            </script>
+            <script>
+            /* === Conversión: demo agendada en el widget de calendario Hapee ===
+               El iframe de booking (beta.hapee.ai) avisa al parent vía postMessage
+               con event.data.type === 'zentru_calendar_submitted' cuando la cita queda
+               confirmada. Ahí disparamos 'dg_agendar_demo', el evento clave definido
+               en Analytics (GA4) — Google Ads lo importa desde ahí. Sin send_to:
+               el evento va a todos los destinos configurados en el Google tag. */
+            (function(){
+              var fired = false;
+              var ALLOWED = ['hapee.ai'];
+              window.addEventListener('message', function(e){
+                /* Solo mensajes del widget propio (beta.hapee.ai u otro subdominio).
+                   Match exacto de hostname o subdominio — un substring/regex dejaría
+                   pasar orígenes tipo https://hapee.ai.evil.com */
+                var host = '';
+                try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+                var allowed = ALLOWED.some(function(d){
+                  return host === d || host.slice(-(d.length + 1)) === ('.' + d);
+                });
+                if(!allowed) return;
+                var d = e.data;
+                var isBooking = !!d && typeof d === 'object' && d.type === 'zentru_calendar_submitted';
+                if(!isBooking || fired) return;
+                fired = true; /* una sola conversión por carga de página */
+                if(typeof gtag === 'function'){
+                  gtag('event', 'dg_agendar_demo');
+                }
+                /* Meta: el mismo eventID que manda el servidor por la API de Conversiones
+                   (apt.<id de la cita>) — Meta deduplica y cuenta UNA reserva. Sin eventID
+                   no se dispara: un Schedule sin él se sumaría al del servidor. */
+                if(typeof fbq === 'function' && d.eventId){
+                  fbq('track', 'Schedule', {}, { eventID: String(d.eventId) });
+                }
+              });
+            })();
+            </script>
+            <script>
+            /* === Guard de auto-resize del widget ===
+               La página del calendario reporta documentElement.scrollHeight (que nunca baja del alto
+               del propio iframe) y calendar-embed.js fija el iframe en ese valor + 16px cada segundo
+               → bucle: el iframe crece 16px/s sin fin. Este listener se registra ANTES que el loader
+               (orden del documento; el loader es async al final del body), se queda con el mensaje y
+               solo agranda el iframe cuando el contenido real supera el alto actual. */
+            (function(){
+              window.addEventListener('message', function(e){
+                var d = e.data;
+                if(!d || typeof d !== 'object' || d.type !== 'zentru_calendar_height') return;
+                var host = '';
+                try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+                if(host !== 'hapee.ai' && host.slice(-9) !== '.hapee.ai') return;
+                var f = document.querySelector('#hapeeCalendar iframe[data-zcal]');
+                if(!f) return;
+                e.stopImmediatePropagation();
+                var h = parseInt(d.height, 10);
+                if(!h || h < 200) return;
+                var cur = Math.round(f.getBoundingClientRect().height);
+                if(h > cur + 2) f.style.height = h + 'px';
+              });
+            })();
+            </script>
+          </div>
+          <!-- Esqueleto mientras monta el iframe (no toca #hapeeCalendar; se desvanece al cargar) -->
+          <div class="cal-skel" id="calSkel" aria-hidden="true">
+            <div class="sk-col"><i class="sk" style="height:56px;width:56px;border-radius:50%"></i><i class="sk" style="height:22px;width:70%"></i><i class="sk" style="height:14px;width:50%"></i><i class="sk" style="height:14px;width:60%"></i></div>
+            <div class="sk-col"><i class="sk" style="height:22px;width:45%"></i><div class="sk-days"><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i><i class="sk"></i></div><i class="sk" style="height:44px"></i><i class="sk" style="height:44px"></i></div>
+          </div>
+        </div>
+        <p class="cal-alt"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>¿No carga? <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener">Abre el calendario en otra pestaña</a></p>
+      </div>
+
+      <aside class="side" aria-label="Por qué agendar">
+        <div class="card proof rv">
+          <div class="proof-n"><b>+150</b><span>clientes activos<br>usan Hapee</span></div>
+          <p>Hapee nace dentro del Grupo Digitals, agencia Meta Business Partner y Google Partner desde 2018: no solo te mostramos la plataforma, la dejamos funcionando contigo.</p>
+          <div class="proof-logos">
+            <img src="/img/brands/burgerking.png?v=2" alt="Burger King" loading="lazy" height="46">
+            <img src="/img/brands/logo-chery.png?v=2" alt="Chery" loading="lazy" height="46">
+            <img src="/img/brands/corfo.png?v=2" alt="CORFO" loading="lazy" height="46">
+            <img src="/img/brands/indisa.png?v=2" alt="Clínica Indisa" loading="lazy" height="46">
+            <img src="/img/brands/sacyr.png?v=2" alt="Sacyr" loading="lazy" height="46">
+            <img src="/img/brands/andes.png?v=2" alt="Andes" loading="lazy" height="46">
+          </div>
+          <p class="proof-cap">Marcas que trabajan con el equipo detrás de Hapee (Grupo Digitals).</p>
+        </div>
+
+        <div class="card faq-s rv">
+          <p class="faq-k">Antes de agendar</p>
+          <details><summary>¿Tiene algún costo?</summary><p>No. La demo es sin costo y no te obliga a contratar: sales con un plan de acción y decides tú.</p></details>
+          <details><summary>¿Necesito saber de tecnología?</summary><p>No. Si sabes usar WhatsApp, sabes usar Hapee. En la demo lo ves funcionando sin instalar nada.</p></details>
+          <details><summary>¿Puedo invitar a mi socio o jefe?</summary><p>Sí, y lo recomendamos. Reenvía la invitación de Google Meet a quien decide contigo.</p></details>
+          <details><summary>¿Y si no puedo asistir?</summary><p>Reagenda desde el correo de confirmación <span class="todo">[confirmar enlace]</span> o escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p></details>
+        </div>
+      </aside>
+    </div>
+    <aside class="note" data-n="D2"><b>Calendario real, al centro</b> Mismo embed de beta.hapee.ai, mismo reenvío de UTM, misma conversión dg_agendar_demo y mismo guard de resize: los tres scripts se copiaron sin cambios. Se suma un esqueleto que ocupa el alto del widget mientras carga (hoy la página salta). En la propuesta no se carga gtag, así que reservar aquí no suma conversiones.</aside>
+    <aside class="note" data-n="D3" style="top:auto;bottom:40px"><b>Prueba social honesta al costado</b> Sale el bloque «+90K clientes, 1,37B mensajes, 194M leads»: no son cifras de Hapee. Queda +150 clientes activos y los logos rotulados como clientes del grupo. FAQ de 4 preguntas en vez de repetir la home completa.</aside>
+  </section>
+
+  <!-- ═════════════ 3 · VSL (opcional, sin precarga) ═════════════ -->
+  <section class="sec alt" id="video">
+    <div class="ctn">
+      <div class="sec-head center"><p class="eyebrow">¿Prefieres verlo primero?</p><h2 class="display">Hapee en <span class="grad-text">5 minutos.</span></h2><p class="lead">El recorrido completo de la plataforma. Si después quieres verlo con tu caso, el calendario está arriba.</p></div>
+      <div class="vsl rv">
+        <div class="vsl-in">
+          <video id="vsl" controls playsinline preload="none" poster="/img/robot.png" aria-label="Video: recorrido de Hapee en 5 minutos">
+            <source src="/img/vsl-hapee.mp4" type="video/mp4">
+          </video>
+          <button class="vsl-face" id="vslFace" type="button" aria-label="Reproducir el video de 5 minutos">
+            <span class="t"><small>Video · 5 min</small><b>Así vende una empresa con Hapee</b><span>Agentes IA, bandeja, pipeline y automatizaciones, de punta a punta.</span></span>
+            <img class="rb" src="/img/robot.png" alt="" width="435" height="800" loading="lazy">
+            <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
+          </button>
+        </div>
+      </div>
+      <div class="vsl-meta"><span>Se descarga solo si le das play</span><span>·</span><span>Subtítulos <span class="todo">[pendiente]</span></span></div>
+    </div>
+    <aside class="note" data-n="D4"><b>Video sin costo de carga</b> Hoy el VSL (86 MB) arranca con preload="metadata" y además hay un segundo video de 10 MB en autoplay. Aquí: un solo video, preload="none", carátula propia y la descarga empieza al dar play. Pendiente: reencodear a ≤20 MB y agregar subtítulos.</aside>
+  </section>
+
+  <!-- ═════════════ 4 · QUÉ PASA DESPUÉS ═════════════ -->
+  <section class="sec next">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Después de agendar</p><h2 class="display">Sin sorpresas.</h2></div>
+      <div class="grid g3">
+        <article class="card tile rv">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+          <span class="k">AL INSTANTE</span><h3>Te llega la confirmación</h3><p>Correo con el enlace de Google Meet y la invitación para tu calendario. Revisa también Promociones o Spam.</p>
+        </article>
+        <article class="card tile rv">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 2 2 4-4M3 7l2 2 4-4M13 6h8M13 12h8M13 18h8"/></svg></span>
+          <span class="k">ANTES DE LA LLAMADA</span><h3>Te preparas en 2 minutos</h3><p>Una página con cuenta regresiva y 5 puntos para que la demo rinda el doble. <a href="/propuesta-2026-r8x4/demo-confirmada">Ver cómo se ve →</a></p>
+        </article>
+        <article class="card tile rv">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></span>
+          <span class="k">EL DÍA DE LA DEMO</span><h3>30 minutos, con tu caso</h3><p>Diagnóstico, Hapee en vivo con tu rubro y un plan de acción. Tú decides si sigues.</p>
+        </article>
+      </div>
+    </div>
+    <aside class="note" data-n="D5"><b>Se quita lo que sobra</b> La página actual repite la home (chat interactivo, «Así se ve por dentro», integraciones, «reemplaza +20 herramientas», nebulosa de partículas, robot 3D de 443 KB). Todo eso distrae del único objetivo: elegir un horario. Queda lo que baja la ansiedad antes de agendar.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">¿Ningún horario te sirve?</h2>
+      <p>Escríbenos con dos o tres opciones que te acomoden y buscamos un espacio contigo.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="#calendario" data-go="calendario">Volver al calendario <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="mailto:info@hapee.ai?subject=Demo%20Hapee%3A%20busco%20otro%20horario">info@hapee.ai</a></div>
+    </div></div>
+  </section>
+</main>
+
+<!-- Barra fija móvil: aparece fuera del hero y del calendario -->
+<div class="dbar" id="dbar" aria-hidden="true">
+  <span class="tx"><b>Demo 1:1 · 30 min</b><small>Sin costo · por Google Meet</small></span>
+  <a class="btn btn-primary btn-sm" href="#calendario" data-go="calendario" tabindex="-1">Elegir horario</a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=false;
+  try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+
+  /* Scroll suave a calendario / video */
+  d.querySelectorAll('[data-go]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=d.getElementById(a.getAttribute('data-go')); if(!t) return;
+      e.preventDefault(); t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+      try{history.replaceState(null,'','#'+t.id)}catch(err){}
+    });
+  });
+
+  /* Agenda: recorre los 3 tramos de la demo (pausa con hover y con reduced motion) */
+  var steps=[].slice.call(d.querySelectorAll('.step')), bars=[].slice.call(d.querySelectorAll('.bar30 i')), cur=-1, timer=null, hold=false;
+  function show(i){cur=i;steps.forEach(function(s,k){s.classList.toggle('on',k===i)});bars.forEach(function(b,k){b.classList.toggle('on',k<=i)})}
+  if(steps.length===3){
+    if(reduce){show(2)}
+    else{
+      show(0);
+      timer=setInterval(function(){if(!hold&&!d.hidden)show((cur+1)%3)},2600);
+      steps.forEach(function(s,k){s.addEventListener('mouseenter',function(){hold=true;show(k)});s.addEventListener('mouseleave',function(){hold=false})});
+    }
+  }
+
+  /* Esqueleto del calendario: se va cuando el iframe del widget carga (o a los 10 s) */
+  var cal=d.getElementById('hapeeCalendar'), skel=d.getElementById('calSkel');
+  function hideSkel(){if(skel)skel.classList.add('off')}
+  if(cal&&skel){
+    var watch=function(){var f=cal.querySelector('iframe');if(f){f.addEventListener('load',function(){setTimeout(hideSkel,250)});return true}return false};
+    if(!watch()&&'MutationObserver' in window){var mo=new MutationObserver(function(){if(watch())mo.disconnect()});mo.observe(cal,{childList:true,subtree:true})}
+    setTimeout(hideSkel,10000);
+  }
+
+  /* VSL: la carátula reemplaza al póster; el video recién se descarga al dar play */
+  var v=d.getElementById('vsl'), face=d.getElementById('vslFace');
+  if(v&&face){
+    face.addEventListener('click',function(){face.hidden=true;var p=v.play();if(p&&p.catch)p.catch(function(){});v.focus()});
+    if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting&&!v.paused)v.pause()})},{threshold:.2}).observe(v)}
+  }
+
+  /* Barra fija móvil: oculta en el hero, en el calendario y en el footer */
+  var bar=d.getElementById('dbar'), hero=d.getElementById('top'), calSec=d.getElementById('calendario');
+  if(bar&&hero&&calSec&&'IntersectionObserver' in window){
+    var st={hero:true,cal:false,foot:false};
+    var link=bar.querySelector('a');
+    var refresh=function(){var on=!st.hero&&!st.cal&&!st.foot;bar.classList.toggle('on',on);bar.setAttribute('aria-hidden',on?'false':'true');if(link)link.tabIndex=on?0:-1};
+    var obs=function(el,k){if(!el)return;new IntersectionObserver(function(es){es.forEach(function(e){st[k]=e.isIntersecting;refresh()})},{rootMargin:'-60px 0px -60px 0px'}).observe(el)};
+    obs(hero,'hero');obs(calSec.querySelector('.cal-stage'),'cal');
+    var tryFoot=function(){var f=d.querySelector('.foot');if(f)obs(f,'foot');else setTimeout(tryFoot,300)};tryFoot();
+  }
+})();
+</script>
+
+<!-- Hapee Calendar embed loader (monta el iframe en #hapeeCalendar + auto-resize) -->
+<script src="https://beta.hapee.ai/static/calendar-embed.js" async></script>
+</body>
+</html>

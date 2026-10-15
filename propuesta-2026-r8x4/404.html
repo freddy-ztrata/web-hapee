@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página no encontrada · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  .nf .phero-grid{grid-template-columns:1.05fr .95fr;align-items:center}
+  .nf .phero-grid>div{min-width:0}
+  .nf h1{font-size:clamp(3rem,7vw,6.4rem)}
+  .path{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom;font:600 .9em ui-monospace,SFMono-Regular,Menlo,monospace;padding:2px 8px;border-radius:6px;background:var(--surface-2);color:var(--heading)}
+
+  .guess{display:flex;align-items:center;gap:12px;margin-top:var(--s-6);padding:14px 16px;border-radius:var(--r-lg);background:var(--grad-soft);border:1px solid rgba(250,80,0,.3);color:var(--heading)}
+  .guess[hidden]{display:none}
+  .guess .ico{color:var(--link)}
+  .guess a{font-weight:700;margin-left:auto;white-space:nowrap}
+
+  /* Buscador */
+  .finder{margin-top:var(--s-8);border-radius:var(--r-xl);border:1px solid var(--border-strong);background:var(--surface);box-shadow:var(--shadow-2);overflow:hidden}
+  .finder-in{display:flex;align-items:center;gap:12px;height:62px;padding:0 18px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+  .finder-in input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;font:500 1.05rem var(--f-body);color:var(--heading)}
+  .finder-in input::placeholder{color:var(--text-muted)}
+  .finder:focus-within{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+  .res{list-style:none;margin:0;padding:8px;max-height:316px;overflow-y:auto}
+  .res li a{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);color:var(--heading)}
+  .res li a[aria-selected="true"],.res li a:hover{background:var(--surface-2)}
+  .res li a[aria-selected="true"] .go{opacity:1;transform:none}
+  .res li a>span:nth-child(2){min-width:0}
+  .res .ri{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--grad-soft);color:var(--link)}
+  .res .ri .ico{width:18px;height:18px}
+  .res b{display:block;font-size:.95rem}
+  .res small{display:block;color:var(--text-muted);font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .res mark{background:none;color:var(--link);font-weight:800}
+  .res .go{color:var(--text-muted);font-size:.8rem;opacity:0;transform:translateX(-4px);transition:all var(--d-base) var(--ease-out)}
+  .res .empty{padding:18px 14px;color:var(--text-muted);font-size:.92rem}
+  .finder-ft{display:flex;gap:16px;padding:10px 18px;border-top:1px solid var(--border);font-size:.76rem;color:var(--text-muted)}
+  .finder-ft span{display:inline-flex;align-items:center;gap:6px}
+
+  /* Escenario del robot */
+  .lost{position:relative;display:grid;place-items:center;min-height:540px;perspective:900px}
+  .big{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-size:clamp(12rem,28vw,24rem);line-height:.8;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1.5px rgba(250,80,0,.45);user-select:none;pointer-events:none}
+  .big span{background:linear-gradient(180deg,rgba(250,80,0,.18),rgba(205,35,73,0));-webkit-background-clip:text;background-clip:text}
+  .halo{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.35),rgba(205,35,73,.12) 45%,transparent 68%);filter:blur(30px)}
+  .rb-wrap{position:relative;transform-style:preserve-3d;transition:transform .5s var(--ease-out)}
+  .rb-float{animation:lostFloat 6s var(--ease-in-out) infinite}
+  .rb-float img{height:min(460px,62vh);width:auto;aspect-ratio:435/800;object-fit:contain;filter:drop-shadow(0 40px 50px rgba(0,0,0,.5))}
+  @keyframes lostFloat{0%,100%{transform:translateY(0) rotate(-4deg)}25%{transform:translateY(-14px) rotate(2deg)}50%{transform:translateY(-4px) rotate(5deg)}75%{transform:translateY(-16px) rotate(-1deg)}}
+  .shadow{position:absolute;bottom:34px;width:180px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);animation:sh 6s var(--ease-in-out) infinite}
+  @keyframes sh{25%,75%{transform:scale(.8);opacity:.6}}
+  .q{position:absolute;font-family:var(--f-display);color:var(--link);opacity:0;animation:qm 4.8s var(--ease-out) infinite}
+  .q1{top:16%;right:22%;font-size:3.6rem}
+  .q2{top:28%;left:20%;font-size:2.4rem;animation-delay:1.6s}
+  .q3{top:10%;left:40%;font-size:2rem;animation-delay:3.2s}
+  @keyframes qm{0%{opacity:0;transform:translateY(10px) scale(.8)}20%{opacity:.9;transform:none}60%{opacity:.9}100%{opacity:0;transform:translateY(-24px) rotate(12deg)}}
+
+  .shortcuts .tile .ic{margin-bottom:4px}
+  .chips-more{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:var(--s-8)}
+
+  @media (max-width:1100px){
+    .nf .phero-grid{grid-template-columns:1fr}
+    .lost{min-height:340px}
+    .rb-float img{height:300px}
+    .shadow{bottom:10px}
+  }
+  @media (max-width:760px){
+    .lost{min-height:280px}
+    .rb-float img{height:240px}
+    .finder-ft{display:none}
+    .res li a{grid-template-columns:34px 1fr}
+    .res .go{display:none}
+  }
+</style>
+</head>
+<body data-page="404">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <section class="phero nf">
+    <div class="ctn">
+      <div class="phero-grid">
+        <div>
+          <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Error 404</nav>
+          <p class="eyebrow">Error 404</p>
+          <h1 class="display">Esta página se nos <span class="grad-text">perdió.</span></h1>
+          <p class="lead">La dirección <span class="path" id="path">/propuesta-2026-r8x4/no-existe</span> no existe o cambió de lugar. Busca lo que necesitas o parte por uno de los atajos de abajo.</p>
+
+          <p class="guess" id="guess" hidden>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            <span id="guessTx">¿Buscabas otra página?</span>
+            <a id="guessA" href="/propuesta-2026-r8x4/home">Ir <span aria-hidden="true">→</span></a>
+          </p>
+
+          <div class="finder" role="search">
+            <label class="finder-in" for="q">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <span class="sr">Buscar una página</span>
+              <input id="q" type="search" placeholder="Busca: precios, demo, API…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="res" aria-autocomplete="list">
+            </label>
+            <ul class="res" id="res" role="listbox" aria-label="Páginas"></ul>
+            <div class="finder-ft" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> moverse</span><span><kbd>Enter</kbd> abrir</span><span><kbd>/</kbd> buscar</span></div>
+          </div>
+          <p class="sr" id="resCount" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="lost" id="lost" aria-hidden="true">
+          <div class="big"><span>404</span></div>
+          <div class="halo"></div>
+          <span class="shadow"></span>
+          <span class="q q1">?</span><span class="q q2">?</span><span class="q q3">?</span>
+          <div class="rb-wrap" id="rbWrap"><div class="rb-float"><img src="/img/robot.png" alt="" width="435" height="800" fetchpriority="high"></div></div>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="N1"><b>Un 404 que existe</b> Hoy nginx responde cualquier URL inventada con la home y estado 200 (por eso dos páginas sin COPY pasaron inadvertidas). Propuesta: error_page 404 con esta página y estado 404 real. Si la ruta es una URL vieja (/planes, /agenda-tu-demo, /comparativa…), sugiere la nueva; si es un error de tipeo, la más parecida.</aside>
+  </section>
+
+  <section class="sec alt shortcuts">
+    <div class="ctn">
+      <div class="sec-head center"><p class="eyebrow">Atajos</p><h2 class="display">Lo que más se busca.</h2></div>
+      <div class="grid g4">
+        <a class="card tile spot rv" href="/propuesta-2026-r8x4/home">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+          <h3>Inicio</h3><p>Prueba un agente IA de tu rubro en 5 segundos.</p><span class="more">Ir al inicio →</span>
+        </a>
+        <a class="card tile spot rv" href="/propuesta-2026-r8x4/producto">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></span>
+          <h3>Producto</h3><p>Agentes IA, bandeja omnicanal, CRM, automatizaciones y más.</p><span class="more">Ver la plataforma →</span>
+        </a>
+        <a class="card tile spot rv" href="/propuesta-2026-r8x4/precios">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+          <h3>Precios</h3><p>Starter, Pro y Elite Setup. Sin contratos, cancelas cuando quieras.</p><span class="more">Ver precios →</span>
+        </a>
+        <a class="card tile spot rv" href="/propuesta-2026-r8x4/demo">
+          <span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <h3>Agendar demo</h3><p>30 minutos con el equipo, con tu caso. Sin costo.</p><span class="more">Elegir horario →</span>
+        </a>
+      </div>
+      <div class="chips-more">
+        <a class="chip" href="/propuesta-2026-r8x4/blog">Blog</a>
+        <a class="chip" href="/propuesta-2026-r8x4/docs">Documentación API</a>
+        <a class="chip" href="/propuesta-2026-r8x4/academia">Academia</a>
+        <a class="chip" href="/propuesta-2026-r8x4/casos">Casos de éxito</a>
+        <a class="chip" href="/propuesta-2026-r8x4/mapa">Todas las páginas</a>
+        <a class="chip" href="mailto:info@hapee.ai">info@hapee.ai</a>
+      </div>
+    </div>
+    <aside class="note" data-n="N2"><b>Salidas útiles</b> Cuatro atajos que cubren casi todo lo que llega por error (inicio, producto, precios, demo) y el resto como chips. Sin cta-band: aquí el objetivo es reubicar, no vender.</aside>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, P='/propuesta-2026-r8x4/';
+  var reduce=false;try{reduce=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+  var I={
+    home:'<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+    grid:'<path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/>',
+    chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+    cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5z"/><path d="M4 19.5V22h16"/>',
+    code:'<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>',
+    shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    plug:'<path d="M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z"/>',
+    file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+    star:'<path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+    play:'<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
+    map:'<path d="m1 6 7-3 8 3 7-3v15l-7 3-8-3-7 3z"/><path d="M8 3v15M16 6v15"/>'
+  };
+  /* Rutas de la propuesta: [slug, título, descripción, ícono, palabras clave] */
+  var R=[
+    ['home','Inicio','Agentes IA, CRM y automatización en un solo lugar','home','portada principal'],
+    ['producto','Producto','Toda la plataforma, módulo por módulo','grid','plataforma funciones modulos'],
+    ['producto#agentes','Agentes IA','Responden, califican y agendan 24/7','chat','bot inteligencia artificial chatbot'],
+    ['producto#crm','CRM y pipeline','Cada lead y cada etapa en un lugar','grid','ventas embudo contactos'],
+    ['producto#automatizaciones','Automatizaciones','Flujos que trabajan mientras duermes','grid','workflows flujos'],
+    ['producto#licitaciones','Licitaciones','Mercado Público y entidades privadas, con IA','file','mercado publico estado compras'],
+    ['producto#voz','Voz clonada','Tu agente habla con tu voz','chat','audio llamadas'],
+    ['whatsapp','Ventas por WhatsApp','Tu agente IA en la API oficial de WhatsApp','chat','whatsapp business api'],
+    ['precios','Precios','Starter, Pro y Elite Setup','card','planes pagos costo valor stripe'],
+    ['demo','Agendar demo','30 minutos con el equipo, con tu caso','cal','reunion llamada agenda calendario'],
+    ['soluciones','Soluciones','Pymes, agencias, proveedores del Estado y empresas','users','industrias rubros'],
+    ['partners','Agencias y partners','Revende Hapee con tu marca','users','reseller revendedor socios'],
+    ['por-que-hapee','Por qué Hapee','Comparativas y antes/después','star','comparativa competencia transformacion'],
+    ['integraciones','Integraciones','Todo lo que conecta Hapee','plug','conectar shopify google meta'],
+    ['casos','Casos de éxito','Resultados de clientes de Hapee','star','clientes testimonios'],
+    ['seguridad','Seguridad','Datos, cumplimiento y confianza','shield','privacidad gdpr datos'],
+    ['nosotros','Nosotros','Equipo, historia e inversionistas','users','empresa equipo fundadores'],
+    ['blog','Blog','IA aplicada a ventas','book','articulos noticias'],
+    ['docs','Documentación API','Webhooks, ERP y MCP','code','api desarrolladores mcp claude chatgpt'],
+    ['academia','Academia','Configura Hapee paso a paso','book','cursos videos tutoriales ayuda'],
+    ['eventos','Eventos y webinars','En vivo y grabados','cal','webinar charlas'],
+    ['demos','Demos interactivas','Oficina 3D, juego y Vía','play','juego oficina'],
+    ['changelog','Novedades','Lo último que lanzamos','star','cambios lanzamientos actualizaciones'],
+    ['legal#terminos','Términos del servicio','Condiciones de uso y pagos','file','terminos condiciones legal'],
+    ['legal#privacidad','Política de privacidad','Cómo tratamos tus datos','shield','privacidad datos personales'],
+    ['legal#eliminacion','Eliminación de datos','Cómo pedir que borremos tus datos','shield','borrar eliminar datos meta'],
+    ['mapa','Mapa del sitio','Todas las páginas de la propuesta','map','indice sitemap']
+  ];
+  /* URLs del sitio actual → su equivalente en la nueva arquitectura */
+  var OLD={'planes':'precios','planes-k9x2v7':'precios','agenda-tu-demo':'demo','preparate-demo':'demo','comparativa':'por-que-hapee','transformacion':'por-que-hapee',
+    'agentes-ia-whatsapp':'whatsapp','terminos':'legal#terminos','politica-privacidad':'legal#privacidad','eliminacion-datos':'legal#eliminacion',
+    'webinar':'eventos','juego':'demos','rrss-templates':'blog','gracias-compra':'home','index':'home'};
+
+  function norm(s){s=(s||'').toLowerCase();try{s=s.normalize('NFD').replace(/[̀-ͯ]/g,'')}catch(e){}return s}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+
+  /* Ruta pedida (con textContent: nunca se inyecta como HTML) */
+  var path=location.pathname+location.search;
+  var pEl=d.getElementById('path');
+  if(pEl&&!/\/404(\.html)?$/.test(location.pathname))pEl.textContent=path.length>80?path.slice(0,77)+'…':path;
+
+  /* Sugerencia: URL vieja conocida o la ruta más parecida (Levenshtein) */
+  (function(){
+    var seg=norm(location.pathname.replace(/\.html$/,'').replace(/\/+$/,'').split('/').pop());
+    if(!seg||seg==='404')return;
+    var best=null,score=1e9,txt;
+    if(OLD[seg]){best=OLD[seg];txt='Esa página ahora vive en otro lugar:'}
+    else{
+      R.forEach(function(r){var s=r[0].split('#')[0];var dist=lev(seg,s);if(dist<score){score=dist;best=r[0]}});
+      if(score>Math.max(2,Math.floor(seg.length/3)))best=null;
+      txt='¿Quisiste decir…?';
+    }
+    if(!best)return;
+    var r=R.filter(function(x){return x[0]===best})[0];if(!r)return;
+    d.getElementById('guessTx').textContent=txt;
+    var a=d.getElementById('guessA');a.href=P+r[0];a.firstChild.textContent=r[1]+' ';
+    d.getElementById('guess').hidden=false;
+  })();
+  function lev(a,b){var m=a.length,n=b.length,dp=[],i,j;for(i=0;i<=m;i++){dp[i]=[i]}for(j=1;j<=n;j++)dp[0][j]=j;
+    for(i=1;i<=m;i++)for(j=1;j<=n;j++)dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return dp[m][n]}
+
+  /* Buscador */
+  var q=d.getElementById('q'),res=d.getElementById('res'),cnt=d.getElementById('resCount'),sel=0,items=[];
+  function hl(text,term){if(!term)return esc(text);var n=norm(text),k=n.indexOf(term);if(k<0)return esc(text);return esc(text.slice(0,k))+'<mark>'+esc(text.slice(k,k+term.length))+'</mark>'+esc(text.slice(k+term.length))}
+  function render(){
+    var term=norm(q.value.trim());
+    var list=R.map(function(r){
+      if(!term)return {r:r,s:0};
+      var t=norm(r[1]),dsc=norm(r[2]),k=norm(r[4]+' '+r[0]);
+      var s=t.indexOf(term)===0?0:t.indexOf(term)>-1?1:k.indexOf(term)>-1?2:dsc.indexOf(term)>-1?3:-1;
+      return {r:r,s:s};
+    }).filter(function(x){return x.s>-1});
+    list.sort(function(a,b){return a.s-b.s});
+    if(!term)list=list.slice(0,8);
+    items=list;sel=0;
+    if(!list.length){res.innerHTML='<li class="empty">No encontramos «'+esc(q.value.trim())+'». Prueba con otra palabra o escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</li>';cnt.textContent='Sin resultados';return}
+    res.innerHTML=list.map(function(x,i){var r=x.r;return '<li role="presentation"><a role="option" id="opt'+i+'" href="'+P+r[0]+'" aria-selected="'+(i===0)+'"><span class="ri"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'+I[r[3]]+'</svg></span><span><b>'+hl(r[1],term)+'</b><small>'+esc(r[2])+'</small></span><span class="go">Abrir ↵</span></a></li>'}).join('');
+    q.setAttribute('aria-activedescendant','opt0');
+    cnt.textContent=list.length+(list.length===1?' página':' páginas');
+  }
+  function move(k){var as=res.querySelectorAll('a[role=option]');if(!as.length)return;sel=(sel+k+as.length)%as.length;
+    [].forEach.call(as,function(a,i){a.setAttribute('aria-selected',i===sel?'true':'false')});q.setAttribute('aria-activedescendant','opt'+sel);as[sel].scrollIntoView({block:'nearest'})}
+  if(q&&res){
+    q.addEventListener('input',render);
+    q.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){e.preventDefault();move(1)}
+      else if(e.key==='ArrowUp'){e.preventDefault();move(-1)}
+      else if(e.key==='Enter'){var a=res.querySelectorAll('a[role=option]')[sel];if(a){e.preventDefault();location.href=a.href}}
+      else if(e.key==='Escape'){q.value='';render()}
+    });
+    d.addEventListener('keydown',function(e){if(e.key==='/'&&d.activeElement!==q&&!/input|textarea|select/i.test((d.activeElement||{}).tagName||'')){e.preventDefault();q.focus()}});
+    render();
+  }
+
+  /* Robot 2.5D: se inclina hacia el puntero (solo puntero fino y sin movimiento reducido) */
+  var wrap=d.getElementById('rbWrap'),stage=d.getElementById('lost');
+  var fine=false;try{fine=matchMedia('(pointer: fine)').matches}catch(e){}
+  if(wrap&&stage&&fine&&!reduce){
+    var raf=null,tx=0,ty=0;
+    addEventListener('pointermove',function(e){
+      var r=stage.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+      tx=Math.max(-1,Math.min(1,(e.clientX-cx)/(innerWidth/2)));ty=Math.max(-1,Math.min(1,(e.clientY-cy)/(innerHeight/2)));
+      if(!raf)raf=requestAnimationFrame(function(){raf=null;wrap.style.transform='rotateY('+(tx*14).toFixed(2)+'deg) rotateX('+(-ty*8).toFixed(2)+'deg)'});
+    },{passive:true});
+  }
+})();
+</script>
+</body>
+</html>

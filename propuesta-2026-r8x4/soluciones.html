@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soluciones · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Selector de segmento del hero ─────────────────────────── */
+  .segs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:var(--s-12)}
+  .seg-c{position:relative;display:grid;gap:10px;align-content:start;padding:24px 22px 22px;min-height:220px;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
+  .seg-c:hover{border-color:rgba(250,80,0,.45);transform:translateY(-4px)}
+  .seg-c .n{font:400 4rem/.8 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong);transition:color var(--d-slow),-webkit-text-stroke-color var(--d-slow)}
+  .seg-c:hover .n{color:var(--orange);-webkit-text-stroke-color:transparent}
+  .seg-c b{font:700 1.08rem/1.25 var(--f-body);color:var(--heading)}
+  .seg-c small{color:var(--text-muted);font-size:.88rem;line-height:1.45}
+  .seg-c .go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:.86rem;color:var(--link)}
+  .seg-c .go .ico{width:18px;height:18px;transition:transform var(--d-base) var(--ease-out)}
+  .seg-c:hover .go .ico{transform:translateY(3px)}
+
+  /* ── Barra pegajosa de segmentos ───────────────────────────── */
+  .segbar{position:sticky;top:88px;z-index:50;transition:top var(--d-slow) var(--ease-out);margin-bottom:-60px}
+  body:has(#nav.hide) .segbar{top:12px}
+  .segbar-in{display:flex;gap:2px;width:max-content;max-width:calc(100% - 28px);margin:0 auto;padding:6px;border-radius:var(--r-pill);background:var(--glass);border:1px solid var(--border);
+    -webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:var(--shadow-2);overflow-x:auto;scrollbar-width:none}
+  .segbar-in::-webkit-scrollbar{display:none}
+  .segbar a{flex-shrink:0;height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:var(--r-pill);color:var(--text-muted);font:600 .86rem/1 var(--f-body);white-space:nowrap}
+  .segbar a:hover{color:var(--heading)}
+  .segbar a.on{background:var(--heading);color:var(--bg)}
+
+  /* ── Segmento ──────────────────────────────────────────────── */
+  .segsec{scroll-margin-top:-50px}
+  .seg-top{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s-16);align-items:end;margin-bottom:var(--s-12)}
+  .seg-top .sec-head{margin:0}
+  .seg-top .num{font:400 clamp(7rem,13vw,12rem)/.75 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong);justify-self:end;user-select:none}
+
+  /* Dolor → solución, unidos por una línea que se dibuja */
+  .ps{display:grid;gap:10px}
+  .ps-h{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 4px 6px}
+  .ps-h span:last-child{color:var(--link)}
+  .ps-row{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch}
+  .ps-a,.ps-b{padding:18px 20px;border-radius:var(--r-lg);border:1px solid var(--border);font-size:.95rem;line-height:1.5}
+  .ps-a{background:var(--surface);color:var(--text-muted)}
+  .ps-b{background:var(--surface);color:var(--heading);font-weight:600;border-color:rgba(250,80,0,.28);box-shadow:inset 3px 0 0 var(--orange)}
+  .ps-ln{position:relative;align-self:center;height:2px;margin:0 6px;background:var(--border)}
+  .ps-ln::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:0 50%;transition:transform .9s var(--ease-out) .2s}
+  .ps-ln::before{content:"";position:absolute;right:-2px;top:50%;width:8px;height:8px;border-top:2px solid var(--orange);border-right:2px solid var(--orange);transform:translateY(-50%) rotate(45deg);opacity:0;transition:opacity .3s 1s}
+  .ps-row.in .ps-ln::after{transform:none}
+  .ps-row.in .ps-ln::before{opacity:1}
+  .js .ps-row .ps-b{opacity:.0;transform:translateX(-10px);transition:opacity .6s var(--ease-out) .7s,transform .8s var(--ease-out) .7s}
+  .js .ps-row.in .ps-b{opacity:1;transform:none}
+
+  .seg-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--s-8);align-items:start}
+  .side{display:grid;gap:16px;position:sticky;top:170px}
+  .side .card{padding:24px;display:grid;gap:12px}
+  .side h3{font-size:1rem;letter-spacing:.02em}
+  .mods{display:flex;flex-wrap:wrap;gap:8px}
+  .mods a{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface-2);color:var(--heading);font:600 .84rem/1 var(--f-body);transition:border-color var(--d-base)}
+  .mods a:hover{border-color:var(--orange)}
+  .mods .ico{width:15px;height:15px;color:var(--link)}
+  .rec{display:grid;gap:4px;padding:16px;border-radius:var(--r-md);background:var(--grad-soft);border:1px solid rgba(250,80,0,.25)}
+  .rec small{color:var(--text-muted);font-size:.8rem}
+  .rec b{font:400 1.9rem/1 var(--f-display);color:var(--heading);text-transform:uppercase}
+  .rec span{font-size:.86rem;color:var(--text)}
+  .side .btn{width:100%}
+
+  /* Visual por segmento */
+  .vis{margin-top:var(--s-8)}
+  /* Pymes: una noche cualquiera */
+  .night{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative;padding:28px 24px}
+  .night::before{content:"";position:absolute;left:24px;right:24px;top:47px;height:2px;background:var(--border)}
+  .night::after{content:"";position:absolute;left:24px;right:24px;top:47px;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:0 50%;transition:transform 2.4s var(--ease-in-out)}
+  .night.in::after{transform:none}
+  .nt{position:relative;display:grid;gap:6px;padding-right:16px}
+  .nt i{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--border-strong);z-index:1;transition:all .4s var(--ease-out);transition-delay:calc(var(--i) * .6s)}
+  .night.in .nt i{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 6px rgba(250,80,0,.15)}
+  .nt b{font:400 1.9rem/1 var(--f-display);color:var(--heading);margin-top:8px}
+  .nt span{font-size:.86rem;color:var(--text-muted)}
+
+  /* Agencias: niveles */
+  .tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .tier{padding:22px;display:grid;gap:6px}
+  .tier small{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .tier b{font:400 3.4rem/.9 var(--f-display);color:var(--heading)}
+  .tier span{font-size:.86rem;color:var(--text-muted)}
+  .tier.top{border-color:rgba(250,80,0,.4);background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border:1px solid transparent}
+
+  /* Estado: licitaciones con afinidad (estilo de la app, siempre claro) */
+  .lic{padding:20px;background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--orange) 10%,var(--n-50)),transparent 55%),radial-gradient(110% 90% at 100% 100%,color-mix(in srgb,var(--burgundy) 13%,var(--n-50)),var(--n-50) 60%);color:var(--n-800);display:grid;gap:10px}
+  .lic-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:800 1rem/1.2 var(--f-body)}
+  .lic-h span{font:700 .72rem/1 var(--f-body);padding:5px 9px;border-radius:var(--r-pill);background:color-mix(in srgb,var(--orange) 14%,var(--n-0));color:var(--orange-ink)}
+  .lic-i{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;border-radius:14px;background:var(--n-0);border:1px solid rgba(20,18,16,.08);box-shadow:0 6px 18px rgba(20,18,16,.06);border-left:3px solid var(--orange)}
+  .dial{--v:0;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--orange) calc(var(--v) * 1%),var(--n-200) 0);position:relative;transition:--v 1.6s var(--ease-out)}
+  @property --v{syntax:"<number>";inherits:false;initial-value:0}
+  .dial::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--n-0)}
+  .dial b{position:relative;font:800 .95rem/1 var(--f-body);color:var(--n-800)}
+  .lic-i h4{font:700 .92rem/1.3 var(--f-body);color:var(--n-800);margin:0}
+  .lic-i small{display:block;color:var(--n-600);font-size:.78rem;margin-top:3px}
+  .lic-i em{font-style:normal;font:700 .74rem/1 var(--f-body);padding:5px 8px;border-radius:7px;background:color-mix(in srgb,var(--warn) 18%,var(--n-0));color:color-mix(in srgb,var(--warn) 55%,var(--n-900));white-space:nowrap}
+
+  /* Empresas: controles */
+  .ctrl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .ctrl .card{padding:20px;display:grid;gap:8px;align-content:start}
+  .ctrl .ic{width:40px;height:40px;border-radius:12px}
+  .ctrl h4{font:700 .98rem/1.3 var(--f-body);color:var(--heading);margin:0}
+  .ctrl p{font-size:.86rem;color:var(--text-muted)}
+
+  @media (max-width:1100px){
+    .segs{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .seg-top,.seg-grid{grid-template-columns:1fr}
+    .seg-top .num{display:none}
+    .side{position:static}
+    .ctrl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:760px){
+    .segs{grid-template-columns:1fr}
+    .seg-c{min-height:0}
+    .seg-c .n{font-size:2.8rem}
+    .segbar{top:84px}
+    .ps-h{display:none}
+    .ps-row{grid-template-columns:1fr;gap:0}
+    .ps-ln{width:2px;height:22px;margin:0 0 0 24px;align-self:auto}
+    .ps-ln::after{transform:scaleY(0);transform-origin:50% 0}
+    .ps-ln::before{right:auto;left:-3px;top:auto;bottom:-2px;transform:rotate(135deg)}
+    .night{grid-template-columns:1fr 1fr;row-gap:22px}
+    .night::before,.night::after{display:none}
+    .tiers,.ctrl{grid-template-columns:1fr}
+    .lic-i{grid-template-columns:auto 1fr}
+    .lic-i em{grid-column:2;justify-self:start}
+  }
+</style>
+</head>
+<body data-page="soluciones" data-sec="soluciones">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-kanban" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7M12 7v4M16 7v9"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="m12 15-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></symbol>
+</svg>
+
+<main id="main" class="page">
+
+  <!-- ═════════ HERO ═════════ -->
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Soluciones</nav>
+      <div class="sec-head" style="margin:0;max-width:880px">
+        <p class="eyebrow">Soluciones</p>
+        <h1 class="display">La misma plataforma, armada para <span class="grad-text">cómo vendes.</span></h1>
+        <p class="lead">Una pyme que vive en WhatsApp, una agencia con veinte clientes, una empresa que postula a licitaciones o un equipo con varias sucursales: cada uno parte por un problema distinto. Elige el tuyo.</p>
+      </div>
+      <nav class="segs" aria-label="Segmentos">
+        <a class="card seg-c spot rv" href="#pymes"><span class="n">01</span><b>Pymes y equipos comerciales</b><small>Responde a toda hora y ordena tus ventas sin contratar más.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
+        <a class="card seg-c spot rv" href="#agencias"><span class="n">02</span><b>Agencias y partners</b><small>Suma IA y CRM a tu oferta y cobra una comisión recurrente.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
+        <a class="card seg-c spot rv" href="#estado"><span class="n">03</span><b>Proveedores del Estado</b><small>Licitaciones que calzan con tu rubro, analizadas por IA.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
+        <a class="card seg-c spot rv" href="#empresas"><span class="n">04</span><b>Empresas</b><small>Roles, integraciones y una implementación acompañada.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
+      </nav>
+    </div>
+    <aside class="note" data-n="S1"><b>Página nueva: por segmento</b> Hoy el sitio le habla a todos con el mismo mensaje y los segmentos no tienen página. Cada uno aquí sigue la misma estructura (dolor → cómo lo resuelve Hapee → módulos → plan sugerido → CTA) para que un anuncio por segmento aterrice en su ancla.</aside>
+  </section>
+
+  <div class="segwrap">
+    <nav class="segbar" aria-label="Ir a un segmento"><div class="segbar-in" id="segbar">
+      <a href="#pymes">Pymes</a><a href="#agencias">Agencias</a><a href="#estado">Proveedores del Estado</a><a href="#empresas">Empresas</a>
+    </div></nav>
+
+    <!-- ═════════ PYMES ═════════ -->
+    <section class="sec segsec" id="pymes">
+      <div class="ctn">
+        <div class="seg-top">
+          <div class="sec-head"><p class="eyebrow">01 · Pymes y equipos comerciales</p><h2 class="display">Vende más sin contratar más.</h2><p class="lead">Para negocios que venden por WhatsApp e Instagram y no alcanzan a responder todo a tiempo.</p></div>
+          <span class="num" aria-hidden="true">01</span>
+        </div>
+        <div class="seg-grid">
+          <div>
+            <div class="ps">
+              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
+              <div class="ps-row"><div class="ps-a">Los mensajes de la noche y del fin de semana esperan hasta el lunes.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">El agente IA responde en segundos, a toda hora, por WhatsApp, Instagram y Facebook.</div></div>
+              <div class="ps-row"><div class="ps-a">Cada vendedor lleva sus clientes en su teléfono o en una planilla.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una bandeja compartida y un CRM donde cada conversación queda en la ficha del cliente.</div></div>
+              <div class="ps-row"><div class="ps-a">Pagas cinco o seis herramientas que no se hablan entre sí.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">CRM, email, sitios, agenda y automatizaciones en una sola suscripción.</div></div>
+              <div class="ps-row"><div class="ps-a">Nadie hace el seguimiento del que dijo «lo pienso».</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Workflows que escriben, esperan y avisan al vendedor en el momento justo.</div></div>
+            </div>
+            <div class="card night vis rv" id="night" aria-label="Ejemplo de una noche con Hapee">
+              <div class="nt" style="--i:0"><i></i><b>23:42</b><span>Llega un mensaje por WhatsApp</span></div>
+              <div class="nt" style="--i:1"><i></i><b>23:42</b><span>El agente responde y pregunta qué busca</span></div>
+              <div class="nt" style="--i:2"><i></i><b>23:46</b><span>Queda calificado y con visita agendada</span></div>
+              <div class="nt" style="--i:3"><i></i><b>09:00</b><span>Tu vendedor lo ve listo en el pipeline</span></div>
+            </div>
+          </div>
+          <aside class="side">
+            <div class="card">
+              <h3>Módulos clave</h3>
+              <div class="mods"><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a><a href="/propuesta-2026-r8x4/producto#bandeja"><svg class="ico"><use href="#i-inbox"/></svg>Bandeja</a><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM</a><a href="/propuesta-2026-r8x4/producto#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a><a href="/propuesta-2026-r8x4/producto#email"><svg class="ico"><use href="#i-mail"/></svg>Email</a></div>
+              <div class="rec"><small>Plan sugerido</small><b>Starter o Pro</b><span>Starter para 1 o 2 personas; Pro si vendes en equipo o necesitas WhatsApp Business API.</span></div>
+              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
+              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/whatsapp">Ver el agente para WhatsApp</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <aside class="note" data-n="S2"><b>El dolor, emparejado</b> Cada problema tiene su respuesta al lado y una línea que los une al hacer scroll: se lee en 10 segundos. La «noche cualquiera» muestra el mecanismo con una hora concreta en vez de una cifra que no podemos respaldar.</aside>
+    </section>
+
+    <!-- ═════════ AGENCIAS ═════════ -->
+    <section class="sec alt segsec" id="agencias">
+      <div class="ctn">
+        <div class="seg-top">
+          <div class="sec-head"><p class="eyebrow">02 · Agencias y partners</p><h2 class="display">Revende Hapee a tus clientes.</h2><p class="lead">Para agencias, consultoras y freelancers que atienden pymes: suma agentes de IA, CRM y automatización a tu oferta, sin desarrollarlos.</p></div>
+          <span class="num" aria-hidden="true">02</span>
+        </div>
+        <div class="seg-grid">
+          <div>
+            <div class="ps">
+              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
+              <div class="ps-row"><div class="ps-a">Tus clientes te piden IA y automatización, y armarlo a medida no escala.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una plataforma lista (agentes, CRM, automatizaciones y reportes) que configuras para cada cliente.</div></div>
+              <div class="ps-row"><div class="ps-a">Cada cliente vive en una herramienta distinta.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una subcuenta por cliente, administradas desde tu cuenta de agencia.</div></div>
+              <div class="ps-row"><div class="ps-a">Armar el reporte mensual te toma horas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Reportes en un clic con la pauta, las redes y GA4 de cada cliente.</div></div>
+              <div class="ps-row"><div class="ps-a">Cobras por proyecto y empiezas de cero cada mes.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Comisión recurrente mientras el cliente siga activo.</div></div>
+            </div>
+            <div class="tiers vis">
+              <div class="card tier rv"><small>Partner</small><b>20%</b><span>Recurrente, para empezar a vender desde el primer cliente.</span></div>
+              <div class="card tier rv"><small>Partner Pro</small><b>28%</b><span>Para agencias con cuentas activas y equipo certificado.</span></div>
+              <div class="card tier top rv"><small>Partner Elite</small><b>35%</b><span>Por invitación o desempeño, con cartera enterprise.</span></div>
+            </div>
+          </div>
+          <aside class="side">
+            <div class="card">
+              <h3>Módulos clave</h3>
+              <div class="mods"><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a><a href="/propuesta-2026-r8x4/producto#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a><a href="/propuesta-2026-r8x4/producto#web"><svg class="ico"><use href="#i-web"/></svg>Sitios y funnels</a><a href="/propuesta-2026-r8x4/producto#academia"><svg class="ico"><use href="#i-cap"/></svg>Academia</a></div>
+              <div class="rec"><small>Programa</small><b>Hapee Partners</b><span>Tres niveles, certificación en la Academia y kit de venta. Detalle de requisitos y beneficios en la página del programa.</span></div>
+              <a class="btn btn-primary" href="/propuesta-2026-r8x4/partners">Conocer el programa <span class="arr">→</span></a>
+              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/demo">Agendar demo</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <aside class="note" data-n="S3"><b>Resumen, no duplicado</b> El detalle del programa vive en /partners; aquí solo el resumen y los tres niveles con las comisiones que ya publica el sitio, para que la agencia entienda en un vistazo si le sirve.</aside>
+    </section>
+
+    <!-- ═════════ ESTADO ═════════ -->
+    <section class="sec segsec" id="estado">
+      <div class="ctn">
+        <div class="seg-top">
+          <div class="sec-head"><p class="eyebrow">03 · Proveedores del Estado</p><h2 class="display">Las licitaciones que puedes ganar, cada mañana.</h2><p class="lead">Para empresas que venden al Estado y a grandes compradores privados, y hoy revisan portales a mano.</p></div>
+          <span class="num" aria-hidden="true">03</span>
+        </div>
+        <div class="seg-grid">
+          <div>
+            <div class="ps">
+              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
+              <div class="ps-row"><div class="ps-a">Revisar Mercado Público todos los días toma horas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Hapee revisa Mercado Público, WherEx y portales privados, y te avisa por correo.</div></div>
+              <div class="ps-row"><div class="ps-a">Las bases son largas y descubres tarde que no calzas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">La IA resume las bases y calcula la afinidad de cada licitación con tu empresa.</div></div>
+              <div class="ps-row"><div class="ps-a">Se te pasan los plazos.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Ves cuántos días quedan, ordenado por afinidad y monto.</div></div>
+              <div class="ps-row"><div class="ps-a">La oportunidad queda fuera del proceso comercial.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">La licitación pasa al pipeline como negocio, con tareas para el equipo. <span class="todo">[confirmar]</span></div></div>
+            </div>
+            <div class="card lic vis rv" id="lic" role="img" aria-label="Maqueta: tres licitaciones con su afinidad calculada por IA, monto y días para el cierre.">
+              <div class="lic-h">Oportunidades <span>Mercado Público</span></div>
+              <div class="lic-i"><span class="dial" data-v="87"><b>0</b></span><div><h4>Community management y pauta digital</h4><small>Universidad pública · Metropolitana · $12.800.000</small></div><em>cierra en 4 días</em></div>
+              <div class="lic-i"><span class="dial" data-v="84"><b>0</b></span><div><h4>Desarrollo de sitio web institucional</h4><small>Servicio de salud · Metropolitana · $24.000.000</small></div><em>cierra en 9 días</em></div>
+              <div class="lic-i"><span class="dial" data-v="81"><b>0</b></span><div><h4>Plataforma CRM para atención ciudadana</h4><small>Ministerio · Metropolitana · $58.000.000</small></div><em>cierra en 15 días</em></div>
+            </div>
+          </div>
+          <aside class="side">
+            <div class="card">
+              <h3>Módulos clave</h3>
+              <div class="mods"><a href="/propuesta-2026-r8x4/producto#licitaciones"><svg class="ico"><use href="#i-bank"/></svg>Licitaciones</a><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM y cotizaciones</a><a href="/propuesta-2026-r8x4/producto#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a></div>
+              <div class="rec"><small>Plan sugerido</small><b>Pro</b><span>Starter incluye Mercado Público; Pro suma entidades privadas.</span></div>
+              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
+              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/producto#licitaciones">Ver el módulo</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <aside class="note" data-n="S4"><b>El diferenciador, con su propia puerta</b> Licitaciones es el módulo que ningún competidor directo tiene y hoy está en la pestaña 8 de la home. Aquí tiene su segmento. La maqueta usa el formato real del módulo (afinidad 0–100, monto, plazo) con organismos genéricos.</aside>
+    </section>
+
+    <!-- ═════════ EMPRESAS ═════════ -->
+    <section class="sec alt segsec" id="empresas">
+      <div class="ctn">
+        <div class="seg-top">
+          <div class="sec-head"><p class="eyebrow">04 · Empresas</p><h2 class="display">Escala con control.</h2><p class="lead">Para equipos grandes, con varias áreas o sucursales, que necesitan permisos claros, integraciones con sus sistemas y una implementación sin sorpresas.</p></div>
+          <span class="num" aria-hidden="true">04</span>
+        </div>
+        <div class="seg-grid">
+          <div>
+            <div class="ps">
+              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
+              <div class="ps-row"><div class="ps-a">Muchos equipos en la misma cuenta, todos viendo todo.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Roles y perfiles de permisos: cada persona ve y edita solo lo que le corresponde.</div></div>
+              <div class="ps-row"><div class="ps-a">TI necesita conectar el ERP y otros sistemas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">API REST v1, webhooks firmados y un sandbox con la misma API que producción.</div></div>
+              <div class="ps-row"><div class="ps-a">Datos personales de clientes en herramientas sueltas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Tratamiento conforme a la Ley 21.719 de Chile y al GDPR, en una sola plataforma.</div></div>
+              <div class="ps-row"><div class="ps-a">Una implementación que no puede fallar.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Elite Setup: nuestro equipo la deja funcionando en 7 a 14 días, con kickoff y acompañamiento.</div></div>
+            </div>
+            <div class="ctrl vis">
+              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-users"/></svg></span><h4>Roles y perfiles</h4><p>Permisos por perfil, incluido «solo lo asignado» para cada vendedor.</p></div>
+              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-key"/></svg></span><h4>Inicio de sesión</h4><p>Correo y contraseña con verificación en dos pasos, o con Google.</p></div>
+              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-code"/></svg></span><h4>API, webhooks y MCP</h4><p>Integraciones con permisos por usuario; el asistente de IA nunca ve tu contraseña.</p></div>
+              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-lock"/></svg></span><h4>Cifrado</h4><p>En tránsito y en reposo. <span class="todo">[confirmar con TI]</span></p></div>
+              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-server"/></svg></span><h4>Dónde viven los datos</h4><p>Región de alojamiento y respaldos. <span class="todo">[confirmar]</span></p></div>
+              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-clock"/></svg></span><h4>SLA de soporte</h4><p>Tiempos de respuesta y disponibilidad comprometida. <span class="todo">[confirmar]</span></p></div>
+            </div>
+          </div>
+          <aside class="side">
+            <div class="card">
+              <h3>Módulos clave</h3>
+              <div class="mods"><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM</a><a href="/propuesta-2026-r8x4/producto#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a><a href="/propuesta-2026-r8x4/producto#api"><svg class="ico"><use href="#i-code"/></svg>API y MCP</a><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Centro de agentes</a></div>
+              <div class="rec"><small>Plan sugerido</small><b>Pro + Elite Setup</b><span>Usuarios y contactos ilimitados, más la implementación llave en mano.</span></div>
+              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Hablar con ventas <span class="arr">→</span></a>
+              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/seguridad">Ver seguridad</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+      <aside class="note" data-n="S5"><b>Lo que pregunta un comprador enterprise</b> Roles, inicio de sesión y permisos del MCP salen de la documentación actual. Cifrado, alojamiento y SLA no están publicados en ninguna parte: van punteados hasta que TI los confirme.</aside>
+    </section>
+  </div>
+
+  <section class="sec">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">¿No sabes por dónde empezar?</h2>
+      <p>Cuéntanos cómo vendes hoy y en 30 minutos te mostramos qué parte de Hapee te sirve primero. Sin compromiso.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, hasIO='IntersectionObserver' in window;
+  var $$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
+  function once(els,fn,opt){ if(reduce||!hasIO){els.forEach(fn);return;} var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fn(e.target);io.unobserve(e.target);}})},opt||{threshold:.35}); els.forEach(function(e){io.observe(e)}); }
+
+  /* Dolor → solución: la línea se dibuja fila por fila */
+  once($$('.ps-row'),function(r){r.classList.add('in')},{threshold:.6});
+
+  /* Pymes: la noche avanza */
+  once($$('#night'),function(n){n.classList.add('in')});
+
+  /* Estado: los diales de afinidad cuentan hasta su valor */
+  once($$('.dial'),function(el){
+    var v=+el.dataset.v||0, b=el.querySelector('b');
+    if(reduce){el.style.setProperty('--v',v);b.textContent=v;return;}
+    el.style.setProperty('--v',v);
+    var t0=null;(function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-p,3);b.textContent=Math.round(v*e);if(p<1)requestAnimationFrame(f);})(performance.now());
+  },{threshold:.5});
+
+  /* Barra de segmentos: resalta el visible */
+  var links=$$('#segbar a');
+  if(hasIO){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});});},{rootMargin:'-45% 0px -50% 0px'});
+    links.forEach(function(a){var t=d.getElementById(a.getAttribute('href').slice(1));if(t)io.observe(t);});}
+})();
+</script>
+</body>
+</html>

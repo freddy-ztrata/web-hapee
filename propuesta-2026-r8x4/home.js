@@ -312,16 +312,17 @@
   })();
 
   /* ═════════ PALETA DE COMANDOS (⌘K) ═════════ */
+  var P = '/propuesta-2026-r8x4/';
   (function () {
     var box = $('#cmdk'), inp = $('#cmdkInput'), list = $('#cmdkList'), sel = 0, view = [];
     var ITEMS = [
-      ['Acciones', 'Agendar una demo', '/agenda-tu-demo', 'Demo'],
+      ['Acciones', 'Agendar una demo', P + 'demo', 'Demo'],
       ['Acciones', 'Hablar con el agente IA', '#demo', 'En vivo'],
       ['Acciones', 'Calcular cuánto estoy perdiendo', '#calculadora', 'ROI'],
       ['Acciones', 'Cambiar tema claro u oscuro', 'theme', 'Tema'],
       ['Secciones', 'Plataforma', '#plataforma'], ['Secciones', 'Así se ve Hapee por dentro', '#plataforma'], ['Secciones', 'Integraciones', '#integraciones'],
       ['Secciones', 'Precios', '#precios'], ['Secciones', 'Seguridad y confianza', '#confianza'], ['Secciones', 'Equipo', '#equipo'], ['Secciones', 'Preguntas frecuentes', '#faq'],
-      ['Páginas', 'Documentación de la API', '/docs/'], ['Páginas', 'Conector MCP para Claude', '/docs/mcp'], ['Páginas', 'Blog', '/blog.html'], ['Páginas', 'Academia', '/academia'], ['Páginas', 'Partners', '/partners.html'], ['Páginas', 'Comparativa', '/comparativa.html'],
+      ['Páginas', 'Plataforma completa', P + 'producto'], ['Páginas', 'Precios', P + 'precios'], ['Páginas', 'Documentación de la API', P + 'docs'], ['Páginas', 'Blog', P + 'blog'], ['Páginas', 'Casos de éxito', P + 'casos'], ['Páginas', 'Academia', P + 'academia'], ['Páginas', 'Partners', P + 'partners'], ['Páginas', 'Por qué Hapee', P + 'por-que-hapee'], ['Páginas', 'Seguridad', P + 'seguridad'], ['Páginas', 'Nosotros', P + 'nosotros'], ['Páginas', 'Todas las páginas', P + 'mapa'],
       ['Páginas', 'Auditoría y plan 2026', '/propuesta-2026-r8x4/']
     ];
     function render() {

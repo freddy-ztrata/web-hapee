@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Por qué Hapee · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Antes / después ── */
+  .ba{--x:50%;position:relative;aspect-ratio:16/9;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-3);
+    background:radial-gradient(60% 80% at 75% 50%,rgba(250,80,0,.25),transparent 60%),linear-gradient(90deg,var(--n-900),var(--n-900));touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+  .ba video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  .ba .after::after,.ba .before::after{content:"";position:absolute;inset:0;pointer-events:none}
+  .ba .after,.ba .before{position:absolute;inset:0}
+  .ba .after::after{background:linear-gradient(90deg,transparent 40%,rgba(0,0,0,.45))}
+  .ba .before{clip-path:inset(0 calc(100% - var(--x)) 0 0);background:linear-gradient(90deg,var(--n-900),var(--n-800))}
+  .ba .before video{filter:grayscale(.7) contrast(1.1) brightness(.85)}
+  .ba .before::after{background:linear-gradient(90deg,rgba(0,0,0,.5),transparent 60%)}
+  .ba .lbl{position:absolute;top:18px;z-index:3;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:var(--r-pill);font:700 .76rem/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--n-0);
+    background:rgba(8,8,8,.55);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .ba .lbl.l{left:18px}.ba .lbl.r{right:18px}
+  .ba .lbl.r i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+  .ba .lbl.l i{width:7px;height:7px;border-radius:50%;background:var(--err)}
+  .ba .big{position:absolute;bottom:22px;z-index:3;font:400 clamp(2rem,5vw,4.4rem)/.85 var(--f-display);text-transform:uppercase;color:var(--n-0);text-shadow:0 4px 30px rgba(0,0,0,.6);pointer-events:none}
+  .ba .big.l{left:24px}.ba .big.r{right:24px;text-align:right}
+  .ba .big.r span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+  .ba .bar{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;z-index:4;background:var(--n-0);box-shadow:0 0 24px rgba(250,80,0,.9);pointer-events:none}
+  .ba .knob{position:absolute;top:50%;left:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;display:grid;place-items:center;background:var(--grad);border:2px solid var(--n-0);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+  .ba .knob .ico{width:24px;height:24px;stroke:var(--n-0);stroke-width:2.2}
+  .ba input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+  .ba input:focus-visible ~ .bar .knob{outline:3px solid var(--orange);outline-offset:4px}
+  .ba .hint{position:absolute;left:50%;top:calc(50% + 44px);transform:translateX(-50%);z-index:4;font:700 .72rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--n-0);opacity:.85;pointer-events:none;transition:opacity var(--d-slow);white-space:nowrap}
+  .ba.used .hint{opacity:0}
+  .ba .pp{position:absolute;left:50%;bottom:16px;margin-left:-20px;z-index:5;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);background:rgba(8,8,8,.55);color:var(--n-0);cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .ba .pp .ico{width:18px;height:18px}
+  .ba .pp .i-play{display:none}.ba.paused .pp .i-play{display:block}.ba.paused .pp .i-pause{display:none}
+  .ba-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .bal{padding:22px 24px;display:grid;gap:12px}
+  .bal h3{font-size:1.1rem;display:flex;align-items:center;gap:10px}
+  .bal ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .bal li{display:flex;gap:10px;align-items:flex-start;color:var(--text);font-size:.95rem}
+  .bal li .ico{width:18px;height:18px;margin-top:2px}
+  .bal.no li .ico{color:var(--err)}
+  .bal.yes{border-color:rgba(250,80,0,.35);background:linear-gradient(var(--surface),var(--surface)) padding-box}
+  .bal.yes li .ico{color:var(--ok)}
+
+  /* ── Diferenciadores ── */
+  .diff .tile h3{display:flex;align-items:center;gap:10px}
+  .diff .proof{margin-top:auto;padding-top:12px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+  .diff .proof b{color:var(--heading);font-weight:600}
+
+  /* ── Duelo 1 vs 1 ── */
+  .rivals{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:var(--s-8)}
+  .duel{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+  .dc{padding:28px;display:grid;gap:14px;align-content:start}
+  .dc.us{border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box}
+  .dc-h{display:flex;align-items:center;gap:14px}
+  .dc-h .av{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font:800 1rem/1 var(--f-body);color:var(--heading);background:var(--surface-2);border:1px solid var(--border)}
+  .dc.us .dc-h .av{background:none;border:0}
+  .dc.us .dc-h .av img{width:52px;height:52px;border-radius:14px}
+  .dc-h b{display:block;font-size:1.3rem;color:var(--heading)}
+  .dc-h small{color:var(--text-muted);font-size:.84rem}
+  .dc p.desc{color:var(--text-muted);font-size:.93rem;min-height:4.4em}
+  .dc ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.92rem}
+  .dc li{display:flex;gap:10px;align-items:flex-start}
+  .dc li .ico{width:18px;height:18px;margin-top:2px;flex-shrink:0}
+  .dc li.y .ico{color:var(--ok)}.dc li.n .ico{color:var(--err)}.dc li.n{color:var(--text-muted)}
+  .dc .pr{margin-top:auto;padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .dc .pr small{color:var(--text-muted);font-size:.82rem}
+  .dc .pr b{font:400 2.4rem/1 var(--f-display);color:var(--heading)}
+  .vs{display:grid;place-items:center}
+  .vs span{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--border);font:400 1.6rem/1 var(--f-display);color:var(--text-muted)}
+  .cov{margin-top:16px;padding:24px 28px;display:grid;gap:16px}
+  .cov-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:baseline}
+  .cov-h b{font:400 2rem/1 var(--f-display);color:var(--heading)}
+  .cov-g{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  .cov-g span{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border-radius:var(--r-md);font-size:.8rem;font-weight:600;line-height:1.2;border:1px solid var(--border);color:var(--text-muted);transition:all var(--d-slow) var(--ease-out)}
+  .cov-g span.on{color:var(--heading);border-color:rgba(250,80,0,.45);background:var(--grad-soft)}
+  .verdict{margin-top:16px;padding:20px 24px;border-radius:var(--r-lg);background:var(--grad-soft);border:1px solid rgba(250,80,0,.3);color:var(--heading);font-weight:600}
+  .verdict small{display:block;font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--link);margin-bottom:8px}
+  .swap{animation:swap .45s var(--ease-out)}
+  @keyframes swap{from{opacity:0;transform:translateY(8px)}}
+
+  /* ── Tabla completa ── */
+  .tbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
+  .tbar .tabs-row{margin:0}
+  .legend{display:flex;gap:14px;font-size:.82rem;color:var(--text-muted);align-items:center}
+  .legend span{display:inline-flex;gap:6px;align-items:center}
+  .cmp{min-width:860px}
+  .cmp th,.cmp td{text-align:center;padding:12px 10px}
+  .cmp th:first-child,.cmp td:first-child{text-align:left;position:sticky;top:auto;left:0;z-index:1;background:var(--surface);min-width:240px;box-shadow:1px 0 0 var(--border)}
+  .cmp thead th{position:static;top:auto;vertical-align:bottom;line-height:1.25;text-transform:none;letter-spacing:0;font-size:.8rem;color:var(--heading)}
+  .cmp thead th small{display:block;font-weight:500;color:var(--text-muted);font-size:.7rem;margin-top:2px}
+  .cmp thead th.h{color:var(--link)}
+  .cmp td.h,.cmp th.h{background:var(--grad-soft)}
+  .cmp tr.cat td{background:var(--surface-2);font:700 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:12px 16px}
+  .cmp tr.cat td:first-child{background:var(--surface-2)}
+  .cmp td .sub{display:block;font-weight:500;color:var(--text-muted);font-size:.78rem;margin-top:2px}
+  .mk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%}
+  .mk .ico{width:15px;height:15px;stroke-width:2.6}
+  .mk.y{background:rgba(34,197,94,.14);color:var(--ok)}
+  .mk.p{background:rgba(245,158,11,.14);color:var(--warn);font-weight:800;font-size:.9rem}
+  .mk.n{color:var(--text-muted);opacity:.6}
+  .cmp td.t{font-size:.82rem;font-weight:600;color:var(--heading);white-space:nowrap}
+  .cmp .hid{display:none}
+  .scroll-hint{display:none;font-size:.8rem;color:var(--text-muted);margin-top:10px}
+
+  /* ── Cuándo no ── */
+  .notfor{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .nf{padding:24px;display:grid;gap:10px;align-content:start}
+  .nf h3{font-size:1.1rem}
+  .nf p{color:var(--text-muted);font-size:.93rem}
+
+  @media (max-width:1100px){
+    .duel{grid-template-columns:1fr}
+    .vs{padding:4px 0}.vs span{width:48px;height:48px;font-size:1.2rem}
+    .cov-g{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .notfor{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .ba{aspect-ratio:4/5}
+    .ba .lbl .xs{display:none}
+    .ba .lbl{top:12px}.ba .lbl.l{left:12px}.ba .lbl.r{right:12px}
+    .ba-lists{grid-template-columns:1fr}
+    .ba .big{bottom:64px}
+    .cov-g{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .rivals{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter)}
+    .rivals .chip{flex-shrink:0}
+    .scroll-hint{display:block}
+    .cmp th:first-child,.cmp td:first-child{min-width:170px}
+  }
+</style>
+</head>
+<body data-page="por-que-hapee" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-y" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-n" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-lr" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 4h3v16H7zM14 4h3v16h-3z"/></symbol>
+  <symbol id="i-lang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+</svg>
+<main id="main" class="page">
+
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Recursos<span>/</span>Por qué Hapee</nav>
+      <div class="sec-head" style="margin-bottom:0;max-width:920px">
+        <p class="eyebrow">Por qué Hapee</p>
+        <h1 class="display">Una plataforma en vez <span class="grad-text">de seis.</span></h1>
+        <p class="lead">Mira cómo cambia el día a día cuando los agentes de IA hacen el trabajo pesado, y compara Hapee punto por punto, con precios, contra las herramientas que hoy usas o estás evaluando.</p>
+        <div class="phero-cta">
+          <a class="btn btn-primary btn-lg" href="#duelo">Comparar con mi herramienta <span class="arr">→</span></a>
+          <a class="btn btn-secondary btn-lg" href="#antes-despues">Ver el antes y después</a>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="W1"><b>Dos páginas en una</b> Hoy «Comparativa» y «Transformación» cuentan el mismo «por qué» por separado y con menús distintos. Aquí van juntas: primero la emoción (antes/después), después la razón (duelo y tabla).</aside>
+  </section>
+
+  <!-- ═════════════ ANTES / DESPUÉS ═════════════ -->
+  <section class="sec" id="antes-despues" style="padding-top:0">
+    <div class="ctn ctn-wide">
+      <div class="ba rv" id="ba">
+        <div class="after"><video muted loop playsinline preload="none" aria-hidden="true" data-src="/img/transformacion-despues.mp4"></video></div>
+        <div class="before"><video muted loop playsinline preload="none" aria-hidden="true" data-src="/img/transformacion-antes.mp4"></video></div>
+        <span class="lbl l"><i></i>Antes<span class="xs"> · sin Hapee</span></span>
+        <span class="lbl r"><i></i>Después<span class="xs"> · con Hapee</span></span>
+        <p class="big l">Puro caos<br>operativo.</p>
+        <p class="big r">Todo<br><span>automatizado.</span></p>
+        <input type="range" id="baR" min="0" max="100" value="50" step="1" aria-label="Comparar antes y después: mueve para revelar">
+        <div class="bar" aria-hidden="true"><span class="knob"><svg class="ico"><use href="#i-lr"/></svg></span></div>
+        <span class="hint">Arrastra para comparar</span>
+        <button class="pp" id="baP" type="button" aria-label="Pausar videos"><svg class="ico i-pause"><use href="#i-pause"/></svg><svg class="ico i-play"><use href="#i-play"/></svg></button>
+      </div>
+      <div class="ba-lists">
+        <div class="card bal no rv"><h3>Sin Hapee</h3><ul>
+          <li><svg class="ico"><use href="#i-n"/></svg>Mensajes que nadie contesta a tiempo</li>
+          <li><svg class="ico"><use href="#i-n"/></svg>Ventas que se pierden de noche y en fin de semana</li>
+          <li><svg class="ico"><use href="#i-n"/></svg>Un equipo apagando incendios entre seis herramientas</li>
+          <li><svg class="ico"><use href="#i-n"/></svg>Decisiones a ciegas: no sabes qué campaña vende</li></ul></div>
+        <div class="card bal yes rv"><h3>Con Hapee</h3><ul>
+          <li><svg class="ico"><use href="#i-y"/></svg>Agentes de IA que responden en segundos, 24/7</li>
+          <li><svg class="ico"><use href="#i-y"/></svg>Un CRM con cada lead calificado y su historial</li>
+          <li><svg class="ico"><use href="#i-y"/></svg>Tu marca habla con tu voz, también por teléfono</li>
+          <li><svg class="ico"><use href="#i-y"/></svg>Tu equipo dedicado a cerrar, no a copiar y pegar</li></ul></div>
+      </div>
+    </div>
+    <aside class="note" data-n="W2"><b>El comparador, más liviano</b> Los mismos videos de transformación, pero con preload="none": se cargan solo cuando el bloque entra en pantalla (hoy pesan 22 MB y se descargan al abrir la página). Se maneja con mouse, dedo o teclado, y se puede pausar. Se quitan «3×», «−70%» y «+35%» porque no tienen fuente.</aside>
+  </section>
+
+  <!-- ═════════════ DIFERENCIADORES ═════════════ -->
+  <section class="sec alt">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Lo que nos diferencia</p>
+        <h2 class="display">Seis cosas que puedes <span class="grad-text">verificar.</span></h2>
+        <p class="lead">Nada de «el mejor del mercado». Cada punto lo compruebas en una demo o en nuestra documentación.</p>
+      </div>
+      <div class="grid g3 diff">
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-lang"/></svg></span><h3>En español, de verdad</h3><p>Producto, soporte, academia y agentes pensados en español para Latinoamérica. No es una traducción de una suite en inglés.</p><p class="proof"><b>Compruébalo:</b> la plataforma y la Academia completas, en la demo.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-users"/></svg></span><h3>Implementación incluida si la quieres</h3><p>Elite Setup: el equipo de Grupo Digitals, agencia Meta Business Partner y Google Partner, configura tu cuenta y entrena a tus agentes.</p><p class="proof"><b>Compruébalo:</b> en <a href="/propuesta-2026-r8x4/precios">precios</a> y en el directorio de partners de Meta y Google.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-card"/></svg></span><h3>Self-service o llave en mano</h3><p>Puedes contratar en línea con tarjeta, sin hablar con ventas, o pedir que lo dejemos funcionando. Sin contratos de permanencia.</p><p class="proof"><b>Compruébalo:</b> el checkout de <a href="/propuesta-2026-r8x4/precios">precios</a>.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-mic"/></svg></span><h3>Voz clonada de tu marca</h3><p>Tu agente atiende llamadas y notas de voz con la voz de tu marca, incluida en todos los planes.</p><p class="proof"><b>Compruébalo:</b> escucha al agente con voz en la <a href="/propuesta-2026-r8x4/home#demo">home</a>.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-code"/></svg></span><h3>API abierta y conector MCP</h3><p>API pública con webhooks, integración con ERP y un conector MCP para consultar y operar Hapee desde Claude o ChatGPT.</p><p class="proof"><b>Compruébalo:</b> en la <a href="/propuesta-2026-r8x4/docs">documentación</a>.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-search"/></svg></span><h3>Licitaciones con IA</h3><p>Oportunidades de Mercado Público (y privadas en Pro) con afinidad calculada por IA y alertas por correo, dentro del mismo CRM.</p><p class="proof"><b>Compruébalo:</b> el módulo de <a href="/propuesta-2026-r8x4/producto#licitaciones">Licitaciones</a>.</p></div>
+      </div>
+    </div>
+    <aside class="note" data-n="W3"><b>Diferenciar con hechos</b> Se eliminan «Spoiler: no hay competencia real», «único en LATAM», «agentes certificados» y «Validado por Meta y Google» (la certificación es de la agencia, no del software). Cada tarjeta dice dónde comprobarla.</aside>
+  </section>
+
+  <!-- ═════════════ DUELO ═════════════ -->
+  <section class="sec" id="duelo">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Cara a cara</p>
+        <h2 class="display">Elige con qué <span class="grad-text">nos comparas.</span></h2>
+        <p class="lead">Lo que hace bien cada herramienta, lo que le falta y qué parte de tu operación comercial cubre.</p>
+      </div>
+      <div class="rivals" role="group" aria-label="Elegir competidor" id="rivals"></div>
+      <div class="duel">
+        <article class="card dc us">
+          <div class="dc-h"><span class="av"><img src="/img/hapee-mcp-icon-256.png" alt="" width="52" height="52"></span><div><b>Hapee</b><small>Agentes IA + CRM + automatización</small></div></div>
+          <p class="desc">Plataforma completa con CRM, bandeja omnicanal, agentes de IA con voz, automatizaciones, email, licitaciones y academia, en español.</p>
+          <ul>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>CRM, marketing, IA y voz en una sola cuenta</li>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>Agentes que responden, califican y agendan 24/7</li>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>WhatsApp API oficial, Instagram, Facebook y email</li>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>Voz clonada y conector MCP para Claude</li>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>Implementación por agencia Meta y Google Partner</li>
+            <li class="y"><svg class="ico"><use href="#i-y"/></svg>Usuarios y contactos ilimitados en Pro</li>
+          </ul>
+          <div class="pr"><small>Desde</small><b>USD 297</b><small>/mes</small></div>
+        </article>
+        <div class="vs" aria-hidden="true"><span>VS</span></div>
+        <article class="card dc" id="rival" aria-live="polite">
+          <div class="dc-h"><span class="av" id="rAv">HS</span><div><b id="rName">HubSpot</b><small id="rTag">CRM enterprise</small></div></div>
+          <p class="desc" id="rDesc"></p>
+          <ul id="rPros"></ul>
+          <div class="pr"><small>Desde</small><b id="rPrice">USD 890</b><small id="rPer">/mes</small></div>
+        </article>
+      </div>
+      <div class="card cov rv">
+        <div class="cov-h"><p><b id="covN">0</b> <span class="muted">de 12 áreas de tu operación comercial cubre <strong id="covW" style="color:var(--heading)">HubSpot</strong>. Hapee cubre las 12.</span></p></div>
+        <div class="cov-g" id="covG"></div>
+      </div>
+      <div class="verdict" id="verdict"><small>Veredicto</small><span id="vTxt"></span></div>
+      <p class="muted" style="margin-top:12px;font-size:.82rem">Precios de lista publicados por cada proveedor, en USD, para el plan de entrada que incluye la función comparada <span class="todo">[confirmar vigencia a la fecha de publicación]</span></p>
+    </div>
+    <aside class="note" data-n="W4"><b>Duelo y cobertura juntos</b> Se conservan el selector 1 a 1 y el medidor de cobertura de la comparativa actual, ahora en un solo bloque. GoHighLevel aparece solo aquí, como competidor, y Zolutium y Heat como «marca blanca de GoHighLevel» (regla aprobada por el dueño); se diferencia con puntos verificables.</aside>
+  </section>
+
+  <!-- ═════════════ TABLA ═════════════ -->
+  <section class="sec alt" id="tabla">
+    <div class="ctn ctn-wide">
+      <div class="sec-head">
+        <p class="eyebrow">Tabla comparativa</p>
+        <h2 class="display">Todo el mercado, <span class="grad-text">en una vista.</span></h2>
+      </div>
+      <div class="tbar">
+        <div class="tabs-row" role="group" aria-label="Filtrar columnas" id="colF">
+          <button class="chip" aria-pressed="true" data-g="all">Todas</button>
+          <button class="chip" aria-pressed="false" data-g="suite">Suites todo en uno</button>
+          <button class="chip" aria-pressed="false" data-g="ia">Agentes y chatbots</button>
+          <button class="chip" aria-pressed="false" data-g="crm">CRM y email</button>
+        </div>
+        <div class="legend"><span><span class="mk y"><svg class="ico"><use href="#i-y"/></svg></span>Sí</span><span><span class="mk p">~</span>Parcial</span><span><span class="mk n"><svg class="ico"><use href="#i-n"/></svg></span>No</span></div>
+      </div>
+      <div class="tbl-wrap rv"><table class="tbl cmp" id="cmp"><thead></thead><tbody></tbody></table></div>
+      <p class="scroll-hint">Desliza la tabla hacia el lado para ver todas las columnas.</p>
+    </div>
+    <aside class="note" data-n="W5"><b>Tabla filtrable</b> Las 12 columnas de hoy, con la primera columna fija al deslizar y filtros por tipo de herramienta. Se reescriben filas que no se podían sostener: «Validado Meta y Google» pasa a «Implementación por agencia partner»; «Kickoff gratuito» a «Kickoff incluido en Elite Setup».</aside>
+  </section>
+
+  <!-- ═════════════ CUÁNDO NO ═════════════ -->
+  <section class="sec">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Para ser honestos</p>
+        <h2 class="display">Cuándo Hapee <span class="grad-text">no es para ti.</span></h2>
+      </div>
+      <div class="notfor">
+        <div class="card nf rv"><h3>Solo necesitas newsletters</h3><p>Si tu única necesidad es enviar un boletín al mes a una lista pequeña, una herramienta de email marketing básica te sale más barata.</p></div>
+        <div class="card nf rv"><h3>No vendes por conversación</h3><p>Si tus clientes no escriben por WhatsApp, Instagram ni correo antes de comprar, el valor de los agentes de IA es menor.</p></div>
+        <div class="card nf rv"><h3>Ya tienes un stack integrado</h3><p>Si tu CRM, tu chatbot y tu email ya se hablan y tu equipo responde en minutos, conversemos primero qué problema concreto quieres resolver.</p></div>
+      </div>
+    </div>
+    <aside class="note" data-n="W6"><b>Bloque nuevo: honestidad</b> Decir para quién no es Hapee sube la credibilidad del resto de la página y filtra demos que no van a convertir.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">Compáralo con tu caso.</h2>
+      <p>Trae tu stack actual a una demo de 30 minutos. Te mostramos qué reemplaza Hapee, qué no y cuánto pagarías. Sin compromiso, sin contratos. Cancelas cuando quieras.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function svg(id){ return '<svg class="ico"><use href="#'+id+'"/></svg>'; }
+
+  /* ── Antes / después ── */
+  var ba=d.getElementById('ba'), rng=d.getElementById('baR'), pp=d.getElementById('baP');
+  if(ba&&rng){
+    var vids=ba.querySelectorAll('video'), loaded=false, dragging=false;
+    function setX(p){ p=Math.max(0,Math.min(100,p)); ba.style.setProperty('--x',p+'%'); rng.value=Math.round(p); }
+    function fromEvent(e){ var r=ba.getBoundingClientRect(); return (e.clientX-r.left)/r.width*100; }
+    ba.addEventListener('pointerdown',function(e){ if(e.target.closest('.pp')) return; dragging=true; ba.classList.add('used'); try{ba.setPointerCapture(e.pointerId);}catch(_){} setX(fromEvent(e)); });
+    ba.addEventListener('pointermove',function(e){ if(dragging) setX(fromEvent(e)); });
+    ['pointerup','pointercancel'].forEach(function(t){ ba.addEventListener(t,function(){ dragging=false; }); });
+    rng.addEventListener('input',function(){ ba.classList.add('used'); setX(+rng.value); });
+    function load(){ if(loaded) return; loaded=true; vids.forEach(function(v){ v.src=v.dataset.src; v.preload='auto'; }); if(!reduce) play(); else ba.classList.add('paused'); }
+    function play(){ vids.forEach(function(v){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); }); ba.classList.remove('paused'); pp.setAttribute('aria-label','Pausar videos'); }
+    function pause(){ vids.forEach(function(v){ v.pause(); }); ba.classList.add('paused'); pp.setAttribute('aria-label','Reproducir videos'); }
+    pp.addEventListener('click',function(){ load(); if(ba.classList.contains('paused')){ delete ba.dataset.user; play(); } else { ba.dataset.user='1'; pause(); } });
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ load(); if(!reduce&&!ba.dataset.user) play(); } else if(loaded){ vids.forEach(function(v){ v.pause(); }); } }); },{rootMargin:'200px 0px'});
+      io.observe(ba);
+    } else { load(); }
+    // Pequeño vaivén de invitación la primera vez que se ve (no con movimiento reducido)
+    if(!reduce && 'IntersectionObserver' in window){
+      var io2=new IntersectionObserver(function(es){ if(!es[0].isIntersecting) return; io2.disconnect(); var t0=performance.now();
+        (function k(t){ if(ba.classList.contains('used')) return; var p=(t-t0)/1800; if(p>1){ setX(50); return; } setX(50+Math.sin(p*Math.PI*2)*14); requestAnimationFrame(k); })(t0); },{threshold:.6});
+      io2.observe(ba);
+    }
+  }
+
+  /* ── Datos de competidores ── */
+  var AREAS=['Agentes IA por chat','Voz con IA','CRM y pipelines','Email marketing','Automatizaciones','Funnels y sitios','Agenda y citas','Redes sociales','Reportería de campañas','Licitaciones','Academia','Soporte en español'];
+  var R={
+    hubspot:{n:'HubSpot',i:'HS',tag:'CRM enterprise',price:'USD 890',per:'/mes (Marketing Pro)',cov:[2,3,4,5,6,8],
+      desc:'Suite de CRM y marketing robusta y madura, pensada para empresas medianas y grandes de Estados Unidos.',
+      pros:[[1,'CRM y automatización de marketing maduros'],[0,'Sin agentes de IA propios para WhatsApp'],[0,'WhatsApp a través de integraciones de terceros'],[0,'Sin clonación de voz'],[0,'Precio de entrada alto para una pyme']],
+      v:'HubSpot es potente, pero está pensado para empresas grandes de Estados Unidos. Hapee te da CRM, agentes de IA y voz por menos de la mitad del precio de entrada, listo para Latinoamérica.'},
+    gohighlevel:{n:'GoHighLevel',i:'GHL',tag:'Suite todo en uno (en inglés)',price:'USD 97',per:'/mes (Starter)',cov:[0,2,3,4,5,6,7,8],
+      desc:'Suite todo en uno muy completa (CRM, funnels, email y automatización), pensada para el mercado de habla inglesa.',
+      pros:[[1,'Suite todo en uno muy completa'],[0,'Producto y soporte principalmente en inglés'],[0,'Configuración self-service, curva técnica alta'],[0,'Sin agencia local Meta y Google Partner que lo implemente'],[0,'Sin voz clonada ni conector MCP con Claude']],
+      v:'GoHighLevel es una gran plataforma, en inglés y para armarla tú. Hapee te da esa amplitud en español, con agentes entrenados con tu información, voz clonada e implementación local si la quieres.'},
+    zolutium:{n:'Zolutium',i:'Zo',tag:'Marca blanca de GoHighLevel',price:'USD 470',per:'/mes',cov:[0,2,3,4,5,6,7,8],
+      desc:'Marca blanca (white-label) de GoHighLevel: el mismo motor, reempaquetado con otra marca.',
+      pros:[[1,'Funnels, CRM, email y automatización completos'],[0,'Marca blanca de GoHighLevel: el producto base está en inglés'],[0,'Sin clonación de voz'],[0,'Sin conector MCP con Claude'],[0,'Sin agencia Meta y Google Partner en la implementación']],
+      v:'Zolutium revende GoHighLevel con otra marca. Hapee es una plataforma pensada en español, con la agencia que la configura y entrena a tus agentes con tu información.'},
+    heat:{n:'Heat',i:'Ht',tag:'Marca blanca de GoHighLevel',price:'USD 450',per:'/mes',cov:[0,2,3,4,5,6,7,8],
+      desc:'Marca blanca (white-label) de GoHighLevel: el mismo software con otra marca.',
+      pros:[[1,'CRM, funnels, email y bandeja en una plataforma'],[0,'Marca blanca de GoHighLevel'],[0,'Sin clonación de voz'],[0,'Sin conector MCP ni academia propia'],[0,'Configuración y migración a tu cargo']],
+      v:'Heat revende GoHighLevel con otra marca. Con Hapee puedes sumar Elite Setup: agentes entrenados con tu información, voz clonada y kickoff con el equipo.'},
+    vambe:{n:'Vambe',i:'V',tag:'Agentes IA + Ads',price:'USD 499',per:'/mes',cov:[0,4,8],
+      desc:'Agentes de IA conversacionales con atribución de anuncios, sin CRM completo ni email marketing.',
+      pros:[[1,'Agentes de IA conversacionales'],[1,'Integración con Meta y Google Ads'],[0,'Sin CRM completo con pipelines'],[0,'Sin email marketing'],[0,'Sin voz clonada ni academia propia']],
+      v:'Vambe se enfoca en chatbots y atribución. Hapee suma el CRM, el email, la voz, las automatizaciones y la academia en la misma cuenta.'},
+    kommo:{n:'Kommo',i:'K',tag:'CRM de ventas omnicanal',price:'USD 15',per:'/usuario/mes',cov:[0,2,4],
+      desc:'CRM omnicanal con mensajería; la IA es un complemento y el precio sube con cada usuario.',
+      pros:[[1,'Bandeja omnicanal y pipeline'],[0,'Agentes de IA como complemento de planes superiores'],[0,'Cobra por usuario'],[0,'Sin voz clonada'],[0,'Sin email marketing avanzado integrado']],
+      v:'Kommo cobra por cada usuario y la IA es un extra. Hapee Pro trae usuarios ilimitados y agentes de IA incluidos por USD 397 al mes.'},
+    cliengo:{n:'Cliengo',i:'C',tag:'Chatbots web',price:'Consultar',per:'',cov:[0],
+      desc:'Chatbots para web y WhatsApp enfocados en captar leads, sin CRM completo ni voz.',
+      pros:[[1,'Chatbot web fácil de instalar'],[0,'Sin CRM con pipelines completos'],[0,'Sin email marketing'],[0,'Sin voz clonada'],[0,'Sin gestión de redes sociales']],
+      v:'Cliengo capta el lead. Hapee lo capta, lo califica, lo agenda, le hace seguimiento y lo mide.'},
+    mailchimp:{n:'Mailchimp',i:'M',tag:'Email marketing',price:'USD 13',per:'/mes (limitado)',cov:[3,5],
+      desc:'Plataforma histórica de email marketing, sin agentes conversacionales ni pipeline de ventas.',
+      pros:[[1,'Email marketing maduro y conocido'],[0,'Sin agentes de IA para WhatsApp'],[0,'Sin CRM de ventas'],[0,'Solo email: sin bandeja omnicanal'],[0,'Sin voz']],
+      v:'Mailchimp hace email. Hapee hace email, WhatsApp, Instagram, Facebook, agentes y CRM conectados. Si solo necesitas newsletters, Mailchimp es más barato.'},
+    activecampaign:{n:'ActiveCampaign',i:'AC',tag:'Email + automatización',price:'USD 49',per:'/mes (Plus)',cov:[2,3,4],
+      desc:'Buena automatización por email, sin agentes de IA para WhatsApp ni bandeja omnicanal.',
+      pros:[[1,'Flujos de automatización por email potentes'],[0,'Sin agentes de IA en WhatsApp'],[0,'WhatsApp solo vía integraciones'],[0,'Sin bandeja omnicanal'],[0,'Sin gestión de redes sociales']],
+      v:'ActiveCampaign automatiza el email. Hapee automatiza la conversación completa, en todos los canales.'},
+    versu:{n:'Versu.ai',i:'Vs',tag:'IA conversacional',price:'Consultar',per:'',cov:[0],
+      desc:'Plataforma de IA conversacional enfocada en un solo frente, sin la suite comercial completa.',
+      pros:[[1,'IA conversacional como foco'],[0,'Sin CRM con pipelines integrado'],[0,'Sin email marketing'],[0,'Sin voz clonada'],[0,'Sin conector MCP ni academia']],
+      v:'Versu.ai resuelve la conversación. Hapee resuelve también lo que viene después: CRM, seguimiento, email y reportes.'},
+    databot:{n:'Databot',i:'Db',tag:'RPA e integración de datos',price:'USD 600',per:'/mes',cov:[4],
+      desc:'Automatización de procesos internos (RPA) e integraciones con ERP, sin canales de venta.',
+      pros:[[1,'RPA e integraciones con ERP y CRM'],[0,'Sin agentes conversacionales de ventas'],[0,'Sin WhatsApp, Instagram ni Facebook'],[0,'Sin email marketing ni pipeline'],[0,'Sin academia']],
+      v:'Databot automatiza el back office. Hapee automatiza el frente comercial: la conversación con tu cliente.'},
+    nexor:{n:'Nexor IA',i:'N',tag:'Agentes IA · etapa temprana',price:'—',per:'',cov:[0],
+      desc:'Proyecto nuevo enfocado en agentes conversacionales, todavía sin el resto de la operación comercial.',
+      pros:[[1,'Agentes conversacionales con IA'],[0,'Sin CRM ni pipelines'],[0,'Sin email ni automatizaciones'],[0,'Sin reportería de campañas'],[0,'Sin voz, funnels ni academia']],
+      v:'El agente que responde es el comienzo. Después hay que guardar el lead, hacerle seguimiento, medir la campaña que lo trajo y cobrar: Hapee ya hace todo eso.'}
+  };
+  var ORDER=['hubspot','gohighlevel','zolutium','heat','vambe','kommo','cliengo','mailchimp','activecampaign','versu','databot','nexor'];
+
+  var rv=d.getElementById('rivals'), covG=d.getElementById('covG');
+  if(rv&&covG){
+    covG.innerHTML=AREAS.map(function(a){ return '<span>'+a+'</span>'; }).join('');
+    rv.innerHTML=ORDER.map(function(k,i){ return '<button class="chip" aria-pressed="'+(i===0)+'" data-k="'+k+'">'+R[k].n+'</button>'; }).join('');
+    var show=function(k){ var c=R[k]; if(!c) return;
+      d.getElementById('rAv').textContent=c.i; d.getElementById('rName').textContent=c.n; d.getElementById('rTag').textContent=c.tag;
+      d.getElementById('rDesc').textContent=c.desc; d.getElementById('rPrice').textContent=c.price; d.getElementById('rPer').textContent=c.per;
+      d.getElementById('rPros').innerHTML=c.pros.map(function(p){ return '<li class="'+(p[0]?'y':'n')+'">'+svg(p[0]?'i-y':'i-n')+'<span>'+p[1]+'</span></li>'; }).join('');
+      d.getElementById('vTxt').textContent=c.v; d.getElementById('covW').textContent=c.n; d.getElementById('covN').textContent=c.cov.length;
+      covG.querySelectorAll('span').forEach(function(s,i){ s.classList.toggle('on', c.cov.indexOf(i)>-1); });
+      if(!reduce){ ['rival','verdict'].forEach(function(id){ var el=d.getElementById(id); el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }); } };
+    rv.addEventListener('click',function(e){ var b=e.target.closest('[data-k]'); if(!b) return;
+      rv.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed',c===b?'true':'false'); }); show(b.dataset.k); });
+    show('hubspot');
+  }
+
+  /* ── Tabla completa ── */
+  var COLS=[['Hapee','Todo en uno','h'],['HubSpot','CRM enterprise','suite'],['Vambe','Agentes IA','ia'],['Mailchimp','Email','crm'],['Kommo','CRM de ventas','crm'],['Cliengo','Chatbot web','ia'],['ActiveCampaign','Email + automat.','crm'],['Versu.ai','IA conversacional','ia'],['Databot','RPA y datos','crm'],['Zolutium','Marca blanca de GoHighLevel','suite'],['Heat','Marca blanca de GoHighLevel','suite'],['GoHighLevel','Suite en inglés','suite']];
+  var T=[
+    ['Plataforma'],
+    ['Todo en uno: CRM + IA + email + omnicanal + voz','Todo en una sola cuenta','ynnnnnnnnppp'],
+    ['Pipelines de venta ilimitados','','yynnypynnyyy'],
+    ['Bandeja omnicanal','WhatsApp + Instagram + Facebook + email','ypynyyppnyyy'],
+    ['Academia propia','Cursos para configurar y vender','ynnnnpnnnppp'],
+    ['Inteligencia artificial'],
+    ['Agentes IA que califican leads 24/7','','ynynpynynppp'],
+    ['Agentes IA que agendan y avanzan la venta','','ynynnpnynnnp'],
+    ['Clonación de voz de tu marca','','ynnnnnnnnnnn'],
+    ['IA conversacional en español nativo','','ypyppypynppn'],
+    ['Conector MCP para Claude','Model Context Protocol','ynnnnnnnnnnn'],
+    ['Marketing y ventas'],
+    ['Email marketing avanzado','','yynypnynnyyy'],
+    ['Publicación en redes sociales','','yynpnnnnnyyy'],
+    ['Gestión de reseñas','','ypnnnnnnnyyy'],
+    ['Embudos y landings','','yynppnynnyyy'],
+    ['Licitaciones (Mercado Público)','Afinidad calculada por IA','ynnnnnnnnnnn'],
+    ['Canales e integraciones'],
+    ['WhatsApp Business API oficial','','ypynyypynppp'],
+    ['Instagram Direct','','ypynyypynyyy'],
+    ['Facebook Messenger','','ypynyypynyyy'],
+    ['Integración con Ads','Meta, Google y TikTok Ads','yyyppppnnppp'],
+    ['Implementación por agencia Meta y Google Partner','Elite Setup','ypnnnnnnnnnn'],
+    ['Precio'],
+    ['Usuarios ilimitados','Sin cobro por usuario extra','ynpnnpnppppp'],
+    ['Contactos ilimitados','En plan Pro','ynpnppnpnppp'],
+    ['Precio de entrada (USD/mes)','Precio de lista de referencia',['297','890','499','13','15/usuario','Consultar','49','Consultar','600','470','450','97']],
+    ['Soporte e implementación'],
+    ['Soporte humano en español','','ypypyypyyppn'],
+    ['Kickoff de implementación','Incluido en Elite Setup','ynnnnnnnnnnn'],
+    ['Configuración llave en mano','Elite Setup','ypnnnnpnyppn'],
+    ['Migración de datos','','ypppppppyppp']
+  ];
+  var cmp=d.getElementById('cmp');
+  if(cmp){
+    var th='<tr><th scope="col">Función</th>'+COLS.map(function(c,i){ return '<th scope="col" class="'+(i===0?'h':'')+'" data-g="'+c[2]+'">'+c[0]+'<small>'+c[1]+'</small></th>'; }).join('')+'</tr>';
+    cmp.tHead.innerHTML=th;
+    var mk={y:'<span class="mk y" title="Sí">'+svg('i-y')+'<span class="sr">Sí</span></span>',p:'<span class="mk p" title="Parcial">~<span class="sr">Parcial</span></span>',n:'<span class="mk n" title="No">'+svg('i-n')+'<span class="sr">No</span></span>'};
+    cmp.tBodies[0].innerHTML=T.map(function(r){
+      if(r.length===1) return '<tr class="cat"><td colspan="'+(COLS.length+1)+'">'+r[0]+'</td></tr>';
+      var vals=typeof r[2]==='string'?r[2].split(''):r[2];
+      return '<tr><td>'+r[0]+(r[1]?'<span class="sub">'+r[1]+'</span>':'')+'</td>'+vals.map(function(v,i){
+        var cls=(i===0?'h ':'')+(mk[v]?'':'t'); return '<td class="'+cls.trim()+'" data-g="'+COLS[i][2]+'">'+(mk[v]||v)+'</td>'; }).join('')+'</tr>';
+    }).join('');
+    var colF=d.getElementById('colF');
+    if(colF) colF.addEventListener('click',function(e){ var b=e.target.closest('[data-g]'); if(!b) return; var g=b.dataset.g;
+      colF.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed',c===b?'true':'false'); });
+      cmp.querySelectorAll('[data-g]').forEach(function(c){ var k=c.getAttribute('data-g'); c.classList.toggle('hid', g!=='all' && k!=='h' && k!==g); });
+      cmp.style.minWidth=g==='all'?'':'0'; });
+  }
+})();
+</script>
+</body>
+</html>

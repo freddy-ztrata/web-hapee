@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Novedades · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Hero: ritmo ── */
+  .ch-hero{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-12);align-items:end}
+  .pulse{padding:24px;display:grid;gap:18px}
+  .pulse-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .pulse-top b{display:block;font-family:var(--f-display);font-weight:400;font-size:clamp(3.4rem,6vw,5rem);line-height:.85;color:var(--heading)}
+  .pulse-top small{font-size:.86rem;color:var(--text-muted)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:10px;height:10px;border-radius:3px}
+  .k-new{background:var(--orange)}.k-imp{background:var(--ok)}.k-fix{background:var(--warn)}
+  .bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;align-items:end;min-height:150px}
+  .bar{display:flex;flex-direction:column;justify-content:flex-end;gap:8px;text-align:center}
+  .bar .stack{display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;gap:2px;transform-origin:bottom;transform:scaleY(0);transition:transform .9s var(--ease-out)}
+  .bar .stack i{display:block;flex-shrink:0;border-radius:4px}
+  .bar .stack .n{margin-bottom:4px}
+  .pulse.in .bar .stack{transform:none}
+  .bar small{font-size:.74rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em}
+  .bar .n{font:700 .78rem/1 var(--f-body);color:var(--heading)}
+
+  /* ── Barra de filtros ── */
+  .fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:var(--s-12)}
+  .fbar .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip .dot{width:8px;height:8px;border-radius:50%}
+  .fbar .hint{font-size:.84rem;color:var(--text-muted)}
+
+  /* ── Línea de tiempo ── */
+  .month{position:relative;padding-left:40px;scroll-margin-top:110px}
+  .month+.month{margin-top:var(--s-16)}
+  .month[hidden]{display:none}
+  .month::before{content:"";position:absolute;left:11px;top:14px;bottom:-40px;width:2px;background:linear-gradient(var(--border-strong),transparent)}
+  .month h2{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:clamp(2.4rem,4vw,3.4rem);line-height:1;margin-bottom:var(--s-6);position:relative}
+  .month h2::before{content:"";position:absolute;left:-36px;top:.28em;width:16px;height:16px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 5px var(--bg),0 0 18px rgba(250,80,0,.6)}
+  .month h2 small{font:600 .9rem/1 var(--f-body);text-transform:none;color:var(--text-muted);margin-left:12px;letter-spacing:0}
+  .entries{display:grid;gap:14px}
+  .entry{padding:24px;display:grid;gap:12px;transition:border-color var(--d-base)}
+  .entry:hover{border-color:var(--border-strong)}
+  .entry[hidden]{display:none}
+  .entry header{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .entry time{font-size:.82rem;color:var(--text-muted);font-weight:600}
+  .entry h3{font-size:1.2rem;line-height:1.3}
+  .entry p{color:var(--text-muted);font-size:.96rem;max-width:70ch}
+  .entry ul{margin:0;padding-left:1.2em;color:var(--text);font-size:.94rem;display:grid;gap:4px}
+  .entry .shot{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);margin-top:4px}
+  .entry .shot img{width:100%;height:auto}
+  .entry .links{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;font-weight:700}
+  .entry code{font:500 .86em ui-monospace,SFMono-Regular,Menlo,monospace;padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--heading)}
+  .tg{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:var(--r-pill);font:700 .7rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+  .tg .ico{width:13px;height:13px;stroke-width:2.2}
+  .tg-new{background:var(--grad-soft);color:var(--link);border:1px solid rgba(250,80,0,.3)}
+  .tg-imp{background:rgba(34,197,94,.12);color:var(--ok);border:1px solid rgba(34,197,94,.3)}
+  .tg-fix{background:rgba(245,158,11,.12);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
+  .area{font-size:.76rem;font-weight:700;color:var(--text-muted);padding:5px 10px;border-radius:var(--r-pill);border:1px solid var(--border)}
+  .entry.big{grid-template-columns:1fr 1fr;align-items:center;gap:24px}
+  .entry.big .txt{display:grid;gap:12px}
+
+  /* columna lateral */
+  .with-toc>*{min-width:0}
+  .side{position:sticky;top:110px;display:grid;gap:var(--s-8)}
+  .side .toc{position:static}
+  .toc .k{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+  .toc a{display:flex;justify-content:space-between}
+  .toc a small{color:var(--text-muted);font-size:.76rem}
+  .sub{padding:18px;display:grid;gap:10px}
+  .sub b{color:var(--heading);font-size:.95rem}
+  .sub p{font-size:.84rem;color:var(--text-muted)}
+  .sub input{height:42px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--border-strong);background:var(--bg);color:var(--heading);font:500 .9rem var(--f-body);outline:none;width:100%}
+  .sub input:focus{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+  .sub .btn{width:100%}
+  .sub .rss{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700}
+  .sub .rss .ico{width:15px;height:15px}
+  .sub-ok{font-size:.86rem;color:var(--ok);font-weight:600}
+  .sub-ok[hidden]{display:none}
+
+  @media (max-width:1100px){
+    .ch-hero,.entry.big{grid-template-columns:1fr}
+    .side{position:static}
+    .toc a{white-space:nowrap;flex-shrink:0}
+  }
+  @media (max-width:760px){
+    .month{padding-left:28px}
+    .month::before{left:5px}
+    .month h2::before{left:-29px;width:14px;height:14px}
+    .entry{padding:20px}
+    .bars{gap:6px;min-height:120px}
+  }
+</style>
+</head>
+<body data-page="changelog" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <section class="phero">
+    <div class="ctn ch-hero">
+      <div>
+        <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Recursos<span>/</span>Novedades</nav>
+        <p class="eyebrow">Novedades del producto</p>
+        <h1 class="display">Lo que lanzamos, <span class="grad-text">mes a mes.</span></h1>
+        <p class="lead">Cada función nueva, cada mejora y cada corrección de Hapee, con fecha. Si lo usas a diario, aquí ves qué cambió; si nos estás evaluando, aquí ves a qué ritmo avanzamos.</p>
+        <div class="phero-cta"><a class="btn btn-primary btn-lg" href="#suscribirse">Recibir novedades <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/docs">Documentación API</a></div>
+      </div>
+      <div class="card pulse rv" id="pulse">
+        <div class="pulse-top">
+          <div><b id="total">0</b><small>entregas desde abril de 2026</small></div>
+          <div class="legend"><span><i class="k-new"></i>Nuevo</span><span><i class="k-imp"></i>Mejora</span><span><i class="k-fix"></i>Corrección</span></div>
+        </div>
+        <div class="bars" id="bars" role="img" aria-label="Entregas por mes"></div>
+      </div>
+    </div>
+    <aside class="note" data-n="C1"><b>Página nueva: señal de ritmo</b> Hoy no existe changelog; las novedades están dispersas en notas de blog. Esta página es la que un VC o un comprador revisa para saber si el producto se mueve. El gráfico se calcula de las entradas de abajo: nunca se desalinea.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn with-toc">
+      <div class="side">
+        <nav class="toc" aria-label="Meses">
+          <span class="k">2026</span>
+          <a href="#oct">Octubre <small></small></a>
+          <a href="#sep">Septiembre <small></small></a>
+          <a href="#ago">Agosto <small></small></a>
+          <a href="#jul">Julio <small></small></a>
+          <a href="#jun">Junio <small></small></a>
+          <a href="#may">Mayo <small></small></a>
+          <a href="#abr">Abril <small></small></a>
+        </nav>
+        <form class="card sub" id="suscribirse" novalidate>
+          <b>Novedades en tu correo</b>
+          <p>Un resumen al mes con lo que lanzamos.</p>
+          <label class="sr" for="sE">Correo</label><input id="sE" type="email" placeholder="tu@empresa.com" autocomplete="email">
+          <button class="btn btn-primary btn-sm" type="submit">Suscribirme</button>
+          <p class="sub-ok" id="sOk" role="status" hidden>Listo. Propuesta: entra a la audiencia de novedades en Hapee.</p>
+          <a class="rss" href="#" aria-label="Feed RSS de novedades (propuesta)"><svg class="ico" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>Feed RSS</a>
+        </form>
+      </div>
+
+      <div>
+        <div class="fbar">
+          <div class="chips" role="group" aria-label="Filtrar por tipo">
+            <button class="chip" aria-pressed="true" data-f="all">Todo</button>
+            <button class="chip" aria-pressed="false" data-f="new"><span class="dot k-new"></span>Nuevo</button>
+            <button class="chip" aria-pressed="false" data-f="imp"><span class="dot k-imp"></span>Mejora</button>
+            <button class="chip" aria-pressed="false" data-f="fix"><span class="dot k-fix"></span>Corrección</button>
+          </div>
+          <span class="hint">Las fechas con <span class="todo">[confirmar]</span> salen del registro del sitio y deben validarse con producto.</span>
+        </div>
+
+        <!-- OCTUBRE -->
+        <section class="month" id="oct" data-m="Oct">
+          <h2>Octubre <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry big rv" data-k="new">
+              <div class="txt">
+                <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">API y MCP</span><time datetime="2026-10-12">12 oct</time></header>
+                <h3>Conector MCP: usa Hapee desde Claude y ChatGPT</h3>
+                <p>Agrega Hapee como conector en tu asistente de IA, inicia sesión con tu propio usuario y pídele en lenguaje natural «muéstrame los negocios abiertos de esta semana» o «agenda una cita para mañana a las 10».</p>
+                <ul><li>Dirección oficial: <code>mcp.hapee.ai/mcp</code></li><li>240 herramientas: 85 de consulta y 155 que modifican datos</li><li>Trabaja con tus permisos exactos; disponible desde el plan Pro</li></ul>
+                <div class="links"><a href="/propuesta-2026-r8x4/docs">Ver la guía del conector →</a></div>
+              </div>
+              <div class="shot"><img src="/img/hapee-mcp-icon-512.png" alt="Ícono de la app de Hapee, usado como logo del conector MCP" width="512" height="512" loading="lazy" style="max-width:220px;margin:24px auto;border-radius:44px"></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Sitio</span><time datetime="2026-10-15">15 oct</time><span class="todo">[confirmar]</span></header>
+              <h3>Hapee.ai en inglés y portugués</h3>
+              <p>El sitio completo, el blog y los legales en tres idiomas. Detecta el idioma del navegador, se puede cambiar a mano y recuerda la elección.</p>
+            </article>
+            <article class="card entry rv" data-k="imp">
+              <header><span class="tg tg-imp"><svg class="ico" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Mejora</span><span class="area">Centro de agentes</span><time>Oct</time><span class="todo">[confirmar]</span></header>
+              <h3>Actividad en vivo de tus agentes</h3>
+              <p>Un feed en tiempo real con lo que hace cada agente: la conversación que atiende, la tarea que completa y cada traspaso a una persona.</p>
+              <div class="shot"><img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" alt="Centro de agentes de Hapee" width="1500" height="780" loading="lazy"></div>
+            </article>
+            <article class="card entry rv" data-k="fix">
+              <header><span class="tg tg-fix"><svg class="ico" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Corrección</span><span class="area">API y MCP</span><time>Oct</time><span class="todo">[confirmar]</span></header>
+              <h3>El conector ya no pide iniciar sesión cada hora</h3>
+              <p>La conexión se renueva sola mientras la autorización siga vigente. Si cambia tu rol o tu perfil de permisos, se desconecta por seguridad.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- SEPTIEMBRE -->
+        <section class="month" id="sep" data-m="Sep">
+          <h2>Septiembre <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry big rv" data-k="new">
+              <div class="txt">
+                <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Centro de agentes</span><time datetime="2026-09-20">20 sep</time><span class="todo">[confirmar]</span></header>
+                <h3>La Oficina: tus agentes en 3D</h3>
+                <p>Una oficina 3D donde cada agente de IA tiene su puesto, trabaja en sus tareas y te responde con voz real si le hablas. La forma más clara de ver a tu equipo digital funcionando.</p>
+                <div class="links"><a href="/propuesta-2026-r8x4/demos">Entrar a la Oficina →</a></div>
+              </div>
+              <div class="shot" style="background:var(--surface-2);display:grid;place-items:center;aspect-ratio:4/3"><img src="/img/robot.png" alt="Robot de Hapee" width="435" height="800" loading="lazy" style="height:86%;width:auto;object-fit:contain"></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Centro de agentes</span><time>Sep</time><span class="todo">[confirmar]</span></header>
+              <h3>Tablero de tareas de los agentes</h3>
+              <p>Cada agente con sus tareas pendientes, en curso y terminadas, como el tablero de tu equipo humano. Asignas, priorizas y revisas lo que hizo.</p>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Calendarios y formularios</span><time datetime="2026-09-13">13 sep</time><span class="todo">[confirmar]</span></header>
+              <h3>Calendarios y formularios embebibles en cualquier sitio</h3>
+              <p>Con una línea de código insertas tu calendario de reservas o un formulario de Hapee en tu web. Se ajustan solos de alto, siguen el tema claro u oscuro de tu sitio y cada envío entra directo al CRM.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/demo">Verlo en la página de demo →</a></div>
+            </article>
+            <article class="card entry rv" data-k="imp">
+              <header><span class="tg tg-imp"><svg class="ico" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Mejora</span><span class="area">Pagos</span><time datetime="2026-09-04">4 sep</time><span class="todo">[confirmar]</span></header>
+              <h3>Checkout con consentimiento legal verificable</h3>
+              <p>Al contratar, la aceptación de términos y de privacidad se registra por separado y queda verificada por el servidor antes de cobrar.</p>
+            </article>
+            <article class="card entry rv" data-k="fix">
+              <header><span class="tg tg-fix"><svg class="ico" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Corrección</span><span class="area">La Oficina</span><time>Sep</time><span class="todo">[confirmar]</span></header>
+              <h3>La Oficina abre al instante y con los agentes en su puesto</h3>
+              <p>La sala tardaba hasta 36 segundos en mostrar a los agentes y el botón «Entrar» no respondía en algunos navegadores. Ahora carga de inmediato.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- AGOSTO -->
+        <section class="month" id="ago" data-m="Ago">
+          <h2>Agosto <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Radar</span><time datetime="2026-08-05">5 ago</time></header>
+              <h3>Radar de Competencia</h3>
+              <p>Define hasta 12 competidores y cada lunes ves sus anuncios en Meta, Google, TikTok y LinkedIn, su web, sus redes, su prensa y su visibilidad en asistentes de IA, con un análisis que te dice qué hacer.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=radar-de-competencia">Leer el anuncio →</a></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Reuniones IA</span><time datetime="2026-08-05">5 ago</time></header>
+              <h3>Reuniones IA: notetaker propio</h3>
+              <p>El bot entra solo a tus reuniones de Meet, Zoom o Teams, transcribe y entrega resumen, tareas con responsable y fecha, y un borrador del correo de seguimiento.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=reuniones-ia-notetaker">Leer el anuncio →</a></div>
+            </article>
+            <article class="card entry big rv" data-k="imp">
+              <div class="txt">
+                <header><span class="tg tg-imp"><svg class="ico" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Mejora</span><span class="area">Licitaciones</span><time datetime="2026-08-05">5 ago</time></header>
+                <h3>Licitaciones públicas y privadas, con afinidad explicada</h3>
+                <p>Además de Mercado Público, el plan Pro suma oportunidades de entidades privadas. Cada licitación trae un puntaje de afinidad con tu negocio, explicado en una frase.</p>
+                <div class="links"><a href="/propuesta-2026-r8x4/producto#licitaciones">Ver Licitaciones →</a></div>
+              </div>
+              <div class="shot"><img src="/propuesta-2026-r8x4/shots/licitaciones.webp?v=20261015" alt="Módulo de Licitaciones de Hapee" width="1500" height="780" loading="lazy"></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Modelos de IA</span><time datetime="2026-08-05">5 ago</time></header>
+              <h3>Claude Opus 5 disponible en tus agentes</h3>
+              <p>El modelo más potente de Anthropic ya se puede elegir por agente, sin migrar nada: mejor razonamiento en tareas de varios pasos y conversaciones largas sin perder el hilo.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- JULIO -->
+        <section class="month" id="jul" data-m="Jul">
+          <h2>Julio <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Pagos</span><time datetime="2026-07-10">10 jul</time><span class="todo">[confirmar]</span></header>
+              <h3>Planes self-service con pago en Stripe</h3>
+              <p>Starter y Pro se contratan desde la web, con tarjeta. La cuenta se crea sola después del pago y llega el correo para activarla.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/precios">Ver precios →</a></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- JUNIO -->
+        <section class="month" id="jun" data-m="Jun">
+          <h2>Junio <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Modelos de IA</span><time datetime="2026-06-10">10 jun</time></header>
+              <h3>Fable Mythos vía MCP</h3>
+              <p>La nueva variante de la familia Fable de Anthropic se suma a los modelos disponibles para el razonamiento de los agentes.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=fable-mythos-mcp-hapee">Leer el anuncio →</a></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Sitios y funnels</span><time>Jun</time><span class="todo">[confirmar]</span></header>
+              <h3>Sitios web, landings y funnels</h3>
+              <p>Construye tu sitio, tus landings y tus embudos de venta dentro de Hapee, con dominio propio, blog y formularios conectados al CRM.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/producto#web">Ver Sitios y funnels →</a></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- MAYO -->
+        <section class="month" id="may" data-m="May">
+          <h2>Mayo <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Agentes IA</span><time datetime="2026-05-07">7 may</time></header>
+              <h3>Conexión nativa con Claude vía MCP</h3>
+              <p>Los agentes piden al CRM, al calendario y a la base de conocimiento el contexto que necesitan, cuando lo necesitan, en vez de recibir un prompt recortado.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=mcp-claude">Leer el anuncio →</a></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Voz</span><time datetime="2026-05-05">5 may</time></header>
+              <h3>Voz clonada con ElevenLabs</h3>
+              <p>Tus agentes hablan con la voz de tu marca en llamadas y audios de WhatsApp, con pausas naturales y respuesta en menos de un segundo.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/producto#voz">Ver Voz clonada →</a></div>
+            </article>
+            <article class="card entry rv" data-k="imp">
+              <header><span class="tg tg-imp"><svg class="ico" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>Mejora</span><span class="area">Redes sociales</span><time datetime="2026-05-01">1 may</time></header>
+              <h3>Redes sociales desde un solo panel</h3>
+              <p>Programa, publica y mide Instagram, Facebook, TikTok, LinkedIn y WhatsApp en un calendario. Los agentes responden comentarios y mensajes directos.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=automatiza-rrss">Leer la guía →</a></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ABRIL -->
+        <section class="month" id="abr" data-m="Abr">
+          <h2>Abril <small>2026</small></h2>
+          <div class="entries">
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Plataforma</span><time datetime="2026-04-28">28 abr</time></header>
+              <h3>Lanzamiento de Hapee SaaS</h3>
+              <p>Hapee abre como plataforma: agentes de IA, bandeja omnicanal, CRM, automatizaciones y email marketing en una sola cuenta.</p>
+              <div class="links"><a href="/propuesta-2026-r8x4/blog-articulo?a=hapee-aperol-lanzamiento">Leer sobre el lanzamiento →</a></div>
+            </article>
+            <article class="card entry rv" data-k="new">
+              <header><span class="tg tg-new"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10l-6.1 1.2L12 17l-1.9-5.8L4 10l6.1-1.2z"/></svg>Nuevo</span><span class="area">Modelos de IA</span><time datetime="2026-04-25">25 abr</time></header>
+              <h3>GPT-5.5 disponible en tus agentes</h3>
+              <p>El modelo más reciente de OpenAI se suma a la plataforma: conversaciones más coherentes y razonamiento de varios pasos.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+    <aside class="note" data-n="C2"><b>Etiquetas y fechas</b> Cada entrada lleva tipo (Nuevo, Mejora, Corrección), área del producto y fecha; filtrable. Las fechas con aviso salen de commits del sitio, no del registro de producto: validarlas antes de publicar. En producción esta página se genera desde un archivo de datos (o la API) y alimenta el RSS y el correo mensual.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">Todo esto ya está en Hapee.</h2>
+      <p>Agenda 30 minutos y te mostramos lo nuevo con tu caso, sin compromiso.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document;
+  var months=[].slice.call(d.querySelectorAll('.month')), entries=[].slice.call(d.querySelectorAll('.entry'));
+  var total=d.getElementById('total'); if(total) total.textContent=entries.length;
+
+  // conteo por mes en el índice
+  months.forEach(function(m){ var a=d.querySelector('.toc a[href="#'+m.id+'"] small'); if(a) a.textContent=m.querySelectorAll('.entry').length; });
+
+  // gráfico de ritmo (de abril a octubre, izquierda a derecha)
+  var bars=d.getElementById('bars');
+  if(bars){
+    var ordered=months.slice().reverse(), max=0, data=[];
+    ordered.forEach(function(m){ var c={new:0,imp:0,fix:0}; [].forEach.call(m.querySelectorAll('.entry'),function(e){ var k=e.getAttribute('data-k'); if(c[k]!==undefined) c[k]++; }); var t=c.new+c.imp+c.fix; if(t>max) max=t; data.push({m:m.getAttribute('data-m'),c:c,t:t}); });
+    var html='', col={new:'k-new',imp:'k-imp',fix:'k-fix'}, label=[];
+    data.forEach(function(r,i){
+      var seg='', H=innerWidth<760?80:104; ['fix','imp','new'].forEach(function(k){ if(r.c[k]) seg+='<i class="'+col[k]+'" style="height:'+Math.max(4,Math.round(r.c[k]/max*H))+'px"></i>'; });
+      html+='<div class="bar"><div class="stack" style="transition-delay:'+(i*70)+'ms"><span class="n">'+r.t+'</span>'+seg+'</div><small>'+r.m+'</small></div>';
+      label.push(r.m+': '+r.t);
+    });
+    bars.innerHTML=html; bars.setAttribute('aria-label','Entregas por mes. '+label.join(', '));
+  }
+  var pulse=d.getElementById('pulse'), reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if(pulse){ if(reduce||!('IntersectionObserver' in window)) pulse.classList.add('in'); else { var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ pulse.classList.add('in'); },250); io.disconnect(); } }); },{threshold:.3}); io.observe(pulse); } }
+
+  // filtro por tipo
+  var chips=[].slice.call(d.querySelectorAll('.fbar .chip'));
+  chips.forEach(function(c){ c.addEventListener('click',function(){
+    var f=c.getAttribute('data-f'); chips.forEach(function(o){ o.setAttribute('aria-pressed',o===c?'true':'false'); });
+    entries.forEach(function(e){ e.hidden=!(f==='all'||e.getAttribute('data-k')===f); if(!e.hidden) e.classList.add('in'); });
+    months.forEach(function(m){ var vis=[].some.call(m.querySelectorAll('.entry'),function(e){ return !e.hidden; }); m.hidden=!vis; var a=d.querySelector('.toc a[href="#'+m.id+'"]'); if(a) a.style.display=vis?'':'none'; });
+  }); });
+
+  // suscripción (maqueta)
+  var sf=d.getElementById('suscribirse');
+  if(sf) sf.addEventListener('submit',function(e){ e.preventDefault(); var em=d.getElementById('sE'); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value)){ em.focus(); em.setAttribute('aria-invalid','true'); return; } em.removeAttribute('aria-invalid'); d.getElementById('sOk').hidden=false; });
+})();
+</script>
+</body>
+</html>

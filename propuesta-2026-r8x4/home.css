@@ -132,9 +132,10 @@ html:not(.dark) .aurora i{mix-blend-mode:multiply}
 .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .mq-track{display:flex;gap:72px;width:max-content;animation:mq 40s linear infinite;align-items:center}
 .marquee:hover .mq-track{animation-play-state:paused}
-.mq-track img{height:40px;width:auto;object-fit:contain;filter:grayscale(1);opacity:.6;transition:all var(--d-base)}
-html.dark .mq-track img{filter:grayscale(1) invert(1) brightness(1.4);opacity:.5}
-.mq-track img:hover{filter:none;opacity:1}
+/* los logos de img/brands son blancos sobre transparente: en oscuro van tal cual, en claro se invierten */
+.mq-track img{height:40px;width:auto;object-fit:contain;opacity:.6;transition:opacity var(--d-base)}
+html:not(.dark) .mq-track img{filter:invert(1)}
+.mq-track img:hover{opacity:1}
 @keyframes mq{to{transform:translateX(-50%)}}
 
 /* ── CHAOS (problema) ───────────────────────────────────────── */

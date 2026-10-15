@@ -13,7 +13,7 @@
   // Shadow DOM: la escena usa clases cortas (.hero, .ring, .chips…) que la
   // página también usa; aislarla evita que los estilos se pisen en ambos sentidos.
   var R = stage.attachShadow ? stage.attachShadow({ mode: 'open' }) : stage;
-  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=25"><div class="sc-canvas" id="scCanvas"></div>';
+  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=31"><div class="sc-canvas" id="scCanvas"></div>';
   var canvas = R.getElementById ? R.getElementById('scCanvas') : stage.querySelector('#scCanvas'), tabsEl = d.getElementById('psTabs'), capEl = d.getElementById('psCap'), urlEl = d.getElementById('psUrl'), frame = d.getElementById('psFrame');
   var ROBOT = '/img/robot.png', LOGO = '/img/logo-hapee.png';
 

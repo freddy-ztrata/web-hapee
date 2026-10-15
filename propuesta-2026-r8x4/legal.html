@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Legal · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .lh .phero h1{font-size:clamp(3rem,6.4vw,6rem)}
+  .ldocs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:var(--s-12)}
+  .ldoc-c{display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;align-items:center;padding:20px 22px;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
+  .ldoc-c:hover{border-color:rgba(250,80,0,.45);transform:translateY(-3px)}
+  .ldoc-c .ic{grid-row:span 2}
+  .ldoc-c b{color:var(--heading);font-size:1.05rem}
+  .ldoc-c small{color:var(--text-muted);font-size:.8rem}
+  .ldoc-c .arr{grid-row:span 2;color:var(--link);transition:transform var(--d-base) var(--ease-out)}
+  .ldoc-c:hover .arr{transform:translateY(3px)}
+
+  /* ── Lo importante ─────────────────────────────────── */
+  .gist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .gist .card{padding:24px;display:grid;gap:10px;align-content:start}
+  .gist b{color:var(--heading);font-size:1.02rem}
+  .gist p{color:var(--text-muted);font-size:.9rem}
+  .gist a{font-weight:600;font-size:.86rem;margin-top:auto}
+
+  /* ── Índice ────────────────────────────────────────── */
+  .ltoc{position:sticky;top:110px;max-height:calc(100svh - 130px);overflow-y:auto;scrollbar-width:thin;display:grid;gap:18px;font-size:.86rem;padding-right:6px}
+  .ltoc .grp{display:grid;gap:1px}
+  .ltoc .doc{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:var(--r-md);font-weight:700;font-size:.92rem;color:var(--heading)}
+  .ltoc .doc small{font-weight:600;font-size:.72rem;color:var(--text-muted)}
+  .ltoc .doc.on{background:var(--surface-2);box-shadow:inset 2px 0 0 var(--orange)}
+  .ltoc .subl{display:grid;gap:1px;padding-left:6px}
+  .ltoc .grp:not(.cur) .subl{display:none}
+  .ltoc .subl a{display:grid;grid-template-columns:22px 1fr;gap:6px;padding:6px 10px;border-radius:8px;color:var(--text-muted);line-height:1.35}
+  .ltoc .subl a span{font-weight:700;opacity:.7}
+  .ltoc .subl a:hover{color:var(--heading);background:var(--surface-2)}
+  .ltoc .subl a.on{color:var(--heading);background:var(--surface-2)}
+  .ltoc .subl a.on span{color:var(--link);opacity:1}
+
+  /* ── Documento ─────────────────────────────────────── */
+  .lmain{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-24)}
+  .ldoc{scroll-margin-top:100px}
+  .ldoc-h{display:grid;gap:16px;padding-bottom:var(--s-8);margin-bottom:var(--s-8);border-bottom:1px solid var(--border)}
+  .ldoc-h h2{font-size:var(--t-h2)}
+  .ldoc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;font-size:.86rem;color:var(--text-muted)}
+  .ldoc-meta time{display:inline-flex;align-items:center;gap:8px;color:var(--heading);font-weight:600}
+  .ldoc-meta .ico{width:16px;height:16px;color:var(--link)}
+  .lang-seg{display:inline-flex;padding:3px;border-radius:var(--r-pill);background:var(--surface-2);border:1px solid var(--border)}
+  .lang-seg a,.lang-seg span{height:32px;min-width:44px;padding:0 12px;display:grid;place-items:center;border-radius:var(--r-pill);font:700 .78rem/1 var(--f-body);color:var(--text-muted)}
+  .lang-seg span{background:var(--heading);color:var(--bg)}
+  .lang-seg a:hover{color:var(--heading)}
+  .ldoc-meta .pbtn{margin-left:auto}
+  .lprose{max-width:760px;font-size:1rem;line-height:1.75;color:var(--text)}
+  .lprose>p+p{margin-top:1em}
+  .lprose strong{color:var(--heading)}
+  .lprose a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(250,80,0,.5)}
+  .lprose .callout{margin:var(--s-6) 0;padding:20px 22px;border-radius:var(--r-lg);background:var(--grad-soft);border:1px solid rgba(250,80,0,.35);color:var(--heading)}
+  .lprose .callout a{color:var(--link)}
+  .lsec{scroll-margin-top:100px;padding-top:var(--s-8);margin-top:var(--s-8);border-top:1px solid var(--border)}
+  .lsec h3{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-size:1.3rem;margin-bottom:14px}
+  .lsec h3 .num{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--border);font:700 .85rem/1 var(--f-body);color:var(--link);flex-shrink:0}
+  .lsec.full h3 .num{background:var(--grad);border-color:transparent;color:#fff}
+  .lsec h3 .key{font:700 .66rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:6px;background:rgba(34,197,94,.12);color:var(--ok)}
+  html:not(.dark) .lsec h3 .key{color:color-mix(in srgb,var(--ok) 55%,var(--n-950))}
+  .lsec h3+h3{margin-top:0}
+  .lsec>h3:not(:first-child){font-size:1.05rem;margin-top:var(--s-6)}
+  .lsec p{margin-top:.8em}
+  .lsec p:first-of-type{margin-top:0}
+  .lsec ul,.lsec ol{margin:.8em 0 0;padding-left:1.2em;display:grid;gap:.45em}
+  .lsec li::marker{color:var(--link)}
+  .lsec li.more{list-style:none;color:var(--text-muted)}
+  .lsec table{width:100%;margin-top:1em;border-collapse:separate;border-spacing:0;font-size:.9rem;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+  .lsec th,.lsec td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--border)}
+  .lsec th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);background:var(--surface-2)}
+  .lsec tr:last-child td{border-bottom:0}
+  .lsec td:first-child{color:var(--heading);font-weight:600}
+  .lsec .tbl-scroll{overflow-x:auto}
+  .elide{color:var(--text-muted);font-size:1.4rem;line-height:1;letter-spacing:.2em;margin-top:.6em!important}
+  .subs{list-style:none!important;padding:0!important;display:flex!important;flex-wrap:wrap;gap:6px!important}
+  .subs li{font-size:.78rem;font-weight:600;padding:5px 10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-muted)}
+  .todo-line{font-size:.88rem;color:var(--text-muted)}
+  .ldoc-end{margin-top:var(--s-12);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:20px 24px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface)}
+  .ldoc-end p{color:var(--text-muted);font-size:.9rem}
+  .ldoc-end b{color:var(--heading)}
+
+  .legal-entity{margin-top:var(--s-16);padding-top:var(--s-6);border-top:1px solid var(--border);font-size:.82rem;color:var(--text-muted)}
+
+  @media (max-width:1100px){
+    .gist{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .ldocs{grid-template-columns:minmax(0,1fr)}
+    .lwrap{grid-template-columns:minmax(0,1fr)!important}
+    .ltoc{position:sticky;top:76px;z-index:20;max-height:none;overflow:visible;display:flex;gap:6px;padding:8px;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-block:1px solid var(--border)}
+    .ltoc .grp{display:contents}
+    .ltoc .subl{display:none}
+    .ltoc .doc{flex:1;justify-content:center;border:1px solid var(--border);background:var(--surface)}
+    .ltoc .doc small{display:none}
+  }
+  @media (max-width:760px){
+    .gist{grid-template-columns:minmax(0,1fr)}
+    .ltoc .doc{font-size:.8rem;padding:10px 8px}
+    .ldoc-meta .pbtn{margin-left:0}
+    .lsec table{display:block;overflow-x:auto}
+  }
+  @media print{
+    .nav,.foot,.review-bar,.mcta,.grain,.phero,#resumen,.ltoc,.note,.pbtn,.ldoc-end{display:none!important}
+    body{background:#fff;color:#000}
+    .lwrap{display:block!important}
+  }
+</style>
+</head>
+<body data-page="legal" data-sec="empresa">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page lh">
+
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Legal</nav>
+      <p class="eyebrow">Legal · WM Digital, LLC</p>
+      <h1 class="display">Reglas claras, <span class="grad-text">datos cuidados.</span></h1>
+      <p class="lead">Los términos del servicio, la política de privacidad y cómo pedir la eliminación de tus datos, en un solo lugar y con índice. ¿Algo no queda claro? Escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+      <div class="ldocs">
+        <a class="card ldoc-c spot" href="#terminos"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></span><b>Términos y Condiciones</b><span class="arr">↓</span><small>Actualizados el 1 de julio de 2026</small></a>
+        <a class="card ldoc-c spot" href="#privacidad"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><b>Política de Privacidad</b><span class="arr">↓</span><small>Actualizada el 12 de octubre de 2026</small></a>
+        <a class="card ldoc-c spot" href="#eliminacion"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6"/></svg></span><b>Eliminación de datos</b><span class="arr">↓</span><small>Actualizada el 8 de octubre de 2026</small></a>
+      </div>
+    </div>
+    <aside class="note" data-n="L1"><b>Una plantilla para todo lo legal</b> Hoy son tres páginas con su propio CSS, nav mínimo y sin footer del sitio. Aquí comparten una plantilla con índice, fecha visible, versión ES/EN/PT por documento e impresión limpia. Al publicar, /terminos.html y /politica-privacidad.html redirigen a su ancla; /eliminacion-datos se mantiene como URL propia porque Meta la revisa.</aside>
+  </section>
+
+  <section class="sec" id="resumen" style="padding-top:0">
+    <div class="ctn">
+      <div class="sec-head" style="margin-bottom:var(--s-8)"><p class="eyebrow">Lo importante, en simple</p><h2 class="display">Cuatro cosas que <span class="grad-text">debes saber.</span></h2><p class="muted" style="font-size:.9rem">Este resumen no reemplaza los documentos: si hay diferencias, rige el texto completo.</p></div>
+      <div class="gist">
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><b>Cancelas cuando quieras, sin reembolsos</b><p>Mantienes el acceso hasta el final del período pagado. Los pagos realizados no son reembolsables, tampoco por períodos no usados.</p><a href="#t-5">Sección 5 de los términos →</a></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span><b>Los datos de tus clientes no se venden</b><p>Tú conservas los derechos sobre tu contenido. No usamos los datos que gestionas en Hapee para publicidad propia ni los vendemos a terceros.</p><a href="#p-3">Finalidades del tratamiento →</a></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span><b>Tus derechos, en 30 días</b><p>Acceso, rectificación, eliminación, oposición y portabilidad. Escribes a info@hapee.ai y respondemos en un plazo máximo de 30 días.</p><a href="#p-13">Tus derechos →</a></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></span><b>Eliminar tus datos</b><p>Un correo a info@hapee.ai con el asunto «Eliminación de datos». Confirmamos en 5 días hábiles y ejecutamos en 30 días corridos.</p><a href="#eliminacion">Cómo pedirlo →</a></div>
+      </div>
+    </div>
+    <aside class="note" data-n="L2"><b>Resumen antes del texto legal</b> Cuatro tarjetas con lo que más se pregunta (no reembolso, uso de datos, derechos y eliminación), cada una enlazada a su sección exacta. Mismo contenido que los documentos vigentes, sin prometer nada nuevo.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn with-toc lwrap">
+      <nav class="ltoc" aria-label="Índice de los documentos legales">
+        <div class="grp cur"><a class="doc" href="#terminos" data-doc="terminos">Términos <small>17</small></a><div class="subl"><a href="#t-1"><span>1</span>Definiciones</a><a href="#t-2"><span>2</span>Descripción del servicio</a><a href="#t-3"><span>3</span>Registro y cuenta</a><a href="#t-4"><span>4</span>Planes y precios</a><a href="#t-5"><span>5</span>Cancelación y no reembolso</a><a href="#t-6"><span>6</span>Uso aceptable</a><a href="#t-7"><span>7</span>Inteligencia artificial — Limitaciones y responsabilidad</a><a href="#t-8"><span>8</span>Integraciones con terceros</a><a href="#t-9"><span>9</span>Propiedad intelectual</a><a href="#t-10"><span>10</span>Protección de datos — Acuerdo de procesamiento (DPA)</a><a href="#t-11"><span>11</span>Disponibilidad del servicio</a><a href="#t-12"><span>12</span>Limitación de responsabilidad</a><a href="#t-13"><span>13</span>Indemnización</a><a href="#t-14"><span>14</span>Resolución de disputas</a><a href="#t-15"><span>15</span>Modificaciones</a><a href="#t-16"><span>16</span>Disposiciones generales</a><a href="#t-17"><span>17</span>Contacto</a></div></div>
+        <div class="grp"><a class="doc" href="#privacidad" data-doc="privacidad">Privacidad <small>18</small></a><div class="subl"><a href="#p-1"><span>1</span>Responsable del tratamiento</a><a href="#p-2"><span>2</span>Datos que recopilamos</a><a href="#p-3"><span>3</span>Finalidades del tratamiento</a><a href="#p-4"><span>4</span>Procesadores y proveedores externos</a><a href="#p-5"><span>5</span>Integración con LinkedIn (Community Management API)</a><a href="#p-6"><span>6</span>Integración con WhatsApp Business (Meta Cloud API)</a><a href="#p-7"><span>7</span>Integración con tu casilla de correo y calendario (Google y Microsoft)</a><a href="#p-8"><span>8</span>Integración con TikTok (cuenta de negocio y publicidad)</a><a href="#p-9"><span>9</span>Integración con tiendas en línea (Shopify y WooCommerce)</a><a href="#p-10"><span>10</span>Conector MCP para asistentes de IA</a><a href="#p-11"><span>11</span>Aplicaciones móviles (iOS y Android)</a><a href="#p-12"><span>12</span>Almacenamiento, seguridad y retención</a><a href="#p-13"><span>13</span>Tus derechos</a><a href="#p-14"><span>14</span>Menores de edad</a><a href="#p-15"><span>15</span>Cookies y tecnologías similares</a><a href="#p-16"><span>16</span>Cambios a esta política</a><a href="#p-17"><span>17</span>Legislación aplicable</a><a href="#p-18"><span>18</span>Contacto</a></div></div>
+        <div class="grp"><a class="doc" href="#eliminacion" data-doc="eliminacion">Eliminación <small>7</small></a><div class="subl"><a href="#e-1"><span>1</span>Quién puede solicitarlo</a><a href="#e-2"><span>2</span>Qué información incluir en la solicitud</a><a href="#e-3"><span>3</span>Qué se elimina</a><a href="#e-4"><span>4</span>Datos provenientes de Meta (WhatsApp, Facebook, Instagram)</a><a href="#e-5"><span>5</span>Qué conservamos y por qué</a><a href="#e-6"><span>6</span>Plazos</a><a href="#e-7"><span>7</span>Contacto</a></div></div>
+      </nav>
+
+      <div class="lmain">
+        <!-- ══ TÉRMINOS ══ -->
+        <article class="ldoc" id="terminos" aria-labelledby="terminos-t">
+          <header class="ldoc-h">
+            <p class="eyebrow">Documento 1 de 3</p>
+            <h2 class="display" id="terminos-t">Términos y Condiciones</h2>
+            <div class="ldoc-meta">
+              <time><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Última actualización: 1 de julio de 2026</time>
+              <span class="lang-seg" role="group" aria-label="Idioma del documento"><span aria-current="true">ES</span><a href="/terms.html" hreflang="en" lang="en">EN</a><a href="/termos.html" hreflang="pt" lang="pt">PT</a></span>
+              <button type="button" class="btn btn-ghost btn-sm pbtn" data-print><svg class="ico" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Imprimir</button>
+            </div>
+          </header>
+          <div class="lprose">
+            <p>Los presentes Términos y Condiciones (en adelante, los "Términos") regulan el acceso y uso de la plataforma <strong>Hapee.ai</strong> (en adelante, la "Plataforma" o el "Servicio"), operada por <strong>WM Digital, LLC</strong> (en adelante, "Hapee", "nosotros" o "la Empresa"), sociedad de responsabilidad limitada constituida bajo las leyes del Estado de Delaware, Estados Unidos (Delaware file number 10365621), con domicilio en 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US (EIN: 38-4371956). <span class="todo">[confirmar: aquí dice Delaware y el resto del sitio, Wyoming]</span></p><p>Al registrarte o utilizar la Plataforma, aceptas quedar vinculado por estos Términos. Si no estás de acuerdo, no utilices el Servicio.</p>
+            <section class="lsec" id="t-1"><h3><span class="num">1</span>Definiciones</h3><ul><li><strong>"Usuario":</strong> toda persona física o jurídica que accede o utiliza la Plataforma.</li><li><strong>"Cliente":</strong> el Usuario que contrata un plan de pago.</li><li><strong>"Contacto":</strong> los clientes finales del Cliente, cuyos datos se gestionan dentro de la Plataforma.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-2"><h3><span class="num">2</span>Descripción del servicio</h3><p>Hapee es una plataforma de infraestructura de IA para empresas que incluye:</p>
+<ul><li>CRM con gestión de contactos y pipelines de ventas.</li><li>Agentes conversacionales de inteligencia artificial (chat, WhatsApp, Instagram, web).</li><li>Automatizaciones de flujos comerciales.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-3"><h3><span class="num">3</span>Registro y cuenta</h3><p>Para usar el Servicio debes:</p>
+<ul><li>Ser mayor de 18 años.</li><li>Proporcionar información veraz, actual y completa.</li><li>Mantener la confidencialidad de tus credenciales de acceso.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec full" id="t-4"><h3><span class="num">4</span>Planes y precios<span class="key">Texto completo</span></h3><h3>4.1 Planes disponibles</h3>
+<table>
+  <tr><th>Plan</th><th>Precio</th><th>Facturación</th></tr>
+  <tr><td>Starter</td><td>$297 USD</td><td>Mensual</td></tr>
+  <tr><td>Pro</td><td>$397 USD</td><td>Mensual</td></tr>
+  <tr><td>Elite Setup</td><td>desde $3.290 USD</td><td>Pago único</td></tr>
+</table><p class="todo-line"><span class="todo">[confirmar]</span> Elite Setup figura «desde» USD 3.290 y el sitio lo vende a precio fijo; los planes anuales (USD 2.970 y 3.970) no aparecen en esta tabla.</p>
+<p>Los precios están expresados en dólares estadounidenses (USD) y no incluyen impuestos locales que puedan aplicar según tu jurisdicción.</p>
+<h3>4.2 Facturación y pagos</h3>
+<ul>
+  <li>Al contratar cualquier plan, el primer cobro se realiza en el momento del registro para activar el Servicio.</li>
+  <li>Los planes mensuales (Starter y Pro) se facturan automáticamente cada 30 días desde la fecha de activación.</li>
+  <li>El plan Elite Setup corresponde a un pago único de implementación llave en mano, sin renovación automática.</li>
+  <li>Aceptamos Visa, Mastercard, American Express y Discover.</li>
+  <li>Los pagos son procesados de forma segura por procesadores certificados PCI-DSS.</li>
+  <li>Es tu responsabilidad mantener un método de pago válido asociado a tu cuenta.</li>
+</ul>
+<h3>4.3 Cambios de plan</h3>
+<p>Puedes cambiar de plan (upgrade o downgrade) en cualquier momento desde tu panel de usuario. El cambio se aplicará al próximo ciclo de facturación. En caso de upgrade, se cobrará la diferencia proporcional.</p></section>
+<section class="lsec full" id="t-5"><h3><span class="num">5</span>Cancelación y no reembolso<span class="key">Texto completo</span></h3><p>Puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario o escribiendo a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+<ul>
+  <li>La cancelación toma efecto al final del período de facturación vigente. Mantienes acceso hasta esa fecha.</li>
+  <li><strong>Los pagos realizados no son reembolsables.</strong> Hapee no ofrece garantía de devolución ni reembolsos parciales por períodos no utilizados.</li>
+  <li>El plan Elite Setup, al ser un pago único de implementación llave en mano, no admite reembolso una vez iniciada la configuración.</li>
+  <li>Tras la cancelación, tu cuenta pasará a estado inactivo. Los datos del Cliente se conservan por 90 días tras la cancelación, después de lo cual son eliminados permanentemente.</li>
+</ul></section>
+<section class="lsec" id="t-6"><h3><span class="num">6</span>Uso aceptable</h3><p>Te comprometes a NO usar la Plataforma para:</p>
+<ul><li>Enviar spam, mensajes masivos no solicitados o comunicaciones engañosas.</li><li>Suplantar la identidad de otra persona o entidad.</li><li>Distribuir malware, virus o código malicioso.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-7"><h3><span class="num">7</span>Inteligencia artificial — Limitaciones y responsabilidad</h3><p>Los Agentes IA de Hapee generan respuestas basadas en modelos de lenguaje y configuraciones del Cliente. Es importante entender que:</p>
+<ul><li>Las respuestas generadas por IA <strong>pueden contener errores o inexactitudes</strong>.</li><li>El Cliente es responsable de supervisar, configurar y aprobar los flujos de conversación de sus Agentes IA.</li><li>Hapee <strong>no garantiza</strong> que las respuestas de IA sean precisas, completas o apropiadas en todos los contextos.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-8"><h3><span class="num">8</span>Integraciones con terceros</h3><p>La Plataforma se integra con servicios y APIs de terceros —incluyendo, entre otros, Meta, WhatsApp, Instagram, Google, LinkedIn, TikTok, procesadores de pago y otros proveedores— mediante autorización OAuth u otros mecanismos de conexión.</p>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-9"><h3><span class="num">9</span>Propiedad intelectual</h3><h3>9.1 Propiedad de Hapee</h3>
+<p>La Plataforma, su código, diseño, marca, logo y toda la tecnología subyacente son propiedad exclusiva de WM Digital, LLC. Nada en estos Términos te otorga derechos de propiedad intelectual sobre la Plataforma.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>9.2 Contenido del Cliente</li><li>9.3 Datos anonimizados</li></ul></section>
+<section class="lsec" id="t-10"><h3><span class="num">10</span>Protección de datos — Acuerdo de procesamiento (DPA)</h3><p>Cuando el Cliente utiliza Hapee para gestionar datos de sus Contactos:</p>
+<ul><li>El <strong>Cliente actúa como responsable</strong> del tratamiento de los datos de sus Contactos.</li><li><strong>Hapee actúa como encargado</strong> del tratamiento, procesando datos exclusivamente según las instrucciones del Cliente.</li><li>Hapee se compromete a cumplir con las obligaciones del artículo 28 del RGPD y las disposiciones equivalentes de la Ley 21.719 de Chile.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-11"><h3><span class="num">11</span>Disponibilidad del servicio</h3><ul><li>Hapee se esfuerza por mantener una disponibilidad del <strong>99.5% mensual</strong> (SLA).</li><li>Pueden existir interrupciones planificadas para mantenimiento (notificadas con al menos 48 horas de anticipación) y no planificadas por causas de fuerza mayor.</li><li>Hapee no será responsable de interrupciones causadas por terceros (proveedores de internet, APIs externas como WhatsApp/Meta, procesadores de pago).</li></ul></section>
+<section class="lsec" id="t-12"><h3><span class="num">12</span>Limitación de responsabilidad</h3><p>En la máxima medida permitida por la ley aplicable:</p>
+<ul><li>Hapee se proporciona <strong>"tal cual" y "según disponibilidad"</strong>, sin garantías de ningún tipo, expresas o implícitas.</li><li>No garantizamos resultados específicos de ventas, conversión o rendimiento comercial.</li><li>No garantizamos la exactitud, integridad ni disponibilidad de los datos proporcionados por las plataformas de terceros (Meta, Google, LinkedIn, TikTok, WhatsApp u otras); dichos datos se muestran tal como los entregan sus respectivas APIs.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-13"><h3><span class="num">13</span>Indemnización</h3><p>El Cliente se compromete a indemnizar y mantener indemne a Hapee de cualquier reclamación, daño o gasto (incluyendo honorarios legales) derivado de:</p>
+<ul><li>El uso del Servicio por parte del Cliente o sus usuarios.</li><li>La violación de estos Términos.</li><li>La infracción de derechos de terceros.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-14"><h3><span class="num">14</span>Resolución de disputas</h3><h3>14.1 Ley aplicable</h3>
+<p>Estos Términos se rigen por las leyes del <strong>Estado de Wyoming, Estados Unidos</strong>, sin perjuicio de las disposiciones imperativas de protección al consumidor aplicables en tu país de residencia.</p>
+<h3>14.2 Resolución amistosa</h3>
+<p>Antes de iniciar cualquier procedimiento formal, ambas partes se comprometen a intentar resolver la disputa de buena fe durante un período de <strong>30 días</strong> mediante comunicación directa.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>14.3 Arbitraje</li><li>14.4 Jurisdicción para consumidores UE/Chile</li></ul></section>
+<section class="lsec" id="t-15"><h3><span class="num">15</span>Modificaciones</h3><p>Hapee se reserva el derecho de modificar estos Términos en cualquier momento. Para cambios sustanciales:</p>
+<ul><li>Te notificaremos por correo electrónico con al menos <strong>30 días de anticipación</strong>.</li><li>Publicaremos la versión actualizada en esta URL con la nueva fecha.</li><li>El uso continuado de la Plataforma tras la entrada en vigor de los cambios constituye tu aceptación.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-16"><h3><span class="num">16</span>Disposiciones generales</h3><ul><li><strong>Cesión:</strong> No puedes ceder tus derechos u obligaciones bajo estos Términos sin nuestro consentimiento previo por escrito.</li><li><strong>Integridad:</strong> Estos Términos, junto con la Política de Privacidad, constituyen el acuerdo completo entre las partes.</li><li><strong>Divisibilidad:</strong> Si alguna disposición es declarada inválida, las demás permanecerán en pleno vigor.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="t-17"><h3><span class="num">17</span>Contacto</h3><p>Para consultas sobre estos Términos:</p>
+<ul><li><strong>Correo:</strong> <a href="mailto:info@hapee.ai">info@hapee.ai</a></li><li><strong>WhatsApp:</strong> <a href="https://wa.me/56965349093">+56 9 6534 9093</a></li><li><strong>Dirección postal:</strong> WM Digital, LLC — 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US</li></ul></section>
+          </div>
+          <div class="ldoc-end"><p><b>¿Dudas sobre estos términos?</b> Escríbenos a info@hapee.ai.</p><a class="btn btn-secondary btn-sm" href="mailto:info@hapee.ai">info@hapee.ai</a></div>
+          <aside class="note" data-n="L3"><b>Inconsistencias marcadas</b> Los términos dicen «Delaware» y el resto del sitio, Wyoming; Elite Setup figura «desde» USD 3.290 y los planes anuales no están en la tabla 4.1. Quedan como [confirmar] para el equipo legal. Las secciones no clave se abrevian con «…» solo en la propuesta: en producción va el texto íntegro.</aside>
+        </article>
+
+        <!-- ══ PRIVACIDAD ══ -->
+        <article class="ldoc" id="privacidad" aria-labelledby="privacidad-t">
+          <header class="ldoc-h">
+            <p class="eyebrow">Documento 2 de 3</p>
+            <h2 class="display" id="privacidad-t">Política de Privacidad</h2>
+            <div class="ldoc-meta">
+              <time><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Última actualización: 12 de octubre de 2026</time>
+              <span class="lang-seg" role="group" aria-label="Idioma del documento"><span aria-current="true">ES</span><a href="/privacy-policy.html" hreflang="en" lang="en">EN</a><a href="/politica-privacidade.html" hreflang="pt" lang="pt">PT</a></span>
+              <button type="button" class="btn btn-ghost btn-sm pbtn" data-print><svg class="ico" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Imprimir</button>
+            </div>
+          </header>
+          <div class="lprose">
+            <p>Esta política describe cómo <strong>WM Digital, LLC</strong> y <strong>WM Digital SpA</strong> (en adelante, "Hapee", "nosotros" o "la plataforma") recopila, utiliza, almacena y protege los datos personales de los usuarios que acceden a la plataforma a través del sitio web <a href="https://hapee.ai">hapee.ai</a>, la aplicación móvil para iOS, la aplicación móvil para Android y la aplicación de escritorio para Windows y macOS.</p><p>Al usar cualquiera de estos canales, aceptas las prácticas descritas en este documento. Si no estás de acuerdo, te pedimos que no utilices la plataforma.</p>
+            <section class="lsec full" id="p-1"><h3><span class="num">1</span>Responsable del tratamiento<span class="key">Texto completo</span></h3><p>Hapee.ai es operada por el grupo WM Digital. Dos sociedades del grupo actúan como <strong>corresponsables del tratamiento</strong>, cada una en su ámbito:</p>
+<p><strong>WM Digital, LLC</strong>, sociedad constituida bajo las leyes del Estado de Delaware, Estados Unidos (Delaware file number 10365621; EIN: 38-4371956), <strong>opera la plataforma Hapee.ai</strong>, es titular de la tecnología y responsable del tratamiento de los datos tratados a través de la plataforma y de sus integraciones con las APIs de terceros que el cliente decida conectar.</p>
+<p>1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US.</p>
+<p><strong>WM Digital SpA</strong> (Hapee), sociedad constituida bajo las leyes de Chile (RUT: 77.178.674-K), pertenece al mismo grupo, <strong>contrata con los clientes de la plataforma en Chile</strong> y es responsable del tratamiento respecto de esa relación comercial.</p>
+<p>Padre Mariano 82, oficina 502, Providencia, Santiago, Chile.</p>
+<p>Puedes ejercer tus derechos ante cualquiera de las dos sociedades, en la dirección de contacto indicada más abajo.</p>
+<p>Contacto general: <a href="mailto:info@hapee.ai">info@hapee.ai</a></p>
+<p>Solicitudes de privacidad y derechos del titular: <a href="mailto:info@hapee.ai">info@hapee.ai</a></p>
+<p>Encargado de privacidad: Freddy Alejandro Castro Cuevas.</p></section>
+<section class="lsec full" id="p-2"><h3><span class="num">2</span>Datos que recopilamos<span class="key">Texto completo</span></h3><p>Recopilamos los siguientes tipos de datos, ya sea directamente del usuario o automáticamente al usar la plataforma:</p>
+<h3>2.1. Datos de cuenta y contacto</h3>
+<ul>
+  <li>Nombre y apellido</li>
+  <li>Dirección de correo electrónico</li>
+  <li>Número de teléfono (si lo cargas en tu perfil)</li>
+  <li>Contraseña (almacenada con hash bcrypt)</li>
+  <li>Foto de perfil o avatar (cuando la cargas voluntariamente)</li>
+  <li>Datos de la organización a la que perteneces (agencia, cliente)</li>
+</ul>
+<h3>2.2. Identificadores</h3>
+<ul>
+  <li>Identificador de usuario interno (asociado a tu sesión y registros de auditoría)</li>
+  <li>Token del dispositivo móvil para envío de notificaciones push (Firebase Cloud Messaging)</li>
+</ul>
+<h3>2.3. Contenido del usuario</h3>
+<p>Cualquier contenido que crees, importes o gestiones dentro de la plataforma:</p>
+<ul>
+  <li>Contactos, oportunidades comerciales, tareas, notas, formularios, flujos de trabajo, reportes, estimaciones, sitios y embudos, publicaciones de blog, objetos personalizados</li>
+  <li>Mensajes y conversaciones (chat interno entre miembros del equipo, emails, SMS, WhatsApp, llamadas, mensajería directa con clientes en la bandeja unificada)</li>
+  <li>Fotos, vídeos, audios y archivos que subas (avatares, contenido para redes sociales en el módulo de gestión de redes sociales, archivos adjuntos en chats, audios grabados al usar el asistente de voz)</li>
+</ul>
+<h3>2.4. Datos de uso e interacción</h3>
+<ul>
+  <li>Páginas visitadas, clics, tiempo de sesión, último inicio de sesión, eventos de auditoría</li>
+  <li>Historial de búsquedas dentro de la plataforma y conversaciones con el asistente de inteligencia artificial</li>
+  <li>Logs de errores, métricas de rendimiento y latencia para diagnóstico técnico</li>
+</ul>
+<h3>2.5. Ubicación aproximada</h3>
+<p>Inferimos la ubicación aproximada (país y región) a partir de la dirección IP cuando interactúas con la plataforma. No recopilamos ni usamos coordenadas GPS exactas.</p>
+<h3>2.6. Datos de marketing digital de terceros (solo agencias)</h3>
+<p>Si conectas cuentas publicitarias mediante OAuth (Meta Ads, Google Ads, LinkedIn Ads, TikTok Ads, Google Analytics), almacenamos los tokens de acceso en formato cifrado y consultamos métricas publicitarias (impresiones, clics, inversión, conversiones) para generar reportes.</p>
+<h3>2.7. Datos de Meta (Facebook e Instagram)</h3>
+<p>Si conectas una Página de Facebook o una cuenta de Instagram Business, recibimos de Meta los siguientes datos, siempre limitados a los activos que el usuario que realiza la conexión ya administra y selecciona de forma explícita:</p>
+<ul>
+  <li><strong>Mensajes.</strong> Las conversaciones de Messenger y los mensajes directos de Instagram que las personas inician con tu Página o cuenta, junto con el nombre y la foto de perfil públicos del remitente. Los mostramos en tu bandeja de entrada para que tu equipo los lea y responda. Si la persona retira un mensaje, dejamos de mostrar su contenido.</li>
+  <li><strong>Métricas de la Página y de la cuenta de Instagram.</strong> Alcance, impresiones, interacciones, seguidores y rendimiento de las publicaciones, para los informes de tu cuenta.</li>
+  <li><strong>Métricas de campañas publicitarias.</strong> Gasto, impresiones, clics, conversiones y demás indicadores de las cuentas publicitarias que conectes (ver también 2.6).</li>
+  <li><strong>Identificadores.</strong> El identificador y el nombre de la Página, de la cuenta de Instagram y de las cuentas publicitarias seleccionadas.</li>
+</ul>
+<p>Estos datos se usan únicamente para prestarte el servicio: no se venden, no se comparten con terceros con fines publicitarios ni se utilizan para crear audiencias o segmentar anuncios. No publicamos ni modificamos campañas ni contenido de tu Página sin una acción tuya.</p>
+<p>Puedes desconectar la Página o la cuenta de Instagram en cualquier momento desde Configuración &rarr; Integraciones de la plataforma. Al hacerlo, damos de baja la suscripción a los webhooks de Meta y dejamos de recibir sus datos.</p>
+<h3>2.8. Datos que NO recopilamos</h3>
+<ul>
+  <li>Información de pago: los pagos se procesan a través de Stripe, que gestiona los datos de tarjeta directamente. Hapee nunca tiene acceso a números de tarjeta ni credenciales bancarias</li>
+  <li>Coordenadas GPS exactas o ubicación precisa</li>
+  <li>Agenda de contactos del teléfono móvil</li>
+  <li>Datos biométricos, de salud o sensibles</li>
+</ul>
+<h3>2.9. Quienes visitan hapee.ai o solicitan una demo (marketing propio de Hapee)</h3>
+<p>Esta sección trata solo del marketing del propio Hapee —cuando visitas nuestro sitio <strong>hapee.ai</strong> o pides una demostración de la plataforma, por la web, por WhatsApp o por Instagram—. No se refiere a los datos que nuestros clientes gestionan dentro de Hapee, a los que nunca aplicamos esto.</p>
+<ul>
+  <li><strong>Píxel de Meta y etiqueta de Google:</strong> nuestro sitio carga el píxel de Meta (Facebook e Instagram) y la etiqueta de Google (Google Ads y Analytics). Registran las páginas que visitas y si agendas una demo, y usan cookies propias de esas plataformas (por ejemplo <code>_fbp</code> y <code>_fbc</code> de Meta) para relacionar esa visita con los anuncios que viste. Ver la sección 15.</li>
+  <li><strong>API de Conversiones de Meta:</strong> cuando agendas una demo, cuando asistes a ella y si contratas Hapee, enviamos a Meta un aviso de ese hecho desde nuestros servidores. El aviso incluye tu correo y tu teléfono <strong>cifrados de forma irreversible (hash SHA-256)</strong>, el identificador del clic en el anuncio si llegaste desde uno, y la dirección IP y el navegador desde los que agendaste. Nunca enviamos el contenido de tus conversaciones ni tus respuestas a nuestras preguntas.</li>
+  <li><strong>Cómo te contactamos:</strong> si pides una demo, te escribimos por WhatsApp, SMS o correo para coordinarla (confirmación y recordatorios). Las novedades y promociones <strong>por SMS solo te llegan si marcaste la casilla de SMS</strong> del formulario. Puedes darte de baja cuando quieras: con el enlace del correo o respondiendo <strong>BAJA o STOP</strong>. Cuando aceptas en un formulario, guardamos el texto que aceptaste, la fecha, la página, tu IP y tu navegador como prueba.</li>
+  <li><strong>Para qué:</strong> medir qué anuncios nos traen demostraciones y clientes, y que las plataformas muestren nuestros anuncios a personas con un perfil parecido. Meta y Google tratan esa información también como responsables, según sus propias políticas (<a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">Meta</a>, <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google</a>).</li>
+  <li><strong>Cómo oponerte:</strong> puedes bloquear o borrar esas cookies desde tu navegador, ajustar tus preferencias de anuncios en <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener noreferrer">Meta</a> y <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google</a>, o escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> para que dejemos de enviar tus datos a estas plataformas.</li>
+</ul></section>
+<section class="lsec" id="p-3"><h3><span class="num">3</span>Finalidades del tratamiento</h3><p>Usamos los datos para:</p>
+<ul><li>Autenticación, gestión de cuentas y control de acceso</li><li>Proveer las funcionalidades de la plataforma (CRM, mailing, workflows, reportes, sites, AI agents, etc.)</li><li>Enviar notificaciones push, correos transaccionales y alertas relacionadas con tu actividad</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="p-4"><h3><span class="num">4</span>Procesadores y proveedores externos</h3><p>Para operar la plataforma trabajamos con los siguientes proveedores, quienes procesan datos en nuestro nombre bajo acuerdos contractuales de confidencialidad y seguridad:</p>
+<ul><li><strong>Amazon Web Services (AWS)</strong> — alojamiento de servidores y base de datos</li><li><strong>Anthropic</strong> — modelos Claude para asistente de IA, generación de contenido y agentes conversacionales. No se almacenan datos personales identificables en sus sistemas más allá del tiempo necesario para procesar la respuesta</li><li><strong>OpenAI</strong> — modelos GPT para los agentes conversacionales, cuando el cliente elige uno de esos modelos en el editor de agentes, y para la indexación de la base de conocimiento. Rigen las mismas condiciones que en el punto anterior: no se usan tus datos para entrenar modelos</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="p-5"><h3><span class="num">5</span>Integración con LinkedIn (Community Management API)</h3><p>Esta sección describe específicamente cómo Hapee utiliza la <strong>Community Management API</strong> de LinkedIn cuando vinculas una página de empresa de LinkedIn o tu perfil personal de LinkedIn a tu cuenta de Hapee mediante el flujo de autorización <strong>OAuth 2.0</strong>. Cada integración es independiente, opcional, y se activa únicamente cuando —como administrador autorizado de la página, o como titular del perfil personal— decides conectarla.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>5.1 Datos que accedemos de tu página de LinkedIn</li><li>5.2 Acciones que realizamos en nombre de tu página</li><li>5.3 Conexión y publicación en tu perfil personal de LinkedIn</li><li>5.4 Finalidad del tratamiento</li><li>5.5 Cómo revocar el acceso a LinkedIn</li><li>5.6 Cumplimiento con las políticas de LinkedIn</li></ul></section>
+<section class="lsec" id="p-6"><h3><span class="num">6</span>Integración con WhatsApp Business (Meta Cloud API)</h3><p>Cuando conectas un número de WhatsApp Business a Hapee, procesamos —en tu nombre y el de tus subcuentas, a través de la <strong>WhatsApp Business Platform (Meta Cloud API)</strong>— los datos necesarios para gestionar tus conversaciones. Esta integración es opcional y se activa únicamente cuando tú, como administrador autorizado, conectas el número.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>6.1 Datos que procesamos</li><li>6.2 Finalidad del tratamiento</li><li>6.3 Almacenamiento, retención y eliminación</li><li>6.4 Cumplimiento con las políticas de Meta</li></ul></section>
+<section class="lsec" id="p-7"><h3><span class="num">7</span>Integración con tu casilla de correo y calendario (Google y Microsoft)</h3><p>Cuando conectas tu cuenta de Google a Hapee, procesamos —en tu nombre— los datos necesarios para que puedas responder correos y gestionar reuniones desde la plataforma. Esta integración es <strong>opcional</strong>, la inicia cada usuario desde su propio perfil, y puedes revocarla en cualquier momento desde Hapee o desde <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">la página de permisos de tu cuenta de Google</a>.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>7.1 Permisos que solicitamos y para qué</li><li>7.2 Uso limitado de los datos de Google (Limited Use)</li><li>7.3 Procesamiento por inteligencia artificial</li><li>7.4 Almacenamiento, retención y eliminación</li><li>7.5 Integración con Microsoft (Outlook y Microsoft 365)</li></ul></section>
+<section class="lsec" id="p-8"><h3><span class="num">8</span>Integración con TikTok (cuenta de negocio y publicidad)</h3><p>Cuando conectas una cuenta de TikTok a Hapee, procesamos —en tu nombre y el de tus subcuentas, a través de las APIs oficiales de <strong>TikTok for Business</strong>— los datos necesarios para medir tu presencia, gestionar tus comentarios y atender tus mensajes. Esta integración es <strong>opcional</strong> y se activa únicamente cuando tú, como titular o administrador autorizado de la cuenta, la conectas mediante el flujo de autorización (OAuth) de TikTok. Solo accedemos a las cuentas que nos autorizan expresamente, y únicamente a su propio contenido.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>8.1 Datos que accedemos de tu cuenta de TikTok</li><li>8.2 Acciones que realizamos en nombre de tu cuenta</li><li>8.3 Finalidad del tratamiento</li><li>8.4 Almacenamiento, retención y eliminación</li><li>8.5 Cumplimiento con las políticas de TikTok</li></ul></section>
+<section class="lsec" id="p-9"><h3><span class="num">9</span>Integración con tiendas en línea (Shopify y WooCommerce)</h3><p>Cuando conectas tu tienda a Hapee —instalando la app de Hapee en Shopify o el plugin de Hapee en WooCommerce— recibimos de ella, en tu nombre, los datos necesarios para operar tu CRM. Esta integración es <strong>opcional</strong> y la activa el dueño o un administrador autorizado de la tienda.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>9.1 Datos que recibimos</li><li>9.2 Finalidad del tratamiento</li><li>9.3 Retención y eliminación</li></ul></section>
+<section class="lsec" id="p-10"><h3><span class="num">10</span>Conector MCP para asistentes de IA</h3><p>Hapee ofrece un conector MCP (<em>Model Context Protocol</em>) que te permite usar la plataforma desde un asistente de inteligencia artificial que tú eliges y conectas, por ejemplo Claude, ChatGPT o Grok Bot. Para conectarlo inicias sesión con tu propio usuario de Hapee y apruebas la conexión en una pantalla de consentimiento. Las instrucciones están en <a href="/docs/mcp">hapee.ai/docs/mcp</a>.</p>
+<p class="elide">…</p><ul class="subs" aria-label="Subsecciones abreviadas"><li>10.1 Datos a los que accede</li><li>10.2 Qué guarda el servidor del conector</li><li>10.3 Qué guarda la plataforma Hapee</li><li>10.4 Retención</li><li>10.5 Datos que llegan a tu asistente de IA</li><li>10.6 Cómo revocar el acceso</li><li>10.7 Contacto</li></ul></section>
+<section class="lsec" id="p-11"><h3><span class="num">11</span>Aplicaciones móviles (iOS y Android)</h3><p>La aplicación móvil de Hapee es una experiencia integrada que carga la plataforma web dentro de un contenedor nativo. Usa los siguientes permisos del sistema operativo, cuando los autorizas:</p>
+<ul><li><strong>Notificaciones push</strong> — para avisarte de nuevos mensajes, asignaciones y eventos relevantes</li><li><strong>Cámara y galería de fotos</strong> — solo cuando subes una foto de perfil, archivos adjuntos en chat o publicaciones de redes sociales</li><li><strong>Micrófono</strong> — solo cuando activas el modo de voz manos libres del asistente</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="p-12"><h3><span class="num">12</span>Almacenamiento, seguridad y retención</h3><ul><li>Los datos se almacenan en servidores AWS ubicados principalmente en regiones de Estados Unidos. Pueden transferirse internacionalmente en tránsito hacia los procesadores listados en la sección 4.</li><li>Las contraseñas se almacenan con hash <em>bcrypt</em> de un solo sentido (nunca en texto plano)</li><li>Los tokens OAuth de plataformas publicitarias se almacenan cifrados en la base de datos</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec full" id="p-13"><h3><span class="num">13</span>Tus derechos<span class="key">Texto completo</span></h3><p>Como titular de los datos, puedes ejercer en cualquier momento los derechos de:</p>
+<ul>
+  <li><strong>Acceso</strong> — solicitar copia de los datos personales que tenemos sobre ti</li>
+  <li><strong>Rectificación</strong> — corregir datos inexactos o incompletos</li>
+  <li><strong>Eliminación</strong> — solicitar el borrado de tu cuenta y datos asociados</li>
+  <li><strong>Oposición</strong> — oponerte al tratamiento con fines de marketing</li>
+  <li><strong>Portabilidad</strong> — recibir tus datos en un formato estructurado y de uso común</li>
+</ul>
+<p>Para ejercer cualquiera de estos derechos, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>. Responderemos en un plazo máximo de 30 días. La aplicación cuenta con una opción dedicada para solicitar la eliminación de tu cuenta en <a href="#eliminacion">hapee.ai/eliminacion-datos</a>.</p></section>
+<section class="lsec" id="p-14"><h3><span class="num">14</span>Menores de edad</h3><p>La plataforma está dirigida a profesionales y empresas. No recopilamos intencionalmente datos personales de menores de 13 años. Si tomamos conocimiento de que un menor de 13 años nos ha proporcionado datos sin consentimiento parental verificable, procederemos a eliminar dicha información. Si sospechas que esto pudo ocurrir, contáctanos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p></section>
+<section class="lsec" id="p-15"><h3><span class="num">15</span>Cookies y tecnologías similares</h3><p>Usamos dos tipos de cookies:</p>
+<ul><li><strong>Estrictamente necesarias</strong> — dentro de la plataforma, para mantener tu sesión autenticada y recordar preferencias (idioma, tema). Sin ellas Hapee no funciona.</li><li><strong>De medición publicitaria, solo en nuestro sitio público hapee.ai</strong> — las del píxel de Meta (<code>_fbp</code>, <code>_fbc</code>) y las de la etiqueta de Google (Google Ads y Analytics). Sirven para saber qué anuncios del propio Hapee traen visitas y demostraciones (ver 2.9). No se cargan dentro de la plataforma ni en los sitios, formularios o calendarios que nuestros clientes publican con Hapee.</li></ul>
+<p class="elide" aria-label="Sección abreviada en la propuesta">…</p></section>
+<section class="lsec" id="p-16"><h3><span class="num">16</span>Cambios a esta política</h3><p>Podemos actualizar esta política para reflejar cambios legales, operativos o funcionales. Cuando los cambios sean significativos, te notificaremos por correo electrónico o mediante un aviso destacado dentro de la plataforma. La fecha en la parte superior indica la última revisión.</p></section>
+<section class="lsec" id="p-17"><h3><span class="num">17</span>Legislación aplicable</h3><p>Esta política se rige por la Ley 19.628 sobre Protección de la Vida Privada de la República de Chile, hoy vigente, y por la <strong>Ley 21.719</strong> sobre protección de datos personales, que la sustituye y entra en plena vigencia en <strong>diciembre de 2026</strong>. Desde esa fecha, y respecto de los datos que nuestros clientes nos encomiendan, Hapee actúa como <strong>encargado de tratamiento</strong> y el cliente como responsable. Aplica además la demás normativa chilena pertinente. Respetamos también, cuando corresponda, las exigencias del Reglamento General de Protección de Datos (GDPR) de la Unión Europea para usuarios residentes en dicho territorio.</p></section>
+<section class="lsec" id="p-18"><h3><span class="num">18</span>Contacto</h3><p>Para cualquier consulta o reclamo relacionado con tu privacidad, puedes escribirnos a <a href="mailto:info@hapee.ai">info@hapee.ai</a> o por correo postal a la dirección indicada en la sección 1.</p></section>
+          </div>
+          <div class="ldoc-end"><p><b>Solicitudes de privacidad y derechos del titular</b>: info@hapee.ai. Respondemos en un plazo máximo de 30 días.</p><a class="btn btn-secondary btn-sm" href="mailto:info@hapee.ai">info@hapee.ai</a></div>
+        </article>
+
+        <!-- ══ ELIMINACIÓN ══ -->
+        <article class="ldoc" id="eliminacion" aria-labelledby="eliminacion-t">
+          <header class="ldoc-h">
+            <p class="eyebrow">Documento 3 de 3</p>
+            <h2 class="display" id="eliminacion-t">Eliminación de datos</h2>
+            <div class="ldoc-meta">
+              <time><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Última actualización: 8 de octubre de 2026</time>
+              <span class="lang-seg" role="group" aria-label="Idioma del documento"><span aria-current="true">ES</span><a href="/en/eliminacion-datos" hreflang="en" lang="en">EN</a><a href="/pt/eliminacion-datos" hreflang="pt" lang="pt">PT</a></span>
+              <button type="button" class="btn btn-ghost btn-sm pbtn" data-print><svg class="ico" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Imprimir</button>
+            </div>
+          </header>
+          <div class="lprose">
+            <p>Esta página explica cómo solicitar la eliminación de los datos personales que <strong>WM Digital, LLC</strong> (Hapee) —y, para los clientes que contratan en Chile, <strong>WM Digital SpA</strong>— trata a través de la plataforma <a href="https://hapee.ai">hapee.ai</a>, sus aplicaciones móviles y de escritorio, y las cuentas que hayas conectado —incluidas las cuentas de <strong>WhatsApp Business</strong>, Facebook e Instagram—.</p><p>Complementa lo indicado en la <a href="#privacidad">Política de Privacidad</a>, que prevalece en caso de discrepancia.</p><div class="callout">
+  <p><strong>Para pedir la eliminación de tus datos, escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a></strong> con el asunto <em>«Eliminación de datos»</em>. Respondemos dentro de los <strong>30 días corridos</strong>.</p>
+</div>
+            <section class="lsec full" id="e-1"><h3><span class="num">1</span>Quién puede solicitarlo<span class="key">Texto completo</span></h3><ul>
+  <li><strong>Titulares de una cuenta de Hapee</strong> (clientes y usuarios de su equipo): pueden pedir la eliminación de su cuenta y de los datos asociados.</li>
+  <li><strong>Personas cuyos datos están dentro de la cuenta de un cliente</strong> (por ejemplo, contactos del CRM o personas que escribieron por WhatsApp a un número gestionado con Hapee): en ese caso el cliente de Hapee es el responsable de esos datos y nosotros actuamos como proveedor que los procesa por su cuenta. Puedes escribirnos igual: reenviamos la solicitud al cliente correspondiente y la ejecutamos cuando él lo indica, o directamente si la ley lo exige.</li>
+</ul></section>
+<section class="lsec full" id="e-2"><h3><span class="num">2</span>Qué información incluir en la solicitud<span class="key">Texto completo</span></h3><ul>
+  <li>Nombre completo.</li>
+  <li>Correo electrónico con el que te registraste, o el dato por el que quieres ser identificado (por ejemplo, el número de teléfono desde el que escribiste por WhatsApp).</li>
+  <li>Qué quieres eliminar: la cuenta completa, un canal en particular (WhatsApp, Facebook, Instagram) o un dato puntual.</li>
+</ul>
+<p>Podemos pedirte una verificación adicional de identidad antes de ejecutar la eliminación, para no borrar datos de una persona a pedido de otra.</p></section>
+<section class="lsec full" id="e-3"><h3><span class="num">3</span>Qué se elimina<span class="key">Texto completo</span></h3><table>
+  <tr><th>Dato</th><th>Qué ocurre al solicitar la eliminación</th></tr>
+  <tr><td>Cuenta de usuario y perfil</td><td>Se elimina el acceso y se anonimizan los datos de perfil.</td></tr>
+  <tr><td>Contactos, oportunidades y notas del CRM</td><td>Se eliminan de la cuenta y de nuestras bases de datos.</td></tr>
+  <tr><td>Conversaciones de WhatsApp, Facebook Messenger e Instagram</td><td>Se eliminan los mensajes, los adjuntos descargados y los datos de perfil recibidos de Meta.</td></tr>
+  <tr><td>Archivos subidos (imágenes, documentos, audios)</td><td>Se eliminan del almacenamiento.</td></tr>
+  <tr><td>Tokens de las cuentas conectadas</td><td>Se revocan y se eliminan. Hapee deja de acceder a esas cuentas.</td></tr>
+  <tr><td>Copias de seguridad</td><td>Se sobrescriben en el ciclo normal de respaldo, dentro de los 90 días siguientes.</td></tr>
+</table></section>
+<section class="lsec full" id="e-4"><h3><span class="num">4</span>Datos provenientes de Meta (WhatsApp, Facebook, Instagram)<span class="key">Texto completo</span></h3><p>Cuando conectas una cuenta de WhatsApp Business, una página de Facebook o una cuenta de Instagram, Hapee recibe y almacena datos de Meta para poder mostrarte tus conversaciones y gestionar tus plantillas de mensaje. Al eliminar tus datos:</p>
+<ul>
+  <li>Se eliminan los mensajes, los adjuntos y los datos de perfil (nombre e identificador) recibidos a través de esas cuentas.</li>
+  <li>Se revocan y eliminan los tokens de acceso, y se cancela la suscripción de la aplicación a los webhooks de tu cuenta.</li>
+  <li>Las <strong>plantillas de mensaje</strong> se eliminan de Hapee. Las que existan en tu cuenta de WhatsApp Business del lado de Meta se conservan salvo que pidas expresamente su eliminación, porque son de tu cuenta y no de Hapee.</li>
+</ul>
+<p>También puedes desconectar una cuenta en cualquier momento desde la plataforma, sin necesidad de escribirnos: al desconectarla dejamos de acceder a ella y de recibir mensajes nuevos.</p></section>
+<section class="lsec full" id="e-5"><h3><span class="num">5</span>Qué conservamos y por qué<span class="key">Texto completo</span></h3><p>Después de la eliminación conservamos únicamente lo que estamos obligados a conservar o lo que no permite identificarte:</p>
+<ul>
+  <li><strong>Documentos tributarios y registros de facturación</strong>, por el plazo que exige la legislación chilena.</li>
+  <li><strong>Registros de la propia solicitud de eliminación</strong>, para poder acreditar que la cumplimos.</li>
+  <li><strong>Listas de supresión de correo</strong>: si pediste no volver a recibir correos, conservamos tu dirección en una lista de bloqueo —y nada más— justamente para no volver a contactarte.</li>
+  <li><strong>Datos agregados o anonimizados</strong> que ya no permiten identificar a una persona.</li>
+</ul></section>
+<section class="lsec full" id="e-6"><h3><span class="num">6</span>Plazos<span class="key">Texto completo</span></h3><ul>
+  <li>Confirmamos la recepción de la solicitud dentro de los <strong>5 días hábiles</strong>.</li>
+  <li>Ejecutamos la eliminación y te respondemos dentro de los <strong>30 días corridos</strong>.</li>
+  <li>Las copias de seguridad se sobrescriben dentro de los <strong>90 días</strong> siguientes.</li>
+</ul></section>
+<section class="lsec full" id="e-7"><h3><span class="num">7</span>Contacto<span class="key">Texto completo</span></h3><p><strong>WM Digital, LLC</strong> (Hapee), operadora de la plataforma y de sus aplicaciones — 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, Estados Unidos.<br>
+<strong>WM Digital SpA</strong> (Hapee), para los clientes que contratan en Chile — RUT 77.178.674-K, Padre Mariano 82, oficina 502, Providencia, Santiago, Chile.<br>
+Correo: <a href="mailto:info@hapee.ai">info@hapee.ai</a></p></section>
+          </div>
+          <div class="ldoc-end"><p><b>Pide la eliminación de tus datos</b> con el asunto «Eliminación de datos».</p><a class="btn btn-primary btn-sm" href="mailto:info@hapee.ai?subject=Eliminaci%C3%B3n%20de%20datos">Escribir a info@hapee.ai <span class="arr">→</span></a></div>
+          <aside class="note" data-n="L4"><b>La página que abre Meta</b> Eliminación de datos se muestra completa: es la URL que Meta revisa en App Review. El botón final abre el correo con el asunto ya escrito.</aside>
+        </article>
+
+        <p class="legal-entity">© 2026 WM Digital, LLC (Hapee.ai) · 1908 Thomes Ave STE 12605, Cheyenne, WY 82001, US · WM Digital SpA, Padre Mariano 82, oficina 502, Providencia, Santiago, Chile · <a href="mailto:info@hapee.ai">info@hapee.ai</a></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document;
+  /* índice: documento y sección visibles */
+  var docs=[].slice.call(d.querySelectorAll('.ltoc .doc')), subs=[].slice.call(d.querySelectorAll('.ltoc .subl a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return;
+      var id=e.target.id;
+      if(e.target.classList.contains('ldoc')) docs.forEach(function(a){ var on=a.dataset.doc===id; a.classList.toggle('on',on); a.parentNode.classList.toggle('cur',on); });
+      else { subs.forEach(function(a){ var on=a.getAttribute('href')==='#'+id; a.classList.toggle('on',on);
+        if(on){ var box=a.closest('.ltoc'), r=a.getBoundingClientRect(), b=box.getBoundingClientRect(); if(box.scrollHeight>box.clientHeight&&(r.top<b.top+40||r.bottom>b.bottom-40)) box.scrollTop+=r.top-b.top-b.height/2; } }); }
+    }); },{rootMargin:'-20% 0px -70% 0px'});
+    d.querySelectorAll('.ldoc,.lsec').forEach(function(s){ io.observe(s); });
+  }
+  /* tablas anchas: scroll propio */
+  d.querySelectorAll('.lsec table').forEach(function(t){ var w=d.createElement('div'); w.className='tbl-scroll'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
+  d.querySelectorAll('[data-print]').forEach(function(b){ b.addEventListener('click',function(){ print(); }); });
+})();
+</script>
+</body>
+</html>

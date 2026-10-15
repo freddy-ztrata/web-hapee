@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Documentación · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Hero ─────────────────────────────────────────── */
+  .dh-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s-12);align-items:center}
+  .dh-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--s-6)}
+  .dh-meta span{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface);font:600 .8rem/1 var(--f-body);color:var(--heading)}
+  .dh-meta .ico{width:15px;height:15px;color:var(--link)}
+
+  /* buscador */
+  .dsearch{position:relative;margin-top:var(--s-8);max-width:560px}
+  .dsearch-in{display:flex;align-items:center;gap:12px;height:58px;padding:0 10px 0 18px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow-2);transition:border-color var(--d-base),box-shadow var(--d-base)}
+  .dsearch-in:focus-within{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+  .dsearch-in .ico{color:var(--text-muted)}
+  .dsearch input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;font:500 1rem var(--f-body);color:var(--heading)}
+  .dsearch input::placeholder{color:var(--text-muted)}
+  .dres{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;list-style:none;margin:0;padding:6px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow-3);max-height:min(400px,60vh);overflow-y:auto}
+  .dres[hidden]{display:none}
+  .dres a{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:10px 12px;border-radius:var(--r-md);color:var(--heading)}
+  .dres a small{grid-column:1;color:var(--text-muted);font-size:.78rem}
+  .dres a em{grid-row:span 2;align-self:center;font:700 .68rem/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--text-muted)}
+  .dres a mark{background:none;color:var(--link)}
+  .dres a[aria-selected="true"],.dres a:hover{background:var(--surface-2)}
+  .dres .empty{padding:14px;color:var(--text-muted);font-size:.9rem}
+
+  /* consola del hero */
+  .console{border-radius:var(--r-xl);background:var(--n-900);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow-3),0 0 0 1px rgba(250,80,0,.08);overflow:hidden;position:relative}
+  .console::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:linear-gradient(140deg,rgba(250,80,0,.5),transparent 40%,transparent 70%,rgba(205,35,73,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+  .console-bar{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.06);font:600 .78rem/1 var(--f-body);color:var(--n-500)}
+  .console-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .console-bar b{margin-left:8px;color:var(--n-300);font-weight:600}
+  .console-bar .ok{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--ok)}
+  .console pre{margin:0;padding:20px 22px 24px;font:500 .82rem/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--n-200);overflow-x:auto;white-space:pre}
+  .console .ln{display:block;opacity:1;transition:opacity .35s var(--ease-out),transform .35s var(--ease-out)}
+  .js .console.typing .ln{opacity:0;transform:translateY(4px)}
+  .js .console.typing .ln.on{opacity:1;transform:none}
+
+  /* ── Bloques de código ─────────────────────────────── */
+  .code{border-radius:var(--r-lg);background:var(--n-900);border:1px solid rgba(255,255,255,.08);overflow:hidden;margin-top:var(--s-4);min-width:0}
+  html:not(.dark) .code{border-color:var(--n-800)}
+  .code-bar{display:flex;align-items:center;gap:10px;min-height:46px;padding:0 6px 0 8px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02)}
+  .code-tabs{display:flex;gap:2px}
+  .code-tabs button{height:32px;padding:0 12px;border-radius:8px;border:0;background:none;color:var(--n-500);font:600 .8rem/1 var(--f-body);cursor:pointer;transition:color var(--d-base),background-color var(--d-base)}
+  .code-tabs button:hover{color:var(--n-200)}
+  .code-tabs button[aria-selected="true"]{color:var(--n-50);background:rgba(255,255,255,.08);box-shadow:inset 0 -2px 0 var(--orange)}
+  .code-lang{padding:0 8px;font:700 .7rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--n-500)}
+  .code-file{font:500 .78rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--n-500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .copy{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:none;color:var(--n-300);font:600 .78rem/1 var(--f-body);cursor:pointer;flex-shrink:0;transition:all var(--d-base)}
+  .copy .ico{width:15px;height:15px}
+  .copy:hover{border-color:rgba(255,255,255,.25);color:var(--n-50)}
+  .copy.done{border-color:rgba(34,197,94,.5);color:var(--ok)}
+  .code pre{margin:0;padding:18px 20px;overflow-x:auto;font:500 .84rem/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--n-200);tab-size:2;white-space:pre}
+  .code pre:focus-visible{outline-offset:-3px}
+  .code.resp{background:var(--n-950)}
+  .code.resp .code-file{color:var(--ok)}
+  /* resaltado hecho a mano (tokens del DS) */
+  .t-k{color:var(--orange)}
+  .t-s{color:color-mix(in srgb,var(--ok) 75%,var(--n-50))}
+  .t-n{color:var(--warn)}
+  .t-c{color:var(--n-500);font-style:italic}
+  .t-p{color:color-mix(in srgb,var(--orange) 45%,var(--n-50))}
+  .t-f{color:color-mix(in srgb,var(--burgundy) 45%,var(--n-50))}
+  .t-v{color:var(--warn)}
+
+  /* ── Layout de documentación ───────────────────────── */
+  .dshell{align-items:start}
+  .dside{display:grid;gap:22px;position:sticky;top:110px;max-height:calc(100svh - 130px);overflow-y:auto;padding-right:6px;font-size:.9rem;scrollbar-width:thin}
+  .dside .grp{display:grid;gap:2px}
+  .dside .k{margin:0 12px 6px;font:700 .7rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .dside a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;border-radius:var(--r-md);color:var(--text-muted)}
+  .dside a:hover,.dside a.on{background:var(--surface-2);color:var(--heading)}
+  .dside a.on{box-shadow:inset 2px 0 0 var(--orange)}
+  .dside a .ico{width:14px;height:14px;opacity:.6}
+  .dside .ver{display:flex;align-items:center;gap:8px;padding:12px;border-radius:var(--r-md);border:1px solid var(--border);font-size:.8rem;color:var(--text-muted)}
+  .dmain{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-24)}
+  .dblock{scroll-margin-top:110px}
+  .dblock>h2{font-size:var(--t-h2);margin:var(--s-3) 0 var(--s-4)}
+  .dblock>.lead{margin-bottom:var(--s-8)}
+  .dblock code:not(pre code),.mini code,.dcards code,.dfacts code,.evt code,.scopes code{font:500 .86em ui-monospace,SFMono-Regular,Menlo,monospace;padding:2px 6px;border-radius:6px;background:var(--surface-2);color:var(--heading);border:1px solid var(--border)}
+
+  /* 5 líneas esenciales */
+  .dfacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .dfacts div{background:var(--surface);padding:20px 22px;display:grid;gap:6px;align-content:start}
+  .dfacts b{display:flex;align-items:center;gap:10px;color:var(--heading);font-size:.95rem}
+  .dfacts b .ico{width:18px;height:18px;color:var(--link)}
+  .dfacts p{color:var(--text-muted);font-size:.9rem}
+  .dfacts div:last-child:nth-child(odd){grid-column:span 2}
+
+  /* pasos del quickstart */
+  .steps{display:grid;grid-template-columns:minmax(0,1fr);counter-reset:st}
+  .step{position:relative;padding:0 0 var(--s-12) 64px}
+  .step::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:-4px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border-strong);font:700 .95rem/1 var(--f-body);color:var(--heading);z-index:1}
+  .step::after{content:"";position:absolute;left:19.5px;top:40px;bottom:0;width:1px;background:linear-gradient(var(--border-strong),var(--border))}
+  .step:last-child{padding-bottom:0}.step:last-child::after{display:none}
+  .step.zero::before{content:"0";counter-increment:none}
+  .step.done::before{background:var(--grad);border-color:transparent;color:#fff}
+  .step h3{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:1.3rem}
+  .step h3 .badge{font-size:.7rem}
+  .step>p{margin-top:8px;color:var(--text-muted);max-width:68ch}
+  .step .tip{margin-top:var(--s-4);display:flex;gap:12px;padding:14px 16px;border-radius:var(--r-md);background:var(--grad-soft);border:1px solid rgba(250,80,0,.25);font-size:.9rem;color:var(--heading)}
+  .step .tip .ico{width:18px;height:18px;color:var(--link);margin-top:2px}
+  .resp-d{margin-top:10px}
+  .resp-d summary{display:inline-flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font:600 .85rem/1 var(--f-body);color:var(--text-muted);padding:8px 0}
+  .resp-d summary::-webkit-details-marker{display:none}
+  .resp-d summary .ico{width:16px;height:16px;transition:transform var(--d-base) var(--ease-out)}
+  .resp-d[open] summary .ico{transform:rotate(90deg)}
+  .resp-d summary:hover{color:var(--heading)}
+  .resp-d .code{margin-top:4px}
+
+  /* tarjetas de guías */
+  .dcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .dcard{padding:24px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-content:start;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
+  .dcard:hover{border-color:rgba(250,80,0,.4);transform:translateY(-3px)}
+  .dcard .ic{grid-row:span 3}
+  .dcard h3{font-size:1.12rem;display:flex;align-items:center;gap:8px}
+  .dcard h3 .arr{color:var(--link);transition:transform var(--d-base) var(--ease-out)}
+  .dcard:hover h3 .arr{transform:translateX(4px)}
+  .dcard p{color:var(--text-muted);font-size:.92rem}
+  .dcard ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  .dcard li{font-size:.75rem;font-weight:600;color:var(--text-muted);padding:4px 8px;border-radius:6px;background:var(--surface-2)}
+  .dcard.wide{grid-column:span 2}
+
+  /* MCP destacado */
+  .mcp{position:relative;overflow:hidden;border-radius:var(--r-xl);padding:clamp(28px,4vw,48px);color:var(--n-300);
+    background:radial-gradient(90% 120% at 100% 0%,rgba(250,80,0,.28),transparent 55%),radial-gradient(70% 90% at 0% 100%,rgba(205,35,73,.22),transparent 60%),linear-gradient(180deg,var(--n-900),var(--n-950));border:1px solid rgba(250,80,0,.28)}
+  .mcp h2,.mcp h3,.mcp b{color:var(--n-50)}
+  .mcp .eyebrow{color:#FF7A3D}
+  .mcp-top{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+  .mcp-top img{width:84px;height:84px;border-radius:22px;box-shadow:0 18px 40px -12px rgba(250,80,0,.6)}
+  .mcp-top h2{font-size:var(--t-h2)}
+  .mcp>p{margin-top:var(--s-6);max-width:64ch;color:var(--n-300)}
+  .mcp .code.mcp-url{margin-top:var(--s-8);border-color:rgba(250,80,0,.35);background:rgba(0,0,0,.4)}
+  .mcp .code.mcp-url pre{font-size:1.15rem;color:var(--n-50);padding:22px 20px}
+  .mcp-url-note{margin-top:10px;font-size:.85rem;color:var(--n-500)}
+  .mcp-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s-8);margin-top:var(--s-12)}
+  .mcp ol{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:mc}
+  .mcp ol li{display:grid;grid-template-columns:32px 1fr;gap:12px;font-size:.93rem}
+  .mcp ol li::before{counter-increment:mc;content:counter(mc);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font:700 .82rem/1 var(--f-body);color:var(--n-50)}
+  .mcp-ai{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--s-6)}
+  .mcp-ai span{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px 0 8px;border-radius:var(--r-pill);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font:600 .85rem/1 var(--f-body);color:var(--n-50)}
+  .mcp-ai img{width:24px;height:24px;border-radius:50%;object-fit:contain;background:#fff;padding:3px}
+  .mcp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .mcp-stats div{background:rgba(8,8,8,.6);padding:18px}
+  .mcp-stats b{display:block;font:400 2.6rem/1 var(--f-display);color:var(--n-50)}
+  .mcp-stats small{font-size:.8rem;color:var(--n-500)}
+  .scopes{margin-top:14px;display:grid;gap:8px}
+  .scopes div{display:grid;grid-template-columns:126px minmax(0,1fr);gap:12px;padding:12px 14px;border-radius:var(--r-md);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:.86rem}
+  .scopes code{align-self:start;justify-self:start}
+  .mcp .scopes code{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:var(--n-50)}
+  .mcp-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:var(--s-8)}
+  .mcp-foot .btn-secondary{color:var(--n-50);border-color:rgba(255,255,255,.25)}
+  .mcp-foot small{color:var(--n-500);font-size:.85rem}
+
+  /* webhooks */
+  .wh-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:var(--s-8)}
+  .mini{padding:20px;display:grid;gap:8px;align-content:start}
+  .mini .ico{width:20px;height:20px;color:var(--link)}
+  .mini b{color:var(--heading);font-size:.95rem}
+  .mini p{color:var(--text-muted);font-size:.86rem}
+  .evt{margin-top:var(--s-8)}
+  .evt-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .evt-head h3{font-size:1.25rem}
+  .evt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .evt-grid div{background:var(--surface);padding:16px 18px;display:grid;gap:8px}
+  .evt-grid b{font-size:.85rem;color:var(--heading)}
+  .evt-grid p{display:flex;flex-wrap:wrap;gap:6px}
+  .evt-grid code{font-size:.76rem!important}
+
+  /* recursos */
+  .res-tbl td:first-child code{white-space:nowrap}
+  .res-tbl td{font-size:.9rem}
+
+  .help{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px}
+  .help b{color:var(--heading);font-size:1.05rem}
+  .help p{color:var(--text-muted);font-size:.92rem}
+
+  @media (max-width:1100px){
+    .dh-grid,.mcp-grid{grid-template-columns:minmax(0,1fr)}
+    .dshell{grid-template-columns:minmax(0,1fr)}
+    .dside{min-width:0}
+    .dside{position:static;max-height:none;overflow:visible;padding:0;display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter)}
+    .dside .grp{display:contents}
+    .dside .k,.dside .ver,.dside .ext{display:none}
+    .dside a{white-space:nowrap;border:1px solid var(--border);flex-shrink:0}
+    .wh-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:760px){
+    .dfacts,.dcards,.evt-grid,.wh-grid{grid-template-columns:1fr}
+    .dfacts div:last-child:nth-child(odd),.dcard.wide{grid-column:auto}
+    .step{padding-left:52px}
+    .mcp-top{grid-template-columns:1fr}
+    .mcp-top img{width:64px;height:64px}
+    .mcp .code.mcp-url pre{font-size:.95rem}
+    .scopes div{grid-template-columns:1fr;gap:4px}
+    .mcp-stats b{font-size:2rem}
+    .code-file{display:none}
+    .copy span{display:none}.copy{padding:0 9px}
+    .code-tabs button{padding:0 10px}
+    .console pre{font-size:.74rem}
+  }
+</style>
+</head>
+<body data-page="docs" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="phero">
+    <div class="ctn dh-grid">
+      <div>
+        <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Documentación</nav>
+        <p class="eyebrow">Para desarrolladores · API v1</p>
+        <h1 class="display">Conecta Hapee a <span class="grad-text">tu sistema.</span></h1>
+        <p class="lead">Tu ERP, tu tienda o tu sistema interno, conectados con una subcuenta de Hapee: API REST en JSON, webhooks firmados y un conector MCP para trabajar con Hapee desde Claude, ChatGPT o Grok Bot.</p>
+        <div class="dsearch" role="search">
+          <label class="dsearch-in" for="dq">
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <span class="sr">Buscar en la documentación</span>
+            <input id="dq" type="search" placeholder="Busca: webhooks, idempotencia, deal.won, OAuth…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="dres" aria-autocomplete="list">
+            <kbd aria-hidden="true">/</kbd>
+          </label>
+          <div class="dres" id="dres" role="listbox" aria-label="Resultados" hidden></div>
+        </div>
+        <div class="phero-cta">
+          <a class="btn btn-primary btn-lg" href="#empezar">Empieza en 5 minutos <span class="arr">→</span></a>
+          <a class="btn btn-secondary btn-lg" href="https://beta.hapee.ai/api/v1/openapi.json" rel="noopener"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>OpenAPI 3.1</a>
+        </div>
+        <div class="dh-meta" aria-label="Datos clave de la API">
+          <span><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>v1 estable</span>
+          <span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>100 llamadas/min</span>
+          <span><svg class="ico" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg>HMAC-SHA256</span>
+          <span><svg class="ico" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></svg>240 herramientas MCP</span>
+        </div>
+      </div>
+
+      <div class="console rv" aria-label="Ejemplo: primera llamada a la API">
+        <div class="console-bar"><i></i><i></i><i></i><b>sandbox · hp_test_</b><span class="ok"><span class="dot-live"></span>200 OK</span></div>
+<pre aria-hidden="true"><span class="ln"><span class="t-c">$</span> <span class="t-k">curl</span> https://beta.hapee.ai/api/v1/me \</span><span class="ln">    <span class="t-f">-H</span> <span class="t-s">"Authorization: Bearer $HAPEE_KEY"</span></span><span class="ln"> </span><span class="ln">{</span><span class="ln">  <span class="t-p">"key"</span>: { <span class="t-p">"name"</span>: <span class="t-s">"Mi ERP"</span>, <span class="t-p">"mode"</span>: <span class="t-s">"test"</span> },</span><span class="ln">  <span class="t-p">"subaccount"</span>: {</span><span class="ln">    <span class="t-p">"name"</span>: <span class="t-s">"Cliente — Sandbox"</span>,</span><span class="ln">    <span class="t-p">"timezone"</span>: <span class="t-s">"America/Santiago"</span>,</span><span class="ln">    <span class="t-p">"sandbox"</span>: <span class="t-k">true</span></span><span class="ln">  },</span><span class="ln">  <span class="t-p">"limits"</span>: { <span class="t-p">"requests_per_minute"</span>: <span class="t-n">100</span> },</span><span class="ln">  <span class="t-p">"api_version"</span>: <span class="t-s">"v1"</span></span><span class="ln">}</span></pre>
+      </div>
+    </div>
+    <aside class="note" data-n="D1"><b>Docs, visibles por fin</b> Hoy /docs tiene 0 enlaces desde la home y el blog, y usa su propio CSS. Aquí entra por el mega-menú (Producto → API y MCP, Recursos → Documentación) con el mismo sistema visual, y abre con un buscador y una consola de ejemplo: el desarrollador ve en 3 segundos que la API es real.</aside>
+  </section>
+
+  <!-- ═══════════ CUERPO CON NAVEGACIÓN LATERAL ═══════════ -->
+  <section class="sec" style="padding-top:var(--s-8)">
+    <div class="ctn with-toc dshell">
+      <nav class="dside" aria-label="Documentación">
+        <div class="grp">
+          <p class="k">Empezar</p>
+          <a href="#esencial">Lo esencial</a>
+          <a href="#empezar">Empieza en 5 minutos</a>
+          <a href="#guias">Guías</a>
+        </div>
+        <div class="grp">
+          <p class="k">Conectar</p>
+          <a href="#mcp">Conector MCP</a>
+          <a href="#webhooks">Webhooks</a>
+          <a href="#recursos">Qué cubre la API</a>
+          <a href="#errores">Errores y versiones</a>
+        </div>
+        <div class="grp ext">
+          <p class="k">Guías completas</p>
+          <a href="/docs/empezar">Empezar en 15 minutos <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a href="/docs/erp">Integrar un ERP <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a href="/docs/webhooks">Webhooks <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a href="/docs/mcp">Conector MCP <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a href="/docs/referencia">Referencia <svg class="ico" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
+        <p class="ver"><span class="dot-live"></span>API v1 · actualizada el 12/10/2026</p>
+      </nav>
+
+      <div class="dmain">
+
+        <!-- Lo esencial -->
+        <div class="dblock" id="esencial">
+          <p class="eyebrow">Lo esencial</p>
+          <h2 class="display">Cinco reglas y <span class="grad-text">listo.</span></h2>
+          <p class="lead">La API cubre los mismos objetos con los que trabaja el equipo comercial dentro de Hapee. Todo lo demás sale de estas cinco reglas.</p>
+          <div class="dfacts rv">
+            <div><b><svg class="ico" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg>Autenticación</b><p><code>Authorization: Bearer hp_live_…</code>, o <code>hp_test_…</code> en sandbox. Las credenciales las emite la agencia que administra tu cuenta.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1M9 17h1M14 17h1"/></svg>Subcuenta</b><p>Sale de la credencial. Nunca se manda por parámetro: una credencial solo lee y escribe en su subcuenta.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Formatos</b><p>JSON UTF-8, fechas ISO 8601 en UTC, teléfonos E.164, montos como texto decimal con su <code>currency</code>, RUT como <code>12345678-K</code>.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Listas</b><p>Paginación por cursor: <code>limit</code> hasta 100, <code>cursor</code> y <code>next_cursor</code>.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>Escrituras</b><p>Manda <code>Idempotency-Key</code> en cada escritura: un reintento por un corte de red no duplica nada. Úsalo desde el primer día.</p></div>
+          </div>
+        </div>
+
+        <!-- Empieza en 5 minutos -->
+        <div class="dblock" id="empezar">
+          <p class="eyebrow">Empieza en 5 minutos</p>
+          <h2 class="display">Del primer request al <span class="grad-text">primer webhook.</span></h2>
+          <p class="lead">Todo contra sandbox, sin tocar nada real. Elige tu lenguaje una vez: todos los ejemplos de la página cambian con él.</p>
+          <div class="steps">
+            <div class="step zero rv">
+              <h3>Lo que necesitas <span class="badge">30 s</span></h3>
+              <p>Una credencial <code>hp_test_…</code> que te da la agencia que administra tu cuenta. Apunta a una subcuenta de prueba con datos ficticios.</p>
+              <div class="code " data-code><div class="code-bar"><span class="code-lang">Shell</span><span class="code-file">Terminal</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="sh" tabindex="0"><code><span class="t-k">export</span> HAPEE_KEY=<span class="t-s">"hp_test_..."</span>   <span class="t-c"># la credencial de sandbox que te dio tu agencia</span></code></pre></div>
+            </div>
+            <div class="step rv" data-step>
+              <h3>Confirma que la credencial sirve <span class="badge">1 min</span></h3>
+              <p><code>GET /me</code> te dice quién eres, sobre qué subcuenta operas, en qué modo y con qué límites. Si esto anda, el resto anda.</p>
+              <div class="code " data-code><div class="code-bar"><div class="code-tabs" role="tablist" aria-label="Lenguaje del ejemplo"><button type="button" role="tab" id="cb2-curl" aria-controls="cb2-curl-p" aria-selected="true" tabindex="0" data-lang="curl">curl</button><button type="button" role="tab" id="cb2-js" aria-controls="cb2-js-p" aria-selected="false" tabindex="-1" data-lang="js">JavaScript</button><button type="button" role="tab" id="cb2-py" aria-controls="cb2-py-p" aria-selected="false" tabindex="-1" data-lang="py">Python</button></div><span class="code-file">GET /me</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="curl" role="tabpanel" id="cb2-curl-p" aria-labelledby="cb2-curl" tabindex="0"><code><span class="t-k">curl</span> https://beta.hapee.ai/api/v1/me \
+  <span class="t-f">-H</span> <span class="t-s">"Authorization: Bearer $HAPEE_KEY"</span></code></pre><pre data-lang="js" role="tabpanel" id="cb2-js-p" aria-labelledby="cb2-js" tabindex="0" hidden><code><span class="t-k">const</span> res = <span class="t-k">await</span> <span class="t-f">fetch</span>(<span class="t-s">"https://beta.hapee.ai/api/v1/me"</span>, {
+  headers: { Authorization: <span class="t-s">`Bearer ${process.env.HAPEE_KEY}`</span> },
+});
+<span class="t-k">const</span> yo = <span class="t-k">await</span> res.<span class="t-f">json</span>();
+console.<span class="t-f">log</span>(yo.subaccount.name, yo.subaccount.sandbox); <span class="t-c">// "Cliente — Sandbox" true</span></code></pre><pre data-lang="py" role="tabpanel" id="cb2-py-p" aria-labelledby="cb2-py" tabindex="0" hidden><code><span class="t-k">import</span> os, requests
+
+r = requests.<span class="t-f">get</span>(
+    <span class="t-s">"https://beta.hapee.ai/api/v1/me"</span>,
+    headers={<span class="t-s">"Authorization"</span>: f<span class="t-s">"Bearer {os.environ['HAPEE_KEY']}"</span>},
+)
+yo = r.<span class="t-f">json</span>()
+<span class="t-f">print</span>(yo[<span class="t-s">"subaccount"</span>][<span class="t-s">"name"</span>], yo[<span class="t-s">"subaccount"</span>][<span class="t-s">"sandbox"</span>])  <span class="t-c"># Cliente — Sandbox True</span></code></pre></div>
+              <details class="resp-d" open><summary><svg class="ico" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>Respuesta</summary><div class="code resp" data-code><div class="code-bar"><span class="code-lang">JSON</span><span class="code-file">200 OK</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="json" tabindex="0"><code>{
+  <span class="t-p">"key"</span>: { <span class="t-p">"id"</span>: <span class="t-n">44</span>, <span class="t-p">"name"</span>: <span class="t-s">"Mi ERP"</span>, <span class="t-p">"mode"</span>: <span class="t-s">"test"</span>, <span class="t-p">"read_only"</span>: <span class="t-k">false</span> },
+  <span class="t-p">"subaccount"</span>: { <span class="t-p">"id"</span>: <span class="t-n">91</span>, <span class="t-p">"name"</span>: <span class="t-s">"Cliente — Sandbox"</span>,
+                  <span class="t-p">"timezone"</span>: <span class="t-s">"America/Santiago"</span>, <span class="t-p">"default_currency"</span>: <span class="t-s">"CLP"</span>,
+                  <span class="t-p">"sandbox"</span>: <span class="t-k">true</span>, <span class="t-p">"language"</span>: <span class="t-s">"es"</span> },
+  <span class="t-p">"limits"</span>: { <span class="t-p">"requests_per_minute"</span>: <span class="t-n">100</span>, <span class="t-p">"batch_max_items"</span>: <span class="t-n">100</span>,
+              <span class="t-p">"events_retention_days"</span>: <span class="t-n">30</span>, <span class="t-p">"idempotency_window_hours"</span>: <span class="t-n">24</span> },
+  <span class="t-p">"api_version"</span>: <span class="t-s">"v1"</span>
+}</code></pre></div></details>
+              <p class="tip"><svg class="ico" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Mira que <code>sandbox</code> diga <code>true</code>. Si dice <code>false</code>, para aquí: esa credencial apunta a datos reales.</span></p>
+            </div>
+            <div class="step rv" data-step>
+              <h3>Crea un contacto <span class="badge">2 min</span></h3>
+              <p><code>external_id</code> es el id de tu sistema: hace que la carga se pueda repetir sin duplicar. La segunda vez actualiza en lugar de crear, y con la misma <code>Idempotency-Key</code> recibes la misma respuesta con <code>Idempotent-Replay: true</code>.</p>
+              <div class="code " data-code><div class="code-bar"><div class="code-tabs" role="tablist" aria-label="Lenguaje del ejemplo"><button type="button" role="tab" id="cb4-curl" aria-controls="cb4-curl-p" aria-selected="true" tabindex="0" data-lang="curl">curl</button><button type="button" role="tab" id="cb4-js" aria-controls="cb4-js-p" aria-selected="false" tabindex="-1" data-lang="js">JavaScript</button><button type="button" role="tab" id="cb4-py" aria-controls="cb4-py-p" aria-selected="false" tabindex="-1" data-lang="py">Python</button></div><span class="code-file">POST /contacts/upsert</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="curl" role="tabpanel" id="cb4-curl-p" aria-labelledby="cb4-curl" tabindex="0"><code><span class="t-k">curl</span> <span class="t-f">-X</span> POST https://beta.hapee.ai/api/v1/contacts/upsert \
+  <span class="t-f">-H</span> <span class="t-s">"Authorization: Bearer $HAPEE_KEY"</span> \
+  <span class="t-f">-H</span> <span class="t-s">"Content-Type: application/json"</span> \
+  <span class="t-f">-H</span> <span class="t-s">"Idempotency-Key: mi-primera-prueba-001"</span> \
+  <span class="t-f">-d</span> '{
+    <span class="t-s">"external_id"</span>: <span class="t-s">"ERP-DEMO-1"</span>,
+    <span class="t-s">"email"</span>: <span class="t-s">"prueba@ejemplo.cl"</span>,
+    <span class="t-s">"first_name"</span>: <span class="t-s">"Ana"</span>, <span class="t-s">"last_name"</span>: <span class="t-s">"Pérez"</span>,
+    <span class="t-s">"phone"</span>: <span class="t-s">"+56912345678"</span>,
+    <span class="t-s">"rut"</span>: <span class="t-s">"12.345.678-5"</span>
+  }'</code></pre><pre data-lang="js" role="tabpanel" id="cb4-js-p" aria-labelledby="cb4-js" tabindex="0" hidden><code><span class="t-k">const</span> res = <span class="t-k">await</span> <span class="t-f">fetch</span>(<span class="t-s">"https://beta.hapee.ai/api/v1/contacts/upsert"</span>, {
+  method: <span class="t-s">"POST"</span>,
+  headers: {
+    Authorization: <span class="t-s">`Bearer ${process.env.HAPEE_KEY}`</span>,
+    <span class="t-s">"Content-Type"</span>: <span class="t-s">"application/json"</span>,
+    <span class="t-s">"Idempotency-Key"</span>: <span class="t-s">"mi-primera-prueba-001"</span>,
+  },
+  body: JSON.<span class="t-f">stringify</span>({
+    external_id: <span class="t-s">"ERP-DEMO-1"</span>,
+    email: <span class="t-s">"prueba@ejemplo.cl"</span>,
+    first_name: <span class="t-s">"Ana"</span>, last_name: <span class="t-s">"Pérez"</span>,
+    phone: <span class="t-s">"+56912345678"</span>,
+    rut: <span class="t-s">"12.345.678-5"</span>,
+  }),
+});
+<span class="t-k">const</span> { data, created } = <span class="t-k">await</span> res.<span class="t-f">json</span>(); <span class="t-c">// created: true la primera vez</span></code></pre><pre data-lang="py" role="tabpanel" id="cb4-py-p" aria-labelledby="cb4-py" tabindex="0" hidden><code>r = requests.<span class="t-f">post</span>(
+    <span class="t-s">"https://beta.hapee.ai/api/v1/contacts/upsert"</span>,
+    headers={
+        <span class="t-s">"Authorization"</span>: f<span class="t-s">"Bearer {os.environ['HAPEE_KEY']}"</span>,
+        <span class="t-s">"Idempotency-Key"</span>: <span class="t-s">"mi-primera-prueba-001"</span>,
+    },
+    json={
+        <span class="t-s">"external_id"</span>: <span class="t-s">"ERP-DEMO-1"</span>,
+        <span class="t-s">"email"</span>: <span class="t-s">"prueba@ejemplo.cl"</span>,
+        <span class="t-s">"first_name"</span>: <span class="t-s">"Ana"</span>, <span class="t-s">"last_name"</span>: <span class="t-s">"Pérez"</span>,
+        <span class="t-s">"phone"</span>: <span class="t-s">"+56912345678"</span>,
+        <span class="t-s">"rut"</span>: <span class="t-s">"12.345.678-5"</span>,
+    },
+)
+<span class="t-f">print</span>(r.<span class="t-f">json</span>()[<span class="t-s">"created"</span>])  <span class="t-c"># True la primera vez, False al repetir</span></code></pre></div>
+              <details class="resp-d"><summary><svg class="ico" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>Respuesta</summary><div class="code resp" data-code><div class="code-bar"><span class="code-lang">JSON</span><span class="code-file">200 OK</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="json" tabindex="0"><code>{ <span class="t-p">"data"</span>: { <span class="t-p">"id"</span>: <span class="t-n">90211</span>, <span class="t-p">"email"</span>: <span class="t-s">"prueba@ejemplo.cl"</span>, <span class="t-p">"…"</span>: <span class="t-s">"…"</span> },
+  <span class="t-p">"created"</span>: <span class="t-k">true</span> }</code></pre></div></details>
+            </div>
+            <div class="step rv" data-step>
+              <h3>Registra un webhook <span class="badge">2 min</span></h3>
+              <p>Necesitas una URL pública <code>https</code>; para probar en tu máquina, levanta un túnel (<code>ngrok http 3000</code>). Después dispara un evento de prueba con <code>POST /webhooks/endpoints/{id}/ping</code>.</p>
+              <div class="code " data-code><div class="code-bar"><div class="code-tabs" role="tablist" aria-label="Lenguaje del ejemplo"><button type="button" role="tab" id="cb6-curl" aria-controls="cb6-curl-p" aria-selected="true" tabindex="0" data-lang="curl">curl</button><button type="button" role="tab" id="cb6-js" aria-controls="cb6-js-p" aria-selected="false" tabindex="-1" data-lang="js">JavaScript</button><button type="button" role="tab" id="cb6-py" aria-controls="cb6-py-p" aria-selected="false" tabindex="-1" data-lang="py">Python</button></div><span class="code-file">POST /webhooks/endpoints</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="curl" role="tabpanel" id="cb6-curl-p" aria-labelledby="cb6-curl" tabindex="0"><code><span class="t-k">curl</span> <span class="t-f">-X</span> POST https://beta.hapee.ai/api/v1/webhooks/endpoints \
+  <span class="t-f">-H</span> <span class="t-s">"Authorization: Bearer $HAPEE_KEY"</span> \
+  <span class="t-f">-H</span> <span class="t-s">"Content-Type: application/json"</span> \
+  <span class="t-f">-d</span> '{
+    <span class="t-s">"url"</span>: <span class="t-s">"https://a1b2c3.ngrok-free.app/hooks"</span>,
+    <span class="t-s">"description"</span>: <span class="t-s">"Pruebas locales"</span>,
+    <span class="t-s">"events"</span>: [<span class="t-s">"*"</span>]
+  }'</code></pre><pre data-lang="js" role="tabpanel" id="cb6-js-p" aria-labelledby="cb6-js" tabindex="0" hidden><code><span class="t-k">const</span> res = <span class="t-k">await</span> <span class="t-f">fetch</span>(<span class="t-s">"https://beta.hapee.ai/api/v1/webhooks/endpoints"</span>, {
+  method: <span class="t-s">"POST"</span>,
+  headers: {
+    Authorization: <span class="t-s">`Bearer ${process.env.HAPEE_KEY}`</span>,
+    <span class="t-s">"Content-Type"</span>: <span class="t-s">"application/json"</span>,
+  },
+  body: JSON.<span class="t-f">stringify</span>({
+    url: <span class="t-s">"https://a1b2c3.ngrok-free.app/hooks"</span>,
+    description: <span class="t-s">"Pruebas locales"</span>,
+    events: [<span class="t-s">"*"</span>],
+  }),
+});
+<span class="t-k">const</span> endpoint = <span class="t-k">await</span> res.<span class="t-f">json</span>(); <span class="t-c">// guarda el secret: se muestra una sola vez</span></code></pre><pre data-lang="py" role="tabpanel" id="cb6-py-p" aria-labelledby="cb6-py" tabindex="0" hidden><code>r = requests.<span class="t-f">post</span>(
+    <span class="t-s">"https://beta.hapee.ai/api/v1/webhooks/endpoints"</span>,
+    headers={<span class="t-s">"Authorization"</span>: f<span class="t-s">"Bearer {os.environ['HAPEE_KEY']}"</span>},
+    json={
+        <span class="t-s">"url"</span>: <span class="t-s">"https://a1b2c3.ngrok-free.app/hooks"</span>,
+        <span class="t-s">"description"</span>: <span class="t-s">"Pruebas locales"</span>,
+        <span class="t-s">"events"</span>: [<span class="t-s">"*"</span>],
+    },
+)
+endpoint = r.<span class="t-f">json</span>()  <span class="t-c"># guarda el secret: se muestra una sola vez</span></code></pre></div>
+              <p class="tip"><svg class="ico" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg><span>Guarda el <code>secret</code> ahora: es la única vez que se muestra completo. Después solo verás <code>whsec_…aB3d</code>.</span></p>
+            </div>
+          </div>
+          <p class="muted" style="margin-top:var(--s-8)">¿Sigues? La <a href="/docs/empezar">guía completa de 15 minutos</a> suma la idempotencia paso a paso, el receptor mínimo, <code>GET /events</code> y el registro de entregas.</p>
+        </div>
+
+        <!-- Guías -->
+        <div class="dblock" id="guias">
+          <p class="eyebrow">Guías</p>
+          <h2 class="display">Escritas para que alcance <span class="grad-text">sin nosotros al lado.</span></h2>
+          <div class="dcards">
+            <a class="card dcard spot rv" href="/docs/empezar"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><h3>Empezar en 15 minutos <span class="arr">→</span></h3><p>Del primer request al primer webhook, todo contra sandbox.</p><ul><li>8 pasos</li><li>curl</li><li>Receptor en Node</li></ul></a>
+            <a class="card dcard spot rv" href="/docs/erp"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></span><h3>Integrar un ERP <span class="arr">→</span></h3><p>Carga inicial, sincronización, negocio ganado → factura y cobranza, con mapeo de campos y checklist de salida.</p><ul><li>4 flujos</li><li>Fuente de verdad</li><li>API vs. workflows</li></ul></a>
+            <a class="card dcard spot rv" href="/docs/webhooks"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></span><h3>Webhooks <span class="arr">→</span></h3><p>Verificación de firma, reglas del receptor, rotación del secreto y catálogo de 35 eventos.</p><ul><li>Node</li><li>Python</li><li>PHP</li><li>C#</li></ul></a>
+            <a class="card dcard spot rv" href="/docs/mcp"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></svg></span><h3>Conector MCP <span class="arr">→</span></h3><p>Usa Hapee desde Claude, ChatGPT o Grok Bot con tu propio usuario y exactamente tus permisos.</p><ul><li>OAuth 2.1</li><li>240 herramientas</li><li>Plan Pro</li></ul></a>
+            <a class="card dcard wide spot rv" href="/docs/referencia"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span><h3>Referencia de la API <span class="arr">→</span></h3><p>Todos los endpoints con sus parámetros y respuestas. Se genera desde la aplicación, así que refleja las rutas que de verdad están montadas. Postman, Insomnia y la mayoría de los generadores de cliente importan el contrato OpenAPI 3.1 directo.</p><ul><li>Generada desde el código</li><li>OpenAPI 3.1</li></ul></a>
+          </div>
+        </div>
+
+        <!-- MCP -->
+        <div class="dblock" id="mcp">
+          <div class="mcp rv">
+            <div class="mcp-top">
+              <img src="/img/hapee-mcp-icon-256.png" alt="Ícono de la app de Hapee" width="84" height="84">
+              <div><p class="eyebrow">Conector MCP · nuevo</p><h2 class="display">Hapee dentro de <span class="grad-text">tu asistente de IA.</span></h2></div>
+            </div>
+            <p>Agrega el conector a Claude, ChatGPT, Grok Bot u otro asistente compatible y pídele en lenguaje natural «muéstrame los negocios abiertos de esta semana» o «agenda una cita para mañana a las 10». Inicias sesión con tu usuario: el asistente ve lo que tú ves y cambia solo lo que tú puedes cambiar.</p>
+            <div class="code mcp-url" data-code><div class="code-bar"><span class="code-lang">URL</span><span class="code-file">URL del conector</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="url" tabindex="0"><code>https://mcp.hapee.ai/mcp</code></pre></div>
+            <p class="mcp-url-note">Es la única dirección que necesitas y no lleva credenciales: el inicio de sesión ocurre después, en una pantalla de Hapee. Dirección oficial desde el 12 de octubre de 2026. Requiere un plan que incluya la conexión con asistentes de IA (desde Pro).</p>
+            <div class="mcp-ai" aria-label="Asistentes compatibles">
+              <span><img src="/img/orbit/claude.png" alt="" width="24" height="24">Claude</span>
+              <span><img src="/img/orbit/chatgpt.png" alt="" width="24" height="24">ChatGPT</span>
+              <span><svg class="ico" viewBox="0 0 24 24" style="width:20px;height:20px;margin-left:4px"><path d="M12 3l1.9 5.8L20 10.7l-6.1 1.9L12 18.5l-1.9-5.9L4 10.7l6.1-1.9z"/></svg>Grok Bot</span>
+              <span><svg class="ico" viewBox="0 0 24 24" style="width:20px;height:20px;margin-left:4px"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></svg>Cualquier cliente MCP remoto</span>
+            </div>
+            <div class="mcp-grid">
+              <div>
+                <h3 style="font-size:1.15rem;margin-bottom:16px">Conéctalo en 4 pasos</h3>
+                <ol>
+                  <li><span>En la configuración de tu asistente, agrega un conector personalizado (o remoto) MCP con la URL de arriba. Si te pide un nombre, usa «Hapee».</span></li>
+                  <li><span>Si pregunta por la autenticación, elige <b>OAuth</b>. No hace falta client ID ni secreto: el asistente se registra solo.</span></li>
+                  <li><span>Se abre beta.hapee.ai: inicia sesión como siempre y aprueba la conexión. Ahí puedes quitar el permiso de escritura.</span></li>
+                  <li><span>De vuelta en el asistente, pregúntale «¿quién soy en Hapee?» para comprobar usuario y subcuenta.</span></li>
+                </ol>
+              </div>
+              <div>
+                <div class="mcp-stats"><div><b>240</b><small>herramientas</small></div><div><b>85</b><small>de consulta</small></div><div><b>155</b><small>que modifican</small></div></div>
+                <div class="scopes" aria-label="Permisos">
+                  <div><code>hapee:read</code><span>Consultar lo que tú puedes ver. Siempre incluido.</span></div>
+                  <div><code>hapee:write</code><span>Crear, editar y borrar donde tu perfil lo permite. Opcional: lo quitas al aprobar.</span></div>
+                  <div><code>offline_access</code><span>Mantener la conexión sin iniciar sesión cada hora. Vence a los 90 días.</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="mcp-foot">
+              <a class="btn btn-primary" href="/docs/mcp">Guía completa del conector <span class="arr">→</span></a>
+              <a class="btn btn-secondary" href="/propuesta-2026-r8x4/legal#p-10">Qué datos guarda</a>
+              <small>OAuth 2.1 con PKCE · registro dinámico (RFC 7591) · 100 llamadas por minuto</small>
+            </div>
+          </div>
+          <aside class="note" data-n="D3"><b>MCP como protagonista</b> El conector es el diferenciador técnico más fuerte y hoy vive en una página sin enlaces. Aquí tiene bloque propio: URL copiable (sale del mismo #url-conector de docs/mcp.html), asistentes compatibles, permisos y conteo de herramientas.</aside>
+        </div>
+
+        <!-- Webhooks -->
+        <div class="dblock" id="webhooks">
+          <p class="eyebrow">Webhooks</p>
+          <h2 class="display">Te avisamos cuando <span class="grad-text">pasa algo.</span></h2>
+          <p class="lead">Firmados con HMAC-SHA256 y con el objeto completo en <code>data</code>, con la misma forma que devuelve el <code>GET</code> de ese recurso. ¿Tu sistema no puede exponer una URL pública? <code>GET /events</code> sirve exactamente los mismos eventos, con 30 días de retención.</p>
+          <div class="code " data-code><div class="code-bar"><span class="code-lang">HTTP</span><span class="code-file">Lo que llega a tu endpoint</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="http" tabindex="0"><code><span class="t-k">POST</span> /hooks/hapee HTTP/<span class="t-n">1.1</span>
+<span class="t-p">Content-Type</span>: application/json
+<span class="t-p">X-Hapee-Event</span>: deal.won
+<span class="t-p">X-Hapee-Delivery</span>: <span class="t-n">88213</span>
+<span class="t-p">X-Hapee-Signature</span>: t=<span class="t-n">1789057409</span>,v1=18af345942aa99c0...
+
+{
+  <span class="t-p">"id"</span>: <span class="t-s">"evt_10433"</span>,
+  <span class="t-p">"type"</span>: <span class="t-s">"deal.won"</span>,
+  <span class="t-p">"api_version"</span>: <span class="t-s">"v1"</span>,
+  <span class="t-p">"created_at"</span>: <span class="t-s">"2026-09-10T14:02:11Z"</span>,
+  <span class="t-p">"subaccount_id"</span>: <span class="t-n">63</span>,
+  <span class="t-p">"data"</span>: { <span class="t-p">"id"</span>: <span class="t-n">5521</span>, <span class="t-p">"title"</span>: <span class="t-s">"Reposición Q4"</span>,
+            <span class="t-p">"amount"</span>: <span class="t-s">"4200000"</span>, <span class="t-p">"currency"</span>: <span class="t-s">"CLP"</span> }
+}</code></pre></div>
+          <div class="code " data-code><div class="code-bar"><div class="code-tabs" role="tablist" aria-label="Lenguaje del ejemplo"><button type="button" role="tab" id="cb9-node" aria-controls="cb9-node-p" aria-selected="true" tabindex="0" data-lang="node">Node</button><button type="button" role="tab" id="cb9-py" aria-controls="cb9-py-p" aria-selected="false" tabindex="-1" data-lang="py">Python</button></div><span class="code-file">Verificar X-Hapee-Signature</span><button type="button" class="copy" aria-label="Copiar código"><svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button></div><pre data-lang="node" role="tabpanel" id="cb9-node-p" aria-labelledby="cb9-node" tabindex="0"><code><span class="t-k">const</span> crypto = <span class="t-k">require</span>(<span class="t-s">"crypto"</span>);
+
+<span class="t-k">function</span> <span class="t-f">firmaValida</span>(crudo, cabecera, secreto, tolerancia = <span class="t-n">300</span>) {
+  <span class="t-k">const</span> p = Object.<span class="t-f">fromEntries</span>(
+    cabecera.<span class="t-f">split</span>(<span class="t-s">","</span>).<span class="t-f">map</span>((x) =&gt; x.<span class="t-f">split</span>(<span class="t-s">"="</span>).<span class="t-f">map</span>((s) =&gt; s.<span class="t-f">trim</span>())));
+  <span class="t-k">if</span> (!p.t || !p.v1) <span class="t-k">return</span> <span class="t-k">false</span>;
+  <span class="t-k">const</span> esperado = crypto.<span class="t-f">createHmac</span>(<span class="t-s">"sha256"</span>, secreto)
+    .<span class="t-f">update</span>(<span class="t-s">`${p.t}.${crudo}`</span>).<span class="t-f">digest</span>(<span class="t-s">"hex"</span>);
+  <span class="t-k">const</span> a = Buffer.<span class="t-k">from</span>(esperado), b = Buffer.<span class="t-k">from</span>(p.v1);
+  <span class="t-k">if</span> (a.length !== b.length || !crypto.<span class="t-f">timingSafeEqual</span>(a, b)) <span class="t-k">return</span> <span class="t-k">false</span>;
+  <span class="t-k">return</span> Math.<span class="t-f">abs</span>(Date.<span class="t-f">now</span>() / <span class="t-n">1000</span> - <span class="t-f">Number</span>(p.t)) &lt;= tolerancia;
+}</code></pre><pre data-lang="py" role="tabpanel" id="cb9-py-p" aria-labelledby="cb9-py" tabindex="0" hidden><code><span class="t-k">import</span> hashlib, hmac, time
+
+<span class="t-k">def</span> <span class="t-f">firma_valida</span>(cuerpo_crudo: bytes, cabecera: str, secreto: str,
+                 tolerancia_seg: int = <span class="t-n">300</span>) -&gt; bool:
+    partes = <span class="t-f">dict</span>(
+        p.<span class="t-f">strip</span>().<span class="t-f">split</span>(<span class="t-s">"="</span>, <span class="t-n">1</span>) <span class="t-k">for</span> p <span class="t-k">in</span> cabecera.<span class="t-f">split</span>(<span class="t-s">","</span>) <span class="t-k">if</span> <span class="t-s">"="</span> <span class="t-k">in</span> p
+    )
+    t, v1 = partes.<span class="t-f">get</span>(<span class="t-s">"t"</span>), partes.<span class="t-f">get</span>(<span class="t-s">"v1"</span>)
+    <span class="t-k">if</span> <span class="t-k">not</span> t <span class="t-k">or</span> <span class="t-k">not</span> v1:
+        <span class="t-k">return</span> <span class="t-k">False</span>
+    esperado = hmac.<span class="t-f">new</span>(
+        secreto.<span class="t-f">encode</span>(<span class="t-s">"utf-8"</span>),
+        t.<span class="t-f">encode</span>(<span class="t-s">"utf-8"</span>) + b<span class="t-s">"."</span> + cuerpo_crudo,
+        hashlib.sha256,
+    ).<span class="t-f">hexdigest</span>()
+    <span class="t-k">if</span> <span class="t-k">not</span> hmac.<span class="t-f">compare_digest</span>(esperado, v1):
+        <span class="t-k">return</span> <span class="t-k">False</span>
+    <span class="t-k">return</span> <span class="t-f">abs</span>(<span class="t-f">int</span>(time.<span class="t-f">time</span>()) - <span class="t-f">int</span>(t)) &lt;= tolerancia_seg</code></pre></div>
+          <div class="wh-grid">
+            <div class="card mini rv"><svg class="ico" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg><b>Deduplica por id</b><p>Una entrega puede repetirse. Guarda los <code>id</code> que ya procesaste.</p></div>
+            <div class="card mini rv"><svg class="ico" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg><b>El orden no está garantizado</b><p>Ordena por <code>created_at</code> o consulta el estado actual con un <code>GET</code>.</p></div>
+            <div class="card mini rv"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><b>Responde en menos de 10 s</b><p>Cualquier 2xx confirma. Encola y procesa después.</p></div>
+            <div class="card mini rv"><svg class="ico" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><b>Reintentos por ~24 h</b><p>Espera creciente. Tras 15 fallas seguidas el endpoint se desactiva y se avisa.</p></div>
+          </div>
+          <div class="evt rv">
+            <div class="evt-head"><h3>Catálogo: 35 eventos</h3><span class="muted" style="font-size:.88rem">Suscríbete con <code>["*"]</code> o solo a los que te importan.</span></div>
+            <div class="evt-grid">
+              <div><b>Contactos</b><p><code>contact.created</code><code>.updated</code><code>.deleted</code><code>.tag_added</code><code>.tag_removed</code></p></div>
+              <div><b>Empresas</b><p><code>company.created</code><code>.updated</code><code>.archived</code></p></div>
+              <div><b>Negocios</b><p><code>deal.created</code><code>.updated</code><code>.stage_changed</code><code>.won</code><code>.lost</code><code>.deleted</code></p></div>
+              <div><b>Cotizaciones</b><p><code>quote.created</code><code>.sent</code><code>.viewed</code><code>.accepted</code><code>.rejected</code></p></div>
+              <div><b>Productos</b><p><code>product.created</code><code>.updated</code><code>.archived</code></p></div>
+              <div><b>Objetos personalizados</b><p><code>custom_object.record.created</code><code>.updated</code><code>.deleted</code></p></div>
+              <div><b>Citas</b><p><code>appointment.created</code><code>.updated</code><code>.cancelled</code></p></div>
+              <div><b>Formularios y prueba</b><p><code>form.submitted</code><code>webhook.test</code></p></div>
+              <div style="grid-column:1/-1"><b>Facturación y cobranza</b><p><code>invoice.sent</code><code>.paid</code><code>.overdue</code><code>payment.received</code><code>refund.issued</code></p></div>
+            </div>
+          </div>
+          <aside class="note" data-n="D4"><b>Referencia resumida, no copiada</b> La portada resume lo que más se busca (forma del evento, firma, reglas del receptor y catálogo) y enlaza a la guía completa. Los ejemplos de firma se muestran en tiempo constante, que la guía actual exige pero el receptor mínimo no hace.</aside>
+        </div>
+
+        <!-- Recursos -->
+        <div class="dblock" id="recursos">
+          <p class="eyebrow">Qué cubre la API</p>
+          <h2 class="display">Los mismos objetos que usa <span class="grad-text">tu equipo.</span></h2>
+          <div class="tbl-wrap rv"><table class="tbl res-tbl">
+            <thead><tr><th>Recurso</th><th>Qué te permite</th></tr></thead>
+            <tbody>
+              <tr><td><code>contacts</code></td><td>Personas: crear, actualizar, buscar, etiquetar, notas y tareas</td></tr>
+              <tr><td><code>companies</code></td><td>Empresas, con RUT validado</td></tr>
+              <tr><td><code>deals</code></td><td>Negocios: crear, mover de etapa, marcar ganado o perdido</td></tr>
+              <tr><td><code>products</code>, <code>prices</code></td><td>Catálogo y listas de precios</td></tr>
+              <tr><td><code>quotes</code></td><td>Cotizaciones, con sus líneas y totales</td></tr>
+              <tr><td><code>calendars</code>, <code>appointments</code></td><td>Disponibilidad, agendar, reagendar y cancelar</td></tr>
+              <tr><td><code>custom_objects</code></td><td>Tus propios objetos: facturas, órdenes, pagos</td></tr>
+              <tr><td><code>workflows</code></td><td>Inscribir un contacto en una automatización</td></tr>
+              <tr><td><code>webhooks</code>, <code>events</code></td><td>Enterarte de lo que pasa, sin sondear</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <!-- Errores y versionado -->
+        <div class="dblock" id="errores">
+          <p class="eyebrow">Errores y versiones</p>
+          <h2 class="display">Predecible <span class="grad-text">por diseño.</span></h2>
+          <div class="dfacts rv">
+            <div><b><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>Una sola forma de error</b><p>Todos traen <code>code</code> estable, <code>message</code>, <code>details</code> por campo y <code>request_id</code>. Guarda el <code>X-Request-Id</code>: con él encontramos tu llamada exacta.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9"/></svg>v1 es estable</b><p>Agregar un campo no rompe: ignora los que no conoces. Un cambio que sí rompa sale como <code>v2</code>, y <code>v1</code> sigue vivo al menos 12 meses desde el anuncio.</p></div>
+            <div><b><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Sandbox y producción, la misma API</b><p>Pasar a producción es cambiar la credencial <code>hp_test_</code> por <code>hp_live_</code> y la URL del webhook. Nada más. El checklist de salida está en la <a href="/docs/erp#checklist">guía de ERP</a>.</p></div>
+          </div>
+        </div>
+
+        <div class="card help rv">
+          <div><b>¿Algo que no está documentado?</b><p>Escríbenos con tu <code>request_id</code> y lo revisamos.</p></div>
+          <a class="btn btn-secondary" href="mailto:info@hapee.ai"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>info@hapee.ai</a>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="D2"><b>Una portada de docs de producto</b> Barra lateral fija con resaltado de la sección visible, pestañas curl / JavaScript / Python que se recuerdan en toda la página (hoy solo hay curl), botón copiar en cada bloque y resaltado de sintaxis hecho a mano con los tokens del sistema, sin librerías. En producción, cada guía usa esta misma plantilla.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">¿Lo vemos con tu sistema?</h2>
+      <p>Agenda 30 minutos con nuestro equipo y revisamos juntos cómo conectar tu ERP, tu tienda o tu sistema interno con Hapee.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="mailto:info@hapee.ai">Escribir a info@hapee.ai</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LKEY='hapee-docs-lang';
+
+  /* ── Pestañas de lenguaje: una elección vale para toda la página ── */
+  function setLang(lang, save){
+    d.querySelectorAll('[data-code]').forEach(function(box){
+      var tabs=box.querySelectorAll('[role="tab"]'); if(!tabs.length) return;
+      var map={js:'node',node:'js'}, want=lang, has=box.querySelector('[role="tab"][data-lang="'+want+'"]');
+      if(!has && map[want]) { want=map[want]; has=box.querySelector('[role="tab"][data-lang="'+want+'"]'); }
+      if(!has) return;
+      tabs.forEach(function(t){var on=t.dataset.lang===want; t.setAttribute('aria-selected',on?'true':'false'); t.tabIndex=on?0:-1;});
+      box.querySelectorAll('pre').forEach(function(p){p.hidden=p.dataset.lang!==want;});
+    });
+    if(save){ try{localStorage.setItem(LKEY,lang);}catch(e){} }
+  }
+  d.querySelectorAll('[data-code] [role="tab"]').forEach(function(t){
+    t.addEventListener('click',function(){
+      var y=t.getBoundingClientRect().top; setLang(t.dataset.lang,true);
+      var dy=t.getBoundingClientRect().top-y; if(dy) scrollBy(0,dy); // el bloque no salta al cambiar de alto
+    });
+    t.addEventListener('keydown',function(e){
+      if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
+      var list=[].slice.call(t.parentNode.children), i=list.indexOf(t), n=list[(i+(e.key==='ArrowRight'?1:-1)+list.length)%list.length];
+      n.focus(); n.click(); e.preventDefault();
+    });
+  });
+  try{ var saved=localStorage.getItem(LKEY); if(saved) setLang(saved,false); }catch(e){}
+
+  /* ── Copiar ── */
+  d.querySelectorAll('[data-code] .copy').forEach(function(b){
+    var lbl=b.querySelector('span');
+    b.addEventListener('click',function(){
+      var box=b.closest('[data-code]'), pre=box.querySelector('pre:not([hidden])'); if(!pre) return;
+      var txt=pre.textContent;
+      function ok(){ b.classList.add('done'); lbl.textContent='Copiado'; setTimeout(function(){b.classList.remove('done');lbl.textContent='Copiar';},1800); }
+      if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,fallback); } else fallback();
+      function fallback(){ var r=d.createRange(); r.selectNodeContents(pre); var s=getSelection(); s.removeAllRanges(); s.addRange(r); try{d.execCommand('copy'); ok();}catch(e){} s.removeAllRanges(); }
+    });
+  });
+
+  /* ── Consola del hero: aparece línea por línea ── */
+  var con=d.querySelector('.console');
+  if(con && !reduce && 'IntersectionObserver' in window){
+    con.classList.add('typing');
+    var lines=con.querySelectorAll('.ln');
+    var io=new IntersectionObserver(function(es){ if(!es[0].isIntersecting) return; io.disconnect();
+      lines.forEach(function(l,i){ setTimeout(function(){l.classList.add('on');}, (i<2?i*260:700+i*90)); });
+    },{threshold:.3});
+    io.observe(con);
+  }
+
+  /* ── Pasos: se marcan al recorrerlos ── */
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('done'); so.unobserve(e.target);} });},{rootMargin:'0px 0px -55% 0px'});
+    d.querySelectorAll('[data-step]').forEach(function(s){so.observe(s);});
+  }
+
+  /* ── Barra lateral: resalta la sección visible ── */
+  var side=[].slice.call(d.querySelectorAll('.dside a[href^="#"]'));
+  if(side.length && 'IntersectionObserver' in window){
+    var io3=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting) side.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);}); });},{rootMargin:'-25% 0px -65% 0px'});
+    side.forEach(function(a){var t=d.getElementById(a.getAttribute('href').slice(1)); if(t) io3.observe(t);});
+  }
+
+  /* ── Buscador ── */
+  var IDX=[
+    ['Lo esencial: autenticación, formatos, paginación','Portada','#esencial','bearer hp_live hp_test credencial token rut e.164 iso 8601 cursor limit next_cursor json'],
+    ['Idempotency-Key','Portada','#esencial','idempotencia reintento duplicar escrituras idempotent-replay'],
+    ['Empieza en 5 minutos','Portada','#empezar','quickstart primer request sandbox curl javascript python'],
+    ['GET /me: probar la credencial','Empieza en 5 minutos','#empezar','me quien soy subaccount sandbox limites'],
+    ['POST /contacts/upsert','Empieza en 5 minutos','#empezar','crear contacto external_id upsert match_by'],
+    ['POST /webhooks/endpoints','Empieza en 5 minutos','#empezar','registrar webhook endpoint secret whsec ngrok ping'],
+    ['Conector MCP: URL y conexión','Portada','#mcp','mcp claude chatgpt grok asistente ia oauth conector mcp.hapee.ai'],
+    ['Permisos del conector (scopes)','Conector MCP','#mcp','hapee:read hapee:write offline_access scopes permisos'],
+    ['Verificar la firma X-Hapee-Signature','Webhooks','#webhooks','firma hmac sha256 secreto timestamp tolerancia node python'],
+    ['Catálogo de eventos','Webhooks','#webhooks','eventos contact.created deal.won deal.lost quote.accepted invoice.paid payment.received appointment form.submitted webhook.test'],
+    ['Reglas del receptor','Webhooks','#webhooks','deduplicar orden reintentos timeout 10 segundos desactiva'],
+    ['Qué cubre la API','Portada','#recursos','contacts companies deals products prices quotes calendars appointments custom_objects workflows events'],
+    ['Errores y versionado','Portada','#errores','error code request_id x-request-id v1 v2 versiones validation_error'],
+    ['Empezar en 15 minutos','Guía','/docs/empezar','idempotencia receptor minimo express get events entregas deliveries'],
+    ['Integrar un ERP','Guía','/docs/erp','erp carga inicial batch sincronizacion factura cobranza mapeo de campos dte sii fuente de verdad'],
+    ['Checklist de salida a producción','Integrar un ERP','/docs/erp#checklist','produccion hp_live checklist allowlist ip'],
+    ['¿API o workflows?','Integrar un ERP','/docs/erp','webhook saliente webhook recibido workflow _http_status'],
+    ['Rotar el secreto','Webhooks','/docs/webhooks#rotar','rotar secreto signature-previous 24 horas'],
+    ['GET /events: alternativa por consulta','Webhooks','/docs/webhooks#pull','events cursor retencion 30 dias sin url publica'],
+    ['Firma en PHP y C#','Webhooks','/docs/webhooks#php','php csharp c# .net'],
+    ['Herramientas del conector','Conector MCP','/docs/mcp#herramientas','240 herramientas readOnlyHint destructiveHint openWorldHint'],
+    ['Agencias y subcuentas en MCP','Conector MCP','/docs/mcp#subcuenta','select_subaccount agencia subcuenta whoami'],
+    ['Cuánto dura la conexión MCP','Conector MCP','/docs/mcp#duracion','1 hora 30 dias 90 dias renovacion token revocar desconectar'],
+    ['Detalle técnico OAuth 2.1','Conector MCP','/docs/mcp#tecnico','pkce s256 rfc 9728 8414 7591 7009 8707 streamable http'],
+    ['Referencia de la API (OpenAPI 3.1)','Referencia','/docs/referencia','openapi postman insomnia endpoints parametros'],
+    ['Lote: POST /{recurso}/batch','Integrar un ERP','/docs/erp','batch lote 100 items job_id jobs']
+  ];
+  function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var q=d.getElementById('dq'), box=d.getElementById('dres'), sel=-1, cur=[];
+  function render(){
+    var v=norm(q.value.trim());
+    if(!v){ box.hidden=true; q.setAttribute('aria-expanded','false'); return; }
+    var words=v.split(/\s+/);
+    cur=IDX.map(function(r){var hay=norm(r[0]+' '+r[1]+' '+r[3]), t=norm(r[0]), sc=0;
+      for(var i=0;i<words.length;i++){ if(hay.indexOf(words[i])<0) return null; sc+=t.indexOf(words[i])>-1?2:1; }
+      return {r:r,sc:sc};}).filter(Boolean).sort(function(a,b){return b.sc-a.sc;}).slice(0,8);
+    sel=cur.length?0:-1;
+    if(!cur.length){ box.innerHTML='<p class="empty">Nada con «'+esc(q.value.trim())+'». Prueba con «webhook», «contacto» o «OAuth», o escríbenos a info@hapee.ai.</p>'; }
+    else box.innerHTML=cur.map(function(c,i){
+      var t=esc(c.r[0]), ext=c.r[2].charAt(0)!=='#';
+      words.forEach(function(w){ if(w.length<2) return; var nt=norm(c.r[0]), k=nt.indexOf(w); if(k>-1 && !/[<>]/.test(t)) t=esc(c.r[0].slice(0,k))+'<mark>'+esc(c.r[0].slice(k,k+w.length))+'</mark>'+esc(c.r[0].slice(k+w.length)); });
+      return '<a role="option" id="dr'+i+'" href="'+c.r[2]+'" aria-selected="'+(i===0)+'">'+t+'<small>'+esc(c.r[1])+'</small><em>'+(ext?'Guía':'Aquí')+'</em></a>';
+    }).join('');
+    box.hidden=false; q.setAttribute('aria-expanded','true'); q.setAttribute('aria-activedescendant',cur.length?'dr0':'');
+  }
+  function move(k){ var as=box.querySelectorAll('a'); if(!as.length) return; sel=(sel+k+as.length)%as.length;
+    as.forEach(function(a,i){a.setAttribute('aria-selected',i===sel?'true':'false');}); as[sel].scrollIntoView({block:'nearest'}); q.setAttribute('aria-activedescendant','dr'+sel); }
+  q.addEventListener('input',render);
+  q.addEventListener('focus',render);
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){move(1);e.preventDefault();}
+    else if(e.key==='ArrowUp'){move(-1);e.preventDefault();}
+    else if(e.key==='Enter'){ var a=box.querySelectorAll('a')[sel]; if(a){ e.preventDefault(); box.hidden=true; location.href=a.getAttribute('href'); q.blur(); } }
+    else if(e.key==='Escape'){ box.hidden=true; q.setAttribute('aria-expanded','false'); }
+  });
+  box.addEventListener('click',function(e){ if(e.target.closest('a')){ box.hidden=true; q.setAttribute('aria-expanded','false'); } });
+  d.addEventListener('click',function(e){ if(!e.target.closest('.dsearch')){ box.hidden=true; q.setAttribute('aria-expanded','false'); } });
+  d.addEventListener('keydown',function(e){
+    var a=d.activeElement, typing=a&&(/input|textarea|select/i.test(a.tagName)||a.isContentEditable);
+    if(e.key==='/'&&!typing&&!e.metaKey&&!e.ctrlKey){ e.preventDefault(); q.focus(); q.scrollIntoView({block:'center',behavior:reduce?'auto':'smooth'}); }
+  });
+})();
+</script>
+</body>
+</html>

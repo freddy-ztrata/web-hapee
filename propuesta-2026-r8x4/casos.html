@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casos de éxito · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  .filters{position:sticky;top:88px;z-index:20;padding:10px 0;margin-bottom:var(--s-8);background:linear-gradient(var(--bg) 70%,transparent)}
+  .filters .tabs-row{margin:0}
+  .count{font-size:.85rem;color:var(--text-muted);margin-left:auto;align-self:center}
+
+  .case{transition:opacity var(--d-slow) var(--ease-out),transform var(--d-slow) var(--ease-out)}
+  .case.off{display:none}
+  .case.pop{animation:cpop .5s var(--ease-out)}
+  @keyframes cpop{from{opacity:0;transform:translateY(12px)}}
+
+  /* ── Caso destacado ── */
+  .feat{display:grid;grid-template-columns:1fr 1.05fr;gap:0;margin-bottom:16px}
+  .feat-copy{padding:clamp(24px,4vw,44px);display:grid;gap:20px;align-content:start}
+  .feat-media{position:relative;min-height:420px;background:var(--surface-2);border-left:1px dashed rgba(250,80,0,.35);overflow:hidden}
+  .feat-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top;opacity:.22;filter:saturate(.5) blur(1px)}
+  .feat-media::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 70% at 50% 50%,transparent,var(--surface) 95%)}
+  .play{position:absolute;inset:0;z-index:1;display:grid;place-items:center;align-content:center;gap:14px;text-align:center;padding:24px}
+  .play span{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:var(--grad);box-shadow:0 0 0 10px rgba(250,80,0,.15),0 20px 60px -10px rgba(250,80,0,.6);animation:pulse 2.4s var(--ease-out) infinite}
+  .play span .ico{width:30px;height:30px;stroke:var(--n-0);fill:var(--n-0);margin-left:4px}
+  .play small{color:var(--text-muted);font-size:.85rem;max-width:30ch}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(250,80,0,.35),0 20px 60px -10px rgba(250,80,0,.6)}70%{box-shadow:0 0 0 22px rgba(250,80,0,0),0 20px 60px -10px rgba(250,80,0,.6)}100%{box-shadow:0 0 0 0 rgba(250,80,0,0),0 20px 60px -10px rgba(250,80,0,.6)}}
+  .who{display:flex;align-items:center;gap:14px}
+  .lg{width:56px;height:56px;border-radius:16px;border:1px dashed var(--border-strong);display:grid;place-items:center;color:var(--text-muted);font:700 .62rem/1.1 var(--f-body);text-align:center;flex-shrink:0;background:var(--surface-2)}
+  .who b{display:block;color:var(--heading);font-size:1.1rem}
+  .who small{color:var(--text-muted);font-size:.84rem}
+  .tagrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .k{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--link);margin-bottom:6px;display:block}
+  .blk p{color:var(--text-muted);font-size:.95rem}
+  .mods{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .mods span{font-size:.78rem;font-weight:600;color:var(--heading);padding:5px 10px;border-radius:var(--r-pill);border:1px solid var(--border)}
+  .mets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+  .mets div{background:var(--surface);padding:14px 16px}
+  .mets b{display:block;font:400 2.4rem/1 var(--f-display);color:var(--heading)}
+  .feat .mets b{font-size:3.2rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mets small{color:var(--text-muted);font-size:.78rem;line-height:1.3;display:block;margin-top:4px}
+  .qt{margin:0;padding:16px 18px;border-radius:var(--r-md);background:var(--surface-2);color:var(--heading);font-weight:600;font-size:.95rem;position:relative}
+  .qt::before{content:"«";position:absolute;right:14px;top:-14px;font:400 4rem/1 var(--f-display);color:rgba(250,80,0,.35)}
+  .qt footer{display:flex;align-items:center;gap:10px;margin-top:10px;font-weight:500;font-size:.82rem;color:var(--text-muted)}
+  .qt footer i{width:28px;height:28px;border-radius:50%;border:1px dashed var(--border-strong)}
+
+  /* ── Grilla ── */
+  .cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .cc{padding:24px;display:grid;gap:16px;align-content:start}
+  .cc .mets b{font-size:2rem}
+  .tbd{font:700 .7rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--warn);background:rgba(245,158,11,.14);padding:6px 9px;border-radius:var(--r-pill)}
+
+  /* ── Método ── */
+  .method{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:m}
+  .mstep{padding:24px;display:grid;gap:10px;align-content:start;position:relative}
+  .mstep::before{counter-increment:m;content:"0" counter(m);font:400 3rem/.8 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong)}
+  .mstep h3{font-size:1.1rem}
+  .mstep p{color:var(--text-muted);font-size:.92rem}
+
+  /* ── Trabajos del Grupo Digitals (separados a propósito) ── */
+  .agency{background:linear-gradient(180deg,var(--n-900),var(--n-950));border-block:1px solid rgba(255,255,255,.06);color:var(--n-300)}
+  html:not(.dark) .agency{background:var(--n-100);color:var(--text)}
+  .disc{display:flex;gap:14px;align-items:flex-start;padding:18px 20px;border-radius:var(--r-lg);border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.08);color:var(--heading);font-size:.92rem;max-width:820px;margin-bottom:var(--s-12)}
+  .disc .ico{color:var(--warn);margin-top:1px}
+  .ag{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+  .agc{padding:24px;display:grid;gap:14px;align-content:start;min-height:300px}
+  .agc .blogo{height:44px;display:flex;align-items:center}
+  .agc .blogo img{height:44px;width:auto;object-fit:contain;opacity:.85}
+  html:not(.dark) .agc .blogo img{filter:invert(1);opacity:.75}
+  .agc .blogo span{font:800 1.2rem/1 var(--f-body);letter-spacing:.08em;color:var(--heading)}
+  .agc b.n{font:400 clamp(3.6rem,5vw,4.6rem)/.85 var(--f-display);color:var(--heading)}
+  .agc p{color:var(--text-muted);font-size:.93rem}
+  .agc .svc{margin-top:auto;font:700 .68rem/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);padding-top:12px;border-top:1px solid var(--border)}
+  .brands{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 48px;margin-top:var(--s-12);padding-top:var(--s-8);border-top:1px solid var(--border)}
+  .brands img{height:36px;width:auto;object-fit:contain;opacity:.55;transition:opacity var(--d-base)}
+  .brands img:hover{opacity:1}
+  html:not(.dark) .brands img{filter:invert(1)}
+
+  @media (max-width:1100px){
+    .feat{grid-template-columns:1fr}
+    .feat-media{min-height:300px;border-left:0;border-top:1px dashed rgba(250,80,0,.35);order:-1}
+    .cases{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .method,.ag{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:760px){
+    .cases,.method,.ag{grid-template-columns:1fr}
+    .filters{top:76px}
+    .filters .tabs-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+    .filters .chip{flex-shrink:0}
+    .count{display:none}
+    .feat .mets b{font-size:2.4rem}
+    .agc{min-height:0}
+    .brands{gap:20px 28px}.brands img{height:28px}
+  }
+</style>
+</head>
+<body data-page="casos" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+</svg>
+<main id="main" class="page">
+
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="phero">
+    <div class="ctn">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Recursos<span>/</span>Casos de éxito</nav>
+      <div class="sec-head" style="margin-bottom:0;max-width:900px">
+        <p class="eyebrow">Casos de éxito</p>
+        <h1 class="display">Resultados que se pueden <span class="grad-text">revisar.</span></h1>
+        <p class="lead">Cada caso trae el nombre del cliente, su rubro, el problema que tenía, cómo usa Hapee y tres números medidos en la plataforma. Estamos documentando los primeros casos de clientes de Hapee: abajo ves exactamente cómo se va a leer cada uno.</p>
+        <div class="phero-cta">
+          <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
+          <a class="btn btn-secondary btn-lg" href="mailto:info@hapee.ai?subject=Quiero%20contar%20mi%20caso%20con%20Hapee"><svg class="ico"><use href="#i-mail"/></svg>¿Eres cliente? Cuenta tu caso</a>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="C1"><b>Página nueva y honesta</b> Hoy no existe ni un caso de cliente de Hapee: los casos y logos del sitio son de la agencia. Aquí los marcos punteados muestran la estructura final de cada caso y los trabajos de Digitals van aparte, rotulados.</aside>
+  </section>
+
+  <!-- ═════════════ CASOS DE HAPEE ═════════════ -->
+  <section class="sec" style="padding-top:0">
+    <div class="ctn">
+      <div class="filters">
+        <div class="tabs-row" role="group" aria-label="Filtrar por rubro" id="cf">
+          <button class="chip" aria-pressed="true" data-r="all">Todos</button>
+          <button class="chip" aria-pressed="false" data-r="salud">Salud</button>
+          <button class="chip" aria-pressed="false" data-r="retail">Retail y e-commerce</button>
+          <button class="chip" aria-pressed="false" data-r="inmo">Inmobiliaria</button>
+          <button class="chip" aria-pressed="false" data-r="edu">Educación</button>
+          <button class="chip" aria-pressed="false" data-r="ind">Industria y B2B</button>
+          <button class="chip" aria-pressed="false" data-r="estado">Proveedores del Estado</button>
+          <span class="count" id="cCount" aria-live="polite">7 casos</span>
+        </div>
+      </div>
+
+      <!-- Caso destacado -->
+      <article class="card feat pending case rv" data-r="salud">
+        <div class="feat-copy">
+          <div class="tagrow"><span class="badge">Caso destacado</span><span class="badge">Salud</span><span class="tbd">Caso por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Clínica · Santiago, Chile · cliente desde 20XX</small></div></div>
+          <div class="blk"><span class="k">El reto</span><p>Caso por completar… En una frase: qué se perdía antes (por ejemplo, pacientes que escribían de noche y nadie contestaba hasta el día siguiente).</p></div>
+          <div class="blk"><span class="k">La solución</span><p>Caso por completar… Qué configuró con Hapee y en cuántos días.</p>
+            <div class="mods"><span>Agente IA en WhatsApp</span><span>Agenda conectada</span><span>Pipeline</span><span>Recordatorios automáticos</span></div></div>
+          <div class="mets"><div><b>+00%</b><small>citas agendadas al mes</small></div><div><b>00 s</b><small>tiempo de primera respuesta</small></div><div><b>00%</b><small>conversaciones resueltas sin humano</small></div></div>
+          <blockquote class="qt">Cita textual del cliente sobre el cambio, en sus palabras, con una cifra si es posible.<footer><i></i>Nombre Apellido · Cargo</footer></blockquote>
+        </div>
+        <div class="feat-media">
+          <img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" alt="" loading="lazy" width="1500" height="780">
+          <div class="play"><span><svg class="ico"><use href="#i-play"/></svg></span><b style="color:var(--heading)">Video de 30 segundos con el cliente</b><small>Por grabar. Testimonio en su lugar de trabajo, con la plataforma en pantalla.</small></div>
+        </div>
+      </article>
+
+      <!-- Grilla -->
+      <div class="cases">
+        <article class="card cc pending case rv" data-r="retail">
+          <div class="tagrow"><span class="badge">Retail y e-commerce</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Tienda online · Shopify</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Carritos abandonados y consultas de stock sin responder.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Agente en WhatsApp e Instagram conectado a la tienda, con enlace de pago.</p></div>
+          <div class="mets"><div><b>$00K</b><small>ventas recuperadas</small></div><div><b>00 s</b><small>respuesta</small></div><div><b>00%</b><small>carritos recuperados</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+        <article class="card cc pending case rv" data-r="inmo">
+          <div class="tagrow"><span class="badge">Inmobiliaria</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Corredora de propiedades</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Leads de portales y Meta Ads que nadie calificaba a tiempo.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Agente que califica presupuesto y comuna, y agenda visitas en el calendario del corredor.</p></div>
+          <div class="mets"><div><b>00</b><small>visitas agendadas al mes</small></div><div><b>00%</b><small>leads calificados</small></div><div><b>00 h</b><small>ahorradas por semana</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+        <article class="card cc pending case rv" data-r="edu">
+          <div class="tagrow"><span class="badge">Educación</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Instituto o academia</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Picos de consultas en período de matrícula.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Agente que responde aranceles y fechas, y deriva a admisión los casos listos para matricular.</p></div>
+          <div class="mets"><div><b>+00%</b><small>matrículas</small></div><div><b>00K</b><small>consultas atendidas</small></div><div><b>00 s</b><small>respuesta</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+        <article class="card cc pending case rv" data-r="ind">
+          <div class="tagrow"><span class="badge">Industria y B2B</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Distribuidor industrial</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Cotizaciones que tardaban días y se perdían en el correo.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Agente que recoge el requerimiento, pipeline por etapa y seguimiento automático.</p></div>
+          <div class="mets"><div><b>-00%</b><small>tiempo de cotización</small></div><div><b>00</b><small>oportunidades al mes</small></div><div><b>00%</b><small>tasa de cierre</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+        <article class="card cc pending case rv" data-r="estado">
+          <div class="tagrow"><span class="badge">Proveedores del Estado</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Proveedor de Mercado Público</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Revisar licitaciones a mano todos los días.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Módulo de Licitaciones con afinidad calculada por IA y alertas por correo.</p></div>
+          <div class="mets"><div><b>$00M</b><small>adjudicado</small></div><div><b>00</b><small>licitaciones postuladas</small></div><div><b>00 h</b><small>ahorradas al mes</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+        <article class="card cc pending case rv" data-r="salud">
+          <div class="tagrow"><span class="badge">Salud</span><span class="tbd">Por completar</span></div>
+          <div class="who"><span class="lg">LOGO</span><div><b>Nombre del cliente</b><small>Centro médico o dental</small></div></div>
+          <div class="blk"><span class="k">Reto</span><p>Caso por completar… Pacientes que no llegaban a su hora.</p></div>
+          <div class="blk"><span class="k">Solución</span><p>Confirmaciones y recordatorios automáticos por WhatsApp, con reagendamiento por el agente.</p></div>
+          <div class="mets"><div><b>-00%</b><small>inasistencias</small></div><div><b>00</b><small>horas reagendadas</small></div><div><b>00%</b><small>confirmación</small></div></div>
+          <blockquote class="qt">Cita del cliente.<footer><i></i>Nombre · Cargo</footer></blockquote>
+        </article>
+      </div>
+    </div>
+    <aside class="note" data-n="C2"><b>Estructura fija de cada caso</b> Cliente, rubro, reto, solución con módulos, tres métricas medidas en la plataforma y una cita. Un caso destacado grande (ideal con video) y la grilla filtrable por rubro. Los rubros coinciden con las demos de la home.</aside>
+  </section>
+
+  <!-- ═════════════ MÉTODO ═════════════ -->
+  <section class="sec alt">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Cómo armamos un caso</p>
+        <h2 class="display">Números de la plataforma, <span class="grad-text">no de memoria.</span></h2>
+      </div>
+      <div class="method">
+        <div class="card mstep rv"><h3>Entrevista</h3><p>30 minutos con el cliente: qué hacía antes, qué cambió y qué no funcionó al principio.</p></div>
+        <div class="card mstep rv"><h3>Datos de Hapee</h3><p>Tiempo de respuesta, conversaciones, citas y negocios ganados, sacados del reporte de la cuenta.</p></div>
+        <div class="card mstep rv"><h3>Aprobación</h3><p>El cliente revisa el texto y las cifras, y autoriza el uso de su nombre y su logo.</p></div>
+        <div class="card mstep rv"><h3>Publicación</h3><p>Caso en el sitio, versión corta para la home y un video de 30 segundos cuando se puede.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ TRABAJOS DEL GRUPO DIGITALS ═════════════ -->
+  <section class="sec agency" id="digitals">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Aparte, para no confundir</p>
+        <h2 class="display">Trabajos del equipo detrás de Hapee <span class="grad-text">(Grupo Digitals)</span></h2>
+        <p class="lead">Antes de Hapee, este mismo equipo llevó el marketing y las ventas de estas marcas como agencia. Te los mostramos porque dicen quiénes te van a implementar.</p>
+      </div>
+      <div class="disc"><svg class="ico"><use href="#i-alert"/></svg><p><b>No son casos de la plataforma Hapee.</b> Son resultados de servicios de agencia del Grupo Digitals (pauta, contenido, CRM y funnel), con métricas reportadas por la agencia.</p></div>
+      <div class="ag">
+        <article class="card agc rv"><div class="blogo"><span>DEVELON</span></div><b class="n" data-to="40" data-pre="+" data-suf="%">+40%</b><p>Crecimiento comercial en 2 años para Develon (Hyundai), con leads de maquinaria pesada calificados antes de llegar a ventas.</p><span class="svc">Performance y leads de ticket alto</span></article>
+        <article class="card agc rv"><div class="blogo"><img src="/img/brands/sacyr.png?v=2" alt="Sacyr" width="360" height="140" loading="lazy"></div><b class="n" data-to="260" data-pre="+" data-suf="%">+260%</b><p>Engagement y seguidores en 6 meses en las redes de las concesiones de infraestructura.</p><span class="svc">Contenido y comunidad</span></article>
+        <article class="card agc rv"><div class="blogo"><img src="/img/brands/heli.png?v=2" alt="Heli Forklift" width="360" height="140" loading="lazy"></div><b class="n" data-to="20" data-pre="+" data-suf="%">+20%</b><p>Crecimiento mensual sostenido en ventas de montacargas y equipos industriales.</p><span class="svc">Meta y Google Ads, cotización</span></article>
+        <article class="card agc rv"><div class="blogo"><img src="/img/brands/mundomed.png?v=2" alt="Mundo Med" width="360" height="140" loading="lazy"></div><b class="n" data-to="30" data-pre="+" data-suf="%">+30%</b><p>Crecimiento anual con un funnel completo para equipamiento médico, en más de cinco años de trabajo continuo.</p><span class="svc">Full funnel 360°</span></article>
+      </div>
+      <div class="brands" aria-label="Otras marcas que han trabajado con el Grupo Digitals">
+        <img src="/img/brands/burgerking.png?v=2" alt="Burger King" loading="lazy"><img src="/img/brands/indisa.png?v=2" alt="Clínica Indisa" loading="lazy"><img src="/img/brands/corfo.png?v=2" alt="CORFO" loading="lazy"><img src="/img/brands/logo-chery.png?v=2" alt="Chery" loading="lazy"><img src="/img/brands/elloa.png?v=2" alt="Aeropuerto El Loa" loading="lazy"><img src="/img/brands/tranciti.png?v=2" alt="Tranciti" loading="lazy"><img src="/img/brands/andes.png?v=2" alt="Andes Construcción" loading="lazy"><img src="/img/brands/reutter.png?v=2" alt="Empresas Reutter" loading="lazy"><img src="/img/brands/gashn.png?v=2" alt="Gas HN" loading="lazy">
+      </div>
+      <p class="muted" style="text-align:center;margin-top:16px;font-size:.82rem">Marcas que han trabajado con el Grupo Digitals como agencia. Uso de logos autorizado por cada marca <span class="todo">[confirmar]</span></p>
+    </div>
+    <aside class="note" data-n="C3"><b>Rotulado con honestidad</b> Los cuatro casos de la home actual (Develon, Sacyr, Heli, Mundo Med) se conservan, pero en un bloque separado, con aviso explícito de que son servicios de agencia. Presentarlos como casos de Hapee es el error que la auditoría marcó como crítico.</aside>
+  </section>
+
+  <section class="sec">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">El próximo caso puede ser el tuyo.</h2>
+      <p>Agenda 30 minutos: te mostramos Hapee con tu rubro y definimos juntos qué números vamos a medir desde el primer día.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/por-que-hapee">Por qué Hapee</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Filtro por rubro
+  var f=d.getElementById('cf'), cases=d.querySelectorAll('.case'), cnt=d.getElementById('cCount');
+  if(f) f.addEventListener('click',function(e){ var b=e.target.closest('[data-r]'); if(!b) return; var r=b.dataset.r, n=0;
+    f.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c===b?'true':'false');});
+    cases.forEach(function(c){ var on=r==='all'||c.dataset.r===r; c.classList.toggle('off',!on); if(on){ n++; c.classList.add('in'); if(!reduce){ c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); } } });
+    if(cnt) cnt.textContent=n+(n===1?' caso':' casos'); });
+
+  // Contadores de los trabajos de agencia
+  var ns=d.querySelectorAll('[data-to]');
+  if(ns.length && 'IntersectionObserver' in window && !reduce){
+    ns.forEach(function(n){ n.textContent=(n.dataset.pre||'')+'0'+(n.dataset.suf||''); });
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; io.unobserve(e.target);
+      var el=e.target, to=+el.dataset.to, t0=performance.now();
+      (function tick(t){ var k=Math.min(1,(t-t0)/1500), v=Math.round(to*(1-Math.pow(1-k,3))); el.textContent=(el.dataset.pre||'')+v+(el.dataset.suf||''); if(k<1) requestAnimationFrame(tick); })(t0); }); },{threshold:.6});
+    ns.forEach(function(n){ io.observe(n); });
+  }
+})();
+</script>
+</body>
+</html>

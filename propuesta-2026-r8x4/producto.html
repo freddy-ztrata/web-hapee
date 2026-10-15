@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Producto · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Hero: la plataforma se "abre" al hacer scroll ───────────── */
+  .ph-center{text-align:center;display:grid;justify-items:center}
+  .ph-center .lead{margin-inline:auto}
+  .ph-center .phero-cta{justify-content:center}
+  .stage{position:relative;perspective:1700px;margin-top:var(--s-16);--t:1}
+  .stage-frame{position:relative;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--border-strong);background:var(--n-50);
+    box-shadow:0 60px 120px -40px rgba(250,80,0,.45),var(--shadow-3);transform-origin:50% 0;
+    transform:rotateX(calc(var(--t) * 24deg)) scale(calc(1 - var(--t) * .07));will-change:transform}
+  .stage-frame::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 55%,rgba(8,8,8,calc(var(--t) * .55)))}
+  .chrome{display:flex;align-items:center;gap:6px;height:36px;padding:0 14px;background:var(--n-100);border-bottom:1px solid rgba(20,18,16,.08);font:600 .74rem/1 var(--f-body);color:var(--n-600)}
+  .chrome i{width:10px;height:10px;border-radius:50%;background:var(--n-300)}
+  .chrome span{margin:0 auto;padding:5px 14px;border-radius:var(--r-pill);background:var(--n-0);border:1px solid rgba(20,18,16,.08);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+  .stage-frame img{width:100%;height:auto}
+  .fchip{position:absolute;z-index:2;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r-lg);background:var(--glass);border:1px solid var(--border);
+    -webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);box-shadow:var(--shadow-3);font:600 .86rem/1.3 var(--f-body);color:var(--heading);
+    opacity:calc(1 - var(--t) * 1.4);transform:translateY(calc(var(--t) * 30px))}
+  .fchip small{display:block;font-weight:500;color:var(--text-muted);font-size:.76rem}
+  .fchip .ic{width:36px;height:36px;border-radius:11px}
+  .fchip.a{left:-3%;top:22%}.fchip.b{right:-3%;top:48%}.fchip.c{left:8%;bottom:-6%}
+  @media (max-width:1100px){.fchip.a{left:2%}.fchip.b{right:2%}}
+  @media (max-width:760px){.fchip{display:none}.stage{margin-top:var(--s-8)}}
+
+  /* ── Mapa: 4 momentos ─────────────────────────────────────────── */
+  .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:fl}
+  .flow-col{padding:26px 24px 22px;display:grid;gap:14px;align-content:start}
+  .flow-col .k{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+  .flow-col h3{font:400 2.6rem/.9 var(--f-display);text-transform:uppercase;color:var(--heading)}
+  .flow-col p{font-size:.9rem;color:var(--text-muted)}
+  .flow-col nav{display:grid;gap:2px;margin-top:4px}
+  .flow-col nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;margin-inline:-10px;border-radius:var(--r-md);color:var(--heading);font-weight:600;font-size:.92rem;transition:background-color var(--d-base)}
+  .flow-col nav a:hover{background:var(--surface-2)}
+  .flow-col nav a .ico{width:18px;height:18px;color:var(--link)}
+  .flow-col nav a::after{content:"→";margin-left:auto;color:var(--text-muted);opacity:0;transform:translateX(-4px);transition:all var(--d-base) var(--ease-out)}
+  .flow-col nav a:hover::after{opacity:1;transform:none}
+  .flow-line{position:relative;height:2px;margin:0 0 22px;background:var(--border);border-radius:2px;overflow:hidden}
+  .flow-line::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:0 50%;transition:transform 1.6s var(--ease-out)}
+  .flow.in .flow-line::after{transform:none}
+
+  /* ── Índice pegajoso de módulos ───────────────────────────────── */
+  .mods{position:relative}
+  .modbar{position:sticky;top:88px;z-index:50;transition:top var(--d-slow) var(--ease-out)}
+  body:has(#nav.hide) .modbar{top:12px}
+  .modbar-in{position:relative;margin:0 auto;width:min(1240px,calc(100% - 28px));border-radius:var(--r-pill);background:var(--glass);border:1px solid var(--border);
+    -webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:var(--shadow-2);overflow:hidden}
+  .modbar-sc{display:flex;gap:2px;padding:6px;overflow-x:auto;scrollbar-width:none;scroll-behavior:smooth}
+  .modbar-sc::-webkit-scrollbar{display:none}
+  .modbar a{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 11px;border-radius:var(--r-pill);color:var(--text-muted);font:600 .82rem/1 var(--f-body);white-space:nowrap;transition:background-color var(--d-base),color var(--d-base)}
+  .modbar a .ico{width:16px;height:16px}
+  .modbar a:hover{color:var(--heading)}
+  .modbar a.on{background:var(--heading);color:var(--bg)}
+  .modbar-pr{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--grad);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+
+  /* ── Bloques de módulo ────────────────────────────────────────── */
+  .feature{scroll-margin-top:70px;position:relative;grid-template-columns:.85fr 1.25fr;gap:var(--s-12)}
+  .feature.rev{grid-template-columns:1.25fr .85fr}
+  .f-copy{position:relative}
+  .f-num{display:block;font:400 clamp(4rem,6vw,5.6rem)/.8 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong);user-select:none;margin-bottom:-6px}
+  .f-copy .lead{font-size:1.05rem}
+  .f-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:var(--s-2)}
+  .plan{display:inline-flex;align-items:center;gap:8px;font:600 .8rem/1.3 var(--f-body);color:var(--text-muted);padding:8px 12px;border-radius:14px;border:1px solid var(--border)}
+  .plan::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grad)}
+  .more{font-weight:600;font-size:.92rem}
+  .subs{display:flex;flex-wrap:wrap;gap:6px}
+  .subs span{font:600 .78rem/1 var(--f-body);padding:7px 10px;border-radius:var(--r-pill);background:var(--surface-2);color:var(--heading);border:1px solid var(--border)}
+
+  /* Captura real con cámara: entra con zoom en la acción y se abre */
+  .shot{background:var(--n-50)}
+  .shot .vp{position:relative;overflow:hidden;aspect-ratio:1500/780}
+  .shot .vp img{width:100%;height:100%;object-fit:cover;transform-origin:var(--ox,50%) var(--oy,50%);transform:scale(var(--s,1));transition:transform 1.25s var(--ease-in-out)}
+  .pin{position:absolute;left:var(--x);top:var(--y);z-index:2;display:flex;align-items:center;gap:8px;transform:translate(-9px,-50%);opacity:0;transition:opacity .45s var(--ease-out);pointer-events:none}
+  .pin.l{flex-direction:row-reverse;transform:translate(calc(-100% + 9px),-50%)}
+  .shot.in .pin{opacity:1}
+  .shot.zoom .pin{opacity:0}
+  .shot.zoom .pin.act{opacity:1;transition-delay:.7s}
+  .pin i{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--orange);border:3px solid var(--n-0);box-shadow:0 0 0 0 rgba(250,80,0,.55);animation:pinP 2.2s infinite}
+  @keyframes pinP{70%{box-shadow:0 0 0 12px rgba(250,80,0,0)}100%{box-shadow:0 0 0 0 rgba(250,80,0,0)}}
+  .pin b{font:700 .8rem/1.2 var(--f-body);color:var(--n-0);background:rgba(20,18,16,.9);padding:8px 11px;border-radius:9px;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.25);opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .5s var(--ease-out)}
+  .pin.l b{transform:translateX(6px)}
+  .pin.act b,.shot.static .pin b{opacity:1;transform:none}
+  .pin.act b{transition-delay:.8s}
+  .shot-cap{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid rgba(20,18,16,.08);background:var(--n-0);font:600 .78rem/1.3 var(--f-body);color:var(--n-600);min-height:42px}
+  .shot-cap b{color:var(--n-800)}
+  .shot-cap .dots{display:flex;gap:5px;margin-left:auto}
+  .shot-cap .dots i{width:6px;height:6px;border-radius:50%;background:var(--n-300);transition:all .3s}
+  .shot-cap .dots i.on{width:18px;border-radius:4px;background:var(--orange)}
+
+  /* Mini-UI con el estilo de la app (siempre en claro, como la app) */
+  .mui{--ink:var(--n-800);--mut:var(--n-600);--line:rgba(20,18,16,.08);background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--orange) 10%,var(--n-50)),transparent 55%),radial-gradient(110% 90% at 100% 100%,color-mix(in srgb,var(--burgundy) 13%,var(--n-50)),var(--n-50) 60%);color:var(--ink)}
+  .mui-body{position:relative;min-height:440px;padding:clamp(14px,2.2vw,24px);display:grid;gap:12px;align-content:start;font-size:clamp(.72rem,1.05vw,.84rem);overflow:hidden}
+  .mui .crd{background:var(--n-0);border:1px solid var(--line);border-radius:14px;box-shadow:0 6px 18px rgba(20,18,16,.06)}
+  .mui h4{font:800 1.15em/1.2 var(--f-body);color:var(--ink);margin:0}
+  .mui .pill{display:inline-flex;align-items:center;gap:6px;padding:.45em .8em;border-radius:var(--r-pill);font-weight:700;font-size:.9em;background:var(--n-0);border:1px solid var(--line);color:var(--ink);white-space:nowrap}
+  .mui .pill.on{background:var(--grad);color:var(--n-0);border-color:transparent}
+  .mui .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .mui .sp{flex:1}
+  .mui .mut{color:var(--mut)}
+  .mui:not(.on) *{animation-play-state:paused!important}
+
+  /* RRSS: grilla del mes que arma la IA */
+  .rr-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+  .rr-grid .dh{font-weight:800;color:var(--mut);text-align:center;font-size:.85em;padding-bottom:2px}
+  .rr-day{position:relative;min-height:6.6em;border-radius:10px;background:rgba(255,255,255,.55);border:1px dashed var(--line);padding:4px}
+  .rr-day small{position:absolute;right:6px;top:4px;color:var(--mut);font-weight:700;font-size:.8em}
+  .rp{display:grid;grid-template-columns:auto 1fr;gap:3px 5px;align-items:center;padding:5px;border-radius:8px;background:var(--n-0);border:1px solid var(--line);box-shadow:0 4px 10px rgba(20,18,16,.06);margin-top:1.3em;
+    opacity:0;transform:translateY(6px) scale(.9);animation:postIn 11s var(--ease-out) infinite;animation-delay:calc(var(--i) * .32s)}
+  .rp img{width:1.3em;height:1.3em;object-fit:contain}
+  .rp b{font-size:.8em;line-height:1;color:var(--mut);text-align:right}
+  .rp .th{grid-column:1/-1;height:3em;border-radius:5px;background:var(--grad-soft)}
+  .rp:nth-child(3n) .th{background:linear-gradient(90deg,rgba(250,80,0,.28),rgba(205,35,73,.1))}
+  @keyframes postIn{0%{opacity:0;transform:translateY(6px) scale(.9)}5%,88%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(-4px)}}
+  .rr-ai{display:flex;align-items:center;gap:10px;padding:10px 12px}
+  .rr-ai .bar{flex:1;height:6px;border-radius:6px;background:var(--n-100);overflow:hidden}
+  .rr-ai .bar i{display:block;height:100%;background:var(--grad);transform-origin:0 50%;animation:fill 11s linear infinite}
+  @keyframes fill{0%{transform:scaleX(.03)}45%,100%{transform:scaleX(1)}}
+  .spark{width:1.6em;height:1.6em;border-radius:8px;display:grid;place-items:center;background:var(--grad);color:var(--n-0)}
+  .spark .ico{width:1em;height:1em;stroke-width:2.2}
+
+  /* Web: prompt → página armada */
+  .wb{display:grid;grid-template-columns:.85fr 1.15fr;gap:12px;min-height:390px}
+  .wb-l{display:grid;gap:10px;align-content:start;padding:14px}
+  .wb-prompt{min-height:5.2em;padding:10px;border-radius:10px;background:var(--n-50);border:1px solid var(--line);font-weight:600;line-height:1.45}
+  .wb-prompt .cur{display:inline-block;width:2px;height:1.1em;vertical-align:-2px;background:var(--orange);animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .wb-steps{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .wb-steps li{display:flex;gap:8px;align-items:center;font-weight:600;color:var(--mut);transition:color .3s}
+  .wb-steps li::before{content:"";width:1.2em;height:1.2em;border-radius:50%;border:2px solid var(--n-300);flex-shrink:0;transition:all .3s}
+  .wb.built .wb-steps li{color:var(--ink);transition-delay:calc(var(--i) * .45s)}
+  .wb.built .wb-steps li::before{border-color:var(--orange);background:var(--orange) center/70% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");transition-delay:calc(var(--i) * .45s)}
+  .wb-r{padding:10px;display:grid;gap:8px;align-content:start;overflow:hidden}
+  .wb-blk{border-radius:10px;opacity:.22;filter:grayscale(1);transform:translateY(10px);transition:opacity .5s var(--ease-out),transform .7s var(--ease-spring),filter .6s;transition-delay:calc(var(--i) * .45s)}
+  .wb.built .wb-blk{opacity:1;filter:none;transform:none}
+  .wb-nav{display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--n-50);font-weight:800}
+  .wb-nav i{height:.5em;width:3em;border-radius:4px;background:var(--n-200)}
+  .wb-hero{padding:14px;background:linear-gradient(90deg,rgba(250,80,0,.14),rgba(205,35,73,.14));display:grid;gap:6px}
+  .wb-hero b{font:400 2.1em/.95 var(--f-display);color:var(--ink)}
+  .wb-hero span{justify-self:start;padding:.4em .9em;border-radius:var(--r-pill);background:var(--grad);color:var(--n-0);font-weight:700}
+  .wb-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .wb-cards i{height:3.4em;border-radius:8px;background:var(--n-50);border:1px solid var(--line)}
+  .wb-form{padding:10px;border:1px solid var(--line);display:grid;gap:5px;background:var(--n-0)}
+  .wb-form i{height:1.5em;border-radius:6px;background:var(--n-50);border:1px solid var(--line)}
+  .wb-form em{font-style:normal;font-weight:700;color:var(--orange-ink)}
+  .wb-pub{position:absolute;right:16px;bottom:14px;opacity:0;transform:translateY(8px);transition:all .5s var(--ease-out) 2.2s}
+  .wb.built .wb-pub{opacity:1;transform:none}
+  .wb-pub .dot-live{display:inline-block}
+
+  /* Voz: llamada atendida por el agente */
+  .vz{display:grid;grid-template-columns:.8fr 1.2fr;gap:12px;min-height:390px}
+  .vz-call{padding:16px;display:grid;justify-items:center;align-content:center;gap:10px;text-align:center}
+  .vz-av{position:relative;width:6.4em;height:6.4em;border-radius:50%;background:var(--grad);display:grid;place-items:center}
+  .vz-av::before,.vz-av::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(250,80,0,.35);animation:ring 2.4s var(--ease-out) infinite}
+  .vz-av::after{animation-delay:1.2s}
+  @keyframes ring{from{transform:scale(.9);opacity:1}to{transform:scale(1.35);opacity:0}}
+  .vz-av img{height:5.4em;width:auto;max-width:none;object-fit:contain}
+  .vz-wave{display:flex;align-items:center;gap:3px;height:2.4em}
+  .vz-wave i{width:3px;border-radius:3px;background:var(--grad);height:30%;animation:wave 1.1s ease-in-out infinite;animation-delay:calc(var(--i) * -.13s)}
+  @keyframes wave{0%,100%{height:18%}50%{height:100%}}
+  .vz-tr{padding:12px;display:grid;gap:8px;align-content:start;overflow:hidden}
+  .vz-line{max-width:88%;padding:8px 10px;border-radius:12px;line-height:1.4;opacity:0;transform:translateY(8px);animation:line 12s var(--ease-out) infinite;animation-delay:calc(var(--i) * 1.6s)}
+  .vz-line.c{background:var(--n-100)}
+  .vz-line.a{justify-self:end;background:var(--grad);color:var(--n-0)}
+  .vz-line small{display:block;font-weight:700;opacity:.7;font-size:.82em;margin-bottom:2px}
+  @keyframes line{0%{opacity:0;transform:translateY(8px)}3%,90%{opacity:1;transform:none}97%,100%{opacity:0}}
+  .vz-ok{justify-self:start;animation-delay:6.6s!important;background:var(--n-0)!important;border:1px solid rgba(34,197,94,.4);color:var(--ink)!important}
+  .vz-ok b{color:color-mix(in srgb,var(--ok) 65%,var(--n-900))}
+
+  /* API: ventana de código */
+  .api{background:var(--n-950);color:var(--n-200)}
+  .api .chrome{background:var(--n-900);border-color:rgba(255,255,255,.06);color:var(--n-500)}
+  .api .chrome i{background:var(--n-700)}
+  .api .chrome span{background:var(--n-800);border-color:rgba(255,255,255,.06);color:var(--n-300)}
+  .api-tabs{display:flex;gap:4px;padding:10px 12px 0}
+  .api-tabs button{height:34px;padding:0 14px;border:0;border-radius:9px 9px 0 0;background:none;color:var(--n-500);font:700 .8rem/1 var(--f-body);cursor:pointer}
+  .api-tabs button[aria-selected="true"]{background:var(--n-900);color:var(--n-0);box-shadow:inset 0 2px 0 var(--orange)}
+  .api-pane{display:none;margin:0;padding:18px;background:var(--n-900);min-height:300px;font:500 clamp(.68rem,1.1vw,.82rem)/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre;overflow:auto}
+  .api-pane.on{display:block;animation:fadeUp .4s var(--ease-out)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
+  .api .k{color:var(--orange)}.api .s{color:color-mix(in srgb,var(--ok) 50%,var(--n-0))}.api .c{color:var(--n-500)}.api .n{color:color-mix(in srgb,var(--warn) 65%,var(--n-0))}
+  .api-pane.chat{white-space:normal;font-family:var(--f-body);display:none;gap:10px}
+  .api-pane.chat.on{display:grid}
+  .bub{max-width:85%;padding:10px 12px;border-radius:12px;line-height:1.45}
+  .bub.u{justify-self:end;background:var(--n-700);color:var(--n-50)}
+  .bub.b{background:var(--n-900);border:1px solid rgba(255,255,255,.08)}
+  .bub.b small{display:flex;align-items:center;gap:6px;color:var(--n-500);font-weight:700;margin-bottom:6px}
+  .bub.b small img{width:16px;height:16px;border-radius:4px}
+  .bub table{width:100%;border-collapse:collapse;margin-top:6px;font-size:.92em}
+  .bub td{padding:4px 0;border-top:1px solid rgba(255,255,255,.07)}
+  .bub td:last-child{text-align:right;color:color-mix(in srgb,var(--warn) 65%,var(--n-0))}
+
+  /* Y además */
+  .xtra .tile h3{font-size:1.1rem}
+  @media (max-width:1100px){.feature,.feature.rev{grid-template-columns:1fr}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:760px){
+    .flow{grid-template-columns:1fr}
+    .modbar{top:84px}
+    .mui-body{min-height:0}
+    .wb,.vz{grid-template-columns:1fr}
+    .wb-r,.vz-call{display:none}
+    .rr-grid .rr-day:nth-child(n+16){display:none}
+  }
+</style>
+</head>
+<body data-page="producto" data-sec="producto">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
+  <symbol id="i-kanban" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7M12 7v4M16 7v9"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+  <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="m13.4 10.6 5.7-5.7"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="6"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.7V17c0 .6-.5 1-1 1.2C7.9 18.8 7 20.2 7 22M14 14.7V17c0 .6.5 1 1 1.2 1.1.6 2 2 2 3.8M18 2H6v7a6 6 0 0 0 12 0V2z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<main id="main" class="page">
+
+  <!-- ═════════ HERO ═════════ -->
+  <section class="phero">
+    <div class="ctn ph-center">
+      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Producto</nav>
+      <p class="eyebrow">La plataforma</p>
+      <h1 class="display">Todo tu proceso comercial, <span class="grad-text">en un solo lugar.</span></h1>
+      <p class="lead">Agentes de IA que atienden tus canales, un CRM que se llena solo, automatizaciones, marketing, licitaciones y reportería. Doce módulos que comparten el mismo contacto, así que nada se copia de una herramienta a otra.</p>
+      <div class="phero-cta"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
+    </div>
+    <div class="ctn ctn-wide">
+      <div class="stage" id="stage">
+        <div class="stage-frame">
+          <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>beta.hapee.ai · Inicio</span></div>
+          <img src="/propuesta-2026-r8x4/shots/inicio.webp?v=20261015" width="1500" height="780" alt="Pantalla de inicio de Hapee: conversaciones por responder, negocios abiertos, citas de la semana, licitaciones afines e inversión del mes." fetchpriority="high">
+        </div>
+        <div class="fchip a" aria-hidden="true"><span class="ic"><svg class="ico"><use href="#i-bot"/></svg></span><span>Lead nuevo respondido en 4 s<small>Agente IA · WhatsApp</small></span></div>
+        <div class="fchip b" aria-hidden="true"><span class="ic"><svg class="ico"><use href="#i-kanban"/></svg></span><span>Negocio movido a «Propuesta enviada»<small>Viña Montegrande · $12.500.000</small></span></div>
+        <div class="fchip c" aria-hidden="true"><span class="ic"><svg class="ico"><use href="#i-bank"/></svg></span><span>5 licitaciones afines hoy<small>La más alta, 95% de afinidad</small></span></div>
+      </div>
+    </div>
+    <aside class="note" data-n="PR1"><b>Un hub de producto</b> Hoy el producto vive en 8 pestañas dentro de la home y no tiene URL propia. Aquí cada módulo tiene su ancla (/producto#crm) para enlazar desde anuncios, el mega-menú y el chat. La captura real se «abre» al hacer scroll: es la primera imagen del producto, no una ilustración.</aside>
+  </section>
+
+  <!-- ═════════ MAPA ═════════ -->
+  <section class="sec" style="padding-top:var(--s-12)">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Cómo encaja todo</p><h2 class="display">Cuatro momentos, una sola ficha de cliente.</h2><p class="lead">Del primer anuncio a la venta cerrada, cada módulo escribe en el mismo contacto. Elige por dónde empezar.</p></div>
+      <div class="flow rv" id="flow">
+        <div class="card flow-col spot"><div class="flow-line"></div><span class="k">01 · Atraes</span><h3>Atrae</h3><p>Tráfico y contenido que terminan en un formulario o una conversación.</p>
+          <nav aria-label="Módulos para atraer"><a href="#web"><svg class="ico"><use href="#i-web"/></svg>Sitios y funnels</a><a href="#rrss"><svg class="ico"><use href="#i-mega"/></svg>Redes sociales</a><a href="#email"><svg class="ico"><use href="#i-mail"/></svg>Email marketing</a></nav></div>
+        <div class="card flow-col spot"><div class="flow-line"></div><span class="k">02 · Conversas</span><h3>Conversa</h3><p>Cada mensaje y cada llamada, respondidos en segundos.</p>
+          <nav aria-label="Módulos para conversar"><a href="#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a><a href="#bandeja"><svg class="ico"><use href="#i-inbox"/></svg>Bandeja omnicanal</a><a href="#voz"><svg class="ico"><use href="#i-mic"/></svg>Voz y telefonía</a></nav></div>
+        <div class="card flow-col spot"><div class="flow-line"></div><span class="k">03 · Cierras</span><h3>Cierra</h3><p>Negocios, cotizaciones y oportunidades públicas en el mismo pipeline.</p>
+          <nav aria-label="Módulos para cerrar"><a href="#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM y ventas</a><a href="#licitaciones"><svg class="ico"><use href="#i-bank"/></svg>Licitaciones</a></nav></div>
+        <div class="card flow-col spot"><div class="flow-line"></div><span class="k">04 · Escalas</span><h3>Escala</h3><p>Lo repetitivo corre solo y sabes qué funciona.</p>
+          <nav aria-label="Módulos para escalar"><a href="#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a><a href="#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a><a href="#academia"><svg class="ico"><use href="#i-cap"/></svg>Academia</a><a href="#api"><svg class="ico"><use href="#i-code"/></svg>API y MCP</a></nav></div>
+      </div>
+    </div>
+    <aside class="note" data-n="PR2"><b>Ordenado por resultado</b> En la home actual los módulos se listan por nombre técnico. Aquí se agrupan por lo que el cliente quiere lograr (atraer, conversar, cerrar, escalar), y cada uno salta a su bloque.</aside>
+  </section>
+
+  <!-- ═════════ MÓDULOS ═════════ -->
+  <div class="mods">
+    <nav class="modbar" aria-label="Módulos de la plataforma">
+      <div class="modbar-in"><div class="modbar-sc" id="modbar">
+        <a href="#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a>
+        <a href="#bandeja"><svg class="ico"><use href="#i-inbox"/></svg>Bandeja</a>
+        <a href="#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM</a>
+        <a href="#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a>
+        <a href="#email"><svg class="ico"><use href="#i-mail"/></svg>Email</a>
+        <a href="#rrss"><svg class="ico"><use href="#i-mega"/></svg>Redes sociales</a>
+        <a href="#web"><svg class="ico"><use href="#i-web"/></svg>Sitios y funnels</a>
+        <a href="#voz"><svg class="ico"><use href="#i-mic"/></svg>Voz</a>
+        <a href="#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a>
+        <a href="#licitaciones"><svg class="ico"><use href="#i-bank"/></svg>Licitaciones</a>
+        <a href="#academia"><svg class="ico"><use href="#i-cap"/></svg>Academia</a>
+        <a href="#api"><svg class="ico"><use href="#i-code"/></svg>API y MCP</a>
+      </div><span class="modbar-pr" id="modpr"></span></div>
+    </nav>
+
+    <section class="sec" style="padding-top:var(--s-8)">
+      <div class="ctn">
+
+        <!-- 01 AGENTES -->
+        <article class="feature" id="agentes">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">01</span>
+            <p class="eyebrow">Agentes IA · Centro de agentes</p>
+            <h2 class="display">Agentes que atienden, califican y agendan.</h2>
+            <p class="lead">Entrenas a cada agente con tus productos, precios y preguntas frecuentes. Responde en segundos por WhatsApp, Instagram, Facebook, email y chat web, y deriva a tu equipo cuando el cliente pide una persona o cuando no sabe la respuesta.</p>
+            <ul class="checks">
+              <li>Modelos de Anthropic, OpenAI y Google en una sola plataforma</li>
+              <li>Califica con las preguntas que tú defines y mueve el negocio en el pipeline</li>
+              <li>Agenda en tu calendario y confirma por el mismo canal</li>
+              <li>Centro de agentes: un equipo con roles (SDR, soporte, recepción, cobranza, marketing), tareas en tablero y actividad en vivo</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Agentes en Starter y Pro · Centro de agentes en Pro</span><a class="more" href="/propuesta-2026-r8x4/whatsapp">Agente para WhatsApp →</a></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>hapee agents · Centro de agentes</span></div>
+            <div class="vp" style="--fx:52%;--fy:42%">
+              <img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Centro de agentes de Hapee: lista de agentes con su rol, tablero de tareas por estado y actividad en vivo.">
+              <span class="pin" style="--x:21%;--y:39%"><i></i><b>Cada agente con su rol</b></span>
+              <span class="pin" style="--x:56%;--y:36%;--d:.25s"><i></i><b>Tareas por estado</b></span>
+              <span class="pin l" style="--x:83%;--y:31%;--d:.5s"><i></i><b>Actividad en vivo</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 02 BANDEJA -->
+        <article class="feature rev" id="bandeja">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">02</span>
+            <p class="eyebrow">Conversaciones · Bandeja omnicanal</p>
+            <h2 class="display">Todos tus canales, una sola bandeja.</h2>
+            <p class="lead">WhatsApp, Instagram, Facebook Messenger, email y chat web llegan al mismo lugar, con la ficha del contacto al lado. Ves qué respondió la IA, asignas, pospones o resuelves sin cambiar de pestaña.</p>
+            <ul class="checks">
+              <li>WhatsApp Business API oficial de Meta: sin riesgo de bloqueo por uso no autorizado</li>
+              <li>Cada respuesta del agente queda marcada como «Respondió la IA»</li>
+              <li>Respuestas rápidas, plantillas y enlaces de activación</li>
+              <li>Asignación por persona y analítica de la bandeja</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Starter y Pro · WhatsApp Business API en Pro</span><a class="more" href="#voz">Llamadas y telefonía →</a></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Conversaciones · Bandeja</span></div>
+            <div class="vp" style="--fx:58%;--fy:45%">
+              <img src="/propuesta-2026-r8x4/shots/inbox.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Bandeja de Hapee con una conversación de WhatsApp en la que la IA responde, y la ficha del contacto a la derecha.">
+              <span class="pin" style="--x:58%;--y:44.5%"><i></i><b>«Respondió la IA»</b></span>
+              <span class="pin l" style="--x:68%;--y:17%;--d:.25s"><i></i><b>Asignar, posponer, resolver</b></span>
+              <span class="pin l" style="--x:90%;--y:31%;--d:.5s"><i></i><b>Ficha del contacto al lado</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 03 CRM -->
+        <article class="feature" id="crm">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">03</span>
+            <p class="eyebrow">CRM · Ventas</p>
+            <h2 class="display">Un CRM que se llena solo.</h2>
+            <p class="lead">Cada conversación crea o actualiza el contacto y cada negocio avanza por etapas que tú defines. Ves el valor abierto, el ponderado y lo ganado sin armar una planilla.</p>
+            <div class="subs" aria-label="Partes del CRM"><span>Contactos</span><span>Empresas</span><span>Negocios · Pipeline</span><span>Tareas</span><span>Productos</span><span>Cotizaciones</span><span>Ventas</span><span>Calendario</span></div>
+            <ul class="checks">
+              <li>Varios pipelines, cada uno con sus etapas y probabilidades</li>
+              <li>Cotizaciones en PDF con tus productos y listas de precios</li>
+              <li>Cobros con Stripe, facturas y suscripciones</li>
+              <li>Campos propios, etiquetas, empresas con RUT validado e historial completo</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Starter y Pro · pipeline ilimitado</span></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>CRM · Negocios · Pipeline</span></div>
+            <div class="vp" style="--fx:40%;--fy:30%">
+              <img src="/propuesta-2026-r8x4/shots/pipeline.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Pipeline de negocios de Hapee con etapas Nuevo, Contactado, Reunión agendada y Propuesta enviada, y totales de valor abierto, ponderado y ganado.">
+              <span class="pin" style="--x:43%;--y:27.5%"><i></i><b>Abierto, ponderado y ganado</b></span>
+              <span class="pin" style="--x:73%;--y:34.7%;--d:.25s"><i></i><b>Etapas a tu medida</b></span>
+              <span class="pin" style="--x:22%;--y:59%;--d:.5s"><i></i><b>El negocio con su conversación</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 04 AUTOMATIZACIONES -->
+        <article class="feature rev" id="automatizaciones">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">04</span>
+            <p class="eyebrow">Workflows</p>
+            <h2 class="display">Flujos que hacen el seguimiento por ti.</h2>
+            <p class="lead">Envía una propuesta, espera dos días, revisa si respondió y avisa al vendedor. Arma el flujo con disparadores, esperas, condiciones y acciones, o descríbelo y la IA lo arma.</p>
+            <ul class="checks">
+              <li>Constructor visual con ramas «Sí» y «No»</li>
+              <li>Disparadores como una etiqueta nueva, un formulario o un cambio de etapa</li>
+              <li>Pruebas antes de publicar, historial de inscripciones y registro de cada ejecución</li>
+              <li>Los agentes IA y el email trabajan dentro del mismo flujo</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Básicas en Starter · avanzadas en Pro</span></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Workflows · Post-demo comercial</span></div>
+            <div class="vp" style="--fx:30%;--fy:45%">
+              <img src="/propuesta-2026-r8x4/shots/automations.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Constructor de workflows de Hapee: disparador por etiqueta, esperas, envío de propuesta y una condición que separa en Sí y No.">
+              <span class="pin" style="--x:11.7%;--y:44.9%"><i></i><b>Disparador</b></span>
+              <span class="pin" style="--x:49.4%;--y:44.9%;--d:.25s"><i></i><b>Enviar propuesta</b></span>
+              <span class="pin l" style="--x:87%;--y:44.9%;--d:.5s"><i></i><b>¿Respondió? Sí / No</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 05 EMAIL -->
+        <article class="feature" id="email">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">05</span>
+            <p class="eyebrow">Marketing · Mail Marketing</p>
+            <h2 class="display">Email marketing con tu base, no con una lista suelta.</h2>
+            <p class="lead">Campañas, newsletters y correos automáticos que salen del mismo CRM: segmentas por etiqueta o etapa, eliges una plantilla y mides el rendimiento de cada envío.</p>
+            <ul class="checks">
+              <li>Plantillas listas en español, inglés y portugués</li>
+              <li>Editor visual por bloques</li>
+              <li>Campañas, plantillas y rendimiento en un solo lugar</li>
+              <li>Correos que se disparan desde un workflow</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Incluido en Starter y Pro</span></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Marketing · Email marketing</span></div>
+            <div class="vp" style="--fx:60%;--fy:55%">
+              <img src="/propuesta-2026-r8x4/shots/email.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Email marketing de Hapee: plantillas por categoría e idioma, con pestañas de campañas, plantillas y rendimiento.">
+              <span class="pin" style="--x:30%;--y:16.2%"><i></i><b>Campañas y rendimiento</b></span>
+              <span class="pin l" style="--x:86.5%;--y:34.6%;--d:.25s"><i></i><b>Plantillas por idioma</b></span>
+              <span class="pin" style="--x:43%;--y:85%;--d:.5s"><i></i><b>Usar plantilla en un clic</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 06 RRSS (mini-UI) -->
+        <article class="feature rev" id="rrss">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">06</span>
+            <p class="eyebrow">Marketing · Redes sociales</p>
+            <h2 class="display">La IA arma la grilla del mes.</h2>
+            <p class="lead">Le das el objetivo y el tono de tu marca. La IA propone ideas, copies e imágenes para el mes; tú apruebas y programas en Instagram, Facebook, LinkedIn y TikTok desde el mismo calendario.</p>
+            <ul class="checks">
+              <li>Grillas completas generadas con IA</li>
+              <li>Programación multicanal en un calendario</li>
+              <li>Estrategia de contenidos y concursos en el mismo módulo</li>
+              <li>Biblioteca de multimedia compartida con el equipo</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Plan <span class="todo">[confirmar]</span></span></div>
+          </div>
+          <div class="f-media mui rv" data-mui role="img" aria-label="Maqueta: calendario de redes sociales en el que la IA va agregando publicaciones de Instagram, Facebook, LinkedIn y TikTok.">
+            <div class="mui-body" style="align-content:start">
+              <div class="row"><h4>Redes sociales · Noviembre</h4><span class="sp"></span><span class="pill on">Calendario</span><span class="pill">Grilla IA</span></div>
+              <div class="crd rr-ai"><span class="spark"><svg class="ico"><use href="#i-spark"/></svg></span><b>IA armando la grilla</b><span class="mut">objetivo: agendar visitas</span><span class="bar"><i></i></span></div>
+              <div class="rr-grid" id="rrGrid"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 07 WEB (mini-UI) -->
+        <article class="feature" id="web">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">07</span>
+            <p class="eyebrow">Sitios web · Funnels · Formularios · Blog</p>
+            <h2 class="display">Sitios y funnels conectados al CRM.</h2>
+            <p class="lead">Describe tu sitio y la IA lo arma, o edítalo bloque a bloque. Se publica dentro de Hapee con tu dominio, y cada formulario deja el lead directo en el pipeline, sin plugins.</p>
+            <ul class="checks">
+              <li>Funnels y landing pages por pasos, con A/B testing y upsells</li>
+              <li>Sitios completos y blog</li>
+              <li>Formularios que crean el contacto y disparan workflows</li>
+              <li>Agenda integrada; si ya usas WordPress, también se conecta</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Plan <span class="todo">[confirmar]</span></span></div>
+          </div>
+          <div class="f-media mui rv" data-mui role="img" aria-label="Maqueta: el usuario describe una landing para una clínica y la IA arma el encabezado, los servicios y un formulario conectado al CRM.">
+            <div class="mui-body">
+              <div class="wb" id="wb">
+                <div class="crd wb-l">
+                  <div class="row"><span class="spark"><svg class="ico"><use href="#i-spark"/></svg></span><h4>Describe tu sitio</h4></div>
+                  <div class="wb-prompt"><span id="wbText"></span><span class="cur"></span></div>
+                  <ul class="wb-steps"><li style="--i:1">Encabezado y llamado</li><li style="--i:2">Servicios</li><li style="--i:3">Formulario → CRM</li><li style="--i:4">Dominio y publicación</li></ul>
+                </div>
+                <div class="crd wb-r">
+                  <div class="wb-blk wb-nav" style="--i:1"><b>Clínica Vitalis</b><span class="sp"></span><i></i><i></i><i></i></div>
+                  <div class="wb-blk wb-hero" style="--i:1"><b>Tu hora médica en 2 minutos</b><span>Agendar hora</span></div>
+                  <div class="wb-blk wb-cards" style="--i:2"><i></i><i></i><i></i></div>
+                  <div class="wb-blk wb-form" style="--i:3"><em>Formulario · conectado al CRM</em><i></i><i></i></div>
+                </div>
+              </div>
+              <span class="pill wb-pub"><span class="dot-live"></span>Publicado · clinicavitalis.cl</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 08 VOZ (mini-UI) -->
+        <article class="feature rev" id="voz">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">08</span>
+            <p class="eyebrow">Voz clonada · Telefonía</p>
+            <h2 class="display">Tu agente contesta el teléfono, con tu voz.</h2>
+            <p class="lead">Clonamos la voz de tu marca para que el agente atienda llamadas y responda audios en español nativo. La telefonía vive en Conversaciones, junto a WhatsApp y el resto de tus canales.</p>
+            <ul class="checks">
+              <li>Clonación de voz personalizada</li>
+              <li>Agentes de voz que califican y agendan durante la llamada</li>
+              <li>Cada llamada queda registrada en la ficha del contacto</li>
+              <li>Transcripción y resumen de la llamada <span class="todo">[confirmar]</span></li>
+            </ul>
+            <div class="f-meta"><span class="plan">Voz clonada desde Starter</span></div>
+          </div>
+          <div class="f-media mui rv" data-mui role="img" aria-label="Maqueta: llamada atendida por el agente de voz, con la transcripción y una cita agendada al final.">
+            <div class="mui-body">
+              <div class="vz">
+                <div class="crd vz-call">
+                  <div class="vz-av"><img src="/img/robot.png" width="435" height="800" alt=""></div>
+                  <b style="font-size:1.15em">Agente de voz · Recepción</b>
+                  <span class="mut">Llamada entrante · <span id="vzT">00:00</span></span>
+                  <div class="vz-wave" aria-hidden="true"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i></div>
+                  <span class="pill"><svg class="ico" style="width:1.1em;height:1.1em"><use href="#i-mic"/></svg>Voz clonada de tu marca</span>
+                </div>
+                <div class="crd vz-tr">
+                  <div class="row"><h4>Transcripción en vivo</h4><span class="sp"></span><span class="pill">Clínica Vitalis</span></div>
+                  <div class="vz-line c" style="--i:0"><small>Cliente</small>Hola, ¿tienen hora con dermatología esta semana?</div>
+                  <div class="vz-line a" style="--i:1"><small>Agente</small>Sí, tengo el jueves a las 10:30 o el viernes a las 16:00. ¿Cuál te acomoda?</div>
+                  <div class="vz-line c" style="--i:2"><small>Cliente</small>El jueves a las 10:30, por favor.</div>
+                  <div class="vz-line a" style="--i:3"><small>Agente</small>Listo, quedó agendada. Te envío la confirmación por WhatsApp.</div>
+                  <div class="vz-line vz-ok" style="--i:4"><b>Cita agendada</b> · jueves 10:30 · Calendario</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 09 REPORTERÍA -->
+        <article class="feature" id="reporteria">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">09</span>
+            <p class="eyebrow">Reportería</p>
+            <h2 class="display">Tu pauta y tus redes en un tablero.</h2>
+            <p class="lead">Meta Ads, Google Ads, TikTok Ads y LinkedIn Ads junto a tus redes orgánicas y GA4: inversión, impresiones, clics, conversiones, CPM y CPC, con el período que elijas.</p>
+            <ul class="checks">
+              <li>Atribución de leads y ventas por campaña</li>
+              <li>Dashboards editables</li>
+              <li>Reportes en un clic para tus clientes</li>
+              <li>Insights con IA y retorno de la inversión en publicidad (ROAS)</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Básica en Starter · completa en Pro</span></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Reportería · Resumen general</span></div>
+            <div class="vp" style="--fx:55%;--fy:55%">
+              <img src="/propuesta-2026-r8x4/shots/reporteria.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Reportería de Hapee: inversión e impresiones de Meta Ads y Google Ads en el mismo gráfico, con fuentes orgánicas y publicitarias en el menú lateral.">
+              <span class="pin" style="--x:46%;--y:54%"><i></i><b>Cada plataforma, cruzada</b></span>
+              <span class="pin" style="--x:10%;--y:70.6%;--d:.25s"><i></i><b>Orgánico y GA4</b></span>
+              <span class="pin l" style="--x:89%;--y:17.2%;--d:.5s"><i></i><b>Período a elección</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 10 LICITACIONES -->
+        <article class="feature rev" id="licitaciones">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">10</span>
+            <p class="eyebrow">Licitaciones</p>
+            <h2 class="display">Licitaciones que calzan con tu rubro.</h2>
+            <p class="lead">Hapee revisa Mercado Público, WherEx y portales privados, calcula la afinidad de cada licitación con tu empresa y te avisa por correo. La IA resume las bases en segundos para que decidas si postular.</p>
+            <ul class="checks">
+              <li>Afinidad de 0 a 100 calculada por IA</li>
+              <li>Monto, plazo y organismo de un vistazo</li>
+              <li>Alertas por correo con lo nuevo de tu rubro</li>
+              <li>Bases analizadas por IA</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Starter: Mercado Público · Pro: también entidades privadas</span><a class="more" href="/propuesta-2026-r8x4/soluciones#estado">Para proveedores del Estado →</a></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Licitaciones · Oportunidades</span></div>
+            <div class="vp" style="--fx:45%;--fy:60%">
+              <img src="/propuesta-2026-r8x4/shots/licitaciones.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Módulo de licitaciones de Hapee: oportunidades de Mercado Público ordenadas por afinidad, con organismo, monto y días para el cierre.">
+              <span class="pin" style="--x:21.8%;--y:54.4%"><i></i><b>Afinidad 0–100</b></span>
+              <span class="pin" style="--x:60%;--y:59.6%;--d:.25s"><i></i><b>Monto y días al cierre</b></span>
+              <span class="pin l" style="--x:61%;--y:34%;--d:.5s"><i></i><b>Hot: sobre 70%</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 11 ACADEMIA -->
+        <article class="feature" id="academia">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">11</span>
+            <p class="eyebrow">Academia</p>
+            <h2 class="display">Tu equipo aprende Hapee dentro de Hapee.</h2>
+            <p class="lead">Cursos cortos por área (setup, ventas, operaciones, automatización, IA y datos), comunidad con ranking y mentorías en vivo de onboarding y estrategia.</p>
+            <ul class="checks">
+              <li>Cursos y certificaciones oficiales</li>
+              <li>Onboarding guiado para cada persona del equipo</li>
+              <li>Comunidad con ranking y puntos</li>
+              <li>Clases nuevas todos los meses</li>
+            </ul>
+            <div class="f-meta"><span class="plan">Incluida en Starter y Pro</span><a class="more" href="/propuesta-2026-r8x4/academia">Ver la Academia →</a></div>
+          </div>
+          <figure class="f-media shot rv" style="margin:0">
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Academia</span></div>
+            <div class="vp" style="--fx:50%;--fy:60%">
+              <img src="/propuesta-2026-r8x4/shots/academia.webp?v=20261015" width="1500" height="780" loading="lazy" alt="Academia de Hapee: curso en progreso, catálogo de cursos por área, ranking del equipo y mentorías.">
+              <span class="pin" style="--x:42%;--y:62%"><i></i><b>Cursos por área</b></span>
+              <span class="pin l" style="--x:80%;--y:31%;--d:.25s"><i></i><b>Ranking del equipo</b></span>
+              <span class="pin l" style="--x:80%;--y:85%;--d:.5s"><i></i><b>Mentorías en vivo</b></span>
+            </div>
+            <figcaption class="shot-cap"><span data-cap>Vista general</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></figcaption>
+          </figure>
+        </article>
+
+        <!-- 12 API -->
+        <article class="feature rev" id="api">
+          <div class="f-copy rv">
+            <span class="f-num" aria-hidden="true">12</span>
+            <p class="eyebrow">API · Webhooks · MCP</p>
+            <h2 class="display">Hapee conectado a tus sistemas.</h2>
+            <p class="lead">Conecta tu ERP, tu tienda o tu sistema interno con la API REST v1, recibe eventos firmados por webhook y usa Hapee desde Claude, ChatGPT o Grok Bot con el conector MCP, siempre con tus mismos permisos.</p>
+            <ul class="checks">
+              <li>Contactos, empresas, negocios, productos, cotizaciones, citas, objetos propios y workflows</li>
+              <li>Webhooks firmados con HMAC-SHA256, o consulta por <code>/events</code></li>
+              <li>Sandbox con credenciales de prueba y la misma API que producción</li>
+              <li>Conector MCP con inicio de sesión por usuario</li>
+            </ul>
+            <div class="f-meta"><span class="plan">API en todos los planes <span class="todo">[confirmar]</span> · MCP desde Pro</span><a class="more" href="/propuesta-2026-r8x4/docs">Ver la documentación →</a></div>
+          </div>
+          <div class="f-media api rv" data-api>
+            <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>beta.hapee.ai/api/v1</span></div>
+            <div class="api-tabs" role="tablist" aria-label="Ejemplos de integración">
+              <button role="tab" aria-selected="true" aria-controls="apiRest" id="tRest">REST</button>
+              <button role="tab" aria-selected="false" aria-controls="apiHook" id="tHook" tabindex="-1">Webhook</button>
+              <button role="tab" aria-selected="false" aria-controls="apiMcp" id="tMcp" tabindex="-1">MCP</button>
+            </div>
+<pre class="api-pane on" id="apiRest" role="tabpanel" aria-labelledby="tRest"><span class="k">curl</span> https://beta.hapee.ai/api/v1/me \
+  -H <span class="s">"Authorization: Bearer hp_test_TU_CREDENCIAL"</span>
+
+<span class="c"># respuesta</span>
+{
+  <span class="s">"subaccount"</span>: { <span class="s">"name"</span>: <span class="s">"Cliente — Sandbox"</span>,
+                  <span class="s">"default_currency"</span>: <span class="s">"CLP"</span>,
+                  <span class="s">"sandbox"</span>: <span class="k">true</span> },
+  <span class="s">"limits"</span>: { <span class="s">"requests_per_minute"</span>: <span class="n">100</span> },
+  <span class="s">"api_version"</span>: <span class="s">"v1"</span>
+}</pre>
+<pre class="api-pane" id="apiHook" role="tabpanel" aria-labelledby="tHook" hidden><span class="k">POST</span> /hooks/hapee
+X-Hapee-Event: <span class="s">deal.won</span>
+X-Hapee-Signature: t=1789057409,v1=18af3459…
+
+{
+  <span class="s">"type"</span>: <span class="s">"deal.won"</span>,
+  <span class="s">"api_version"</span>: <span class="s">"v1"</span>,
+  <span class="s">"data"</span>: { <span class="s">"title"</span>: <span class="s">"Reposición Q4"</span>,
+            <span class="s">"amount"</span>: <span class="s">"4200000"</span>, <span class="s">"currency"</span>: <span class="s">"CLP"</span> }
+}</pre>
+            <div class="api-pane chat" id="apiMcp" role="tabpanel" aria-labelledby="tMcp" hidden>
+              <div class="bub u">¿Qué negocios tengo abiertos en el pipeline de ventas?</div>
+              <div class="bub b"><small><img src="/img/hapee-mcp-icon-256.png" width="16" height="16" alt="">Hapee · herramienta listar_deals</small>Tienes 7 negocios abiertos por $50.100.000. Los más grandes:
+                <table><tr><td>Plan Full Funnel · Andes Retail</td><td>$18.000.000</td></tr><tr><td>E-commerce + Performance · Viña Montegrande</td><td>$12.500.000</td></tr><tr><td>Marca personal LinkedIn · Estudio A.</td><td>$2.400.000</td></tr></table></div>
+              <div class="bub u">Mueve el de Viña Montegrande a «Propuesta enviada».</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    <aside class="note" data-n="PR3"><b>Captura real o maqueta viva</b> Los 8 módulos con captura usan pantallas reales de la subcuenta DEMO (15/10): la cámara entra con zoom donde está la acción y luego abre el plano, con 3 marcas que explican qué mirar. RRSS, Sitios, Voz y API no tienen datos en la DEMO: se muestran como mini-interfaces animadas con el estilo de la app. Plan de cada módulo visible; los que no están en la tabla de precios quedan marcados para confirmar.</aside>
+    </section>
+  </div>
+
+  <!-- ═════════ Y ADEMÁS ═════════ -->
+  <section class="sec alt xtra">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Y además</p><h2 class="display">Lo que también viene en el menú.</h2></div>
+      <div class="grid g4">
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-radar"/></svg></span><h3>Radar de Competencia</h3><p>Sigue a tus competidores desde Hapee. <span class="todo">[confirmar alcance]</span></p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-image"/></svg></span><h3>Multimedia</h3><p>Imágenes, videos y archivos de la marca en una biblioteca que usan todos los módulos.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-target"/></svg></span><h3>Estrategia</h3><p>El plan de marketing de la cuenta, junto a las campañas que lo ejecutan. <span class="todo">[confirmar]</span></p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-trophy"/></svg></span><h3>Concursos</h3><p>Concursos y campañas en redes en un clic, con los participantes directo al CRM.</p></div>
+      </div>
+    </div>
+    <aside class="note" data-n="PR4"><b>Menú real, completo</b> Los nombres siguen el menú de la app (octubre 2026), para que lo que el cliente ve en la web sea lo que encuentra al entrar.</aside>
+  </section>
+
+  <section class="sec">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">Velo con tu caso.</h2>
+      <p>En 30 minutos te mostramos los módulos que necesitas, con tus canales y tu proceso de venta. Sin compromiso.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $=function(s,r){return (r||d).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
+  var hasIO='IntersectionObserver' in window;
+  function watch(els,fn,opt){ if(!hasIO){els.forEach(function(e){fn(e,true)});return;} var io=new IntersectionObserver(function(es){es.forEach(function(e){fn(e.target,e.isIntersecting,io)})},opt||{}); els.forEach(function(e){io.observe(e)}); }
+
+  /* Hero: la captura se endereza con el scroll */
+  var stage=$('#stage');
+  if(stage){
+    if(reduce){stage.style.setProperty('--t','0');}
+    else{
+      var tick=false;
+      var upd=function(){tick=false;var r=stage.getBoundingClientRect(),h=innerHeight;var t=(r.top-h*.12)/(h*.55);t=Math.max(0,Math.min(1,t));stage.style.setProperty('--t',t.toFixed(3));};
+      addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
+      addEventListener('resize',upd); upd();
+    }
+  }
+
+  /* Línea del mapa */
+  var flow=$('#flow'); if(flow) watch([flow],function(el,on,io){if(on){el.classList.add('in');io&&io.unobserve(el);}},{threshold:.3});
+
+  /* Capturas: recorrido de cámara por las marcas (zoom en cada una, luego vista general) */
+  $$('.shot').forEach(function(shot){
+    var pins=$$('.pin',shot), dots=$$('.dots i',shot), cap=$('[data-cap]',shot), k=-1, t=null, alive=false;
+    function mark(i){ dots.forEach(function(x,j){x.classList.toggle('on',j===i)}); if(cap) cap.innerHTML=i<0?'Vista general':'<b>'+(i+1)+'/'+pins.length+'</b> '+pins[i].textContent; }
+    if(reduce||!hasIO){ shot.classList.add('in','static'); return; }
+    function step(){
+      if(!alive) return;
+      shot.classList.remove('zoom'); pins.forEach(function(p){p.classList.remove('act')}); shot.style.setProperty('--s','1');
+      k=(k+1)%(pins.length+1);
+      if(k===pins.length){ mark(-1); t=setTimeout(step,2800); return; }
+      t=setTimeout(function(){
+        var p=pins[k]; shot.style.setProperty('--ox',p.style.getPropertyValue('--x')); shot.style.setProperty('--oy',p.style.getPropertyValue('--y'));
+        requestAnimationFrame(function(){requestAnimationFrame(function(){ if(!alive) return; shot.classList.add('zoom'); p.classList.add('act'); shot.style.setProperty('--s','1.75'); mark(k); t=setTimeout(step,3400); });});
+      }, k===0&&shot.dataset.started!=='1' ? 900 : 1300);
+      shot.dataset.started='1';
+    }
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting&&!alive){ alive=true; shot.classList.add('in'); k=-1; shot.dataset.started=''; step(); }
+      else if(!e.isIntersecting&&alive){ alive=false; clearTimeout(t); shot.classList.remove('zoom'); shot.style.setProperty('--s','1'); pins.forEach(function(p){p.classList.remove('act')}); mark(-1); }
+    });},{threshold:.4}).observe(shot);
+  });
+
+  /* Índice pegajoso: activo, progreso y desplazamiento horizontal */
+  var bar=$('#modbar'), links=$$('a',bar), pr=$('#modpr'), mods=$('.mods');
+  var secs=links.map(function(a){return d.getElementById(a.getAttribute('href').slice(1))});
+  function setOn(id){links.forEach(function(a){var on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);if(on){a.setAttribute('aria-current','true');var l=a.offsetLeft-(bar.clientWidth-a.offsetWidth)/2;bar.scrollTo({left:l,behavior:reduce?'auto':'smooth'});}else a.removeAttribute('aria-current');});}
+  watch(secs.filter(Boolean),function(el,on){if(on)setOn(el.id);},{rootMargin:'-45% 0px -50% 0px'});
+  var tk2=false;
+  function prog(){tk2=false;if(!mods)return;var r=mods.getBoundingClientRect();var p=(innerHeight*.5-r.top)/r.height;pr.style.setProperty('--p',Math.max(0,Math.min(1,p)).toFixed(3));}
+  addEventListener('scroll',function(){if(!tk2){tk2=true;requestAnimationFrame(prog);}},{passive:true}); prog();
+
+  /* Mini-UI: solo animan cuando se ven */
+  watch($$('[data-mui]'),function(el,on){el.classList.toggle('on',on);},{threshold:.2});
+
+  /* RRSS: grilla de 14 días con publicaciones */
+  var g=$('#rrGrid');
+  if(g){
+    var days=['L','M','M','J','V','S','D'], P=[[1,'instagram','10:00'],[3,'facebook','12:30'],[4,'linkedin','09:00'],[6,'tiktok','19:00'],[8,'instagram','18:00'],[9,'linkedin','08:30'],[11,'facebook','11:00'],[12,'tiktok','20:00'],[13,'instagram','13:00']];
+    var h=days.map(function(x){return '<span class="dh">'+x+'</span>'}).join('');
+    for(var i=0;i<14;i++){var p=P.filter(function(q){return q[0]===i})[0];
+      h+='<div class="rr-day"><small>'+(i+3)+'</small>'+(p?'<div class="rp" style="--i:'+P.indexOf(p)+'"><img src="/img/orbit/'+p[1]+(p[1]==='tiktok'?'.svg':'.png')+'" alt="" width="16" height="16"><b>'+p[2]+'</b><span class="th"></span></div>':'')+'</div>';}
+    g.innerHTML=h;
+  }
+
+  /* Web: escribe el pedido y arma la página */
+  var wb=$('#wb'), wt=$('#wbText');
+  if(wb&&wt){
+    var msg='Landing para Clínica Vitalis: agendar horas de dermatología, con formulario y WhatsApp.', timer=null, running=false;
+    function cycle(){
+      wb.classList.remove('built'); wt.textContent=''; var i=0;
+      if(reduce){wt.textContent=msg;wb.classList.add('built');return;}
+      (function type(){ if(!running) return; wt.textContent=msg.slice(0,++i); if(i<msg.length) timer=setTimeout(type,28); else timer=setTimeout(function(){wb.classList.add('built');timer=setTimeout(cycle,6500);},350); })();
+    }
+    watch([wb.closest('[data-mui]')],function(el,on){ if(on&&!running){running=true;cycle();} else if(!on&&running){running=false;clearTimeout(timer);} },{threshold:.25});
+  }
+
+  /* Voz: cronómetro de la llamada */
+  var vt=$('#vzT');
+  if(vt){var sec=0,iv=null;watch([vt.closest('[data-mui]')],function(el,on){clearInterval(iv);if(on&&!reduce){iv=setInterval(function(){sec=(sec+1)%60;vt.textContent='00:'+(sec<10?'0':'')+sec;},1000);}},{threshold:.2});}
+
+  /* API: pestañas accesibles + rotación hasta que el usuario elija */
+  var api=$('[data-api]');
+  if(api){
+    var tabs=$$('[role=tab]',api), auto=!reduce, rot=null;
+    function sel(t,focus){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;var p=d.getElementById(x.getAttribute('aria-controls'));p.hidden=!on;p.classList.toggle('on',on);});if(focus)t.focus();}
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){auto=false;clearInterval(rot);sel(t);});
+      t.addEventListener('keydown',function(e){var k=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(k){e.preventDefault();auto=false;clearInterval(rot);sel(tabs[(i+k+tabs.length)%tabs.length],true);}});
+    });
+    watch([api],function(el,on){clearInterval(rot);if(on&&auto){rot=setInterval(function(){var c=tabs.findIndex(function(x){return x.getAttribute('aria-selected')==='true'});sel(tabs[(c+1)%tabs.length]);},5000);}},{threshold:.4});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blog · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  /* ── Hero ── */
+  .bh{display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s-12);align-items:end}
+  .bh-side{display:grid;gap:14px;padding-bottom:10px}
+  .bh-stat{display:flex;gap:28px;flex-wrap:wrap}
+  .bh-stat div{display:grid;gap:2px}
+  .bh-stat b{font-family:var(--f-display);font-weight:400;font-size:2.6rem;line-height:1;color:var(--heading)}
+  .bh-stat small{font-size:.8rem;color:var(--text-muted)}
+  .writers{display:flex;align-items:center;gap:12px;font-size:.86rem;color:var(--text-muted)}
+  .writers .av{display:flex}
+  .writers img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--bg);margin-left:-10px;background:var(--surface-2)}
+  .writers img:first-child{margin-left:0}
+
+  /* ── Destacado ── */
+  .feat{display:grid;grid-template-columns:1.25fr 1fr;color:inherit;transition:border-color var(--d-base)}
+  .feat:hover{border-color:rgba(250,80,0,.4)}
+  .feat .fm{position:relative;overflow:hidden;min-height:420px;background:var(--surface-2)}
+  .feat .fm img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease-out)}
+  .feat:hover .fm img{transform:scale(1.035)}
+  .feat .fm .flag{position:absolute;left:18px;top:18px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pill);background:rgba(8,8,8,.72);color:#fff;font:700 .72rem/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .feat .fb{padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;gap:18px;justify-content:center}
+  .feat h2{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:clamp(2.4rem,4vw,3.6rem);line-height:.95}
+  .feat p{color:var(--text-muted);font-size:1.02rem}
+  .by{display:flex;align-items:center;gap:12px;font-size:.84rem;color:var(--text-muted)}
+  .by img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--surface-2)}
+  .by b{display:block;color:var(--heading);font-size:.9rem}
+  .readmore{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--link)}
+  .readmore .ico{width:18px;height:18px;transition:transform var(--d-base) var(--ease-out)}
+  a:hover .readmore .ico{transform:translateX(4px)}
+
+  /* recientes */
+  .recent{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+  .rc{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:14px;color:inherit;transition:border-color var(--d-base)}
+  .rc:hover{border-color:rgba(250,80,0,.4)}
+  .rc .th{aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;background:var(--surface-2)}
+  .rc .th img{width:100%;height:100%;object-fit:cover}
+  .rc h3{font-size:.98rem;line-height:1.3}
+  .rc small{display:block;margin-top:6px;font-size:.76rem;color:var(--text-muted)}
+
+  /* ── Barra de filtros ── */
+  .bar{position:sticky;top:12px;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px;border-radius:var(--r-pill);
+    background:var(--glass);border:1px solid var(--border);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);margin-bottom:var(--s-8)}
+  .bar .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+  .bar .chips::-webkit-scrollbar{display:none}
+  .chip .n{font-size:.72rem;opacity:.6}
+  .srch{position:relative;flex:0 1 300px}
+  .srch .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-muted);pointer-events:none}
+  .srch input{width:100%;height:42px;padding:0 44px 0 42px;border-radius:var(--r-pill);border:1px solid var(--border-strong);background:var(--surface);color:var(--heading);font:500 .92rem var(--f-body);outline:none;transition:border-color var(--d-base),box-shadow var(--d-base)}
+  .srch input:focus{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+  .srch kbd{position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+  .count{font-size:.86rem;color:var(--text-muted);margin:-12px 0 var(--s-6)}
+  .count b{color:var(--heading)}
+
+  /* ── Tarjetas ── */
+  .post{border-radius:var(--r-lg)}
+  .post .cover{position:relative}
+  .post .cover .tag{position:absolute;left:14px;top:14px;padding:6px 10px;border-radius:var(--r-pill);background:rgba(8,8,8,.72);color:#fff;font:700 .7rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .post .body{flex:1;align-content:start}
+  .post .meta .ico{width:14px;height:14px}
+  .post .foot-l{margin-top:auto;padding:0 22px 22px;display:flex;justify-content:space-between;align-items:center;font-size:.84rem}
+  .post .foot-l span{color:var(--text-muted)}
+  .post[hidden]{display:none}
+  .empty{padding:56px 24px;text-align:center;display:grid;gap:12px;justify-items:center}
+  .empty[hidden]{display:none}
+  .empty .ic{width:56px;height:56px}
+
+  /* ── Newsletter ── */
+  .nl{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-12);align-items:center;padding:clamp(28px,5vw,56px);border:1.5px solid transparent;
+    background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box}
+  .nl h2{font-size:clamp(2.4rem,4.5vw,3.8rem)}
+  .nl-form{display:grid;gap:12px}
+  .nl-row{display:flex;gap:8px}
+  .nl-row input{flex:1;min-width:0;height:54px;padding:0 18px;border-radius:var(--r-pill);border:1px solid var(--border-strong);background:var(--bg);color:var(--heading);font:500 1rem var(--f-body);outline:none}
+  .nl-row input:focus{border-color:var(--orange);box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+  .nl-row .btn{height:54px}
+  .nl-ok{display:flex;gap:10px;align-items:center;color:var(--heading);font-weight:600}
+  .nl-ok[hidden]{display:none}
+  .nl-ok .ico{color:var(--ok)}
+  .nl ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:.9rem;color:var(--text-muted)}
+
+  @media (max-width:1100px){
+    .bh,.feat,.nl{grid-template-columns:1fr}
+    .feat .fm{min-height:0;aspect-ratio:4/3}
+    .recent{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .bar{border-radius:var(--r-lg);top:8px}
+    .srch{flex:1 1 100%;order:-1}
+    .srch kbd{display:none}
+    .nl-row{flex-direction:column}
+    .nl-row .btn{width:100%}
+    .feat h2{font-size:2.3rem}
+  }
+</style>
+</head>
+<body data-page="blog" data-sec="recursos">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<main id="main" class="page">
+
+  <section class="phero">
+    <div class="ctn bh">
+      <div>
+        <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Recursos<span>/</span>Blog</nav>
+        <p class="eyebrow">Blog de Hapee</p>
+        <h1 class="display">IA aplicada a <span class="grad-text">ventas.</span></h1>
+        <p class="lead">Lo que lanzamos, lo que aprendemos implementando agentes de IA en equipos comerciales y lo que pasa en el ecosistema. Escrito por el equipo que construye Hapee.</p>
+      </div>
+      <div class="bh-side">
+        <div class="bh-stat"><div><b id="nTotal">13</b><small>artículos</small></div><div><b>4</b><small>temas</small></div><div><b>Abr 2026</b><small>primer artículo</small></div></div>
+        <div class="writers"><span class="av"><img src="/img/equipo/sebastian.webp" alt="" width="34" height="34"><img src="/img/equipo/freddy.webp" alt="" width="34" height="34"><img src="/img/equipo/claudia.webp" alt="" width="34" height="34"><img src="/img/equipo/camila.webp" alt="" width="34" height="34"></span><span>Escriben Sebastián, Freddy, Claudia, Camila y el equipo.</span></div>
+      </div>
+    </div>
+    <aside class="note" data-n="B1"><b>Blog, no «News»</b> Una sola etiqueta en todo el sitio (hoy conviven «Blog» y «Hapee News»). El hero dice de qué trata el blog y quién escribe: personas del equipo con foto en vez de «Por Equipo Hapee».</aside>
+  </section>
+
+  <!-- Destacado + recientes (se ocultan al filtrar) -->
+  <section class="sec" id="top" style="padding-top:0;padding-bottom:var(--s-16)">
+    <div class="ctn">
+      <a class="card feat rv" href="/propuesta-2026-r8x4/blog-articulo?a=via-by-hapee-metro">
+        <div class="fm">
+          <img src="/img/via-metro-demoday.jpg" alt="Robot de Hapee en un andén del Metro de Santiago, anuncio del Demo Day" width="1400" height="1080" style="object-position:0 50%" fetchpriority="high">
+          <span class="flag"><span class="dot-live"></span>Lo último</span>
+        </div>
+        <div class="fb">
+          <span class="badge" style="justify-self:start;width:max-content">Eventos · Vía by Hapee</span>
+          <h2>Vía by Hapee avanza de fase: vamos por ser la IA del Metro de Santiago</h2>
+          <p>Presentamos Vía, nuestro asistente de viaje con IA para el pasajero, en el Demo Day 2026 de Metro. El proyecto avanzó de fase y ahora concursamos para convertirnos en la IA oficial de la red.</p>
+          <div class="by"><img src="/img/equipo/sebastian.webp" alt="" width="40" height="40"><span><b>Sebastián Figueroa</b>23 ago 2026 · 4 min de lectura</span></div>
+          <span class="readmore">Leer artículo <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <div class="recent">
+        <a class="card rc rv" href="/propuesta-2026-r8x4/blog-articulo?a=radar-de-competencia"><span class="th"><img src="/img/rrss-jpg/hapee-radar-post.jpg" alt="" loading="lazy" width="96" height="96"></span><div><h3>Radar de Competencia: qué hace tu competencia, cada semana</h3><small>Producto · 5 ago 2026</small></div></a>
+        <a class="card rc rv" href="/propuesta-2026-r8x4/blog-articulo?a=reuniones-ia-notetaker"><span class="th"><img src="/img/rrss-jpg/hapee-notetaker-post.jpg" alt="" loading="lazy" width="96" height="96"></span><div><h3>Reuniones IA: un notetaker propio que entra, escucha y ordena</h3><small>Producto · 5 ago 2026</small></div></a>
+        <a class="card rc rv" href="/propuesta-2026-r8x4/blog-articulo?a=licitaciones-mercado-publico"><span class="th"><img src="/img/rrss-jpg/hapee-licitaciones-post.jpg" alt="" loading="lazy" width="96" height="96"></span><div><h3>Licitaciones: gana más sin pasar el día buscándolas</h3><small>Producto · 5 ago 2026</small></div></a>
+      </div>
+    </div>
+    <aside class="note" data-n="B2"><b>Un destacado, no un collage</b> Hoy el destacado (Fable Mythos, junio) es más antiguo que seis notas de la grilla. Aquí el destacado es siempre el más reciente, con portada real, autor y tiempo de lectura; debajo, los tres siguientes.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0" id="todos">
+    <div class="ctn">
+      <div class="bar" role="search">
+        <div class="chips" role="group" aria-label="Filtrar por tema">
+          <button class="chip" aria-pressed="true" data-cat="all">Todos <span class="n"></span></button>
+          <button class="chip" aria-pressed="false" data-cat="producto">Producto <span class="n"></span></button>
+          <button class="chip" aria-pressed="false" data-cat="modelos">Modelos de IA <span class="n"></span></button>
+          <button class="chip" aria-pressed="false" data-cat="eventos">Eventos <span class="n"></span></button>
+          <button class="chip" aria-pressed="false" data-cat="guias">Guías <span class="n"></span></button>
+        </div>
+        <label class="srch"><span class="sr">Buscar en el blog</span><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Buscar: MCP, licitaciones, voz…" autocomplete="off"><kbd>/</kbd></label>
+      </div>
+      <p class="count" id="count" aria-live="polite">Mostrando <b>9</b> artículos más</p>
+
+      <div class="grid g3" id="grid">
+        <a class="card post rv" data-feat href="/propuesta-2026-r8x4/blog-articulo?a=via-by-hapee-metro" data-cat="eventos" data-k="metro santiago demo day transporte pasajero asistente viaje">
+          <div class="cover"><img src="/img/via-metro-demoday.jpg" alt="" loading="lazy" width="640" height="360"><span class="tag">Eventos</span></div>
+          <div class="body"><div class="meta"><span>23 ago 2026</span><span>·</span><span>4 min</span></div><h3>Vía by Hapee avanza de fase: vamos por ser la IA del Metro de Santiago</h3><p>Presentamos Vía, nuestro asistente de viaje con IA para el pasajero, en el Demo Day 2026 de Metro. Ahora concursamos para ser la IA oficial de la red.</p></div>
+          <div class="foot-l"><span>Sebastián Figueroa</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" data-feat href="/propuesta-2026-r8x4/blog-articulo?a=radar-de-competencia" data-cat="producto" data-k="competencia anuncios meta google tiktok linkedin prensa web inteligencia competitiva">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-radar-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Producto</span></div>
+          <div class="body"><div class="meta"><span>5 ago 2026</span><span>·</span><span>5 min</span></div><h3>Radar de Competencia: qué hace tu competencia, cada semana</h3><p>Define hasta 12 competidores y cada lunes ves sus anuncios, su web, sus redes, su prensa y su visibilidad en asistentes de IA, con un análisis que te dice qué hacer.</p></div>
+          <div class="foot-l"><span>Giorgina Zanotti</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" data-feat href="/propuesta-2026-r8x4/blog-articulo?a=reuniones-ia-notetaker" data-cat="producto" data-k="reuniones notetaker meet zoom teams transcripcion resumen tareas">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-notetaker-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Producto</span></div>
+          <div class="body"><div class="meta"><span>5 ago 2026</span><span>·</span><span>6 min</span></div><h3>Reuniones IA: un notetaker propio que entra, escucha y ordena</h3><p>El bot se suma solo a tus reuniones de Meet, Zoom o Teams y te entrega resumen, tareas con responsable y un borrador del correo de seguimiento.</p></div>
+          <div class="foot-l"><span>Claudia Novoa</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" data-feat href="/propuesta-2026-r8x4/blog-articulo?a=licitaciones-mercado-publico" data-cat="producto" data-k="licitaciones mercado publico compras estado privadas afinidad">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-licitaciones-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Producto</span></div>
+          <div class="body"><div class="meta"><span>5 ago 2026</span><span>·</span><span>5 min</span></div><h3>Licitaciones: gana más sin pasar el día buscándolas</h3><p>Mercado Público y oportunidades privadas filtradas por afinidad real con tu negocio, con el puntaje explicado en una frase. Menos avisos y mejores.</p></div>
+          <div class="foot-l"><span>Claudia Novoa</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=claude-opus-5" data-cat="modelos" data-k="claude opus anthropic modelo razonamiento agentes">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-opus5-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Modelos de IA</span></div>
+          <div class="body"><div class="meta"><span>5 ago 2026</span><span>·</span><span>4 min</span></div><h3>Claude Opus 5 ya está disponible en Hapee</h3><p>El modelo más potente de Anthropic ya se puede elegir en tus agentes: mejor razonamiento en tareas de varios pasos y conversaciones largas sin perder el hilo.</p></div>
+          <div class="foot-l"><span>Freddy Castro</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=expo-compra-publica-podcast" data-cat="eventos" data-k="expo compra publica podcast licitaciones estado">
+          <div class="cover"><img src="/img/blog/expo-compra-publica-podcast.jpg" alt="" loading="lazy" width="640" height="336"><span class="tag">Eventos</span></div>
+          <div class="body"><div class="meta"><span>5 ago 2026</span><span>·</span><span>3 min</span></div><h3>Hapee en el podcast de la Expo Compra Pública</h3><p>Conversamos sobre IA aplicada a compras públicas: por qué el cuello de botella no es la falta de licitaciones sino el tiempo para filtrarlas.</p></div>
+          <div class="foot-l"><span>Sebastián Figueroa</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=fable-mythos-mcp-hapee" data-cat="modelos" data-k="fable mythos anthropic mcp claude modelo">
+          <div class="cover"><img src="/img/blog-mythos-portada.png" alt="" loading="lazy" width="640" height="362"><span class="tag">Modelos de IA</span></div>
+          <div class="body"><div class="meta"><span>10 jun 2026</span><span>·</span><span>3 min</span></div><h3>Fable Mythos llega a Hapee: más poder a la conexión MCP</h3><p>La nueva variante de la familia Fable de Anthropic se suma al stack que potencia el razonamiento de los agentes de Hapee vía MCP.</p></div>
+          <div class="foot-l"><span>Freddy Castro</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=mcp-claude" data-cat="producto" data-k="mcp claude anthropic model context protocol crm contexto conector">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-mcp-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Producto</span></div>
+          <div class="body"><div class="meta"><span>7 may 2026</span><span>·</span><span>4 min</span></div><h3>Conexión nativa con Claude vía MCP</h3><p>Tus agentes ya no llaman a Claude con un prompt fijo: el modelo pide al CRM, al calendario y a la base de conocimiento el contexto que necesita, cuando lo necesita.</p></div>
+          <div class="foot-l"><span>Freddy Castro</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=voz-elevenlabs" data-cat="producto" data-k="voz clonada elevenlabs audio llamadas telefono">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-voz-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Producto</span></div>
+          <div class="body"><div class="meta"><span>5 may 2026</span><span>·</span><span>3 min</span></div><h3>Clonación de voz para tus agentes, con ElevenLabs</h3><p>Tus agentes hablan con la voz de tu marca, con pausas naturales y respuesta en menos de un segundo. Para atención telefónica, retail y servicios financieros.</p></div>
+          <div class="foot-l"><span>Rocío Segura</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=aws-chile" data-cat="eventos" data-k="aws amazon cloud bedrock infraestructura santiago">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-aws-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Eventos</span></div>
+          <div class="body"><div class="meta"><span>3 may 2026</span><span>·</span><span>2 min</span></div><h3>El equipo de Hapee visita las oficinas de AWS en Chile</h3><p>Jornada técnica con el equipo regional de AWS en Santiago: arquitectura multirregión, Bedrock y el camino al AWS Partner Network.</p></div>
+          <div class="foot-l"><span>Jaime León</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=automatiza-rrss" data-cat="guias" data-k="redes sociales rrss instagram facebook tiktok linkedin contenido programar guia">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-rrss-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Guías</span></div>
+          <div class="body"><div class="meta"><span>1 may 2026</span><span>·</span><span>9 min</span></div><h3>Cómo automatizar el contenido de tus redes sociales con Hapee</h3><p>Programa, publica y mide Instagram, Facebook, TikTok, LinkedIn y WhatsApp desde un solo panel, con agentes que responden cada comentario.</p></div>
+          <div class="foot-l"><span>Camila San Martín</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=hapee-aperol-lanzamiento" data-cat="eventos" data-k="lanzamiento aperol podcast evento saas">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-aperol-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Eventos</span></div>
+          <div class="body"><div class="meta"><span>28 abr 2026</span><span>·</span><span>2 min</span></div><h3>Evento Hapee by Aperol: el lanzamiento oficial</h3><p>Lanzamiento oficial de Hapee SaaS con podcast en vivo: cerca de 50 asistentes entre clientes, partners y founders del ecosistema de IA.</p></div>
+          <div class="foot-l"><span>Giorgina Zanotti</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+        <a class="card post rv" href="/propuesta-2026-r8x4/blog-articulo?a=gpt-5-5" data-cat="modelos" data-k="gpt openai chatgpt modelo">
+          <div class="cover"><img src="/img/rrss-jpg/hapee-gpt-linkedin.jpg" alt="" loading="lazy" width="640" height="357"><span class="tag">Modelos de IA</span></div>
+          <div class="body"><div class="meta"><span>25 abr 2026</span><span>·</span><span>3 min</span></div><h3>GPT-5.5 ya está disponible en Hapee</h3><p>El modelo más reciente de OpenAI, integrado en la plataforma: conversaciones más coherentes y razonamiento de varios pasos.</p></div>
+          <div class="foot-l"><span>Freddy Castro</span><span class="readmore">Leer <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></div>
+        </a>
+      </div>
+
+      <div class="card empty" id="empty" hidden>
+        <span class="ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <h3>Nada por aquí con «<span id="qEcho"></span>».</h3>
+        <p class="muted">Prueba con otra palabra o revisa todos los temas.</p>
+        <button class="btn btn-secondary btn-sm" id="reset">Ver todos los artículos</button>
+      </div>
+    </div>
+    <aside class="note" data-n="B3"><b>Encontrar, no hojear</b> Filtro por tema con conteo y búsqueda en vivo (atajo «/»). Al filtrar, el destacado se recoge y la grilla muestra todo lo que calza. Las 13 notas reales con portada, fecha y autor; enlaces sin «.html». Los autores por nota son una propuesta <span class="todo">[confirmar]</span>: hoy todas dicen «Equipo Hapee».</aside>
+  </section>
+
+  <section class="sec alt">
+    <div class="ctn">
+      <div class="card nl rv">
+        <div class="sec-head" style="margin:0">
+          <p class="eyebrow">Newsletter</p>
+          <h2 class="display">Una vez al mes. <span class="grad-text">Sin relleno.</span></h2>
+          <p class="lead">Lo que lanzamos, lo que funcionó en implementaciones reales y un modelo de IA que vale la pena probar.</p>
+        </div>
+        <form class="nl-form" id="nl" novalidate>
+          <div class="nl-row"><label class="sr" for="nlE">Correo de trabajo</label><input id="nlE" type="email" autocomplete="email" placeholder="tu@empresa.com" required><button class="btn btn-primary" type="submit">Suscribirme <span class="arr">→</span></button></div>
+          <label class="check"><input type="checkbox" id="nlC" required> <span>Acepto recibir el newsletter de Hapee y la <a href="/propuesta-2026-r8x4/legal#privacidad">política de privacidad</a>.</span></label>
+          <p class="nl-ok" id="nlOk" role="status" hidden><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Listo. Propuesta: aquí el correo entra a la audiencia del newsletter en Hapee.</p>
+          <ul><li>Un correo al mes, el primer martes.</li><li>Te das de baja con un clic.</li></ul>
+        </form>
+      </div>
+    </div>
+    <aside class="note" data-n="B4"><b>Newsletter nuevo</b> El blog actual no captura correos. En producción el formulario se monta con el embebible de formularios de la app (como en partners) y alimenta una audiencia de Email Marketing de Hapee: el sitio usa su propio producto.</aside>
+  </section>
+
+  <section class="sec">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">Lo que lees aquí, funcionando en tu negocio.</h2>
+      <p>Agenda 30 minutos y te mostramos Hapee con tu caso, sin compromiso.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home#demo">Hablar con el agente</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var d=document, grid=d.getElementById('grid'); if(!grid) return;
+  var posts=[].slice.call(grid.querySelectorAll('.post')), chips=[].slice.call(d.querySelectorAll('.bar .chip'));
+  var q=d.getElementById('q'), top=d.getElementById('top'), count=d.getElementById('count'), empty=d.getElementById('empty'), echo=d.getElementById('qEcho');
+  var cat='all';
+  function norm(s){ s=(s||'').toLowerCase(); try{ s=s.normalize('NFD').replace(/[̀-ͯ]/g,''); }catch(e){} return s; }
+  posts.forEach(function(p){ var h=p.querySelector('h3'), t=p.querySelector('p'), a=p.querySelector('.foot-l span'); p._t=norm([h&&h.textContent,t&&t.textContent,a&&a.textContent,p.getAttribute('data-k'),p.getAttribute('data-cat')].join(' ')); });
+  chips.forEach(function(c){ var k=c.getAttribute('data-cat'), n=posts.filter(function(p){return k==='all'||p.getAttribute('data-cat')===k;}).length; var s=c.querySelector('.n'); if(s) s.textContent=n; });
+  var nt=d.getElementById('nTotal'); if(nt) nt.textContent=posts.length;
+  function apply(){
+    var term=norm(q.value.trim()), filtering=cat!=='all'||term!=='', shown=0;
+    posts.forEach(function(p){
+      var ok=(cat==='all'||p.getAttribute('data-cat')===cat)&&(!term||term.split(/\s+/).every(function(w){return p._t.indexOf(w)>-1;}));
+      if(!filtering&&p.hasAttribute('data-feat')) ok=false;
+      p.hidden=!ok; if(ok){ shown++; p.classList.add('in'); }
+    });
+    if(top) top.hidden=filtering;
+    empty.hidden=shown>0; echo.textContent=q.value.trim()||cat;
+    count.innerHTML=filtering?('<b>'+shown+'</b> '+(shown===1?'artículo encontrado':'artículos encontrados')):('Mostrando <b>'+shown+'</b> artículos más');
+  }
+  chips.forEach(function(c){ c.addEventListener('click',function(){ cat=c.getAttribute('data-cat'); chips.forEach(function(o){o.setAttribute('aria-pressed',o===c?'true':'false');}); apply(); }); });
+  var t; q.addEventListener('input',function(){ clearTimeout(t); t=setTimeout(apply,80); });
+  d.getElementById('reset').addEventListener('click',function(){ q.value=''; cat='all'; chips.forEach(function(o){o.setAttribute('aria-pressed',o.getAttribute('data-cat')==='all'?'true':'false');}); apply(); q.focus(); });
+  d.addEventListener('keydown',function(e){ var tg=e.target&&e.target.tagName; if(e.key==='/'&&tg!=='INPUT'&&tg!=='TEXTAREA'){ e.preventDefault(); q.focus(); } });
+  apply();
+
+  var nl=d.getElementById('nl');
+  if(nl) nl.addEventListener('submit',function(e){ e.preventDefault(); var em=d.getElementById('nlE'), ck=d.getElementById('nlC');
+    if(!em.value||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value)){ em.focus(); em.setAttribute('aria-invalid','true'); return; }
+    if(!ck.checked){ ck.focus(); return; }
+    em.removeAttribute('aria-invalid'); d.getElementById('nlOk').hidden=false; });
+})();
+</script>
+</body>
+</html>

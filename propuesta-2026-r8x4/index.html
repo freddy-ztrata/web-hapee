@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=15">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=31">
 <script>try{if(localStorage.getItem('hapee-prop-theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}</script>
 <style>
   body{line-height:1.65}
@@ -23,6 +23,7 @@
   .top nav a:hover{background:var(--surface-2);color:var(--heading)}
   .top .btn{margin-left:auto}
   @media(max-width:900px){.top nav{display:none}}
+  @media(max-width:640px){.top .btn-secondary{display:none}.top .btn-primary{margin-left:auto!important}}
 
   .cover{padding:120px 0 80px;position:relative;overflow:hidden}
   .cover::before{content:"";position:absolute;right:-10%;top:-30%;width:60vw;height:60vw;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.35),transparent 60%);filter:blur(60px);z-index:-1}
@@ -112,7 +113,7 @@
   .dc p{font-size:.92rem;color:var(--text-muted)}
 
   .end{padding:100px 0 140px;text-align:center}
-  .news{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .news{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .news .card{padding:22px}
   .news b{display:block;color:var(--heading);margin:8px 0 6px}
   .news p{font-size:.92rem;color:var(--text-muted)}
@@ -138,9 +139,9 @@
   <div class="ctn ctn-wide">
     <img src="/img/logo-hapee.png" alt="Hapee" width="98" height="28">
     <nav aria-label="Secciones">
-      <a href="#novedades">Novedades</a><a href="#resumen">Resumen</a><a href="#criticos">Críticos</a><a href="#areas">Auditoría</a><a href="#kas">Mantener / Agregar / Sacar</a><a href="#arquitectura">Arquitectura</a><a href="#home">Nueva home</a><a href="#ds">Design system</a><a href="#fase0">Fase 0</a><a href="#roadmap">Roadmap</a><a href="#decisiones">Decisiones</a>
+      <a href="#novedades">Novedades</a><a href="/propuesta-2026-r8x4/mapa">Todas las páginas</a><a href="#resumen">Resumen</a><a href="#criticos">Críticos</a><a href="#areas">Auditoría</a><a href="#kas">Mantener / Agregar / Sacar</a><a href="#arquitectura">Arquitectura</a><a href="#home">Nueva home</a><a href="#ds">Design system</a><a href="#fase0">Fase 0</a><a href="#roadmap">Roadmap</a><a href="#decisiones">Decisiones</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="/propuesta-2026-r8x4/home">Ver la propuesta <span class="arr">→</span></a>
+    <a class="btn btn-secondary btn-sm" href="/propuesta-2026-r8x4/mapa" style="margin-left:auto">Todas las páginas</a><a class="btn btn-primary btn-sm" href="/propuesta-2026-r8x4/home" style="margin-left:8px">Ver la propuesta <span class="arr">→</span></a>
   </div>
 </header>
 
@@ -155,7 +156,8 @@
     </div>
     <div class="cover-cta">
       <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/home">Ver la nueva home <span class="arr">→</span></a>
-      <a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home?notas=1">Verla con notas de diseño</a>
+      <a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/mapa">Ver todas las páginas</a>
+      <a class="btn btn-ghost btn-lg" href="/propuesta-2026-r8x4/home?notas=1">Con notas de diseño</a>
     </div>
     <p class="muted" style="margin-top:18px;font-size:.88rem">Nada de esto reemplaza el sitio actual. La propuesta vive en esta URL oculta (noindex) para revisarla, ajustarla y, si se aprueba, reemplazar.</p>
   </div>
@@ -168,8 +170,9 @@
     <h2 class="sh display">Qué hay de nuevo para revisar</h2>
     <p class="lead">Todo esto vive solo en la propuesta. El sitio público no cambió.</p>
     <div class="news">
-      <div class="card"><img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" alt="Centro de agentes de Hapee" loading="lazy" width="1500" height="780"><b>«Así se ve Hapee por dentro», con capturas reales</b><p>El widget favorito de la web actual, ahora con 9 capturas nuevas de la plataforma (subcuenta DEMO, 15/10), animadas: zoom donde está la acción, cursor, foco y avisos. Suma el nuevo Centro de agentes.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/home#plataforma">Ver el widget →</a></p></div>
+      <div class="card"><img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" alt="Centro de agentes de Hapee" loading="lazy" width="1500" height="780"><b>«Así se ve Hapee por dentro», vivo</b><p>El widget favorito de la web actual, rehecho desde cero con la interfaz de octubre: en cada módulo pasan cosas (llegan mensajes y la IA responde, los negocios cambian de columna, el flujo se ejecuta, los gráficos se dibujan). Suma el nuevo Centro de agentes.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/home#plataforma">Ver el widget →</a></p></div>
       <div class="card"><img src="/img/robot.png" alt="Robot Hapee" loading="lazy" style="object-fit:contain;background:#141210"><b>Robot del hero con sus colores reales</b><p>El render oficial, con colores y logo exactos, animado en 2.5D: se inclina siguiendo el cursor, flota y lo recorre un brillo de luz. El modelo 3D lavaba los colores y deformaba el logo del pecho.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/home">Ver el hero →</a></p></div>
+      <div class="card"><b style="margin-top:0">El sitio completo, no solo la home</b><p>22 páginas con el mismo sistema: plataforma, soluciones, WhatsApp, precios con checkout, demo, nosotros e inversionistas, seguridad, casos, partners, blog y artículo, docs, academia, eventos, novedades, legales y más.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/mapa">Ver todas las páginas →</a></p></div>
       <div class="card"><b style="margin-top:0">Selector de idioma, Freddy CTO y Fase 0</b><p>Globo ES/EN/PT en el nav, control segmentado en el menú móvil y enlaces en el footer. Freddy Castro figura como cofundador y CTO. Y los arreglos técnicos rápidos del sitio actual quedan preparados para aprobar (ver <a href="#fase0">Fase 0</a>).</p></div>
     </div>
   </div>

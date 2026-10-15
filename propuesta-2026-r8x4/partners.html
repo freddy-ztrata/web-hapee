@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Partners · Hapee — Propuesta 2026</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
+<style>
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:var(--s-6)}
+  .pills span{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface);font-size:.85rem;font-weight:600;color:var(--heading)}
+  .pills .ico{width:16px;height:16px;color:var(--ok)}
+
+  /* ── Hero: panel de comisiones (ejemplo) ── */
+  .earn{padding:22px;display:grid;gap:16px;transform:perspective(1200px) rotateY(-6deg) rotateX(3deg);transition:transform var(--d-hero) var(--ease-out);box-shadow:var(--shadow-3)}
+  .earn:hover{transform:none}
+  .earn-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .earn-h small{color:var(--text-muted);font-size:.8rem}
+  .earn-v{display:flex;align-items:baseline;gap:10px}
+  .earn-v b{font:400 3.6rem/.9 var(--f-display);color:var(--heading)}
+  .earn-v span{color:var(--ok);font-weight:700;font-size:.85rem}
+  .chart{width:100%;height:110px}
+  .chart .area{fill:url(#ea)}
+  .chart .line{fill:none;stroke:url(#el);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 2.4s var(--ease-out) .3s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .accts{display:grid;gap:2px}
+  .acct{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 6px;border-radius:var(--r-sm);font-size:.85rem;opacity:0;animation:inl .5s var(--ease-out) forwards}
+  .acct:nth-child(1){animation-delay:.9s}.acct:nth-child(2){animation-delay:1.1s}.acct:nth-child(3){animation-delay:1.3s}.acct:nth-child(4){animation-delay:1.5s}
+  @keyframes inl{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+  .acct i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--surface-2);font:800 .7rem/1 var(--f-body);font-style:normal;color:var(--heading)}
+  .acct b{color:var(--heading);font-weight:600}
+  .acct small{display:block;color:var(--text-muted);font-size:.75rem}
+  .acct em{font-style:normal;font-weight:700;color:var(--ok)}
+
+  /* ── Tiers ── */
+  .tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+  .tier{padding:28px;display:grid;gap:16px}
+  @property --beam{syntax:"<angle>";inherits:false;initial-value:0deg}
+  .tier.pro{border:1.5px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,conic-gradient(from var(--beam),transparent 0 70%,var(--orange) 80%,var(--burgundy) 90%,transparent 100%) border-box;animation:beam 4s linear infinite;box-shadow:0 30px 80px -30px rgba(250,80,0,.45)}
+  @keyframes beam{to{--beam:360deg}}
+  .tier .pop{position:absolute;top:22px;right:22px;font:700 .7rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;padding:7px 10px;border-radius:var(--r-pill);background:var(--grad);color:var(--n-0)}
+  .tier h3{font-size:1.45rem}
+  .tier .sub{color:var(--text-muted);font-size:.9rem;margin-top:-8px}
+  .pct{display:flex;align-items:baseline;gap:10px}
+  .pct b{font:400 5rem/.85 var(--f-display);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pct span{color:var(--heading);font-weight:700;font-size:.9rem;line-height:1.2}
+  .tier .extra{font-size:.88rem;color:var(--text-muted)}
+  .entry{justify-self:start}
+  .for{font-size:.86rem;color:var(--text-muted);padding:12px 14px;border-radius:var(--r-md);background:var(--surface-2)}
+  .tier h4{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--link);margin-top:4px}
+  .tier ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.9rem}
+  .tier li{display:flex;gap:10px;color:var(--text)}
+  .tier li::before{content:"";flex-shrink:0;width:18px;height:18px;margin-top:2px;border-radius:50%;background:center/11px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FA5000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"),var(--grad-soft)}
+  .tier ul.req li::before{background:center/10px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B8078' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E"),var(--surface-2)}
+  .tier details summary{cursor:pointer;font-weight:600;font-size:.88rem;color:var(--link);list-style:none;margin-top:4px}
+  .tier details summary::-webkit-details-marker{display:none}
+  .tier details[open] summary{margin-bottom:10px}
+  .pay{margin-top:var(--s-8);padding:18px 22px;border-radius:var(--r-lg);border:1px solid var(--border);color:var(--text-muted);font-size:.9rem;display:flex;gap:14px;align-items:flex-start}
+  .pay .ico{color:var(--link);margin-top:1px}
+
+  /* insignias */
+  .bdg{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--n-950);border:1px solid rgba(255,255,255,.1);position:relative}
+  .bdg img{height:20px;width:auto;object-fit:contain;flex-shrink:0;min-width:70px;display:block}
+  .bdg span{font:800 .72rem/1 var(--f-body);letter-spacing:.14em;color:var(--n-0)}
+  .bdg span em{font-style:normal;margin-left:6px;padding:4px 6px;border-radius:6px;background:var(--grad);font-size:.62rem}
+  .bdg.p2{border:1.5px solid transparent;background:linear-gradient(var(--n-950),var(--n-950)) padding-box,var(--grad) border-box}
+  .bdg.p3{border:1.5px solid var(--warn);box-shadow:0 0 30px -6px rgba(245,158,11,.45)}
+  .bdg.p3 span em{background:var(--warn);color:var(--n-950)}
+
+  /* ── Calculadora ── */
+  .calc{display:grid;grid-template-columns:1.1fr .9fr;gap:0}
+  .calc-in{padding:clamp(24px,4vw,40px);display:grid;gap:24px}
+  .calc-out{padding:clamp(24px,4vw,40px);background:var(--grad-soft);border-left:1px solid var(--border);display:grid;gap:18px;align-content:center}
+  .rg{display:grid;gap:10px}
+  .rg span{display:flex;justify-content:space-between;font-weight:600;color:var(--heading);font-size:.95rem}
+  .rg output{font:400 1.8rem/1 var(--f-display);color:var(--link)}
+  .rg input[type=range]{width:100%;accent-color:var(--orange);height:28px}
+  .calc-out small{color:var(--text-muted);font-size:.85rem}
+  .calc-out b{display:block;font:400 clamp(3.4rem,6vw,5rem)/.9 var(--f-display);color:var(--heading)}
+  .calc-out .y b{font-size:2.4rem}
+  .calc-note{font-size:.8rem;color:var(--text-muted)}
+
+  /* ── Cómo funciona ── */
+  .flow4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative}
+  .flow4::before{content:"";position:absolute;left:8%;right:8%;top:34px;height:2px;background:linear-gradient(90deg,var(--orange),var(--burgundy));opacity:.35}
+  .fs{display:grid;gap:10px;align-content:start;position:relative}
+  .fs .num{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1.5px solid rgba(250,80,0,.5);font:400 1.8rem/1 var(--f-display);color:var(--heading);box-shadow:0 0 0 8px var(--bg)}
+  html.dark .sec.alt .fs .num{background:var(--n-900);box-shadow:0 0 0 8px var(--n-900)}
+  .fs h3{font-size:1.2rem}
+  .fs p{color:var(--text-muted);font-size:.93rem}
+
+  /* ── Insignias ── */
+  .badges{display:grid;grid-template-columns:1fr 1.1fr;gap:var(--s-12);align-items:center}
+  .bstage{display:grid;gap:16px;padding:32px;border-radius:var(--r-xl);background:radial-gradient(80% 80% at 50% 0%,rgba(250,80,0,.16),transparent 60%),var(--n-950);border:1px solid rgba(255,255,255,.08)}
+  .brow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;border-radius:var(--r-lg);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+  .brow small{color:var(--n-500);font-size:.8rem;text-align:right}
+
+  /* ── FAQ ── */
+  .faq details{border-bottom:1px solid var(--border)}
+  .faq summary{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:72px;font:700 1.08rem/1.3 var(--f-body);color:var(--heading);cursor:pointer;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-weight:400;font-size:1.5rem;color:var(--link);transition:transform var(--d-base)}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{padding:0 40px 22px 0;color:var(--text-muted)}
+  .faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--s-16);align-items:start}
+
+  /* ── Postular ── */
+  .apply{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s-12);align-items:start}
+  .apply-form{padding:8px;min-height:520px}
+  .apply-form [data-zentru-form]{min-height:500px}
+
+  @media (max-width:1100px){
+    .tiers,.calc,.badges,.apply,.faq-grid{grid-template-columns:1fr}
+    .calc-out{border-left:0;border-top:1px solid var(--border)}
+    .flow4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .flow4::before{display:none}
+    .earn{transform:none}
+  }
+  @media (max-width:760px){
+    .flow4{grid-template-columns:1fr}
+    .brow{flex-direction:column;align-items:flex-start}.brow small{text-align:left}
+    .pct b{font-size:4.2rem}
+  }
+</style>
+</head>
+<body data-page="partners" data-sec="soluciones">
+<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a6 6 0 0 1-12 0V8z"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+</svg>
+<main id="main" class="page">
+
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="phero">
+    <div class="ctn phero-grid">
+      <div>
+        <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Soluciones<span>/</span>Partners</nav>
+        <p class="eyebrow">Hapee Partners · LATAM 2026</p>
+        <h1 class="display">Vende IA con comisión recurrente de hasta <span class="grad-text">35%.</span></h1>
+        <p class="lead">Programa de partners para agencias, consultoras y freelancers. Certifícate, revende Hapee y cobra todos los meses mientras la cuenta siga activa.</p>
+        <div class="phero-cta">
+          <a class="btn btn-primary btn-lg" href="#aplicar">Postular <span class="arr">→</span></a>
+          <a class="btn btn-secondary btn-lg" href="#tiers">Ver tiers</a>
+        </div>
+        <div class="pills"><span><svg class="ico"><use href="#i-check"/></svg>Aprobación en 72 h</span><span><svg class="ico"><use href="#i-check"/></svg>Comisión vitalicia</span><span><svg class="ico"><use href="#i-check"/></svg>Sin costo de entrada</span></div>
+      </div>
+      <div class="card earn" aria-label="Ejemplo de panel de comisiones de un partner">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+          <linearGradient id="el" x1="0" x2="1"><stop offset="0" style="stop-color:var(--orange)"/><stop offset="1" style="stop-color:var(--burgundy)"/></linearGradient>
+          <linearGradient id="ea" x1="0" x2="0" y1="0" y2="1"><stop offset="0" style="stop-color:rgba(250,80,0,.28)"/><stop offset="1" style="stop-color:rgba(250,80,0,0)"/></linearGradient></defs></svg>
+        <div class="earn-h"><div><small>Tus comisiones este mes</small></div><span class="badge">Ejemplo</span></div>
+        <div class="earn-v"><b>USD 416</b><span>+28% vs. mes anterior</span></div>
+        <svg class="chart" viewBox="0 0 400 110" preserveAspectRatio="none" aria-hidden="true">
+          <path class="area" d="M0 100 L0 92 C40 90 60 84 100 80 S160 70 200 62 S270 44 310 36 S370 14 400 8 L400 110 L0 110Z"/>
+          <path class="line" d="M0 92 C40 90 60 84 100 80 S160 70 200 62 S270 44 310 36 S370 14 400 8"/>
+        </svg>
+        <div class="accts">
+          <div class="acct"><i>AR</i><div><b>Andes Retail</b><small>Pro · 28%</small></div><em>USD 111</em></div>
+          <div class="acct"><i>CV</i><div><b>Clínica Vitalis</b><small>Pro · 28%</small></div><em>USD 111</em></div>
+          <div class="acct"><i>VM</i><div><b>Viña Montegrande</b><small>Starter · 28%</small></div><em>USD 83</em></div>
+          <div class="acct"><i>TB</i><div><b>Transportes BMA</b><small>Pro · 28%</small></div><em>USD 111</em></div>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="R1"><b>Mismo programa, más claro</b> Se conservan comisiones, tiers, requisitos, beneficios y el formulario de la app. El hero muestra lo que el partner va a ver (su panel de comisiones, con datos de ejemplo) en vez de la órbita de logos, que ya vive en la home.</aside>
+  </section>
+
+  <!-- ═════════════ RAZONES ═════════════ -->
+  <section class="sec" style="padding-top:0">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Por qué Hapee</p><h2 class="display">Cuatro razones <span class="grad-text">para sumarte.</span></h2></div>
+      <div class="grid g4">
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-brain"/></svg></span><h3>IA lista para revender</h3><p>Agentes de WhatsApp, agentes de voz, automatizaciones, CRM y reportes ya resueltos. Tú aportas la estrategia.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-plug"/></svg></span><h3>Sin migrar el stack</h3><p>Se conecta con WhatsApp API, Meta y Google Ads, Shopify, Stripe, Calendly y más de 400 apps vía Zapier o Make.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-coin"/></svg></span><h3>Comisión recurrente</h3><p>Hasta 35% mientras el cliente siga activo. Sin tope de tiempo y sin devolución de comisiones después de los 90 días.</p></div>
+        <div class="card tile spot rv"><span class="ic"><svg class="ico"><use href="#i-rocket"/></svg></span><h3>Marca que abre puertas</h3><p>Listado público, webinars en conjunto, ruedas de negocios con clientes de Digitals y canal privado Hapee Insiders.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ TIERS ═════════════ -->
+  <section class="sec alt" id="tiers">
+    <div class="ctn">
+      <div class="sec-head">
+        <p class="eyebrow">Tiers del programa</p>
+        <h2 class="display">Tres caminos. Tú eliges <span class="grad-text">qué tan rápido.</span></h2>
+        <p class="lead">Cada tier es una promoción real, no un nombre decorativo. Subes cuando tu cartera activa de clientes Hapee lo justifica: se revisa cada 6 meses y el ascenso es automático.</p>
+      </div>
+      <div class="tiers">
+        <article class="card tier rv">
+          <span class="bdg"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER</span></span>
+          <h3>Hapee Partner</h3><p class="sub">Entrada · para vender desde el primer día</p>
+          <div class="pct"><b>20%</b><span>recurrente<br>vitalicio</span></div>
+          <p class="extra">Sobre el MRR neto de cada cliente que cierres, mientras siga facturando.</p>
+          <span class="badge entry">Sin costo de entrada</span>
+          <p class="for">Freelancers, consultores independientes y agencias de menos de 10 personas que quieren sumar Hapee a sus servicios.</p>
+          <h4>Requisitos de entrada</h4>
+          <ul class="req"><li>Cartera activa de al menos 3 clientes</li><li>Completar Hapee Academy (curso básico, ~6 h)</li><li>Aprobar la certificación Hapee Partner (40 preguntas, 75%)</li><li>Workspace Hapee Starter o superior</li></ul>
+          <details><summary>Ver los 6 beneficios</summary><ul><li>Insignia oficial Hapee Partner (SVG, PNG y Lottie)</li><li>Link único de referido y panel en tiempo real</li><li>Listado en el directorio partners.hapee.ai</li><li>Kit de marca compartida básico (1 deck, 2 one-pagers, 3 casos)</li><li>Acceso a Hapee Insiders (Slack y Circle)</li><li>Webinars mensuales, comunidad en Slack y soporte por chat (SLA 24 h)</li></ul></details>
+          <a class="btn btn-secondary" href="#aplicar">Postula como Partner</a>
+        </article>
+        <article class="card tier pro rv">
+          <span class="pop">Recomendado</span>
+          <span class="bdg p2"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER<em>PRO</em></span></span>
+          <h3>Hapee Partner Pro</h3><p class="sub">Intermedio · para agencias con al menos 5 cuentas Hapee</p>
+          <div class="pct"><b>28%</b><span>recurrente<br>vitalicio</span></div>
+          <p class="extra">Más 5% adicional los primeros 6 meses sobre cuentas referidas por Hapee.</p>
+          <span class="badge entry">Por desempeño · no se compra</span>
+          <p class="for">Agencias en crecimiento, con equipo de ventas e implementación, que quieren acelerar su MRR sumando los leads que Hapee deriva.</p>
+          <h4>Requisitos de entrada</h4>
+          <ul class="req"><li>5 cuentas Hapee activas cerradas en los últimos 12 meses</li><li>USD 2.500 de MRR acumulado generado</li><li>Retención de ingresos (GRR) de 75% o más en cuentas referidas</li><li>Al menos 2 personas certificadas en Hapee Academy</li></ul>
+          <details><summary>Ver los 9 beneficios</summary><ul><li>Todo lo del tier Partner</li><li>Comisión de 28% + 5% extra los primeros 6 meses</li><li>Partner Manager dedicado (1 por cada 15 partners Pro)</li><li>Leads tibios derivados desde el directorio público</li><li>Ruedas de negocios Digitals (bimensuales, con clientes enterprise)</li><li>Kit de marca compartida completo (decks, anuncios, landings, demos)</li><li>Co-marketing: 2 webinars en conjunto al año</li><li>Soporte prioritario (SLA 4 h, canal directo en Slack)</li><li>Acceso beta a funciones 60 días antes del lanzamiento público</li></ul></details>
+          <a class="btn btn-primary" href="#aplicar">Sube a Partner Pro</a>
+        </article>
+        <article class="card tier rv">
+          <span class="bdg p3"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER<em>ELITE</em></span></span>
+          <h3>Hapee Partner Elite</h3><p class="sub">Superior · por invitación o desempeño · top 10 de LATAM</p>
+          <div class="pct"><b>35%</b><span>recurrente<br>vitalicio</span></div>
+          <p class="extra">Más 10% adicional los primeros 6 meses sobre cuentas enterprise referidas por el pool prioritario de Hapee.</p>
+          <span class="badge entry">Solo por invitación</span>
+          <p class="for">Agencias top de Latinoamérica (10 o más personas), con cartera enterprise activa, que operan como brazo extendido del equipo Hapee.</p>
+          <h4>Requisitos de entrada</h4>
+          <ul class="req"><li>20 o más cuentas Hapee activas</li><li>USD 15.000 de MRR acumulado generado</li><li>GRR de 85% o más en cuentas referidas</li><li>Mínimo 4 personas certificadas en Hapee Academy</li><li>Aprobación final del Comité Hapee Partners</li></ul>
+          <details><summary>Ver los 11 beneficios</summary><ul><li>Todo lo del tier Pro</li><li>Comisión de 35% + 10% extra los primeros 6 meses en enterprise</li><li>Account manager 1 a 1 (no compartido)</li><li>Pool prioritario de leads enterprise (Digitals refiere directo)</li><li>Canal #elite-only en Slack con el equipo de producto</li><li>Sesiones estratégicas trimestrales con el CEO y el CTO de Hapee</li><li>Co-marketing premium: 6 webinars en conjunto al año</li><li>Voto en el roadmap del producto (Partner Advisory Board)</li><li>Soporte preferente (SLA 1 h, líder de cuenta directo)</li><li>Logo en la home de hapee.ai como Featured Partner</li><li>Reconocimiento anual en el directorio como Top Elite Partner</li></ul></details>
+          <a class="btn btn-secondary" href="#aplicar">Postula a Elite (revisión humana)</a>
+        </article>
+      </div>
+      <div class="pay"><svg class="ico"><use href="#i-cal"/></svg><p>Las comisiones se calculan sobre el MRR neto de la cuenta (después de los descuentos aplicados al cliente). Se pagan a mes vencido, el día 5 de cada mes, por transferencia en moneda local o en USD, a partir de USD 500 acumulados.</p></div>
+    </div>
+    <aside class="note" data-n="R2"><b>Tiers sin ruido</b> Mismo contenido, con el porcentaje como protagonista y los beneficios plegables para que las tres columnas se lean de un vistazo. «Recomendado» con el mismo borde animado del plan Pro. Se cambian anglicismos («claw-back», «white-glove», «co-branded») por español claro.</aside>
+  </section>
+
+  <!-- ═════════════ CALCULADORA ═════════════ -->
+  <section class="sec">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Calculadora</p><h2 class="display">¿Cuánto podrías <span class="grad-text">cobrar al mes?</span></h2><p class="lead">Mueve los valores según tu cartera. Usamos los precios públicos de Starter (USD 297) y Pro (USD 397).</p></div>
+      <div class="card calc rv">
+        <div class="calc-in">
+          <label class="rg"><span>Clientes en plan Starter <output id="oS">5</output></span><input type="range" id="rS" min="0" max="60" step="1" value="5"></label>
+          <label class="rg"><span>Clientes en plan Pro <output id="oP">5</output></span><input type="range" id="rP" min="0" max="60" step="1" value="5"></label>
+          <div class="rg"><span>Tu tier</span><div class="tabs-row" role="group" aria-label="Tier" id="rT" style="margin:0"><button class="chip" aria-pressed="false" data-p="20">Partner · 20%</button><button class="chip" aria-pressed="true" data-p="28">Pro · 28%</button><button class="chip" aria-pressed="false" data-p="35">Elite · 35%</button></div></div>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div><small>Comisión mensual estimada</small><b id="vM">USD 972</b></div>
+          <div class="y"><small>En un año</small><b id="vY">USD 11.659</b></div>
+          <p class="calc-note">Estimación sobre precios de lista, sin descuentos ni el bono de los primeros 6 meses. No es una promesa de ingresos.</p>
+        </div>
+      </div>
+    </div>
+    <aside class="note" data-n="R3"><b>Calculadora nueva</b> Convierte «hasta 35%» en dinero con la cartera del partner. Usa los precios vigentes y deja visibles los supuestos para no prometer resultados.</aside>
+  </section>
+
+  <!-- ═════════════ CÓMO FUNCIONA ═════════════ -->
+  <section class="sec alt">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Cómo funciona</p><h2 class="display">De la postulación al primer pago <span class="grad-text">en menos de 30 días.</span></h2></div>
+      <div class="flow4">
+        <div class="fs rv"><span class="num">01</span><h3>Postula</h3><p>Formulario de 8 minutos. Sin facturación mínima.</p></div>
+        <div class="fs rv"><span class="num">02</span><h3>Entrevista</h3><p>Un Partner Manager te llama en máximo 72 horas. Si calzas, firmas y entras al onboarding.</p></div>
+        <div class="fs rv"><span class="num">03</span><h3>Certifícate</h3><p>Examen en línea, kit de marca compartida y link único de referido. Ya estás vendiendo.</p></div>
+        <div class="fs rv"><span class="num">04</span><h3>Cobra</h3><p>Comisión recurrente todos los meses, el día 5. Panel en tiempo real con tu MRR.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ INSIGNIA ═════════════ -->
+  <section class="sec">
+    <div class="ctn badges">
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Tu insignia oficial</p>
+        <h2 class="display">El sello que cambia cómo <span class="grad-text">te ven.</span></h2>
+        <p class="lead">Sistema visual con una variante por tier, en SVG, PNG y Lottie animado, para LinkedIn, la firma de tu correo, propuestas y redes. Con verificador público: solo los partners activos aparecen.</p>
+        <ul class="checks"><li>Paquete descargable SVG, PNG y Lottie</li><li>Manual de uso en PDF con lo que sí y lo que no</li><li>Verificador público contra fraude</li></ul>
+      </div>
+      <div class="bstage rv">
+        <div class="brow"><span class="bdg"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER</span></span><small>Tier 1 · versión base con degradado de marca</small></div>
+        <div class="brow"><span class="bdg p2"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER<em>PRO</em></span></span><small>Tier 2 · borde de marca y etiqueta PRO</small></div>
+        <div class="brow"><span class="bdg p3"><img src="/img/logo-hapee.png" alt="Hapee" width="57" height="20"><span>PARTNER<em>ELITE</em></span></span><small>Tier 3 · borde dorado y etiqueta ELITE</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ FAQ ═════════════ -->
+  <section class="sec alt">
+    <div class="ctn faq-grid">
+      <div class="sec-head" style="margin:0;position:sticky;top:120px"><p class="eyebrow">Preguntas frecuentes</p><h2 class="display">Lo que nos preguntan <span class="grad-text">antes de postular.</span></h2><p class="lead">¿Algo más? Escríbenos a <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p></div>
+      <div class="faq">
+        <details><summary>¿Qué requisitos hay para postular?</summary><p>Mínimo 3 clientes activos, foco en marketing digital, ventas o automatización, y pasar una entrevista de 30 minutos. Sin facturación mínima ni cartera obligatoria.</p></details>
+        <details><summary>¿Cuánto cuesta entrar?</summary><p>Nada. Ningún tier cobra por entrar. Los tiers superiores se ganan por volumen, no se compran.</p></details>
+        <details><summary>¿Cómo funciona la comisión recurrente?</summary><p>Cada cliente que cierras queda asociado a tu cuenta de por vida. Cobras 20, 28 o 35% sobre su MRR neto mientras siga pagando, todos los meses y no solo el primero.</p></details>
+        <details><summary>¿Hapee deriva leads o los consigo yo?</summary><p>Ambos. Tú generas la mayoría con tu marketing (te damos el kit de marca compartida). Los partners Pro reciben leads tibios del directorio público y los Elite entran al pool prioritario enterprise.</p></details>
+        <details><summary>¿En qué países opera?</summary><p>Toda Latinoamérica (12 países) y España. Pagos en USD o en moneda local según el país. El resto se evalúa caso a caso.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ POSTULAR ═════════════ -->
+  <section class="sec" id="aplicar">
+    <div class="ctn apply">
+      <div class="sec-head" style="margin:0">
+        <p class="eyebrow">Postula ahora</p>
+        <h2 class="display">Tu próximo ingreso recurrente empieza con <span class="grad-text">un formulario.</span></h2>
+        <p class="lead">8 minutos para completarlo. Respuesta en 72 horas hábiles. Sin compromiso si no calza.</p>
+        <ul class="checks"><li>Revisión humana de tu postulación (no un bot)</li><li>Entrevista de 30 minutos con un Partner Manager de LATAM</li><li>Acceso inmediato a Hapee Academy si calzas</li><li>Insignia y link de referido el mismo día de la firma</li></ul>
+      </div>
+      <div class="card apply-form">
+        <!-- Formulario de postulación alojado en la app (beta.hapee.ai): el embed monta el iframe
+             dentro de este div y lo ajusta al alto del contenido. El script sincroniza el tema
+             leyendo html.dark de esta página, así que sigue al interruptor claro/oscuro. -->
+        <div data-zentru-form="hapee/hapee-partners" data-mode="inline"></div>
+        <script src="https://beta.hapee.ai/static/form-embed.js"></script>
+      </div>
+    </div>
+    <aside class="note" data-n="R4"><b>Formulario de la app, intacto</b> El mismo embed de hoy (data-zentru-form="hapee/hapee-partners" con form-embed.js): las postulaciones llegan a la app y el tema sigue al interruptor de la página.</aside>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="ctn"><div class="cta-band rv">
+      <h2 class="display">Deja de cobrar una vez.</h2>
+      <p>Empieza a cobrar todos los meses. ¿Quieres ver Hapee antes de postular? Agenda una demo y te lo mostramos con el caso de uno de tus clientes.</p>
+      <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="#aplicar">Postular</a></div>
+    </div></div>
+  </section>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var d=document, S=297, P=397, pct=28;
+  var rS=d.getElementById('rS'), rP=d.getElementById('rP'), oS=d.getElementById('oS'), oP=d.getElementById('oP'), vM=d.getElementById('vM'), vY=d.getElementById('vY'), rT=d.getElementById('rT');
+  if(!rS||!rP) return;
+  function fmt(n){ return 'USD '+Math.round(n).toLocaleString('es-CL'); }
+  function calc(){ var s=+rS.value, p=+rP.value, m=(s*S+p*P)*pct/100; oS.textContent=s; oP.textContent=p; vM.textContent=fmt(m); vY.textContent=fmt(m*12); }
+  rS.addEventListener('input',calc); rP.addEventListener('input',calc);
+  if(rT) rT.addEventListener('click',function(e){ var b=e.target.closest('[data-p]'); if(!b) return; pct=+b.dataset.p;
+    rT.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c===b?'true':'false');}); calc(); });
+  calc();
+})();
+</script>
+</body>
+</html>

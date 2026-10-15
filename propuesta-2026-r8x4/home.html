@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/robot.png" fetchpriority="high">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=25">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=25">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=25">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=31">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=31">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=31">
 <script>
   /* Tema antes del primer pintado: oscuro por defecto, respeta la elección guardada. */
   try{var t=localStorage.getItem('hapee-prop-theme');if(t==='light')document.documentElement.classList.remove('dark')}catch(e){}
@@ -35,36 +35,39 @@
         <button class="nav-a" aria-expanded="false" aria-controls="mm-producto">Producto <svg class="ico car" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="mm-panel" id="mm-producto">
           <div class="mm-grid">
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><b>Agentes IA</b><small>Responden, califican y agendan 24/7</small></a>
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></span><b>CRM y pipeline</b><small>Cada lead, cada etapa, un solo lugar</small></a>
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><b>Automatizaciones</b><small>Flujos que trabajan mientras duermes</small></a>
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><b>Licitaciones</b><small>Mercado Público y privados, con IA</small></a>
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></span><b>Voz clonada</b><small>Tu agente habla con tu voz</small></a>
-            <a class="mm-item" href="#plataforma"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span><b>API y MCP</b><small>Conecta Hapee a Claude y ChatGPT</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#agentes"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><b>Agentes IA</b><small>Responden, califican y agendan 24/7</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#crm"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg></span><b>CRM y pipeline</b><small>Cada lead, cada etapa, un solo lugar</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#automatizaciones"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><b>Automatizaciones</b><small>Flujos que trabajan mientras duermes</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#licitaciones"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><b>Licitaciones</b><small>Mercado Público y privados, con IA</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#voz"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></span><b>Voz clonada</b><small>Tu agente habla con tu voz</small></a>
+            <a class="mm-item" href="/propuesta-2026-r8x4/producto#api"><span class="mm-ic"><svg class="ico" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span><b>API y MCP</b><small>Conecta Hapee a Claude y ChatGPT</small></a>
           </div>
-          <a class="mm-foot" href="#plataforma">Ver la plataforma por dentro <span class="arr">→</span></a>
+          <a class="mm-foot" href="/propuesta-2026-r8x4/producto">Ver toda la plataforma <span class="arr">→</span></a>
         </div>
       </div>
       <div class="mm" data-mm>
         <button class="nav-a" aria-expanded="false" aria-controls="mm-soluciones">Soluciones <svg class="ico car" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="mm-panel mm-panel-sm" id="mm-soluciones">
-          <a class="mm-row" href="#demo"><b>Pymes y equipos comerciales</b><small>Vende más sin contratar más</small></a>
-          <a class="mm-row" href="#demo"><b>Agencias y partners</b><small>Revende Hapee con tu marca</small></a>
-          <a class="mm-row" href="#plataforma"><b>Proveedores del Estado</b><small>Licitaciones con IA</small></a>
-          <a class="mm-row" href="#confianza"><b>Empresas</b><small>Seguridad, roles y cumplimiento</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/soluciones#pymes"><b>Pymes y equipos comerciales</b><small>Vende más sin contratar más</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/partners"><b>Agencias y partners</b><small>Revende Hapee con tu marca</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/soluciones#estado"><b>Proveedores del Estado</b><small>Licitaciones con IA</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/soluciones#empresas"><b>Empresas</b><small>Seguridad, roles y cumplimiento</small></a>
         </div>
       </div>
-      <a class="nav-a" href="#precios">Precios</a>
+      <a class="nav-a" href="/propuesta-2026-r8x4/precios">Precios</a>
       <div class="mm" data-mm>
         <button class="nav-a" aria-expanded="false" aria-controls="mm-recursos">Recursos <svg class="ico car" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <div class="mm-panel mm-panel-sm" id="mm-recursos">
-          <a class="mm-row" href="/blog.html"><b>Blog</b><small>IA aplicada a ventas</small></a>
-          <a class="mm-row" href="/docs/"><b>Documentación API</b><small>Webhooks, ERP y MCP</small></a>
-          <a class="mm-row" href="/academia"><b>Academia</b><small>Configura Hapee paso a paso</small></a>
-          <a class="mm-row" href="/comparativa.html"><b>Comparativas</b><small>Hapee frente a otras opciones</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/blog"><b>Blog</b><small>IA aplicada a ventas</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/docs"><b>Documentación API</b><small>Webhooks, ERP y MCP</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/academia"><b>Academia</b><small>Configura Hapee paso a paso</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/casos"><b>Casos de éxito</b><small>Resultados de clientes de Hapee</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/por-que-hapee"><b>Por qué Hapee</b><small>Comparativas y antes/después</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/eventos"><b>Eventos y webinars</b><small>En vivo y grabados</small></a>
+          <a class="mm-row" href="/propuesta-2026-r8x4/changelog"><b>Novedades</b><small>Lo último que lanzamos</small></a>
         </div>
       </div>
-      <a class="nav-a" href="#equipo">Empresa</a>
+      <a class="nav-a" href="/propuesta-2026-r8x4/nosotros">Empresa</a>
     </nav>
 
     <div class="nav-r">
@@ -79,7 +82,7 @@
       </div>
       <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema claro u oscuro"><svg class="ico i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="ico i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       <a class="nav-a nav-login" href="https://beta.hapee.ai/" rel="noopener">Ingresar</a>
-      <a class="btn btn-primary btn-sm magnetic" href="/agenda-tu-demo">Agendar demo <span class="arr">→</span></a>
+      <a class="btn btn-primary btn-sm magnetic" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
       <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
     </div>
   </div>
@@ -88,14 +91,14 @@
 <!-- Menú móvil -->
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menú" hidden>
   <nav class="sheet-in">
-    <details><summary>Producto</summary><a href="#plataforma">Agentes IA</a><a href="#plataforma">CRM y pipeline</a><a href="#plataforma">Automatizaciones</a><a href="#plataforma">Licitaciones</a><a href="#plataforma">API y MCP</a></details>
-    <details><summary>Soluciones</summary><a href="#demo">Pymes</a><a href="#demo">Agencias y partners</a><a href="#plataforma">Proveedores del Estado</a><a href="#confianza">Empresas</a></details>
-    <a class="sheet-a" href="#precios">Precios</a>
-    <details><summary>Recursos</summary><a href="/blog.html">Blog</a><a href="/docs/">Documentación API</a><a href="/academia">Academia</a><a href="/comparativa.html">Comparativas</a></details>
-    <a class="sheet-a" href="#equipo">Empresa</a>
+    <details><summary>Producto</summary><a href="/propuesta-2026-r8x4/producto">Toda la plataforma</a><a href="/propuesta-2026-r8x4/producto#agentes">Agentes IA</a><a href="/propuesta-2026-r8x4/producto#crm">CRM y pipeline</a><a href="/propuesta-2026-r8x4/producto#automatizaciones">Automatizaciones</a><a href="/propuesta-2026-r8x4/producto#licitaciones">Licitaciones</a><a href="/propuesta-2026-r8x4/docs">API y MCP</a></details>
+    <details><summary>Soluciones</summary><a href="/propuesta-2026-r8x4/soluciones#pymes">Pymes</a><a href="/propuesta-2026-r8x4/whatsapp">Ventas por WhatsApp</a><a href="/propuesta-2026-r8x4/partners">Agencias y partners</a><a href="/propuesta-2026-r8x4/soluciones#estado">Proveedores del Estado</a><a href="/propuesta-2026-r8x4/soluciones#empresas">Empresas</a></details>
+    <a class="sheet-a" href="/propuesta-2026-r8x4/precios">Precios</a>
+    <details><summary>Recursos</summary><a href="/propuesta-2026-r8x4/blog">Blog</a><a href="/propuesta-2026-r8x4/docs">Documentación API</a><a href="/propuesta-2026-r8x4/academia">Academia</a><a href="/propuesta-2026-r8x4/casos">Casos de éxito</a><a href="/propuesta-2026-r8x4/por-que-hapee">Por qué Hapee</a><a href="/propuesta-2026-r8x4/eventos">Eventos</a></details>
+    <details><summary>Empresa</summary><a href="/propuesta-2026-r8x4/nosotros">Nosotros</a><a href="/propuesta-2026-r8x4/seguridad">Seguridad</a><a href="/propuesta-2026-r8x4/integraciones">Integraciones</a><a href="/propuesta-2026-r8x4/demos">Demos interactivas</a></details>
     <a class="sheet-a" href="https://beta.hapee.ai/">Ingresar</a>
     <div class="sheet-lang" role="group" aria-label="Idioma"><span><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Idioma</span><div class="seg"><button data-l="es" aria-pressed="true">ES</button><button data-l="en" aria-pressed="false">EN</button><button data-l="pt" aria-pressed="false">PT</button></div></div>
-    <a class="btn btn-primary btn-lg" href="/agenda-tu-demo">Agendar demo <span class="arr">→</span></a>
+    <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
   </nav>
 </div>
 
@@ -130,7 +133,7 @@
       <p class="prompt-hint reveal-up">Escribe tu rubro y habla con un agente real en vivo. Sin registro.</p>
 
       <div class="hero-cta reveal-up">
-        <a class="btn btn-secondary btn-lg magnetic" href="/agenda-tu-demo">Agendar demo de 30 min</a>
+        <a class="btn btn-secondary btn-lg magnetic" href="/propuesta-2026-r8x4/demo">Agendar demo de 30 min</a>
         <a class="btn btn-ghost btn-lg" href="#precios">Ver precios</a>
       </div>
     </div>
@@ -215,7 +218,7 @@
         <li><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Califica y agenda en tu calendario</li>
         <li><svg class="ico" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Pasa la conversación a una persona cuando hace falta</li>
       </ul>
-      <a class="btn btn-primary btn-lg magnetic" href="/agenda-tu-demo">Lo quiero con mi marca <span class="arr">→</span></a>
+      <a class="btn btn-primary btn-lg magnetic" href="/propuesta-2026-r8x4/demo">Lo quiero con mi marca <span class="arr">→</span></a>
     </div>
 
     <div class="phone" aria-label="Demo del agente">
@@ -297,7 +300,7 @@
         <div class="ro"><small>Ingreso adicional estimado</small><b class="display grad-text" id="v-rev">$5.400</b><small>USD al mes</small></div>
         <div class="ro"><small>Ahorro en herramientas</small><b class="display" id="v-save">$350</b><small>USD al mes</small></div>
         <p class="roi-note" id="v-note">Con el plan Pro (USD 397/mes), el retorno estimado es <b>15×</b>.</p>
-        <a class="btn btn-primary btn-lg" href="/agenda-tu-demo">Ver cómo lograrlo <span class="arr">→</span></a>
+        <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Ver cómo lograrlo <span class="arr">→</span></a>
       </div>
     </div>
   </div>
@@ -372,20 +375,20 @@
       <article class="card plan">
         <h3>Starter</h3><p class="pl-d">Para profesionales y equipos pequeños que quieren ordenar sus ventas.</p>
         <p class="price"><span class="cur">USD</span><b class="display" data-m="297" data-y="2.970">297</b><span class="per" data-m="/mes" data-y="/año">/mes</span></p>
-        <a class="btn btn-secondary" href="/planes">Seleccionar plan</a>
+        <a class="btn btn-secondary" href="/propuesta-2026-r8x4/precios">Seleccionar plan</a>
         <ul><li>2 usuarios y 2.000 contactos</li><li>Agentes IA conversacionales 24/7</li><li>Bandeja omnicanal</li><li>Pipeline de ventas ilimitado</li><li>Email Marketing, Licitaciones (Mercado Público) y Academia</li></ul>
       </article>
       <article class="card plan pro">
         <span class="pl-pop">El más elegido</span>
         <h3>Pro</h3><p class="pl-d">Para equipos que venden en varios canales y quieren todo el ecosistema.</p>
         <p class="price"><span class="cur">USD</span><b class="display" data-m="397" data-y="3.970">397</b><span class="per" data-m="/mes" data-y="/año">/mes</span></p>
-        <a class="btn btn-primary" href="/planes">Seleccionar plan</a>
+        <a class="btn btn-primary" href="/propuesta-2026-r8x4/precios">Seleccionar plan</a>
         <ul><li>Usuarios y contactos ilimitados</li><li>Todo lo de Starter</li><li>Licitaciones: Mercado Público y privadas</li><li>Automatizaciones avanzadas y reportería</li><li>WhatsApp Business API</li></ul>
       </article>
       <article class="card plan">
         <h3>Elite Setup</h3><p class="pl-d">Implementación llave en mano con nuestro equipo. Se suma a tu plan.</p>
         <p class="price"><span class="cur">USD</span><b class="display">3.290</b><span class="per">pago único</span></p>
-        <a class="btn btn-secondary" href="/planes">Seleccionar plan</a>
+        <a class="btn btn-secondary" href="/propuesta-2026-r8x4/precios">Seleccionar plan</a>
         <ul><li>Configuración completa de la cuenta</li><li>Agentes entrenados con tu información</li><li>Voz clonada de tu marca</li><li>Landings, funnels y automatizaciones</li><li>Kickoff y acompañamiento</li></ul>
       </article>
     </div>
@@ -438,7 +441,7 @@
   <div class="ctn final-in">
     <h2 class="display t-mega final-h"><span>Deja de perder</span><span class="grad-text">ventas esta noche.</span></h2>
     <p class="lead">Agenda 30 minutos y te mostramos dónde se te escapan las ventas y cómo las recupera tu agente.</p>
-    <div class="final-cta"><a class="btn btn-primary btn-lg magnetic" href="/agenda-tu-demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="#precios">Ver precios</a></div>
+    <div class="final-cta"><a class="btn btn-primary btn-lg magnetic" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="#precios">Ver precios</a></div>
   </div>
 </section>
 
@@ -449,10 +452,10 @@
   <div class="ctn">
     <div class="foot-grid">
       <div class="foot-brand"><img src="/img/logo-hapee.png" alt="Hapee" width="120" height="34"><p>Agentes de IA, CRM y automatización para vender más en WhatsApp, Instagram y todos tus canales.</p><a href="mailto:info@hapee.ai">info@hapee.ai</a></div>
-      <div><h4>Producto</h4><a href="#plataforma">Agentes IA</a><a href="#plataforma">CRM</a><a href="#plataforma">Automatizaciones</a><a href="#plataforma">Licitaciones</a><a href="#precios">Precios</a></div>
-      <div><h4>Soluciones</h4><a href="#demo">Pymes</a><a href="/partners.html">Agencias y partners</a><a href="#plataforma">Proveedores del Estado</a><a href="#confianza">Empresas</a></div>
-      <div><h4>Recursos</h4><a href="/blog.html">Blog</a><a href="/docs/">Documentación API</a><a href="/academia">Academia</a><a href="/comparativa.html">Comparativas</a></div>
-      <div><h4>Empresa</h4><a href="#equipo">Nosotros</a><a href="#confianza">Seguridad</a><a href="/politica-privacidad.html">Privacidad</a><a href="/terminos.html">Términos</a><a href="/eliminacion-datos.html">Eliminación de datos</a></div>
+      <div><h4>Producto</h4><a href="/propuesta-2026-r8x4/producto">Plataforma</a><a href="/propuesta-2026-r8x4/producto#agentes">Agentes IA</a><a href="/propuesta-2026-r8x4/producto#crm">CRM</a><a href="/propuesta-2026-r8x4/integraciones">Integraciones</a><a href="/propuesta-2026-r8x4/precios">Precios</a><a href="/propuesta-2026-r8x4/changelog">Novedades</a></div>
+      <div><h4>Soluciones</h4><a href="/propuesta-2026-r8x4/soluciones#pymes">Pymes</a><a href="/propuesta-2026-r8x4/whatsapp">Ventas por WhatsApp</a><a href="/propuesta-2026-r8x4/partners">Agencias y partners</a><a href="/propuesta-2026-r8x4/soluciones#estado">Proveedores del Estado</a><a href="/propuesta-2026-r8x4/soluciones#empresas">Empresas</a></div>
+      <div><h4>Recursos</h4><a href="/propuesta-2026-r8x4/blog">Blog</a><a href="/propuesta-2026-r8x4/casos">Casos de éxito</a><a href="/propuesta-2026-r8x4/docs">Documentación API</a><a href="/propuesta-2026-r8x4/academia">Academia</a><a href="/propuesta-2026-r8x4/eventos">Eventos</a><a href="/propuesta-2026-r8x4/por-que-hapee">Por qué Hapee</a></div>
+      <div><h4>Empresa</h4><a href="/propuesta-2026-r8x4/nosotros">Nosotros</a><a href="/propuesta-2026-r8x4/seguridad">Seguridad</a><a href="/propuesta-2026-r8x4/legal#privacidad">Privacidad</a><a href="/propuesta-2026-r8x4/legal#terminos">Términos</a><a href="/propuesta-2026-r8x4/legal#eliminacion">Eliminación de datos</a></div>
     </div>
     <p class="foot-mega display" aria-hidden="true">HAPEE</p>
     <div class="foot-bot"><span>© 2026 WM Digital, LLC · Hapee.ai</span><span class="foot-lang"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><button data-l="es" aria-current="true">Español</button><button data-l="en">English</button><button data-l="pt">Português</button></span></div>
@@ -460,7 +463,7 @@
 </footer>
 
 <!-- CTA fija móvil -->
-<div class="mcta" id="mcta"><a class="btn btn-primary" href="/agenda-tu-demo">Agendar demo <span class="arr">→</span></a></div>
+<div class="mcta" id="mcta"><a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a></div>
 
 <!-- Paleta de comandos -->
 <div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Buscar o ir a" hidden>
@@ -474,13 +477,13 @@
 <div class="review-bar" role="region" aria-label="Revisión de la propuesta">
   <span class="rb-tag"><i></i><span>Propuesta 2026 · no publicada</span></span>
   <button id="notesBtn" aria-pressed="false">Notas de diseño</button>
-  <a href="/propuesta-2026-r8x4/">Auditoría y plan</a>
+  <a href="/propuesta-2026-r8x4/mapa">Todas las páginas</a><a href="/propuesta-2026-r8x4/">Auditoría y plan</a>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="/propuesta-2026-r8x4/home.js?v=25" defer></script>
-<script src="/propuesta-2026-r8x4/showcase.js?v=25" defer></script>
+<script src="/propuesta-2026-r8x4/home.js?v=31" defer></script>
+<script src="/propuesta-2026-r8x4/showcase.js?v=31" defer></script>
 </body>
 </html>
