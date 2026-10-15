@@ -157,7 +157,8 @@
     servicios: { name: 'Estudio Consultor', hello: '¡Hola! Soy el asistente de Estudio Consultor. ¿En qué te podemos ayudar: contabilidad, legal o recursos humanos?', sugg: ['Necesito un contador para mi pyme', '¿Cuánto cuesta la asesoría?', 'Quiero una reunión'], ctx: 'un estudio de servicios profesionales para pymes: contabilidad, asesoría legal y gestión de personas. Planes mensuales desde 3 UF.' }
   };
   var VOICE = 'lLsDvdl6OjtZfLJPM2HA';
-  var cur = 'inmobiliaria', history = [], busy = false, voiceOn = false, audio = null, custom = null;
+  var cur = 'inmobiliaria', history = [], busy = false, voiceOn = true,   // voz activada por defecto; el botón del parlante la apaga
+      audio = null, custom = null;
   var body = $('#phBody'), sugg = $('#phSugg'), form = $('#phForm'), input = $('#phText'), status = $('#phStatus');
 
   function systemPrompt() {
@@ -223,7 +224,15 @@
   }
   form.addEventListener('submit', function (e) { e.preventDefault(); send(input.value); });
   $$('.chips .chip').forEach(function (c) { c.addEventListener('click', function () { custom = null; reset(c.dataset.ind); }); });
-  $('#voiceBtn').addEventListener('click', function () { voiceOn = !voiceOn; this.setAttribute('aria-pressed', voiceOn ? 'true' : 'false'); if (!voiceOn && audio) audio.pause(); });
+  var VOZ_ON = '<svg class="ico" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>',
+      VOZ_OFF = '<svg class="ico" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5zM22 9l-6 6M16 9l6 6"/></svg>';
+  $('#voiceBtn').addEventListener('click', function () {
+    voiceOn = !voiceOn;
+    this.setAttribute('aria-pressed', voiceOn ? 'true' : 'false');
+    this.setAttribute('aria-label', voiceOn ? 'Respuestas con voz activadas (clic para silenciar)' : 'Voz silenciada (clic para activar)');
+    this.innerHTML = voiceOn ? VOZ_ON : VOZ_OFF;
+    if (!voiceOn && audio) audio.pause();
+  });
   reset('inmobiliaria');
 
   // El hero alimenta la demo
