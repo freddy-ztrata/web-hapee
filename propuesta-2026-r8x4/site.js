@@ -36,11 +36,12 @@
           .map(function (m) { return '<a class="mm-item" href="' + P + m[3] + '"><span class="mm-ic">' + ico(m[0]) + '</span><b>' + m[1] + '</b><small>' + m[2] + '</small></a>'; }).join('') +
         '</div><a class="mm-foot" href="' + P + 'producto">Ver toda la plataforma <span class="arr">→</span></a></div></div>' +
       '<div class="mm" data-mm><button class="nav-a" aria-expanded="false" data-sec="soluciones">Soluciones ' + ico('car', 'car') + '</button><div class="mm-panel mm-panel-sm">' +
-        '<a class="mm-row" href="' + P + 'soluciones#pymes"><b>Pymes y equipos comerciales</b><small>Vende más sin contratar más</small></a>' +
+        '<a class="mm-row" href="' + P + 'soluciones#industrias"><b>Por industria</b><small>Inmobiliaria, salud, educación, retail y más</small></a>' +
+        '<a class="mm-row" href="' + P + 'soluciones#tamano"><b>Por tamaño de empresa</b><small>De equipos en crecimiento a corporativos</small></a>' +
         '<a class="mm-row" href="' + P + 'whatsapp"><b>Ventas por WhatsApp</b><small>Tu agente IA en WhatsApp oficial</small></a>' +
         '<a class="mm-row" href="' + P + 'partners"><b>Agencias y partners</b><small>Revende Hapee con tu marca</small></a>' +
-        '<a class="mm-row" href="' + P + 'soluciones#estado"><b>Proveedores del Estado</b><small>Licitaciones con IA</small></a>' +
-        '<a class="mm-row" href="' + P + 'soluciones#empresas"><b>Empresas</b><small>Seguridad, roles y cumplimiento</small></a></div></div>' +
+        '<a class="mm-row" href="' + P + 'soluciones#publico"><b>Sector público y licitaciones</b><small>Encuentra y gana licitaciones con IA</small></a>' +
+        '<a class="mm-row" href="' + P + 'soluciones#corporativos"><b>Corporativos</b><small>Seguridad, roles, API e implementación</small></a></div></div>' +
       '<a class="nav-a" href="' + P + 'precios" data-sec="precios">Precios</a>' +
       '<div class="mm" data-mm><button class="nav-a" aria-expanded="false" data-sec="recursos">Recursos ' + ico('car', 'car') + '</button><div class="mm-panel mm-panel-sm">' +
         '<a class="mm-row" href="' + P + 'blog"><b>Blog</b><small>IA aplicada a ventas</small></a>' +
@@ -64,7 +65,7 @@
     '</div></div></header>' +
     '<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Menú" hidden><nav class="sheet-in">' +
       '<details><summary>Producto</summary><a href="' + P + 'producto">Toda la plataforma</a><a href="' + P + 'producto#agentes">Agentes IA</a><a href="' + P + 'producto#crm">CRM y pipeline</a><a href="' + P + 'producto#automatizaciones">Automatizaciones</a><a href="' + P + 'producto#licitaciones">Licitaciones</a><a href="' + P + 'docs">API y MCP</a></details>' +
-      '<details><summary>Soluciones</summary><a href="' + P + 'soluciones#pymes">Pymes</a><a href="' + P + 'whatsapp">Ventas por WhatsApp</a><a href="' + P + 'partners">Agencias y partners</a><a href="' + P + 'soluciones#estado">Proveedores del Estado</a><a href="' + P + 'soluciones#empresas">Empresas</a></details>' +
+      '<details><summary>Soluciones</summary><a href="' + P + 'soluciones#industrias">Por industria</a><a href="/propuesta-2026-r8x4/soluciones#tamano">Por tamaño</a><a href="' + P + 'whatsapp">Ventas por WhatsApp</a><a href="' + P + 'partners">Agencias y partners</a><a href="' + P + 'soluciones#publico">Sector público</a><a href="' + P + 'soluciones#corporativos">Corporativos</a></details>' +
       '<a class="sheet-a" href="' + P + 'precios">Precios</a>' +
       '<details><summary>Recursos</summary><a href="' + P + 'blog">Blog</a><a href="' + P + 'casos">Casos de éxito</a><a href="' + P + 'docs">Documentación API</a><a href="' + P + 'academia">Academia</a><a href="' + P + 'por-que-hapee">Por qué Hapee</a><a href="' + P + 'eventos">Eventos</a><a href="' + P + 'changelog">Novedades</a></details>' +
       '<details><summary>Empresa</summary><a href="' + P + 'nosotros">Nosotros</a><a href="' + P + 'seguridad">Seguridad</a><a href="' + P + 'integraciones">Integraciones</a><a href="' + P + 'demos">Demos interactivas</a></details>' +
@@ -77,7 +78,7 @@
     '<footer class="foot"><div class="ctn"><div class="foot-grid">' +
       '<div class="foot-brand"><img src="/img/logo-hapee.png" alt="Hapee" width="120" height="34"><p>Agentes de IA, CRM y automatización para vender más en WhatsApp, Instagram y todos tus canales.</p><a href="mailto:info@hapee.ai">info@hapee.ai</a></div>' +
       '<div><h4>Producto</h4><a href="' + P + 'producto">Plataforma</a><a href="' + P + 'producto#agentes">Agentes IA</a><a href="' + P + 'producto#crm">CRM</a><a href="' + P + 'integraciones">Integraciones</a><a href="' + P + 'precios">Precios</a><a href="' + P + 'changelog">Novedades</a></div>' +
-      '<div><h4>Soluciones</h4><a href="' + P + 'soluciones#pymes">Pymes</a><a href="' + P + 'whatsapp">Ventas por WhatsApp</a><a href="' + P + 'partners">Agencias y partners</a><a href="' + P + 'soluciones#estado">Proveedores del Estado</a><a href="' + P + 'soluciones#empresas">Empresas</a></div>' +
+      '<div><h4>Soluciones</h4><a href="' + P + 'soluciones#industrias">Por industria</a><a href="/propuesta-2026-r8x4/soluciones#tamano">Por tamaño</a><a href="' + P + 'whatsapp">Ventas por WhatsApp</a><a href="' + P + 'partners">Agencias y partners</a><a href="' + P + 'soluciones#publico">Sector público</a><a href="' + P + 'soluciones#corporativos">Corporativos</a></div>' +
       '<div><h4>Recursos</h4><a href="' + P + 'blog">Blog</a><a href="' + P + 'casos">Casos de éxito</a><a href="' + P + 'docs">Documentación API</a><a href="' + P + 'academia">Academia</a><a href="' + P + 'eventos">Eventos</a><a href="' + P + 'por-que-hapee">Por qué Hapee</a></div>' +
       '<div><h4>Empresa</h4><a href="' + P + 'nosotros">Nosotros</a><a href="' + P + 'seguridad">Seguridad</a><a href="' + P + 'legal#privacidad">Privacidad</a><a href="' + P + 'legal#terminos">Términos</a><a href="' + P + 'legal#eliminacion">Eliminación de datos</a></div>' +
     '</div><p class="foot-mega display" aria-hidden="true">HAPEE</p>' +

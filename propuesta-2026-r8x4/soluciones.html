@@ -12,364 +12,359 @@
 <link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=30">
 <link rel="stylesheet" href="/propuesta-2026-r8x4/site.css?v=30">
 <style>
-  /* ── Selector de segmento del hero ─────────────────────────── */
-  .segs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:var(--s-12)}
-  .seg-c{position:relative;display:grid;gap:10px;align-content:start;padding:24px 22px 22px;min-height:220px;color:inherit;transition:border-color var(--d-base),transform var(--d-slow) var(--ease-out)}
-  .seg-c:hover{border-color:rgba(250,80,0,.45);transform:translateY(-4px)}
-  .seg-c .n{font:400 4rem/.8 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong);transition:color var(--d-slow),-webkit-text-stroke-color var(--d-slow)}
-  .seg-c:hover .n{color:var(--orange);-webkit-text-stroke-color:transparent}
-  .seg-c b{font:700 1.08rem/1.25 var(--f-body);color:var(--heading)}
-  .seg-c small{color:var(--text-muted);font-size:.88rem;line-height:1.45}
-  .seg-c .go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:.86rem;color:var(--link)}
-  .seg-c .go .ico{width:18px;height:18px;transition:transform var(--d-base) var(--ease-out)}
-  .seg-c:hover .go .ico{transform:translateY(3px)}
+  /* ── Hero: buscador de soluciones ─────────────────────────── */
+  .sol-hero{padding:var(--s-12) 0 var(--s-8);text-align:center;position:relative;isolation:isolate}
+  .sol-hero::before{content:"";position:absolute;left:50%;top:-30%;width:80vw;height:60vw;transform:translateX(-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(250,80,0,.28),rgba(205,35,73,.1) 45%,transparent 65%);filter:blur(70px);z-index:-1}
+  html:not(.dark) .sol-hero::before{opacity:.45}
+  .sol-hero h1{font-size:clamp(3rem,7.5vw,7rem);margin:var(--s-4) auto var(--s-6);max-width:18ch}
+  .sol-hero .lead{margin-inline:auto}
+  .marq{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:var(--s-8)}
+  .marq a{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface);color:var(--heading);font-weight:600;font-size:.9rem;transition:border-color var(--d-base),transform var(--d-base) var(--ease-out)}
+  .marq a:hover{border-color:var(--orange);transform:translateY(-2px)}
+  .marq .ico{width:18px;height:18px;color:var(--link)}
 
-  /* ── Barra pegajosa de segmentos ───────────────────────────── */
-  .segbar{position:sticky;top:88px;z-index:50;transition:top var(--d-slow) var(--ease-out);margin-bottom:-60px}
-  body:has(#nav.hide) .segbar{top:12px}
-  .segbar-in{display:flex;gap:2px;width:max-content;max-width:calc(100% - 28px);margin:0 auto;padding:6px;border-radius:var(--r-pill);background:var(--glass);border:1px solid var(--border);
-    -webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);box-shadow:var(--shadow-2);overflow-x:auto;scrollbar-width:none}
-  .segbar-in::-webkit-scrollbar{display:none}
-  .segbar a{flex-shrink:0;height:38px;padding:0 16px;display:inline-flex;align-items:center;border-radius:var(--r-pill);color:var(--text-muted);font:600 .86rem/1 var(--f-body);white-space:nowrap}
-  .segbar a:hover{color:var(--heading)}
-  .segbar a.on{background:var(--heading);color:var(--bg)}
-
-  /* ── Segmento ──────────────────────────────────────────────── */
-  .segsec{scroll-margin-top:-50px}
-  .seg-top{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--s-16);align-items:end;margin-bottom:var(--s-12)}
-  .seg-top .sec-head{margin:0}
-  .seg-top .num{font:400 clamp(7rem,13vw,12rem)/.75 var(--f-display);color:transparent;-webkit-text-stroke:1px var(--border-strong);justify-self:end;user-select:none}
-
-  /* Dolor → solución, unidos por una línea que se dibuja */
-  .ps{display:grid;gap:10px}
-  .ps-h{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);padding:0 4px 6px}
-  .ps-h span:last-child{color:var(--link)}
-  .ps-row{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch}
-  .ps-a,.ps-b{padding:18px 20px;border-radius:var(--r-lg);border:1px solid var(--border);font-size:.95rem;line-height:1.5}
-  .ps-a{background:var(--surface);color:var(--text-muted)}
-  .ps-b{background:var(--surface);color:var(--heading);font-weight:600;border-color:rgba(250,80,0,.28);box-shadow:inset 3px 0 0 var(--orange)}
-  .ps-ln{position:relative;align-self:center;height:2px;margin:0 6px;background:var(--border)}
-  .ps-ln::after{content:"";position:absolute;inset:0;background:var(--grad);transform:scaleX(0);transform-origin:0 50%;transition:transform .9s var(--ease-out) .2s}
-  .ps-ln::before{content:"";position:absolute;right:-2px;top:50%;width:8px;height:8px;border-top:2px solid var(--orange);border-right:2px solid var(--orange);transform:translateY(-50%) rotate(45deg);opacity:0;transition:opacity .3s 1s}
-  .ps-row.in .ps-ln::after{transform:none}
-  .ps-row.in .ps-ln::before{opacity:1}
-  .js .ps-row .ps-b{opacity:.0;transform:translateX(-10px);transition:opacity .6s var(--ease-out) .7s,transform .8s var(--ease-out) .7s}
-  .js .ps-row.in .ps-b{opacity:1;transform:none}
-
-  .seg-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:var(--s-8);align-items:start}
-  .side{display:grid;gap:16px;position:sticky;top:170px}
-  .side .card{padding:24px;display:grid;gap:12px}
-  .side h3{font-size:1rem;letter-spacing:.02em}
+  /* ── Explorador por industria ─────────────────────────────── */
+  .explorer{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;align-items:start}
+  .ind-list{display:grid;gap:4px;position:sticky;top:110px}
+  .ind{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:var(--r-md);border:1px solid transparent;background:none;color:var(--text-muted);font:600 .95rem/1.2 var(--f-body);text-align:left;cursor:pointer;transition:all var(--d-base)}
+  .ind:hover{color:var(--heading);background:var(--surface-2)}
+  .ind[aria-selected="true"]{color:var(--heading);background:var(--surface);border-color:var(--border-strong);box-shadow:var(--shadow-2)}
+  .ind .ii{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--surface-2);color:var(--text-muted);flex-shrink:0;transition:all var(--d-base)}
+  .ind[aria-selected="true"] .ii{background:var(--grad);color:#fff}
+  .ind .ii .ico{width:18px;height:18px}
+  .stage{border-radius:var(--r-xl);border:1px solid var(--border);background:var(--surface);overflow:hidden;box-shadow:var(--shadow-3)}
+  .st-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:0}
+  .st-copy{padding:36px;display:grid;gap:16px;align-content:start}
+  .st-copy .k{display:inline-flex;align-items:center;gap:8px;justify-self:start}
+  .st-copy h2{font-size:clamp(2rem,3.4vw,3rem)}
+  .st-copy .pain{padding:14px 16px;border-radius:var(--r-md);background:var(--surface-2);border-left:3px solid var(--orange);color:var(--heading);font-size:.95rem}
+  .st-copy .pain small{display:block;color:var(--text-muted);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
   .mods{display:flex;flex-wrap:wrap;gap:8px}
-  .mods a{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface-2);color:var(--heading);font:600 .84rem/1 var(--f-body);transition:border-color var(--d-base)}
-  .mods a:hover{border-color:var(--orange)}
-  .mods .ico{width:15px;height:15px;color:var(--link)}
-  .rec{display:grid;gap:4px;padding:16px;border-radius:var(--r-md);background:var(--grad-soft);border:1px solid rgba(250,80,0,.25)}
-  .rec small{color:var(--text-muted);font-size:.8rem}
-  .rec b{font:400 1.9rem/1 var(--f-display);color:var(--heading);text-transform:uppercase}
-  .rec span{font-size:.86rem;color:var(--text)}
-  .side .btn{width:100%}
+  .mods span{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:var(--r-pill);background:var(--grad-soft);border:1px solid rgba(250,80,0,.22);color:var(--heading);font-weight:600;font-size:.82rem}
+  .st-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 
-  /* Visual por segmento */
-  .vis{margin-top:var(--s-8)}
-  /* Pymes: una noche cualquiera */
-  .night{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative;padding:28px 24px}
-  .night::before{content:"";position:absolute;left:24px;right:24px;top:47px;height:2px;background:var(--border)}
-  .night::after{content:"";position:absolute;left:24px;right:24px;top:47px;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:0 50%;transition:transform 2.4s var(--ease-in-out)}
-  .night.in::after{transform:none}
-  .nt{position:relative;display:grid;gap:6px;padding-right:16px}
-  .nt i{width:16px;height:16px;border-radius:50%;background:var(--surface);border:2px solid var(--border-strong);z-index:1;transition:all .4s var(--ease-out);transition-delay:calc(var(--i) * .6s)}
-  .night.in .nt i{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 6px rgba(250,80,0,.15)}
-  .nt b{font:400 1.9rem/1 var(--f-display);color:var(--heading);margin-top:8px}
-  .nt span{font-size:.86rem;color:var(--text-muted)}
+  /* teléfono con la conversación del rubro */
+  .st-phone{position:relative;padding:28px;background:radial-gradient(120% 90% at 100% 0%,rgba(250,80,0,.22),transparent 60%),linear-gradient(160deg,var(--surface-2),var(--surface));display:grid;place-items:center;border-left:1px solid var(--border)}
+  .ph{width:100%;max-width:330px;height:430px;border-radius:34px;padding:10px;background:#0b0b0b;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 70px -20px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow:hidden}
+  .ph-h{display:flex;align-items:center;gap:10px;padding:12px 12px 10px;background:#121110;border-radius:24px 24px 0 0;color:#f5f0eb}
+  .ph-h img{width:30px;height:30px;border-radius:50%;object-fit:contain;background:#1d1a18}
+  .ph-h b{display:block;font-size:.86rem}.ph-h small{display:flex;align-items:center;gap:6px;font-size:.72rem;color:#9d948b}
+  .ph-b{flex:1;padding:12px 10px;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;overflow:hidden;background:#0e0d0c;background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:14px 14px;border-radius:0 0 24px 24px}
+  .bb{max-width:86%;padding:8px 11px;border-radius:14px;font-size:.82rem;line-height:1.45;color:#f5f0eb;animation:bIn .4s var(--ease-out) both}
+  .bb.c{align-self:flex-start;background:#1f1d1b;border-bottom-left-radius:4px}
+  .bb.a{align-self:flex-end;background:linear-gradient(90deg,#FA5000,#CD2349);border-bottom-right-radius:4px}
+  .bb.sys{align-self:center;max-width:none;background:rgba(34,197,94,.14);color:#86efac;font-weight:700;font-size:.74rem;border-radius:999px}
+  .bb.tp{align-self:flex-end;display:flex;gap:4px;padding:11px 12px;background:#2a1b14}
+  .bb.tp i{width:6px;height:6px;border-radius:50%;background:#ff8a4d;animation:dot 1s infinite}
+  .bb.tp i:nth-child(2){animation-delay:.15s}.bb.tp i:nth-child(3){animation-delay:.3s}
+  @keyframes bIn{from{opacity:0;transform:translateY(8px) scale(.97)}}
+  @keyframes dot{50%{transform:translateY(-4px);opacity:.4}}
 
-  /* Agencias: niveles */
-  .tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .tier{padding:22px;display:grid;gap:6px}
-  .tier small{font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
-  .tier b{font:400 3.4rem/.9 var(--f-display);color:var(--heading)}
-  .tier span{font-size:.86rem;color:var(--text-muted)}
-  .tier.top{border-color:rgba(250,80,0,.4);background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border:1px solid transparent}
+  /* flujo típico del rubro */
+  .st-flow{border-top:1px solid var(--border);padding:24px 36px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:f}
+  .fs{position:relative;padding:14px 14px 14px 16px;border-radius:var(--r-md);background:var(--surface-2);font-size:.88rem;color:var(--heading)}
+  .fs::before{counter-increment:f;content:counter(f);display:grid;place-items:center;width:24px;height:24px;margin-bottom:8px;border-radius:50%;background:var(--grad);color:#fff;font:800 .74rem/1 var(--f-body)}
+  .fs small{display:block;color:var(--text-muted);font-size:.8rem;margin-top:3px}
+  .fs:not(:last-child)::after{content:"";position:absolute;right:-12px;top:26px;width:12px;height:2px;background:var(--border-strong)}
+  .swap{animation:swapIn .5s var(--ease-out) both}
+  @keyframes swapIn{from{opacity:0;transform:translateY(10px)}}
 
-  /* Estado: licitaciones con afinidad (estilo de la app, siempre claro) */
-  .lic{padding:20px;background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--orange) 10%,var(--n-50)),transparent 55%),radial-gradient(110% 90% at 100% 100%,color-mix(in srgb,var(--burgundy) 13%,var(--n-50)),var(--n-50) 60%);color:var(--n-800);display:grid;gap:10px}
-  .lic-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:800 1rem/1.2 var(--f-body)}
-  .lic-h span{font:700 .72rem/1 var(--f-body);padding:5px 9px;border-radius:var(--r-pill);background:color-mix(in srgb,var(--orange) 14%,var(--n-0));color:var(--orange-ink)}
-  .lic-i{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;border-radius:14px;background:var(--n-0);border:1px solid rgba(20,18,16,.08);box-shadow:0 6px 18px rgba(20,18,16,.06);border-left:3px solid var(--orange)}
-  .dial{--v:0;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--orange) calc(var(--v) * 1%),var(--n-200) 0);position:relative;transition:--v 1.6s var(--ease-out)}
-  @property --v{syntax:"<number>";inherits:false;initial-value:0}
-  .dial::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--n-0)}
-  .dial b{position:relative;font:800 .95rem/1 var(--f-body);color:var(--n-800)}
-  .lic-i h4{font:700 .92rem/1.3 var(--f-body);color:var(--n-800);margin:0}
-  .lic-i small{display:block;color:var(--n-600);font-size:.78rem;margin-top:3px}
-  .lic-i em{font-style:normal;font:700 .74rem/1 var(--f-body);padding:5px 8px;border-radius:7px;background:color-mix(in srgb,var(--warn) 18%,var(--n-0));color:color-mix(in srgb,var(--warn) 55%,var(--n-900));white-space:nowrap}
+  /* ── Por tamaño ───────────────────────────────────────────── */
+  .sizes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .size{padding:30px;display:flex;flex-direction:column;gap:14px;position:relative}
+  .size .tag{align-self:flex-start}
+  .size h3{font-size:1.5rem}
+  .size .who{color:var(--text-muted);font-size:.93rem;min-height:3em}
+  .size .plan{margin-top:auto;padding-top:16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.88rem;color:var(--text-muted)}
+  .size .plan b{color:var(--heading)}
+  .scale{display:flex;gap:4px;margin-bottom:4px}
+  .scale i{flex:1;height:6px;border-radius:6px;background:var(--surface-2)}
+  .scale i.on{background:var(--grad)}
 
-  /* Empresas: controles */
-  .ctrl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .ctrl .card{padding:20px;display:grid;gap:8px;align-content:start}
-  .ctrl .ic{width:40px;height:40px;border-radius:12px}
-  .ctrl h4{font:700 .98rem/1.3 var(--f-body);color:var(--heading);margin:0}
-  .ctrl p{font-size:.86rem;color:var(--text-muted)}
+  /* ── Por área ─────────────────────────────────────────────── */
+  .areas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .area{background:var(--surface);padding:28px;display:grid;gap:10px;align-content:start;transition:background var(--d-base)}
+  .area:hover{background:var(--surface-2)}
+  .area h3{font-size:1.15rem}
+  .area p{color:var(--text-muted);font-size:.9rem}
+  .area ul{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:6px;font-size:.86rem;color:var(--heading)}
+  .area li::before{content:"→ ";color:var(--link)}
+
+  /* ── Bandas: agencias y sector público ────────────────────── */
+  .bands{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .band{position:relative;overflow:hidden;border-radius:var(--r-xl);padding:36px;display:grid;gap:14px;align-content:start;min-height:340px;border:1px solid var(--border)}
+  .band h3{font-size:clamp(1.8rem,3vw,2.6rem)}
+  .band p{max-width:44ch}
+  .band.ag{background:linear-gradient(150deg,#1b1210,#0b0908);color:#d8cfc6;border-color:rgba(250,80,0,.3)}
+  .band.ag h3{color:#fff}
+  .band.pub{background:var(--surface)}
+  .band.pub p{color:var(--text-muted)}
+  .tiers{display:flex;gap:8px;margin-top:6px}
+  .tiers div{flex:1;padding:12px;border-radius:var(--r-md);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);text-align:center}
+  .tiers b{display:block;font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1;color:#fff}
+  .tiers small{font-size:.74rem;color:#b5aaa1}
+  .lic-mini{display:grid;gap:8px;margin-top:6px}
+  .lm{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--surface-2)}
+  .lm .r{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:800 .78rem/1 var(--f-body);color:var(--heading);background:conic-gradient(var(--orange) calc(var(--v)*1%),var(--border) 0);position:relative}
+  .lm .r::before{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--surface-2)}
+  .lm .r span{position:relative}
+  .lm b{display:block;font-size:.86rem;color:var(--heading)}.lm small{font-size:.76rem;color:var(--text-muted)}
+
+  /* ── Corporativos ─────────────────────────────────────────── */
+  .corp{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s-12);align-items:center}
+  .ctrl{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ctrl .card{padding:20px;display:grid;gap:8px}
+  .ctrl .card b{color:var(--heading)}
+  .ctrl .card small{color:var(--text-muted);font-size:.86rem}
 
   @media (max-width:1100px){
-    .segs{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .seg-top,.seg-grid{grid-template-columns:1fr}
-    .seg-top .num{display:none}
-    .side{position:static}
-    .ctrl{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .explorer{grid-template-columns:1fr}
+    .ind-list{position:static;grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+    .st-top,.corp{grid-template-columns:1fr}
+    .st-phone{border-left:0;border-top:1px solid var(--border)}
+    .sizes,.bands{grid-template-columns:1fr}
+    .areas{grid-template-columns:1fr 1fr}
   }
   @media (max-width:760px){
-    .segs{grid-template-columns:1fr}
-    .seg-c{min-height:0}
-    .seg-c .n{font-size:2.8rem}
-    .segbar{top:84px}
-    .ps-h{display:none}
-    .ps-row{grid-template-columns:1fr;gap:0}
-    .ps-ln{width:2px;height:22px;margin:0 0 0 24px;align-self:auto}
-    .ps-ln::after{transform:scaleY(0);transform-origin:50% 0}
-    .ps-ln::before{right:auto;left:-3px;top:auto;bottom:-2px;transform:rotate(135deg)}
-    .night{grid-template-columns:1fr 1fr;row-gap:22px}
-    .night::before,.night::after{display:none}
-    .tiers,.ctrl{grid-template-columns:1fr}
-    .lic-i{grid-template-columns:auto 1fr}
-    .lic-i em{grid-column:2;justify-self:start}
+    .st-copy{padding:24px}.st-flow{grid-template-columns:1fr 1fr;padding:20px 24px}
+    .fs:not(:last-child)::after{display:none}
+    .areas,.ctrl{grid-template-columns:1fr}
+    .ind{padding:10px 12px;font-size:.88rem}
   }
 </style>
 </head>
 <body data-page="soluciones" data-sec="soluciones">
-<script src="/propuesta-2026-r8x4/site.js?v=30"></script>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
-  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></symbol>
-  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
-  <symbol id="i-kanban" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 7v7M12 7v4M16 7v9"/></symbol>
-  <symbol id="i-flow" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
-  <symbol id="i-web" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
-  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"/></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol>
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
-  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
-  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-  <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="m12 15-3-3a22 22 0 0 1 2-4A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/></symbol>
-</svg>
-
+<script src="/propuesta-2026-r8x4/site.js?v=36"></script>
 <main id="main" class="page">
 
-  <!-- ═════════ HERO ═════════ -->
-  <section class="phero">
+  <!-- HERO -->
+  <section class="sol-hero">
     <div class="ctn">
-      <nav class="crumbs" aria-label="Ruta"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Soluciones</nav>
-      <div class="sec-head" style="margin:0;max-width:880px">
-        <p class="eyebrow">Soluciones</p>
-        <h1 class="display">La misma plataforma, armada para <span class="grad-text">cómo vendes.</span></h1>
-        <p class="lead">Una pyme que vive en WhatsApp, una agencia con veinte clientes, una empresa que postula a licitaciones o un equipo con varias sucursales: cada uno parte por un problema distinto. Elige el tuyo.</p>
+      <nav class="crumbs" aria-label="Ruta" style="justify-content:center"><a href="/propuesta-2026-r8x4/home">Inicio</a><span>/</span>Soluciones</nav>
+      <p class="eyebrow">Soluciones</p>
+      <h1 class="display">Una plataforma. <span class="grad-text">Cualquier empresa.</span></h1>
+      <p class="lead">Desde un equipo de tres personas hasta una operación con cientos de vendedores, en cualquier industria. Hapee se adapta a cómo vendes, no al revés.</p>
+      <div class="marq">
+        <a href="#industrias"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>Por industria</a>
+        <a href="#tamano"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Por tamaño</a>
+        <a href="#areas"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.8-3.6 3.3-5.2 6.2-5.2s5.4 1.6 6.2 5.2M16 5.6a3 3 0 0 1 0 5.8M17.8 15.1c2.1.5 3.4 1.9 3.9 4.4"/></svg>Por área</a>
+        <a href="#agencias"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Agencias</a>
+        <a href="#publico"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21h16M5 10h14M12 3 4 7h16zM7 10v8M12 10v8M17 10v8"/></svg>Sector público</a>
+        <a href="#corporativos"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Corporativos</a>
       </div>
-      <nav class="segs" aria-label="Segmentos">
-        <a class="card seg-c spot rv" href="#pymes"><span class="n">01</span><b>Pymes y equipos comerciales</b><small>Responde a toda hora y ordena tus ventas sin contratar más.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
-        <a class="card seg-c spot rv" href="#agencias"><span class="n">02</span><b>Agencias y partners</b><small>Suma IA y CRM a tu oferta y cobra una comisión recurrente.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
-        <a class="card seg-c spot rv" href="#estado"><span class="n">03</span><b>Proveedores del Estado</b><small>Licitaciones que calzan con tu rubro, analizadas por IA.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
-        <a class="card seg-c spot rv" href="#empresas"><span class="n">04</span><b>Empresas</b><small>Roles, integraciones y una implementación acompañada.</small><span class="go">Ver solución <svg class="ico"><use href="#i-down"/></svg></span></a>
-      </nav>
     </div>
-    <aside class="note" data-n="S1"><b>Página nueva: por segmento</b> Hoy el sitio le habla a todos con el mismo mensaje y los segmentos no tienen página. Cada uno aquí sigue la misma estructura (dolor → cómo lo resuelve Hapee → módulos → plan sugerido → CTA) para que un anuncio por segmento aterrice en su ancla.</aside>
+    <aside class="note" data-n="S1"><b>Para todo tipo de empresas</b> La página deja de estar centrada en un segmento: se navega por industria, tamaño y área, con agencias, sector público y corporativos como casos especiales. El mismo mensaje sirve a un equipo de 3 personas y a una empresa grande.</aside>
   </section>
 
-  <div class="segwrap">
-    <nav class="segbar" aria-label="Ir a un segmento"><div class="segbar-in" id="segbar">
-      <a href="#pymes">Pymes</a><a href="#agencias">Agencias</a><a href="#estado">Proveedores del Estado</a><a href="#empresas">Empresas</a>
-    </div></nav>
-
-    <!-- ═════════ PYMES ═════════ -->
-    <section class="sec segsec" id="pymes">
-      <div class="ctn">
-        <div class="seg-top">
-          <div class="sec-head"><p class="eyebrow">01 · Pymes y equipos comerciales</p><h2 class="display">Vende más sin contratar más.</h2><p class="lead">Para negocios que venden por WhatsApp e Instagram y no alcanzan a responder todo a tiempo.</p></div>
-          <span class="num" aria-hidden="true">01</span>
-        </div>
-        <div class="seg-grid">
-          <div>
-            <div class="ps">
-              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
-              <div class="ps-row"><div class="ps-a">Los mensajes de la noche y del fin de semana esperan hasta el lunes.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">El agente IA responde en segundos, a toda hora, por WhatsApp, Instagram y Facebook.</div></div>
-              <div class="ps-row"><div class="ps-a">Cada vendedor lleva sus clientes en su teléfono o en una planilla.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una bandeja compartida y un CRM donde cada conversación queda en la ficha del cliente.</div></div>
-              <div class="ps-row"><div class="ps-a">Pagas cinco o seis herramientas que no se hablan entre sí.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">CRM, email, sitios, agenda y automatizaciones en una sola suscripción.</div></div>
-              <div class="ps-row"><div class="ps-a">Nadie hace el seguimiento del que dijo «lo pienso».</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Workflows que escriben, esperan y avisan al vendedor en el momento justo.</div></div>
-            </div>
-            <div class="card night vis rv" id="night" aria-label="Ejemplo de una noche con Hapee">
-              <div class="nt" style="--i:0"><i></i><b>23:42</b><span>Llega un mensaje por WhatsApp</span></div>
-              <div class="nt" style="--i:1"><i></i><b>23:42</b><span>El agente responde y pregunta qué busca</span></div>
-              <div class="nt" style="--i:2"><i></i><b>23:46</b><span>Queda calificado y con visita agendada</span></div>
-              <div class="nt" style="--i:3"><i></i><b>09:00</b><span>Tu vendedor lo ve listo en el pipeline</span></div>
-            </div>
+  <!-- POR INDUSTRIA -->
+  <section class="sec" id="industrias" style="padding-top:var(--s-12)">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Por industria</p><h2 class="display">Elige tu rubro y <span class="grad-text">míralo funcionando.</span></h2><p class="lead">Cada industria vende distinto. Mira cómo conversa el agente, qué módulos usas y cómo se mueve una venta típica.</p></div>
+      <div class="explorer">
+        <div class="ind-list" role="tablist" aria-label="Industrias" id="indList"></div>
+        <div class="stage rv" id="stage" role="tabpanel">
+          <div class="st-top">
+            <div class="st-copy" id="stCopy"></div>
+            <div class="st-phone"><div class="ph"><div class="ph-h"><img src="/img/robot.png" alt=""><div><b id="phN">Agente</b><small><span class="dot-live"></span>en línea</small></div></div><div class="ph-b" id="phB" aria-live="polite"></div></div></div>
           </div>
-          <aside class="side">
-            <div class="card">
-              <h3>Módulos clave</h3>
-              <div class="mods"><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a><a href="/propuesta-2026-r8x4/producto#bandeja"><svg class="ico"><use href="#i-inbox"/></svg>Bandeja</a><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM</a><a href="/propuesta-2026-r8x4/producto#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a><a href="/propuesta-2026-r8x4/producto#email"><svg class="ico"><use href="#i-mail"/></svg>Email</a></div>
-              <div class="rec"><small>Plan sugerido</small><b>Starter o Pro</b><span>Starter para 1 o 2 personas; Pro si vendes en equipo o necesitas WhatsApp Business API.</span></div>
-              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
-              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/whatsapp">Ver el agente para WhatsApp</a>
-            </div>
-          </aside>
+          <div class="st-flow" id="stFlow"></div>
         </div>
       </div>
-      <aside class="note" data-n="S2"><b>El dolor, emparejado</b> Cada problema tiene su respuesta al lado y una línea que los une al hacer scroll: se lee en 10 segundos. La «noche cualquiera» muestra el mecanismo con una hora concreta en vez de una cifra que no podemos respaldar.</aside>
-    </section>
+    </div>
+    <aside class="note" data-n="S2"><b>Explorador interactivo</b> Reemplaza los bloques estáticos por segmento: el visitante elige su industria y ve una conversación real del agente, los módulos que usaría y el flujo típico de venta. Ocho rubros; se suman nuevos agregando un objeto en el script.</aside>
+  </section>
 
-    <!-- ═════════ AGENCIAS ═════════ -->
-    <section class="sec alt segsec" id="agencias">
-      <div class="ctn">
-        <div class="seg-top">
-          <div class="sec-head"><p class="eyebrow">02 · Agencias y partners</p><h2 class="display">Revende Hapee a tus clientes.</h2><p class="lead">Para agencias, consultoras y freelancers que atienden pymes: suma agentes de IA, CRM y automatización a tu oferta, sin desarrollarlos.</p></div>
-          <span class="num" aria-hidden="true">02</span>
-        </div>
-        <div class="seg-grid">
-          <div>
-            <div class="ps">
-              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
-              <div class="ps-row"><div class="ps-a">Tus clientes te piden IA y automatización, y armarlo a medida no escala.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una plataforma lista (agentes, CRM, automatizaciones y reportes) que configuras para cada cliente.</div></div>
-              <div class="ps-row"><div class="ps-a">Cada cliente vive en una herramienta distinta.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Una subcuenta por cliente, administradas desde tu cuenta de agencia.</div></div>
-              <div class="ps-row"><div class="ps-a">Armar el reporte mensual te toma horas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Reportes en un clic con la pauta, las redes y GA4 de cada cliente.</div></div>
-              <div class="ps-row"><div class="ps-a">Cobras por proyecto y empiezas de cero cada mes.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Comisión recurrente mientras el cliente siga activo.</div></div>
-            </div>
-            <div class="tiers vis">
-              <div class="card tier rv"><small>Partner</small><b>20%</b><span>Recurrente, para empezar a vender desde el primer cliente.</span></div>
-              <div class="card tier rv"><small>Partner Pro</small><b>28%</b><span>Para agencias con cuentas activas y equipo certificado.</span></div>
-              <div class="card tier top rv"><small>Partner Elite</small><b>35%</b><span>Por invitación o desempeño, con cartera enterprise.</span></div>
-            </div>
-          </div>
-          <aside class="side">
-            <div class="card">
-              <h3>Módulos clave</h3>
-              <div class="mods"><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Agentes IA</a><a href="/propuesta-2026-r8x4/producto#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a><a href="/propuesta-2026-r8x4/producto#web"><svg class="ico"><use href="#i-web"/></svg>Sitios y funnels</a><a href="/propuesta-2026-r8x4/producto#academia"><svg class="ico"><use href="#i-cap"/></svg>Academia</a></div>
-              <div class="rec"><small>Programa</small><b>Hapee Partners</b><span>Tres niveles, certificación en la Academia y kit de venta. Detalle de requisitos y beneficios en la página del programa.</span></div>
-              <a class="btn btn-primary" href="/propuesta-2026-r8x4/partners">Conocer el programa <span class="arr">→</span></a>
-              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/demo">Agendar demo</a>
-            </div>
-          </aside>
-        </div>
+  <!-- POR TAMAÑO -->
+  <section class="sec alt" id="tamano">
+    <div class="ctn">
+      <div class="sec-head center"><p class="eyebrow">Por tamaño</p><h2 class="display">Crece sin <span class="grad-text">cambiar de sistema.</span></h2><p class="lead">La misma plataforma acompaña cada etapa: lo que cambia es cuánto automatizas y cuánto te acompaña nuestro equipo.</p></div>
+      <div class="sizes">
+        <article class="card size rv">
+          <div class="scale"><i class="on"></i><i></i><i></i></div>
+          <span class="badge tag">1 a 10 personas</span>
+          <h3>Equipos en crecimiento</h3>
+          <p class="who">Responder a todos sin contratar más gente y tener las ventas ordenadas desde el día uno.</p>
+          <ul class="checks"><li>Agente IA atendiendo 24/7</li><li>Bandeja omnicanal y pipeline</li><li>Plantillas de email y RRSS</li></ul>
+          <div class="plan"><span>Plan sugerido</span><b>Starter</b></div>
+        </article>
+        <article class="card size rv">
+          <div class="scale"><i class="on"></i><i class="on"></i><i></i></div>
+          <span class="badge tag">10 a 100 personas</span>
+          <h3>Empresas medianas</h3>
+          <p class="who">Varios canales, varios vendedores y la necesidad de medir qué funciona y quién vende.</p>
+          <ul class="checks"><li>Usuarios y contactos ilimitados</li><li>Automatizaciones avanzadas y reportería</li><li>Centro de agentes y WhatsApp API</li></ul>
+          <div class="plan"><span>Plan sugerido</span><b>Pro</b></div>
+        </article>
+        <article class="card size rv">
+          <div class="scale"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+          <span class="badge tag">100+ personas</span>
+          <h3>Corporativos</h3>
+          <p class="who">Procesos propios, requisitos de seguridad e integración con los sistemas que ya existen.</p>
+          <ul class="checks"><li>Roles, permisos y registro de actividad</li><li>API, webhooks y conector MCP</li><li>Implementación llave en mano</li></ul>
+          <div class="plan"><span>Plan sugerido</span><b>Pro + Elite Setup</b></div>
+        </article>
       </div>
-      <aside class="note" data-n="S3"><b>Resumen, no duplicado</b> El detalle del programa vive en /partners; aquí solo el resumen y los tres niveles con las comisiones que ya publica el sitio, para que la agencia entienda en un vistazo si le sirve.</aside>
-    </section>
+    </div>
+    <aside class="note" data-n="S3"><b>Por tamaño, no por etiqueta</b> En vez de «pymes», tres etapas con el plan sugerido. Ayuda a que una empresa grande se reconozca y a que una chica no sienta que el producto le queda grande.</aside>
+  </section>
 
-    <!-- ═════════ ESTADO ═════════ -->
-    <section class="sec segsec" id="estado">
-      <div class="ctn">
-        <div class="seg-top">
-          <div class="sec-head"><p class="eyebrow">03 · Proveedores del Estado</p><h2 class="display">Las licitaciones que puedes ganar, cada mañana.</h2><p class="lead">Para empresas que venden al Estado y a grandes compradores privados, y hoy revisan portales a mano.</p></div>
-          <span class="num" aria-hidden="true">03</span>
-        </div>
-        <div class="seg-grid">
-          <div>
-            <div class="ps">
-              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
-              <div class="ps-row"><div class="ps-a">Revisar Mercado Público todos los días toma horas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Hapee revisa Mercado Público, WherEx y portales privados, y te avisa por correo.</div></div>
-              <div class="ps-row"><div class="ps-a">Las bases son largas y descubres tarde que no calzas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">La IA resume las bases y calcula la afinidad de cada licitación con tu empresa.</div></div>
-              <div class="ps-row"><div class="ps-a">Se te pasan los plazos.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Ves cuántos días quedan, ordenado por afinidad y monto.</div></div>
-              <div class="ps-row"><div class="ps-a">La oportunidad queda fuera del proceso comercial.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">La licitación pasa al pipeline como negocio, con tareas para el equipo. <span class="todo">[confirmar]</span></div></div>
-            </div>
-            <div class="card lic vis rv" id="lic" role="img" aria-label="Maqueta: tres licitaciones con su afinidad calculada por IA, monto y días para el cierre.">
-              <div class="lic-h">Oportunidades <span>Mercado Público</span></div>
-              <div class="lic-i"><span class="dial" data-v="87"><b>0</b></span><div><h4>Community management y pauta digital</h4><small>Universidad pública · Metropolitana · $12.800.000</small></div><em>cierra en 4 días</em></div>
-              <div class="lic-i"><span class="dial" data-v="84"><b>0</b></span><div><h4>Desarrollo de sitio web institucional</h4><small>Servicio de salud · Metropolitana · $24.000.000</small></div><em>cierra en 9 días</em></div>
-              <div class="lic-i"><span class="dial" data-v="81"><b>0</b></span><div><h4>Plataforma CRM para atención ciudadana</h4><small>Ministerio · Metropolitana · $58.000.000</small></div><em>cierra en 15 días</em></div>
-            </div>
-          </div>
-          <aside class="side">
-            <div class="card">
-              <h3>Módulos clave</h3>
-              <div class="mods"><a href="/propuesta-2026-r8x4/producto#licitaciones"><svg class="ico"><use href="#i-bank"/></svg>Licitaciones</a><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM y cotizaciones</a><a href="/propuesta-2026-r8x4/producto#automatizaciones"><svg class="ico"><use href="#i-flow"/></svg>Automatizaciones</a></div>
-              <div class="rec"><small>Plan sugerido</small><b>Pro</b><span>Starter incluye Mercado Público; Pro suma entidades privadas.</span></div>
-              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a>
-              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/producto#licitaciones">Ver el módulo</a>
-            </div>
-          </aside>
-        </div>
+  <!-- POR ÁREA -->
+  <section class="sec" id="areas">
+    <div class="ctn">
+      <div class="sec-head"><p class="eyebrow">Por área</p><h2 class="display">Cada equipo, <span class="grad-text">en la misma página.</span></h2></div>
+      <div class="areas">
+        <div class="area rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8M14 7h7v7"/></svg></span><h3>Ventas</h3><p>Leads calificados por la IA y un pipeline que se mueve solo.</p><ul><li>Pipeline y cotizaciones</li><li>Agendamiento automático</li><li>Seguimiento sin olvidos</li></ul></div>
+        <div class="area rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M3 10.8 19.5 5v13L3 13.2z"/><path d="M7.5 14.5V18a2 2 0 0 0 4 .5"/></svg></span><h3>Marketing</h3><p>Campañas, contenido y pauta medidos hasta la venta.</p><ul><li>Email marketing</li><li>Grilla de RRSS con IA</li><li>Reportería de Ads</li></ul></div>
+        <div class="area rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h3>Atención al cliente</h3><p>Respuestas en segundos y una persona cuando hace falta.</p><ul><li>Bandeja omnicanal</li><li>Agentes de soporte</li><li>Traspaso a humano</li></ul></div>
+        <div class="area rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5v4a3 3 0 0 0 3 3h6.5"/></svg></span><h3>Operaciones</h3><p>Procesos repetitivos que corren solos y se conectan a tu ERP.</p><ul><li>Workflows sin código</li><li>API y webhooks</li><li>Roles y permisos</li></ul></div>
       </div>
-      <aside class="note" data-n="S4"><b>El diferenciador, con su propia puerta</b> Licitaciones es el módulo que ningún competidor directo tiene y hoy está en la pestaña 8 de la home. Aquí tiene su segmento. La maqueta usa el formato real del módulo (afinidad 0–100, monto, plazo) con organismos genéricos.</aside>
-    </section>
+    </div>
+  </section>
 
-    <!-- ═════════ EMPRESAS ═════════ -->
-    <section class="sec alt segsec" id="empresas">
-      <div class="ctn">
-        <div class="seg-top">
-          <div class="sec-head"><p class="eyebrow">04 · Empresas</p><h2 class="display">Escala con control.</h2><p class="lead">Para equipos grandes, con varias áreas o sucursales, que necesitan permisos claros, integraciones con sus sistemas y una implementación sin sorpresas.</p></div>
-          <span class="num" aria-hidden="true">04</span>
+  <!-- AGENCIAS Y SECTOR PÚBLICO -->
+  <section class="sec alt">
+    <div class="ctn bands">
+      <article class="band ag rv" id="agencias">
+        <p class="eyebrow">Agencias y partners</p>
+        <h3 class="display">Suma IA a tu oferta, con tu marca.</h3>
+        <p>Agencias, consultoras e integradores que atienden a varios clientes: vende Hapee, impleméntalo y gana una comisión recurrente.</p>
+        <div class="tiers"><div><b>20%</b><small>Nivel 1</small></div><div><b>28%</b><small>Nivel 2</small></div><div><b>35%</b><small>Nivel 3</small></div></div>
+        <div><a class="btn btn-primary" href="/propuesta-2026-r8x4/partners">Ver el programa de partners <span class="arr">→</span></a></div>
+      </article>
+      <article class="band pub rv" id="publico">
+        <p class="eyebrow">Sector público y licitaciones</p>
+        <h3 class="display">Encuentra y gana <span class="grad-text">licitaciones.</span></h3>
+        <p>Para empresas que le venden al Estado o a grandes compradores: la IA revisa Mercado Público y entidades privadas, calcula la afinidad con tu rubro y te avisa a tiempo.</p>
+        <div class="lic-mini">
+          <div class="lm"><span class="r" style="--v:97"><span>97%</span></span><div><b>Campañas digitales salud preventiva</b><small>Gobierno Regional · $32.000.000</small></div></div>
+          <div class="lm"><span class="r" style="--v:87"><span>87%</span></span><div><b>Pauta digital universitaria</b><small>Universidad pública · $12.800.000</small></div></div>
         </div>
-        <div class="seg-grid">
-          <div>
-            <div class="ps">
-              <div class="ps-h" aria-hidden="true"><span>Hoy</span><span></span><span>Con Hapee</span></div>
-              <div class="ps-row"><div class="ps-a">Muchos equipos en la misma cuenta, todos viendo todo.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Roles y perfiles de permisos: cada persona ve y edita solo lo que le corresponde.</div></div>
-              <div class="ps-row"><div class="ps-a">TI necesita conectar el ERP y otros sistemas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">API REST v1, webhooks firmados y un sandbox con la misma API que producción.</div></div>
-              <div class="ps-row"><div class="ps-a">Datos personales de clientes en herramientas sueltas.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Tratamiento conforme a la Ley 21.719 de Chile y al GDPR, en una sola plataforma.</div></div>
-              <div class="ps-row"><div class="ps-a">Una implementación que no puede fallar.</div><span class="ps-ln" aria-hidden="true"></span><div class="ps-b">Elite Setup: nuestro equipo la deja funcionando en 7 a 14 días, con kickoff y acompañamiento.</div></div>
-            </div>
-            <div class="ctrl vis">
-              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-users"/></svg></span><h4>Roles y perfiles</h4><p>Permisos por perfil, incluido «solo lo asignado» para cada vendedor.</p></div>
-              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-key"/></svg></span><h4>Inicio de sesión</h4><p>Correo y contraseña con verificación en dos pasos, o con Google.</p></div>
-              <div class="card rv"><span class="ic"><svg class="ico"><use href="#i-code"/></svg></span><h4>API, webhooks y MCP</h4><p>Integraciones con permisos por usuario; el asistente de IA nunca ve tu contraseña.</p></div>
-              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-lock"/></svg></span><h4>Cifrado</h4><p>En tránsito y en reposo. <span class="todo">[confirmar con TI]</span></p></div>
-              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-server"/></svg></span><h4>Dónde viven los datos</h4><p>Región de alojamiento y respaldos. <span class="todo">[confirmar]</span></p></div>
-              <div class="card rv pending"><span class="ic"><svg class="ico"><use href="#i-clock"/></svg></span><h4>SLA de soporte</h4><p>Tiempos de respuesta y disponibilidad comprometida. <span class="todo">[confirmar]</span></p></div>
-            </div>
-          </div>
-          <aside class="side">
-            <div class="card">
-              <h3>Módulos clave</h3>
-              <div class="mods"><a href="/propuesta-2026-r8x4/producto#crm"><svg class="ico"><use href="#i-kanban"/></svg>CRM</a><a href="/propuesta-2026-r8x4/producto#reporteria"><svg class="ico"><use href="#i-chart"/></svg>Reportería</a><a href="/propuesta-2026-r8x4/producto#api"><svg class="ico"><use href="#i-code"/></svg>API y MCP</a><a href="/propuesta-2026-r8x4/producto#agentes"><svg class="ico"><use href="#i-bot"/></svg>Centro de agentes</a></div>
-              <div class="rec"><small>Plan sugerido</small><b>Pro + Elite Setup</b><span>Usuarios y contactos ilimitados, más la implementación llave en mano.</span></div>
-              <a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Hablar con ventas <span class="arr">→</span></a>
-              <a class="btn btn-ghost" href="/propuesta-2026-r8x4/seguridad">Ver seguridad</a>
-            </div>
-          </aside>
-        </div>
+        <div><a class="btn btn-secondary" href="/propuesta-2026-r8x4/producto#licitaciones">Ver cómo funciona <span class="arr">→</span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CORPORATIVOS -->
+  <section class="sec" id="corporativos">
+    <div class="ctn corp">
+      <div class="sec-head" style="margin:0"><p class="eyebrow">Corporativos</p><h2 class="display">Listo para <span class="grad-text">operaciones grandes.</span></h2><p class="lead">Control sobre quién ve qué, integración con tus sistemas y un equipo que implementa contigo.</p>
+        <div class="st-cta"><a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Hablar con ventas <span class="arr">→</span></a><a class="btn btn-secondary" href="/propuesta-2026-r8x4/seguridad">Centro de seguridad</a></div></div>
+      <div class="ctrl">
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><b>Roles y permisos</b><small>Cada persona ve solo lo que le corresponde.</small></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg></span><b>API, webhooks y MCP</b><small>Conecta tu ERP, BI o asistentes de IA.</small></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><b>Cumplimiento</b><small>Ley 21.719 y GDPR. SLA <span class="todo">[confirmar]</span></small></div>
+        <div class="card rv"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.8-3.6 3.3-5.2 6.2-5.2s5.4 1.6 6.2 5.2"/></svg></span><b>Implementación dedicada</b><small>Elite Setup: equipo que configura y entrena contigo.</small></div>
       </div>
-      <aside class="note" data-n="S5"><b>Lo que pregunta un comprador enterprise</b> Roles, inicio de sesión y permisos del MCP salen de la documentación actual. Cifrado, alojamiento y SLA no están publicados en ninguna parte: van punteados hasta que TI los confirme.</aside>
-    </section>
-  </div>
+    </div>
+  </section>
 
-  <section class="sec">
+  <section class="sec" style="padding-top:0">
     <div class="ctn"><div class="cta-band rv">
-      <h2 class="display">¿No sabes por dónde empezar?</h2>
-      <p>Cuéntanos cómo vendes hoy y en 30 minutos te mostramos qué parte de Hapee te sirve primero. Sin compromiso.</p>
+      <h2 class="display">Cuéntanos cómo vendes.</h2>
+      <p>En 30 minutos te mostramos Hapee armado para tu industria y tu tamaño, con tu caso.</p>
       <div class="row"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/demo">Agendar demo <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/precios">Ver precios</a></div>
     </div></div>
   </section>
 </main>
 
 <script>
-(function(){
+(function () {
   'use strict';
-  var d=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, hasIO='IntersectionObserver' in window;
-  var $$=function(s,r){return Array.prototype.slice.call((r||d).querySelectorAll(s))};
-  function once(els,fn,opt){ if(reduce||!hasIO){els.forEach(fn);return;} var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){fn(e.target);io.unobserve(e.target);}})},opt||{threshold:.35}); els.forEach(function(e){io.observe(e)}); }
-
-  /* Dolor → solución: la línea se dibuja fila por fila */
-  once($$('.ps-row'),function(r){r.classList.add('in')},{threshold:.6});
-
-  /* Pymes: la noche avanza */
-  once($$('#night'),function(n){n.classList.add('in')});
-
-  /* Estado: los diales de afinidad cuentan hasta su valor */
-  once($$('.dial'),function(el){
-    var v=+el.dataset.v||0, b=el.querySelector('b');
-    if(reduce){el.style.setProperty('--v',v);b.textContent=v;return;}
-    el.style.setProperty('--v',v);
-    var t0=null;(function f(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-p,3);b.textContent=Math.round(v*e);if(p<1)requestAnimationFrame(f);})(performance.now());
-  },{threshold:.5});
-
-  /* Barra de segmentos: resalta el visible */
-  var links=$$('#segbar a');
-  if(hasIO){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){var on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});});},{rootMargin:'-45% 0px -50% 0px'});
-    links.forEach(function(a){var t=d.getElementById(a.getAttribute('href').slice(1));if(t)io.observe(t);});}
+  var d = document, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var I = {
+    building: '<path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4M9 9v.01M9 13v.01M9 17v.01"/>',
+    health: '<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/>',
+    edu: '<path d="m2.5 9 9.5-4.8L21.5 9 12 13.8z"/><path d="M6.5 11.4v4.4c0 1.4 2.6 2.7 5.5 2.7s5.5-1.3 5.5-2.7v-4.4"/>',
+    shop: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/>',
+    car: '<path d="M5 17h14M5 17a2 2 0 1 1-4 0v-5l2-5h14l3 5v5a2 2 0 1 1-4 0M7 17a2 2 0 1 1-4 0"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/>',
+    brief: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+    plane: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>',
+    factory: '<path d="M2 20h20M4 20V10l5 3V10l5 3V10l5 3v7M17 6V3h2v6"/>'
+  };
+  var IND = [
+    { k: 'inmobiliaria', n: 'Inmobiliaria', i: 'building', who: 'Inmobiliaria Andes',
+      h: 'Del anuncio a la visita, <span class="grad-text">sin perder leads.</span>',
+      pain: 'Los leads de portales y redes llegan a toda hora y se enfrían antes de que alguien los llame.',
+      mods: ['Agente IA en WhatsApp', 'Pipeline por proyecto', 'Agendamiento de visitas', 'Reportería por portal'],
+      chat: [['c', 'Hola, vi el depto de 2 dormitorios en Ñuñoa. ¿Sigue disponible?'], ['a', '¡Sí! Quedan 3 unidades desde UF 2.900. ¿Es para vivir o invertir?'], ['c', 'Para vivir, con crédito hipotecario'], ['a', 'Perfecto. ¿Te acomoda visitar el piloto el sábado a las 11:00?'], ['s', 'Visita agendada · sábado 11:00']],
+      flow: [['Llega el lead', 'Portal, Instagram o WhatsApp'], ['La IA califica', 'Presupuesto, plazo y crédito'], ['Agenda la visita', 'En el calendario del corredor'], ['Seguimiento', 'Recordatorios hasta la promesa']] },
+    { k: 'salud', n: 'Salud y clínicas', i: 'health', who: 'Clínica Vida Plena',
+      h: 'Agenda llena y <span class="grad-text">menos inasistencias.</span>',
+      pain: 'El teléfono no da abasto, los pacientes no confirman y las horas quedan vacías.',
+      mods: ['Agente de recepción', 'Agenda por especialista', 'Recordatorios automáticos', 'Bandeja omnicanal'],
+      chat: [['c', 'Hola, necesito hora con dermatología'], ['a', 'Claro. Tengo martes 10:30 o jueves 16:00. ¿Cuál prefieres?'], ['c', 'Jueves, ¿atienden Fonasa?'], ['a', 'Sí, atendemos Fonasa e Isapres. Te dejo agendada el jueves a las 16:00.'], ['s', 'Hora agendada · recordatorio 24 h antes']],
+      flow: [['Paciente escribe', 'WhatsApp, web o redes'], ['La IA agenda', 'Según especialidad y previsión'], ['Recordatorio', '24 h antes, con confirmación'], ['Reagenda', 'Si cancela, libera la hora']] },
+    { k: 'educacion', n: 'Educación', i: 'edu', who: 'Academia Aprende+',
+      h: 'Más matrículas en <span class="grad-text">cada periodo.</span>',
+      pain: 'En temporada de admisión llegan cientos de consultas iguales y los interesados se pierden entre correos.',
+      mods: ['Agente de admisión', 'Email marketing', 'Formularios y funnels', 'Pipeline de matrícula'],
+      chat: [['c', '¿El curso de inglés es online?'], ['a', 'Sí, con clases en vivo y grabadas. ¿Qué nivel tienes hoy?'], ['c', 'Intermedio, quiero certificarme'], ['a', 'Te recomiendo el programa B2 con certificado. ¿Te envío el temario y la fecha de inicio?'], ['s', 'Temario enviado · interesado calificado']],
+      flow: [['Consulta', 'Campaña o formulario'], ['La IA orienta', 'Programa según nivel y objetivo'], ['Nutrición', 'Correos hasta el inicio'], ['Matrícula', 'Pago y bienvenida']] },
+    { k: 'retail', n: 'Retail y e-commerce', i: 'shop', who: 'Tienda Nativa',
+      h: 'Vende también <span class="grad-text">en la conversación.</span>',
+      pain: 'Preguntas de stock, tallas y despacho que nadie responde a tiempo, y carritos abandonados.',
+      mods: ['Agente de ventas', 'Catálogo y productos', 'Recuperación de carritos', 'Integración con tu tienda'],
+      chat: [['c', '¿Tienen la polera negra en talla M?'], ['a', 'Sí, quedan 4 unidades. El despacho a Santiago llega en 2 días hábiles.'], ['c', 'Genial, ¿cómo pago?'], ['a', 'Te dejo el enlace de pago seguro. ¡Gracias por tu compra!'], ['s', 'Venta cerrada · $24.990']],
+      flow: [['Pregunta', 'Instagram, WhatsApp o web'], ['La IA responde', 'Stock, talla y despacho'], ['Enlace de pago', 'Directo en el chat'], ['Postventa', 'Seguimiento y reseña']] },
+    { k: 'automotriz', n: 'Automotriz', i: 'car', who: 'Automotriz Sur',
+      h: 'Del interés al <span class="grad-text">test drive.</span>',
+      pain: 'Cotizaciones que llegan de muchas fuentes y vendedores que no alcanzan a responder todas.',
+      mods: ['Agente cotizador', 'Pipeline por modelo', 'Agenda de test drive', 'Reportería de Ads'],
+      chat: [['c', 'Quiero cotizar un SUV híbrido'], ['a', 'Tenemos dos modelos desde $24.990.000. ¿Lo pagarías al contado o con crédito?'], ['c', 'Con crédito y entrego mi auto'], ['a', 'Perfecto, recibimos tu auto en parte de pago. ¿Agendamos un test drive esta semana?'], ['s', 'Test drive agendado · viernes 17:00']],
+      flow: [['Cotización', 'Ads, web o WhatsApp'], ['La IA califica', 'Modelo, pago y parte de pago'], ['Test drive', 'Con un vendedor asignado'], ['Cierre', 'Crédito y entrega']] },
+    { k: 'servicios', n: 'Servicios profesionales', i: 'brief', who: 'Estudio Consultor',
+      h: 'Más reuniones con <span class="grad-text">los clientes correctos.</span>',
+      pain: 'El equipo pierde horas explicando lo mismo a prospectos que no calzan.',
+      mods: ['Agente de primera reunión', 'CRM y cotizaciones', 'Workflows de seguimiento', 'Licitaciones'],
+      chat: [['c', 'Necesito asesoría contable para mi empresa'], ['a', 'Te ayudamos. ¿Cuántas personas trabajan en tu empresa y en qué régimen tributan?'], ['c', '40 personas, régimen general'], ['a', 'Calzas con nuestro plan Empresa. ¿Agendamos 20 minutos con un socio?'], ['s', 'Reunión agendada · martes 9:30']],
+      flow: [['Contacto', 'Web, LinkedIn o referido'], ['La IA filtra', 'Tamaño, necesidad y urgencia'], ['Reunión', 'Con el socio correcto'], ['Propuesta', 'Cotización y seguimiento']] },
+    { k: 'turismo', n: 'Turismo y hotelería', i: 'plane', who: 'Hotel Costa Azul',
+      h: 'Reservas a cualquier hora, <span class="grad-text">en cualquier idioma.</span>',
+      pain: 'Huéspedes de otros países que escriben de noche y reservan donde les responden primero.',
+      mods: ['Agente multilingüe', 'Bandeja omnicanal', 'Campañas por temporada', 'Reseñas automáticas'],
+      chat: [['c', 'Hi! Do you have a double room for March 12–15?'], ['a', 'Hi! Yes, we have an ocean-view double for USD 140 per night, breakfast included. Shall I book it?'], ['c', 'Yes please'], ['a', 'Done! I just sent you the confirmation and a secure payment link.'], ['s', 'Reserva confirmada · 3 noches']],
+      flow: [['Consulta', 'Desde cualquier país'], ['La IA responde', 'En su idioma, con tarifas'], ['Reserva', 'Pago seguro'], ['Estadía', 'Recordatorios y reseña']] },
+    { k: 'industria', n: 'Industria y B2B', i: 'factory', who: 'Equipos del Norte',
+      h: 'Ventas complejas, <span class="grad-text">bajo control.</span>',
+      pain: 'Ciclos largos, muchos decisores y cotizaciones que se pierden entre planillas y correos.',
+      mods: ['CRM de cuentas y empresas', 'Cotizaciones', 'Licitaciones públicas y privadas', 'API con tu ERP'],
+      chat: [['c', 'Necesito cotizar 3 grúas horquilla para bodega'], ['a', 'Con gusto. ¿Eléctricas o a combustión, y qué capacidad de carga necesitan?'], ['c', 'Eléctricas, 2,5 toneladas'], ['a', 'Te preparo la cotización hoy y la asigno a tu ejecutivo de cuenta.'], ['s', 'Cotización creada · ejecutivo asignado']],
+      flow: [['Requerimiento', 'Web, correo o licitación'], ['La IA levanta datos', 'Especificaciones y plazos'], ['Cotización', 'Desde el CRM'], ['Seguimiento', 'Hasta la orden de compra']] }
+  ];
+  function ico(k) { return '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + I[k] + '</svg>'; }
+  var list = d.getElementById('indList'), copy = d.getElementById('stCopy'), flow = d.getElementById('stFlow'), ph = d.getElementById('phB'), phN = d.getElementById('phN');
+  var timers = [], cur = 0, auto = null, userPicked = false;
+  IND.forEach(function (x, i) {
+    var b = d.createElement('button'); b.className = 'ind'; b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i ? 'false' : 'true');
+    b.innerHTML = '<span class="ii">' + ico(x.i) + '</span>' + x.n;
+    b.addEventListener('click', function () { userPicked = true; show(i); });
+    list.appendChild(b);
+  });
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function show(i) {
+    clear(); cur = i; var x = IND[i];
+    Array.prototype.forEach.call(list.children, function (b, j) { b.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    copy.innerHTML = '<span class="badge k">' + x.n + '</span><h2 class="display">' + x.h + '</h2><div class="pain"><small>El problema</small>' + x.pain + '</div>' +
+      '<div class="mods">' + x.mods.map(function (m) { return '<span>' + m + '</span>'; }).join('') + '</div>' +
+      '<div class="st-cta"><a class="btn btn-primary" href="/propuesta-2026-r8x4/demo">Ver Hapee para ' + x.n.toLowerCase() + ' <span class="arr">→</span></a></div>';
+    copy.classList.remove('swap'); void copy.offsetWidth; copy.classList.add('swap');
+    flow.innerHTML = x.flow.map(function (f) { return '<div class="fs">' + f[0] + '<small>' + f[1] + '</small></div>'; }).join('');
+    flow.classList.remove('swap'); void flow.offsetWidth; flow.classList.add('swap');
+    phN.textContent = x.who; ph.innerHTML = '';
+    var t = 200;
+    x.chat.forEach(function (m) {
+      if (m[0] === 'a' && !reduce) { (function (tt) { timers.push(setTimeout(function () { ph.insertAdjacentHTML('beforeend', '<div class="bb tp"><i></i><i></i><i></i></div>'); }, tt)); })(t); t += 900; }
+      (function (mm, tt) { timers.push(setTimeout(function () { var tp = ph.querySelector('.tp'); if (tp) tp.remove(); ph.insertAdjacentHTML('beforeend', '<div class="bb ' + (mm[0] === 's' ? 'sys' : mm[0]) + '">' + mm[1] + '</div>'); }, reduce ? 0 : tt)); })(m, t);
+      t += mm(m);
+    });
+    function mm(m) { return m[0] === 'c' ? 1100 : 1300; }
+    // avance automático hasta que la persona elige un rubro
+    if (!userPicked && !reduce) timers.push(setTimeout(function () { show((cur + 1) % IND.length); }, t + 2200));
+  }
+  // empieza cuando el explorador entra en pantalla
+  var started = false, io = new IntersectionObserver(function (es) { if (es[0].isIntersecting && !started) { started = true; show(0); } }, { threshold: .3 });
+  io.observe(d.getElementById('stage'));
 })();
 </script>
 </body>
