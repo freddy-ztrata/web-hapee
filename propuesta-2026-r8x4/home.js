@@ -58,6 +58,28 @@
   });
   if (/[?&]notas=1/.test(location.search)) nb.click();
 
+  /* ── Selector de idioma ───────────────────────────────────
+     En el sitio real escribe la cookie hapee_lang y lleva a la misma página
+     en /en/ o /pt/ (ver js/lang.js). La propuesta existe solo en español:
+     aquí muestra un aviso en vez de navegar a una página que no existe. */
+  (function () {
+    var box = $('[data-lang]'), note = d.createElement('div'), t;
+    note.className = 'lang-note'; note.setAttribute('role', 'status'); d.body.appendChild(note);
+    if (box) {
+      var b = $('.lang-btn', box);
+      b.addEventListener('click', function (e) { e.stopPropagation(); var o = box.classList.toggle('open'); b.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+      d.addEventListener('click', function () { box.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); });
+    }
+    $$('[data-l]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var l = el.dataset.l; if (box) box.classList.remove('open');
+        if (l === 'es') return;
+        note.textContent = (l === 'en' ? 'English' : 'Português') + ': esta propuesta está solo en español. Al aprobarla, este selector lleva a la versión /' + l + '/ de la misma página y recuerda la elección.';
+        note.classList.add('on'); clearTimeout(t); t = setTimeout(function () { note.classList.remove('on'); }, 4200);
+      });
+    });
+  })();
+
   /* ── Cursor y botones magnéticos (solo puntero fino) ──── */
   if (fine && !reduce) {
     var curEl = $('.cursor'), cx = 0, cy = 0, tx = 0, ty = 0;
@@ -102,6 +124,19 @@
       }, { passive: true });
     });
   }
+
+  /* ── Robot: acabado de plástico brillante como el render oficial (img/robot.png).
+     La textura trae los colores reales; solo se baja la rugosidad para que la luz
+     del entorno «neutral» le saque brillo sin cambiar el tono. */
+  if (robot) robot.addEventListener('load', function () {
+    try {
+      robot.model.materials.forEach(function (m) {
+        var p = m.pbrMetallicRoughness;
+        p.setRoughnessFactor(Math.min(p.roughnessFactor, .38));
+        p.setMetallicFactor(0);
+      });
+    } catch (e) { /* si el visor cambia de API, el robot se ve igual que antes */ }
+  });
 
   /* ── Placeholder rotativo del hero ────────────────────── */
   var hi = $('#heroInput'), ideas = ['Vendo departamentos en Santiago…', 'Tengo una clínica dental…', 'Vendo cursos online de inglés…', 'Tengo una tienda de ropa en Instagram…', 'Vendo autos seminuevos…'], ii = 0;
@@ -196,6 +231,116 @@
     if (window.__lenis) window.__lenis.scrollTo('#demo', { offset: -40, duration: 1.4, onComplete: go });
     else { $('#demo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(go, reduce ? 0 : 700); }
   });
+
+  /* ═════════ ASÍ SE VE HAPEE: capturas reales animadas ═════════
+     Para cambiar una captura basta reemplazar el archivo en /shots (mismo
+     nombre, 1500 px de ancho). Cada «beat» es un punto de la captura en % del
+     ancho y alto [x, y, ancho px, alto px, aviso] sobre una imagen de 1500×780. */
+  (function () {
+    var view = $('#psView'); if (!view) return;
+    var BASE = '/propuesta-2026-r8x4/shots/';
+    var SHOTS = [
+      { k: 'inicio', t: 'Inicio', chip: 'Todo bajo control', cap: '<b>Inicio.</b> El centro de control: KPIs del día, accesos a todos los módulos y el pulso de tu operación.',
+        beats: [[24.7, 54, 300, 100, 'La IA responde; tú ves solo lo que falta'], [45.8, 54, 300, 100, '8 negocios abiertos · $53M en pipeline'], [88, 54, 300, 100, '3 licitaciones afines detectadas hoy']] },
+      { k: 'inbox', t: 'Bandeja omnicanal', chip: 'Todos tus canales', cap: '<b>Bandeja omnicanal.</b> Una conversación por cliente, venga de WhatsApp, Instagram, Facebook, LinkedIn o email. El agente responde y tú tomas el control cuando quieres.',
+        beats: [[26, 30, 270, 52, 'WhatsApp, Instagram, Facebook y email juntos'], [62, 32, 420, 64, 'El agente IA respondió y propuso una llamada'], [57.3, 22.2, 102, 30, 'Tomas el control con un clic']] },
+      { k: 'pipeline', t: 'Pipeline', chip: 'Ventas en movimiento', cap: '<b>Pipeline.</b> Tu kanban de ventas con montos, probabilidad y responsables. El agente mueve los negocios de etapa por ti.',
+        beats: [[23, 33, 235, 95, 'Cada conversación crea o actualiza el negocio'], [54.8, 33, 225, 95, 'Reunión agendada por el agente'], [88.4, 24, 215, 46, '$39,8M en negociación, a la vista']] },
+      { k: 'automations', t: 'Automatizaciones', chip: 'Flujos que trabajan solos', cap: '<b>Automatizaciones.</b> Flujos visuales sin código: esperas, condiciones, emails y etiquetas que trabajan mientras duermes.',
+        beats: [[48.5, 11, 196, 38, 'Se activa cuando etiquetas al contacto'], [48, 42, 182, 104, 'Envía la propuesta sola'], [48, 66, 182, 88, 'Y decide el siguiente paso según la respuesta']] },
+      { k: 'email', t: 'Email marketing', chip: 'Campañas en minutos', cap: '<b>Email marketing.</b> Plantillas listas por objetivo (bienvenida, promoción, recuperación) para editar y enviar en minutos.',
+        beats: [[38.5, 21, 560, 40, 'Plantillas por objetivo comercial'], [29.5, 40.8, 285, 170, 'Bienvenida lista para tus nuevos contactos'], [69.2, 40.8, 285, 170, 'Una oferta flash en un clic']] },
+      { k: 'marketing', t: 'RRSS', chip: 'Contenido sin caos', cap: '<b>RRSS.</b> Calendario de contenido con estados de aprobación. La IA genera la grilla del mes y tu equipo solo revisa.',
+        beats: [[76.8, 13, 112, 32, 'La IA arma la grilla del mes'], [56.5, 26, 760, 140, 'Cada post con su estado: listo, en revisión, aprobado'], [67.3, 92, 156, 90, 'Programado y publicado a tiempo']] },
+      { k: 'builder', t: 'Constructor web y email', chip: 'Sin código', cap: '<b>Constructor web y email.</b> Arrastra bloques, previsualiza en escritorio y móvil, y programa el envío.',
+        beats: [[7.4, 76, 205, 70, 'Arrastra bloques: producto, testimonio, redes'], [48.9, 33, 145, 46, 'Edita en línea con doble clic'], [94.8, 2.8, 150, 34, 'Guarda y programa el envío']] },
+      { k: 'academia', t: 'Academia', chip: 'Tu equipo aprende', cap: '<b>Academia.</b> Cursos para dejar Hapee funcionando, con avance por persona y ranking del equipo.',
+        beats: [[48, 21, 960, 160, 'Retoma donde lo dejaste'], [26, 52, 315, 230, 'Cursos cortos por objetivo'], [89.5, 45, 260, 300, 'Ranking: tu equipo aprende jugando']] },
+      { k: 'reporteria', t: 'Reportería', chip: 'Datos que deciden', cap: '<b>Reportería.</b> Meta Ads, Google Ads y tus redes en un solo tablero, por día y por canal.',
+        beats: [[24.2, 41.8, 300, 30, 'Meta Ads y Google Ads juntos'], [37.4, 56, 560, 230, 'Inversión día a día, por canal'], [76.7, 56, 560, 230, 'Impresiones y conversiones en el mismo lugar']] },
+      { k: 'licitaciones', t: 'Licitaciones', chip: 'Oportunidades del Estado', cap: '<b>Licitaciones.</b> Mercado Público filtrado para tu rubro, con afinidad calculada por IA y alertas por correo.',
+        beats: [[18.5, 62.7, 70, 70, 'Afinidad calculada con IA: 87%'], [66.7, 45.5, 300, 82, '5 oportunidades HOT para tu rubro'], [72.3, 25, 125, 40, 'Te avisamos apenas aparece una']] }
+    ];
+    var DUR = 8200, tabs = $('#psTabs'), shots = $('#psShots'), cam = $('#psCam'), ring = $('#psRing'), cursor = $('#psCursor'),
+        toast = $('#psToast'), chip = $('#psChip'), cap = $('#psCap'), url = $('#psUrl'), frame = $('#psFrame');
+    var cur = 0, timers = [], prog = null, visible = false, hover = false, started = false;
+
+    SHOTS.forEach(function (sh, i) {
+      var b = d.createElement('button');
+      b.className = 'ps-tab'; b.type = 'button'; b.id = 'ps-tab-' + i;
+      b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'psView'); b.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); b.tabIndex = i === 0 ? 0 : -1;
+      b.innerHTML = '<span>' + sh.t + '</span><i class="ps-prog"></i>';
+      b.addEventListener('click', function () { go(i, true); });
+      tabs.appendChild(b);
+      var img = new Image(); img.src = BASE + sh.k + '.webp'; img.alt = 'Captura de Hapee: ' + sh.t; img.width = 1500; img.height = 780;
+      img.decoding = 'async'; if (i === 0) img.className = 'on';
+      shots.appendChild(img);
+    });
+    view.setAttribute('role', 'tabpanel');
+
+    function clear() { timers.forEach(clearTimeout); timers = []; }
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    function beat(b) {
+      var x = b[0], y = b[1];
+      cam.style.transformOrigin = x + '% ' + y + '%';
+      if (!reduce) cam.style.transform = 'scale(1.14)';
+      cursor.style.left = x + '%'; cursor.style.top = y + '%';
+      ring.classList.remove('on'); toast.classList.remove('on');
+      at(reduce ? 0 : 1000, function () {
+        ring.style.left = x + '%'; ring.style.top = y + '%';
+        ring.style.setProperty('--w', (b[2] / 1500 * 100) + '%');
+        ring.style.setProperty('--h', (b[3] / 780 * 100) + '%');
+        cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click');
+        ring.classList.add('on');
+        // el aviso va al lado opuesto del borde más cercano y nunca se sale del marco
+        var W = view.clientWidth, H = view.clientHeight;
+        toast.textContent = b[4];
+        var tw = toast.offsetWidth, th = toast.offsetHeight, px = x / 100 * W, py = y / 100 * H;
+        var left = x < 58 ? px + 28 : px - tw - 28, top = y < 55 ? py + 30 : py - th - 30;
+        toast.style.left = Math.max(12, Math.min(W - tw - 12, left)) + 'px';
+        toast.style.top = Math.max(12, Math.min(H - th - 12, top)) + 'px';
+        toast.classList.add('on');
+      });
+    }
+    function go(i, user) {
+      clear();
+      var prev = cur; cur = (i + SHOTS.length) % SHOTS.length;
+      var sh = SHOTS[cur], btns = $$('.ps-tab', tabs), imgs = $$('img', shots);
+      btns.forEach(function (b, j) { b.setAttribute('aria-selected', j === cur ? 'true' : 'false'); b.tabIndex = j === cur ? 0 : -1; $('.ps-prog', b).style.transform = 'scaleX(0)'; });
+      imgs.forEach(function (im, j) { im.classList.toggle('on', j === cur); });
+      if (user && window.innerWidth < 761) btns[cur].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+      url.textContent = 'app.hapee.ai · ' + sh.t; chip.textContent = '● ' + sh.chip; cap.innerHTML = sh.cap;
+      ring.classList.remove('on'); toast.classList.remove('on');
+      cam.style.transform = 'scale(1)';
+      if (prog) prog.cancel();
+      if (reduce) { beat(sh.beats[0]); return; }
+      var running = visible && !hover && !d.hidden;
+      if (!running) return;
+      prog = $('.ps-prog', btns[cur]).animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: DUR, easing: 'linear', fill: 'forwards' });
+      at(450, function () { beat(sh.beats[0]); });
+      at(3000, function () { beat(sh.beats[1]); });
+      at(5550, function () { beat(sh.beats[2]); });
+      at(DUR, function () { go(cur + 1); });
+    }
+    function sync() {
+      var run = visible && !hover && !d.hidden;
+      if (run && !started) { started = true; go(cur); }
+      else if (run) go(cur);
+      else { clear(); if (prog) prog.pause(); }
+    }
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; sync(); }, { threshold: .35 }).observe(frame);
+    frame.addEventListener('pointerenter', function () { hover = true; sync(); });
+    frame.addEventListener('pointerleave', function () { hover = false; sync(); });
+    d.addEventListener('visibilitychange', sync);
+    tabs.addEventListener('keydown', function (e) {
+      var k = e.key, n = k === 'ArrowRight' ? 1 : k === 'ArrowLeft' ? -1 : 0;
+      if (k === 'Home') { go(0, true); } else if (k === 'End') { go(SHOTS.length - 1, true); } else if (!n) return;
+      else go(cur + n, true);
+      e.preventDefault(); $$('.ps-tab', tabs)[cur].focus();
+    });
+    go(0);
+    if (reduce) beat(SHOTS[0].beats[0]);
+  })();
 
   /* ═════════ ESFERA DE INTEGRACIONES ═════════ */
   (function () {
@@ -295,7 +440,7 @@
       ['Acciones', 'Hablar con el agente IA', '#demo', 'En vivo'],
       ['Acciones', 'Calcular cuánto estoy perdiendo', '#calculadora', 'ROI'],
       ['Acciones', 'Cambiar tema claro u oscuro', 'theme', 'Tema'],
-      ['Secciones', 'Plataforma', '#plataforma'], ['Secciones', 'Recorrido por la app', '#tour'], ['Secciones', 'Integraciones', '#integraciones'],
+      ['Secciones', 'Plataforma', '#plataforma'], ['Secciones', 'Así se ve Hapee por dentro', '#plataforma'], ['Secciones', 'Integraciones', '#integraciones'],
       ['Secciones', 'Precios', '#precios'], ['Secciones', 'Seguridad y confianza', '#confianza'], ['Secciones', 'Equipo', '#equipo'], ['Secciones', 'Preguntas frecuentes', '#faq'],
       ['Páginas', 'Documentación de la API', '/docs/'], ['Páginas', 'Conector MCP para Claude', '/docs/mcp'], ['Páginas', 'Blog', '/blog.html'], ['Páginas', 'Academia', '/academia'], ['Páginas', 'Partners', '/partners.html'], ['Páginas', 'Comparativa', '/comparativa.html'],
       ['Páginas', 'Auditoría y plan 2026', '/propuesta-2026-r8x4/']
@@ -379,18 +524,8 @@
     gsap.set('.cf', { opacity: 0, y: 20 });
 
     // Reveals genéricos
-    $$('.sec-head, .bento .card, .plan, .quote, .tg, .step, .faq-list details, .roi-grid, .phone, .demo-copy > *').forEach(function (el) {
+    $$('.sec-head, .ps-frame, .plan, .quote, .tg, .step, .faq-list details, .roi-grid, .phone, .demo-copy > *').forEach(function (el) {
       gsap.from(el, { opacity: 0, y: 40, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
-    });
-    gsap.from('.bars i', { scaleY: 0, stagger: .06, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.bars', start: 'top 85%' } });
-
-    // Tour horizontal (solo escritorio)
-    var mm = gsap.matchMedia();
-    mm.add('(min-width: 761px)', function () {
-      var track = $('.tour-track');
-      var dist = function () { return track.scrollWidth - window.innerWidth + 80; };
-      gsap.to(track, { x: function () { return -dist(); }, ease: 'none', scrollTrigger: { trigger: '.tour', start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
-      gsap.to('#tourProg', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.tour', start: 'top top', end: 'bottom bottom', scrub: true } });
     });
 
     // Pasos: la línea se dibuja y enciende cada número
