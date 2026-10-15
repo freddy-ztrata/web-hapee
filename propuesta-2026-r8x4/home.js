@@ -104,19 +104,35 @@
     });
   });
 
-  /* ── Robot (render oficial): inclinación 3D que sigue al cursor ── */
-  var tilt = $('#botTilt');
+  /* ── Robot 3D con vida propia ───────────────────────────
+     Mira al frente balanceándose (±32°), cada ~9 s da una vuelta completa y un
+     saltito, y se inclina hacia el cursor. Si la persona lo arrastra, espera
+     4 s y retoma desde donde quedó. */
+  var tilt = $('#botTilt'), bot = $('#bot'), mv = $('#robot3d');
   if (tilt && !reduce) {
-    var rx = 0, ry = 0, trx = 0, tryy = 0, t0 = performance.now();
+    var rx = 0, ry = 0, trx = 0, tryy = 0, t0 = performance.now(), userUntil = 0, spinFrom = null, base = 0;
     if (fine) window.addEventListener('pointermove', function (e) {
-      tryy = (e.clientX / window.innerWidth - .5) * 22;
-      trx = (e.clientY / window.innerHeight - .5) * -12;
+      tryy = (e.clientX / window.innerWidth - .5) * 16;
+      trx = (e.clientY / window.innerHeight - .5) * -10;
     }, { passive: true });
+    if (mv) mv.addEventListener('camera-change', function (e) { if (e.detail && e.detail.source === 'user-interaction') { userUntil = performance.now() + 4000; spinFrom = null; } });
+    function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
     (function tl(now) {
-      if (!fine) { var s = (now - t0) / 1000; tryy = Math.sin(s * .7) * 9; trx = Math.sin(s * .5) * 4; }   // táctil: balanceo suave
+      var s = (now - t0) / 1000;
+      if (!fine) { tryy = Math.sin(s * .7) * 7; trx = Math.sin(s * .5) * 3; }
       rx += (trx - rx) * .07; ry += (tryy - ry) * .07;
-      tilt.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      tilt.style.setProperty('--rx', (rx + Math.sin(s * 1.3) * 1.2).toFixed(2) + 'deg');
       tilt.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      if (mv && mv.loaded && now > userUntil) {
+        // ángulo continuo: balanceo + vueltas acumuladas (nunca vuelve atrás)
+        var cyc = s % 9, spin = 0;
+        if (cyc > 7.4) {
+          if (spinFrom === null) { spinFrom = s; bot.classList.remove('hop'); void bot.offsetWidth; bot.classList.add('hop'); }
+          spin = ease(Math.min(1, (s - spinFrom) / 1.6)) * 360;
+        } else if (spinFrom !== null) { base += 360; spinFrom = null; }
+        var theta = base + spin + Math.sin(s * .55) * 32;
+        mv.cameraOrbit = (-theta).toFixed(2) + 'deg 80deg 104%';
+      }
       requestAnimationFrame(tl);
     })(t0);
     if (fine) $$('.float').forEach(function (f, i) {

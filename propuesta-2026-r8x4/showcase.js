@@ -13,7 +13,7 @@
   // Shadow DOM: la escena usa clases cortas (.hero, .ring, .chips…) que la
   // página también usa; aislarla evita que los estilos se pisen en ambos sentidos.
   var R = stage.attachShadow ? stage.attachShadow({ mode: 'open' }) : stage;
-  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=33"><div class="sc-canvas" id="scCanvas"></div>';
+  R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=35"><div class="sc-canvas" id="scCanvas"></div>';
   var canvas = R.getElementById ? R.getElementById('scCanvas') : stage.querySelector('#scCanvas'), tabsEl = d.getElementById('psTabs'), capEl = d.getElementById('psCap'), urlEl = d.getElementById('psUrl'), frame = d.getElementById('psFrame');
   var ROBOT = '/img/robot.png', LOGO = '/img/logo-hapee.png';
 
@@ -322,20 +322,37 @@
         at(6600, function () { var t = $$('.s-rep2 .tabs span'); t[0].classList.remove('on'); t[1].classList.add('on'); });
       } },
 
-    { k: 'lic', t: 'Licitaciones', cap: '<b>Licitaciones.</b> Mercado Público filtrado para tu rubro: la IA calcula la afinidad de cada licitación, te explica el porqué y te avisa cuando aparece una nueva.',
-      html: '<div class="s-lic"><div class="ban"><small>SNIPER COMERCIAL · MERCADO PÚBLICO</small><b>Licitaciones filtradas para tu rubro</b><p>Solo con el rubro de tu empresa filtramos las licitaciones afines: relevancia calculada con IA, montos, plazos y el porqué de cada match.</p><span class="rk">🚀</span></div>' +
-        '<div class="stats"><div class="sc-card st"><div class="sc-k">Activas</div><div class="sc-n" id="lA">0</div></div><div class="sc-card st"><div class="sc-k">Relevantes</div><div class="sc-n" id="lR">0</div></div><div class="sc-card st hot"><div class="sc-k">HOT (≥70%)</div><div class="sc-n" id="lH">0</div></div><div class="sc-card st"><div class="sc-k">Con ventana (≥15d)</div><div class="sc-n" id="lV">0</div></div></div>' +
-        '<div class="ops" id="ops">' + [[87, 'Community management y pauta digital universitaria', 'Universidad de Chile · Metropolitana · 4d', '$12.800.000', 'DEMO 95%'], [85, 'Servicio de marketing digital y gestión de redes', 'Municipalidad de Providencia · 6d', '$18.500.000', 'DEMO 92%'], [84, 'Desarrollo de sitio web institucional y mantención', 'Servicio de Salud Metropolitano Oriente · 9d', '$24.000.000', 'DEMO 88%'], [81, 'Plataforma CRM y automatización ciudadana', 'Ministerio de Economía · 15d', '$58.000.000', 'DEMO 81%']].map(op).join('') + '</div></div>',
+    { k: 'lic', t: 'Licitaciones', cap: '<b>Licitaciones.</b> Hapee escanea Mercado Público todo el día, descarta lo que no calza con tu rubro y te avisa cuando aparece una oportunidad con alta afinidad, con el porqué y en un clic al pipeline.',
+      html: '<div class="s-lic2">' +
+        '<div class="sc-card scan"><div class="sh"><span class="lv"><i></i>Escaneando Mercado Público</span><span class="sc-k">hoy</span></div>' +
+          '<div class="rad"><div class="rings"></div><div class="sweep"></div><div id="blips"></div><div class="core"><b id="lN">0</b><small>analizadas</small></div></div>' +
+          '<div class="feed" id="lFeed"></div></div>' +
+        '<div class="right"><div class="stats"><div class="sc-card st"><div class="sc-k">Afines hoy</div><div class="sc-n" id="lA">0</div></div><div class="sc-card st hot"><div class="sc-k">HOT · ≥ 80%</div><div class="sc-n" id="lH">0</div></div><div class="sc-card st"><div class="sc-k">Monto en juego</div><div class="sc-n" id="lM">$0</div></div></div>' +
+          '<div class="ops" id="ops">' + [[87, 'Community management y pauta digital universitaria', 'Universidad de Chile · cierra en 4 días', '$12.800.000'], [85, 'Servicio de marketing digital y gestión de redes', 'Municipalidad de Providencia · 6 días', '$18.500.000'], [81, 'Plataforma CRM y automatización ciudadana', 'Ministerio de Economía · 15 días', '$58.000.000']].map(op).join('') + '</div></div></div>',
       run: function () {
-        reveal($$('.s-lic .op'), 300, 140);
-        at(400, function () { count(R.getElementById('lA'), 5, 900); count(R.getElementById('lR'), 5, 900); count(R.getElementById('lH'), 5, 900); count(R.getElementById('lV'), 1, 900); });
-        at(900, function () { $$('.s-lic .fg').forEach(function (c, i) { setTimeout(function () { c.style.strokeDashoffset = 126 - 126 * c.dataset.v / 100; }, reduce ? 0 : i * 180); }); });
-        at(4300, function () {
-          var ops = R.getElementById('ops'), n = h(op([92, 'Campañas digitales para programa de salud preventiva', 'Gobierno Regional de Valparaíso · 18d', '$32.000.000', 'DEMO 97%']));
-          n.classList.add('new', 'sc-pop'); ops.insertBefore(n, ops.firstChild); ops.removeChild(ops.lastChild);
-          setTimeout(function () { var c = n.querySelector('.fg'); c.style.strokeDashoffset = 126 - 126 * .92; }, reduce ? 0 : 120);
-          count(R.getElementById('lA'), 6, 500); count(R.getElementById('lH'), 6, 500); count(R.getElementById('lV'), 2, 500);
-          say('🎯', 'Nueva licitación afín: 92%', 'Gobierno Regional de Valparaíso · $32.000.000'); bell(4);
+        var feed = R.getElementById('lFeed'), blips = R.getElementById('blips');
+        var ITEMS = [['Suministro de mobiliario escolar', 0], ['Pauta digital para campaña de salud', 1], ['Mantención de ascensores', 0], ['Arriendo de vehículos', 0], ['Desarrollo de sitio web institucional', 1], ['Compra de insumos médicos', 0], ['Producción audiovisual regional', 1], ['Servicio de aseo', 0], ['Campañas digitales salud preventiva', 2]];
+        function blip(hot) { var a = Math.random() * 6.28, r = 22 + Math.random() * 46; var n = h('<i class="' + (hot ? 'hot' : '') + '" style="left:calc(50% + ' + (Math.cos(a) * r).toFixed(0) + '%);top:calc(50% + ' + (Math.sin(a) * r).toFixed(0) + '%)"></i>'); blips.appendChild(n); at(2600, function () { n.remove(); }); }
+        count(R.getElementById('lN'), 1284, 7200);
+        ITEMS.forEach(function (it, i) {
+          at(300 + i * 560, function () {
+            blip(it[1] > 0);
+            var n = h('<div class="fi ' + (it[1] ? 'ok' : 'no') + '"><span>' + it[0] + '</span><em>' + (it[1] === 2 ? '97% · HOT' : it[1] ? 'afín' : 'descartada') + '</em></div>');
+            feed.insertBefore(n, feed.firstChild); while (feed.children.length > 6) feed.removeChild(feed.lastChild);
+          });
+        });
+        at(400, function () { count(R.getElementById('lA'), 5, 900); count(R.getElementById('lH'), 3, 900); count(R.getElementById('lM'), 89300000, 1500, '$'); });
+        at(900, function () { $$('.s-lic2 .fg').forEach(function (c, i) { setTimeout(function () { c.style.strokeDashoffset = 126 - 126 * c.dataset.v / 100; }, reduce ? 0 : i * 180); }); });
+        at(5000, function () {
+          var ops = R.getElementById('ops'), n = h(op([97, 'Campañas digitales para programa de salud preventiva', 'Gobierno Regional de Valparaíso · cierra en 18 días', '$32.000.000']));
+          n.classList.add('new');
+          n.querySelector('.txt').insertAdjacentHTML('beforeend', '<ul class="why"><li>Tu rubro: marketing digital y pauta</li><li>Monto dentro de tu rango</li><li>Plazo con margen para postular</li></ul><span class="sc-btn mk">+ Crear negocio</span>');
+          ops.insertBefore(n, ops.firstChild); ops.removeChild(ops.lastChild);
+          setTimeout(function () { n.querySelector('.fg').style.strokeDashoffset = 126 - 126 * .97; }, reduce ? 0 : 120);
+          count(R.getElementById('lA'), 6, 500); count(R.getElementById('lH'), 4, 500); count(R.getElementById('lM'), 121300000, 900, '$');
+          say('🎯', 'Nueva licitación con 97% de afinidad', 'Gobierno Regional de Valparaíso · $32.000.000'); bell(4);
+          at(1100, function () { point(n.querySelector('.mk'), true); });
+          at(2350, function () { cursor.classList.remove('on'); var b = n.querySelector('.mk'); b.textContent = '✓ En el pipeline'; b.classList.add('done'); say('💼', 'Negocio creado en el pipeline', 'Etapa: Preparando postulación'); });
         });
       } }
   ];
@@ -371,8 +388,9 @@
     return '<div class="hm">' + cells + '</div><div class="hx"><span>8h</span><span>14h</span><span>20h</span></div>';
   }
   function op(o) {
-    return '<div class="sc-card op"><div class="ring"><svg viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="20"/><circle class="fg" data-v="' + o[0] + '" cx="23" cy="23" r="20"/></svg><b>' + o[0] + '</b></div><div><h6>' + o[1] + '</h6><p>' + o[2] + '</p><div class="m"><em>💰 ' + Math.round(o[0] * .82) + '</em>' + o[3] + '</div><span class="fit">' + o[4] + '</span></div></div>';
+    return '<div class="sc-card op"><div class="ring"><svg viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="20"/><circle class="fg" data-v="' + o[0] + '" cx="23" cy="23" r="20"/></svg><b>' + o[0] + '%</b></div><div class="txt"><h6>' + o[1] + '</h6><p>' + o[2] + '</p><div class="m">' + o[3] + '</div></div></div>';
   }
+
 
   /* ═════════ MOTOR: pestañas, escala, avance automático ═════════ */
   var DUR = 8600, cur_ = 0, prog = null, visible = false, hover = false, pending = false;
