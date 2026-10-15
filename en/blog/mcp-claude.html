@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Native connection with Claude via MCP | Hapee News</title>
+<meta name="description" content="Hapee is the first conversational AI platform in LATAM with native integration to Anthropic's Model Context Protocol. Your agents reason with Claude directly, with no middlemen.">
+<link rel="canonical" href="https://hapee.ai/en/blog/mcp-claude.html">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/blog/mcp-claude.html">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/blog/mcp-claude.html">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/blog/mcp-claude.html">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/blog/mcp-claude.html">
+<meta name="theme-color" content="#FA5000">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hapee.ai/en/blog/mcp-claude.html">
+<meta property="og:title" content="Native connection with Claude via MCP">
+<meta property="og:description" content="Hapee is the first conversational AI platform in LATAM with native integration to Anthropic's Model Context Protocol. Your agents reason with Claude directly, with no middlemen.">
+<meta property="og:image" content="https://hapee.ai/img/rrss-jpg/hapee-mcp-linkedin.jpg">
+<meta property="article:section" content="Product · Tech">
+<meta property="article:published_time" content="2026-05-07T09:00:00-04:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Native connection with Claude via MCP">
+<meta name="twitter:description" content="Hapee is the first conversational AI platform in LATAM with native integration to Anthropic's Model Context Protocol. Your agents reason with Claude directly, with no middlemen.">
+<meta name="twitter:image" content="https://hapee.ai/img/rrss-jpg/hapee-mcp-linkedin.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="article.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"BlogPosting",
+  "headline":"Native connection with Claude via MCP",
+  "image":"https://hapee.ai/img/rrss-jpg/hapee-mcp-linkedin.jpg",
+  "datePublished":"2026-05-07","author":{"@type":"Organization","name":"Hapee"},
+  "publisher":{"@type":"Organization","name":"Hapee","logo":{"@type":"ImageObject","url":"https://hapee.ai/img/logo-hapee.png"}},
+  "mainEntityOfPage":"https://hapee.ai/en/blog/mcp-claude.html"
+}
+</script>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="ctn" style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:24px">
+      <a href="/en/" aria-label="Hapee">
+        <img class="nav-logo light-logo" src="/img/logo-hapee.png" alt="Hapee">
+        <img class="nav-logo dark-logo" src="/img/logo-hapee.png" alt="Hapee" style="filter:brightness(0) invert(1)">
+      </a>
+      <div class="nlinks">
+        <a href="/en/#features">Features</a>
+        <a href="/en/#como">How it works</a>
+        <a href="/en/comparativa.html">Comparison</a>
+        <a href="/en/blog.html" class="on">Blog</a>
+        <a href="/en/#planes">Pricing</a>
+        <a href="https://beta.hapee.ai/" target="_blank" rel="noopener">Login</a>
+      </div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <span data-lang-switch></span>
+      <button class="dark-toggle" id="darkToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+<article class="ctn-narrow">
+  <div class="post-back"><a href="/en/blog.html">Back to the blog</a></div>
+  <header class="post-head">
+    <div class="post-meta">Product · Tech</div>
+    <h1 class="post-title">Native connection with Claude via <em>MCP</em></h1>
+    <p class="post-lede">Today Hapee becomes the first conversational AI platform in Latin America with native integration to Anthropic's Model Context Protocol (MCP). Your agents no longer call Claude through an API: they invoke it as direct context, with lower latency and truly multi-step reasoning.</p>
+    <div class="post-byline">
+      <span>May 7, 2026</span><span class="dot"></span>
+      <span>Product · Tech</span><span class="dot"></span>
+      <span>4 min read</span><span class="dot"></span>
+      <span>By <strong>Hapee Team</strong></span>
+    </div>
+  </header>
+  <figure class="post-hero">
+    <img src="/img/rrss-jpg/hapee-mcp-linkedin.jpg" alt="Hapi robot connected to neural network nodes · MCP × Claude">
+    <span class="cap">MCP × Claude · Anthropic Model Context Protocol</span>
+  </figure>
+  <div class="post-body">
+    <p>For the past year, the question Hapee customers asked most was always the same: <em>"why does the agent sometimes seem less intelligent when I give it a lot of customer information?"</em>. The technical answer was frustrating: AI agents on traditional platforms <strong>trim the context</strong> before sending it to the model, because every token costs money. The result: the model doesn't see the whole conversation, doesn't see the CRM, doesn't see the purchase history. It loses nuance.</p>
+
+    <p>The Model Context Protocol (MCP), which <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">Anthropic published as an open standard</a>, solves that. Instead of sending a fixed prompt, MCP lets Claude <strong>request additional context</strong> in real time from external sources (CRM, knowledge base, tools). Reasoning becomes truly multi-step.</p>
+
+    <div class="callout">
+      <div class="label">What changes, in one line</div>
+      <p>Before: the agent calls the model once with a fixed prompt. Now: the model asks for the data it needs when it needs it, reasons, asks for more, decides. <strong>Lower latency, better answers.</strong></p>
+    </div>
+
+    <h2 data-num="01">What MCP Native is</h2>
+    <p>MCP Native (native connection with Claude) is the implementation of Anthropic's protocol inside Hapee agents. When an agent is set to MCP mode, it automatically exposes the following <em>available contexts</em> to Claude:</p>
+    <ul>
+      <li><strong>the CRM</strong> — contact, tags, history, pipeline stage, estimated value</li>
+      <li><strong>Conversations</strong> — the entire cross-channel conversation history for that contact</li>
+      <li><strong>the Knowledge Base</strong> — documents, FAQs and manuals uploaded to the workspace</li>
+      <li><strong>Calendars</strong> — your team's real availability, not simulated slots</li>
+      <li><strong>Workflows</strong> — the ability to trigger workflows from within the conversation</li>
+    </ul>
+
+    <h2 data-num="02">How it shows up in practice</h2>
+    <p>A concrete example: a customer who has already bought 3 times writes <em>"hi, I need help with my order"</em>. With a classic agent, the model receives that phrase and a fixed system prompt. With MCP, Claude first <em>asks</em> the CRM whether this contact has open orders, sees there's one "in transit", sees the estimated delivery date, sees a previous ticket the customer opened yesterday. And only then does it respond:</p>
+
+    <blockquote>
+      "Hi Camila! I see your order #4892 is leaving the warehouse today and should reach you tomorrow between 10:00 AM and 2:00 PM. Is that why you're writing, or is it something else about the ticket you opened yesterday regarding the size?"
+      <cite>— Response generated with MCP Native</cite>
+    </blockquote>
+
+    <p>The difference is that it <strong>feels human</strong>. Because it has <em>all</em> the context, not a trimmed prompt.</p>
+
+    <h2 data-num="03">Performance · real numbers</h2>
+    <p>After 4 weeks in beta with 12 customers:</p>
+    <ul>
+      <li><strong>Average latency</strong>: 1.4s (vs 2.8s with the traditional API)</li>
+      <li><strong>Cost per conversation</strong>: −22% (Claude only requests the context it needs)</li>
+      <li><strong>First-contact resolution</strong>: +34% (the agent closes more cases without escalating)</li>
+      <li><strong>Perceived quality</strong> (end-customer survey): +41% better</li>
+    </ul>
+
+    <h2 data-num="04">How to turn it on</h2>
+    <p>Available to all Hapee customers starting today:</p>
+    <ol class="step-list">
+      <li><b>Settings → AI Models</b> In your agent's model selector, choose <code>Claude (MCP Native)</code> instead of the traditional API options.</li>
+      <li><b>Connect the contexts</b> By default Hapee exposes CRM, Conversations, Knowledge Base and Calendar. You can disable any of them individually if you don't want the model to access something.</li>
+      <li><b>Test in the sandbox</b> A test conversation with your own number. You'll notice the lower latency right away.</li>
+      <li><b>Go to production</b> Turn on MCP for all the agents in a workspace with a single toggle.</li>
+    </ol>
+
+    <h2 data-num="05">What's next</h2>
+    <p>MCP Native is the first of three native integrations coming this quarter:</p>
+    <ul>
+      <li><strong>OpenAI Assistants API native</strong> · tool-use functions with persistent state</li>
+      <li><strong>Gemini live</strong> · real-time multimodal voice sessions</li>
+      <li><strong>Mistral Codestral</strong> · agents that write workflow code from natural language</li>
+    </ul>
+    <p>But MCP is the most important one. It's the first real industry standard, and Anthropic released it as open source so any platform can adopt it. That Hapee is the first in LATAM to have it natively isn't just marketing: it's <em>infrastructure</em>.</p>
+    <div class="post-cta">
+      <h3>Turn on MCP Native in your account.</h3>
+      <p>We'll schedule a 25-minute demo · we'll show it to you with your own CRM connected.</p>
+      <a class="btn" href="/en/agenda-tu-demo">Book a demo →</a>
+    </div>
+
+    <aside class="post-share">
+      <span class="lbl">Share</span>
+      <a data-share="x" target="_blank" rel="noopener">𝕏</a>
+      <a data-share="li" target="_blank" rel="noopener">LinkedIn</a>
+      <a data-share="fb" target="_blank" rel="noopener">Facebook</a>
+      <a data-share="wa" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLinkBtn">📋 Copy link</button>
+    </aside>
+  </div>
+  <section class="post-related">
+    <h3>More from Hapee News</h3>
+    <div class="related-grid">
+      <a class="related-card" href="/en/blog/voz-elevenlabs.html">
+        <div class="thumb"><img src="/img/rrss-jpg/hapee-voz-linkedin.jpg" alt=""></div>
+        <div class="cat">Product · Voice AI</div>
+        <h4>Voice cloning with ElevenLabs</h4>
+        <div class="meta">May 5, 2026 · 3 min</div>
+      </a>
+      <a class="related-card" href="/en/blog/gpt-5-5.html">
+        <div class="thumb"><img src="/img/rrss-jpg/hapee-gpt-linkedin.jpg" alt=""></div>
+        <div class="cat">Product · OpenAI</div>
+        <h4>GPT 5.5 is now available in Hapee</h4>
+        <div class="meta">Apr 25, 2026 · 3 min</div>
+      </a>
+      <a class="related-card" href="/en/blog/automatiza-rrss.html">
+        <div class="thumb"><img src="/img/rrss-jpg/hapee-rrss-linkedin.jpg" alt=""></div>
+        <div class="cat">How-to · Marketing</div>
+        <h4>Automate your social media content</h4>
+        <div class="meta">May 1, 2026 · 9 min</div>
+      </a>
+    </div>
+  </section>
+</article>
+</main>
+
+<footer>
+  <div class="ctn">
+    <span>© 2026 Hapee · Conversational AI platform</span>
+    <a class="powered-by" href="https://digitals.cl" target="_blank" rel="noopener" title="Grupo Digitals">
+      <span>Powered by</span>
+      <img src="/img/logo-grupo-digitals.png" alt="Grupo Digitals">
+    </a>
+    <div style="display:flex;gap:1.4rem;flex-wrap:wrap">
+      <a href="/en/blog.html">Blog</a>
+      <a href="/en/comparativa.html">Comparison</a>
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script src="article.js" defer></script>
+<script src="/js/whatsapp.js" defer></script>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

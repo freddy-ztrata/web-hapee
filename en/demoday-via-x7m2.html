@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Vía by Hapee · Demo Day 2026</title>
+<meta name="description" content="Vía by Hapee — an AI travel assistant for Metro passengers. Demo Day 2026 application.">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#FA5000;--accent-2:#FF7A18;--pink:#CD2349;--pink-2:#E8457C;
+  --bg:#070505;--heading:#fff;--text:#d8d3ce;--text-2:#a49c94;--muted:#7a726a;
+  --card:rgba(255,255,255,.03);--border:rgba(250,80,0,.14);--border-2:rgba(255,255,255,.08);
+  --pill:100px;--fd:'Plus Jakarta Sans',-apple-system,sans-serif;--fb:'Plus Jakarta Sans',sans-serif;
+  --grad:linear-gradient(92deg,var(--accent),var(--pink-2));
+  --tr:.3s cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.65;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(18px,5vw,48px)}
+.tg{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent)}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(60% 40% at 80% 0%,rgba(250,80,0,.13),transparent 60%),
+  radial-gradient(55% 42% at 5% 30%,rgba(205,35,73,.10),transparent 60%);}
+main{position:relative;z-index:1}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px clamp(18px,5vw,48px);border-bottom:1px solid var(--border-2)}
+nav .logo{height:28px;width:auto!important;object-fit:contain;flex-shrink:0;display:block;min-width:80px}
+nav .badge{font-size:.66rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);border:1px solid var(--border-2);border-radius:var(--pill);padding:7px 14px}
+nav .badge b{color:#fff}
+
+/* hero */
+.hero{padding:clamp(44px,7vw,80px) 0 clamp(20px,4vw,36px);text-align:center}
+.hero h1{font-size:clamp(2.8rem,8vw,5.4rem);font-weight:800;line-height:.98;letter-spacing:-.03em;color:var(--heading);margin:18px 0 0}
+.hero .sub{font-size:clamp(1.1rem,2.4vw,1.6rem);font-weight:700;color:#fff;margin-top:14px}
+.hero .desc{color:var(--text-2);font-size:clamp(1rem,1.5vw,1.12rem);max-width:640px;margin:16px auto 0}
+
+/* video */
+.videobox{position:relative;margin:clamp(24px,4vw,40px) 0 clamp(40px,6vw,64px);border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:0 30px 80px -30px rgba(250,80,0,.35),0 0 0 1px rgba(0,0,0,.4)}
+.videobox::before{content:'';position:absolute;inset:-1px;border-radius:20px;padding:1px;pointer-events:none;z-index:2;
+  background:linear-gradient(120deg,rgba(250,80,0,.5),transparent 40%,transparent 60%,rgba(205,35,73,.4));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.videobox video{width:100%;height:auto;display:block;background:#000;aspect-ratio:16/9;object-fit:cover}
+
+/* stats strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:clamp(40px,6vw,64px)}
+.stat{background:var(--card);border:1px solid var(--border-2);border-radius:16px;padding:20px 16px;text-align:center}
+.stat .n{font-family:var(--fd);font-size:clamp(1.9rem,4vw,2.7rem);line-height:1;color:var(--accent);letter-spacing:1px}
+.stat .l{font-size:.8rem;color:var(--text-2);margin-top:6px}
+@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* sections */
+section.blk{padding:clamp(30px,5vw,52px) 0;border-top:1px solid var(--border-2)}
+.blk h2{font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;color:var(--heading);letter-spacing:-.02em;margin:12px 0 0}
+.blk p.lead{color:var(--text-2);font-size:clamp(1rem,1.5vw,1.1rem);max-width:760px;margin-top:16px}
+.blk p.lead b{color:#fff}
+.grid{display:grid;gap:16px;margin-top:clamp(24px,4vw,36px)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border-2);border-radius:16px;padding:22px 20px;transition:var(--tr)}
+.card:hover{border-color:var(--border);transform:translateY(-2px)}
+.card h3{color:#fff;font-size:1.05rem;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+.card h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 0 4px rgba(250,80,0,.15)}
+.card p{color:var(--text-2);font-size:.93rem}
+.feat-list{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:12px}
+.feat-list li{position:relative;padding-left:26px;color:var(--text);font-size:.98rem}
+.feat-list li b{color:#fff}
+.feat-list li::before{content:'';position:absolute;left:0;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--grad)}
+.win{border-left:2px solid var(--accent);padding:4px 0 4px 18px}
+.win h3{color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.win ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.win ul li{position:relative;padding-left:20px;color:var(--text);font-size:.96rem}
+.win ul li::before{content:'';position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.callout{background:linear-gradient(160deg,rgba(250,80,0,.1),rgba(255,255,255,.02));border:1px solid var(--border);border-radius:18px;padding:26px 24px;margin-top:clamp(24px,4vw,32px)}
+.callout .k{font-size:.7rem;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent)}
+.callout p{color:var(--text);font-size:1.02rem;margin-top:10px}
+.callout p b{color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.chip{font-size:.82rem;color:var(--text);border:1px solid var(--border-2);border-radius:var(--pill);padding:8px 15px;background:var(--card)}
+
+/* footer */
+footer{padding:clamp(40px,6vw,60px) 0 46px;border-top:1px solid var(--border-2);margin-top:clamp(30px,5vw,50px)}
+footer .cap{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+footer .row{display:flex;flex-wrap:wrap;gap:9px;margin:14px 0 26px}
+footer .foot-b{color:var(--muted);font-size:.84rem}
+footer .foot-b b{color:var(--text-2)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/en/"><img class="logo" src="img/logo-hapee.png" alt="Hapee"></a>
+  <span class="badge"><b>Demo Day</b> 2026</span>
+</nav>
+
+<main>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Application · Demo Day 2026 · Transforming the network that moves the city</span>
+    <h1>Vía <span class="tg">by Hapee</span></h1>
+    <p class="sub">AI travel assistant for Metro passengers</p>
+    <p class="desc">A single brain that accompanies the passenger in real time — focused on service disruptions — and scales across the entire network, without touching the existing infrastructure.</p>
+
+    <div class="videobox rv">
+      <video controls preload="metadata" playsinline poster="img/vsl-metro-poster.jpg">
+        <source src="img/vsl-metro.mp4" type="video/mp4">
+        Your browser does not support video. <a href="img/vsl-metro.mp4" style="color:var(--accent)">Download it here</a>.
+      </video>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><div class="n">+2K</div><div class="l">Automated customers</div></div>
+      <div class="stat"><div class="n">~2.4s</div><div class="l">Agent response time</div></div>
+      <div class="stat"><div class="n">~4 months</div><div class="l">Scoped pilot</div></div>
+      <div class="stat"><div class="n">24/7</div><div class="l">In every disruption</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- Resumen del proyecto -->
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">01 · The problem</span>
+    <h2>The critical moment isn't the trip: <span class="tg">it's the disruption</span></h2>
+    <p class="lead">On a network that moves millions of people every day, when a train is stopped, a route is diverted or service changes, customer service channels collapse and passenger uncertainty skyrockets. <b>The information exists, but it doesn't reach the people who need it on time, personalized, in the channel where they need it.</b></p>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">02 · The solution</span>
+    <h2>A single brain that <span class="tg">scales across the whole network</span></h2>
+    <p class="lead">Vía by Hapee accompanies the passenger in real time, with a special focus on service disruptions. It is not one agent per station: it is a single engine that serves the whole network. It lives where the passenger already is — the app and WhatsApp — and relies on a lightweight physical point in the station (QR touchpoint via Linkd), without touching the existing infrastructure.</p>
+    <div class="grid g2">
+      <div class="card"><h3><span class="dot"></span>Single, scalable agent</h3><p>The same engine serves the entire network and grows to future lines (7, 8, 9) with no re-architecture.</p></div>
+      <div class="card"><h3><span class="dot"></span>Omnichannel</h3><p>App, WhatsApp and a physical QR point in the station, with a consistent experience across all of them.</p></div>
+      <div class="card"><h3><span class="dot"></span>Contextual and real-time</h3><p>Integrates via API with the service-status feeds the operation already has, with no structural changes.</p></div>
+      <div class="card"><h3><span class="dot"></span>Living knowledge base</h3><p>Updatable online and managed by the operator itself: the information is always up to date.</p></div>
+      <div class="card"><h3><span class="dot"></span>Multi-engine architecture</h3><p>Runs on several AI engines (GPT, Gemini and Claude/Anthropic), choosing the best one for each task.</p></div>
+      <div class="card"><h3><span class="dot"></span>Voice and audio</h3><p>Voice agents and audio understanding (official ElevenLabs partnership) to broaden accessibility.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">03 · Architecture</span>
+    <h2>Built on Hapee, <span class="tg">cloud-native on AWS</span></h2>
+    <p class="lead">A proprietary platform built entirely on AWS, designed from scratch to operate at scale. It is not legacy software or an assembly of third-party pieces.</p>
+    <ul class="feat-list" style="margin-top:24px">
+      <li><b>Automatic scaling.</b> During a disruption, when thousands of passengers ask at once, the infrastructure grows in seconds and returns to its baseline when the peak passes — with no outages from overload.</li>
+      <li><b>Modern stack.</b> React frontend with a visual flow builder; decoupled serverless backend; API integrations with the operator's systems.</li>
+      <li><b>Native MCP connection with Anthropic's Claude</b> — a capability unique in LATAM — that lets the agent work with tools and context in a secure, structured way.</li>
+      <li><b>Security and compliance.</b> Encryption in transit and at rest, traceability and auditing of every interaction, and a design compliant with Chile's Law 21.719 on data protection.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">04 · Why it's feasible</span>
+    <h2>Not a <span class="tg">lab experiment</span></h2>
+    <p class="lead">Vía by Hapee is not built from scratch: it runs on Hapee, a proprietary platform that is <b>already in production with real customers</b>. The pilot is not about inventing the technology; it is about adapting it to the operator.</p>
+    <div class="callout">
+      <span class="k">Direct proof · Sacyr case</span>
+      <p>Today we run, for <b>Sacyr</b>, an infrastructure concessionaire, an agent that handles user inquiries 24/7 and routes them to the right team on its own. It is practically the same problem, already solved and working in the real world — which means <b>low implementation risk</b> and a scoped pilot of <b>~4 months</b> at high-traffic stations.</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">05 · What each side gains</span>
+    <h2>Value for the <span class="tg">passenger and the operator</span></h2>
+    <div class="grid g2">
+      <div class="win"><h3>The passenger</h3><ul>
+        <li>Less uncertainty in critical moments.</li>
+        <li>Personalized information in their own channel.</li>
+        <li>Better accessibility (text, voice and audio).</li>
+      </ul></div>
+      <div class="win"><h3>The operator</h3><ul>
+        <li>Offloads its service channels right when they are most overloaded.</li>
+        <li>Better management of every disruption.</li>
+        <li>Clear, actionable data on what passengers actually ask about.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap rv">
+    <span class="eyebrow">06 · Traction and backing</span>
+    <h2>Real production, <span class="tg">sustained growth</span></h2>
+    <p class="lead">Platform in production with real customers: <b>2,000+ automated customers</b>, ~40 new subscriptions per month since early 2026 with sustained growth of around 30%, and an agent response time of ~2.4 seconds. Cases running today: <b>Sacyr, Ajinomoto, Develon/Hyundai</b>, among others.</p>
+    <div class="chips">
+      <span class="chip">Meta Business Partner</span>
+      <span class="chip">Google Partner Premier</span>
+      <span class="chip">AWS Partner Network</span>
+      <span class="chip">ElevenLabs Official Partner</span>
+      <span class="chip">Anthropic Claude · Native MCP</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap rv">
+    <div class="cap">A single brain that scales across the whole network</div>
+    <p class="foot-b" style="margin-top:14px">We start with a scoped, low-risk pilot, and from there expand coverage, channels and capabilities on the same technology base.</p>
+    <p class="foot-b" style="margin-top:22px">Behind it is <b>Digitals Group</b> — an applied-AI agency with a presence in LATAM and the US · Vía by Hapee for Demo Day 2026.</p>
+  </div>
+</footer>
+</main>
+
+<script>
+(function(){var e=document.querySelectorAll('.rv');if(!('IntersectionObserver'in window)){e.forEach(function(x){x.classList.add('in')});return;}
+var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1,rootMargin:'0px 0px -8% 0px'});
+e.forEach(function(x){io.observe(x)})})();
+</script>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-10-12-review-video-2
+ARG CACHE_BUST=2026-10-15-idiomas-en-pt
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -47,6 +47,11 @@ COPY webinar.html /usr/share/nginx/html/webinar.html
 # defecto que este archivo advierte arriba y que ya paso con
 # eliminacion-datos.html y con marca.html.
 COPY docs/ /usr/share/nginx/html/docs/
+# Versiones en ingles y portugues del sitio entero (2026-10-15): mismo slug que
+# la pagina en espanol bajo /en/ y /pt/. Directorios enteros por la misma razon
+# que blog/ y docs/. Los assets NO se duplican: nginx los busca sin el prefijo.
+COPY en/ /usr/share/nginx/html/en/
+COPY pt/ /usr/share/nginx/html/pt/
 # Material para revisores de directorios (video de demostración del plugin).
 COPY review/ /usr/share/nginx/html/review/
 COPY img/ /usr/share/nginx/html/img/

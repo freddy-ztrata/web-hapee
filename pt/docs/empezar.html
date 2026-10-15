@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Comece em 15 minutos — API da Hapee</title>
+<meta name="description" content="Do primeiro request ao primeiro webhook da API da Hapee, tudo no sandbox e sem tocar em dados reais.">
+<link rel="canonical" href="https://hapee.ai/pt/docs/empezar">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/docs/empezar">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/docs/empezar">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/docs/empezar">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/docs/empezar">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/pt/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/pt/docs/">Início</a>
+      <a href="/pt/docs/empezar" class="activo">Começar</a>
+      <a href="/pt/docs/erp">Integrar um ERP</a>
+      <a href="/pt/docs/webhooks">Webhooks</a>
+      <a href="/pt/docs/mcp">Conector MCP</a>
+      <a href="/pt/docs/referencia">Referência</a>
+      <a href="/pt/">← Voltar ao site</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>Nesta página</h4>
+      <a href="#credencial">0. O que você precisa</a>
+      <a href="#probar">1. Testar a credencial</a>
+      <a href="#contacto">2. Criar um contato</a>
+      <a href="#idempotencia">3. Testar a idempotência</a>
+      <a href="#webhook">4. Registrar um webhook</a>
+      <a href="#disparar">5. Disparar o primeiro evento</a>
+      <a href="#pull">6. Se você não pode expor uma URL</a>
+      <a href="#entregas">7. Ver o que aconteceu</a>
+      <h4>Próximos passos</h4>
+      <a href="/pt/docs/erp">Integrar um ERP</a>
+      <a href="/pt/docs/webhooks">Webhooks</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <h1>Comece em 15 minutos</h1>
+    <p class="dv-bajada">Do primeiro request ao primeiro webhook. Tudo no sandbox, sem tocar em nada real.</p>
+
+    <h2 id="credencial">0. O que você precisa</h2>
+
+    <p>Uma credencial <code>hp_test_…</code> fornecida pela agência que administra sua conta. Ela aponta para uma subconta de teste com dados fictícios.</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>export HAPEE_KEY="hp_test_..."
+export HAPEE_URL="https://beta.hapee.ai/api/v1"</code></pre>
+    </div>
+
+    <h2 id="probar">1. Confirmar que a credencial funciona <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 1 min</span></h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s "$HAPEE_URL/me" -H "Authorization: Bearer $HAPEE_KEY"</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "key": { "id": 44, "name": "Mi ERP sandbox", "mode": "test",
+           "read_only": false, "scoped_to_subaccount": true },
+  "subaccount": { "id": 91, "name": "Cliente — Sandbox",
+                  "timezone": "America/Santiago", "default_currency": "CLP",
+                  "sandbox": true, "language": "es" },
+  "limits": { "requests_per_minute": 100, "batch_max_items": 100,
+              "events_retention_days": 30, "idempotency_window_hours": 24 },
+  "api_version": "v1"
+}</code></pre>
+    </div>
+
+    <div class="dv-aviso ojo">
+      <p><strong>Verifique se <code>sandbox</code> diz <code>true</code>.</strong> Se disser <code>false</code>, pare aqui: essa credencial aponta para dados reais.</p>
+    </div>
+
+    <h2 id="contacto">2. Criar um contato <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s -X POST "$HAPEE_URL/contacts/upsert" \
+  -H "Authorization: Bearer $HAPEE_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: meu-primeiro-teste-001" \
+  -d '{
+    "external_id": "ERP-DEMO-1",
+    "email": "prueba@ejemplo.cl",
+    "first_name": "Ana", "last_name": "Pérez",
+    "phone": "+56912345678",
+    "rut": "12.345.678-5"
+  }'</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{ "data": { "id": 90211, "email": "prueba@ejemplo.cl", "…": "…" },
+  "created": true }</code></pre>
+    </div>
+
+    <p><code>external_id</code> é o id do <em>seu</em> sistema. É o que permite repetir a carga sem duplicar: na segunda vez ele atualiza em vez de criar.</p>
+
+    <h2 id="idempotencia">3. Testar que a idempotência funciona <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
+
+    <p>Execute <strong>o mesmo comando outra vez</strong>, sem mudar nada. Você receberá a mesma resposta e o header <code>Idempotent-Replay: true</code>. <strong>Nenhum segundo contato foi criado.</strong></p>
+
+    <p>Agora execute uma <strong>terceira</strong> vez, mudando <code>first_name</code> mas mantendo a mesma <code>Idempotency-Key</code>:</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{ "error": {
+    "code": "idempotency_key_reusada",
+    "message": "Esta Idempotency-Key ya se usó con un cuerpo distinto..."
+} }</code></pre>
+    </div>
+
+    <p>Isso está correto: a mesma chave com outro corpo significa que você a reutilizou para outra coisa. <strong>Uma chave por operação.</strong></p>
+
+    <h2 id="webhook">4. Registrar um webhook <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 5 min</span></h2>
+
+    <p>Você precisa de uma URL pública. Para testar na sua máquina, abra um túnel:</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>ngrok http 3000     # dá algo como https://a1b2c3.ngrok-free.app</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s -X POST "$HAPEE_URL/webhooks/endpoints" \
+  -H "Authorization: Bearer $HAPEE_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://a1b2c3.ngrok-free.app/hooks",
+    "description": "Testes locais",
+    "events": ["*"]
+  }'</code></pre>
+    </div>
+
+    <div class="dv-aviso ojo">
+      <p><strong>Salve o <code>secret</code> agora.</strong> Ele só é exibido completo uma vez. Depois você verá apenas <code>whsec_…aB3d</code>.</p>
+    </div>
+
+    <h3>Receptor mínimo</h3>
+
+    <div class="dv-code" data-lang="node">
+<pre><code>const express = require('express');
+const crypto = require('crypto');
+const app = express();
+
+const SECRETO = 'whsec_aB3dE...';
+
+app.post('/hooks', express.raw({ type: 'application/json' }), (req, res) =&gt; {
+  const crudo = req.body.toString('utf8');
+  const cab = req.get('X-Hapee-Signature') || '';
+  const { t, v1 } = Object.fromEntries(
+    cab.split(',').map(p =&gt; p.split('=').map(s =&gt; s.trim())));
+
+  const esperado = crypto.createHmac('sha256', SECRETO)
+                         .update(`${t}.${crudo}`).digest('hex');
+  if (esperado !== v1) return res.sendStatus(401);
+
+  console.log('evento:', JSON.parse(crudo).type);
+  res.sendStatus(200);
+});
+
+app.listen(3000);</code></pre>
+    </div>
+
+    <div class="dv-aviso">
+      <p>Em produção é necessária uma comparação em <strong>tempo constante</strong> e uma <strong>janela de atualidade</strong>. A versão completa está em <a href="/pt/docs/webhooks">Webhooks</a>, com exemplos em Node, Python, PHP e C#.</p>
+    </div>
+
+    <h2 id="disparar">5. Disparar o primeiro evento <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 1 min</span></h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s -X POST "$HAPEE_URL/webhooks/endpoints/12/ping" \
+  -H "Authorization: Bearer $HAPEE_KEY"</code></pre>
+    </div>
+
+    <p>No seu console: <code>evento: webhook.test</code></p>
+
+    <p>E agora um de verdade — atualize o contato do passo 2:</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s -X POST "$HAPEE_URL/contacts/upsert" \
+  -H "Authorization: Bearer $HAPEE_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: meu-primeiro-teste-002" \
+  -d '{"external_id": "ERP-DEMO-1", "match_by": "external_id",
+       "first_name": "Ana María"}'</code></pre>
+    </div>
+
+    <p>No seu console: <code>evento: contact.updated</code></p>
+
+    <div class="dv-aviso">
+      <p>Os eventos são disparados por <strong>tudo</strong> o que acontece na subconta, não apenas pelo que você faz. Se alguém da equipe comercial mover um negócio para «ganho» pelo aplicativo, você recebe do mesmo jeito.</p>
+    </div>
+
+    <h2 id="pull">6. Se você não pode expor uma URL <span style="color:#6a6a6a;font-size:.7em;font-weight:400">· 2 min</span></h2>
+
+    <p>O mesmo, mas consultando você mesmo:</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s "$HAPEE_URL/events?limit=10" -H "Authorization: Bearer $HAPEE_KEY"</code></pre>
+    </div>
+
+    <p>Guarde o <code>next_cursor</code> e passe-o na próxima vez. <strong>Mesmos eventos, mesmo corpo.</strong></p>
+
+    <h2 id="entregas">7. Ver o que aconteceu com uma entrega</h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -s "$HAPEE_URL/webhooks/deliveries?endpoint_id=12" \
+  -H "Authorization: Bearer $HAPEE_KEY"</code></pre>
+    </div>
+
+    <p>Cada entrega mostra seu status, quantas tentativas já fez, o que seu endpoint respondeu e quando é a próxima tentativa.</p>
+
+    <h2>Pronto. E agora?</h2>
+
+    <div class="dv-grid">
+      <a class="dv-card" href="/pt/docs/erp">
+        <h3>Integrar um ERP</h3>
+        <p>Os fluxos completos, o mapeamento de campos e o checklist de saída.</p>
+      </a>
+      <a class="dv-card" href="/pt/docs/webhooks">
+        <h3>Webhooks</h3>
+        <p>Assinatura em quatro linguagens e as regras do receptor.</p>
+      </a>
+      <a class="dv-card" href="/pt/docs/referencia">
+        <h3>Referência completa</h3>
+        <p>Todos os endpoints com seus parâmetros.</p>
+      </a>
+    </div>
+
+    <div class="dv-aviso">
+      <p><strong>Antes de ir para produção</strong>, o checklist está no final do <a href="/pt/docs/erp#checklist">guia de integração</a>. Ir para o live é trocar a credencial e a URL do webhook: nada mais.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/politica-privacidade.html">Política de privacidade</a> · <a href="/termos.html">Termos</a></p>
+  <p>API v1 · Documentação atualizada em 10 de setembro de 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

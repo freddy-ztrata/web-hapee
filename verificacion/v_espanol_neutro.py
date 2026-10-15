@@ -90,7 +90,12 @@ FUTURO = re.compile(r"(?:ar|er|ir)[áé]s?$|r[áé]s?$")
 # Pretérito de 1a persona (`Configuré`, `necesité`): un testimonio habla de si
 # mismo. Termina en `-é` como el imperativo vos de `-er`, asi que se distingue
 # por la persona gramatical, que el regex no ve: van declarados.
-PRETERITO_1A = {"configuré", "necesité", "escribí", "empecé", "conecté"}
+PRETERITO_1A = {"configuré", "necesité", "escribí", "empecé", "conecté",
+                # Los agentes de la oficina 3D (oficina/index.html) cuentan lo
+                # que hicieron: "Actualicé el pipeline", "Revisé la bandeja".
+                "actualicé", "armé", "arreglé", "dejé", "moví", "publiqué",
+                "reasigné", "respondí", "revisé", "subí", "terminé", "agendé",
+                "avisé", "mandé"}
 
 # Encliticos de voseo. No hay regex razonable --se parecen a sustantivos-- asi
 # que van por lista y se amplia cuando aparezca uno nuevo.

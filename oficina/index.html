@@ -329,7 +329,7 @@ const AGENTES=[
  {id:'lic',n:'Agente de Licitaciones',mod:'Licitaciones',lema:'Gana más licitaciones',d:'Oportunidades de Mercado Público, WherEx y portales privados filtradas por tu rubro, % de afinidad calculado por IA, alertas inteligentes por correo y bases analizadas en segundos.',ui:'licitaciones',url:'https://hapee.ai/',x:5.4,z:-51,kit:'credencial',acc:0x0EA5E9,
   frases:['Mercado Público + WherEx + portales privados.','% de afinidad calculado por IA.','Alertas inteligentes por correo.','Bases analizadas por IA en segundos.'],tick:['% de afinidad calculado por IA','alerta enviada por correo','bases analizadas en segundos']}];
 const PASOS=[['1','Conecta tus canales','WhatsApp, email, redes sociales y tu calendario en un solo clic.'],['2','Activa la IA','Configura tus agentes para responder, calificar y agendar citas 24/7.'],['3','Escala tu negocio','Mide resultados en tiempo real y multiplica tus ventas con datos exactos.']];
-const PLANES=[['STARTER','$297','/mes'],['PRO','$397','/mes · el más elegido'],['ELITE SETUP','$2.990','pago único']];
+const PLANES=[['STARTER','$297','/mes'],['PRO','$397','/mes · el más elegido'],['ELITE SETUP','$3.290','pago único']];
 const MARCAS=['andes','burgerking','corfo','elloa','gashn','heli','indisa','logo-chery','mundomed','reutter','sacyr','tranciti'];
 const SALUDOS=['¡Hola! Soy el {n}. Pulsa E y conversamos.','¿Te muestro cómo trabajo? Pulsa E.','Estoy en turno 24/7. ¿Hablamos? Pulsa E.'];
 
@@ -675,7 +675,7 @@ let holo=null;
  const haz=new THREE.Mesh(new THREE.ConeGeometry(1.6,1.4,48,1,true),basic({color:0xFA5000,transparent:true,opacity:.05,side:THREE.DoubleSide,depthWrite:false}));haz.position.y=-1.55;holo.add(haz);
  holo.position.set(HOLO.x,2.55,HOLO.z);scene.add(holo);
  const pl=new THREE.PointLight(0xFF7A3D,18,9,1.8);pl.position.set(HOLO.x,2.2,HOLO.z);scene.add(pl);
- const ho={type:'holo',n:'Planes Hapee',mod:'Sala de control',d:'STARTER $297/mes · PRO $397/mes (el más elegido) · ELITE SETUP $2.990 pago único. Sin compromiso, sin contratos.',url:'https://hapee.ai/planes'};holo.children[0].userData.work=ho;holo.children[1].userData.work=ho;works.push({o:ho,mesh:holo.children[0],g:holo});works.push({o:ho,mesh:holo.children[1],g:holo});
+ const ho={type:'holo',n:'Planes Hapee',mod:'Sala de control',d:'STARTER $297/mes · PRO $397/mes (el más elegido) · ELITE SETUP $3.290 pago único. Sin compromiso, sin contratos.',url:'https://hapee.ai/planes'};holo.children[0].userData.work=ho;holo.children[1].userData.work=ho;works.push({o:ho,mesh:holo.children[0],g:holo});works.push({o:ho,mesh:holo.children[1],g:holo});
  const t4=new THREE.Mesh(new THREE.PlaneGeometry(4.8,.92),basic({map:signTex('ZONA 04 · NÚCLEO 24/7 →',70,'#D44400',2048,384),transparent:true}));t4.position.set(0,HT-1.05,Z3.b+.3);scene.add(t4);}
 
 /* ══ ZONA 04 · NÚCLEO 24/7 ══ sala blanca: racks claros con LED, pasarela de luz */
@@ -1345,7 +1345,7 @@ function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];co
 
 /* ══ CHAT CON EL AGENTE ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
-function sistema(ag){return 'Eres el '+ag.n+' de Hapee, la plataforma de Agentes IA + CRM all-in-one de Grupo Digitals (hapee.ai). Tu módulo es «'+ag.mod+'»: '+ag.lema+'. '+ag.d+' Estás en la oficina 3D de Hapee (Hapee HQ) hablando con un visitante. Responde en español de Chile, cercano y concreto, en máximo dos frases. Planes: STARTER $297/mes, PRO $397/mes (el más elegido), ELITE SETUP $2.990 pago único; sin compromiso ni contratos. Si preguntan por precio o por probar, invita a agendar una demo en hapee.ai/agenda-tu-demo. Nunca menciones proveedores ni tecnología de terceros detrás de Hapee.';}
+function sistema(ag){return 'Eres el '+ag.n+' de Hapee, la plataforma de Agentes IA + CRM all-in-one de Grupo Digitals (hapee.ai). Tu módulo es «'+ag.mod+'»: '+ag.lema+'. '+ag.d+' Estás en la oficina 3D de Hapee (Hapee HQ) hablando con un visitante. Responde en español de Chile, cercano y concreto, en máximo dos frases. Planes: STARTER $297/mes, PRO $397/mes (el más elegido), ELITE SETUP $3.290 pago único; sin compromiso ni contratos. Si preguntan por precio o por probar, invita a agendar una demo en hapee.ai/agenda-tu-demo. Nunca menciones proveedores ni tecnología de terceros detrás de Hapee.';}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 // El agente (o holograma, o recepción) con quien se puede hablar más cerca, a menos de `max` m.
 function agenteCercano(max){let md=max,ag=null;
@@ -1432,7 +1432,7 @@ function cerrarDemo(){if(!demoAbierta)return;clearInterval(demoPoll);demoAbierta
 $('#dX').addEventListener('click',cerrarDemo);
 demoFrame.addEventListener('load',function(){alWidget();vigilaWidget();});
 $('#chForm').addEventListener('submit',function(e){e.preventDefault();const t=chIn.value.trim();if(!t)return;chIn.value='';preguntar(t,null);});
-function guion(ag,tipo){if(tipo==='que')return ag.lema+'. '+ag.d;if(tipo==='como')return ag.frases[0]+' '+ag.frases[1]+' Y todo queda en el mismo lugar, sin herramientas separadas.';if(tipo==='precio')return 'Hapee tiene tres planes: STARTER $297/mes, PRO $397/mes (el más elegido) y ELITE SETUP $2.990 pago único. Sin compromiso ni contratos. Agenda una demo en hapee.ai/agenda-tu-demo y lo vemos con tus datos.';return null;}
+function guion(ag,tipo){if(tipo==='que')return ag.lema+'. '+ag.d;if(tipo==='como')return ag.frases[0]+' '+ag.frases[1]+' Y todo queda en el mismo lugar, sin herramientas separadas.';if(tipo==='precio')return 'Hapee tiene tres planes: STARTER $297/mes, PRO $397/mes (el más elegido) y ELITE SETUP $3.290 pago único. Sin compromiso ni contratos. Agenda una demo en hapee.ai/agenda-tu-demo y lo vemos con tus datos.';return null;}
 async function preguntar(texto,tipo){const ag=chatCon;if(!ag)return;msg('yo',texto);historial.push({role:'user',content:texto});const esp=msg('bot',null);const b=ag.bot;if(b)decir(b,'…',9000,'pensando');
  let resp=null,viaIA=false;const g=guion(ag,tipo);
  if(!g){try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:220,system:sistema(ag),messages:historial.slice(-8)})});
@@ -1612,5 +1612,6 @@ function medirFPS(){if(!/fps=1/.test(location.search))return;const t=document.cr
  for(let s0=0;s0<26;s0++)window.__loop(performance.now()+s0*16.7);const N=40,t0=performance.now();for(let i=0;i<N;i++){composer.render();}const ms=(performance.now()-t0)/N;
  const d=window.__diag();t.textContent='MS='+ms.toFixed(1)+' EQUIV='+Math.round(1000/ms)+'fps | robots '+d.robots+' rig '+d.rig+' | obras '+d.obras+'/'+works.length+' | '+d.tex+'tex '+d.geo+'geo '+d.draw+'draw';}
 </script>
+<script src="/js/lang.js" defer></script>
 </body>
 </html>

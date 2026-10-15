@@ -19,7 +19,7 @@
   const url = window.location.href;
   const title = document.title.split('|')[0].trim();
   const sharers = {
-    x:  `https://twitter.com/intent/tweet?text=${encodeURIComponent(title + ' — vía Hapee')}&url=${encodeURIComponent(url)}`,
+    x:  `https://twitter.com/intent/tweet?text=${encodeURIComponent(title + ({ en: ' — via Hapee', pt: ' — via Hapee' }[(document.documentElement.lang || 'es').slice(0, 2)] || ' — vía Hapee'))}&url=${encodeURIComponent(url)}`,
     li: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
     fb: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     wa: `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`
@@ -36,7 +36,7 @@
       navigator.clipboard.writeText(url).catch(() => {});
       const orig = copyBtn.innerHTML;
       copyBtn.classList.add('done');
-      copyBtn.innerHTML = '✓ Copiado';
+      copyBtn.innerHTML = { en: '✓ Copied', pt: '✓ Copiado' }[(document.documentElement.lang || 'es').slice(0, 2)] || '✓ Copiado';
       setTimeout(() => {
         copyBtn.classList.remove('done');
         copyBtn.innerHTML = orig;

@@ -8,8 +8,17 @@
 
   // ---- Contact config (change here, applies everywhere) ----
   var PHONE = '56965349093';                              // +56 9 6534 9093
-  var MESSAGE = 'Hola 👋 Quiero saber más sobre Hapee.ai';
-  var LABEL = '¿Hablamos?';
+  // Textos por idioma de la página (<html lang>): es por defecto, en y pt
+  // para las versiones /en/ y /pt/ del sitio.
+  var TEXTOS = {
+    es: { msg: 'Hola 👋 Quiero saber más sobre Hapee.ai', label: '¿Hablamos?', aria: 'Escríbenos por WhatsApp' },
+    en: { msg: 'Hi 👋 I want to know more about Hapee.ai', label: "Let's talk?", aria: 'Message us on WhatsApp' },
+    pt: { msg: 'Oi 👋 Quero saber mais sobre o Hapee.ai', label: 'Vamos conversar?', aria: 'Fale conosco pelo WhatsApp' }
+  };
+  var idioma = (document.documentElement.lang || 'es').slice(0, 2).toLowerCase();
+  var T = TEXTOS[idioma] || TEXTOS.es;
+  var MESSAGE = T.msg;
+  var LABEL = T.label;
 
   // Guard against double-injection
   if (document.getElementById('hapee-wa-fab')) return;
@@ -45,7 +54,7 @@
   a.href = href;
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
-  a.setAttribute('aria-label', 'Escríbenos por WhatsApp');
+  a.setAttribute('aria-label', T.aria);
   a.innerHTML =
     '<span class="hapee-wa-label">' + LABEL + '</span>' +
     '<span class="hapee-wa-btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="' + WA_PATH + '"/></svg></span>';

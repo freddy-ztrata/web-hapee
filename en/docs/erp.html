@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Integrate Your ERP with Hapee — API v1</title>
+<meta name="description" content="Connect your ERP to Hapee: initial load, two-way sync, won deal to invoice, and collections. With field mapping and a go-live checklist.">
+<link rel="canonical" href="https://hapee.ai/en/docs/erp">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/docs/erp">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/docs/erp">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/docs/erp">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/docs/erp">
+<meta property="og:title" content="Integrate your ERP with Hapee">
+<meta property="og:description" content="Canonical flows, field mapping and a go-live checklist.">
+<meta property="og:url" content="https://hapee.ai/en/docs/erp">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/en/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/en/docs/">Home</a>
+      <a href="/en/docs/empezar">Get started</a>
+      <a href="/en/docs/erp" class="activo">Integrate an ERP</a>
+      <a href="/en/docs/webhooks">Webhooks</a>
+      <a href="/en/docs/mcp">MCP connector</a>
+      <a href="/en/docs/referencia">Reference</a>
+      <a href="/en/">← Back to site</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>On this page</h4>
+      <a href="#antes">Before writing code</a>
+      <a href="#caminos">API or workflows?</a>
+      <a href="#verdad">Source of truth</a>
+      <a href="#flujo-a">A · Initial load</a>
+      <a href="#flujo-b">B · Sync</a>
+      <a href="#flujo-c">C · Won → invoice</a>
+      <a href="#flujo-d">D · Collections</a>
+      <a href="#mapeo">Field mapping</a>
+      <a href="#checklist">Production checklist</a>
+      <a href="#errores">Common errors</a>
+      <h4>See also</h4>
+      <a href="/en/docs/empezar">Get started in 15 minutes</a>
+      <a href="/en/docs/webhooks">Webhooks</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <h1>Integrate your ERP with Hapee</h1>
+    <p class="dv-bajada">The complete flows, field mapping and the go-live checklist. Written so it is enough without us at your side.</p>
+
+    <h2 id="antes">Before you write a line</h2>
+
+    <p>Three things that define everything else:</p>
+
+    <ol>
+      <li><strong>The subaccount comes from the credential.</strong> It is never sent as a parameter. A credential belongs to one subaccount and can only read and write there.</li>
+      <li><strong>There are two ways to find out what happens</strong> and they serve exactly the same thing: webhooks (we notify you) or <code>GET /events</code> (you poll). You choose based on whether your ERP can expose a public URL, not on what you want to receive.</li>
+      <li><strong>Every write accepts <code>Idempotency-Key</code>.</strong> A retry after a network drop won't duplicate anything. Use it from day one, not when the problem shows up.</li>
+    </ol>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl https://beta.hapee.ai/api/v1/me \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL"</code></pre>
+    </div>
+
+    <p>If this works, everything else works.</p>
+
+    <h2 id="caminos">API or workflows?</h2>
+
+    <p>There are <strong>three ways to connect</strong> and they don't compete: you use them together. The real
+    difference is <em>who writes the code</em>.</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>What you want to do</th><th>Path</th><th>Who does it</th></tr>
+        <tr><td>Load thousands of customers and products</td><td><strong>API + batch</strong></td><td>Your technical team</td></tr>
+        <tr><td>“Deal won → notify the ERP”</td><td><strong>Workflow</strong></td><td>Your sales team, no code</td></tr>
+        <tr><td>“The ERP says it was paid”</td><td><strong>Webhook trigger</strong></td><td>One HTTP call, no credential</td></tr>
+        <tr><td>Incremental sync without losing anything</td><td><strong>API + webhooks</strong></td><td>Your technical team</td></tr>
+      </table>
+    </div>
+
+    <h3>With workflows, no code on the Hapee side</h3>
+
+    <p>Inside Hapee, in the workflow builder, there are two pieces that talk to your system:</p>
+
+    <ul>
+      <li><strong>“Outgoing webhook” node</strong> — placed after the step you care about
+      (for example, “the deal moved to Won”) and makes a <code>POST</code> to your URL. You configure
+      the URL, method, JSON body with contact variables, headers and a secret for signing.</li>
+      <li><strong>“Webhook received” trigger</strong> — gives you a URL that your system
+      <code>POST</code>s to in order to start the workflow. <strong>It needs no credential</strong>: the
+      token in the URL itself is enough.</li>
+    </ul>
+
+    <p>It is the fastest way to get started: the person who already uses Hapee builds it in an afternoon,
+    without waiting on anyone.</p>
+
+    <div class="dv-aviso ojo">
+      <p><strong>⚠️ A 4xx from your side does NOT stop the workflow.</strong> The engine only retries when your
+      system responds <strong>5xx</strong>. If it responds <code>401</code> because the token is wrong, or
+      <code>400</code> because it doesn't like the body, <strong>the workflow carries on as if it had
+      worked</strong> and nobody finds out.</p>
+      <p>The response code is stored in the <code>_http_status</code> variable. <strong>Always add an
+      “If / Else” node that checks it</strong> right after the outgoing webhook, and send the bad case to
+      an internal notification. Without that, the day your token expires, sales “were reported” and never
+      arrived.</p>
+      <p>In the workflow's execution log that step shows up marked as
+      <strong>“no effect”</strong>, with the HTTP code next to it — but only whoever goes in to
+      look sees that, while the “If / Else” node alerts you on its own.</p>
+    </div>
+
+    <h3>When the API is better than the workflow</h3>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th></th><th>Workflow</th><th>API + webhooks</th></tr>
+        <tr><td>Retries if your system is down</td><td>5 attempts, ~1 hour</td><td><strong>12 attempts, ~24 hours</strong></td></tr>
+        <tr><td>Queryable delivery log</td><td>In the workflow log</td><td><strong>Yes, with manual redelivery</strong></td></tr>
+        <tr><td>A 4xx from your side</td><td>Carries on as if nothing happened</td><td><strong>Retried and logged</strong></td></tr>
+        <tr><td>Signature</td><td>Optional secret you configure</td><td><strong>HMAC with timestamp</strong></td></tr>
+        <tr><td>Bulk load</td><td>No</td><td><strong>Up to 100 per call</strong></td></tr>
+        <tr><td>Who sets it up</td><td><strong>The sales team</strong></td><td>The technical team</td></tr>
+      </table>
+    </div>
+
+    <p><strong>Our recommendation:</strong> start with workflows to test the connection end to end,
+    and move to the API whatever can't be lost — collections, invoices and the initial load.</p>
+
+    <h2 id="verdad">Source of truth: who owns what</h2>
+
+    <p>You need to agree on this <strong>before</strong> syncing anything, because it decides what happens when both sides change the same data. The default proposal:</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Entity</th><th>Owner</th><th>Reason</th></tr>
+        <tr><td>Tax data (RUT, legal name, line of business)</td><td><strong>ERP</strong></td><td>It is what goes on the DTE</td></tr>
+        <tr><td>Products and list prices</td><td><strong>ERP</strong></td><td>It is where the catalog is maintained</td></tr>
+        <tr><td>Invoices, credit notes, payments</td><td><strong>ERP</strong></td><td>The SII only knows the ERP</td></tr>
+        <tr><td>Deal stage, sales activity</td><td><strong>Hapee</strong></td><td>It is where the sales team works</td></tr>
+        <tr><td>Contacts and their conversation history</td><td><strong>Hapee</strong></td><td>It is where they happen</td></tr>
+        <tr><td>Contact data (phone, email)</td><td>Whoever touched it last</td><td>Both are valid</td></tr>
+      </table>
+    </div>
+
+    <div class="dv-aviso ojo">
+      <p><strong>What can't happen is not deciding.</strong> Without this agreement, each side overwrites the other and the symptom shows up weeks later as “the data keeps getting erased”.</p>
+    </div>
+
+    <h2 id="flujo-a">Flow A — Initial load</h2>
+
+    <p>One time only, when connecting. Use <code>POST /{resource}/batch</code> with up to <strong>100 items</strong> per call. The batch <strong>is not aborted</strong> by a bad item: it takes the ones it can and tells you which failed.</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/companies/batch \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: initial-load-companies-batch-001" \
+  -d '{
+    "items": [
+      {"external_id": "ERP-CLI-4471", "rut": "76.543.210-K",
+       "nombre": "Comercial Andes SpA",
+       "email": "contacto@andes.cl"},
+      {"external_id": "ERP-CLI-4472", "rut": "77.111.222-3",
+       "nombre": "Distribuidora Sur Ltda"}
+    ]
+  }'</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "job_id": 812,
+  "total": 2, "succeeded": 2, "failed": 0,
+  "results": [
+    {"index": 0, "ok": true, "status": 201, "created": true, "data": {"id": 9001}},
+    {"index": 1, "ok": true, "status": 201, "created": true, "data": {"id": 9002}}
+  ]
+}</code></pre>
+    </div>
+
+    <h3>Three things that will save you a headache</h3>
+
+    <ul>
+      <li><strong>Always send <code>external_id</code></strong> with your ERP's id. It is what makes the load <strong>repeatable without duplicating</strong>: the second run updates instead of creating (<code>"created": false</code>).</li>
+      <li><strong>The <code>job_id</code> lets you re-read the result</strong> with <code>GET /jobs/{id}</code> if you lose the response. A 100-item <code>POST</code> whose result is lost to a network drop can't be blindly repeated; with the job, you look it up.</li>
+      <li><strong>Load companies before contacts</strong>, so you can link them.</li>
+    </ul>
+
+    <p>Recommended order: <code>companies</code> → <code>product-categories</code> and <code>products</code> → <code>contacts</code>.</p>
+
+    <h2 id="flujo-b">Flow B — Incremental sync</h2>
+
+    <h3>ERP → Hapee</h3>
+
+    <p>Use <code>upsert</code>, not <code>create</code>. Matching is the delicate part, and the precedence is <strong>deterministic</strong>:</p>
+
+    <div class="dv-code" data-lang="order">
+<pre><code>external_id  &gt;  rut  &gt;  email  &gt;  phone</code></pre>
+    </div>
+
+    <p><strong>One criterion at a time</strong> is tried, in order, and the first one that finds something wins. You can pin it with <code>match_by</code>:</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/contacts/upsert \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: sync-contact-CON-991-v3" \
+  -d '{
+    "match_by": "external_id",
+    "external_id": "ERP-CON-991",
+    "email": "jefe.compras@andes.cl",
+    "first_name": "Rodrigo", "last_name": "Pinto",
+    "phone": "+56912345678",
+    "custom_fields": {"payment_terms": "30 días"}
+  }'</code></pre>
+    </div>
+
+    <div class="dv-aviso ojo">
+      <p><strong><code>match_by</code> is exclusive.</strong> If you ask to match by <code>external_id</code> and there is no match, <strong>it creates</strong> — it does not fall back to email. This is on purpose: falling back would mean disobeying you exactly when you were explicit, and could overwrite someone your ERP considers a different person.</p>
+    </div>
+
+    <div class="dv-aviso ojo">
+      <p><strong>The RUT is validated.</strong> A wrong check digit returns <code>422</code> and nothing is saved. A badly saved RUT identifies nobody <em>and also</em> poisons all future deduplication: the next load with the correct RUT doesn't find it and creates a duplicate.</p>
+    </div>
+
+    <h3>Hapee → ERP</h3>
+
+    <p>Two options, same data. <strong>Option 1 — Webhooks</strong> (recommended if you can expose an <code>https</code> URL):</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/webhooks/endpoints \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://erp.yourcompany.com/hooks/hapee",
+    "description": "ERP production",
+    "events": ["deal.won", "quote.accepted", "contact.updated", "company.updated"]
+  }'</code></pre>
+    </div>
+
+    <p>The response includes the <code>secret</code> <strong>only once</strong>. See <a href="/en/docs/webhooks">Webhooks</a> for signature verification.</p>
+
+    <p><strong>Option 2 — <code>GET /events</code></strong> (if the ERP is installed on-premises, with no open port):</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl "https://beta.hapee.ai/api/v1/events?cursor=10432&amp;limit=100" \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL"</code></pre>
+    </div>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "data": [
+    {"id": "evt_10433", "type": "deal.won", "api_version": "v1",
+     "created_at": "2026-09-10T14:02:11Z", "subaccount_id": 63,
+     "data": {"id": 5521, "title": "Q4 restock",
+              "amount": "4200000", "currency": "CLP"}}
+  ],
+  "next_cursor": "10433",
+  "has_more": false
+}</code></pre>
+    </div>
+
+    <p><strong>Save the <code>next_cursor</code></strong> and pass it in the next call. Events come <strong>oldest to newest</strong> on purpose: you are catching up, and they must be processed in the order they happened. Retention: <strong>30 days</strong>.</p>
+
+    <h2 id="flujo-c">Flow C — Deal won → invoice</h2>
+
+    <p>The flow that justifies the integration.</p>
+
+    <div class="dv-code" data-lang="sequence">
+<pre><code>  Hapee                          Your ERP
+    │
+    │  The team marks the deal as won
+    │
+    ├──── deal.won ─────────────────►│
+    │     (webhook or /events)       │
+    │                                │  Creates the sales order
+    │                                │  Issues the DTE with the SII
+    │                                │
+    │◄─── PATCH /deals/{id} ─────────┤  Writes the folio back
+    │       invoice_number: "F-8842" │
+    │       payment_status: "pending"│
+    │                                │
+    │◄─── POST custom-objects/…  ────┤  Publishes the document as
+    │                                │  a record visible in the CRM
+    │
+    │  The sales rep SEES the invoice inside the customer record</code></pre>
+    </div>
+
+    <h3>Step 1 — You receive the event</h3>
+    <p><code>deal.won</code> carries the complete deal, with the same shape that <code>GET /deals/{id}</code> returns.</p>
+
+    <h3>Step 2 — You write back</h3>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X PATCH https://beta.hapee.ai/api/v1/deals/5521 \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: folio-F-8842" \
+  -d '{"custom_fields": {
+        "invoice_number": "F-8842",
+        "payment_status": "pending",
+        "due_date": "2026-10-10"}}'</code></pre>
+    </div>
+
+    <h3>Step 3 — You publish the document as a record</h3>
+    <p>That way the sales rep sees the invoice without leaving Hapee:</p>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code>curl -X POST https://beta.hapee.ai/api/v1/custom-objects/{object_id}/records \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "external_id": "ERP-DTE-8842",
+    "values": {
+      "folio": "F-8842", "tipo_dte": "33",
+      "monto_neto": "3529412", "iva": "670588", "total": "4200000",
+      "moneda": "CLP", "fecha_emision": "2026-09-10",
+      "estado": "emitida",
+      "url_pdf": "https://erp.yourcompany.com/dte/8842.pdf"
+    }
+  }'</code></pre>
+    </div>
+
+    <h2 id="flujo-d">Flow D — Collections</h2>
+
+    <div class="dv-code" data-lang="bash">
+<pre><code># 1. The ERP reports that the document is overdue and unpaid
+curl -X PATCH https://beta.hapee.ai/api/v1/deals/5521 \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -d '{"custom_fields": {"payment_status": "overdue", "amount_paid": "0"}}'
+
+# 2. The contact is tagged
+curl -X POST https://beta.hapee.ai/api/v1/contacts/8821/tags \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -d '{"tag": "cobranza-vencida"}'
+
+# 3. The contact is enrolled in the collections workflow
+curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
+  -H "Authorization: Bearer hp_test_YOUR_CREDENTIAL" \
+  -d '{"contacto_id": 8821}'</code></pre>
+    </div>
+
+    <p>From there, Hapee takes over: the reminders, WhatsApp, email. When the customer pays, the ERP closes the loop with <code>payment_status: "paid"</code> and the tag is removed.</p>
+
+    <h2 id="mapeo">Field mapping</h2>
+
+    <p>A template to fill in with your team. The Hapee fields are the ones the API exposes today.</p>
+
+    <h3>Company / Customer</h3>
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Your ERP</th><th>Hapee</th><th>Notes</th></tr>
+        <tr><td><em>(internal id)</em></td><td><code>external_id</code></td><td><strong>Unique per subaccount.</strong> It is the sync key</td></tr>
+        <tr><td>RUT</td><td><code>rut</code></td><td>The check digit is validated. Stored as <code>12345678-K</code></td></tr>
+        <tr><td>Legal name</td><td><code>razon_social</code></td><td></td></tr>
+        <tr><td>Trade name</td><td><code>nombre</code></td><td>Required on create</td></tr>
+        <tr><td>Line of business</td><td><code>custom_fields.giro</code></td><td></td></tr>
+        <tr><td>Billing email</td><td><code>custom_fields.billing_email</code></td><td>Different from <code>email</code></td></tr>
+        <tr><td>Payment terms</td><td><code>custom_fields.payment_terms</code></td><td></td></tr>
+        <tr><td>Address</td><td><code>direccion</code>, <code>ciudad</code>, <code>region</code></td><td></td></tr>
+      </table>
+    </div>
+
+    <h3>Contact / Person</h3>
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Your ERP</th><th>Hapee</th><th>Notes</th></tr>
+        <tr><td><em>(internal id)</em></td><td><code>external_id</code></td><td>Unique per subaccount</td></tr>
+        <tr><td>RUT</td><td><code>rut</code></td><td>Optional; <strong>can repeat</strong> across contacts</td></tr>
+        <tr><td>First name / Last name</td><td><code>first_name</code> / <code>last_name</code></td><td></td></tr>
+        <tr><td>Email</td><td><code>email</code></td><td>Lowercase</td></tr>
+        <tr><td>Phone</td><td><code>phone</code></td><td><strong>E.164</strong>: <code>+56912345678</code></td></tr>
+        <tr><td>Company</td><td><code>empresa_id</code></td><td>The Hapee id, not your ERP's</td></tr>
+      </table>
+    </div>
+
+    <h3>Deal / Sales order</h3>
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Your ERP</th><th>Hapee</th><th>Notes</th></tr>
+        <tr><td>Sales order no.</td><td><code>external_id</code></td><td></td></tr>
+        <tr><td>DTE folio</td><td><code>custom_fields.invoice_number</code></td><td></td></tr>
+        <tr><td>Payment status</td><td><code>custom_fields.payment_status</code></td><td><code>pending</code> / <code>paid</code> / <code>overdue</code></td></tr>
+        <tr><td>Amount paid</td><td><code>custom_fields.amount_paid</code></td><td>Decimal string</td></tr>
+        <tr><td>Due date</td><td><code>custom_fields.due_date</code></td><td><code>YYYY-MM-DD</code></td></tr>
+        <tr><td>Amount</td><td><code>amount</code> + <code>currency</code></td><td><strong>Decimal string</strong>, not a number</td></tr>
+      </table>
+    </div>
+
+    <h2 id="checklist">Production go-live checklist</h2>
+
+    <p>Before swapping <code>hp_test_</code> for <code>hp_live_</code>:</p>
+
+    <ul>
+      <li><code>GET /me</code> responds and shows the correct subaccount</li>
+      <li>The initial load ran <strong>twice</strong> in the sandbox and duplicated nothing</li>
+      <li>Every record has an <code>external_id</code> with your ERP's id</li>
+      <li>The RUTs pass validation (no <code>422</code> in the batch)</li>
+      <li>The webhook endpoint <strong>verifies the signature</strong> and rejects an invalid one</li>
+      <li>The receiver <strong>deduplicates by the event <code>id</code></strong> (order is not guaranteed and a delivery can repeat)</li>
+      <li>Every write sends <code>Idempotency-Key</code></li>
+      <li>A retry with the same key was tested and <strong>did not</strong> duplicate</li>
+      <li>The complete Flow C works end to end in the sandbox</li>
+      <li>The <strong>source of truth</strong> per entity is agreed</li>
+      <li>There is a place where the ERP logs API errors, with the response's <code>request_id</code></li>
+      <li>If the ERP has a fixed IP, it is loaded into the credential's <strong>allowlist</strong></li>
+    </ul>
+
+    <h3>Switching to production</h3>
+    <ol>
+      <li>Ask the agency for an <code>hp_live_</code> credential for the real subaccount</li>
+      <li>Change the credential and the webhook URL</li>
+      <li>Run the initial load <strong>once</strong></li>
+      <li>Check with <code>GET /events</code> that events are arriving</li>
+    </ol>
+
+    <p><strong>Nothing else needs to change.</strong> The sandbox and production speak the same API.</p>
+
+    <h2 id="errores">Common errors</h2>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Code</th><th>What happened</th><th>What to do</th></tr>
+        <tr><td><code>401 invalid_key</code></td><td>The credential doesn't exist or was revoked</td><td>Request a new one</td></tr>
+        <tr><td><code>403 ip_no_permitida</code></td><td>Your IP is not on the allowlist</td><td>Ask for it to be added</td></tr>
+        <tr><td><code>403 no_es_sandbox</code></td><td><code>hp_test_</code> credential on a real subaccount</td><td>Use <code>hp_live_</code></td></tr>
+        <tr><td><code>404 not_found</code></td><td>It doesn't exist, <strong>or</strong> it isn't in your subaccount</td><td>Check the id and the credential</td></tr>
+        <tr><td><code>409 idempotency_key_reusada</code></td><td>Same key, different body</td><td>Use a new key</td></tr>
+        <tr><td><code>422 validation_error</code></td><td>Look at <code>details[]</code>: it names the field and the problem</td><td></td></tr>
+        <tr><td><code>429</code></td><td>You went over the limit</td><td>Wait as long as <code>Retry-After</code> says</td></tr>
+      </table>
+    </div>
+
+    <div class="dv-aviso">
+      <p><strong>Always save the <code>X-Request-Id</code> from the response.</strong> It lets us find your exact call in our logs. Write to us at <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/privacy-policy.html">Privacy policy</a> · <a href="/terms.html">Terms</a></p>
+  <p>API v1 · Documentation last updated September 10, 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Hapee MCP Connector — Use Hapee from Your AI Assistant</title>
+<meta name="description" content="Connect Claude, ChatGPT, Grok Bot or another MCP-compatible assistant to your Hapee account. You sign in with your own user and the assistant works with exactly your permissions.">
+<link rel="canonical" href="https://hapee.ai/en/docs/mcp">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/docs/mcp">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/docs/mcp">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/docs/mcp">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/docs/mcp">
+<meta property="og:title" content="Hapee MCP Connector">
+<meta property="og:description" content="Use Hapee from your AI assistant, with your own user and your permissions. No shared keys.">
+<meta property="og:url" content="https://hapee.ai/en/docs/mcp">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://hapee.ai/img/hapee-mcp-icon.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Hapee icon: a white h on an orange-to-burgundy gradient">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hapee.ai/img/hapee-mcp-icon-512.png">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/docs/docs.css">
+</head>
+<body>
+
+<nav class="dv-nav">
+  <div class="dv-nav-inner">
+    <a href="/en/"><img src="/img/logo-hapee.png" alt="Hapee" class="dv-logo"></a>
+    <span class="dv-etiqueta">API v1</span>
+    <div class="dv-nav-links">
+      <a href="/en/docs/">Home</a>
+      <a href="/en/docs/empezar">Get started</a>
+      <a href="/en/docs/erp">Integrate an ERP</a>
+      <a href="/en/docs/webhooks">Webhooks</a>
+      <a href="/en/docs/mcp" class="activo">MCP connector</a>
+      <a href="/en/docs/referencia">Reference</a>
+      <a href="/en/">← Back to site</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dv-wrap">
+
+  <aside class="dv-lateral">
+    <div class="dv-lateral-caja">
+      <h4>On this page</h4>
+      <a href="#que-es">What it is</a>
+      <a href="#url">The connector URL</a>
+      <a href="#conectar">Connect it to your assistant</a>
+      <a href="#login">Sign-in and consent</a>
+      <a href="#permisos">What it can do</a>
+      <a href="#subcuenta">Agencies and subaccounts</a>
+      <a href="#herramientas">Tools</a>
+      <a href="#escritura">Tools that modify data</a>
+      <a href="#duracion">How long the connection lasts</a>
+      <a href="#desconectar">Disconnecting it</a>
+      <a href="#limites">Limits</a>
+      <a href="#tecnico">Technical details</a>
+      <a href="#privacidad">Privacy</a>
+      <h4>See also</h4>
+      <a href="/en/docs/">Hapee API</a>
+      <a href="/privacy-policy.html#conector-mcp">Privacy policy</a>
+    </div>
+  </aside>
+
+  <main class="dv-main">
+
+    <div class="dv-titulo-icono">
+      <img src="/img/hapee-mcp-icon-256.png" srcset="/img/hapee-mcp-icon-256.png 1x, /img/hapee-mcp-icon-512.png 2x" width="64" height="64" alt="Hapee connector icon">
+      <h1>Hapee MCP connector</h1>
+    </div>
+    <p class="dv-bajada">Use Hapee from your AI assistant. You sign in with your own user and the assistant works with exactly your permissions: it sees what you see and changes only what you can change.</p>
+
+    <h2 id="que-es">What it is</h2>
+
+    <p>The connector is an <strong>MCP</strong> server (<em>Model Context Protocol</em>, the open standard AI assistants use to connect to external tools). Once you add it to a compatible assistant —Claude, ChatGPT, Grok Bot or any other that accepts remote MCP connectors— you can ask it in plain language things like “show me this week's open deals,” “create a contact with this data” or “book an appointment for tomorrow at 10.”</p>
+
+    <p>The connector does not store your Hapee data: each tool is a call to the <a href="/en/docs/">Hapee API v1</a> made <strong>with your own session</strong>. There are no shared keys or secret URLs: each person connects with their own Hapee user.</p>
+
+    <h2 id="url">The connector URL</h2>
+
+    <div class="dv-code" data-lang="url" id="url-conector">
+<pre><code>https://mcp.hapee.ai/mcp</code></pre>
+    </div>
+
+    <p>It is the only address you need. It carries no credential: sign-in happens afterwards, on a Hapee screen.</p>
+
+    <div class="dv-aviso">
+      <p><strong>This is the official address since October 12, 2026.</strong> If you connected the connector with the previous address (at <code>mcp-oauth.hapee.ai</code>), add it again with this one. If you were using a personal URL ending in <code>/c/…</code>, that is the previous connection method: replace it with this one.</p>
+    </div>
+
+    <div class="dv-aviso">
+      <p><strong>Requires your plan to include the connection with AI assistants</strong> (available from the Pro plan). If your plan doesn't include it, the Hapee screen tells you when you connect and the connector does not operate.</p>
+    </div>
+
+    <h2 id="conectar">Connect it to your assistant</h2>
+
+    <p>Each assistant puts the option in a different place in its settings, and those menus change often, so here are the generic steps. The procedure is the same in all of them:</p>
+
+    <ol>
+      <li>In your assistant's settings, <strong>add a custom (or remote) MCP connector</strong> with the URL above. If it asks for a name, use “Hapee.”</li>
+      <li>If it asks for the authentication type, choose <strong>OAuth</strong>. You don't need to enter any <em>client ID</em> or secret: the assistant registers itself.</li>
+      <li>The assistant opens a Hapee window. <strong>Sign in with your user</strong> and approve the connection (see the next section).</li>
+      <li>You return to the assistant with the connector active. Ask it, for example, “who am I in Hapee?” to check which user and subaccount you are connected as.</li>
+    </ol>
+
+    <ul>
+      <li><strong>Claude</strong>: add a custom connector with the connector URL.</li>
+      <li><strong>ChatGPT</strong>: add a remote MCP connector with the connector URL.</li>
+      <li><strong>Grok Bot</strong>: add a remote MCP connector with the connector URL.</li>
+    </ul>
+
+    <p>If your organization manages connectors centrally, an administrator may need to add it first.</p>
+
+    <h2 id="login">Sign-in and consent</h2>
+
+    <p>The window the assistant opens is the one at <strong>beta.hapee.ai</strong>, the same one you use to enter Hapee every day. You sign in there as usual:</p>
+
+    <ul>
+      <li>with your <strong>email and password</strong>, plus your <strong>two-step verification</strong> if you have it enabled, or</li>
+      <li>with <strong>Google</strong>, if that is how you normally sign in.</li>
+    </ul>
+
+    <p>The assistant <strong>never sees your password</strong>: it only receives a temporary permission that Hapee issues when you approve it. After signing in, the consent screen appears, showing which application is requesting access, which address it will send you back to, which account and agency you are connecting with, and what it will be able to do. There you can <strong>remove the write permission</strong> if you want the assistant to only be able to read.</p>
+
+    <h2 id="permisos">What it can do</h2>
+
+    <p>The connection requests these permissions (<em>scopes</em>):</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Permission</th><th>What it allows</th></tr>
+        <tr><td><code>hapee:read</code></td><td>Read the information you can see in Hapee. It is always included: without it the connection is useless.</td></tr>
+        <tr><td><code>hapee:write</code></td><td>Also create, edit and delete wherever your profile allows. If you remove it on the consent screen, the tools that modify data don't appear and the API rejects any write.</td></tr>
+        <tr><td><code>offline_access</code></td><td>Keep the connection alive without you having to sign in every hour (see <a href="#duracion">how long the connection lasts</a>). Today Hapee issues the renewal permission on every approved connection, whether or not the application requests it.</td></tr>
+      </table>
+    </div>
+
+    <p><strong>Permissions only subtract, never add.</strong> Above the <em>scopes</em>, your real Hapee user rules: your role, your permission profile, the active modules and, if your profile is “assigned only,” just what is assigned to you. If your administrator changes your profile's permissions, they apply from the next call; if they assign you another role or profile, the connection is disconnected and you have to connect again. No connection can do anything you couldn't do from the screen.</p>
+
+    <p>The list of tools the assistant sees is also built <strong>for you</strong>: only the ones your permissions allow appear, and write tools only if you approved <code>hapee:write</code>.</p>
+
+    <h2 id="subcuenta">Agencies and subaccounts</h2>
+
+    <p>The connector works on <strong>one subaccount at a time</strong>: the business you operate in Hapee.</p>
+
+    <ul>
+      <li><strong>Subaccount user</strong> (customer): the connection is tied to your subaccount. If you have access to more than one, you choose which on the consent screen; to change it, connect again.</li>
+      <li><strong>Agency team</strong> (owner, administrator or team member): you choose the subaccount in each conversation with the <code>select_subaccount</code> tool. With no arguments it lists the subaccounts you can see; with an id it pins that subaccount for the rest of the conversation. It only accepts subaccounts your user can already see in Hapee. The agency's internal administration (subaccounts, team, internal tasks) is not in this connector.</li>
+      <li>Platform administration access does <strong>not</strong> extend to the connector.</li>
+    </ul>
+
+    <h2 id="herramientas">Tools</h2>
+
+    <p>The connector offers <strong>240 tools</strong> on top of the Hapee API: <strong>85 read-only and 155 that modify data</strong>. How many you see depends on your permissions. Their names are in English, as the assistant-directory standard requires; your assistant replies and writes content in your language.</p>
+
+    <div class="dv-tabla-wrap">
+      <table id="tabla-herramientas">
+        <tr><th>Family</th><th>Total</th><th>Read-only</th><th>Modify</th></tr>
+        <tr><td>CRM: contacts, companies, deals, sales pipelines, stages, tags and tasks</td><td>62</td><td>19</td><td>43</td></tr>
+        <tr><td>Websites, landing pages, funnels, domains, images and blog</td><td>52</td><td>18</td><td>34</td></tr>
+        <tr><td>Products, categories and quotes</td><td>25</td><td>8</td><td>17</td></tr>
+        <tr><td>Automations (workflows) and AI agents</td><td>24</td><td>8</td><td>16</td></tr>
+        <tr><td>Email marketing: campaigns, templates and audiences</td><td>22</td><td>10</td><td>12</td></tr>
+        <tr><td>Forms, properties and custom objects</td><td>22</td><td>8</td><td>14</td></tr>
+        <tr><td>Calendars and appointments</td><td>15</td><td>5</td><td>10</td></tr>
+        <tr><td>Conversations and WhatsApp</td><td>13</td><td>4</td><td>9</td></tr>
+        <tr><td>Reports</td><td>2</td><td>2</td><td>0</td></tr>
+        <tr><td>Identity (<code>whoami</code>, <code>select_subaccount</code>) and design catalog</td><td>3</td><td>3</td><td>0</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>240</strong></td><td><strong>85</strong></td><td><strong>155</strong></td></tr>
+      </table>
+    </div>
+
+    <h2 id="escritura">Tools that modify data</h2>
+
+    <p>Each tool declares its nature with the standard MCP annotations, so your assistant can ask for your confirmation before running something:</p>
+
+    <ul>
+      <li><strong>Read-only</strong> (<code>readOnlyHint: true</code>): the 85 read tools. They change nothing (two of them, validating a workflow and counting an audience, use POST but save nothing).</li>
+      <li><strong>Create or add</strong> (<code>readOnlyHint: false</code>, <code>destructiveHint: false</code>): 48 tools, such as creating a note, a task, or a landing page or campaign draft.</li>
+      <li><strong>Edit, delete or act outward</strong> (<code>readOnlyHint: false</code>, <code>destructiveHint: true</code>): 107 tools that change or remove something that already exists, publish or send.</li>
+      <li><strong>Reach outside Hapee</strong> (<code>openWorldHint: true</code>): 38 of them, such as sending a message, a quote or an email campaign, publishing a page or pointing a domain. The connector tells your assistant to ask for your confirmation before using them.</li>
+    </ul>
+
+    <div class="dv-aviso ojo">
+      <p><strong>What the assistant does with <code>hapee:write</code> is done in your real account.</strong> A sent message reaches the contact and a deleted record is deleted. Review what your assistant proposes before confirming it, and if you only need to read, connect it without the write permission.</p>
+    </div>
+
+    <h2 id="duracion">How long the connection lasts</h2>
+
+    <ul>
+      <li>The <strong>access permission</strong> the assistant uses lasts <strong>1 hour</strong>.</li>
+      <li>The assistant renews it on its own with a <strong>renewal permission</strong> that lasts <strong>30 days from its last use</strong> and changes on every renewal (the previous one stops working). If someone tried to reuse one that was already used, Hapee cuts the entire connection.</li>
+      <li>No matter what, <strong>90 days</strong> after you approved it the connection expires and you have to sign in again.</li>
+    </ul>
+
+    <h2 id="desconectar">Disconnecting it</h2>
+
+    <p>You have several ways to cut off access:</p>
+
+    <ul>
+      <li><strong>From Hapee</strong>: in your <strong>Profile</strong>, the “Connected AI assistants” section lists every assistant you connected, with its subaccount and last use; “Disconnect” cuts its access instantly.</li>
+      <li><strong>From your assistant</strong>: remove or disconnect the connector in its settings. If the assistant notifies Hapee when disconnecting, the connection is revoked right away; if not, it simply stops being used and expires on its own within the timeframes above.</li>
+      <li><strong>Changing your password or your two-step verification</strong>: automatically disconnects all your assistant connections.</li>
+      <li><strong>Changes to your user</strong>: if your administrator changes your role, permission profile, agency or subaccount, or deactivates your user, your connections disconnect on their own.</li>
+      <li><strong>The agency owner</strong> can revoke any connection of their agency from the Hapee API keys screen: they appear as “OAuth: &lt;application name&gt;.”</li>
+      <li>If you need help cutting off access, write to us at <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</li>
+    </ul>
+
+    <h2 id="limites">Limits</h2>
+
+    <ul>
+      <li>Each connection has the same limit as any API credential: <strong>100 calls per minute</strong>. If your assistant exceeds it, it gets a temporary error and just needs to wait a few seconds.</li>
+      <li>Automatic application registration is limited to <strong>20 registrations per hour</strong> from the same IP address.</li>
+      <li>Lists return up to 100 items per page, just like the API.</li>
+    </ul>
+
+    <h2 id="tecnico">Technical details</h2>
+
+    <p>For anyone integrating their own MCP client or reviewing the connector:</p>
+
+    <ul>
+      <li><strong>Transport</strong>: MCP over <em>Streamable HTTP</em> at the connector URL.</li>
+      <li><strong>Discovery</strong>: a request without a token receives <code>401</code> with <code>WWW-Authenticate: Bearer resource_metadata=…</code>, which points to <code>/.well-known/oauth-protected-resource</code> on the same host (RFC 9728).</li>
+      <li><strong>Authorization server</strong>: <code>https://beta.hapee.ai</code>, with its metadata at <code>/.well-known/oauth-authorization-server</code> (RFC 8414).</li>
+      <li><strong>OAuth 2.1</strong>: dynamic registration of public clients (RFC 7591), PKCE required with <code>S256</code> only, renewal-token rotation with reuse detection, revocation (RFC 7009) and resource-bound audience (RFC 8707). Redirect URIs must be <code>https</code>, or <code>http</code> only to the local machine.</li>
+      <li><strong>Sessions</strong>: each MCP session is tied to the person who opened it; a token from another person in the same session is rejected.</li>
+    </ul>
+
+    <h2 id="privacidad">Privacy</h2>
+
+    <p>The connector only accesses what your own permissions let you see, and the MCP server does not store your Hapee data: what it reads passes to your assistant and is subject to that assistant's privacy policy. The detail of what is stored, where and for how long is in the <a href="/privacy-policy.html#conector-mcp">“MCP connector for AI assistants” section of our privacy policy</a>.</p>
+
+    <div class="dv-aviso">
+      <p>Questions, or something that doesn't work as described here? Write to us at <a href="mailto:info@hapee.ai">info@hapee.ai</a>.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer class="dv-footer">
+  <p>Hapee — WM Digital SpA · <a href="/privacy-policy.html">Privacy policy</a> · <a href="/terms.html">Terms</a></p>
+  <p>MCP connector · Documentation last updated October 12, 2026</p>
+</footer>
+
+<script src="/docs/docs.js" defer></script>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

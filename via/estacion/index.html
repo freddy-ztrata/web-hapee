@@ -9,6 +9,10 @@
 <meta name="theme-color" content="#0B0A0D">
 <meta property="og:type" content="website"><meta property="og:title" content="Vía by Hapee · Estación Universidad de Chile"><meta property="og:description" content="Una estación de Metro donde los agentes de Hapee acompañan a cada pasajero."><meta property="og:url" content="https://hapee.ai/via/estacion/"><meta property="og:image" content="https://hapee.ai/via/estacion/assets/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="es_CL"><meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://hapee.ai/via/estacion/">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/via/estacion/">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/via/estacion/">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/via/estacion/">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/via/estacion/">
 <link rel="icon" href="assets/brand/favicon.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
@@ -2524,5 +2528,6 @@ window.__diag=function(){return {x:+P.x.toFixed(2),z:+P.z.toFixed(2),y:+P.y.toFi
  personas:PERS.filter(p=>p.on).length,trenes:TRENES.map(t=>t.fase+'@'+t.x.toFixed(0)).join(','),cont:CONT.on,esc:ESC.fase,ts:+tsEsc.toFixed(1),estados:bots.map(b=>b.ag.id+':'+b.estado+':'+b.animName+'@'+b.m.position.x.toFixed(1)+','+b.m.position.y.toFixed(1)+','+b.m.position.z.toFixed(1)+' yaw '+b.m.rotation.y.toFixed(2)+'/'+b.yawObj.toFixed(2)).join(' | '),
  est:estN(),inter:INTER.visible,tunv:TUNV.visible,viaje:VIAJE.on?VIAJE.fase+'/'+(VIAJE.tr?VIAJE.tr.fase:'')+'@'+VIAJE.lx.toFixed(1)+','+VIAJE.lz.toFixed(2):'',wa:WA.on,draw:renderer.info.render.calls,tri:renderer.info.render.triangles,tex:renderer.info.memory.textures,geo:renderer.info.memory.geometries,horneado:window.__horneado};};
 </script>
+<script src="/js/lang.js" defer></script>
 </body>
 </html>

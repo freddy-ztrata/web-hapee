@@ -14,6 +14,14 @@
 (function () {
   'use strict';
 
+  // Textos del botón según el idioma de la página (/docs, /en/docs, /pt/docs).
+  var TEXTOS = {
+    es: { codigo: 'código', copiar: 'Copiar', copiado: 'Copiado', error: 'No se pudo' },
+    en: { codigo: 'code', copiar: 'Copy', copiado: 'Copied', error: 'Failed' },
+    pt: { codigo: 'código', copiar: 'Copiar', copiado: 'Copiado', error: 'Falhou' }
+  };
+  var T = TEXTOS[(document.documentElement.lang || 'es').slice(0, 2).toLowerCase()] || TEXTOS.es;
+
   function copiar(texto) {
     return navigator.clipboard.writeText(texto);
   }
@@ -34,7 +42,7 @@
         cab.className = 'dv-code-cab';
         var lang = document.createElement('span');
         lang.className = 'dv-code-lang';
-        lang.textContent = bloque.getAttribute('data-lang') || 'código';
+        lang.textContent = bloque.getAttribute('data-lang') || T.codigo;
         cab.appendChild(lang);
         bloque.insertBefore(cab, pre);
       }
@@ -44,17 +52,17 @@
       var boton = document.createElement('button');
       boton.className = 'dv-copiar';
       boton.type = 'button';
-      boton.textContent = 'Copiar';
+      boton.textContent = T.copiar;
       boton.addEventListener('click', function () {
         copiar(pre.innerText).then(function () {
-          boton.textContent = 'Copiado';
-          setTimeout(function () { boton.textContent = 'Copiar'; }, 1600);
+          boton.textContent = T.copiado;
+          setTimeout(function () { boton.textContent = T.copiar; }, 1600);
         }).catch(function () {
           // Si el navegador lo niega (permisos, foco), se dice. Dejar el
           // botón como si hubiera funcionado haría que el usuario pegue lo
           // que tenía antes en el portapapeles sin darse cuenta.
-          boton.textContent = 'No se pudo';
-          setTimeout(function () { boton.textContent = 'Copiar'; }, 1600);
+          boton.textContent = T.error;
+          setTimeout(function () { boton.textContent = T.copiar; }, 1600);
         });
       });
       cab.appendChild(boton);

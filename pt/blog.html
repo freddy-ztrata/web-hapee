@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Hapee News · Tendências em IA, automação e produto</title>
+<meta name="description" content="Hapee News: novidades de produto, IA conversacional, agentes com voz clonada, integrações (MCP Claude, ChatGPT 5.5, ElevenLabs), eventos e parcerias.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://hapee.ai/pt/blog.html">
+<link rel="alternate" hreflang="es" href="https://hapee.ai/blog.html">
+<link rel="alternate" hreflang="en" href="https://hapee.ai/en/blog.html">
+<link rel="alternate" hreflang="pt" href="https://hapee.ai/pt/blog.html">
+<link rel="alternate" hreflang="x-default" href="https://hapee.ai/en/blog.html">
+<meta name="theme-color" content="#FA5000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hapee News · Edição Nº 01">
+<meta property="og:description" content="Produto, IA e eventos pela equipe da Hapee. A plataforma all-in-one de agentes de IA.">
+<meta property="og:image" content="https://hapee.ai/img/og-hapee-2026.jpg">
+<meta property="og:url" content="https://hapee.ai/pt/blog.html">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --accent:#FA5000;
+  --accent-alt:#CD2349;
+  --bg:#FFFFFF;
+  --bg-alt:#F5F3F0;
+  --bg-alt2:#F8FAFC;
+  --text:#4a4a4a;
+  --text-2:#777e8f;
+  --heading:#1a1a1a;
+  --paper:#FAFAFA;
+  --pill:100px;
+  --tr:.3s cubic-bezier(.4,0,.2,1);
+  --fd:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fb:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --fm:'Plus Jakarta Sans',-apple-system,sans-serif;
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow-md:0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.13);
+  --card-bg:#FFFFFF;
+  --card-border:rgba(0,0,0,.09);
+  --line:rgba(0,0,0,.06);
+  --nav-scrolled-bg:rgba(255,255,255,.97);
+}
+
+html.dark{
+  --bg:#080808;
+  --bg-alt:#0d0d0d;
+  --bg-alt2:#111111;
+  --text:#b0a89e;
+  --text-2:#8b8078;
+  --heading:#f5f0eb;
+  --paper:#0f0f0f;
+  --card-bg:#0f0f0f;
+  --card-border:rgba(250,80,0,.12);
+  --line:rgba(250,80,0,.08);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.5);
+  --shadow-md:0 8px 32px rgba(0,0,0,.6);
+  --shadow-lg:0 20px 60px rgba(250,80,0,.08),0 20px 60px rgba(0,0,0,.6);
+  --nav-scrolled-bg:rgba(8,8,8,.97);
+}
+html.dark body{background:#080808;position:relative}
+html.dark body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 15%,rgba(250,80,0,.22),transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 30%,rgba(205,35,73,.16),transparent 45%),
+    radial-gradient(ellipse 70% 45% at 50% 60%,rgba(250,80,0,.14),transparent 50%),
+    radial-gradient(ellipse 75% 45% at 85% 90%,rgba(250,80,0,.2),transparent 50%);
+}
+html.dark main,html.dark .nav,html.dark .footer{position:relative;z-index:1}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:.95rem;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--fd);color:var(--heading);line-height:1.05;letter-spacing:-.5px}
+.ctn{max-width:1280px;margin:0 auto;padding:0 24px}
+.tg{background:linear-gradient(135deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:16px 0;transition:var(--tr);background:transparent}
+.nav.sc{background:var(--nav-scrolled-bg);backdrop-filter:blur(20px);padding:10px 0;border-bottom:1px solid var(--line);box-shadow:0 2px 20px rgba(0,0,0,.08)}
+.nav .ctn{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-logo{height:30px;transition:var(--tr)}
+.nlinks{display:flex;align-items:center;gap:18px}
+.nlinks a{font-size:.85rem;font-weight:500;color:var(--text-2);transition:var(--tr);white-space:nowrap}
+.nlinks a:hover,.nlinks a.on{color:var(--accent)}
+.nlinks a.nav-game{color:var(--accent);font-weight:700;padding:5px 10px;border:1px solid rgba(250,80,0,.35);border-radius:6px;background:rgba(250,80,0,.06);font-size:.8rem}
+.nlinks a.nav-game:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nctas{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fb);font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:var(--pill);cursor:pointer;transition:var(--tr);border:2px solid transparent}
+.bs{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff}
+.bs:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(250,80,0,.35)}
+.bo{background:transparent;color:var(--heading);border-color:rgba(26,26,26,.2)}
+html.dark .bo{border-color:rgba(250,80,0,.2)}
+.bo:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.dark-toggle{width:36px;height:36px;border-radius:50%;background:var(--bg-alt);border:1px solid var(--card-border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0;color:var(--text-2)}
+html.dark .dark-toggle{background:#111;border-color:rgba(250,80,0,.1)}
+.dark-toggle:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.08)}
+.dark-toggle svg{width:16px;height:16px}
+.icon-sun{display:none}.icon-moon{display:block}
+html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
+.mbtn{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mbtn span{display:block;width:22px;height:2px;background:var(--heading);margin:5px 0;border-radius:2px}
+@media(max-width:1100px){.nlinks,.nctas{display:none}.mbtn{display:block}}
+
+/* ============================================
+   MASTHEAD · WIRE-FEED EDITORIAL · ROBOT INTERACTIVO
+   Brutalist title + interactive robot stage + breaking ticker
+   ============================================ */
+.masthead{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg)}
+.mast-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:auto;display:block}
+.masthead .ctn{position:relative;z-index:2;padding:5.5rem 24px 0;max-width:1480px;margin:0 auto}
+
+/* === Broadcast bar (top): live + counters + location === */
+.mast-broadcast{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 0;margin-bottom:3rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-family:var(--fm);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2);flex-wrap:wrap}
+
+/* Pre-header tagline · simple + Hapee voice */
+.mast-preheader{display:inline-flex;align-items:center;gap:.7rem;padding:10px 0;margin-bottom:2.4rem;border-bottom:1px solid var(--line);width:100%}
+.mast-preheader .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:mastPulse 1.8s ease-in-out infinite}
+.mast-preheader .ph-text{font-family:var(--fb);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);font-weight:700}
+.bx-live{display:inline-flex;align-items:center;gap:.6rem;color:#ff2828;font-weight:800;letter-spacing:.26em;font-size:.7rem}
+.bx-live .dot{width:9px;height:9px;border-radius:50%;background:#ff2828;box-shadow:0 0 0 0 rgba(255,40,40,.55);animation:bxLivePulse 1.3s ease-out infinite}
+@keyframes bxLivePulse{0%{box-shadow:0 0 0 0 rgba(255,40,40,.6)}100%{box-shadow:0 0 0 14px rgba(255,40,40,0)}}
+.bx-counters{display:flex;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.bx-counter{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
+.bx-counter .num{font-family:var(--fd);font-size:1.35rem;letter-spacing:-.02em;color:var(--heading);line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+.bx-counter .lbl{font-size:.54rem;color:var(--text-2);letter-spacing:.22em;font-weight:600;opacity:.75}
+.bx-loc{font-weight:600;color:var(--text-2);opacity:.8}
+
+/* === Hero grid === */
+.mast-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:start;position:relative;padding-bottom:3rem}
+
+/* === Brutalist title === */
+.mast-title{font-family:var(--fd);font-size:clamp(4.5rem,12vw,12rem);line-height:.92;font-weight:800;color:var(--heading);letter-spacing:-.035em;text-transform:uppercase;margin:0;padding:.05em 0 .15em;overflow:visible;position:relative}
+.mast-title .word{display:block;overflow:visible;position:relative}
+.mast-title .word.w2{margin-top:0;line-height:1.05;padding-bottom:.18em}
+.mast-title .word>span{display:inline-block;opacity:0;transform:translateY(48px);animation:mastReveal .95s cubic-bezier(.16,1,.3,1) forwards;position:relative}
+.mast-title .word.w2>span:not(.caret){animation-delay:.22s;padding-right:.06em}
+
+/* "News." italic gradient + drawing underline */
+.mast-title .em{font-family:var(--fs);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 55%,#ff8a3a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:.96em;letter-spacing:-.025em;vertical-align:baseline;text-transform:none;padding:0 .04em .12em 0;display:inline-block;line-height:1.05;position:relative}
+.mast-title .em::after{content:'';position:absolute;left:0;right:.04em;bottom:.05em;height:.06em;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-alt) 100%);transform-origin:left;transform:scaleX(0);animation:mastUnderline 1.1s 1.4s cubic-bezier(.85,0,.15,1) forwards;border-radius:.04em;opacity:.85}
+@keyframes mastUnderline{to{transform:scaleX(1)}}
+@keyframes mastReveal{to{opacity:1;transform:translateY(0)}}
+
+/* Blinking cursor caret */
+.mast-title .caret{display:inline-block;width:.07em;height:.78em;background:var(--accent);margin-left:.04em;vertical-align:-.05em;animation:mastCaret 1s steps(1) infinite,mastFade .4s 1.6s cubic-bezier(.16,1,.3,1) forwards;opacity:0;box-shadow:0 0 18px rgba(250,80,0,.6)}
+@keyframes mastCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+/* === Editorial decor: kicker + giant outline number === */
+.mast-kicker{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--fm);font-size:.7rem;letter-spacing:.32em;color:var(--accent);font-weight:700;text-transform:uppercase;margin-bottom:1.4rem;padding:.4rem .85rem;border:1px solid var(--accent);border-radius:999px;background:rgba(250,80,0,.04)}
+.mast-kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:mastPulse 1.8s ease-in-out infinite}
+@keyframes mastPulse{50%{opacity:.35;transform:scale(.65)}}
+.mast-issue-num{position:absolute;font-family:var(--fd);font-weight:800;font-size:clamp(10rem,22vw,22rem);line-height:.85;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-stroke:1.5px var(--accent);opacity:.13;pointer-events:none;z-index:0;right:-2%;top:-8%;animation:mastFloat 6s ease-in-out infinite alternate;user-select:none}
+@keyframes mastFloat{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-18px) rotate(0deg)}}
+.mast-edition{font-family:var(--fs);font-style:italic;font-size:1rem;color:var(--accent);margin-top:.1rem;opacity:0;animation:mastFade 1.1s 1.55s cubic-bezier(.16,1,.3,1) forwards;display:inline-flex;align-items:center;gap:.5rem}
+.mast-edition::before{content:'';width:24px;height:1px;background:var(--accent)}
+.mast-sub{margin-top:1.6rem;max-width:560px;color:var(--heading);font-size:1.15rem;line-height:1.55;font-weight:500;letter-spacing:-.005em;opacity:0;animation:mastFade .9s .75s cubic-bezier(.16,1,.3,1) forwards}
+.mast-sub strong{font-weight:700;color:var(--heading)}
+@keyframes mastFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.mast-cats{margin-top:1.5rem;display:flex;gap:.55rem;flex-wrap:wrap;opacity:0;animation:mastFade .9s .9s cubic-bezier(.16,1,.3,1) forwards}
+.cat-chip{font-family:var(--fm);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2);padding:6px 12px;border:1px solid var(--line);border-radius:var(--pill);transition:var(--tr);cursor:pointer;font-weight:600;background:transparent}
+.cat-chip:hover,.cat-chip.on{color:var(--accent);border-color:var(--accent);background:rgba(250,80,0,.06)}
+
+/* === MOCKUP · Hapee interfaz + featured story === */
+.mast-art-wrap{position:relative;z-index:3;margin-left:-2%}
+.mockup{position:relative;height:580px;border-radius:14px;background:#0a0a0e;border:1px solid var(--line);overflow:hidden;box-shadow:0 50px 100px -40px rgba(250,80,0,.4),0 0 0 1px var(--line),0 0 0 1px rgba(255,255,255,.02) inset;opacity:0;transform:translateY(40px);animation:mastFade 1.1s .4s cubic-bezier(.16,1,.3,1) forwards;font-family:var(--fb);display:flex;flex-direction:column}
+html:not(.dark) .mockup{background:#fafafa;border-color:rgba(0,0,0,.08)}
+
+/* Browser bar */
+.mk-bar{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--line);flex-shrink:0}
+html:not(.dark) .mk-bar{background:#f3f3f5}
+.mk-dots{display:inline-flex;gap:6px}
+.mk-dots span{width:11px;height:11px;border-radius:50%;background:#444}
+.mk-dots span:nth-child(1){background:#ff5f57}
+.mk-dots span:nth-child(2){background:#febc2e}
+.mk-dots span:nth-child(3){background:#28c840}
+.mk-url{flex:1;display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.7rem;color:var(--text-2);padding:5px 10px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:6px;font-weight:600;letter-spacing:.05em}
+html:not(.dark) .mk-url{background:#fff}
+.mk-url::before{content:'🔒';font-size:.65em;opacity:.6}
+.mk-url .live{margin-left:auto;color:#22c55e;font-size:.6rem;letter-spacing:.18em;font-weight:800}
+.mk-url .live::before{content:'●';margin-right:.3em;animation:bxLivePulse 1.3s ease-out infinite;display:inline-block}
+
+/* Inner layout: sidebar + main */
+.mk-body{flex:1;display:grid;grid-template-columns:200px 1fr;min-height:0;overflow:hidden}
+.mk-side{background:rgba(255,255,255,.02);border-right:1px solid var(--line);padding:14px 0;overflow:hidden;display:flex;flex-direction:column}
+html:not(.dark) .mk-side{background:#f8f8fa}
+.mk-side-title{padding:0 14px;font-family:var(--fm);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--text-2);font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:.4rem}
+.mk-side-title::before{content:'●';color:#ff2828;font-size:.7em;animation:bxLivePulse 1.3s ease-out infinite}
+.mk-side ul{list-style:none;margin:0;padding:0}
+.mk-side li{padding:9px 14px;font-size:.78rem;color:var(--text);cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;gap:.5rem;line-height:1.25;transition:background .15s,border-color .15s,color .15s}
+.mk-side li:hover{background:rgba(250,80,0,.06)}
+.mk-side li.active{background:rgba(250,80,0,.1);border-left-color:var(--accent);color:var(--heading);font-weight:600}
+.mk-side li .mk-li-tag{font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;font-weight:800;text-transform:uppercase;padding:2px 6px;border-radius:3px;flex-shrink:0;background:var(--accent);color:#fff}
+.mk-side li.active .mk-li-tag{background:#ff2828}
+.mk-side li .mk-li-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mk-side-foot{margin-top:auto;padding:10px 14px 0;font-family:var(--fm);font-size:.5rem;letter-spacing:.18em;color:var(--text-2);text-transform:uppercase;border-top:1px solid var(--line);opacity:.7}
+.mk-side-foot span{display:block;line-height:1.6}
+
+/* Main: featured story */
+.mk-main{position:relative;overflow:hidden;display:flex;flex-direction:column}
+.mk-cover{position:relative;flex:1;min-height:0;overflow:hidden;display:block}
+.mk-cover img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.04);animation:mkKenBurns 18s ease-in-out infinite alternate}
+@keyframes mkKenBurns{from{transform:scale(1.04) translate(0,0)}to{transform:scale(1.12) translate(-2%,1%)}}
+.mk-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,14,0) 0%,rgba(10,10,14,0) 35%,rgba(10,10,14,.7) 75%,rgba(10,10,14,.95) 100%);pointer-events:none;z-index:2}
+
+/* Fable Mythos · usa la portada wide (robot derecha + Claude pill abajo) */
+.mk-cover-fable{background:#0a0612 url('/img/blog-mythos-portada.png?v=3') 70% 90%/cover no-repeat}
+.mk-fable-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.mk-fable-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--accent) 40%,var(--accent-alt) 100%);box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);animation:fableCorePulse 3s ease-in-out infinite;z-index:3;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.7rem;color:#fff;letter-spacing:.1em;font-weight:700;text-shadow:0 0 8px rgba(0,0,0,.4)}
+.mk-fable-core::before{content:'FABLE';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);font-size:.7rem}
+.mk-fable-core::after{content:'MYTHOS';position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);font-size:.55rem;opacity:.85}
+@keyframes fableCorePulse{0%,100%{box-shadow:0 0 40px var(--accent),0 0 80px rgba(250,80,0,.5);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 60px var(--accent),0 0 120px rgba(250,80,0,.7);transform:translate(-50%,-50%) scale(1.05)}}
+.mk-fable-orbit{position:absolute;top:50%;left:50%;border:1.5px solid;border-radius:50%;animation:fableOrbit 8s ease-in-out infinite alternate;z-index:2;pointer-events:none}
+.mk-fable-orbit-1{width:160px;height:160px;margin:-80px 0 0 -80px;border-color:rgba(250,80,0,.45)}
+.mk-fable-orbit-2{width:220px;height:220px;margin:-110px 0 0 -110px;border-color:rgba(205,35,73,.32)}
+@keyframes fableOrbit{0%{opacity:.7;transform:scale(1) rotate(0)}100%{opacity:.3;transform:scale(1.1) rotate(15deg)}}
+.mk-fable-node{position:absolute;top:var(--y);left:var(--x);transform:translate(-50%,-50%);font-family:var(--fm);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#fff;padding:5px 9px;background:rgba(10,8,16,.85);border:1px solid rgba(250,80,0,.45);border-radius:4px;backdrop-filter:blur(6px);z-index:3;animation:fableNodeIn .9s ease-out backwards;animation-delay:var(--d)}
+@keyframes fableNodeIn{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.mk-cover-glyph{position:absolute;top:14px;left:14px;z-index:3;font-family:var(--fm);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;padding:5px 9px;border:1px solid rgba(255,255,255,.4);border-radius:4px;backdrop-filter:blur(8px);background:rgba(0,0,0,.4);font-weight:800;color:#fff;display:inline-flex;align-items:center;gap:.4rem}
+.mk-cover-glyph .star{color:var(--accent)}
+.mk-cover-glyph.r{left:auto;right:14px;color:#22c55e;border-color:#22c55e}
+.mk-cover-glyph.r::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;animation:bxLivePulse 1.3s ease-out infinite}
+.mk-cover-cta{position:absolute;bottom:18px;left:18px;right:18px;z-index:3;color:#fff}
+.mk-cover-tag{display:inline-block;font-family:var(--fm);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);background:rgba(250,80,0,.18);padding:4px 9px;border-radius:4px;border:1px solid rgba(250,80,0,.5);font-weight:800;margin-bottom:8px}
+.mk-cover-head{font-family:var(--fd);font-weight:700;font-size:1.55rem;letter-spacing:-.018em;line-height:1.08;margin:0 0 8px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45)}
+.mk-cover-exc{font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.45;max-width:88%;margin:0 0 12px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.mk-cover-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fb);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800;transition:gap .25s}
+.mk-cover-link::after{content:'→';transition:transform .25s}
+.mk-cover:hover .mk-cover-link{gap:.7rem}
+.mk-cover:hover .mk-cover-link::after{transform:translateX(4px)}
+
+/* Bottom mini-strip with metrics */
+.mk-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--line);background:rgba(255,255,255,.02);font-family:var(--fm);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-2);flex-shrink:0;gap:10px}
+html:not(.dark) .mk-foot{background:#f8f8fa}
+.mk-foot-stat{display:inline-flex;align-items:center;gap:.4rem;font-weight:600}
+.mk-foot-stat strong{color:var(--accent);font-family:var(--fd);font-size:.9rem;letter-spacing:-.01em;font-weight:400;line-height:1;font-variant-numeric:tabular-nums}
+.mk-foot-stat .ic{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.mk-foot-stat.live .ic{background:#22c55e;animation:bxLivePulse 1.3s ease-out infinite}
+
+/* Top scan stripe */
+.mockup::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#ff2828,var(--accent),var(--accent-alt),#ff2828);background-size:200% 100%;animation:rsScan 4s linear infinite;z-index:10}
+@keyframes rsScan{from{background-position:0 0}to{background-position:200% 0}}
+
+.mast-badge{position:absolute;right:-30px;top:-30px;z-index:6;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 80%);color:#fff;display:grid;place-items:center;box-shadow:0 30px 60px -20px rgba(250,80,0,.6),0 0 0 6px var(--bg),0 0 0 7px rgba(250,80,0,.45),inset 0 1px 0 rgba(255,255,255,.18)}
+.mast-badge::before{content:'';position:absolute;inset:8px;border-radius:50%;border:1px dashed rgba(255,255,255,.35);pointer-events:none}
+.mast-badge .center{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fd);text-align:center;line-height:1}
+.mast-badge .n{font-size:2.8rem;line-height:1;font-weight:400;letter-spacing:-.03em;color:#fff}
+.mast-badge .n .hash{font-size:1.6rem;color:rgba(255,255,255,.85);vertical-align:.4em;margin-left:2px}
+.mast-badge .sub{font-family:var(--fb);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.9);font-weight:800;margin-top:4px}
+.mast-badge svg.spinring{position:absolute;inset:0;width:100%;height:100%;animation:mastSpin 22s linear infinite}
+.mast-badge svg.spinring text{font-family:var(--fb);font-size:11px;letter-spacing:.16em;font-weight:800;fill:rgba(255,255,255,.95);text-transform:uppercase}
+@keyframes mastSpin{to{transform:rotate(360deg)}}
+
+/* === Wire ticker (breaking news bar at bottom) === */
+.mast-wire{position:relative;z-index:3;display:flex;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-alt,#fafafa);margin:0 -24px;overflow:hidden}
+html.dark .mast-wire{background:#0a0a0c}
+.wire-tag{flex:0 0 auto;background:linear-gradient(135deg,#ff2828,#cd2349);color:#fff;font-family:var(--fm);font-size:.7rem;letter-spacing:.28em;font-weight:800;padding:16px 32px 16px 24px;display:inline-flex;align-items:center;gap:.7rem;text-transform:uppercase;clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%);position:relative;z-index:2}
+.wire-tag .dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:bxLivePulse 1s ease-out infinite}
+.wire-track{flex:1;overflow:hidden;display:flex;align-items:center;position:relative;font-family:var(--fb);font-size:.92rem;font-weight:600;color:var(--heading);min-width:0}
+.wire-track::before,.wire-track::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none}
+.wire-track::before{left:0;background:linear-gradient(90deg,var(--bg-alt,#fafafa),transparent)}
+.wire-track::after{right:0;background:linear-gradient(-90deg,var(--bg-alt,#fafafa),transparent)}
+html.dark .wire-track::before{background:linear-gradient(90deg,#0a0a0c,transparent)}
+html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transparent)}
+.wire-loop{display:inline-flex;align-items:center;gap:36px;white-space:nowrap;animation:wireRoll 45s linear infinite;padding-left:36px}
+.wire-track:hover .wire-loop{animation-play-state:paused}
+.wire-item{display:inline-flex;align-items:center;gap:.6rem}
+.wire-item .b{color:#ff2828;font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;font-weight:800;padding:2px 7px;border:1px solid #ff2828;border-radius:2px}
+.wire-sep{color:var(--accent);opacity:.45;font-weight:300;font-size:1.3rem}
+@keyframes wireRoll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+@media(max-width:980px){
+  .mast-grid{grid-template-columns:1fr;gap:2.2rem;padding-bottom:2rem}
+  .masthead .ctn{padding:3.5rem 20px 0}
+  .mast-broadcast{margin-bottom:2rem;font-size:.6rem;gap:14px}
+  .bx-counter .num{font-size:1.1rem}
+  .bx-loc{display:none}
+  .mast-art-wrap{margin-left:0}
+  .mockup{height:500px}
+  .mk-body{grid-template-columns:160px 1fr}
+  .mast-badge{width:96px;height:96px;right:-18px;top:-18px}
+  .mast-badge .n{font-size:2.4rem}
+  .mast-title{font-size:clamp(3.6rem,15vw,7rem);line-height:.95}
+}
+@media(max-width:640px){
+  .mast-broadcast{padding:10px 0}
+  .bx-counters{gap:16px}
+  .bx-counter .num{font-size:.95rem}
+  .bx-counter .lbl{font-size:.5rem}
+  .wire-tag{font-size:.6rem;padding:12px 22px 12px 18px;letter-spacing:.2em}
+  .wire-track{font-size:.78rem}
+  .mockup{height:440px}
+  .mk-body{grid-template-columns:1fr;display:flex;flex-direction:column}
+  .mk-side{max-height:130px;overflow:hidden;border-right:none;border-bottom:1px solid var(--line);padding:8px 0}
+  .mk-side li{padding:6px 14px;font-size:.7rem}
+  .mk-side-foot{display:none}
+  .mk-cover-head{font-size:1.2rem}
+  .mk-cover-exc{display:none}
+  .mk-foot{font-size:.5rem;padding:8px 12px;gap:6px;flex-wrap:wrap}
+  .mk-foot-stat strong{font-size:.78rem}
+}
+
+/* ===== FEATURED ARTICLE ===== */
+.featured{padding:80px 0;border-bottom:1px solid var(--line)}
+.feat-card{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;cursor:pointer;position:relative}
+.feat-art{aspect-ratio:1.15/1;position:relative;border-radius:24px;overflow:hidden;background:#000;border:1px solid var(--line);transition:transform .6s var(--tr)}
+.feat-card:hover .feat-art{transform:translateY(-6px);box-shadow:0 30px 60px rgba(250,80,0,.18)}
+.feat-body{position:relative}
+.feat-tag{font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.feat-tag::before{content:'';width:32px;height:2px;background:var(--accent)}
+.feat-card h2{font-size:clamp(2.4rem,4.5vw,3.6rem);line-height:.95;color:var(--heading);margin-bottom:20px;font-weight:800;letter-spacing:-1px}
+.feat-exc{font-size:1.1rem;color:var(--text);line-height:1.65;margin-bottom:28px;max-width:520px}
+.feat-meta{display:flex;align-items:center;gap:20px;font-family:var(--fm);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2)}
+.feat-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.read-link{display:inline-flex;align-items:center;gap:8px;margin-top:24px;font-family:var(--fb);font-weight:700;color:var(--accent);font-size:.92rem;text-transform:uppercase;letter-spacing:1.5px;transition:gap .3s}
+.feat-card:hover .read-link{gap:14px}
+.read-link svg{width:14px;height:14px;transition:transform .3s}
+.feat-card:hover .read-link svg{transform:translateX(4px)}
+
+/* ===== MAG GRID ===== */
+.mag-sec{padding:80px 0 100px}
+.mag-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:48px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.mag-head h3{font-size:clamp(2rem,3.5vw,2.6rem);font-weight:800;color:var(--heading);letter-spacing:-1px}
+.mag-head h3 .num{font-family:var(--fm);font-size:.6em;color:var(--accent);margin-right:14px;font-weight:700;vertical-align:top}
+.mag-head .count{font-family:var(--fm);font-size:.75rem;color:var(--text-2);letter-spacing:2px;text-transform:uppercase}
+
+.mag-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:32px;grid-auto-rows:minmax(380px,auto)}
+.art{cursor:pointer;position:relative;display:flex;flex-direction:column;transition:transform .5s var(--tr)}
+.art:hover{transform:translateY(-6px)}
+.art-art{position:relative;border-radius:20px;overflow:hidden;background:#000;border:1px solid var(--line);transition:box-shadow .5s var(--tr);flex:1;min-height:240px}
+.art:hover .art-art{box-shadow:0 24px 60px rgba(250,80,0,.18)}
+.art-body{padding:18px 4px 0}
+.art-tag{font-family:var(--fm);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
+.art h4{font-size:1.4rem;line-height:1.05;color:var(--heading);font-weight:800;letter-spacing:-.3px;margin-bottom:10px}
+.art-exc{font-size:.88rem;color:var(--text);line-height:1.55;margin-bottom:12px}
+.art-meta{font-family:var(--fm);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-2)}
+
+/* Different sizes */
+.art-1{grid-column:span 3}
+.art-2{grid-column:span 3}
+.art-3{grid-column:span 2}
+.art-4{grid-column:span 2}
+.art-5{grid-column:span 2}
+.art-1 h4,.art-2 h4{font-size:1.7rem}
+
+/* ===== ART STYLES (per post CSS art) ===== */
+.art-art .glyph{position:absolute;font-family:var(--fm);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600}
+.art-art .glyph.tl{top:18px;left:20px}
+.art-art .glyph.tr{top:18px;right:20px;text-align:right}
+.art-art .glyph.bl{bottom:18px;left:20px}
+.art-art .glyph.br{bottom:18px;right:20px;text-align:right}
+/* número gigante en transparencia sobre las tarjetas: retirado a pedido.
+   La regla queda desactivada para no dejar CSS suelto si vuelve el markup. */
+.art-art .center-num{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--fd);font-size:8rem;font-weight:400;color:rgba(255,255,255,.06);letter-spacing:-4px;pointer-events:none;line-height:.85}
+
+/* THEME: FABLE MYTHOS · solo foto limpia (sin overlays ni constelación) */
+.theme-fable{background:#0a0612}
+.theme-fable .hero-bg{width:100%;height:100%;object-fit:cover;display:block}
+
+/* THEME: MCP CLAUDE — connected nodes (kept for legacy) */
+.theme-mcp{background:radial-gradient(circle at 30% 40%,#2a1a14 0%,#0a0a0a 70%);}
+.theme-mcp .nodes-svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* THEME: VOICE / ELEVENLABS — sound waves */
+.theme-voice{background:linear-gradient(135deg,#1a0d0d 0%,#0a0a0a 100%)}
+.theme-voice .waves{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:5px;padding:30px}
+.theme-voice .bar{flex:1;background:linear-gradient(180deg,var(--accent),var(--accent-alt));border-radius:3px;animation:waveBar 1.4s ease-in-out infinite;min-width:3px;opacity:.85}
+.theme-voice .bar:nth-child(odd){animation-delay:.1s}
+.theme-voice .bar:nth-child(3n){animation-delay:.2s;background:linear-gradient(180deg,var(--accent-alt),var(--accent))}
+.theme-voice .bar:nth-child(4n){animation-delay:.3s}
+.theme-voice .bar:nth-child(5n){animation-delay:.4s}
+@keyframes waveBar{0%,100%{height:20%}50%{height:90%}}
+
+/* THEME: AWS CHILE — grid + cloud */
+.theme-aws{background:linear-gradient(135deg,#0a0f1a 0%,#0a0a0a 100%);position:relative}
+.theme-aws::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(250,80,0,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(250,80,0,.12) 1px,transparent 1px);background-size:40px 40px;opacity:.5;mask:linear-gradient(180deg,transparent,#000 30%,#000 70%,transparent)}
+.theme-aws .cl-shape{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:220px;height:120px;background:radial-gradient(ellipse,rgba(255,153,0,.4) 0%,transparent 70%);border-radius:50%;filter:blur(20px)}
+.theme-aws .servers{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.theme-aws .server{width:14px;height:36px;background:linear-gradient(180deg,var(--accent),var(--accent-alt));border-radius:2px;animation:serverPulse 2s ease-in-out infinite;opacity:.7}
+.theme-aws .server:nth-child(2){animation-delay:.2s;height:48px}
+.theme-aws .server:nth-child(3){animation-delay:.4s;height:32px}
+.theme-aws .server:nth-child(4){animation-delay:.6s;height:42px}
+.theme-aws .server:nth-child(5){animation-delay:.8s;height:38px}
+@keyframes serverPulse{0%,100%{opacity:.5;box-shadow:0 0 0 rgba(250,80,0,0)}50%{opacity:1;box-shadow:0 0 16px rgba(250,80,0,.6)}}
+
+/* THEME: APEROL EVENT — drink + bubbles */
+.theme-aperol{background:radial-gradient(circle at 50% 60%,#ff6b1a 0%,#cd2349 50%,#0a0a0a 100%);position:relative}
+.theme-aperol .glass{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:160px;border:3px solid rgba(255,255,255,.4);border-top:none;border-radius:0 0 60px 60px;overflow:hidden}
+.theme-aperol .glass::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,80,0,.6) 30%,#FA5000 100%);animation:liquidWave 3s ease-in-out infinite}
+@keyframes liquidWave{0%,100%{transform:translateY(20%)}50%{transform:translateY(15%)}}
+.theme-aperol .bubble{position:absolute;background:rgba(255,255,255,.6);border-radius:50%;animation:bubbleRise 3s ease-in infinite}
+.theme-aperol .b1{width:8px;height:8px;bottom:20%;left:40%;animation-delay:0s}
+.theme-aperol .b2{width:6px;height:6px;bottom:20%;left:55%;animation-delay:.5s}
+.theme-aperol .b3{width:10px;height:10px;bottom:20%;left:50%;animation-delay:1s}
+.theme-aperol .b4{width:5px;height:5px;bottom:20%;left:45%;animation-delay:1.5s}
+.theme-aperol .b5{width:7px;height:7px;bottom:20%;left:52%;animation-delay:2s}
+@keyframes bubbleRise{0%{transform:translateY(0);opacity:.8}100%{transform:translateY(-120px);opacity:0}}
+
+/* THEME: CHATGPT 5.5 — neural network */
+.theme-gpt{background:radial-gradient(circle at 50% 50%,#1a0a1a 0%,#0a0a0a 80%)}
+.theme-gpt .neural{position:absolute;inset:0}
+.theme-gpt .core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:radial-gradient(circle,var(--accent),var(--accent-alt));border-radius:50%;box-shadow:0 0 60px rgba(250,80,0,.6);animation:corePulse 2.5s ease-in-out infinite}
+.theme-gpt .core::before{content:'AI';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fd);font-size:1.5rem;letter-spacing:1px}
+@keyframes corePulse{0%,100%{box-shadow:0 0 60px rgba(250,80,0,.6);transform:translate(-50%,-50%) scale(1)}50%{box-shadow:0 0 100px rgba(250,80,0,.9);transform:translate(-50%,-50%) scale(1.05)}}
+.theme-gpt .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1.5px solid rgba(250,80,0,.25);border-radius:50%;animation:ringExpand 3s ease-out infinite}
+.theme-gpt .ring:nth-child(2){width:140px;height:140px;animation-delay:0s}
+.theme-gpt .ring:nth-child(3){width:200px;height:200px;animation-delay:1s}
+.theme-gpt .ring:nth-child(4){width:260px;height:260px;animation-delay:2s}
+@keyframes ringExpand{0%{opacity:.6;transform:translate(-50%,-50%) scale(.7)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+
+/* THEME: AUTOMATE RRSS — orbital social icons */
+.theme-rrss{background:radial-gradient(circle at 50% 50%,#1a1a0d 0%,#0a0a0a 80%);position:relative}
+.theme-rrss .hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent-alt));border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fd);font-size:1.4rem;box-shadow:0 0 30px rgba(250,80,0,.5)}
+.theme-rrss .orbit{position:absolute;top:50%;left:50%;border:1px dashed rgba(250,80,0,.2);border-radius:50%;transform:translate(-50%,-50%);animation:orbitRot 20s linear infinite}
+.theme-rrss .orbit-1{width:200px;height:200px}
+.theme-rrss .orbit-2{width:280px;height:280px;animation-direction:reverse;animation-duration:30s}
+@keyframes orbitRot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.theme-rrss .icon{position:absolute;width:34px;height:34px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.85rem;font-weight:700;color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.theme-rrss .ig{top:50%;left:-17px;transform:translateY(-50%);background:linear-gradient(135deg,#833AB4,#FD1D1D,#FCB045);color:#fff}
+.theme-rrss .fb{top:-17px;left:50%;transform:translateX(-50%);background:#1877F2;color:#fff}
+.theme-rrss .wa{top:50%;right:-17px;transform:translateY(-50%);background:#25D366;color:#fff}
+.theme-rrss .tk{bottom:-17px;left:50%;transform:translateX(-50%);background:#000;color:#fff}
+
+/* THEME: VÍA BY HAPEE · METRO — hito full-width, oscuro con línea de red */
+.art-via{grid-column:1/-1}
+.art-via .art-art{min-height:300px}
+.art-via h4{font-size:clamp(1.6rem,2.8vw,2.2rem);max-width:36ch}
+.art-via .art-exc{max-width:78ch}
+.theme-via{background:#070505;position:relative}
+.theme-via::before{content:'';position:absolute;inset:0;z-index:0;background:
+  radial-gradient(60% 48% at 82% 8%,rgba(250,80,0,.30),transparent 60%),
+  radial-gradient(52% 46% at 6% 88%,rgba(205,35,73,.24),transparent 60%)}
+.theme-via .via-word{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;width:100%;padding:0 20px;pointer-events:none}
+.theme-via .via-word .w{font-family:var(--fd);font-weight:800;font-size:clamp(2.6rem,6vw,4.4rem);line-height:.95;letter-spacing:-.03em;color:#fff}
+.theme-via .via-word .w em{font-style:normal;background:linear-gradient(92deg,#FA5000,#E8457C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.theme-via .via-word .s{display:block;font-family:var(--fm);font-size:clamp(.52rem,1.1vw,.7rem);letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:12px;font-weight:700}
+.theme-via .via-track{position:absolute;left:7%;right:7%;bottom:19%;height:3px;border-radius:3px;z-index:2;background:linear-gradient(90deg,#FA5000,#E8457C);box-shadow:0 0 18px rgba(250,80,0,.55)}
+.theme-via .via-st{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:#FA5000;border:3px solid #fff}
+.theme-via .via-st.now{width:15px;height:15px;background:#fff;border-color:#FA5000;box-shadow:0 0 0 0 rgba(250,80,0,.6);animation:viaPulse 1.6s ease-out infinite}
+.theme-via .via-st.next{background:#0a0a0a;border-color:rgba(255,255,255,.55)}
+@keyframes viaPulse{to{box-shadow:0 0 0 15px rgba(250,80,0,0)}}
+@media(prefers-reduced-motion:reduce){.theme-via .via-st.now{animation:none}}
+@media(max-width:768px){.art-via .art-art{min-height:260px}.art-via h4{font-size:1.55rem}.art-via .glyph.tr,.art-via .glyph.br{display:none}}
+
+/* ===== MODAL ===== */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:flex-start;justify-content:center;padding:80px 24px 24px;overflow-y:auto;backdrop-filter:blur(8px)}
+.modal-bg.open{display:flex}
+.modal-panel{background:var(--paper);max-width:780px;width:100%;border-radius:24px;padding:48px 48px 56px;position:relative;color:var(--text);box-shadow:var(--shadow-lg);border:1px solid var(--card-border)}
+html.dark .modal-panel{background:#0f0f0f;border-color:rgba(250,80,0,.15)}
+.modal-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;border:1px solid var(--card-border);background:var(--bg-alt);cursor:pointer;color:var(--heading);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:var(--tr)}
+html.dark .modal-close{background:#1a1a1a;border-color:rgba(250,80,0,.1)}
+.modal-close:hover{color:var(--accent);border-color:var(--accent);transform:rotate(90deg)}
+.modal-tag{font-family:var(--fm);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:14px}
+.modal-panel h2{font-size:clamp(2rem,4vw,3rem);line-height:1;color:var(--heading);font-weight:800;letter-spacing:-1px;margin-bottom:18px}
+.modal-meta{display:flex;gap:18px;font-family:var(--fm);font-size:.7rem;color:var(--text-2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.modal-body p{font-size:1.05rem;line-height:1.75;margin-bottom:20px;color:var(--text)}
+.modal-body p strong{color:var(--heading);font-weight:700}
+.modal-body h3{font-family:var(--fd);font-size:1.6rem;font-weight:800;color:var(--heading);margin:36px 0 14px;letter-spacing:-.3px}
+.modal-body ul{padding-left:20px;margin-bottom:20px}
+.modal-body li{margin-bottom:10px;line-height:1.65;list-style:disc;color:var(--text)}
+.modal-body li::marker{color:var(--accent)}
+.modal-body blockquote{border-left:3px solid var(--accent);padding-left:20px;margin:24px 0;font-family:var(--fd);font-size:1.6rem;line-height:1.2;color:var(--heading);letter-spacing:-.3px;font-weight:400}
+body.modal-open{overflow:hidden}
+
+/* ===== CTA ===== */
+.cta-band{padding:80px 0;background:linear-gradient(135deg,var(--accent),var(--accent-alt) 60%,#8b1a2e);text-align:center;position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(255,255,255,.09),transparent 50%),radial-gradient(circle at 80% 50%,rgba(255,255,255,.05),transparent 40%)}
+.cta-band .ctn{position:relative;z-index:1}
+.cta-band h2{font-size:clamp(2rem,4.5vw,3rem);color:#fff;font-weight:800;letter-spacing:-1px;margin-bottom:14px}
+.cta-band p{color:rgba(255,255,255,.88);font-size:1rem;max-width:560px;margin:0 auto 28px}
+.cta-band .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-band .bs{background:#fff;color:var(--accent);padding:12px 28px;font-size:.9rem}
+.cta-band .bo{border-color:rgba(255,255,255,.5);color:#fff;padding:12px 28px;font-size:.9rem}
+
+/* FOOTER */
+.footer{padding:48px 0 28px;background:#080808;border-top:1px solid rgba(250,80,0,.06)}
+.footer .ctn{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+.footer-logo{height:26px;filter:brightness(0) invert(1)}
+.footer-cp{font-size:.85rem;color:#8b8078}
+.powered-by{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--fm);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#8b8078;font-weight:600;text-decoration:none;padding:.55rem .9rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);transition:all .25s;margin-left:.5rem;line-height:1}
+.powered-by:hover{color:var(--accent);border-color:var(--accent)}
+.powered-by img{height:34px;width:auto;max-width:120px;display:block;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;transition:opacity .25s}
+.powered-by:hover img{opacity:1}
+.footer a{color:rgba(255,255,255,.4);font-size:.85rem;margin-left:14px;transition:var(--tr)}
+.footer a:hover{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .feat-card{grid-template-columns:1fr;gap:32px}
+  .mag-grid{grid-template-columns:repeat(4,1fr);gap:24px}
+  .art-1,.art-2{grid-column:span 4}
+  .art-3,.art-4,.art-5{grid-column:span 2}
+}
+@media(max-width:768px){
+  .masthead{padding:120px 0 40px}
+  .mag-grid{grid-template-columns:1fr;gap:28px}
+  .art-1,.art-2,.art-3,.art-4,.art-5{grid-column:span 1}
+  .featured{padding:50px 0}
+  .mag-sec{padding:50px 0 70px}
+  .modal-panel{padding:32px 24px 40px}
+  .cta-band{padding:60px 0}
+  .footer .ctn{flex-direction:column;text-align:center}
+}
+
+/* === Real Higgsfield art overrides === */
+.feat-art,.art-art{isolation:isolate}
+.feat-art .hero-bg,.art-art .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
+.feat-art::after,.art-art::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.45) 65%,rgba(0,0,0,.72) 100%)}
+.feat-art > .glyph,.feat-art > .center-num,.art-art > .glyph,.art-art > .center-num{z-index:2;position:absolute}
+.feat-art .nodes-svg,.art-art .waves,.art-art .cl-shape,.art-art .servers,.art-art .glass,.art-art .bubble,.art-art .ring,.art-art .core,.art-art .neural,.art-art .hub,.art-art .orbit,.art-art .micon{display:none!important}
+/* Fable Mythos · solo la foto limpia · NADA encima */
+.theme-fable .hero-bg{display:block!important;z-index:1;opacity:1}
+.theme-fable::after{display:none!important}
+.theme-fable .fable-svg,.theme-fable .glyph,.theme-fable .center-num{display:none!important}
+
+</style>
+<!-- Meta Pixel (conjunto de datos 955108270238616). Se declara en la política de
+     privacidad (§2.9 y §13). El Schedule de la reserva lo dispara agenda-tu-demo con el
+     MISMO eventID que el servidor (apt.<id>), para que Meta cuente una sola reserva. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '955108270238616');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></noscript>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+<nav class="nav" id="nav">
+  <div class="ctn">
+    <a href="/pt/"><img src="img/logo-hapee.png" alt="Hapee" class="nav-logo"></a>
+    <div class="nlinks">
+      <a href="/pt/comparativa.html">Comparativo</a>
+      <a href="/pt/blog.html" class="on">Blog</a>
+      <a href="/pt/transformacion.html">Transformação</a>
+      <a href="/pt/partners.html">Parceiros</a>
+      <a href="/pt/juego" class="nav-game">🎮 Jogar</a>
+      <a href="/pt/academia">Academia</a>
+    </div>
+    <div class="nctas">
+      <span data-lang-switch></span>
+      <button class="dark-toggle" id="darkToggle" aria-label="Alternar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="/pt/agenda-tu-demo" class="btn bo">Agendar Demo</a>
+      <a href="/pt/#planes" class="btn bs">Ver Planos</a>
+    </div>
+    <button class="mbtn" onclick="window.location.href='/pt/'"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+</header>
+
+<main>
+
+<!-- MASTHEAD · ROBOT INTERACTIVO + WIRE-FEED EDITORIAL -->
+<section class="masthead" id="masthead">
+  <canvas class="mast-canvas" id="mastCanvas"></canvas>
+
+  <div class="ctn">
+
+    <!-- Pre-header tagline -->
+    <div class="mast-preheader">
+      <span class="dot"></span>
+      <span class="ph-text">Notícias e Reportagens de Marketing e IA</span>
+    </div>
+
+    <!-- Hero grid: brutalist title + live newsroom feed -->
+    <div class="mast-grid">
+      <div class="mast-text">
+        <span class="mast-issue-num" aria-hidden="true">01</span>
+        <span class="mast-kicker"><span class="dot"></span>Edição 01 · ao vivo</span>
+        <h1 class="mast-title">
+          <span class="word w1"><span>Hapee</span></span>
+          <span class="word w2"><span class="em">News.</span><span class="caret"></span></span>
+        </h1>
+        <span class="mast-edition">Edição de Maio de 2026 · O primeiro wire-feed editorial de IA na LATAM</span>
+        <p class="mast-sub">Produto, IA e eventos pela equipe da Hapee. Notícias da suíte all-in-one de agentes de IA, integrações com os modelos mais avançados do mundo e <strong>casos reais da América Latina</strong>.</p>
+        <div class="mast-cats">
+          <span class="cat-chip on" data-cat="all" role="button" tabindex="0">Todos</span>
+          <span class="cat-chip" data-cat="producto" role="button" tabindex="0">Produto</span>
+          <span class="cat-chip" data-cat="tech" role="button" tabindex="0">Tech</span>
+          <span class="cat-chip" data-cat="eventos" role="button" tabindex="0">Eventos</span>
+          <span class="cat-chip" data-cat="how-to" role="button" tabindex="0">How-to</span>
+        </div>
+      </div>
+
+      <div class="mast-art-wrap">
+        <div class="mockup" aria-label="Hapee Newsroom · interface">
+          <!-- Browser bar -->
+          <div class="mk-bar">
+            <span class="mk-dots"><span></span><span></span><span></span></span>
+            <span class="mk-url">hapee.ai/blog<span class="live">Live</span></span>
+          </div>
+
+          <div class="mk-body">
+            <!-- Sidebar: newsroom -->
+            <aside class="mk-side">
+              <div class="mk-side-title">Newsroom · live</div>
+              <ul>
+                <li class="active"><span class="mk-li-tag">Breaking</span><span class="mk-li-text">Fable Mythos × Hapee</span></li>
+                <li><span class="mk-li-tag" style="background:var(--accent)">Prod</span><span class="mk-li-text">MCP nativo × Claude</span></li>
+                <li><span class="mk-li-tag" style="background:#1e3a8a;color:#bfdbfe">Tech</span><span class="mk-li-text">ChatGPT 5.5 no ar</span></li>
+                <li><span class="mk-li-tag" style="background:#14532d;color:#bbf7d0">How</span><span class="mk-li-text">Automatize suas redes</span></li>
+                <li><span class="mk-li-tag" style="background:var(--accent)">Prod</span><span class="mk-li-text">ElevenLabs voz espanhol-CL</span></li>
+                <li><span class="mk-li-tag" style="background:var(--accent-alt)">Event</span><span class="mk-li-text">Aperol · Santiago</span></li>
+              </ul>
+              <div class="mk-side-foot"><span>Issue 01</span><span>Jun 2026</span></div>
+            </aside>
+
+            <!-- Main: featured story -->
+            <main class="mk-main">
+              <a class="mk-cover mk-cover-fable" href="/pt/blog/fable-mythos-mcp-hapee.html" aria-label="Ler o artigo em destaque Fable Mythos × Hapee">
+                <span class="mk-cover-glyph"><span class="star">★</span>Breaking</span>
+                <span class="mk-cover-glyph r">Now</span>
+                <div class="mk-cover-cta">
+                  <span class="mk-cover-tag">Anthropic · Produto</span>
+                  <h3 class="mk-cover-head">Fable Mythos chega à Hapee: mais poder para a conexão MCP</h3>
+                  <p class="mk-cover-exc">Nova variante Fable do Claude. Estamos adicionando ao stack que já potencializa o raciocínio dos agentes Hapee.</p>
+                  <span class="mk-cover-link">Ler artigo</span>
+                </div>
+              </a>
+            </main>
+          </div>
+
+          <!-- Footer metrics strip -->
+          <div class="mk-foot">
+            <span class="mk-foot-stat live"><span class="ic"></span><strong id="liveReaders2">12.847</strong>Leitores</span>
+            <span class="mk-foot-stat"><span class="ic"></span><strong>04</strong>Edições</span>
+            <span class="mk-foot-stat"><span class="ic"></span><strong>21</strong>Artigos</span>
+            <span class="mk-foot-stat"><strong id="liveUpdated2">3s</strong>Última atualização</span>
+          </div>
+        </div>
+        <div class="mast-badge">
+          <svg class="spinring" viewBox="0 0 140 140">
+            <defs>
+              <path id="badgeRingPath" d="M 70,70 m -52,0 a 52,52 0 1,1 104,0 a 52,52 0 1,1 -104,0"/>
+            </defs>
+            <text>
+              <textPath href="#badgeRingPath" startOffset="0%">BLOG · #1 EM IA · LATAM · BLOG · #1 EM IA · LATAM · </textPath>
+            </text>
+          </svg>
+          <div class="center">
+            <div class="n">1<span class="hash">#</span></div>
+            <div class="sub">IA · LATAM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breaking news wire ticker -->
+    <div class="mast-wire" aria-label="Ticker de últimas notícias">
+      <div class="wire-tag"><span class="dot"></span>Urgente</div>
+      <div class="wire-track">
+        <div class="wire-loop">
+          <span class="wire-item"><span class="b">14:32</span>Hapee × Claude · MCP nativo ativado em produção</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:28</span>ChatGPT 5.5 implantado em todos os agentes Hapee</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:21</span>Nova integração ElevenLabs · voz clonada em espanhol do Chile</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:09</span>Hapee Aperol Spritz · Lançamento oficial em Santiago</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:58</span>Parceria com a AWS Chile confirmada · infraestrutura na LATAM</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:42</span>+90.000 clientes automatizados · recorde histórico</span>
+          <span class="wire-sep">/</span>
+          <!-- duplicate set for seamless loop -->
+          <span class="wire-item"><span class="b">14:32</span>Hapee × Claude · MCP nativo ativado em produção</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:28</span>ChatGPT 5.5 implantado em todos os agentes Hapee</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:21</span>Nova integração ElevenLabs · voz clonada em espanhol do Chile</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">14:09</span>Hapee Aperol Spritz · Lançamento oficial em Santiago</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:58</span>Parceria com a AWS Chile confirmada · infraestrutura na LATAM</span>
+          <span class="wire-sep">/</span>
+          <span class="wire-item"><span class="b">13:42</span>+90.000 clientes automatizados · recorde histórico</span>
+          <span class="wire-sep">/</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured">
+  <div class="ctn">
+    <article class="feat-card" data-art="fable-mythos" data-cat="producto">
+      <div class="feat-art theme-fable">
+        <img class="hero-bg" loading="eager" decoding="async" fetchpriority="high" src="img/blog-mythos-portada.png?v=3" alt="Fable Mythos × Hapee MCP · capa">
+      </div>
+      <div class="feat-body">
+        <div class="feat-tag">Produto · Tech · Destaque</div>
+        <h2>Fable Mythos chega à Hapee: mais poder para a conexão MCP</h2>
+        <p class="feat-exc">A Anthropic acaba de apresentar o <strong>Fable Mythos</strong>, uma nova variante da família Fable. Na Hapee, estamos adicionando-a ao stack que já potencializa o raciocínio dos agentes via conexão nativa com o Claude.</p>
+        <div class="feat-meta">
+          <span>10 jun 2026</span>
+          <span class="dot"></span>
+          <span>3 min de leitura</span>
+          <span class="dot"></span>
+          <span>Por Equipe Hapee</span>
+        </div>
+        <a class="read-link" href="/pt/blog/fable-mythos-mcp-hapee.html">Ler a nota completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- MAG GRID -->
+<section class="mag-sec">
+  <div class="ctn">
+    <div class="mag-head">
+      <h3><span class="num">02</span>Notas recentes</h3>
+      <span class="count">06 ARTIGOS</span>
+    </div>
+    <div class="mag-grid" id="magGrid">
+      <article class="art art-via" data-art="via" data-pub="2026-08-23" data-cat="eventos">
+        <div class="art-art theme-via">
+          <span class="glyph tl">Nº 12 / Notícias</span>
+          <span class="glyph tr">Metrô de Santiago · Demo Day 2026</span>
+          <div class="via-word">
+            <div class="w">Via <em>by Hapee</em></div>
+            <span class="s">Assistente de viagem com IA · para o passageiro do Metrô</span>
+          </div>
+          <div class="via-track" aria-hidden="true">
+            <span class="via-st" style="left:0%"></span>
+            <span class="via-st" style="left:25%"></span>
+            <span class="via-st" style="left:50%"></span>
+            <span class="via-st now" style="left:75%"></span>
+            <span class="via-st next" style="left:100%"></span>
+          </div>
+          <span class="glyph bl">Avançamos de fase</span>
+          <span class="glyph br">Próxima estação: IA oficial</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Notícias · Via by Hapee</div>
+          <h4>Via by Hapee avança de fase: vamos ser a IA do Metrô de Santiago</h4>
+          <p class="art-exc">Apresentamos a Via —nosso assistente de viagem com IA para o passageiro— no Demo Day 2026 do Metrô, "Transformando a rede que move a cidade". O projeto avançou de fase e em breve estaremos concorrendo para nos tornarmos a IA oficial da rede.</p>
+          <div class="art-meta">23 ago 2026 · Notícias · 4 min</div>
+        </div>
+      </article>
+
+      <article class="art art-1" data-art="radar" data-pub="2026-08-05" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-radar-post.jpg" alt="">
+          <span class="glyph tl">Nº 01 / Produto</span>
+          <span class="glyph tr">Radar · Hapee</span>
+          <span class="glyph bl">Varredura semanal</span>
+          <span class="glyph br">Até 12 concorrentes</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Radar</div>
+          <h4>Radar de Concorrência: o que a sua concorrência faz, toda semana</h4>
+          <p class="art-exc">Novo módulo: defina quem vigiar e toda segunda-feira você recebe uma leitura dos anúncios, do site, da visibilidade em assistentes de IA, das redes e da imprensa deles. Conclusões e recomendações, não dados brutos.</p>
+          <div class="art-meta">5 ago 2026 · Produto · 5 min</div>
+        </div>
+      </article>
+
+      <article class="art art-2" data-art="notetaker" data-pub="2026-08-06" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-notetaker-post.jpg" alt="">
+          <span class="glyph tl">Nº 02 / Produto</span>
+          <span class="glyph tr">Notetaker próprio</span>
+          <span class="glyph bl">Meet · Zoom · Teams</span>
+          <span class="glyph br">Tarefas com responsável</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Reuniões IA</div>
+          <h4>Reuniões IA: um notetaker próprio que entra, escuta e organiza</h4>
+          <p class="art-exc">O bot entra sozinho nas suas videochamadas, transcreve o áudio e entrega resumo, insights, tarefas com responsável e data, e um rascunho de e-mail de acompanhamento. Com medidores de clima para reuniões comerciais.</p>
+          <div class="art-meta">6 ago 2026 · Produto · 6 min</div>
+        </div>
+      </article>
+
+      <article class="art art-3" data-art="licitaciones" data-pub="2026-08-10" data-cat="producto">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-licitaciones-post.jpg" alt="">
+          <span class="glyph tl">Nº 03 / Produto</span>
+          <span class="glyph tr">Mercado Público</span>
+          <span class="glyph bl">Afinidade calculada</span>
+          <span class="glyph br">Menos ruído</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Licitações</div>
+          <h4>Licitações: ganhe mais sem passar o dia procurando por elas</h4>
+          <p class="art-exc">Mercado Público e oportunidades privadas filtradas por afinidade real com o seu negócio, com a pontuação explicada em uma frase. Menos avisos e melhores.</p>
+          <div class="art-meta">10 ago 2026 · Produto · 5 min</div>
+        </div>
+      </article>
+
+      <article class="art art-4" data-art="opus5" data-pub="2026-08-12" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-opus5-post.jpg" alt="">
+          <span class="glyph tl">Nº 04 / Produto</span>
+          <span class="glyph tr">Claude Opus 5</span>
+          <span class="glyph bl">Selecionável por agente</span>
+          <span class="glyph br">Sem migração</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Anthropic</div>
+          <h4>Claude Opus 5 já está disponível na Hapee</h4>
+          <p class="art-exc">O motor mais potente da Anthropic já pode ser selecionado nos seus agentes: melhor raciocínio em tarefas de vários passos, uso de ferramentas mais preciso e conversas longas sem perder o fio.</p>
+          <div class="art-meta">12 ago 2026 · Produto · 4 min</div>
+        </div>
+      </article>
+
+      <article class="art art-5" data-art="expo" data-pub="2026-08-14" data-cat="eventos">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/expo-compra-publica-podcast-post.jpg" alt="">
+          <span class="glyph tl">Nº 05 / Eventos</span>
+          <span class="glyph tr">Expo Compra Pública</span>
+          <span class="glyph bl">Podcast</span>
+          <span class="glyph br">IA em compras públicas</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · Compras Públicas</div>
+          <h4>A Hapee no podcast da Expo Compra Pública</h4>
+          <p class="art-exc">Conversamos sobre IA aplicada a compras públicas: por que o gargalo não é a falta de licitações, e sim o tempo para filtrá-las, e o que vale automatizar e o que não vale.</p>
+          <div class="art-meta">14 ago 2026 · Eventos · 3 min</div>
+        </div>
+      </article>
+
+      <!-- ART 1: VOZ ELEVENLABS -->
+      <article class="art art-1" data-art="voz" data-cat="producto">
+        <div class="art-art theme-voice">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-voz-post.jpg" alt="">
+          <span class="glyph tl">Nº 02 / Produto</span>
+          <span class="glyph tr">ElevenLabs · Hapee</span>
+          <div class="waves">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+          <span class="glyph bl">Voice Cloning</span>
+          <span class="glyph br">96.5% accuracy</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Voice IA</div>
+          <h4>Clonagem de voz para agentes de IA, agora a mais avançada do mercado</h4>
+          <p class="art-exc">Em parceria direta com a ElevenLabs, a Hapee leva a clonagem de voz a outro patamar: seus agentes falam exatamente como a sua marca, com expressividade humana e latência abaixo de um segundo.</p>
+          <div class="art-meta">5 mai 2026 · Produto · 2 min</div>
+        </div>
+      </article>
+
+      <!-- ART 2: AWS CHILE -->
+      <article class="art art-2" data-art="aws" data-cat="eventos">
+        <div class="art-art theme-aws">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/eventos/aws-stgo-team.jpeg" alt="Equipe Hapee nos escritórios da AWS em Santiago do Chile" style="object-position:50% 35%">
+          <div class="cl-shape"></div>
+          <span class="glyph tl">Nº 03 / Eventos</span>
+          <span class="glyph tr">AWS Chile · Hapee</span>
+          <div class="servers"><div class="server"></div><div class="server"></div><div class="server"></div><div class="server"></div><div class="server"></div></div>
+          <span class="glyph bl">Strategic Partnership</span>
+          <span class="glyph br">2026</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · Parcerias</div>
+          <h4>A equipe da Hapee visita os escritórios da AWS no Chile</h4>
+          <p class="art-exc">Reunião técnica com a equipe regional da AWS Santiago — cerca de 50 founders, engenheiros e parceiros do ecossistema cloud chileno. Roadmap multirregião, Bedrock e entrada no AWS Partner Network em pauta.</p>
+          <div class="art-meta">3 mai 2026 · Eventos · 2 min</div>
+        </div>
+      </article>
+
+      <!-- ART 3: APEROL EVENT -->
+      <article class="art art-3" data-art="aperol" data-cat="eventos">
+        <div class="art-art theme-aperol">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/eventos/hapee-podcast-launch.jpeg" alt="Lançamento Hapee SaaS · podcast ao vivo" style="object-position:50% 40%">
+          <span class="glyph tl">Nº 04 / Eventos</span>
+          <div class="glass">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+            <div class="bubble b4"></div>
+            <div class="bubble b5"></div>
+          </div>
+          <span class="glyph bl">Hapee × Aperol</span>
+          <span class="glyph br">RSVP open</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · Networking</div>
+          <h4>Evento Hapee by Aperol: a noite mais laranja do ano</h4>
+          <p class="art-exc">Lançamento oficial da Hapee SaaS com podcast ao vivo e coquetel patrocinado pela Aperol. Cerca de 50 participantes entre clientes early, parceiros e founders do ecossistema de IA chileno.</p>
+          <div class="art-meta">28 abr 2026 · Eventos · 1 min</div>
+        </div>
+      </article>
+
+      <!-- ART 4: CHATGPT 5.5 -->
+      <article class="art art-4" data-art="gpt" data-cat="producto">
+        <div class="art-art theme-gpt">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-gpt-post.jpg" alt="">
+          <span class="glyph tl">Nº 05 / Produto</span>
+          <span class="glyph tr">GPT 5.5</span>
+          <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+          <div class="core"></div>
+          <span class="glyph bl">OpenAI · Hapee</span>
+          <span class="glyph br">Live</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Produto · Modelos</div>
+          <h4>ChatGPT 5.5 já está disponível na Hapee</h4>
+          <p class="art-exc">O modelo mais recente da OpenAI está integrado à plataforma. Conversas mais coerentes, raciocínio em múltiplas etapas e janela de contexto ampliada.</p>
+          <div class="art-meta">25 abr 2026 · Produto · 2 min</div>
+        </div>
+      </article>
+
+      <!-- ART 5: RRSS AUTOMATION -->
+      <article class="art art-5" data-art="rrss" data-cat="how-to">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/rrss-jpg/hapee-rrss-post.jpg" alt="">
+          <span class="glyph tl">Nº 06 / How-to</span>
+          <span class="glyph tr">Social Auto</span>
+          <div class="orbit orbit-1"></div>
+          <div class="orbit orbit-2"></div>
+          <div class="hub">H</div>
+          <div class="icon ig">IG</div>
+          <div class="icon fb">f</div>
+          <div class="icon wa">W</div>
+          <div class="icon tk">tk</div>
+          <span class="glyph bl">Multi-channel</span>
+          <span class="glyph br">10x output</span>
+        </div>
+        <div class="art-body">
+          <div class="art-tag">How-to · Marketing</div>
+          <h4>Como automatizar o conteúdo das suas redes sociais com a Hapee</h4>
+          <p class="art-exc">Guia passo a passo para agendar, gerar e publicar conteúdo no Instagram, Facebook, TikTok e WhatsApp a partir de uma única plataforma.</p>
+          <div class="art-meta">20 abr 2026 · How-to · 4 min</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="ctn">
+    <h2>Ative seu Agente de IA com a Hapee</h2>
+    <p>Sem compromisso, sem contratos. Cancele quando quiser.</p>
+    <div class="btns">
+      <a href="/pt/#planes" class="btn bs">Ver Planos</a>
+      <a href="/pt/agenda-tu-demo" class="btn bo">Agendar Demo</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-panel" id="modalPanel" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">×</button>
+    <div class="modal-tag" id="mTag"></div>
+    <h2 id="mTitle"></h2>
+    <div class="modal-meta" id="mMeta"></div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="ctn">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <a href="/pt/"><img src="img/logo-hapee.png" alt="Hapee" class="footer-logo"></a>
+      <span class="footer-cp">© 2026 Hapee</span>
+      <a class="powered-by" href="https://digitals.cl" target="_blank" rel="noopener" title="Grupo Digitals">
+        <span>Powered by</span>
+        <img src="img/logo-grupo-digitals.png" alt="Grupo Digitals">
+      </a>
+    </div>
+    <div>
+      <a href="/pt/">Início</a>
+      <a href="/pt/comparativa.html">Comparativo</a>
+      <a href="/pt/blog.html">News</a>
+      <a href="/politica-privacidade.html">Privacidade</a>
+      <a href="/termos.html">Termos</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Dark mode init
+(function(){
+  const s=localStorage.getItem('hapee-theme');
+  if(s==='dark')document.documentElement.classList.add('dark');
+})();
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('darkToggle').addEventListener('click',()=>{
+    const d=document.documentElement.classList.toggle('dark');
+    localStorage.setItem('hapee-theme',d?'dark':'light');
+  });
+  window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>50),{passive:true});
+
+  // ============================
+  // CATEGORY FILTER
+  // ============================
+  const chips=document.querySelectorAll('.cat-chip');
+  const allArts=document.querySelectorAll('.art, .feat-card');
+  // Enter o espacio activan el filtro (los chips son span con role=button)
+  chips.forEach(c=>c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}}));
+  chips.forEach(c=>c.addEventListener('click',()=>{
+    chips.forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');
+    const cat=c.dataset.cat;
+    allArts.forEach(a=>{
+      a.style.display=(cat==='all'||a.dataset.cat===cat)?'':'none';
+    });
+  }));
+
+  // ============================
+  // POST CONTENT
+  // ============================
+  const POSTS={
+    mcp:{
+      tag:'Produto · Destaque',
+      title:'A Hapee se conecta de forma nativa com o Claude via MCP',
+      meta:['7 mai 2026','3 min','Equipe Hapee'],
+      body:`
+        <p><strong>Somos a primeira plataforma de IA conversacional da América Latina com conexão nativa ao Model Context Protocol (MCP) da Anthropic.</strong> Isso significa que nossos agentes não consomem mais um modelo qualquer por uma API genérica: eles raciocinam diretamente com o Claude, acessando ferramentas, memória e contexto em tempo real.</p>
+        <h3>O que é MCP?</h3>
+        <p>MCP é um protocolo aberto desenvolvido pela Anthropic que padroniza como os modelos de linguagem se conectam a ferramentas externas (CRMs, bancos de dados, APIs, agentes especializados). Em vez de gambiarras por integração, o MCP define um canal nativo, bidirecional e seguro.</p>
+        <h3>Por que isso muda as regras?</h3>
+        <ul>
+          <li><strong>Raciocínio mais profundo:</strong> o Claude usa as ferramentas da Hapee como cidadãs de primeira classe. O agente pode consultar seu pipeline, agendar, qualificar leads e fechar — tudo em uma única conversa.</li>
+          <li><strong>Latência menor:</strong> sem intermediários, as respostas são até 40% mais rápidas.</li>
+          <li><strong>Segurança nativa:</strong> os dados do cliente não são expostos como prompts; eles trafegam por canais tipados do MCP.</li>
+        </ul>
+        <blockquote>"A Hapee é o primeiro exemplo na América Latina de um agente produtivo construído com MCP de ponta a ponta. A qualidade do raciocínio é comparável à de ferramentas Tier 1 globais."</blockquote>
+        <p>Já disponível para todos os clientes dos planos PRO e ELITE. Sem configuração adicional.</p>
+      `
+    },
+    voz:{
+      tag:'Produto · Voice IA',
+      title:'Clonagem de voz para agentes de IA, agora a mais avançada do mercado',
+      meta:['5 mai 2026','2 min','Equipe Hapee'],
+      body:`
+        <p><strong>Em parceria direta com a ElevenLabs, a Hapee levou a clonagem de voz para agentes de IA a um novo patamar.</strong> Não é só uma voz: é <em>a sua marca falando</em> com expressividade humana, pausas naturais e latência abaixo de um segundo.</p>
+        <h3>O que inclui</h3>
+        <ul>
+          <li>Modelo <strong>eleven_turbo_v2_5</strong> com streaming nativo</li>
+          <li>Várias vozes por marca (feminina, masculina, narrativa, comercial)</li>
+          <li>Idioma nativo em espanhol latino-americano, com sotaques opcionais</li>
+          <li>Latência média: <strong>180ms</strong> até o primeiro áudio</li>
+          <li>Precisão de tom e prosódia: <strong>96,5%</strong> em benchmarks internos</li>
+        </ul>
+        <h3>Casos de uso reais</h3>
+        <p>Clientes do plano PRO já estão usando voz clonada em agentes telefônicos, mensagens de boas-vindas no WhatsApp com áudio e campanhas de outbound voice marketing. O resultado: <strong>taxas de resposta 3x maiores</strong> vs. chat simples.</p>
+        <blockquote>"O cliente jura que é a dona quem está atendendo. Isso muda tudo."</blockquote>
+      `
+    },
+    aws:{
+      tag:'Eventos · Parcerias',
+      title:'A equipe da Hapee visita os escritórios da AWS no Chile',
+      meta:['3 mai 2026','2 min','Equipe Hapee'],
+      body:`
+        <p><strong>A equipe da Hapee foi recebida nos escritórios da Amazon Web Services em Santiago</strong> para uma jornada estratégica de trabalho com o time regional. O foco: escalar nossa infraestrutura de nuvem para sustentar o crescimento explosivo na América Latina.</p>
+        <h3>Temas abordados</h3>
+        <ul>
+          <li>Deploy multirregião (Brasil, México, Chile) para menor latência</li>
+          <li>Otimização de custos com Spot Instances e Auto Scaling</li>
+          <li>Integração profunda com o <strong>Amazon Bedrock</strong> como modelo de fallback</li>
+          <li>Compliance regional: cumprimento das leis de proteção de dados em cada país</li>
+        </ul>
+        <h3>O que vem por aí</h3>
+        <p>Em breve a Hapee anunciará sua entrada no <strong>AWS Partner Network</strong> como ISV especializado em IA conversacional para a América Latina. Isso permitirá co-selling com a força de vendas da AWS e acesso a programas de aceleração exclusivos.</p>
+        <blockquote>"Trabalhar com a AWS nos permite focar no que fazemos de melhor: agentes de IA. Eles garantem que tudo escale."</blockquote>
+      `
+    },
+    aperol:{
+      tag:'Eventos · Networking',
+      title:'Evento Hapee by Aperol: a noite mais laranja do ano',
+      meta:['28 abr 2026','1 min','Equipe Hapee'],
+      body:`
+        <p><strong>Founders, parceiros e clientes top da Hapee se reuniram em uma noite exclusiva patrocinada pela Aperol</strong> em um terraço privado de Santiago. Música ao vivo, demos do produto e networking de altíssimo nível.</p>
+        <h3>O destaque da noite</h3>
+        <p>Demo ao vivo do novo módulo de <strong>voz clonada com MCP</strong>. Diante de mais de 80 convidados, o agente de IA da Hapee anotou pedidos do bar em linguagem natural, gerenciou a lista de convidados VIP e respondeu perguntas em espanhol, inglês e português.</p>
+        <h3>Próximos eventos?</h3>
+        <p>O roadmap de eventos da Hapee para 2026 contempla:</p>
+        <ul>
+          <li>Hapee Summit · Junho · Centro de Convenções CasaPiedra</li>
+          <li>Hapee Mexico Launch · Agosto · Polanco</li>
+          <li>AI Day Buenos Aires · Outubro</li>
+        </ul>
+        <blockquote>"Aperol e Hapee compartilham uma coisa: ambas fazem as conversas fluírem melhor."</blockquote>
+      `
+    },
+    gpt:{
+      tag:'Produto · Modelos',
+      title:'ChatGPT 5.5 já está disponível na Hapee',
+      meta:['25 abr 2026','2 min','Equipe Hapee'],
+      body:`
+        <p><strong>O modelo mais recente da OpenAI, o GPT-5.5, está integrado à plataforma Hapee desde hoje.</strong> Conversas mais coerentes, raciocínio em múltiplas etapas e janela de contexto ampliada para 200K tokens.</p>
+        <h3>O que melhora em relação às versões anteriores</h3>
+        <ul>
+          <li><strong>40% mais preciso</strong> em tarefas de qualificação de leads</li>
+          <li><strong>Memória conversacional</strong> que persiste entre canais (WhatsApp, IG, E-mail)</li>
+          <li><strong>Multi-turn reasoning</strong> para fechar vendas complexas sem escalar para um humano</li>
+          <li><strong>Function calling nativo</strong> com todas as ferramentas do CRM da Hapee</li>
+        </ul>
+        <h3>Modelo duplo: GPT-5.5 + Claude</h3>
+        <p>A Hapee agora opera com um roteador inteligente que escolhe o melhor modelo para cada tarefa: <strong>GPT-5.5</strong> para conversas rápidas e function calling, <strong>Claude</strong> (via MCP) para raciocínio profundo e manejo de contexto longo. O usuário não percebe, mas os resultados sim.</p>
+        <blockquote>"Não se trata de qual modelo é melhor. Trata-se de escolher o certo para cada momento da conversa."</blockquote>
+      `
+    },
+    rrss:{
+      tag:'How-to · Marketing',
+      title:'Como automatizar o conteúdo das suas redes sociais com a Hapee',
+      meta:['20 abr 2026','4 min','Equipe Hapee'],
+      body:`
+        <p>Se você ainda publica manualmente no Instagram, Facebook, TikTok e WhatsApp, está perdendo horas (e resultados). <strong>A Hapee centraliza seu calendário de redes sociais, gera copy com IA, agenda publicações e mede resultados</strong> — tudo em uma única tela.</p>
+        <h3>Passo a passo</h3>
+        <ul>
+          <li><strong>1. Conecte suas contas</strong> de IG, FB, TikTok e WhatsApp Business pelo painel.</li>
+          <li><strong>2. Defina o tom da sua marca</strong> no módulo Brand Voice (a IA aprende a escrever como você).</li>
+          <li><strong>3. Gere conteúdo</strong> usando prompts curtos. A IA entrega copy, hashtags e CTAs adaptados a cada plataforma.</li>
+          <li><strong>4. Agende</strong> com calendário semanal drag-and-drop.</li>
+          <li><strong>5. Monitore</strong> alcance, engajamento e conversões no dashboard de analytics.</li>
+        </ul>
+        <h3>Plus: agentes de IA conectados</h3>
+        <p>O que diferencia a Hapee de um Hootsuite qualquer: quando alguém comenta ou reage ao seu post, <strong>um agente de IA pode responder automaticamente</strong>, levar a conversa para o DM, qualificar a pessoa como lead e agendar uma ligação. Zero cliques manuais.</p>
+        <blockquote>"Antes passávamos 2 horas por dia nas redes. Hoje são 15 minutos para supervisionar."</blockquote>
+      `
+    }
+  };
+
+  // ============================
+  // MODAL LOGIC
+  // ============================
+  const modal=document.getElementById('modal');
+  const mPanel=document.getElementById('modalPanel');
+  const mTag=document.getElementById('mTag');
+  const mTitle=document.getElementById('mTitle');
+  const mMeta=document.getElementById('mMeta');
+  const mBody=document.getElementById('mBody');
+
+  function openPost(id){
+    const p=POSTS[id];if(!p)return;
+    mTag.textContent=p.tag;
+    mTitle.textContent=p.title;
+    mMeta.innerHTML=p.meta.map(x=>`<span>${x}</span>`).join('');
+    mBody.innerHTML=p.body;
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    mPanel.scrollTop=0;
+  }
+  function closePost(){
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+
+  // ── Publicación por fecha ──────────────────────────────────────────
+  // Cada nota lleva data-pub="AAAA-MM-DD". Aparece en el listado sola, el día
+  // que le toca, sin que nadie tenga que subir nada. Se compara contra la fecha
+  // local del visitante a medianoche, no contra la hora de servidor.
+  (function(){
+    const hoy = new Date(); hoy.setHours(0,0,0,0);
+    document.querySelectorAll('[data-pub]').forEach(el=>{
+      const [a,m,d] = el.dataset.pub.split('-').map(Number);
+      if (new Date(a, m-1, d) > hoy) el.remove();
+    });
+    const n = document.querySelectorAll('#magGrid .art').length;
+    const c = document.querySelector('.mag-head .count');
+    if (c) c.textContent = String(n).padStart(2,'0') + (n === 1 ? ' ARTIGO' : ' ARTIGOS');
+  })();
+
+  // data-art → URL real (sub-páginas con share buttons)
+  const POST_URLS={via:'/pt/blog/via-by-hapee-metro.html',radar:'/pt/blog/radar-de-competencia.html',notetaker:'/pt/blog/reuniones-ia-notetaker.html',licitaciones:'/pt/blog/licitaciones-mercado-publico.html',opus5:'/pt/blog/claude-opus-5.html',expo:'/pt/blog/expo-compra-publica-podcast.html',mcp:'/pt/blog/mcp-claude.html',voz:'/pt/blog/voz-elevenlabs.html',aws:'/pt/blog/aws-chile.html',aperol:'/pt/blog/hapee-aperol-lanzamiento.html',gpt:'/pt/blog/gpt-5-5.html',rrss:'/pt/blog/automatiza-rrss.html'};
+  document.querySelectorAll('[data-art]').forEach(el=>{
+    el.style.cursor='pointer';
+    el.addEventListener('click',e=>{
+      const url=POST_URLS[el.dataset.art];
+      if(url) window.location.href=url;
+    });
+  });
+  // (modal viejo queda como fallback dormido)
+  const _mc=document.getElementById('modalClose');
+  if(_mc) _mc.addEventListener('click',closePost);
+  if(modal) modal.addEventListener('click',e=>{if(e.target===modal)closePost()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closePost()});
+});
+
+// === Masthead · Aether Flow particle network (cursor-aware, dark/light) ===
+(function(){
+  const c=document.getElementById('mastCanvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  let W,H;
+  const mouse={x:null,y:null,radius:180};
+  let particles=[];
+
+  function isDark(){return document.documentElement.classList.contains('dark');}
+
+  function resize(){
+    W=c.width=c.clientWidth;
+    H=c.height=c.clientHeight;
+    init();
+  }
+
+  class Particle{
+    constructor(x,y,dx,dy,size,lightColor,darkColor){
+      this.x=x;this.y=y;this.dx=dx;this.dy=dy;this.size=size;
+      this.lightColor=lightColor;this.darkColor=darkColor;
+    }
+    get color(){return isDark()?this.darkColor:this.lightColor;}
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fillStyle=this.color;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.size*3.5,0,Math.PI*2);
+      ctx.fillStyle=this.color.replace(/[\d.]+\)$/,'0.04)');
+      ctx.fill();
+    }
+    update(){
+      if(this.x>W||this.x<0)this.dx=-this.dx;
+      if(this.y>H||this.y<0)this.dy=-this.dy;
+      if(mouse.x!==null&&mouse.y!==null){
+        const dx=mouse.x-this.x,dy=mouse.y-this.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<mouse.radius+this.size){
+          const fx=dx/dist,fy=dy/dist;
+          const force=(mouse.radius-dist)/mouse.radius;
+          this.x-=fx*force*7;
+          this.y-=fy*force*7;
+        }
+      }
+      this.x+=this.dx;this.y+=this.dy;
+      this.draw();
+    }
+  }
+
+  function init(){
+    particles=[];
+    const num=Math.floor((W*H)/7500);
+    const lightColors=[
+      'rgba(250,80,0,0.35)','rgba(205,35,73,0.30)',
+      'rgba(250,80,0,0.20)','rgba(205,35,73,0.18)','rgba(250,120,40,0.22)'
+    ];
+    const darkColors=[
+      'rgba(250,80,0,0.55)','rgba(205,35,73,0.50)',
+      'rgba(250,80,0,0.40)','rgba(205,35,73,0.35)','rgba(250,120,40,0.42)'
+    ];
+    for(let i=0;i<num;i++){
+      const size=Math.random()*2+.7;
+      const x=Math.random()*(W-size*4)+size*2;
+      const y=Math.random()*(H-size*4)+size*2;
+      const dx=(Math.random()-.5)*.45;
+      const dy=(Math.random()-.5)*.45;
+      const idx=Math.floor(Math.random()*lightColors.length);
+      particles.push(new Particle(x,y,dx,dy,size,lightColors[idx],darkColors[idx]));
+    }
+  }
+
+  function connect(){
+    const maxDist=(W/7)*(H/7);
+    for(let a=0;a<particles.length;a++){
+      for(let b=a+1;b<particles.length;b++){
+        const dx=particles[a].x-particles[b].x;
+        const dy=particles[a].y-particles[b].y;
+        const distSq=dx*dx+dy*dy;
+        if(distSq<maxDist){
+          const opacity=1-(distSq/20000);
+          if(opacity<=0)continue;
+          const dark=isDark();
+          let strokeColor;
+          if(mouse.x!==null){
+            const mx=particles[a].x-mouse.x,my=particles[a].y-mouse.y;
+            const mouseDist=Math.sqrt(mx*mx+my*my);
+            if(mouseDist<mouse.radius){
+              strokeColor=dark?`rgba(250,80,0,${Math.min(opacity*.55,.35)})`:`rgba(250,80,0,${Math.min(opacity*.35,.18)})`;
+            }else{
+              strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+            }
+          }else{
+            strokeColor=dark?`rgba(205,35,73,${Math.min(opacity*.35,.18)})`:`rgba(205,35,73,${Math.min(opacity*.2,.07)})`;
+          }
+          ctx.strokeStyle=strokeColor;
+          ctx.lineWidth=.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[a].x,particles[a].y);
+          ctx.lineTo(particles[b].x,particles[b].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawMouseGlow(){
+    if(mouse.x===null)return;
+    const g=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,mouse.radius);
+    g.addColorStop(0,'rgba(250,80,0,.06)');
+    g.addColorStop(.5,'rgba(205,35,73,.02)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.arc(mouse.x,mouse.y,mouse.radius,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  let shockwaves=[];
+  c.addEventListener('click',e=>{
+    const r=c.getBoundingClientRect();
+    shockwaves.push({x:e.clientX-r.left,y:e.clientY-r.top,radius:0,maxRadius:280,alpha:1});
+    for(const p of particles){
+      const dx=p.x-(e.clientX-r.left),dy=p.y-(e.clientY-r.top);
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<240){
+        const force=(1-dist/240)*2.8;
+        p.dx+=(dx/dist)*force;
+        p.dy+=(dy/dist)*force;
+      }
+    }
+  });
+
+  function drawShockwaves(){
+    for(let i=shockwaves.length-1;i>=0;i--){
+      const s=shockwaves[i];
+      s.radius+=3.5;s.alpha-=.014;
+      if(s.alpha<=0){shockwaves.splice(i,1);continue;}
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(250,80,0,${s.alpha*.25})`;
+      ctx.lineWidth=1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.radius*.55,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(205,35,73,${s.alpha*.15})`;
+      ctx.lineWidth=.8;
+      ctx.stroke();
+    }
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of particles)p.update();
+    connect();
+    drawMouseGlow();
+    drawShockwaves();
+    requestAnimationFrame(animate);
+  }
+
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;
+  });
+  c.addEventListener('mouseleave',()=>{mouse.x=null;mouse.y=null;});
+  window.addEventListener('resize',resize);
+  resize();
+  animate();
+})();
+
+/* === MASTHEAD · live counters (broadcast bar + mockup foot) === */
+(function(){
+  const readers=document.getElementById('liveReaders');
+  const readers2=document.getElementById('liveReaders2');
+  let n=12000+Math.floor(Math.random()*1200);
+  const render=()=>{
+    const txt=n.toLocaleString('pt-BR');
+    if(readers)readers.textContent=txt;
+    if(readers2)readers2.textContent=txt;
+  };
+  render();
+  setInterval(()=>{
+    n+=Math.floor(Math.random()*9)-3;
+    if(n<11500)n=11500;if(n>14800)n=14800;
+    render();
+  },1900);
+
+  const upd=document.getElementById('liveUpdated');
+  const upd2=document.getElementById('liveUpdated2');
+  let s=3;
+  setInterval(()=>{
+    s++;if(s>59)s=0;
+    const t=s+'s';
+    if(upd)upd.textContent=t;
+    if(upd2)upd2.textContent=t;
+  },1000);
+
+})();
+
+</script>
+<script src="/js/whatsapp.js" defer></script>
+<style id="qa-tactil">
+/* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
+@media (hover:none),(max-width:760px){
+  footer a{display:inline-flex;align-items:center;min-height:40px}
+  .mast-cats .cat-chip{font-size:12px;min-height:40px;display:inline-flex;align-items:center}
+  #darkToggle{width:40px;height:40px}
+}
+</style>
+<script src="/js/lang.js" defer></script>
+</body>
+</html>

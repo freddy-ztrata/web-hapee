@@ -74,6 +74,7 @@ npx serve -l 3000
 bash verificacion/paginas_en_imagen.sh   # every committed .html has a COPY line (or is in .paginas-locales)
 py verificacion/v_espanol_neutro.py      # site copy is neutral Spanish — no voseo (see below)
 py docs/_verificar_docs.py               # docs/ pages reach the image + internal links resolve
+py verificacion/v_idiomas.py             # every page has its en/ + pt/ version, correctly wired
 py verificacion/mutar_espanol_neutro.py  # mutation run: proves the voseo detector still detects
 py docs/_mutar_docs.py                   # same for the docs verifier
 
@@ -83,9 +84,20 @@ git push origin master
 
 Bump `CACHE_BUST` in the `Dockerfile` whenever a release should bust the nginx layer cache. Use `py` (Windows launcher) for the Python scripts; they are run from the repo root.
 
+## Languages: Spanish, English, Portuguese (since 2026-10-15)
+
+The whole site exists in three languages with the **same slug**: Spanish at the URLs it always had (`/planes`, `/blog/x.html`, `/docs/mcp`), English under `/en/…` and Portuguese (pt-BR) under `/pt/…` — files `en/<path>` and `pt/<path>`, copied as whole directories by the `Dockerfile`. Exception: the legal pages keep their own names (`terms.html`/`termos.html`, `privacy-policy.html`/`politica-privacidade.html`).
+
+- **Default is English, decided by nginx** (`map`s at the top of `nginx.conf`): a request for a Spanish page gets a **302** to `/en/…` or `/pt/…` when that translation exists and the visitor prefers it. Preference = cookie `hapee_lang` (es|en|pt, written by the selector) → else first `Accept-Language` (es* → es, pt* → pt, anything else → en). **No header → no redirect**, so crawlers index each language at its own URL. Pages under `/en/` and `/pt/` are never redirected.
+- **Language selector**: `js/lang.js` (loaded on every page) mounts into each `<span data-lang-switch>` (nav, next to `#darkToggle`; `data-lang-menu` marks the one in the mobile menu). Pages without a visible slot get a floating pill bottom-left. Choosing writes the cookie and goes to the same page in the other language. On `/en/` and `/pt/` it also prefixes any internal link that slipped through unprefixed.
+- **Assets are not duplicated**: translated pages keep relative paths (`img/…`, `assets/…`); nginx serves `/en/img/x.png` from `/img/x.png` (`$hapee_sin_idioma`). An unknown URL under `/en/` falls back to `/en/` (the English home), not the Spanish one.
+- **Editing a page means editing all three versions.** A new Spanish page needs `en/` and `pt/` copies (with `lang="en"`/`lang="pt"`, canonical with the prefix, prefixed internal links, the hreflang block es/en/pt/x-default=en) and their `sitemap.xml` entries. Without them the page just stays Spanish for everyone — nothing breaks.
+- Shared JS reads `<html lang>` for its strings: `js/whatsapp.js` (FAB label + prefilled message), `docs/docs.js` (copy button), `blog/article.js` (share text).
+- Still Spanish-only, served by the app: the booking calendar and partners form embeds from `beta.hapee.ai`, and plan names/features returned by `/api/saas/planes`.
+
 ## Language: neutral Spanish, no voseo
 
-All public copy (HTML text, JS strings, code comments inside docs examples) is **neutral Spanish**: `tú`/`usted` forms, never `vos` (`conectás`, `respondés`, `mirá`, …). `verificacion/v_espanol_neutro.py` extracts every accented-ending word form and compares against an explicit allowlist (futures like `recibirás`, proper nouns, tuteo forms shared with voseo). If it flags a legitimate word, add it to the allowlist in that script rather than weakening the detector; run the mutation script afterwards.
+All Spanish public copy (HTML text, JS strings, code comments inside docs examples) is **neutral Spanish**: `tú`/`usted` forms, never `vos` (`conectás`, `respondés`, `mirá`, …). (The `en/` and `pt/` pages are skipped by the checker through their `<html lang>`.) `verificacion/v_espanol_neutro.py` extracts every accented-ending word form and compares against an explicit allowlist (futures like `recibirás`, proper nouns, tuteo forms shared with voseo). If it flags a legitimate word, add it to the allowlist in that script rather than weakening the detector; run the mutation script afterwards.
 
 ## Brand guidelines (critical)
 
