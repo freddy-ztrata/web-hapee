@@ -76,6 +76,7 @@ CORRECTAS = {
     "café", "comité", "país", "inglés", "portugués", "interés", "menú",
     "caché",  # sustantivo (memoria caché), no el imperativo de "cachar"
     "panamá", "andrés", "tomás", "mié", "revés",
+    "josé",  # nombre propio (José Güerere, equipo de Hapee)
     # Pronombres, interrogativos y monosilabos
     "qué", "porqué", "sé", "té", "dé", "sí", "él", "mí", "ti", "sólo",
     # Presente/subjuntivo que el tuteo comparte
