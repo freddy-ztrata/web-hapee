@@ -1866,7 +1866,7 @@ html.dark .calendar-section::before{background:radial-gradient(ellipse 70% 60% a
 /* El widget (beta.hapee.ai) ya trae su propia tarjeta: sin marco ni cuadro alrededor */
 .cal-embed{position:relative;max-width:960px;margin:40px auto 0;opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
 .cal-embed.in-view{opacity:1;transform:translateY(0)}
-.cal-embed iframe{display:block;width:100%;border:0;background:transparent}
+.cal-embed iframe{display:block;width:100%;border:0;background:transparent;color-scheme:normal}
 
 /* ============================================================
    GLASSMORPHISM — look "liquid glass" del home aplicado a la landing
@@ -2207,7 +2207,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       </div>
     </div>
     <div class="cal-embed anim-rev">
-        <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
+        <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-theme="auto" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
         <noscript>
           <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Seu navegador está com o JavaScript desativado. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Abra o calendário em uma nova aba →</a></p>
         </noscript>
@@ -2299,30 +2299,6 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
             if(typeof fbq === 'function' && d.eventId){
               fbq('track', 'Schedule', {}, { eventID: String(d.eventId) });
             }
-          });
-        })();
-        </script>
-        <script>
-        /* === Guard de auto-resize del widget ===
-           La página del calendario reporta documentElement.scrollHeight (que nunca baja del alto
-           del propio iframe) y calendar-embed.js fija el iframe en ese valor + 16px cada segundo
-           → bucle: el iframe crece 16px/s sin fin. Este listener se registra ANTES que el loader
-           (orden del documento; el loader es async al final del body), se queda con el mensaje y
-           solo agranda el iframe cuando el contenido real supera el alto actual. */
-        (function(){
-          window.addEventListener('message', function(e){
-            var d = e.data;
-            if(!d || typeof d !== 'object' || d.type !== 'zentru_calendar_height') return;
-            var host = '';
-            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
-            if(host !== 'hapee.ai' && host.slice(-9) !== '.hapee.ai') return;
-            var f = document.querySelector('#hapeeCalendar iframe[data-zcal]');
-            if(!f) return;
-            e.stopImmediatePropagation();
-            var h = parseInt(d.height, 10);
-            if(!h || h < 200) return;
-            var cur = Math.round(f.getBoundingClientRect().height);
-            if(h > cur + 2) f.style.height = h + 'px';
           });
         })();
         </script>
