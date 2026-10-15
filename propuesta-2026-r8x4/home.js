@@ -235,31 +235,31 @@
   /* ═════════ ASÍ SE VE HAPEE: capturas reales animadas ═════════
      Para cambiar una captura basta reemplazar el archivo en /shots (mismo
      nombre, 1500 px de ancho). Cada «beat» es un punto de la captura en % del
-     ancho y alto [x, y, ancho px, alto px, aviso] sobre una imagen de 1500×780. */
+     ancho y alto [x, y, ancho px, alto px, aviso] sobre una imagen de 1500×780.
+     Capturas: subcuenta DEMO HAPEE, 15/10/2026, layout de escritorio 1500×780. */
   (function () {
     var view = $('#psView'); if (!view) return;
     var BASE = '/propuesta-2026-r8x4/shots/';
+    var SHOTS_V = '20261015';   // subir al cambiar capturas: el navegador las guarda 30 días
     var SHOTS = [
       { k: 'inicio', t: 'Inicio', chip: 'Todo bajo control', cap: '<b>Inicio.</b> El centro de control: KPIs del día, accesos a todos los módulos y el pulso de tu operación.',
-        beats: [[24.7, 54, 300, 100, 'La IA responde; tú ves solo lo que falta'], [45.8, 54, 300, 100, '8 negocios abiertos · $53M en pipeline'], [88, 54, 300, 100, '3 licitaciones afines detectadas hoy']] },
-      { k: 'inbox', t: 'Bandeja omnicanal', chip: 'Todos tus canales', cap: '<b>Bandeja omnicanal.</b> Una conversación por cliente, venga de WhatsApp, Instagram, Facebook, LinkedIn o email. El agente responde y tú tomas el control cuando quieres.',
-        beats: [[26, 30, 270, 52, 'WhatsApp, Instagram, Facebook y email juntos'], [62, 32, 420, 64, 'El agente IA respondió y propuso una llamada'], [57.3, 22.2, 102, 30, 'Tomas el control con un clic']] },
+        beats: [[48.1, 69.4, 286, 128, '8 negocios abiertos · $50,1M en pipeline'], [88, 69.4, 286, 128, '5 licitaciones afines detectadas para ti'], [28.3, 87.6, 286, 128, 'La inversión del mes, a la vista']] },
+      { k: 'inbox', t: 'Bandeja omnicanal', chip: 'Todos tus canales', cap: '<b>Bandeja omnicanal.</b> Una conversación por cliente, venga de WhatsApp, Instagram, Facebook o email. El agente responde y tú tomas el control cuando quieres.',
+        beats: [[28.5, 51.3, 240, 56, 'WhatsApp, Instagram, Facebook y email juntos'], [61.3, 40.1, 380, 80, 'El agente IA respondió y calificó al cliente'], [61.3, 62.3, 380, 80, 'Y le propuso una llamada con un especialista']] },
       { k: 'pipeline', t: 'Pipeline', chip: 'Ventas en movimiento', cap: '<b>Pipeline.</b> Tu kanban de ventas con montos, probabilidad y responsables. El agente mueve los negocios de etapa por ti.',
-        beats: [[23, 33, 235, 95, 'Cada conversación crea o actualiza el negocio'], [54.8, 33, 225, 95, 'Reunión agendada por el agente'], [88.4, 24, 215, 46, '$39,8M en negociación, a la vista']] },
+        beats: [[29, 52.6, 268, 210, 'Cada conversación crea o actualiza el negocio'], [68.3, 53.3, 254, 220, 'Reunión agendada por el agente'], [52, 27.6, 170, 26, '3 negocios ganados · $30,9M']] },
+      { k: 'agentes', t: 'Agentes IA', chip: 'Tu equipo de IA', cap: '<b>Agentes IA.</b> Un equipo de agentes con rol propio (SDR, soporte, recepción, cobranza, marketing) que toman tareas, las resuelven y muestran su actividad en vivo.',
+        beats: [[26, 40.4, 206, 60, 'Cada agente con su rol: SDR, soporte, cobranza…'], [56.7, 47, 128, 300, 'Toman tareas y las resuelven solos'], [89, 50, 255, 330, 'Actividad en vivo: lo que hicieron hace minutos']] },
       { k: 'automations', t: 'Automatizaciones', chip: 'Flujos que trabajan solos', cap: '<b>Automatizaciones.</b> Flujos visuales sin código: esperas, condiciones, emails y etiquetas que trabajan mientras duermes.',
-        beats: [[48.5, 11, 196, 38, 'Se activa cuando etiquetas al contacto'], [48, 42, 182, 104, 'Envía la propuesta sola'], [48, 66, 182, 88, 'Y decide el siguiente paso según la respuesta']] },
-      { k: 'email', t: 'Email marketing', chip: 'Campañas en minutos', cap: '<b>Email marketing.</b> Plantillas listas por objetivo (bienvenida, promoción, recuperación) para editar y enviar en minutos.',
-        beats: [[38.5, 21, 560, 40, 'Plantillas por objetivo comercial'], [29.5, 40.8, 285, 170, 'Bienvenida lista para tus nuevos contactos'], [69.2, 40.8, 285, 170, 'Una oferta flash en un clic']] },
-      { k: 'marketing', t: 'RRSS', chip: 'Contenido sin caos', cap: '<b>RRSS.</b> Calendario de contenido con estados de aprobación. La IA genera la grilla del mes y tu equipo solo revisa.',
-        beats: [[76.8, 13, 112, 32, 'La IA arma la grilla del mes'], [56.5, 26, 760, 140, 'Cada post con su estado: listo, en revisión, aprobado'], [67.3, 92, 156, 90, 'Programado y publicado a tiempo']] },
-      { k: 'builder', t: 'Constructor web y email', chip: 'Sin código', cap: '<b>Constructor web y email.</b> Arrastra bloques, previsualiza en escritorio y móvil, y programa el envío.',
-        beats: [[7.4, 76, 205, 70, 'Arrastra bloques: producto, testimonio, redes'], [48.9, 33, 145, 46, 'Edita en línea con doble clic'], [94.8, 2.8, 150, 34, 'Guarda y programa el envío']] },
+        beats: [[11.7, 44.9, 64, 64, 'Se activa cuando etiquetas al contacto'], [49.4, 44.9, 64, 64, 'Envía la propuesta sola'], [87.1, 44.9, 64, 64, 'Y decide el siguiente paso según la respuesta']] },
+      { k: 'email', t: 'Email marketing', chip: 'Campañas en minutos', cap: '<b>Email marketing.</b> Plantillas listas por objetivo (encuestas, re-engagement, reseñas, carrito abandonado) para editar y enviar en minutos.',
+        beats: [[53, 40.5, 118, 34, 'Plantillas por objetivo comercial'], [57.7, 62.8, 370, 190, 'Recupera a tus contactos inactivos'], [83.8, 62.8, 370, 190, 'Pide reseñas en un clic']] },
       { k: 'academia', t: 'Academia', chip: 'Tu equipo aprende', cap: '<b>Academia.</b> Cursos para dejar Hapee funcionando, con avance por persona y ranking del equipo.',
-        beats: [[48, 21, 960, 160, 'Retoma donde lo dejaste'], [26, 52, 315, 230, 'Cursos cortos por objetivo'], [89.5, 45, 260, 300, 'Ranking: tu equipo aprende jugando']] },
+        beats: [[28, 25, 450, 180, 'Retoma donde lo dejaste'], [28, 75.6, 280, 250, 'Cursos cortos por objetivo'], [87.6, 52.6, 300, 380, 'Ranking: tu equipo aprende jugando']] },
       { k: 'reporteria', t: 'Reportería', chip: 'Datos que deciden', cap: '<b>Reportería.</b> Meta Ads, Google Ads y tus redes en un solo tablero, por día y por canal.',
-        beats: [[24.2, 41.8, 300, 30, 'Meta Ads y Google Ads juntos'], [37.4, 56, 560, 230, 'Inversión día a día, por canal'], [76.7, 56, 560, 230, 'Impresiones y conversiones en el mismo lugar']] },
+        beats: [[47.1, 49.2, 200, 38, 'Inversión cruzada de todas tus plataformas'], [39.7, 69.2, 530, 240, 'Meta Ads y Google Ads, día a día'], [76.5, 69.2, 530, 240, 'Impresiones y conversiones en el mismo lugar']] },
       { k: 'licitaciones', t: 'Licitaciones', chip: 'Oportunidades del Estado', cap: '<b>Licitaciones.</b> Mercado Público filtrado para tu rubro, con afinidad calculada por IA y alertas por correo.',
-        beats: [[18.5, 62.7, 70, 70, 'Afinidad calculada con IA: 87%'], [66.7, 45.5, 300, 82, '5 oportunidades HOT para tu rubro'], [72.3, 25, 125, 40, 'Te avisamos apenas aparece una']] }
+        beats: [[21.9, 54.4, 64, 64, 'Afinidad calculada con IA: 87%'], [68, 33, 282, 90, '5 oportunidades HOT para tu rubro'], [90.5, 6.2, 182, 38, 'Tú defines la búsqueda; la IA filtra el resto']] }
     ];
     var DUR = 8200, tabs = $('#psTabs'), shots = $('#psShots'), cam = $('#psCam'), ring = $('#psRing'), cursor = $('#psCursor'),
         toast = $('#psToast'), chip = $('#psChip'), cap = $('#psCap'), url = $('#psUrl'), frame = $('#psFrame');
@@ -272,7 +272,7 @@
       b.innerHTML = '<span>' + sh.t + '</span><i class="ps-prog"></i>';
       b.addEventListener('click', function () { go(i, true); });
       tabs.appendChild(b);
-      var img = new Image(); img.src = BASE + sh.k + '.webp'; img.alt = 'Captura de Hapee: ' + sh.t; img.width = 1500; img.height = 780;
+      var img = new Image(); img.src = BASE + sh.k + '.webp?v=' + SHOTS_V; img.alt = 'Captura de Hapee: ' + sh.t; img.width = 1500; img.height = 780;
       img.decoding = 'async'; if (i === 0) img.className = 'on';
       shots.appendChild(img);
     });
