@@ -51,6 +51,49 @@
   @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}}
   .mbox h3{font-size:1.4rem}
   .steps-mini{display:flex;gap:6px}.steps-mini i{flex:1;height:4px;border-radius:4px;background:var(--surface-2)}.steps-mini i.on{background:var(--grad)}
+
+  /* ── Comparación viva ── */
+  .cmp{border:1px solid var(--border);border-radius:var(--r-xl);background:var(--surface);overflow:clip;position:relative}
+  .cmp-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 22px;border-bottom:1px solid var(--border)}
+  .sw{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;color:var(--heading);cursor:pointer}
+  .sw input{position:absolute;opacity:0}
+  .sw span{width:42px;height:24px;border-radius:999px;background:var(--surface-2);border:1px solid var(--border-strong);position:relative;transition:background var(--d-base)}
+  .sw span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:var(--shadow-1);transition:transform var(--d-base) var(--ease-spring)}
+  .sw input:checked+span{background:var(--grad);border-color:transparent}.sw input:checked+span::after{transform:translateX(18px)}
+  .sw input:focus-visible+span{outline:2px solid var(--orange);outline-offset:3px}
+  .cmp-meter{display:flex;align-items:baseline;gap:8px;color:var(--text-muted);font-size:.85rem}
+  .cmp-meter b{font-family:var(--f-display);font-weight:400;font-size:2rem;line-height:1;color:var(--link)}
+  .cmp-head,.cr{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr))}
+  .cmp-head{position:sticky;top:84px;z-index:3;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  .ch{position:relative;padding:16px 14px;display:grid;justify-items:center;gap:6px;text-align:center;transition:background var(--d-base)}
+  .ch b{font-size:1.05rem;color:var(--heading)}.ch span{font-weight:700;color:var(--heading);font-size:.92rem}.ch small{color:var(--text-muted);font-weight:500}
+  .ch .pop{position:absolute;top:-1px;left:50%;transform:translateX(-50%);font:700 .62rem/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;font-style:normal;padding:5px 8px;border-radius:0 0 8px 8px;background:var(--grad);color:#fff;white-space:nowrap}
+  .ch.pro{padding-top:24px}
+  .cg-h{display:flex;align-items:center;gap:10px;padding:18px 22px 10px;font-weight:700;color:var(--heading);font-size:.95rem}
+  .cg-h .ic{width:32px;height:32px;border-radius:10px}.cg-h .ic .ico{width:16px;height:16px}
+  .cr{border-top:1px solid var(--border);transition:background var(--d-base),opacity var(--d-slow),max-height var(--d-slow) var(--ease-out);max-height:90px;overflow:hidden}
+  .cr:hover{background:var(--surface-2)}
+  .cf{padding:14px 22px;color:var(--heading);font-weight:600;font-size:.93rem;display:flex;align-items:center}
+  .cv{padding:14px;display:grid;place-items:center;text-align:center;font-size:.88rem;color:var(--text);transition:background var(--d-base),color var(--d-base)}
+  .cv[data-p="1"],.ch[data-p="1"]{background:rgba(250,80,0,.06)}
+  .y{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(34,197,94,.14);transform:scale(0);transition:transform .5s var(--ease-spring)}
+  .y svg{width:14px;height:14px;fill:none;stroke:#22c55e;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .cmp.in .y{transform:none}
+  .n{color:var(--text-muted);opacity:.5}
+  /* plan destacado al pasar el mouse */
+  .cmp[data-hl] .cv,.cmp[data-hl] .ch{opacity:.45}
+  .cmp[data-hl="0"] [data-p="0"],.cmp[data-hl="1"] [data-p="1"],.cmp[data-hl="2"] [data-p="2"]{opacity:1;background:var(--grad-soft)}
+  .cmp .cv,.cmp .ch{transition:opacity var(--d-base),background var(--d-base)}
+  /* solo diferencias */
+  .cmp.only .cr:not([data-diff]){max-height:0;opacity:0;border-top-color:transparent}
+  .cmp.only .cg:not(:has([data-diff])){display:none}
+  @media (max-width:760px){
+    .cmp-head,.cr{grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,1fr))}
+    .cf{padding:12px 12px;font-size:.82rem}.cv{padding:10px 4px;font-size:.74rem}
+    .ch .pop{display:none}.ch.pro{padding-top:12px}
+    .ch{padding:12px 4px}.ch b{font-size:.85rem}.ch span{font-size:.72rem}.ch .btn{display:none}
+    .cmp-head{top:76px}.cg-h{padding:16px 12px 8px}
+  }
   @media (max-width:1100px){.plans,.quiz{grid-template-columns:1fr}}
 </style>
 </head>
@@ -121,25 +164,20 @@
 
   <section class="sec">
     <div class="ctn">
-      <div class="sec-head center"><p class="eyebrow">Comparación</p><h2 class="display">Todo, lado a lado.</h2></div>
-      <div class="tbl-wrap rv"><table class="tbl">
-        <thead><tr><th>Función</th><th>Starter</th><th class="us">Pro</th><th>Elite Setup</th></tr></thead>
-        <tbody>
-          <tr><td>Usuarios</td><td>2</td><td class="us">Ilimitados</td><td>Se suma a tu plan</td></tr>
-          <tr><td>Contactos</td><td>2.000</td><td class="us">Ilimitados</td><td>—</td></tr>
-          <tr><td>Agentes IA 24/7</td><td class="y">✓</td><td class="us y">✓</td><td>Entrenados por nosotros</td></tr>
-          <tr><td>Bandeja omnicanal</td><td class="y">✓</td><td class="us y">✓</td><td>Configurada</td></tr>
-          <tr><td>WhatsApp Business API</td><td class="n">—</td><td class="us y">✓</td><td>Conectada</td></tr>
-          <tr><td>Pipeline y CRM</td><td class="y">✓</td><td class="us y">✓</td><td>Migración de contactos</td></tr>
-          <tr><td>Automatizaciones</td><td>Básicas</td><td class="us">Avanzadas</td><td>A medida</td></tr>
-          <tr><td>Email Marketing</td><td class="y">✓</td><td class="us y">✓</td><td>Plantillas de marca</td></tr>
-          <tr><td>Licitaciones</td><td>Mercado Público</td><td class="us">Público y privado</td><td>Búsqueda configurada</td></tr>
-          <tr><td>Voz clonada</td><td class="y">✓</td><td class="us y">✓</td><td>Grabada con tu marca</td></tr>
-          <tr><td>Centro de agentes</td><td class="n">—</td><td class="us y">✓</td><td>Configurado</td></tr>
-          <tr><td>Reportería</td><td>Básica</td><td class="us">Completa</td><td>Tablero a medida</td></tr>
-          <tr><td>Academia</td><td class="y">✓</td><td class="us y">✓</td><td>Kickoff en vivo</td></tr>
-        </tbody>
-      </table></div>
+      <div class="sec-head center"><p class="eyebrow">Comparación</p><h2 class="display">Todo, <span class="grad-text">lado a lado.</span></h2><p class="lead">Pasa el mouse sobre un plan para destacarlo, o muestra solo lo que cambia entre planes.</p></div>
+      <div class="cmp rv" id="cmp">
+        <div class="cmp-top">
+          <label class="sw"><input type="checkbox" id="onlyDiff"><span></span>Solo diferencias</label>
+          <div class="cmp-meter"><b id="proPct">0%</b><small>de las funciones cambian entre Starter y Pro</small></div>
+        </div>
+        <div class="cmp-head">
+          <div class="cf"></div>
+          <div class="ch" data-p="0"><b>Starter</b><span>USD 297<small>/mes</small></span><a class="btn btn-secondary btn-sm" href="#" data-plan="Starter">Elegir</a></div>
+          <div class="ch pro" data-p="1"><i class="pop">El más elegido</i><b>Pro</b><span>USD 397<small>/mes</small></span><a class="btn btn-primary btn-sm" href="#" data-plan="Pro">Elegir</a></div>
+          <div class="ch" data-p="2"><b>Elite Setup</b><span>USD 3.290<small> único</small></span><a class="btn btn-secondary btn-sm" href="#" data-plan="Elite Setup">Elegir</a></div>
+        </div>
+        <div class="cg"><div class="cg-h"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.8-3.6 3.3-5.2 6.2-5.2s5.4 1.6 6.2 5.2M16 5.6a3 3 0 0 1 0 5.8M17.8 15.1c2.1.5 3.4 1.9 3.9 4.4"/></svg></span>Equipo y contactos</div><div class="cr" data-diff><div class="cf">Usuarios</div><div class="cv" data-p="0">2</div><div class="cv" data-p="1">Ilimitados</div><div class="cv" data-p="2">Se suma a tu plan</div></div><div class="cr" data-diff><div class="cf">Contactos</div><div class="cv" data-p="0">2.000</div><div class="cv" data-p="1">Ilimitados</div><div class="cv" data-p="2">Migración incluida</div></div></div><div class="cg"><div class="cg-h"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Conversaciones con IA</div><div class="cr"><div class="cf">Agentes IA 24/7</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Entrenados por nosotros</div></div><div class="cr"><div class="cf">Bandeja omnicanal</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Configurada</div></div><div class="cr" data-diff><div class="cf">WhatsApp Business API</div><div class="cv" data-p="0"><span class="n">—</span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Conectada</div></div><div class="cr"><div class="cf">Voz clonada</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Grabada con tu marca</div></div><div class="cr" data-diff><div class="cf">Centro de agentes</div><div class="cv" data-p="0"><span class="n">—</span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Configurado</div></div></div><div class="cg"><div class="cg-h"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>Ventas y automatización</div><div class="cr"><div class="cf">Pipeline y CRM</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Etapas a tu medida</div></div><div class="cr" data-diff><div class="cf">Automatizaciones</div><div class="cv" data-p="0">Básicas</div><div class="cv" data-p="1">Avanzadas</div><div class="cv" data-p="2">A medida</div></div><div class="cr" data-diff><div class="cf">Licitaciones</div><div class="cv" data-p="0">Mercado Público</div><div class="cv" data-p="1">Público y privado</div><div class="cv" data-p="2">Búsqueda configurada</div></div></div><div class="cg"><div class="cg-h"><span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>Marketing y datos</div><div class="cr"><div class="cf">Email Marketing</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Plantillas de marca</div></div><div class="cr" data-diff><div class="cf">Reportería</div><div class="cv" data-p="0">Básica</div><div class="cv" data-p="1">Completa</div><div class="cv" data-p="2">Tablero a medida</div></div><div class="cr"><div class="cf">Academia</div><div class="cv" data-p="0"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="1"><span class="y"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="cv" data-p="2">Kickoff en vivo</div></div></div>
+      </div>
     </div>
   </section>
 
@@ -200,6 +238,21 @@
   d.querySelectorAll('[data-plan]').forEach(function(b){b.addEventListener('click',function(){d.getElementById('ckPlan').textContent=b.dataset.plan;m.hidden=false;d.getElementById('ckN').focus();});});
   m.addEventListener('click',function(e){if(e.target===m||e.target.hasAttribute('data-close'))m.hidden=true;});
   d.addEventListener('keydown',function(e){if(e.key==='Escape')m.hidden=true;});
+
+  // comparación viva
+  var cmp=d.getElementById('cmp');
+  if(cmp){
+    var ys=cmp.querySelectorAll('.y');
+    ys.forEach(function(y,i){y.style.transitionDelay=(i*45)+'ms';});
+    new IntersectionObserver(function(es,o){if(es[0].isIntersecting){cmp.classList.add('in');o.disconnect();
+      var rows=cmp.querySelectorAll('.cr'),pro=0,st=0;rows.forEach(function(r){var c=r.querySelectorAll('.cv');if(c[1].querySelector('.y')||!c[1].querySelector('.n'))pro++;if(c[0].querySelector('.y')||!c[0].querySelector('.n'))st++;});
+      var pct=Math.round((pro-st)/st*100+ (rows.length-st)/rows.length*0),el=d.getElementById('proPct'),t0=performance.now(),to=Math.round((cmp.querySelectorAll('.cr[data-diff]').length/rows.length)*100);
+      (function f(t){var p=Math.min(1,(t-t0)/1200);el.textContent=Math.round(to*(1-Math.pow(1-p,3)))+'%';if(p<1)requestAnimationFrame(f);})(t0);}},{threshold:.2}).observe(cmp);
+    cmp.querySelectorAll('[data-p]').forEach(function(c){c.addEventListener('mouseenter',function(){cmp.dataset.hl=c.dataset.p;});});
+    cmp.addEventListener('mouseleave',function(){delete cmp.dataset.hl;});
+    d.getElementById('onlyDiff').addEventListener('change',function(e){cmp.classList.toggle('only',e.target.checked);});
+    cmp.querySelectorAll('.ch [data-plan]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();d.getElementById('ckPlan').textContent=b.dataset.plan;d.getElementById('ck').hidden=false;});});
+  }
   d.getElementById('ckForm').addEventListener('submit',function(e){e.preventDefault();var b=e.target.querySelector('[type=submit]');b.textContent='Propuesta: aquí se abre Stripe Checkout';});
 })();
 </script>
