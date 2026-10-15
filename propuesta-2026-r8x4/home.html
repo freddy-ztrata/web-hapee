@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/robot.png" fetchpriority="high">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=14">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=14">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=17">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=17">
 <script>
   /* Tema antes del primer pintado: oscuro por defecto, respeta la elección guardada. */
   try{var t=localStorage.getItem('hapee-prop-theme');if(t==='light')document.documentElement.classList.remove('dark')}catch(e){}
@@ -137,13 +137,12 @@
     <div class="hero-stage" aria-hidden="true">
       <div class="orb"></div>
       <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-      <model-viewer id="robot3d" class="robot" src="/oficina/assets/rig/hapee-rig-d.glb" poster="/img/robot.png" alt=""
-        autoplay animation-crossfade-duration="400"
-        environment-image="neutral" tone-mapping="neutral" exposure="1"
-        shadow-intensity="1.1" shadow-softness=".85"
-        camera-orbit="0deg 82deg 105%" field-of-view="26deg" interaction-prompt="none" disable-zoom disable-pan loading="eager">
-        <img slot="poster" src="/img/robot.png" alt="" width="520" height="520">
-      </model-viewer>
+      <div class="bot" id="bot">
+        <div class="bot-tilt" id="botTilt">
+          <img class="bot-img" src="/img/robot.png" alt="" width="435" height="800" fetchpriority="high">
+          <span class="bot-sheen"></span>
+        </div>
+      </div>
       <span class="robot-floor" aria-hidden="true"></span>
       <!-- tarjetas flotantes: ilustran el producto, NO son actividad real -->
       <div class="float f1"><span class="f-ic wa"><img src="/img/orbit/whatsapp.png" alt="" width="20" height="20"></span><div><b>Nuevo lead · Inmobiliaria</b><small>Respondido en 4 s</small></div></div>
@@ -154,7 +153,7 @@
 
   <a class="scroll-cue" href="#marcas" aria-label="Seguir bajando"><span></span></a>
 
-  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot 3D riggeado (el de la oficina) que gesticula, con luz HDR, y sigue al cursor. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
+  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot con el render oficial (colores y logo exactos) animado en 2.5D: se inclina siguiendo el cursor, flota y lo recorre un brillo de luz. Más liviano que el 3D, que lavaba los colores y deformaba el logo del pecho. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
 </section>
 
 <!-- ═════════════ 2 · MARCAS ═════════════ -->
@@ -488,7 +487,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-<script src="/propuesta-2026-r8x4/home.js?v=14" defer></script>
+<script src="/propuesta-2026-r8x4/home.js?v=17" defer></script>
 </body>
 </html>

@@ -104,39 +104,28 @@
     });
   });
 
-  /* ── Robot 3D: la cámara sigue al cursor ──────────────── */
-  var robot = $('#robot3d');
-  if (robot && fine && !reduce) {
-    var rx = 0, ry = 82, trx = 0, try_ = 82;
-    window.addEventListener('pointermove', function (e) {
-      trx = (e.clientX / window.innerWidth - .5) * 50;
-      try_ = 82 + (e.clientY / window.innerHeight - .5) * 14;
+  /* ── Robot (render oficial): inclinación 3D que sigue al cursor ── */
+  var tilt = $('#botTilt');
+  if (tilt && !reduce) {
+    var rx = 0, ry = 0, trx = 0, tryy = 0, t0 = performance.now();
+    if (fine) window.addEventListener('pointermove', function (e) {
+      tryy = (e.clientX / window.innerWidth - .5) * 22;
+      trx = (e.clientY / window.innerHeight - .5) * -12;
     }, { passive: true });
-    (function rl() {
-      rx += (trx - rx) * .06; ry += (try_ - ry) * .06;
-      robot.setAttribute('camera-orbit', (-rx).toFixed(2) + 'deg ' + ry.toFixed(2) + 'deg 105%');
-      requestAnimationFrame(rl);
-    })();
-    $$('.float').forEach(function (f, i) {
+    (function tl(now) {
+      if (!fine) { var s = (now - t0) / 1000; tryy = Math.sin(s * .7) * 9; trx = Math.sin(s * .5) * 4; }   // táctil: balanceo suave
+      rx += (trx - rx) * .07; ry += (tryy - ry) * .07;
+      tilt.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      tilt.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      requestAnimationFrame(tl);
+    })(t0);
+    if (fine) $$('.float').forEach(function (f, i) {
       var k = [18, -14, 10][i] || 10;
       window.addEventListener('pointermove', function (e) {
         f.style.transform = 'translate(' + ((e.clientX / window.innerWidth - .5) * k) + 'px,' + ((e.clientY / window.innerHeight - .5) * k) + 'px)';
       }, { passive: true });
     });
   }
-
-  /* ── Robot: acabado de plástico brillante como el render oficial (img/robot.png).
-     La textura trae los colores reales; solo se baja la rugosidad para que la luz
-     del entorno «neutral» le saque brillo sin cambiar el tono. */
-  if (robot) robot.addEventListener('load', function () {
-    try {
-      robot.model.materials.forEach(function (m) {
-        var p = m.pbrMetallicRoughness;
-        p.setRoughnessFactor(Math.min(p.roughnessFactor, .38));
-        p.setMetallicFactor(0);
-      });
-    } catch (e) { /* si el visor cambia de API, el robot se ve igual que antes */ }
-  });
 
   /* ── Placeholder rotativo del hero ────────────────────── */
   var hi = $('#heroInput'), ideas = ['Vendo departamentos en Santiago…', 'Tengo una clínica dental…', 'Vendo cursos online de inglés…', 'Tengo una tienda de ropa en Instagram…', 'Vendo autos seminuevos…'], ii = 0;

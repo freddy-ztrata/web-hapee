@@ -546,3 +546,16 @@ body.show-notes section{outline:1px dashed rgba(245,166,35,.35);outline-offset:-
 @media (max-width:1100px){.nav-r .lang{display:none}}
 
 .pshow .sec-head{margin-bottom:var(--s-8)}
+
+/* Robot del hero (render oficial img/robot.png) en 2.5D: el 3D lavaba los
+   colores y la animación riggeada deformaba el logo del pecho. */
+.bot{position:absolute;left:50%;top:50%;height:84%;aspect-ratio:435/800;transform:translate(-50%,-50%);perspective:1100px;animation:botFloat 6s var(--ease-in-out) infinite}
+.bot-tilt{position:relative;width:100%;height:100%;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transform-style:preserve-3d;will-change:transform}
+.bot-img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 34px 38px rgba(0,0,0,.42)) drop-shadow(0 0 60px rgba(250,80,0,.18));user-select:none;-webkit-user-drag:none}
+.bot-sheen{position:absolute;inset:0;pointer-events:none;
+  -webkit-mask:url(/img/robot.png) center/contain no-repeat;mask:url(/img/robot.png) center/contain no-repeat;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 48%,rgba(255,255,255,.12) 54%,transparent 62%) no-repeat;background-size:260% 100%;background-position:130% 0;
+  mix-blend-mode:soft-light;animation:botSheen 6.5s var(--ease-in-out) infinite 1.2s}
+@keyframes botFloat{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 14px))}}
+@keyframes botSheen{0%,55%{background-position:130% 0}85%,100%{background-position:-40% 0}}
+@media (prefers-reduced-motion:reduce){.bot,.bot-sheen{animation:none}}
