@@ -125,12 +125,15 @@
     return 'Eres el agente de ventas por WhatsApp de ' + biz +
       ' Esta es una DEMO en la web de Hapee.ai que muestra cómo trabaja un agente de IA de Hapee.' +
       ' Reglas: responde en español neutro y trata al cliente de tú, en máximo 2 o 3 frases cortas, cálido y profesional, con a lo sumo un emoji.' +
-      ' Califica al cliente con una pregunta a la vez (necesidad, plazo, presupuesto) y propón agendar una visita, reunión o llamada.' +
+      ' No uses Markdown ni asteriscos. Califica al cliente con una pregunta a la vez (necesidad, plazo, presupuesto) y propón agendar una visita, reunión o llamada.' +
       ' Si preguntan por Hapee: es una plataforma de agentes de IA, CRM y automatización. Planes: Starter USD 297/mes, Pro USD 397/mes, Elite Setup USD 3.290 pago único de implementación.' +
       ' No hay prueba gratis ni devolución de pagos; para conocerlo se agenda una demo en hapee.ai/agenda-tu-demo. Nunca menciones otros proveedores de software.';
   }
   function add(text, who) {
-    var m = d.createElement('div'); m.className = 'msg ' + who; m.textContent = text;
+    var m = d.createElement('div'); m.className = 'msg ' + who;
+    // el modelo a veces responde con **negritas** de Markdown: se muestran como negrita, sin asteriscos
+    var safe = text.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; });
+    m.innerHTML = safe.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/(^|\s)[*_](\S[^*_]*?)[*_](?=\s|$|[.,!?])/g, '$1$2').replace(/^#+\s*/gm, '').replace(/\n/g, '<br>');
     body.appendChild(m); body.scrollTop = body.scrollHeight; return m;
   }
   function typing(on) {
@@ -188,7 +191,8 @@
     e.preventDefault();
     var v = hi.value.trim() || hi.placeholder.replace(/…$/, '');
     custom = v;
-    var go = function () { reset(cur, 'Hola, ' + v.charAt(0).toLowerCase() + v.slice(1) + '. ¿Cómo me ayudarías a vender más?'); };
+    // el visitante describe SU negocio; el agente atiende como ese negocio y el visitante hace de cliente
+    var go = function () { reset(cur, 'Hola 👋, quiero información'); };
     if (window.__lenis) window.__lenis.scrollTo('#demo', { offset: -40, duration: 1.4, onComplete: go });
     else { $('#demo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(go, reduce ? 0 : 700); }
   });
