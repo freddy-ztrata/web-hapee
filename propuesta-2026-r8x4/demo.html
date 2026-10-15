@@ -61,7 +61,9 @@
   .cal-head h2{font-size:var(--t-h2)}
   .cal-head p{color:var(--text-muted);font-size:.93rem;max-width:46ch}
   .cal-stage{position:relative;min-height:680px}
-  .cal-embed{position:relative;z-index:1}
+  /* el iframe pinta un rectángulo blanco con esquinas rectas detrás de la tarjeta redondeada del widget: se recorta al mismo radio */
+  .cal-embed{position:relative;z-index:1;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(250,80,0,.35),0 0 0 1px rgba(255,255,255,.06)}
+  .cal-embed iframe{display:block;border-radius:16px;background:transparent;color-scheme:normal}
   .cal-skel{position:absolute;inset:0;z-index:0;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);padding:28px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px;transition:opacity var(--d-slow) var(--ease-out)}
   .cal-skel.off{opacity:0;pointer-events:none}
   .sk{border-radius:10px;background:linear-gradient(90deg,var(--surface-2) 0%,rgba(250,80,0,.08) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:sk 1.6s linear infinite}
