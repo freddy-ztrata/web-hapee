@@ -132,10 +132,10 @@ html:not(.dark) .aurora i{mix-blend-mode:multiply}
 .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 /* sin gap: cada logo lleva su margen, así la mitad del track mide exactamente una lista y el -50% empalma */
 .mq-track{display:flex;width:max-content;animation:mq 45s linear infinite;align-items:center}
-.mq-track img{margin-right:72px}
+.mq-track img{margin-right:88px}
 .marquee:hover .mq-track{animation-play-state:paused}
 /* los logos de img/brands son blancos sobre transparente: en oscuro van tal cual, en claro se invierten */
-.mq-track img{height:40px;width:auto;object-fit:contain;opacity:.6;transition:opacity var(--d-base)}
+.mq-track img{height:64px;width:auto;object-fit:contain;opacity:.75;transition:opacity var(--d-base)}
 html:not(.dark) .mq-track img{filter:invert(1)}
 .mq-track img:hover{opacity:1}
 @keyframes mq{to{transform:translateX(-50%)}}
@@ -571,3 +571,5 @@ body.show-notes section{outline:1px dashed rgba(245,166,35,.35);outline-offset:-
 .bot-3d .bot-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .5s}
 .bot-3d.ready .bot-poster{opacity:0}
 .bot-3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;touch-action:pan-y}
+
+@media(max-width:760px){.mq-track img{height:48px;margin-right:56px}}

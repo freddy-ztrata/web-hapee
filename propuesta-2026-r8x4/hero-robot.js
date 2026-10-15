@@ -32,20 +32,26 @@ async function init() {
 
   const { load } = await import('/propuesta-2026-r8x4/robot/robot.js?v=50');
   const bot = await load(THREE);
-  bot.animate(0, { wave: 0 });
-
-  // centrar y encuadrar con la pose de reposo aplicada
-  const root = bot.root; root.updateMatrixWorld(true);
-  const box = new THREE.Box3().setFromObject(root, true), size = box.getSize(new THREE.Vector3()), ctr = box.getCenter(new THREE.Vector3());
+  // centrar y encuadrar: caja de la pose de reposo unida a la del saludo (el brazo levantado no se corta)
+  const root = bot.root, box = new THREE.Box3();
+  for (const [t, w] of [[0, 0], [.3, 1], [.55, 1], [.8, 1], [1.1, 0]]) { bot.animate(t, { wave: w }); root.updateMatrixWorld(true); box.union(new THREE.Box3().setFromObject(root, true)); }
+  bot.animate(0, { wave: 0 }); root.updateMatrixWorld(true);
+  // el eje de giro es el centro del cuerpo en reposo (así no orbita hacia el brazo levantado)
+  const rest = new THREE.Box3().setFromObject(root, true).getCenter(new THREE.Vector3());
+  const ctr = box.getCenter(new THREE.Vector3()).setX(rest.x).setZ(rest.z);
+  const size = new THREE.Vector3(2 * Math.max(box.max.x - rest.x, rest.x - box.min.x), box.max.y - box.min.y, 2 * Math.max(box.max.z - rest.z, rest.z - box.min.z));
   const off = new THREE.Group(); off.add(root); off.position.sub(ctr);
   const spin = new THREE.Group(); spin.add(off); scene.add(spin);
   window.__heroBox = [size.x, size.y, size.z];
-  const dist = (size.y / 2) / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) * 1.12;
-  cam.position.set(0, size.y * .04, dist); cam.lookAt(0, size.y * .02, 0);
+  const tanV = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+  function frameCam() {
+    const dist = Math.max((size.y / 2) / tanV, (size.x / 2) / (tanV * cam.aspect)) * 1.08 + size.z / 2;
+    cam.position.set(0, size.y * .04, dist); cam.lookAt(0, size.y * .02, 0);
+  }
 
   // poner el canvas y retirar el póster
   host.appendChild(cv);
-  function resize() { const r = host.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); cam.aspect = r.width / r.height; cam.updateProjectionMatrix(); }
+  function resize() { const r = host.getBoundingClientRect(); renderer.setSize(r.width, r.height, false); cam.aspect = r.width / r.height; frameCam(); cam.updateProjectionMatrix(); }
   resize(); addEventListener('resize', resize);
   host.classList.add('ready');
 
