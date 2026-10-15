@@ -1795,6 +1795,9 @@ html.dark .hf-bubble{background:rgba(32,25,22,.92);border-color:rgba(255,255,255
   .ps-cap{font-size:.88rem;padding:0 14px}
   .mk-asst-robot3d{width:min(50%,220px);height:70%}
 }
+/* Foco visible para teclado (WCAG 2.4.7, 2026-10-15). Solo enlaces y botones:
+   los inputs ya marcan el foco con su borde. :focus-visible no aparece al hacer clic. */
+a:focus-visible,button:focus-visible,summary:focus-visible,[role="button"]:focus-visible,[tabindex]:focus-visible{outline:2px solid #FA5000;outline-offset:3px;border-radius:6px}
 </style>
 
 <!-- DEMO LANDING — Award-winning sections styles -->
@@ -2336,7 +2339,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
 <section class="video-section">
   <div class="ctn">
     <div class="video-wrap" style="max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)">
-      <video id="hapeeVideo" autoplay muted loop playsinline controls poster="img/video-poster.jpg" style="width:100%;display:block;border-radius:20px" aria-label="Vídeo de demonstração da plataforma Hapee">
+      <video id="hapeeVideo" muted loop playsinline controls preload="none" data-autoplay-visible poster="img/video-poster.jpg" style="width:100%;display:block;border-radius:20px" aria-label="Vídeo de demonstração da plataforma Hapee">
         <source src="img/video-hapee.mp4" type="video/mp4">
       </video>
     </div>
@@ -2553,7 +2556,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
             </div>
             <div class="mk-home-fab">
               <div class="hf-bubble">Bom dia! ☀️ Você tem <b>8 conversas</b> esperando e <b>3 reuniões</b> hoje. Quer ajuda para priorizar?</div>
-              <model-viewer class="hf-robot" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee" auto-rotate rotation-per-second="30deg" interaction-prompt="none" disable-zoom exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+              <model-viewer class="hf-robot" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee" auto-rotate rotation-per-second="30deg" interaction-prompt="none" disable-zoom exposure="1.05" loading="lazy"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
             </div>
           </div>
         </div>
@@ -3358,7 +3361,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
                 </div>
                 <div class="mk-asst-robot-wrap">
                   <div class="as-ring"></div>
-                  <model-viewer class="mk-asst-robot3d" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee 3D" camera-controls auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom shadow-intensity="1.1" exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+                  <model-viewer class="mk-asst-robot3d" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee 3D" camera-controls auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom shadow-intensity="1.1" exposure="1.05" loading="lazy"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
                   <span class="as-hint">✥ arraste · gire em 3D</span>
                 </div>
               </div>
@@ -4852,5 +4855,7 @@ Ao encerrar, mencione: "Esta demo é powered by Hapee.ai — agentes de IA para 
 }
 </style>
 <script src="/js/lang.js" defer></script>
+<script src="/js/video-visible.js" defer></script>
+<script src="/js/menu-movil.js" defer></script>
 </body>
 </html>

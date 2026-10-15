@@ -543,6 +543,9 @@ html.dark .modal .lgl{background:#141414}
 .msec{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:15px;font-size:.75rem;color:var(--text-2)}
 
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px}}
+/* Foco visible para teclado (WCAG 2.4.7, 2026-10-15). Solo enlaces y botones:
+   los inputs ya marcan el foco con su borde. :focus-visible no aparece al hacer clic. */
+a:focus-visible,button:focus-visible,summary:focus-visible,[role="button"]:focus-visible,[tabindex]:focus-visible{outline:2px solid #FA5000;outline-offset:3px;border-radius:6px}
 </style>
 <!-- Meta Pixel (conjunto de datos 955108270238616). Se declara en la política de
      privacidad (§2.9 y §13). El Schedule de la reserva lo dispara agenda-tu-demo con el
@@ -581,7 +584,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <a href="/pt/agenda-tu-demo" class="btn bo">Agendar Demo</a>
-      <a href="#" class="btn bs" onclick="return false">Ver Planos</a>
+      <a href="#planes" class="btn bs">Ver Planos</a>
     </div>
     <button class="mbtn" onclick="window.location.href='/pt/'"><span></span><span></span><span></span></button>
   </div>
