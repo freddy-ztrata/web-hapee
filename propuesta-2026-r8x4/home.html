@@ -12,8 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/robot.png" fetchpriority="high">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=17">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=17">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=25">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=25">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=25">
 <script>
   /* Tema antes del primer pintado: oscuro por defecto, respeta la elección guardada. */
   try{var t=localStorage.getItem('hapee-prop-theme');if(t==='light')document.documentElement.classList.remove('dark')}catch(e){}
@@ -253,19 +254,11 @@
         <span class="ps-url"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="psUrl">app.hapee.ai · Inicio</span></span>
         <span class="ps-live"><span class="dot-live"></span>En vivo</span>
       </div>
-      <div class="ps-view" id="psView">
-        <div class="ps-cam" id="psCam">
-          <div class="ps-shots" id="psShots"></div>
-          <span class="ps-ring" id="psRing" aria-hidden="true"></span>
-          <span class="ps-cursor" id="psCursor" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2.5 19.5 12l-6.8 1.6L9 20.5z" fill="#141210" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-        </div>
-        <div class="ps-toast" id="psToast" role="status" aria-live="polite"></div>
-        <span class="ps-chip" id="psChip">● Todo bajo control</span>
-      </div>
+      <div class="ps-view" id="psView"><div class="sc-stage" id="scStage"></div></div>
     </div>
     <p class="ps-cap" id="psCap"></p>
   </div>
-  <aside class="note" data-n="5"><b>Capturas reales, animadas</b> Reemplaza el bento y el recorrido horizontal por el widget que ya funciona en la web actual («Así se ve Hapee por dentro»), pero con capturas reales y actuales (15/10) de la subcuenta DEMO en vez de maquetas CSS. Suma el nuevo Centro de agentes. Cámara que sigue al cursor, foco sobre lo importante y avisos en vivo. Avanza solo (pausa al pasar el mouse) y se maneja con teclado. Las capturas viven en /shots: reemplazarlas por capturas nuevas no requiere tocar código.</aside>
+  <aside class="note" data-n="5"><b>La plataforma, viva</b> El widget favorito de la web actual, rehecho desde cero con la interfaz de octubre 2026 (capturas de la subcuenta DEMO como referencia): cada módulo es una escena viva de ~8 s. Llegan mensajes y la IA responde, los negocios cambian de columna, las tareas de los agentes avanzan, un pulso recorre el flujo, los gráficos se dibujan y entran licitaciones nuevas. Diseñado sobre un lienzo fijo que se escala: nunca se desarma. Avanza solo y se maneja con teclado.</aside>
 </section>
 
 <!-- ═════════════ 7 · INTEGRACIONES ═════════════ -->
@@ -414,14 +407,14 @@
       <div class="kpis">
         <div><b class="display">2018</b><small>Equipo desde</small></div>
         <div><b class="display">3</b><small>Idiomas</small></div>
-        <div class="verify"><b class="display">00</b><small>Clientes activos de Hapee <em>[dato]</em></small></div>
+        <div><b class="display">+150</b><small>Clientes activos de Hapee</small></div>
       </div>
     </div>
     <div class="faces" aria-hidden="true">
       <img src="/img/equipo/claudia.webp" alt="" loading="lazy"><img src="/img/equipo/giorgina.webp" alt="" loading="lazy"><img src="/img/equipo/jaime.webp" alt="" loading="lazy"><img src="/img/equipo/nelly.webp" alt="" loading="lazy"><img src="/img/equipo/rocio.webp" alt="" loading="lazy"><img src="/img/equipo/jose.webp" alt="" loading="lazy"><img src="/img/equipo/richard.webp" alt="" loading="lazy"><img src="/img/equipo/camila.webp" alt="" loading="lazy"><img src="/img/equipo/leidy.webp" alt="" loading="lazy"><img src="/img/equipo/patricia.webp" alt="" loading="lazy">
     </div>
   </div>
-  <aside class="note" data-n="11"><b>Equipo y tracción</b> Para un VC: caras, fundadores y una métrica propia de Hapee (no las de la agencia). Se eliminan las cifras actuales no verificables («+90K clientes», «194M leads cerrados», «#1 en LATAM»), que se contradicen con «+10.000 clientes del grupo».</aside>
+  <aside class="note" data-n="11"><b>Equipo y tracción</b> Para un VC: caras, fundadores y una métrica propia de Hapee: +150 clientes activos (no las cifras de la agencia). Se eliminan las cifras actuales no verificables («+90K clientes», «194M leads cerrados», «#1 en LATAM»), que se contradicen con «+10.000 clientes del grupo».</aside>
 </section>
 
 <!-- ═════════════ 14 · FAQ ═════════════ -->
@@ -487,6 +480,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script src="/propuesta-2026-r8x4/home.js?v=17" defer></script>
+<script src="/propuesta-2026-r8x4/home.js?v=25" defer></script>
+<script src="/propuesta-2026-r8x4/showcase.js?v=25" defer></script>
 </body>
 </html>
