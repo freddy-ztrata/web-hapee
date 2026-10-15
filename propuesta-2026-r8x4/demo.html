@@ -53,7 +53,9 @@
 
   /* ── Calendario + lateral ── */
   .cal-sec{padding-top:var(--s-12)}
-  .cal-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.85fr);gap:var(--s-12);align-items:start}
+  .cal-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-12);align-items:start}
+  /* el widget del calendario necesita todo el ancho: en una columna angosta cae a su diseño de celular y se estira */
+  .cal-grid>.side{position:static;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}
   .cal-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:var(--s-6)}
   .cal-head>div{display:grid;gap:14px}
   .cal-head h2{font-size:var(--t-h2)}
