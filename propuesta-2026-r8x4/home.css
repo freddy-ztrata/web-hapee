@@ -130,7 +130,9 @@ html:not(.dark) .aurora i{mix-blend-mode:multiply}
 .logos{padding:48px 0 32px;border-block:1px solid var(--border);position:relative}
 .logos-t{text-align:center;font-size:var(--t-sm);color:var(--text-muted);margin-bottom:24px}
 .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.mq-track{display:flex;gap:72px;width:max-content;animation:mq 40s linear infinite;align-items:center}
+/* sin gap: cada logo lleva su margen, así la mitad del track mide exactamente una lista y el -50% empalma */
+.mq-track{display:flex;width:max-content;animation:mq 45s linear infinite;align-items:center}
+.mq-track img{margin-right:72px}
 .marquee:hover .mq-track{animation-play-state:paused}
 /* los logos de img/brands son blancos sobre transparente: en oscuro van tal cual, en claro se invierten */
 .mq-track img{height:40px;width:auto;object-fit:contain;opacity:.6;transition:opacity var(--d-base)}
