@@ -60,7 +60,7 @@
   .cal-head>div{display:grid;gap:14px}
   .cal-head h2{font-size:var(--t-h2)}
   .cal-head p{color:var(--text-muted);font-size:.93rem;max-width:46ch}
-  .cal-stage{position:relative;min-height:650px}
+  .cal-stage{position:relative;min-height:590px}
   .cal-embed{position:relative;z-index:1}
   /* Sin contenedor y en oscuro: el widget trae una tarjeta blanca configurada en la app. Se invierte la luminosidad
      (invert + hue-rotate 180° conserva los tonos naranjos) y se recorta su borde, así queda integrado al fondo. */
@@ -69,7 +69,12 @@
   .cal-embed{overflow:hidden;border-radius:18px;isolation:isolate}
   /* El widget mide 742 px fijos (su columna de descripción tiene max-height:740) aunque el calendario termina en ~620:
      en escritorio se muestra hasta 650 px; cuando pasa al formulario reporta más alto y el guard quita el tope. */
-  @media(min-width:900px){.cal-embed.tope{max-height:650px}}
+  @media(min-width:900px){
+    .cal-embed.tope{max-height:590px}
+    .cal-embed.tope.activo{max-height:650px}
+    /* el texto de la izquierda queda cortado por el tope: se desvanece en vez de cortarse en seco */
+    .cal-embed.tope::after{content:"";position:absolute;left:0;width:30%;bottom:0;height:70px;pointer-events:none;background:linear-gradient(transparent,var(--bg,#141210))}
+  }
   .cal-embed iframe{display:block;margin:-4px;width:calc(100% + 8px)!important;max-width:none}
   .cal-skel{position:absolute;inset:0;z-index:0;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);padding:28px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px;transition:opacity var(--d-slow) var(--ease-out)}
   .cal-skel.off{opacity:0;pointer-events:none}
@@ -330,6 +335,11 @@
                (orden del documento; el loader es async al final del body), se queda con el mensaje y
                solo agranda el iframe cuando el contenido real supera el alto actual. */
             (function(){
+              /* un clic dentro del iframe le quita el foco a la página: así se sabe que la persona empezó a elegir */
+              window.addEventListener('blur', function(){ setTimeout(function(){
+                var a = document.activeElement;
+                if(a && a.tagName === 'IFRAME' && a.closest('.cal-embed')) a.closest('.cal-embed').classList.add('activo');
+              }, 0); });
               window.addEventListener('message', function(e){
                 var d = e.data;
                 if(!d || typeof d !== 'object' || d.type !== 'zentru_calendar_height') return;
