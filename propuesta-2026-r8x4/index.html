@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=12">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=15">
 <script>try{if(localStorage.getItem('hapee-prop-theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}</script>
 <style>
   body{line-height:1.65}
@@ -112,6 +112,14 @@
   .dc p{font-size:.92rem;color:var(--text-muted)}
 
   .end{padding:100px 0 140px;text-align:center}
+  .news{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .news .card{padding:22px}
+  .news b{display:block;color:var(--heading);margin:8px 0 6px}
+  .news p{font-size:.92rem;color:var(--text-muted)}
+  .news img{width:100%;height:auto!important;border-radius:10px;border:1px solid var(--border);aspect-ratio:1500/780;object-fit:cover;object-position:top left}
+  .status{display:inline-flex;align-items:center;gap:6px;font:700 .72rem/1 var(--f-body);padding:5px 9px;border-radius:999px;background:rgba(245,158,11,.14);color:#f59e0b}
+  html:not(.dark) .status{color:#a16207}
+  @media(max-width:900px){.news{grid-template-columns:1fr}}
   .end h2{font-size:clamp(3rem,8vw,6.5rem)}
 
   @media(max-width:900px){
@@ -130,7 +138,7 @@
   <div class="ctn ctn-wide">
     <img src="/img/logo-hapee.png" alt="Hapee" width="98" height="28">
     <nav aria-label="Secciones">
-      <a href="#resumen">Resumen</a><a href="#criticos">Críticos</a><a href="#areas">Auditoría</a><a href="#kas">Mantener / Agregar / Sacar</a><a href="#arquitectura">Arquitectura</a><a href="#home">Nueva home</a><a href="#ds">Design system</a><a href="#roadmap">Roadmap</a><a href="#decisiones">Decisiones</a>
+      <a href="#novedades">Novedades</a><a href="#resumen">Resumen</a><a href="#criticos">Críticos</a><a href="#areas">Auditoría</a><a href="#kas">Mantener / Agregar / Sacar</a><a href="#arquitectura">Arquitectura</a><a href="#home">Nueva home</a><a href="#ds">Design system</a><a href="#fase0">Fase 0</a><a href="#roadmap">Roadmap</a><a href="#decisiones">Decisiones</a>
     </nav>
     <a class="btn btn-primary btn-sm" href="/propuesta-2026-r8x4/home">Ver la propuesta <span class="arr">→</span></a>
   </div>
@@ -143,13 +151,27 @@
     <h1 class="display">Auditoría UX/UI<br><span class="grad-text">y plan 2026</span></h1>
     <p class="lead">Revisión completa de hapee.ai: navegación, contenido, orden, sistema visual, rendimiento, accesibilidad, SEO y confianza. Y un plan para llevar el sitio a nivel de startup que levanta capital: escalable, claro y con efecto «wow» donde suma.</p>
     <div class="meta">
-      <span class="badge">15 de octubre de 2026</span><span class="badge">23 páginas en español + EN/PT</span><span class="badge">4 auditorías + recorrido en vivo</span>
+      <span class="badge">Actualizado el 15 de octubre de 2026</span><span class="badge">23 páginas en español + EN/PT</span><span class="badge">4 auditorías + recorrido en vivo</span>
     </div>
     <div class="cover-cta">
       <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/home">Ver la nueva home <span class="arr">→</span></a>
       <a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home?notas=1">Verla con notas de diseño</a>
     </div>
     <p class="muted" style="margin-top:18px;font-size:.88rem">Nada de esto reemplaza el sitio actual. La propuesta vive en esta URL oculta (noindex) para revisarla, ajustarla y, si se aprueba, reemplazar.</p>
+  </div>
+</section>
+
+<!-- ───────── NOVEDADES ───────── -->
+<section class="sec" id="novedades">
+  <div class="ctn">
+    <p class="eyebrow">Revisión del 15 de octubre</p>
+    <h2 class="sh display">Qué hay de nuevo para revisar</h2>
+    <p class="lead">Todo esto vive solo en la propuesta. El sitio público no cambió.</p>
+    <div class="news">
+      <div class="card"><img src="/propuesta-2026-r8x4/shots/agentes.webp?v=20261015" alt="Centro de agentes de Hapee" loading="lazy" width="1500" height="780"><b>«Así se ve Hapee por dentro», con capturas reales</b><p>El widget favorito de la web actual, ahora con 9 capturas nuevas de la plataforma (subcuenta DEMO, 15/10), animadas: zoom donde está la acción, cursor, foco y avisos. Suma el nuevo Centro de agentes.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/home#plataforma">Ver el widget →</a></p></div>
+      <div class="card"><img src="/img/robot.png" alt="Robot Hapee" loading="lazy" style="object-fit:contain;background:#141210"><b>Robot del hero más vivo</b><p>El robot riggeado de la oficina 3D: gesticula al hablar, sigue el cursor y respeta los colores y el brillo del render oficial.</p><p style="margin-top:10px"><a href="/propuesta-2026-r8x4/home">Ver el hero →</a></p></div>
+      <div class="card"><b style="margin-top:0">Selector de idioma, Freddy CTO y Fase 0</b><p>Globo ES/EN/PT en el nav, control segmentado en el menú móvil y enlaces en el footer. Freddy Castro figura como cofundador y CTO. Y los arreglos técnicos rápidos del sitio actual quedan preparados para aprobar (ver <a href="#fase0">Fase 0</a>).</p></div>
+    </div>
   </div>
 </section>
 
@@ -410,6 +432,30 @@
   </div>
 </section>
 
+<!-- ───────── FASE 0 ───────── -->
+<section class="sec" id="fase0">
+  <div class="ctn">
+    <p class="eyebrow">Lista para aplicar</p>
+    <h2 class="sh display">Fase 0: arreglos rápidos del sitio actual</h2>
+    <p class="lead">Cambios técnicos de bajo riesgo sobre las páginas que ya están publicadas. Ya están hechos y probados en local, pero <b>no se publicaron</b>: esperan aprobación en la rama <code>propuesta/fase-0-quick-wins</code>. No tocan textos de negocio.</p>
+    <div class="tw"><table>
+      <thead><tr><th>Estado</th><th>Cambio</th><th>Dónde</th><th>Por qué</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Caché del servidor:</b> 30 días para imágenes, fuentes, video y 3D; 1 hora para CSS y JS; el HTML se revalida en cada visita.</td><td>nginx.conf</td><td>Hoy cada visita vuelve a pedir todas las imágenes. No usamos «immutable» porque los archivos no llevan hash: un cambio quedaría pegado un año.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Vary: Accept-Language, Cookie</b> en las páginas en español.</td><td>nginx.conf</td><td>La respuesta depende del idioma del navegador; un proxy o CDN no debe servir la versión de otra persona.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Video demo (10 MB) solo cuando se ve:</b> preload="none" y se reproduce al entrar en pantalla, pausa al salir.</td><td>index, agenda-tu-demo, agentes-ia-whatsapp (ES/EN/PT) + js/video-visible.js</td><td>Hoy se descarga completo al abrir la página aunque nadie llegue a verlo.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Robot 3D diferido</b> (model-viewer loading="lazy").</td><td>index, agenda-tu-demo (ES/EN/PT)</td><td>443 KB que hoy bajan aunque el robot esté fuera de pantalla.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Foco visible para teclado</b> en enlaces y botones.</td><td>index, agenda, agentes-ia-whatsapp, planes (ES/EN/PT)</td><td>WCAG 2.4.7: hoy no se ve dónde está el foco.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Menú móvil accesible:</b> anuncia abierto/cerrado, lleva el foco a la X, cierra con Escape y bloquea el resto de la página.</td><td>index, agenda (ES/EN/PT) + js/menu-movil.js</td><td>Hoy el teclado y el lector de pantalla se pierden detrás del menú.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>«Ver Planes» en /planes</b> deja de ser un botón muerto y baja a los precios.</td><td>planes (ES/EN/PT)</td><td>Era href="#" con onclick="return false".</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>«News» → «Blog»</b> y los 16 enlaces a /#planes van a /planes.</td><td>blog, transformacion, 13 artículos (ES/EN/PT)</td><td>Etiqueta inconsistente y dos fuentes de verdad de precios.</td></tr>
+        <tr><td><span class="status">Por aprobar</span></td><td><b>Sitemap:</b> academia y webinar en ES/EN/PT; academia con canonical y hreflang.</td><td>sitemap.xml, academia (ES/EN/PT)</td><td>Páginas indexables que Google no tenía listadas.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted" style="margin-top:16px;font-size:.88rem">Al aprobar: se fusiona la rama en master y Dokploy lo publica en ~1 minuto. Verificado con nginx local: cabeceras, video que no descarga hasta verse, menú con teclado.</p>
+  </div>
+</section>
+
 <!-- ───────── ROADMAP ───────── -->
 <section class="sec" id="roadmap">
   <div class="ctn">
@@ -461,6 +507,9 @@
       <div class="dc"><i></i><div><b>Idioma por defecto</b><p>Mantener la redirección automática a inglés, limitarla a la home, o mostrar un aviso «¿Ver en inglés?». Afecta a anuncios en español con navegador en inglés.</p></div></div>
       <div class="dc"><i></i><div><b>Idioma de las demos</b><p>¿Se dan demos en inglés y portugués? Hoy las páginas EN/PT lo dicen de forma distinta.</p></div></div>
       <div class="dc"><i></i><div><b>Meta Pixel</b><p>Está cargado en el sitio. Confirmar si se mantiene y alinear la política de privacidad y el aviso de cookies.</p></div></div>
+      <div class="dc"><i></i><div><b>Aprobar la Fase 0</b><p>Nueve arreglos técnicos del sitio actual, ya probados, en la rama propuesta/fase-0-quick-wins.</p></div></div>
+      <div class="dc"><i></i><div><b>Radar de Competencia en la web</b><p>La pantalla del radar en la demo muestra empresas reales (inmobiliarias chilenas) y una pestaña con la competencia de Hapee. Decidir si se muestra, con datos ficticios, o no.</p></div></div>
+      <div class="dc"><i></i><div><b>Datos demo para RRSS y Constructor web</b><p>La subcuenta DEMO no tiene posts con fecha ni sitios publicados; si se cargan, se suman esas dos pestañas al widget.</p></div></div>
       <div class="dc"><i></i><div><b>CTA principal</b><p>La propuesta prioriza «Agendar demo» y deja «Ver precios» como secundario. Confirmar según el modelo de venta que quieren empujar.</p></div></div>
     </div>
   </div>
