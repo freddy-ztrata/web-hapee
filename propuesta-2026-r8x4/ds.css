@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Hapee Design System v2 — propuesta 2026 (NO publicado en el sitio real)
+   Una sola fuente de tokens + componentes base. En el sitio actual cada
+   página copia su propio :root (196 hex distintos en la home); aquí todo
+   lee ROLES, nunca hex sueltos. Light y dark comparten los mismos nombres.
+   ========================================================================== */
+
+:root{
+  /* ── Marca ─────────────────────────────────────────────── */
+  --orange:#FA5000;
+  --orange-ink:#D94400;          /* naranja para TEXTO sobre claro: 4,6:1 */
+  --burgundy:#CD2349;
+  --grad:linear-gradient(90deg,#FA5000 0%,#CD2349 100%);   /* siempre 90deg */
+  --grad-soft:linear-gradient(90deg,rgba(250,80,0,.16),rgba(205,35,73,.16));
+
+  /* ── Neutros cálidos ───────────────────────────────────── */
+  --n-0:#ffffff; --n-50:#FAF8F5; --n-100:#F5F3F0; --n-200:#EAE6E1; --n-300:#D6D0C8;
+  --n-500:#8B8078; --n-600:#5F6675; --n-700:#3A3632; --n-800:#1F1C1A; --n-900:#141210;
+  --n-950:#080808;
+
+  /* ── Estado (solo estados, nunca decoración) ───────────── */
+  --ok:#22c55e; --warn:#f59e0b; --err:#dc2626;
+
+  /* ── Roles: LIGHT ──────────────────────────────────────── */
+  --bg:var(--n-50);
+  --surface:var(--n-0);
+  --surface-2:var(--n-100);
+  --border:rgba(20,18,16,.10);
+  --border-strong:rgba(20,18,16,.18);
+  --text:#2A2623;
+  --text-muted:var(--n-600);
+  --heading:#141210;
+  --link:var(--orange-ink);
+  --glass:rgba(255,255,255,.72);
+  --shadow-1:0 1px 2px rgba(20,18,16,.06);
+  --shadow-2:0 8px 24px rgba(20,18,16,.10);
+  --shadow-3:0 24px 64px rgba(20,18,16,.16);
+
+  /* ── Tipografía (escala modular 1,25 · base 16) ────────── */
+  --f-display:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --f-body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --t-mega:clamp(4rem,13vw,13rem);
+  --t-display:clamp(3.4rem,8vw + 1rem,8rem);
+  --t-h1:clamp(2.75rem,5vw,4.75rem);
+  --t-h2:clamp(2.2rem,4vw,3.6rem);
+  --t-h3:1.5rem;
+  --t-lg:1.15rem;
+  --t-body:1rem;
+  --t-sm:.875rem;
+  --t-xs:.75rem;                  /* mínimo absoluto: 12 px */
+
+  /* ── Espacio (base 4) ──────────────────────────────────── */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px; --s-8:32px;
+  --s-12:48px; --s-16:64px; --s-24:96px; --s-32:128px;
+  --section-y:clamp(80px,12vw,160px);
+  --container:1200px;
+  --container-wide:1400px;
+  --gutter:clamp(20px,5vw,40px);
+
+  /* ── Forma ─────────────────────────────────────────────── */
+  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --d-fast:120ms; --d-base:240ms; --d-slow:480ms; --d-hero:900ms;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --ease-spring:cubic-bezier(.34,1.4,.64,1);
+
+  --z-nav:100; --z-overlay:200; --z-modal:300; --z-toast:400;
+  color-scheme:light;
+}
+
+/* ── Roles: DARK (por defecto en la propuesta) ─────────────── */
+html.dark{
+  --bg:var(--n-950);
+  --surface:#0F0E0D;
+  --surface-2:#161412;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.16);
+  --text:#C9C1B8;
+  --text-muted:#8B8078;
+  --heading:#F5F0EB;
+  --link:#FF7A3D;
+  --glass:rgba(14,13,12,.62);
+  --shadow-1:none; --shadow-2:none; --shadow-3:0 30px 80px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+
+/* ── Reset mínimo ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 var(--t-body)/1.6 var(--f-body);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;
+  transition:background-color var(--d-slow) var(--ease-out),color var(--d-slow) var(--ease-out)}
+img,svg,video,canvas{display:block;max-width:100%}
+a{color:var(--link);text-decoration:none}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{color:var(--heading);margin:0;font-weight:700;line-height:1.1;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+::selection{background:var(--orange);color:#fff}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.ctn{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter)}
+.ctn-wide{max-width:var(--container-wide)}
+.section{padding-block:var(--section-y);position:relative}
+.stack>*+*{margin-top:var(--s-4)}
+
+/* ── Tipografía ─────────────────────────────────────────────── */
+.display{font-family:var(--f-display);font-weight:400;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.t-mega{font-size:var(--t-mega)}
+.t-display{font-size:var(--t-display)}
+.t-h1{font-size:var(--t-h1)}
+.t-h2{font-size:var(--t-h2)}
+.lead{font-size:var(--t-lg);color:var(--text-muted);max-width:62ch;line-height:1.6}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--link)}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--grad);border-radius:2px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--text-muted)}
+
+/* ── Botones ────────────────────────────────────────────────── */
+.btn{--h:48px;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:var(--h);padding:0 22px;
+  border-radius:var(--r-pill);border:1.5px solid transparent;font:600 .95rem/1 var(--f-body);cursor:pointer;white-space:nowrap;
+  transition:transform var(--d-fast) var(--ease-out),box-shadow var(--d-base) var(--ease-out),background-color var(--d-base),border-color var(--d-base),color var(--d-base);
+  -webkit-tap-highlight-color:transparent;position:relative;isolation:isolate}
+.btn:active{transform:scale(.97)}
+.btn-sm{--h:40px;padding:0 16px;font-size:.875rem}
+.btn-lg{--h:58px;padding:0 30px;font-size:1.02rem}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 28px -8px rgba(250,80,0,.55)}
+.btn-primary:hover{box-shadow:0 0 0 4px rgba(250,80,0,.18),0 14px 36px -8px rgba(250,80,0,.65)}
+.btn-secondary{background:transparent;border-color:var(--border-strong);color:var(--heading)}
+.btn-secondary:hover{border-color:var(--orange);color:var(--heading)}
+.btn-ghost{background:transparent;color:var(--heading)}
+.btn-ghost:hover{background:var(--surface-2)}
+.btn .arr{transition:transform var(--d-base) var(--ease-out)}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-1);position:relative;overflow:hidden}
+.card-elevated{box-shadow:var(--shadow-2)}
+/* spotlight que sigue al puntero (JS escribe --mx/--my) */
+.spot::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity var(--d-slow) var(--ease-out);
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(250,80,0,.12),transparent 60%)}
+.spot:hover::after{opacity:1}
+
+/* ── Chips / badges ─────────────────────────────────────────── */
+.chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--border);
+  background:var(--surface);font:600 var(--t-sm)/1 var(--f-body);color:var(--heading);cursor:pointer;transition:all var(--d-base) var(--ease-out)}
+.chip:hover{border-color:var(--border-strong)}
+.chip[aria-pressed="true"]{background:var(--heading);color:var(--bg);border-color:var(--heading)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:var(--r-pill);font:700 var(--t-xs)/1 var(--f-body);letter-spacing:.04em;
+  background:var(--grad-soft);color:var(--link);border:1px solid rgba(250,80,0,.25)}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:livePulse 2s infinite}
+@keyframes livePulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* ── Icono ──────────────────────────────────────────────────── */
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ── Grain (textura global sutil) ───────────────────────────── */
+.grain{position:fixed;inset:-50%;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}}
+
+/* ── Banda de revisión (solo propuesta) ─────────────────────── */
+.review-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:var(--z-toast);display:flex;align-items:center;gap:6px;
+  padding:6px;border-radius:var(--r-pill);background:rgba(10,9,8,.9);color:#f5f0eb;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 50px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font:600 .8rem/1 var(--f-body)}
+.review-bar .rb-tag{padding:0 10px 0 12px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.review-bar .rb-tag i{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 12px var(--orange)}
+.review-bar a,.review-bar button{height:34px;padding:0 14px;border-radius:var(--r-pill);border:0;background:rgba(255,255,255,.08);color:#f5f0eb;
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;font:600 .8rem/1 var(--f-body);white-space:nowrap}
+.review-bar a:hover,.review-bar button:hover{background:rgba(255,255,255,.16)}
+.review-bar button[aria-pressed="true"]{background:var(--orange);color:#fff}
+@media(max-width:640px){.review-bar .rb-tag span{display:none}.review-bar{bottom:10px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .grain{display:none}
+}

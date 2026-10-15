@@ -58,7 +58,9 @@ def paginas_espanol():
     dirs = re.findall(r"^COPY ([a-z0-9._-]+)/ ", docker, re.M)
     out = [p for p in sueltas if p not in NO_TRADUCIR]
     for d in dirs:
-        if d in ("en", "pt"):
+        # en/pt son las traducciones; propuesta-* son borradores internos
+        # ocultos (noindex) que se revisan en español antes de aprobarse.
+        if d in ("en", "pt") or d.startswith("propuesta-"):
             continue
         out += sorted(glob.glob(d + "/**/*.html", recursive=True))
     return out

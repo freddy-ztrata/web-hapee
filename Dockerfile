@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-10-15-idiomas-en-pt
+ARG CACHE_BUST=2026-10-15-propuesta-2026
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -51,6 +51,9 @@ COPY docs/ /usr/share/nginx/html/docs/
 # la pagina en espanol bajo /en/ y /pt/. Directorios enteros por la misma razon
 # que blog/ y docs/. Los assets NO se duplican: nginx los busca sin el prefijo.
 COPY en/ /usr/share/nginx/html/en/
+# Propuesta de rediseño 2026 (auditoría + nueva home), OCULTA para revisión:
+# slug ofuscado, noindex, fuera del sitemap y de todo menú. No reemplaza nada.
+COPY propuesta-2026-r8x4/ /usr/share/nginx/html/propuesta-2026-r8x4/
 COPY pt/ /usr/share/nginx/html/pt/
 # Material para revisores de directorios (video de demostración del plugin).
 COPY review/ /usr/share/nginx/html/review/

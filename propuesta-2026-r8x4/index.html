@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditoría y plan 2026 · Hapee.ai</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Auditoría UX/UI de hapee.ai y plan de rediseño 2026 (documento interno, no publicado).">
+<meta name="theme-color" content="#080808">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=7">
+<script>try{if(localStorage.getItem('hapee-prop-theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}</script>
+<style>
+  body{line-height:1.65}
+  .top{position:sticky;top:0;z-index:50;background:var(--glass);border-bottom:1px solid var(--border);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+  .top .ctn{display:flex;align-items:center;gap:16px;height:64px}
+  .top img{height:26px;width:auto;object-fit:contain;min-width:80px}
+  .top nav{display:flex;gap:4px;margin-left:16px;overflow-x:auto;scrollbar-width:none}
+  .top nav a{padding:8px 12px;border-radius:999px;color:var(--text-muted);font-weight:600;font-size:.85rem;white-space:nowrap}
+  .top nav a:hover{background:var(--surface-2);color:var(--heading)}
+  .top .btn{margin-left:auto}
+  @media(max-width:900px){.top nav{display:none}}
+
+  .cover{padding:120px 0 80px;position:relative;overflow:hidden}
+  .cover::before{content:"";position:absolute;right:-10%;top:-30%;width:60vw;height:60vw;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.35),transparent 60%);filter:blur(60px);z-index:-1}
+  .cover h1{font-size:clamp(3.4rem,9vw,8.4rem);margin:18px 0 24px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+  .cover-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+
+  h2.sh{font-size:var(--t-h2);margin:10px 0 18px}
+  .sec{padding:72px 0;border-top:1px solid var(--border)}
+  .sec>.ctn>p.lead{margin-bottom:36px}
+
+  .tldr{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .tldr .card{padding:26px}
+  .tldr b{color:var(--heading);display:block;font-size:1.05rem;margin-bottom:6px}
+  .tldr p{color:var(--text-muted);font-size:.95rem}
+
+  .scores{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .score{padding:22px;display:grid;gap:8px}
+  .score .bar{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+  .score .bar i{display:block;height:100%;background:var(--grad);width:var(--v)}
+  .score b{font-family:var(--f-display);font-size:2.6rem;font-weight:400;color:var(--heading);line-height:1}
+  .score small{color:var(--text-muted)}
+
+  table{width:100%;border-collapse:collapse;font-size:.92rem}
+  th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+  td b{color:var(--heading)}
+  .tw{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface)}
+  .sev{display:inline-block;padding:4px 8px;border-radius:6px;font:700 .72rem/1 var(--f-body);letter-spacing:.04em;white-space:nowrap}
+  .s-c{background:rgba(220,38,38,.15);color:#f87171}.s-a{background:rgba(250,80,0,.15);color:#ff8a4d}.s-m{background:rgba(245,158,11,.15);color:#fbbf24}.s-b{background:rgba(139,128,120,.18);color:var(--text-muted)}
+  html:not(.dark) .s-c{color:#b91c1c}html:not(.dark) .s-a{color:#c2410c}html:not(.dark) .s-m{color:#a16207}
+
+  details.area{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);margin-bottom:12px;overflow:hidden}
+  details.area summary{display:flex;align-items:center;gap:14px;padding:22px 24px;cursor:pointer;list-style:none;font-weight:700;color:var(--heading);font-size:1.1rem}
+  details.area summary::-webkit-details-marker{display:none}
+  details.area summary::after{content:"+";margin-left:auto;font-weight:400;font-size:1.4rem;color:var(--text-muted)}
+  details.area[open] summary::after{content:"−"}
+  details.area .in{padding:0 24px 24px;display:grid;gap:12px}
+  details.area ul{margin:0;padding-left:20px;display:grid;gap:8px}
+  details.area li b{color:var(--heading)}
+  .src{font-size:.8rem;color:var(--text-muted)}
+
+  .kas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .kas .card{padding:26px}
+  .kas h3{display:flex;align-items:center;gap:10px;font-size:1.2rem;margin-bottom:14px}
+  .kas ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:.93rem}
+  .kas .k h3 i,.kas .a h3 i,.kas .r h3 i{width:10px;height:10px;border-radius:50%}
+  .kas .k h3 i{background:var(--ok)}.kas .a h3 i{background:var(--orange)}.kas .r h3 i{background:var(--err)}
+
+  .ia{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  .ia .col{padding:18px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border)}
+  .ia .col b{display:block;color:var(--heading);margin-bottom:10px}
+  .ia .col span{display:block;font-size:.85rem;color:var(--text-muted);padding:4px 0}
+  .ia .col span.new::after{content:" · nuevo";color:var(--link);font-weight:700}
+  .ia .cta{background:var(--grad-soft);border-color:rgba(250,80,0,.3)}
+
+  .flowmap{display:grid;gap:8px;counter-reset:s}
+  .fm{display:grid;grid-template-columns:44px 1fr 1fr;gap:16px;align-items:start;padding:16px 18px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border)}
+  .fm::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--f-display);font-size:1.8rem;color:var(--link);line-height:1}
+  .fm b{color:var(--heading)}
+  .fm small{display:block;color:var(--text-muted);font-size:.85rem}
+  .fm .tag{font-size:.7rem;font-weight:700;padding:3px 7px;border-radius:6px;background:var(--grad-soft);color:var(--link);margin-left:6px}
+
+  .tokens{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .tokens .card{padding:26px}
+  .sw{display:flex;gap:10px;flex-wrap:wrap}
+  .sw i{width:64px;height:64px;border-radius:14px;border:1px solid var(--border);display:flex;align-items:flex-end;padding:6px;font:600 .62rem/1 var(--f-body);font-style:normal;color:#fff}
+  .typescale p{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--border);padding:8px 0}
+  .typescale small{width:90px;flex-shrink:0;color:var(--text-muted);font-size:.75rem}
+
+  .wow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .wow .card{padding:24px}
+  .wow b{color:var(--heading);display:block;margin:10px 0 6px}
+  .wow p{font-size:.92rem;color:var(--text-muted)}
+  .wow .n{font-family:var(--f-display);font-size:2rem;color:var(--link);line-height:1}
+
+  .road{display:grid;gap:14px}
+  .ph{display:grid;grid-template-columns:200px 1fr;gap:24px;padding:26px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border)}
+  .ph h3{font-size:1.25rem}
+  .ph .when{color:var(--link);font-weight:700;font-size:.85rem}
+  .ph ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:.93rem}
+
+  .decisions{display:grid;gap:10px}
+  .dc{display:grid;grid-template-columns:28px 1fr;gap:14px;padding:18px 20px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border)}
+  .dc i{width:22px;height:22px;border-radius:6px;border:2px solid var(--border-strong);margin-top:2px}
+  .dc b{color:var(--heading)}
+  .dc p{font-size:.92rem;color:var(--text-muted)}
+
+  .end{padding:100px 0 140px;text-align:center}
+  .end h2{font-size:clamp(3rem,8vw,6.5rem)}
+
+  @media(max-width:900px){
+    .tldr,.kas,.tokens,.wow{grid-template-columns:1fr}
+    .scores{grid-template-columns:repeat(2,1fr)}
+    .ia{grid-template-columns:repeat(2,1fr)}
+    .ph{grid-template-columns:1fr;gap:10px}
+    .fm{grid-template-columns:36px 1fr}
+    .fm>div:last-child{grid-column:2}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="ctn ctn-wide">
+    <img src="/img/logo-hapee.png" alt="Hapee" width="98" height="28">
+    <nav aria-label="Secciones">
+      <a href="#resumen">Resumen</a><a href="#criticos">Críticos</a><a href="#areas">Auditoría</a><a href="#kas">Mantener / Agregar / Sacar</a><a href="#arquitectura">Arquitectura</a><a href="#home">Nueva home</a><a href="#ds">Design system</a><a href="#roadmap">Roadmap</a><a href="#decisiones">Decisiones</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="/propuesta-2026-r8x4/home">Ver la propuesta <span class="arr">→</span></a>
+  </div>
+</header>
+
+<main>
+<section class="cover">
+  <div class="ctn">
+    <p class="eyebrow">Documento interno · no publicado</p>
+    <h1 class="display">Auditoría UX/UI<br><span class="grad-text">y plan 2026</span></h1>
+    <p class="lead">Revisión completa de hapee.ai: navegación, contenido, orden, sistema visual, rendimiento, accesibilidad, SEO y confianza. Y un plan para llevar el sitio a nivel de startup que levanta capital: escalable, claro y con efecto «wow» donde suma.</p>
+    <div class="meta">
+      <span class="badge">15 de octubre de 2026</span><span class="badge">23 páginas en español + EN/PT</span><span class="badge">4 auditorías + recorrido en vivo</span>
+    </div>
+    <div class="cover-cta">
+      <a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/home">Ver la nueva home <span class="arr">→</span></a>
+      <a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home?notas=1">Verla con notas de diseño</a>
+    </div>
+    <p class="muted" style="margin-top:18px;font-size:.88rem">Nada de esto reemplaza el sitio actual. La propuesta vive en esta URL oculta (noindex) para revisarla, ajustarla y, si se aprueba, reemplazar.</p>
+  </div>
+</section>
+
+<!-- ───────── RESUMEN ───────── -->
+<section class="sec" id="resumen">
+  <div class="ctn">
+    <p class="eyebrow">Resumen ejecutivo</p>
+    <h2 class="sh display">Lo esencial en 1 minuto</h2>
+    <div class="tldr">
+      <div class="card"><b>1. El producto es bueno; la home no lo cuenta.</b><p>El chat en vivo con voz, las maquetas del producto y el módulo de Licitaciones son diferenciadores reales. Están enterrados entre ~15 secciones que repiten «todo en uno» tres veces. El titular es genérico y en móvil ni siquiera se ve en la primera pantalla.</p></div>
+      <div class="card"><b>2. Falta la prueba que piden clientes e inversionistas.</b><p>No hay ni un testimonio ni un caso de cliente de Hapee: los casos y logos son de la agencia. Las cifras («+90K clientes», «194M leads cerrados», «#1 en LATAM») no son verificables y se contradicen entre sí. Un VC lo detecta en segundos.</p></div>
+      <div class="card"><b>3. Hay riesgos legales y de reputación evitables.</b><p>El popup FOMO inventa compras con nombres al azar. Hay sellos de partners (AWS, ElevenLabs, Anthropic) que podrían no tener acuerdo firmado. GoHighLevel aparece fuera de la comparativa. El Meta Pixel está cargado aunque la documentación dice que no.</p></div>
+      <div class="card"><b>4. El sitio no escala tal como está construido.</b><p>Cada página copia su propio CSS, nav y footer (196 colores distintos en la home, 12 breakpoints, 107 sombras). Con 3 idiomas, cualquier cambio de precio o de menú hay que hacerlo a mano en decenas de archivos.</p></div>
+    </div>
+
+    <div class="scores" style="margin-top:28px">
+      <div class="card score"><small>Navegación y arquitectura</small><b>4/10</b><span class="bar"><i style="--v:40%"></i></span></div>
+      <div class="card score"><small>Contenido y narrativa</small><b>5/10</b><span class="bar"><i style="--v:50%"></i></span></div>
+      <div class="card score"><small>Sistema visual</small><b>6/10</b><span class="bar"><i style="--v:60%"></i></span></div>
+      <div class="card score"><small>Confianza y prueba social</small><b>3/10</b><span class="bar"><i style="--v:30%"></i></span></div>
+      <div class="card score"><small>Rendimiento</small><b>5/10</b><span class="bar"><i style="--v:50%"></i></span></div>
+      <div class="card score"><small>Accesibilidad</small><b>4/10</b><span class="bar"><i style="--v:40%"></i></span></div>
+      <div class="card score"><small>SEO técnico</small><b>6/10</b><span class="bar"><i style="--v:60%"></i></span></div>
+      <div class="card score"><small>Escalabilidad del código</small><b>3/10</b><span class="bar"><i style="--v:30%"></i></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── CRÍTICOS ───────── -->
+<section class="sec" id="criticos">
+  <div class="ctn">
+    <p class="eyebrow">Prioridad</p>
+    <h2 class="sh display">Los 12 hallazgos más importantes</h2>
+    <div class="tw"><table>
+      <thead><tr><th>Severidad</th><th>Hallazgo</th><th>Dónde</th><th>Qué hacer</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sev s-c">Crítica</span></td><td><b>Popup FOMO con compras inventadas</b> (nombres, países y planes al azar cada 25–45 s).</td><td>index.html ~4.098</td><td>Eliminar. Riesgo legal (protección al consumidor) y de confianza.</td></tr>
+        <tr><td><span class="sev s-c">Crítica</span></td><td><b>En móvil el titular queda fuera de la primera pantalla</b>: ~450 px vacíos antes del H1 (medido en y≈595 de 812).</td><td>Hero de index</td><td>Hero móvil compacto con titular arriba (resuelto en la propuesta).</td></tr>
+        <tr><td><span class="sev s-c">Crítica</span></td><td><b>Cero prueba social de Hapee</b>: sin testimonios ni casos propios; los logos y casos son de la agencia.</td><td>Toda la home</td><td>Conseguir 3 casos con métrica y rotular honestamente los logos.</td></tr>
+        <tr><td><span class="sev s-c">Crítica</span></td><td><b>Cifras no verificables y contradictorias</b>: +90K clientes vs +10.000 vs +1.000 marcas; «194M leads cerrados»; «#1 en LATAM».</td><td>index y agenda-tu-demo</td><td>Reemplazar por 2–3 métricas reales de Hapee o quitarlas.</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>Sin sección de problema</b>; tres secciones repiten «todo en uno» (Funcionalidades, Así se ve por dentro, Reemplaza +25).</td><td>index</td><td>Nueva narrativa problema → demo → solución (en la propuesta).</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>El mejor activo, enterrado</b>: el chat en vivo con voz está en la sección 6.</td><td>index #hapee-chat</td><td>Subirlo a la sección 4 y alimentarlo desde el hero.</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>Navegación inconsistente</b>: cada página tiene otro menú; «Blog» vs «News»; links .html mezclados con URLs limpias; Docs no está en el menú; «🎮 Jugar» en el menú principal.</td><td>12 páginas</td><td>Un nav y footer únicos con mega-menú (en la propuesta).</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>CTA muerto</b> «Ver Planes» con href="#" en la propia página de planes; badges de App Store y Google Play que no llevan a ninguna tienda.</td><td>planes.html:584, footer index</td><td>Arreglar en el quick win de la fase 0.</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>Sin caché de assets en nginx</b> y video de 10 MB en autoplay; VSL de 86 MB en la página de conversión.</td><td>nginx.conf, agenda-tu-demo</td><td>Caché immutable, preload="none", reencodear el VSL a ≤20 MB o CDN.</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>Contraste insuficiente</b>: naranja #FA5000 sobre blanco 3,4:1 y texto secundario 4,1:1; textos de 7 a 10 px; cero estilos :focus-visible.</td><td>index, agenda</td><td>Naranja de texto #D94400, mínimo 12 px, foco visible (en el design system v2).</td></tr>
+        <tr><td><span class="sev s-a">Alta</span></td><td><b>GoHighLevel mencionado fuera de la comparativa</b> (meta description, FAQ, lista de herramientas) y sellos de partners posiblemente sin acuerdo.</td><td>index</td><td>Retirar; confirmar acuerdos antes de mostrar sellos.</td></tr>
+        <tr><td><span class="sev s-m">Media</span></td><td><b>Redirección automática de idioma</b>: un visitante de Chile con navegador en inglés que llega desde un anuncio en español termina en /en/.</td><td>nginx.conf (cambio del 15/10)</td><td>Decidir: mantener, limitar a la home o reemplazar por un aviso sugerido.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ───────── ÁREAS ───────── -->
+<section class="sec" id="areas">
+  <div class="ctn">
+    <p class="eyebrow">Auditoría completa</p>
+    <h2 class="sh display">Por área</h2>
+
+    <details class="area" open><summary>Arquitectura de información y navegación</summary><div class="in">
+      <ul>
+        <li><b>Faltan las páginas que espera un comprador B2B o un VC:</b> producto por módulo, casos de éxito, seguridad, nosotros/equipo, integraciones, changelog, estado del servicio y carreras. Todo vive como anclas en una home de 5.350 líneas.</li>
+        <li><b>Páginas huérfanas:</b> oficina/, webinar, rrss-templates, agentes-ia-whatsapp y via/ no tienen entrada desde el menú.</li>
+        <li><b>Docs (API y MCP) es invisible:</b> 0 enlaces desde la home y el blog, siendo el diferenciador técnico más fuerte.</li>
+        <li><b>Solapes:</b> comparativa y transformación cuentan «por qué Hapee» por separado; agentes-ia-whatsapp duplica agenda-tu-demo con otro calendario (atribución partida).</li>
+        <li><b>Menús distintos en cada página</b>, footers de 18 a 5 enlaces, anclas rotas (#features y #como no existen en agenda), «Academy» en el menú y «Academia» en la página.</li>
+        <li><b>CTAs que compiten:</b> en el menú pesan igual «Agendar demo», «Ver planes», Login, Jugar y WhatsApp. Self-service y venta asistida conviven sin regla clara.</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>Contenido, narrativa y copy</summary><div class="in">
+      <ul>
+        <li><b>Orden actual:</b> promesa → video sin título → cifras → 8 pestañas de funcionalidades → 3 pasos → chat → 11 maquetas → integraciones → reemplaza +25 → precios → respaldo del grupo → logos → FAQ → cierre. Falta el problema y la prueba llega tarde y prestada.</li>
+        <li><b>Hero genérico:</b> «Automatiza tu negocio. Multiplica tus ventas con IA.» lo podría firmar cualquier competidor. No dice qué hace, para quién ni por qué Hapee.</li>
+        <li><b>Diferenciador escondido en la FAQ:</b> «No te entregamos un software: te entregamos el sistema funcionando». Debe ir arriba.</li>
+        <li><b>Inconsistencias:</b> FAQ «desde USD 297» vs precios fijos; Elite «Todo lo del plan PRO más» vs «se suma a tu plan»; la FAQ promete venta asistida y /planes vende autoservicio.</li>
+        <li><b>Chilenismos y errores:</b> «Chao Lovable», «en la cancha», «Empate comercial», «Datos del campaña», «Únete a los vendedores más exitosos del planeta».</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>Sistema visual (UI)</summary><div class="in">
+      <ul>
+        <li><b>Tokens duplicados en 5 archivos:</b> 196 hex y 230 rgba distintos en la home, 168 gradientes (la mayoría a 135° en vez de 90°), colores fuera de marca (morado, ámbar, azul).</li>
+        <li><b>Bebas Neue se carga y no se usa:</b> todo es Plus Jakarta 800; se pierde la voz editorial de la marca.</li>
+        <li><b>Más de 60 animaciones por página</b> (órbita, constelación, nebulosa, partículas, pulsos, marquee) sin un protagonista por pantalla.</li>
+        <li><b>Emojis como íconos</b> (🔥🚀🤖) mezclados con 233 SVG; se ven distintos en cada sistema.</li>
+        <li><b>Funciona y se mantiene:</b> modo oscuro con negros puros, beam border del plan Pro, la marca reconocible, la nebulosa del cierre.</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>Rendimiento</summary><div class="in">
+      <ul>
+        <li><b>HTML de 399 KB</b> (92 KB gzip) con todo el CSS y JS inline: no se cachea entre páginas.</li>
+        <li><b>Sin Cache-Control</b> para imágenes, CSS ni JS: el navegador revalida en cada visita.</li>
+        <li><b>video-hapee.mp4 (10 MB)</b> en autoplay sin preload="none"; <b>vsl-hapee.mp4 (86 MB)</b> en agenda-tu-demo; póster en PNG.</li>
+        <li><b>105 de 107 imágenes sin width/height</b> (CLS); dos model-viewer en eager que descargan 443 KB de GLB fuera de pantalla.</li>
+        <li><b>Canvas de constelación</b> con requestAnimationFrame permanente (O(n²)) aun con la pestaña oculta.</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>Accesibilidad (WCAG 2.2 AA)</summary><div class="in">
+      <ul>
+        <li><b>Contraste:</b> naranja sobre blanco 3,38:1 (falla en texto normal) y texto secundario 4,07:1.</li>
+        <li><b>Texto de 7 a 10 px</b> en etiquetas y maquetas.</li>
+        <li><b>Sin :focus-visible</b> en index y agenda; menú móvil y FAQ sin aria-expanded ni manejo de foco.</li>
+        <li><b>VSL sin subtítulos</b>; FOMO con aria-live que interrumpe al lector de pantalla cada 25–45 s.</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>SEO técnico</summary><div class="in">
+      <ul>
+        <li><b>Canonicals mezclados</b> (/planes vs /comparativa.html) y ambas versiones responden 200: contenido duplicado.</li>
+        <li><b>academia y webinar</b> fuera del sitemap; lastmod desactualizado.</li>
+        <li><b>Meta description y keywords</b> sobrecargadas de competidores y con «#1 en Chile y LATAM».</li>
+        <li><b>JSON-LD</b> mezcla Organization y SoftwareApplication en un nodo.</li>
+      </ul>
+    </div></details>
+
+    <details class="area"><summary>Confianza, legal y preparación para inversionistas</summary><div class="in">
+      <ul>
+        <li><b>Sin sección de seguridad:</b> nada sobre Ley 21.719, GDPR, cifrado, uso de datos para entrenar IA, traspaso a humano ni SLA.</li>
+        <li><b>Sin equipo ni fundadores</b> en la home; el sitio dice «Hapee no es una startup probando suerte», el relato opuesto al que necesita un VC.</li>
+        <li><b>Sellos «Official ElevenLabs Partner», «AWS Partner Network», «Native MCP Anthropic Claude»</b>: confirmar acuerdos o retirar.</li>
+        <li><b>Meta Pixel cargado</b> (fbq) aunque CLAUDE.md dice que no hay: alinear política de privacidad y consentimiento.</li>
+      </ul>
+      <p class="src">Fuentes: 4 auditorías independientes sobre el código (arquitectura, contenido, UI, técnica) + recorrido en vivo de hapee.ai en escritorio y móvil el 15/10/2026.</p>
+    </div></details>
+  </div>
+</section>
+
+<!-- ───────── MANTENER / AGREGAR / SACAR ───────── -->
+<section class="sec" id="kas">
+  <div class="ctn">
+    <p class="eyebrow">Decisiones de contenido</p>
+    <h2 class="sh display">Mantener, agregar, sacar</h2>
+    <div class="kas">
+      <div class="card k"><h3><i></i>Mantener</h3><ul>
+        <li>Chat en vivo por rubro con voz (sube a la sección 4)</li>
+        <li>Robot 3D y paleta naranja→burdeo sobre negro</li>
+        <li>Capturas del producto (ahora reales, no maquetas CSS)</li>
+        <li>Idea de «reemplaza +25 herramientas» (ahora como historia)</li>
+        <li>Integraciones, módulo de Licitaciones, MCP</li>
+        <li>Beam border del plan Pro y nebulosa del cierre</li>
+        <li>Planes, precios y «Sin compromiso, sin contratos»</li>
+        <li>Badges Meta y Google Partner; logos reales rotulados con honestidad</li>
+        <li>Modo oscuro/claro, tres idiomas</li>
+      </ul></div>
+      <div class="card a"><h3><i></i>Agregar</h3><ul>
+        <li>Hero con prompt: «escribe tu rubro» → demo en vivo</li>
+        <li>Sección de problema con scroll narrativo</li>
+        <li>Bento de 4 pilares + módulos diferenciales</li>
+        <li>Recorrido horizontal por la app</li>
+        <li>Calculadora de ventas perdidas / retorno</li>
+        <li>Implementación en 7–14 días como línea de tiempo</li>
+        <li>Casos de clientes de Hapee con métrica</li>
+        <li>Seguridad y confianza</li>
+        <li>Equipo y fundadores</li>
+        <li>Mega-menú, paleta de comandos ⌘K, CTA fija móvil</li>
+        <li>Interruptor mensual/anual</li>
+      </ul></div>
+      <div class="card r"><h3><i></i>Sacar</h3><ul>
+        <li>Popup FOMO con compras inventadas</li>
+        <li>Cifras «+90K», «1,37B», «194M», «#1 en LATAM»</li>
+        <li>Video sin título entre hero y cifras</li>
+        <li>«🎮 Jugar» del menú principal (pasa a Recursos)</li>
+        <li>Sección duplicada de 8 pestañas de funcionalidades</li>
+        <li>Constelación de fondo (un solo efecto ambiental)</li>
+        <li>GoHighLevel fuera de la comparativa</li>
+        <li>Sellos de partners sin acuerdo firmado</li>
+        <li>Badges de apps que no llevan a ninguna tienda</li>
+        <li>Emojis como íconos de UI</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── ARQUITECTURA ───────── -->
+<section class="sec" id="arquitectura">
+  <div class="ctn">
+    <p class="eyebrow">Nueva arquitectura</p>
+    <h2 class="sh display">Un menú que escala a muchos productos</h2>
+    <p class="lead">Cinco entradas fijas y un CTA. Cada producto nuevo entra en «Producto» sin rediseñar el menú; cada mercado nuevo, en «Soluciones».</p>
+    <div class="ia">
+      <div class="col"><b>Producto</b><span>Plataforma (hub)</span><span class="new">Agentes IA</span><span class="new">WhatsApp</span><span class="new">CRM y automatización</span><span class="new">Licitaciones</span><span class="new">Voz clonada</span><span>API y MCP</span><span class="new">Integraciones</span></div>
+      <div class="col"><b>Soluciones</b><span class="new">Pymes</span><span>Agencias y partners</span><span class="new">Proveedores del Estado</span><span class="new">Empresas</span><span>Vía by Hapee</span></div>
+      <div class="col"><b>Precios</b><span>Planes</span><span class="new">Calculadora</span><span>Elite Setup</span></div>
+      <div class="col"><b>Recursos</b><span>Blog</span><span>Docs</span><span>Academia</span><span>Webinars</span><span class="new">Casos de éxito</span><span>Comparativas</span><span class="new">Changelog</span><span>Demos (juego, oficina)</span></div>
+      <div class="col"><b>Empresa</b><span class="new">Nosotros</span><span class="new">Seguridad</span><span class="new">Inversionistas</span><span class="new">Carreras</span><span>Contacto</span></div>
+      <div class="col cta"><b>Acciones</b><span>Agendar demo (primario)</span><span>Ingresar</span><span>⌘K buscar</span><span>ES · EN · PT</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── NUEVA HOME ───────── -->
+<section class="sec" id="home">
+  <div class="ctn">
+    <p class="eyebrow">Nueva home</p>
+    <h2 class="sh display">Una historia en 15 pasos</h2>
+    <p class="lead">Problema → prueba inmediata → solución → evidencia → oferta → acción. Cada sección tiene un solo trabajo y un solo efecto protagonista.</p>
+    <div class="flowmap">
+      <div class="fm"><div><b>Hero</b><small>Titular con resultado y mecanismo + prompt «escribe tu rubro» + robot 3D que sigue al cursor</small></div><div><small>Antes: «Automatiza tu negocio» + robot en órbita + constelación</small></div></div>
+      <div class="fm"><div><b>Marcas</b><small>Marquee de logos rotulado con honestidad</small></div><div><small>Antes: al final de la página, sin rótulo</small></div></div>
+      <div class="fm"><div><b>Problema</b> <span class="tag">nuevo</span><small>Scroll fijado: 25 herramientas convergen en Hapee</small></div><div><small>Fusiona «Reemplaza +25»</small></div></div>
+      <div class="fm"><div><b>Demo en vivo</b><small>Agente real por rubro, con voz; recibe lo que escribiste en el hero</small></div><div><small>Antes: sección 6</small></div></div>
+      <div class="fm"><div><b>Plataforma (bento)</b><small>4 pilares + Licitaciones, Voz y MCP con micro-animaciones</small></div><div><small>Fusiona «Funcionalidades» + «Así se ve por dentro»</small></div></div>
+      <div class="fm"><div><b>Recorrido horizontal</b> <span class="tag">nuevo</span><small>Capturas reales de la app al hacer scroll</small></div><div><small>Reemplaza 11 maquetas CSS</small></div></div>
+      <div class="fm"><div><b>Integraciones</b><small>Esfera 3D de logos que se arrastra</small></div><div><small>Antes: red estática</small></div></div>
+      <div class="fm"><div><b>Calculadora</b> <span class="tag">nuevo</span><small>Ventas recuperables y retorno con supuestos editables</small></div><div><small>—</small></div></div>
+      <div class="fm"><div><b>Implementación</b><small>Línea de tiempo 7–14 días que se dibuja con el scroll</small></div><div><small>Antes: «3 pasos» genéricos</small></div></div>
+      <div class="fm"><div><b>Resultados</b> <span class="tag">nuevo</span><small>3 casos con métrica (marcos para completar)</small></div><div><small>Antes: casos de la agencia</small></div></div>
+      <div class="fm"><div><b>Seguridad y confianza</b> <span class="tag">nuevo</span><small>Cumplimiento, API oficial, humano en el circuito</small></div><div><small>—</small></div></div>
+      <div class="fm"><div><b>Precios</b><small>Mensual/anual, Elite «se suma a tu plan», beam en Pro</small></div><div><small>Antes: sin interruptor</small></div></div>
+      <div class="fm"><div><b>Equipo</b> <span class="tag">nuevo</span><small>Fundadores, caras del equipo, métrica propia de Hapee</small></div><div><small>Reemplaza el bloque de cifras del grupo</small></div></div>
+      <div class="fm"><div><b>FAQ</b><small>6 preguntas alineadas con autoservicio y sin prueba gratis</small></div><div><small>Antes: 9, con «#1» y GHL</small></div></div>
+      <div class="fm"><div><b>Cierre</b><small>«Deja de perder ventas esta noche» + nebulosa interactiva</small></div><div><small>Antes: «los vendedores más exitosos del planeta»</small></div></div>
+    </div>
+    <p style="margin-top:28px"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/home">Abrir la nueva home <span class="arr">→</span></a></p>
+  </div>
+</section>
+
+<!-- ───────── DESIGN SYSTEM ───────── -->
+<section class="sec" id="ds">
+  <div class="ctn">
+    <p class="eyebrow">Design system v2</p>
+    <h2 class="sh display">Una sola fuente de verdad</h2>
+    <p class="lead">Un archivo de tokens (ds.css) que leen todas las páginas, en vez de 5 copias. Los componentes leen roles (fondo, superficie, texto), nunca colores sueltos: el modo claro y el oscuro salen gratis.</p>
+    <div class="tokens">
+      <div class="card"><h3 style="margin-bottom:14px">Color</h3>
+        <div class="sw"><i style="background:#FA5000">FA5000</i><i style="background:#CD2349">CD2349</i><i style="background:linear-gradient(90deg,#FA5000,#CD2349)">90°</i><i style="background:#D94400">texto</i><i style="background:#080808">950</i><i style="background:#161412">surface</i><i style="background:#F5F3F0;color:#141210">100</i><i style="background:#fff;color:#141210">0</i></div>
+        <p class="muted" style="margin-top:14px;font-size:.9rem">Gradiente siempre a 90°, máximo 3 usos por pantalla. Naranja #D94400 para texto sobre claro (4,6:1). Sin morados ni ámbar decorativos.</p>
+      </div>
+      <div class="card typescale"><h3 style="margin-bottom:10px">Tipografía</h3>
+        <p><small>Display</small><span class="display" style="font-size:2.6rem;color:var(--heading)">Bebas Neue</span></p>
+        <p><small>H3 · 24</small><span style="font-size:1.5rem;font-weight:700;color:var(--heading)">Plus Jakarta Sans</span></p>
+        <p><small>Cuerpo · 16</small><span>Texto de lectura, 60–68 caracteres</span></p>
+        <p><small>Mínimo · 12</small><span style="font-size:.75rem">Nunca menos de 12 px</span></p>
+      </div>
+      <div class="card"><h3 style="margin-bottom:10px">Espacio y forma</h3><p class="muted" style="font-size:.92rem">Escala de 4 px (4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128). Radios 8 · 12 · 20 · 28 · pill. Contenedor único de 1.200 px. 4 breakpoints (480 · 768 · 1024 · 1280) en vez de 12.</p></div>
+      <div class="card"><h3 style="margin-bottom:10px">Motion</h3><p class="muted" style="font-size:.92rem">120 / 240 / 480 / 900 ms. Easing principal cubic-bezier(.16,1,.3,1). Solo transform y opacity. Un efecto ambiental por página, pausado fuera de pantalla. prefers-reduced-motion apaga todo el movimiento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── WOW ───────── -->
+<section class="sec" id="wow">
+  <div class="ctn">
+    <p class="eyebrow">Efecto wow con propósito</p>
+    <h2 class="sh display">Elementos de nivel award 2026</h2>
+    <div class="wow">
+      <div class="card"><span class="n">01</span><b>Prompt en el hero</b><p>Escribes tu rubro y aterrizas conversando con un agente real. Llevar del «mira» al «pruébalo» en un clic.</p></div>
+      <div class="card"><span class="n">02</span><b>Robot 3D reactivo</b><p>El robot de la marca sigue el cursor; tarjetas de vidrio con parallax.</p></div>
+      <div class="card"><span class="n">03</span><b>Scroll narrativo</b><p>25 herramientas sueltas son absorbidas por Hapee mientras bajas.</p></div>
+      <div class="card"><span class="n">04</span><b>Bento vivo</b><p>Kanban que se mueve, flujos que laten, radar de licitaciones, onda de voz, spotlight al cursor.</p></div>
+      <div class="card"><span class="n">05</span><b>Recorrido horizontal</b><p>La app real desfila de lado mientras haces scroll vertical.</p></div>
+      <div class="card"><span class="n">06</span><b>Esfera de integraciones</b><p>19 logos en una esfera 3D que se arrastra con inercia.</p></div>
+      <div class="card"><span class="n">07</span><b>Calculadora en vivo</b><p>Tus números, tu dinero: el argumento de venta lo arma el visitante.</p></div>
+      <div class="card"><span class="n">08</span><b>⌘K y mega-menú</b><p>Navegación de producto de software: busca cualquier sección o acción.</p></div>
+      <div class="card"><span class="n">09</span><b>Tipografía cinética</b><p>Titulares Bebas a escala gigante con revelado por palabra y verbo rotativo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── ROADMAP ───────── -->
+<section class="sec" id="roadmap">
+  <div class="ctn">
+    <p class="eyebrow">Plan de ejecución</p>
+    <h2 class="sh display">Roadmap por fases</h2>
+    <div class="road">
+      <div class="ph"><div><p class="when">Fase 0 · 1 semana</p><h3>Quick wins sin rediseño</h3></div><ul>
+        <li>Quitar el popup FOMO, las cifras no verificables, GoHighLevel fuera de la comparativa y los sellos sin acuerdo</li>
+        <li>Arreglar el CTA muerto de /planes, badges de apps, «News» → «Blog», links .html</li>
+        <li>Caché immutable en nginx, preload="none" en videos, VSL a ≤20 MB</li>
+        <li>:focus-visible, contraste del naranja, aria-expanded en menú y FAQ</li>
+        <li>Agregar academia y webinar al sitemap; canonical único</li>
+      </ul></div>
+      <div class="ph"><div><p class="when">Fase 1 · 2–4 semanas</p><h3>Nueva home + design system</h3></div><ul>
+        <li>Aprobar esta propuesta y conseguir los insumos (casos, métricas, seguridad)</li>
+        <li>ds.css compartido para todas las páginas; nav y footer únicos</li>
+        <li>Publicar la nueva home en ES/EN/PT y medir contra la actual (A/B 50/50)</li>
+        <li>Aplicar el mismo sistema a agenda-tu-demo y planes</li>
+      </ul></div>
+      <div class="ph"><div><p class="when">Fase 2 · 4–8 semanas</p><h3>Páginas que exige un VC</h3></div><ul>
+        <li>Producto por módulo (Agentes, WhatsApp, CRM, Licitaciones, Voz, MCP)</li>
+        <li>Casos de éxito, Seguridad, Nosotros, Inversionistas, Integraciones, Changelog</li>
+        <li>Fusionar comparativa + transformación; agentes-ia-whatsapp → página de WhatsApp con calendario único</li>
+      </ul></div>
+      <div class="ph"><div><p class="when">Fase 3 · 6–10 semanas</p><h3>Plataforma que escala</h3></div><ul>
+        <li>Migrar a Astro (salida estática, mismo nginx y Dokploy): componentes, i18n con JSON, imágenes optimizadas, sitemap y hreflang automáticos</li>
+        <li>Precios y datos de negocio en un solo JSON (también para el prompt del chat)</li>
+        <li>Blog y docs en Markdown; videos a CDN</li>
+      </ul></div>
+      <div class="ph"><div><p class="when">Continuo</p><h3>Crecimiento</h3></div><ul>
+        <li>KPIs: conversión a demo, uso del chat en vivo, scroll depth, LCP &lt; 2,5 s, INP &lt; 200 ms, CLS &lt; 0,1</li>
+        <li>Experimentos de titular y CTA; landings por país y por rubro desde la misma base</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── DECISIONES ───────── -->
+<section class="sec" id="decisiones">
+  <div class="ctn">
+    <p class="eyebrow">Lo que necesitamos de ustedes</p>
+    <h2 class="sh display">Decisiones e insumos</h2>
+    <div class="decisions">
+      <div class="dc"><i></i><div><b>3 casos de clientes de Hapee con métrica</b><p>Nombre, cargo, foto, cita y un número (tiempo de respuesta, citas al mes, ventas recuperadas). Uno en video si es posible.</p></div></div>
+      <div class="dc"><i></i><div><b>2–3 métricas reales de tracción de Hapee</b><p>Cuentas activas, conversaciones al mes, crecimiento. Reemplazan «+90K», «1,37B» y «194M».</p></div></div>
+      <div class="dc"><i></i><div><b>Confirmar seguridad</b><p>Cifrado en tránsito y reposo, dónde se alojan los datos, si los datos de clientes entrenan modelos de terceros, SLA.</p></div></div>
+      <div class="dc"><i></i><div><b>Sellos de partners</b><p>¿Hay acuerdo firmado con AWS, ElevenLabs y Anthropic? Si no, se retiran.</p></div></div>
+      <div class="dc"><i></i><div><b>Popup FOMO y GoHighLevel</b><p>Aprobar su retiro en el sitio actual (fase 0).</p></div></div>
+      <div class="dc"><i></i><div><b>Idioma por defecto</b><p>Mantener la redirección automática a inglés, limitarla a la home, o mostrar un aviso «¿Ver en inglés?». Afecta a anuncios en español con navegador en inglés.</p></div></div>
+      <div class="dc"><i></i><div><b>Idioma de las demos</b><p>¿Se dan demos en inglés y portugués? Hoy las páginas EN/PT lo dicen de forma distinta.</p></div></div>
+      <div class="dc"><i></i><div><b>Meta Pixel</b><p>Está cargado en el sitio. Confirmar si se mantiene y alinear la política de privacidad y el aviso de cookies.</p></div></div>
+      <div class="dc"><i></i><div><b>CTA principal</b><p>La propuesta prioriza «Agendar demo» y deja «Ver precios» como secundario. Confirmar según el modelo de venta que quieren empujar.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="ctn">
+    <h2 class="display">Mírala <span class="grad-text">en acción.</span></h2>
+    <p class="lead" style="margin:18px auto 30px">Recórrela en el computador y en el celular. Activa «Notas de diseño» en la barra inferior para ver el porqué de cada sección.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn btn-primary btn-lg" href="/propuesta-2026-r8x4/home">Ver la nueva home <span class="arr">→</span></a><a class="btn btn-secondary btn-lg" href="/propuesta-2026-r8x4/home?notas=1">Con notas de diseño</a></div>
+  </div>
+</section>
+</main>
+
+<div class="review-bar" role="region" aria-label="Revisión de la propuesta">
+  <span class="rb-tag"><i></i><span>Documento interno · no publicado</span></span>
+  <a href="/propuesta-2026-r8x4/home">Ver la nueva home →</a>
+</div>
+</body>
+</html>
