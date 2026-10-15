@@ -18,7 +18,6 @@
   var nav = $('#nav'), lastY = 0;
   window.addEventListener('scroll', function () {
     var y = window.scrollY;
-    nav.classList.toggle('hide', y > 400 && y > lastY && !d.querySelector('.mm.open'));
     lastY = y;
     var mc = $('#mcta');
     if (mc) {

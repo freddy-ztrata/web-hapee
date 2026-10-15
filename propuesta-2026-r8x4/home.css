@@ -565,3 +565,9 @@ body.show-notes section{outline:1px dashed rgba(245,166,35,.35);outline-offset:-
 @media (pointer:coarse){.bot-hint{display:none}}
 .hero-bot.hop{animation:botHop .7s cubic-bezier(.34,1.5,.64,1)}
 @keyframes botHop{0%,100%{transform:translate(-50%,-50%)}35%{transform:translate(-50%,calc(-50% - 28px)) scale(1.02,.98)}60%{transform:translate(-50%,calc(-50% + 4px)) scale(1.02,.97)}}
+
+/* robot three.js: el póster se ve hasta que el modelo carga */
+.bot-3d{position:relative}
+.bot-3d .bot-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .5s}
+.bot-3d.ready .bot-poster{opacity:0}
+.bot-3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;touch-action:pan-y}

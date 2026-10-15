@@ -101,7 +101,7 @@
 
     var nav = $('#nav'), lastY = 0, mc = $('#mcta');
     addEventListener('scroll', function () {
-      var y = scrollY; nav.classList.toggle('hide', y > 400 && y > lastY && !d.querySelector('.mm.open')); lastY = y;
+      var y = scrollY; lastY = y;
       mc.classList.toggle('on', y > innerHeight * .9 && (innerHeight + y) < d.body.scrollHeight - 700);
     }, { passive: true });
 

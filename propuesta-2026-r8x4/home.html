@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="/img/robot.png" fetchpriority="high">
 <link rel="stylesheet" href="/propuesta-2026-r8x4/ds.css?v=31">
-<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=35">
+<link rel="stylesheet" href="/propuesta-2026-r8x4/home.css?v=38">
 <link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=35">
 <script>
   /* Tema antes del primer pintado: oscuro por defecto, respeta la elección guardada. */
@@ -144,12 +144,7 @@
       <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
       <div class="hero-bot" id="bot">
         <div class="bot-tilt" id="botTilt">
-          <model-viewer id="robot3d" class="bot-3d" src="/propuesta-2026-r8x4/hapee-robot-v2.glb" poster="/img/robot.png" alt="Robot Hapee en 3D. Arrástralo para girarlo."
-            camera-controls disable-zoom disable-pan interaction-prompt="none" touch-action="pan-y"
-            camera-orbit="0deg 80deg 104%" min-camera-orbit="auto 60deg auto" max-camera-orbit="auto 100deg auto"
-            environment-image="neutral" tone-mapping="neutral" exposure="1.05" shadow-intensity="0" loading="eager">
-            <img slot="poster" src="/img/robot.png" alt="" width="435" height="800" style="width:100%;height:100%;object-fit:contain">
-          </model-viewer>
+          <div id="robot3d" class="bot-3d" role="img" aria-label="Robot Hapee en 3D. Arrástralo para girarlo."><img class="bot-poster" src="/img/robot.png" alt="" width="435" height="800"></div>
         </div>
         <span class="bot-hint" aria-hidden="true">↺ Arrástrame</span>
       </div>
@@ -163,7 +158,7 @@
 
   <a class="scroll-cue" href="#marcas" aria-label="Seguir bajando"><span></span></a>
 
-  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot 3D con vida propia: mira al frente balanceándose, cada tanto da una vuelta de 360° y un pequeño salto, flota, se inclina hacia el cursor y se puede arrastrar. Modelo corregido (hapee-robot-v2.glb): pantalla de la cara en color sólido, espalda sin el panel espejado y sin la mancha de la nuca. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
+  <aside class="note" data-n="1"><b>Hero</b> Titular con el resultado y el mecanismo (antes: «Automatiza tu negocio», genérico). CTA principal = probar el producto en 5 segundos; demo como secundario. Robot 3D con vida propia: mira al frente balanceándose, cada tanto da una vuelta de 360° y un pequeño salto, flota, se inclina hacia el cursor y se puede arrastrar. Modelo con esqueleto (hapee-robot-rig.glb) renderizado con three.js: respira, balancea los brazos, saluda cada 10 s y gira 360°; el torso no se deforma. Textura repintada sobre la malla: pantalla de la cara sólida, espalda y nuca simétricas con un panel naranja. En móvil el titular queda arriba del pliegue (hoy aparece en y≈595 px). <b style="display:inline;margin:0">Idioma:</b> selector con globo en el nav (junto al tema), control ES | EN | PT en el menú móvil y enlaces en el footer. Recuerda la elección (cookie) y lleva a la misma página en el otro idioma.</aside>
 </section>
 
 <!-- ═════════════ 2 · MARCAS ═════════════ -->
@@ -491,8 +486,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-<script src="/propuesta-2026-r8x4/home.js?v=37" defer></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module" src="/propuesta-2026-r8x4/hero-robot.js?v=40"></script>
+<script src="/propuesta-2026-r8x4/home.js?v=41" defer></script>
 <script src="/propuesta-2026-r8x4/showcase.js?v=35" defer></script>
 </body>
 </html>
