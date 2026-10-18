@@ -1,4 +1,4 @@
-/* Robot del hero — three.js. El robot vive en /propuesta-2026-r8x4/robot/robot.js con la interfaz
+/* Robot del hero — three.js. El robot vive en /js/robot/robot.js (compartido con la home pública) con la interfaz
      load(THREE) → { root, animate(t, { wave }) }
    (root con los pies en y=0 mirando a +Z; animate respira, mira, balancea los brazos y saluda
    con el brazo derecho según wave ∈ [0,1]; el pecho y el logo nunca se deforman).
@@ -30,7 +30,7 @@ async function init() {
   const rim = new THREE.DirectionalLight(0xff7a3d, 1.4); rim.position.set(-3, 2, -3); scene.add(rim);
   const cam = new THREE.PerspectiveCamera(26, 1, .01, 100);
 
-  const { load } = await import('/propuesta-2026-r8x4/robot/robot.js?v=50');
+  const { load } = await import('/js/robot/robot.js?v=60');
   const bot = await load(THREE);
   // centrar y encuadrar: caja de la pose de reposo unida a la del saludo (el brazo levantado no se corta)
   const root = bot.root, box = new THREE.Box3();

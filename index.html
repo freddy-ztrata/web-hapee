@@ -2168,6 +2168,12 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></noscript>
+<style id="robot-vivo">
+/* Robot 3D vivo (2026-10-17): el overlay .hr-live copia la caja de img.hero-robot y flota igual */
+.orbit-stage .hr-live{position:absolute;z-index:6;animation:rf 4s ease-in-out infinite}
+.mk-asst-robot3d>.hr-poster{width:100%;height:100%;object-fit:contain;display:block}
+@media (prefers-reduced-motion: reduce){.orbit-stage .hr-live{animation:none}}
+</style>
 </head>
 <body>
 
@@ -2281,6 +2287,8 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <div class="orbit-ring orbit-ring-2"></div>
         <div class="orbit-ring orbit-ring-3"></div>
         <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high">
+        <!-- Robot 3D vivo (js/hapee-asistente.js + js/robot/): se monta sobre la imagen, que queda como póster/LCP y como respaldo sin WebGL. Click = abre el chat Hapee AI. -->
+        <div class="hr-live" data-hapee-robot="hero" role="button" tabindex="0" aria-label="Habla con Hapee: abre el chat del asistente IA"></div>
         <!-- Orbital integration icons (logos oficiales) -->
         <!-- Inner ring (8 channels closest to robot) -->
         <div class="orb orb-wa" data-label="WhatsApp"><img src="img/orbit/whatsapp.svg" alt="WhatsApp" loading="lazy"></div>
@@ -2711,7 +2719,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
             </div>
             <div class="mk-home-fab">
               <div class="hf-bubble">¡Buenos días! ☀️ Tienes <b>8 conversaciones</b> esperando y <b>3 citas</b> hoy. ¿Te ayudo a priorizar?</div>
-              <model-viewer class="hf-robot" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Asistente Hapee" auto-rotate rotation-per-second="30deg" interaction-prompt="none" disable-zoom exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+              <img class="hf-robot" src="img/robot.png" alt="Asistente Hapee" loading="lazy" style="object-fit:contain">
             </div>
           </div>
         </div>
@@ -3516,7 +3524,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
                 </div>
                 <div class="mk-asst-robot-wrap">
                   <div class="as-ring"></div>
-                  <model-viewer class="mk-asst-robot3d" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Asistente Hapee 3D" camera-controls auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom shadow-intensity="1.1" exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+                  <div class="mk-asst-robot3d" data-hapee-robot="showcase" role="img" aria-label="Asistente Hapee 3D"><img class="hr-poster" src="img/robot.png" alt="" loading="lazy"></div>
                   <span class="as-hint">✥ arrástralo · gira en 3D</span>
                 </div>
               </div>
@@ -4997,6 +5005,8 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
     // --- ElevenLabs TTS (voice response) ---
     function setSpeaking(on){
       sphereEnergy=on?1:0;
+      // robot vivo: habla mientras suena la voz (TTS o voz del navegador)
+      if(window.HapeeRobot)HapeeRobot.setState(on?'talking':'idle');
     }
     async function speak(text){
       if(currentAudio){currentAudio.pause();currentAudio=null}
@@ -5012,6 +5022,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
         if(!blob||blob.size<256)throw new Error('TTS vacío');
         const url=URL.createObjectURL(blob);
         currentAudio=new Audio(url);
+        if(window.HapeeRobot)HapeeRobot.attachAudio(currentAudio); // pulso del pecho según la amplitud real
         currentAudio.onended=()=>{setSpeaking(false);URL.revokeObjectURL(url);currentAudio=null};
         currentAudio.onerror=()=>{URL.revokeObjectURL(url);currentAudio=null;speakFallback(clean)};
         await currentAudio.play();
@@ -5060,11 +5071,13 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
       suggestions.classList.add('hidden');
       // Show typing
       showTyping();
+      if(window.HapeeRobot)HapeeRobot.setState('thinking');
       sphereEnergy=.4;
       // Fetch reply
       const reply=await callAnthropic(t);
       // Replace typing with bot bubble
       hideTyping();
+      if(window.HapeeRobot)HapeeRobot.setState('talking',{maxMs:3000+reply.length*85});
       appendBubble('bot', formatMd(reply));
       // Speak the reply
       speak(reply);
@@ -5328,7 +5341,6 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 
 });
 </script>
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <script src="/js/whatsapp.js" defer></script>
 <style id="qa-tactil">
 /* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */
@@ -5345,6 +5357,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
   .custom-widget .l{font-size:11px}
 }
 </style>
+<script src="/js/hapee-asistente.js" defer></script>
 <script src="/js/lang.js" defer></script>
 </body>
 </html>

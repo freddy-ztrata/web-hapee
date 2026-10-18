@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://hapee.ai/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -183,7 +183,7 @@
   <!-- Versión en inglés (2026-10-15): mismo slug bajo /en/ -->
   <url>
     <loc>https://hapee.ai/en/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -364,7 +364,7 @@
   <!-- Versión en portugués (2026-10-15): mismo slug bajo /pt/ -->
   <url>
     <loc>https://hapee.ai/pt/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

@@ -2,8 +2,14 @@
 // Todo se genera en código: superficies analíticas (superelipsoides) + piezas en relieve
 // proyectadas sobre ellas, con bordes redondeados reales. Sin texturas salvo la pantalla del pecho.
 // Unidades de modelado: píxeles de img/robot.png (alto 737); el root se escala a alto ≈ 1.
-// Interfaz: load(THREE) → { root, animate(t, { wave }) }.
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+// Interfaz: load(THREE, addons?) → { root, animate(t, { wave }), parts, screen }.
+//   addons.RoundedBoxGeometry: opcional; si falta se importa 'three/addons/…' (requiere importmap).
+//   parts  = { head, torso, hips }: nodos para sumar offsets DESPUÉS de animate() (mirar, inclinarse).
+//   screen = { set(mode), update(t, level), material }: pantalla del pecho viva.
+//            mode 'logo' (por defecto) | 'dots' (pensando) | 'talk' (hablando: barras + pulso según level ∈ [0,1]).
+// Módulo compartido (2026-10-17): lo usan la home pública (js/robot/robot-view.js) y la
+// propuesta oculta (propuesta-2026-r8x4/hero-robot.js). No depende de la página.
+let RoundedBoxGeometry;
 
 let T;
 const H = 737;
@@ -250,25 +256,70 @@ async function loadFont() {
 
 // pantalla del pecho: degradado de marca + «hapee»
 function screenTexture(fontStack, aspect) {
-  const W = 1536, Hh = Math.round(W / aspect), cv = document.createElement('canvas'); cv.width = W; cv.height = Hh;
-  const g = cv.getContext('2d');
-  const lg = g.createLinearGradient(0, 0, W, Hh * .55);
+  // 1024 px de ancho (antes 1536): igual de nítido al tamaño en pantalla y mucho más barato de re-subir
+  // cuando la pantalla se anima (puntos / barras).
+  const W = 1024, Hh = Math.round(W / aspect), cv = document.createElement('canvas'); cv.width = W; cv.height = Hh;
+  const bg = document.createElement('canvas'); bg.width = W; bg.height = Hh;
+  const b = bg.getContext('2d');
+  const lg = b.createLinearGradient(0, 0, W, Hh * .55);
   lg.addColorStop(0, '#ff9a0c'); lg.addColorStop(.45, '#ff6e3c'); lg.addColorStop(1, '#ff2a9a');
-  g.fillStyle = lg; g.fillRect(0, 0, W, Hh);
-  const blob = (x, y, r, col) => { const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, col.replace(/[\d.]+\)$/, '0)')); g.fillStyle = rg; g.fillRect(0, 0, W, Hh); };
+  b.fillStyle = lg; b.fillRect(0, 0, W, Hh);
+  const blob = (x, y, r, col) => { const rg = b.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, col); rg.addColorStop(1, col.replace(/[\d.]+\)$/, '0)')); b.fillStyle = rg; b.fillRect(0, 0, W, Hh); };
   blob(W * .02, Hh * .05, W * .55, 'rgba(255,150,0,.85)');
   blob(W * .12, Hh * .92, W * .5, 'rgba(255,196,40,.9)');
   blob(W * 1.0, Hh * .85, W * .62, 'rgba(244,32,196,.9)');
   blob(W * .88, Hh * .12, W * .45, 'rgba(255,60,120,.6)');
   blob(W * .5, Hh * .62, W * .32, 'rgba(255,186,160,.55)');
-  g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  const g = cv.getContext('2d');
   g.font = `600 100px ${fontStack}sans-serif`;
   const w100 = g.measureText('hapee').width, size = 100 * (W * .79) / w100;
-  g.font = `600 ${size}px ${fontStack}sans-serif`;
-  // base de la x en 0.5 de alto (el texto queda algo sobre el centro, como en la referencia)
-  g.fillText('hapee', W / 2, Hh * .52);
+  const logo = (sc = 1, y = .52) => {
+    g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.font = `600 ${size * sc}px ${fontStack}sans-serif`;
+    // base de la x en 0.5 de alto (el texto queda algo sobre el centro, como en la referencia)
+    g.fillText('hapee', W / 2, Hh * y);
+  };
+  const pill = (x, y, w, h) => { const r = Math.min(w, h) / 2; g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); g.fill(); };
   const tx = new T.CanvasTexture(cv); tx.colorSpace = T.SRGBColorSpace; tx.anisotropy = 8;
-  return tx;
+  let mode = 'logo', last = -1;
+  function draw(t, level) {
+    g.drawImage(bg, 0, 0);
+    if (mode === 'dots') {
+      // tres puntos que rebotan en secuencia (como «escribiendo…»)
+      g.fillStyle = '#ffffff';
+      for (let i = 0; i < 3; i++) {
+        const ph = Math.max(0, Math.sin(t * 6 - i * .9)), r = W * .072;
+        g.globalAlpha = .55 + .45 * ph;
+        g.beginPath(); g.arc(W * (.3 + .2 * i), Hh * (.52 - .09 * ph), r, 0, Math.PI * 2); g.fill();
+      }
+      g.globalAlpha = 1;
+    } else if (mode === 'talk') {
+      const lv = Math.max(0, Math.min(1, level || 0));
+      // brillo blanco suave que late con la voz
+      g.fillStyle = `rgba(255,255,255,${.06 + lv * .22})`; g.fillRect(0, 0, W, Hh);
+      logo(.86 + lv * .06, .44);
+      // ecualizador bajo el logo
+      g.fillStyle = 'rgba(255,255,255,.95)';
+      const n = 7, bw = W * .055, gap = W * .035, x0 = W / 2 - (n * bw + (n - 1) * gap) / 2;
+      for (let i = 0; i < n; i++) {
+        const k = .35 + .65 * Math.abs(Math.sin(t * 7.3 + i * 1.7)) , h = Hh * (.04 + .22 * lv * k);
+        pill(x0 + i * (bw + gap), Hh * .74 - h / 2, bw, Math.max(bw, h));
+      }
+    } else logo();
+    tx.needsUpdate = true;
+  }
+  draw(0, 0);
+  return {
+    texture: tx,
+    set(m) { if (m !== mode) { mode = m; last = -1; } },
+    get mode() { return mode; },
+    // redibuja a ~20 fps solo si la pantalla está animada; en 'logo' queda quieta
+    update(t, level) {
+      if (mode === 'logo') { if (last !== -2) { draw(t, 0); last = -2; } return; }
+      if (last >= 0 && t - last < .05) return;
+      last = t; draw(t, level);
+    }
+  };
 }
 
 // brillo cálido del visor alrededor de ojos y sonrisa (mapa emisivo, coordenadas = carta frontal)
@@ -288,8 +339,9 @@ function visorGlow(shapes) {
 }
 
 // ───────────────────────── modelo ─────────────────────────
-export async function load(THREE) {
+export async function load(THREE, addons = {}) {
   T = THREE;
+  RoundedBoxGeometry = addons.RoundedBoxGeometry || (await import('three/addons/geometries/RoundedBoxGeometry.js')).RoundedBoxGeometry;
   const fontStack = await loadFont();
   const phys = (color, o = {}) => new T.MeshPhysicalMaterial({ color, roughness: .3, metalness: 0, clearcoat: .6, clearcoatRoughness: .16, ...o });
   const M = {
@@ -386,8 +438,10 @@ export async function load(THREE) {
   const screenF = g => (u, v) => rmax(Math.abs(u) - scrW(v) - g, Math.abs(v - 316) - 65 - g, 24 + g * .5);
   add(torsoN, decal(torso, TF, shieldF, screenF(0), [0, 316], { t: 7, rb: 3.6, rbIn: 3.6, nb: 4, ni: 4, N: 112 }), M.white);
   const scr = decal(torso, TF, screenF(3), null, [0, 316], { t: 3.6, rb: 1, nb: 1, ni: 7, N: 96, uv: [-77, 248, 77, 384] });
-  const stx = screenTexture(fontStack, 154 / 136);
-  add(torsoN, scr, new T.MeshPhysicalMaterial({ color: '#000', emissive: '#fff', emissiveMap: stx, roughness: .32, specularIntensity: .5, clearcoat: .55, clearcoatRoughness: .22, toneMapped: false }));
+  const screen = screenTexture(fontStack, 154 / 136);
+  const screenMat = new T.MeshPhysicalMaterial({ color: '#000', emissive: '#fff', emissiveMap: screen.texture, roughness: .32, specularIntensity: .5, clearcoat: .55, clearcoatRoughness: .22, toneMapped: false });
+  screen.material = screenMat;
+  add(torsoN, scr, screenMat);
   // canesú naranja alrededor del cuello (delante y detrás)
   // canesú naranja: rodea el cuello por encima del torso (carta sagital, hueco para el cuello)
   const TR0 = 90, yokeS = table(X => sOfY(torso, TR0, X, 399 + 9 * pw(X / 77, 2)), -80, 80, 160), YS0 = yokeS(0);
@@ -509,5 +563,5 @@ export async function load(THREE) {
     }
   }
   animate(0, { wave: 0 });
-  return { root, animate };
+  return { root, animate, parts: { head: headN, torso: torsoN, hips }, screen };
 }
