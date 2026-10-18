@@ -7,7 +7,7 @@
      · cada ~10 s saluda con el brazo derecho;
      · cada ~10 s (desfasado) da una vuelta de 360° con un saltito;
      · se puede girar arrastrándolo; a los 4 s retoma solo.
-   Si WebGL o el modelo fallan, queda el póster (img/robot.png). */
+   Si WebGL o el modelo fallan, queda el póster (img/robot-v2.png). */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 

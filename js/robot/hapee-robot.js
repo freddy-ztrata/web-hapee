@@ -44,7 +44,7 @@
     '[data-hapee-robot] canvas.hr-cv{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .45s ease;touch-action:pan-y}' +
     '[data-hapee-robot].hr-ready canvas.hr-cv{opacity:1}' +
     // fundido: el 3D aparece encima (.45 s) y recién entonces se va la imagen, que es el mismo robot en la misma pose
-    '.hr-ready>.hr-poster,.hr-ready-poster{opacity:0!important;transition:opacity .3s ease .4s}' +
+    '.hr-ready .hr-poster,.hr-ready-poster{opacity:0!important;transition:opacity .3s ease .4s}' +
     '@media(hover:hover) and (pointer:fine){.orbit-stage .hr-live canvas.hr-cv{filter:drop-shadow(0 20px 50px rgba(250,80,0,.25))}}' +
     '.hr-live{position:absolute;z-index:6;cursor:grab;-webkit-tap-highlight-color:transparent}' +
     '.hr-live:active{cursor:grabbing}' +

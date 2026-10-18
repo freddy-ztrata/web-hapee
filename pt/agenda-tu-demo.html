@@ -60,7 +60,7 @@
       "alternateName": ["Hapee AI","Hapee.ai"],
       "url": "https://hapee.ai",
       "logo": {"@type":"ImageObject","url":"https://hapee.ai/img/logo-hapee.png","width":600,"height":600},
-      "image": "https://hapee.ai/img/robot.png",
+      "image": "https://hapee.ai/img/robot-v2.png",
       "description": "Hapee é a plataforma nº 1 de agentes de IA + CRM all-in-one no Chile e na América Latina. Automação de vendas 24/7 e IA conversacional no WhatsApp, Instagram, E-mail e SMS. A melhor alternativa a Vambe, Kommo, Heat, Versu, HubSpot e GoHighLevel.",
       "slogan": "Agentes de IA + CRM all-in-one. Automatize suas vendas 24/7.",
       "foundingDate": "2024",
@@ -172,7 +172,7 @@
       "name": "Hapee — Agentes de IA + CRM all-in-one. Automatize suas vendas 24/7.",
       "isPartOf": {"@id":"https://hapee.ai/#website"},
       "about": {"@id":"https://hapee.ai/#hapee"},
-      "primaryImageOfPage": "https://hapee.ai/img/robot.png",
+      "primaryImageOfPage": "https://hapee.ai/img/robot-v2.png",
       "inLanguage": "pt-BR",
       "dateModified": "2026-06-06",
       "speakable": {
@@ -237,7 +237,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="preload" href="img/logo-hapee.png" as="image">
-<link rel="preload" href="img/robot.png" as="image">
+<link rel="preload" as="image" type="image/webp" href="img/robot-v2.webp" imagesrcset="img/robot-v2-280.webp 280w, img/robot-v2.webp 460w" imagesizes="(max-width:600px) 140px, 230px">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -2022,6 +2022,15 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></noscript>
+<style id="robot-vivo">
+/* Robot 3D vivo (2026-10-17): el overlay .hr-live copia la caja de img.hero-robot y flota igual */
+.orbit-stage .hr-live{position:absolute;z-index:6;animation:rf 4s ease-in-out infinite}
+/* póster = img/robot-v2.* (render de este mismo robot en su pose inicial); width/height en el img solo reservan la proporción */
+.hero-robot-pic{display:contents}
+img.hero-robot{height:auto}
+.mk-asst-robot3d .hr-poster{width:100%;height:100%;object-fit:contain;display:block}
+@media (prefers-reduced-motion: reduce){.orbit-stage .hr-live{animation:none}}
+</style>
 </head>
 <body>
 
@@ -2131,7 +2140,9 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <div class="orbit-ring orbit-ring-1"></div>
         <div class="orbit-ring orbit-ring-2"></div>
         <div class="orbit-ring orbit-ring-3"></div>
-        <img src="img/robot.png" alt="Hapee Robô IA - Assistente de inteligência artificial" class="hero-robot" fetchpriority="high">
+        <picture style="display:contents"><source type="image/webp" srcset="img/robot-v2-280.webp 280w, img/robot-v2.webp 460w" sizes="(max-width:600px) 140px, 230px"><img style="height:auto" src="img/robot-v2.png" srcset="img/robot-v2-280.png 280w, img/robot-v2.png 460w" sizes="(max-width:600px) 140px, 230px" width="460" height="846" alt="Hapee Robô IA - Assistente de inteligência artificial" class="hero-robot" fetchpriority="high"></picture>
+        <!-- Robot 3D vivo (js/robot/hapee-robot.js + js/robot/robot-view.js): se monta sobre la imagen, que queda como póster/LCP y como respaldo sin WebGL. Decorativo: no abre ningún chat; se gira arrastrándolo. -->
+        <div class="hr-live" data-hapee-robot="hero" aria-hidden="true"></div>
         <!-- Orbital integration icons (logos oficiales) -->
         <!-- Inner ring (8 channels closest to robot) -->
         <div class="orb orb-wa" data-label="WhatsApp"><img src="img/orbit/whatsapp.svg" alt="WhatsApp" loading="lazy"></div>
@@ -2173,7 +2184,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       <p class="vsl-sub">5 minutos que vão mudar a forma como você enxerga as vendas. Casos reais, resultados concretos, zero enrolação.</p>
     </div>
     <div class="vsl-frame anim-rev">
-      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/robot.png" aria-label="Vídeo de demonstração da Hapee — VSL completo">
+      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/robot-v2.png" aria-label="Vídeo de demonstração da Hapee — VSL completo">
         <source src="img/vsl-hapee.mp4" type="video/mp4">
         Seu navegador não suporta vídeo HTML5.
       </video>
@@ -2399,7 +2410,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <button class="hi-ph-back" aria-label="Voltar" tabindex="-1" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <div class="hi-ph-avatar"><img src="img/robot.png" alt=""></div>
+        <div class="hi-ph-avatar"><picture style="display:contents"><source type="image/webp" srcset="img/robot-v2-avatar.webp"><img src="img/robot-v2-avatar.png" alt=""></picture></div>
         <div class="hi-ph-info">
           <span class="hi-ph-name" id="hiBrandName">Hapee</span>
           <span class="hi-ph-status" id="hiBrandStatus">online</span>
@@ -2529,7 +2540,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
             </div>
             <div class="mk-home-fab">
               <div class="hf-bubble">Bom dia! ☀️ Você tem <b>8 conversas</b> esperando e <b>3 reuniões</b> hoje. Quer ajuda para priorizar?</div>
-              <model-viewer class="hf-robot" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee" auto-rotate rotation-per-second="30deg" interaction-prompt="none" disable-zoom exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+              <picture style="display:contents"><source type="image/webp" srcset="img/robot-v2.webp"><img class="hf-robot" src="img/robot-v2.png" alt="Assistente Hapee" loading="lazy" style="object-fit:contain"></picture>
             </div>
           </div>
         </div>
@@ -3334,7 +3345,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
                 </div>
                 <div class="mk-asst-robot-wrap">
                   <div class="as-ring"></div>
-                  <model-viewer class="mk-asst-robot3d" src="img/3d/hapee-robot.glb" poster="img/robot.png" alt="Assistente Hapee 3D" camera-controls auto-rotate rotation-per-second="26deg" interaction-prompt="none" disable-zoom shadow-intensity="1.1" exposure="1.05" loading="eager"><img slot="poster" src="img/robot.png" alt="" style="width:100%;height:100%;object-fit:contain"></model-viewer>
+                  <div class="mk-asst-robot3d" data-hapee-robot="showcase" role="img" aria-label="Assistente Hapee 3D"><picture style="display:contents"><source type="image/webp" srcset="img/robot-v2-showcase.webp"><img width="540" height="772" class="hr-poster" src="img/robot-v2-showcase.png" alt="" loading="lazy"></picture></div>
                   <span class="as-hint">✥ arraste · gire em 3D</span>
                 </div>
               </div>
@@ -3374,7 +3385,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       <div class="demo-cta-ring demo-cta-ring-1" aria-hidden="true"></div>
       <div class="demo-cta-ring demo-cta-ring-2" aria-hidden="true"></div>
       <div class="demo-cta-robot-glow" aria-hidden="true"></div>
-      <img src="img/robot.png" alt="Hapee Robô IA — Assistente de inteligência artificial" class="demo-cta-robot" loading="lazy">
+      <picture style="display:contents"><source type="image/webp" srcset="img/robot-v2.webp"><img src="img/robot-v2.png" alt="Hapee Robô IA — Assistente de inteligência artificial" class="demo-cta-robot" loading="lazy"></picture>
     </div>
     <div class="demo-cta-content anim-rev">
       <span class="demo-cta-badge">Seu próximo passo</span>
@@ -4387,7 +4398,7 @@ Ao encerrar, mencione: "Esta demo é powered by Hapee.ai — agentes de IA para 
       const div=document.createElement('div');
       div.className=`hi-msg ${role}`;
       const checks=role==='me'?'<span class="checks">✓✓</span>':'';
-      const avatar=role==='bot'?'<span class="hi-msg-av"><img src="img/robot.png" alt=""></span>':'';
+      const avatar=role==='bot'?'<span class="hi-msg-av"><img src="img/robot-v2-avatar.png" alt=""></span>':'';
       div.innerHTML=`${avatar}<div class="bubble">${html}<span class="time">${nowTime()}${checks}</span></div>`;
       messagesEl.appendChild(div);
       messagesEl.scrollTop=messagesEl.scrollHeight;
@@ -4401,7 +4412,7 @@ Ao encerrar, mencione: "Esta demo é powered by Hapee.ai — agentes de IA para 
       typingEl=document.createElement('div');
       typingEl.className='hi-msg bot';
       typingEl.id='hiTypingBubble';
-      typingEl.innerHTML='<span class="hi-msg-av"><img src="img/robot.png" alt=""></span><div class="bubble typing"><span></span><span></span><span></span></div>';
+      typingEl.innerHTML='<span class="hi-msg-av"><img src="img/robot-v2-avatar.png" alt=""></span><div class="bubble typing"><span></span><span></span><span></span></div>';
       messagesEl.appendChild(typingEl);
       messagesEl.scrollTop=messagesEl.scrollHeight;
       brandStatus.textContent=statusByChannel('typing');
@@ -4818,7 +4829,7 @@ Ao encerrar, mencione: "Esta demo é powered by Hapee.ai — agentes de IA para 
 <!-- Hapee Calendar embed loader (monta el iframe en #hapeeCalendar + auto-resize) -->
 <script src="https://beta.hapee.ai/static/calendar-embed.js" async></script>
 
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<script src="/js/robot/hapee-robot.js?v=3" defer></script>
 <script src="/js/whatsapp.js" defer></script>
 <style id="qa-tactil">
 /* QA móvil 28-09-2026: alto táctil mínimo de 40 px (los links medían 17-24 px) y ningún texto de interfaz bajo 11 px. */

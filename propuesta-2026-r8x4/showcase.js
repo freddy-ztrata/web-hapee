@@ -15,7 +15,7 @@
   var R = stage.attachShadow ? stage.attachShadow({ mode: 'open' }) : stage;
   R.innerHTML = '<link rel="stylesheet" href="/propuesta-2026-r8x4/showcase.css?v=35"><div class="sc-canvas" id="scCanvas"></div>';
   var canvas = R.getElementById ? R.getElementById('scCanvas') : stage.querySelector('#scCanvas'), tabsEl = d.getElementById('psTabs'), capEl = d.getElementById('psCap'), urlEl = d.getElementById('psUrl'), frame = d.getElementById('psFrame');
-  var ROBOT = '/img/robot.png', LOGO = '/img/logo-hapee.png';
+  var ROBOT = '/img/robot-v2.png', LOGO = '/img/logo-hapee.png';
 
   /* ── utilidades ─────────────────────────────────────── */
   function h(html) { var t = d.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
