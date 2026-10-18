@@ -7,7 +7,8 @@
    renderiza en el renderer oculto y se copia al <canvas> 2D de cada vista
    visible. Una sola subida de geometría y un solo contexto WebGL.
    El estado lo manda HapeeRobot (idle | listening | thinking | talking | happy).
-   Si algo falla, el llamador deja la imagen img/robot.png.
+   Si algo falla, queda la imagen del hero (img/robot-v2.webp|png, render de
+   este mismo robot en su pose inicial: el cambio imagen→3D no se nota).
    ============================================================ */
 const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0';
 
@@ -62,7 +63,8 @@ export async function start(R, vistas) {
       const dist = Math.max((fh / 2) / tanV, (fh * .5) / (tanV * cam.aspect)) * 1.02 + size.z / 2;
       cam.position.set(0, cy + restH * .03, dist); cam.lookAt(0, cy, 0);
     } else {
-      const dist = Math.max((size.y / 2) / tanV, (size.x / 2) / (tanV * cam.aspect)) * 1.06 + size.z / 2;
+      // 1.08: el robot en reposo cabe entero en la caja de img.hero-robot (img/robot-v2.*, mismo encuadre)
+      const dist = Math.max((size.y / 2) / tanV, (size.x / 2) / (tanV * cam.aspect)) * 1.08 + size.z / 2;
       cam.position.set(0, size.y * .04, dist); cam.lookAt(0, size.y * .02, 0);
     }
     cam.updateProjectionMatrix();
@@ -172,7 +174,7 @@ export async function start(R, vistas) {
       if (!v.listo) {
         v.listo = true; v.el.classList.add('hr-ready');
         if (v.el._poster) v.el._poster.classList.add('hr-ready-poster');
-        if (!llegada) { llegada = true; setTimeout(() => R.setState('happy'), 450); }
+        if (!llegada) { llegada = true; setTimeout(() => R.setState('happy'), 950); } // saluda cuando ya terminó el fundido imagen→3D
       }
     }
   })(t0);

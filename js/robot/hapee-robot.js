@@ -10,8 +10,8 @@
 
    El 3D (js/robot/robot-view.js + three.js r160 de jsDelivr) se carga recién
    DESPUÉS del evento `load`: a los ~2,5 s (idle) o con la primera interacción,
-   lo que llegue antes (también en móvil). img/robot.png es el primer pintado y
-   el respaldo: queda sin WebGL, con prefers-reduced-motion, Save-Data, red 2g
+   lo que llegue antes (también en móvil). img/robot-v2.webp|png (render de este
+   mismo robot, misma pose y encuadre) es el primer pintado y el respaldo: queda sin WebGL, con prefers-reduced-motion, Save-Data, red 2g
    o equipo modesto (≤2 GB / ≤2 núcleos).
    ============================================================ */
 (function () {
@@ -41,9 +41,11 @@
   st.id = 'hapee-robot-style';
   st.textContent =
     '[data-hapee-robot]{position:relative}' +
-    '[data-hapee-robot] canvas.hr-cv{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s ease;touch-action:pan-y}' +
+    '[data-hapee-robot] canvas.hr-cv{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .45s ease;touch-action:pan-y}' +
     '[data-hapee-robot].hr-ready canvas.hr-cv{opacity:1}' +
-    '.hr-ready>.hr-poster,.hr-ready-poster{opacity:0!important;transition:opacity .6s ease}' +
+    // fundido: el 3D aparece encima (.45 s) y recién entonces se va la imagen, que es el mismo robot en la misma pose
+    '.hr-ready>.hr-poster,.hr-ready-poster{opacity:0!important;transition:opacity .3s ease .4s}' +
+    '@media(hover:hover) and (pointer:fine){.orbit-stage .hr-live canvas.hr-cv{filter:drop-shadow(0 20px 50px rgba(250,80,0,.25))}}' +
     '.hr-live{position:absolute;z-index:6;cursor:grab;-webkit-tap-highlight-color:transparent}' +
     '.hr-live:active{cursor:grabbing}' +
     '@media(prefers-reduced-motion:reduce){[data-hapee-robot] canvas.hr-cv{transition:none!important}}';
@@ -84,7 +86,7 @@
     var vistas = R.views.slice();
     if (!vistas.length) return;
     cargado = true;
-    import('/js/robot/robot-view.js?v=1').then(function (m) { return m.start(R, vistas); })
+    import('/js/robot/robot-view.js?v=2').then(function (m) { return m.start(R, vistas); })
       .catch(function (e) { if (window.console) console.warn('Hapee robot 3D no disponible, queda la imagen:', e && e.message || e); });
   }
   // Nunca antes de `load` (no compite con el primer pintado ni con el LCP). Después de load:

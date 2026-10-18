@@ -240,7 +240,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="preload" href="img/logo-hapee.png" as="image">
-<link rel="preload" href="img/robot.png" as="image">
+<link rel="preload" as="image" type="image/webp" href="img/robot-v2.webp" imagesrcset="img/robot-v2-280.webp 280w, img/robot-v2.webp 460w" imagesizes="(max-width:600px) 140px, 230px">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -2171,6 +2171,9 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
 <style id="robot-vivo">
 /* Robot 3D vivo (2026-10-17): el overlay .hr-live copia la caja de img.hero-robot y flota igual */
 .orbit-stage .hr-live{position:absolute;z-index:6;animation:rf 4s ease-in-out infinite}
+/* póster = img/robot-v2.* (render de este mismo robot en su pose inicial); width/height en el img solo reservan la proporción */
+.hero-robot-pic{display:contents}
+img.hero-robot{height:auto}
 .mk-asst-robot3d>.hr-poster{width:100%;height:100%;object-fit:contain;display:block}
 @media (prefers-reduced-motion: reduce){.orbit-stage .hr-live{animation:none}}
 </style>
@@ -2286,7 +2289,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <div class="orbit-ring orbit-ring-1"></div>
         <div class="orbit-ring orbit-ring-2"></div>
         <div class="orbit-ring orbit-ring-3"></div>
-        <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high">
+        <picture class="hero-robot-pic"><source type="image/webp" srcset="img/robot-v2-280.webp 280w, img/robot-v2.webp 460w" sizes="(max-width:600px) 140px, 230px"><img src="img/robot-v2.png" srcset="img/robot-v2-280.png 280w, img/robot-v2.png 460w" sizes="(max-width:600px) 140px, 230px" width="460" height="846" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high" decoding="async"></picture>
         <!-- Robot 3D vivo (js/robot/hapee-robot.js + js/robot/robot-view.js): se monta sobre la imagen, que queda como póster/LCP y como respaldo sin WebGL. Decorativo: no abre ningún chat; se gira arrastrándolo. -->
         <div class="hr-live" data-hapee-robot="hero" aria-hidden="true"></div>
         <!-- Orbital integration icons (logos oficiales) -->
@@ -5352,7 +5355,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
   .custom-widget .l{font-size:11px}
 }
 </style>
-<script src="/js/robot/hapee-robot.js" defer></script>
+<script src="/js/robot/hapee-robot.js?v=2" defer></script>
 <script src="/js/lang.js" defer></script>
 </body>
 </html>
