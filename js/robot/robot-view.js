@@ -1,9 +1,9 @@
 /* ============================================================
    Hapee.ai — Robot 3D vivo (módulo, 2026-10-17)
-   Lo importa js/hapee-asistente.js recién cuando el sitio está ocioso:
+   Lo importa js/robot/hapee-robot.js recién después del evento load:
      import('/js/robot/robot-view.js').then(m => m.start(HapeeRobot, vistas))
    UN solo WebGLRenderer y UN solo robot (js/robot/robot.js) para todas las
-   vistas de la página (hero, vitrina, lanzador flotante): cada cuadro se
+   vistas de la página (hero, vitrina «Asistente»): cada cuadro se
    renderiza en el renderer oculto y se copia al <canvas> 2D de cada vista
    visible. Una sola subida de geometría y un solo contexto WebGL.
    El estado lo manda HapeeRobot (idle | listening | thinking | talking | happy).
@@ -118,7 +118,7 @@ export async function start(R, vistas) {
   (function frame(now) {
     requestAnimationFrame(frame);
     if (perdido || document.hidden) return;
-    const vis = views.filter(v => v.visible && v.w && v.h && !v.el.closest('.hb-oculto'));
+    const vis = views.filter(v => v.visible && v.w && v.h);
     if (!vis.length) return;
     const dt = Math.min(.1, (now - tPrev) / 1000); tPrev = now;
     const t = (now - t0) / 1000, s = R.state, lv = R.level();
@@ -172,7 +172,7 @@ export async function start(R, vistas) {
       if (!v.listo) {
         v.listo = true; v.el.classList.add('hr-ready');
         if (v.el._poster) v.el._poster.classList.add('hr-ready-poster');
-        if (!llegada && v.name !== 'launcher') { llegada = true; setTimeout(() => R.setState('happy'), 450); }
+        if (!llegada) { llegada = true; setTimeout(() => R.setState('happy'), 450); }
       }
     }
   })(t0);

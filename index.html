@@ -2287,8 +2287,8 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         <div class="orbit-ring orbit-ring-2"></div>
         <div class="orbit-ring orbit-ring-3"></div>
         <img src="img/robot.png" alt="Hapee Robot IA - Asistente de inteligencia artificial" class="hero-robot" fetchpriority="high">
-        <!-- Robot 3D vivo (js/hapee-asistente.js + js/robot/): se monta sobre la imagen, que queda como póster/LCP y como respaldo sin WebGL. Click = abre el chat Hapee AI. -->
-        <div class="hr-live" data-hapee-robot="hero" role="button" tabindex="0" aria-label="Habla con Hapee: abre el chat del asistente IA"></div>
+        <!-- Robot 3D vivo (js/robot/hapee-robot.js + js/robot/robot-view.js): se monta sobre la imagen, que queda como póster/LCP y como respaldo sin WebGL. Decorativo: no abre ningún chat; se gira arrastrándolo. -->
+        <div class="hr-live" data-hapee-robot="hero" aria-hidden="true"></div>
         <!-- Orbital integration icons (logos oficiales) -->
         <!-- Inner ring (8 channels closest to robot) -->
         <div class="orb orb-wa" data-label="WhatsApp"><img src="img/orbit/whatsapp.svg" alt="WhatsApp" loading="lazy"></div>
@@ -5005,8 +5005,6 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
     // --- ElevenLabs TTS (voice response) ---
     function setSpeaking(on){
       sphereEnergy=on?1:0;
-      // robot vivo: habla mientras suena la voz (TTS o voz del navegador)
-      if(window.HapeeRobot)HapeeRobot.setState(on?'talking':'idle');
     }
     async function speak(text){
       if(currentAudio){currentAudio.pause();currentAudio=null}
@@ -5022,7 +5020,6 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
         if(!blob||blob.size<256)throw new Error('TTS vacío');
         const url=URL.createObjectURL(blob);
         currentAudio=new Audio(url);
-        if(window.HapeeRobot)HapeeRobot.attachAudio(currentAudio); // pulso del pecho según la amplitud real
         currentAudio.onended=()=>{setSpeaking(false);URL.revokeObjectURL(url);currentAudio=null};
         currentAudio.onerror=()=>{URL.revokeObjectURL(url);currentAudio=null;speakFallback(clean)};
         await currentAudio.play();
@@ -5071,13 +5068,11 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
       suggestions.classList.add('hidden');
       // Show typing
       showTyping();
-      if(window.HapeeRobot)HapeeRobot.setState('thinking');
       sphereEnergy=.4;
       // Fetch reply
       const reply=await callAnthropic(t);
       // Replace typing with bot bubble
       hideTyping();
-      if(window.HapeeRobot)HapeeRobot.setState('talking',{maxMs:3000+reply.length*85});
       appendBubble('bot', formatMd(reply));
       // Speak the reply
       speak(reply);
@@ -5357,7 +5352,7 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
   .custom-widget .l{font-size:11px}
 }
 </style>
-<script src="/js/hapee-asistente.js" defer></script>
+<script src="/js/robot/hapee-robot.js" defer></script>
 <script src="/js/lang.js" defer></script>
 </body>
 </html>
