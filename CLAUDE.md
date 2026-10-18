@@ -154,7 +154,7 @@ All Spanish public copy (HTML text, JS strings, code comments inside docs exampl
 - **Hapee AI section** — interactive chat with typewriter responses + voice playback. Sends to `/api/chat`, streams TTS from `/api/tts/{voice_id}`. System prompt embedded inline (~line 4765). Not connected to the hero robot.
 - **CTA Final** — interactive particle nebula (90 geometric shapes, orbital motion, cursor magnetic repulsion). Gated by `IntersectionObserver`; only runs when visible. Has a 2s `setTimeout` safety fallback that forces content visible if GSAP/ScrollTrigger fail.
 - **Animations**: GSAP + ScrollTrigger from CDN (deferred); custom `IntersectionObserver` for counters (replays every scroll-in) and the 3-steps sequence; CSS animations for floating robot, glow pulse, and the PRO card rotating border beam (`@property --beam-a`).
-- **FOMO popup** — fixed bottom-left, random names + 8 target-market countries (AR/CL/CO/EC/ES/MX/PE/UY) + flag PNGs from `img/flags/{cc}.png`. First show at 15s, then every 25–45s; auto-hides at 6s.
+- **FOMO popup: removed (Oct 2026).** The fake "X from <country> just bought/booked" toast was deleted from the home pages (es/en/pt), and its dead CSS from agenda-tu-demo and agentes-ia-whatsapp. Do not reintroduce invented social proof. `@keyframes fomoPulse` stays because the green "online" dots use it. `img/flags/` stays because `propuesta-2026-r8x4/eventos.html` uses it.
 
 ## Partner badges
 
