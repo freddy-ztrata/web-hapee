@@ -5,7 +5,7 @@
 
    Decorativo, SIN conexión con ningún chat: respira, mira alrededor, la
    cabeza sigue el cursor (escritorio), saluda al llegar y se gira
-   arrastrándolo. Vistas [data-hapee-robot]: «hero» (sobre img.hero-robot) y
+   arrastrándolo. Vistas [data-hapee-robot]: «hero» (sobre img.hero-robot o img[data-hapee-poster], su hermano) y
    «showcase» (pestaña Asistente de la vitrina).
 
    El 3D (js/robot/robot-view.js + three.js r160 de jsDelivr) se carga recién
@@ -54,7 +54,7 @@
   var heroVista = document.querySelector('[data-hapee-robot="hero"]');
   if (heroVista) {
     // el overlay copia la caja del póster (img.hero-robot) con aire a los lados para el brazo que saluda
-    var poster = heroVista.parentNode && heroVista.parentNode.querySelector('img.hero-robot');
+    var poster = heroVista.parentNode && heroVista.parentNode.querySelector('img.hero-robot, img[data-hapee-poster]');
     var calzar = function () {
       if (!poster) return;
       var w = poster.offsetWidth, h = poster.offsetHeight; if (!w || !h) return;
