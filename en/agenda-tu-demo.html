@@ -2013,6 +2013,52 @@ img.hero-robot{height:auto}
 .mk-asst-robot3d .hr-poster{width:100%;height:100%;object-fit:contain;display:block}
 @media (prefers-reduced-motion: reduce){.orbit-stage .hr-live{animation:none}}
 </style>
+<style id="agenda-orden">
+/* Orden y limpieza de la landing (18-10-2026): video corto compacto, chip LIVE en la barra del
+   navegador del mockup, barra lateral del mockup solo con íconos en móvil, cierre sin robot. */
+/* Video corto: bloque compacto */
+.vsl-section{padding:44px 0 40px}
+.vsl-head{margin-bottom:22px}
+.vsl-section h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin-bottom:8px}
+.vsl-section .vsl-sub{font-size:.98rem;line-height:1.6;max-width:520px}
+.vsl-tag{font-size:.66rem;padding:6px 14px;margin-bottom:12px}
+.vsl-frame{max-width:680px}
+.vsl-frame::after{inset:-24px;filter:blur(30px)}
+@media(max-width:768px){.vsl-section{padding:36px 0 32px}.vsl-head{margin-bottom:18px}}
+/* Chip LIVE: chico, dentro de la barra del navegador del mockup (no tapa la app) */
+.platform-show .ps-live-badge,.platform-show .ps-live-badge[style]{top:7px!important;bottom:auto!important;left:auto!important;right:max(14px,calc((100% - 1100px) / 2 + 14px))!important;height:22px;width:auto;max-width:calc(100% - 110px);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:.56rem;letter-spacing:1.1px;padding:0 10px;border-radius:999px;background:#fff;color:#b91c1c;border:1px solid rgba(220,38,38,.22);box-shadow:none;z-index:5}
+.platform-show .ps-live-badge::before{display:none}
+html.dark .platform-show .ps-live-badge{background:#0a0a0a;color:#f87171;border-color:rgba(248,113,113,.25)}
+@media(max-width:768px){
+  .platform-show .ps-live-badge,.platform-show .ps-live-badge[style]{right:12px!important;font-size:.5rem;height:20px;top:8px!important;padding:0 8px}
+  /* barra lateral del mockup: riel de íconos, sin textos ni logo */
+  .platform-show .mk-app{width:700px;min-width:700px}
+  .platform-show .browser-bar{width:700px;min-width:700px}
+  .platform-show .mk-nav{width:50px;min-width:50px;padding:12px 6px;gap:4px}
+  .platform-show .mk-nav .mk-nav-l,.platform-show .mk-nav-logo,.platform-show .mk-nav-user{display:none}
+  .platform-show .mk-nav-i{justify-content:center;padding:8px 0}
+  .platform-show .mk-nav-i::after{display:none}
+  .platform-show .mk-nav-svg{width:15px;height:15px}
+  .platform-show .mk-pipe-app .mk-pipe::after{display:none}
+}
+/* «Y reemplaza»: sin tipografía monoespaciada y la cuenta siempre legible */
+.dintg.dintg-reemplaza{padding-top:56px}
+.ab-core em{font-family:var(--fb)}
+.ab-cuenta{font-family:var(--fb);z-index:6;background:var(--bg);padding:6px 14px;border-radius:999px;white-space:nowrap}
+/* Cierre compacto: texto y CTA, sin robot ni cifras repetidas */
+.demo-cta-final{padding:64px 24px}
+.demo-cta-grid{grid-template-columns:1fr;max-width:760px;gap:0}
+.demo-cta-content{text-align:center}
+.demo-cta-content h2{font-size:clamp(2rem,4.4vw,3.1rem)}
+.demo-cta-content p{margin-left:auto;margin-right:auto}
+.demo-cta-actions{align-items:center}
+.demo-cta-chips{justify-content:center}
+@media(max-width:768px){.demo-cta-final{padding:52px 20px}.demo-cta-content h2 br{display:none}}
+/* CTAs flotantes: el botón de WhatsApp no tapa la barra ni la píldora de agendar */
+.hapee-wa{transition:bottom .35s ease}
+@media(max-width:900px){body:has(.demo-sticky-mobile.visible) .hapee-wa{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+@media(min-width:901px){.demo-floating-pill{right:96px;bottom:25px}}
+</style>
 </head>
 <body>
 
@@ -2161,12 +2207,12 @@ img.hero-robot{height:auto}
 <section class="vsl-section" id="vsl-section">
   <div class="ctn">
     <div class="vsl-head anim-rev">
-      <span class="vsl-tag">The video that explains it all</span>
+      <span class="vsl-tag">Short video</span>
       <h2>See Hapee <span class="tg">in action</span></h2>
-      <p class="vsl-sub">5 minutes that will change the way you see sales. Real cases, concrete results, zero fluff.</p>
+      <p class="vsl-sub">Just over a minute to see Hapee in action before your demo.</p>
     </div>
     <div class="vsl-frame anim-rev">
-      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/robot-v2.png" aria-label="Hapee demo video — full VSL">
+      <video class="vsl-video" id="vslVideo" controls playsinline preload="metadata" poster="img/robot-v2.png" aria-label="Short Hapee video">
         <source src="img/vsl-hapee.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
@@ -2183,258 +2229,7 @@ img.hero-robot{height:auto}
   </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- ===================== CALENDAR · CONVERSION MOMENT ===================== -->
-<section class="calendar-section" id="calendario">
-  <div class="ctn">
-    <div class="cal-head anim-rev">
-      <span class="cal-tag">Book your demo</span>
-      <h2>Book your <span class="tg">live demo</span></h2>
-      <p class="cal-sub">Pick the day and time that works best for you. You'll get an email with the Google Meet link and a reminder before the call.</p>
-      <div class="cal-trust anim-rev">
-        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> 100% free</div>
-        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Live, with a specialist</div>
-        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Live platform walkthrough</div>
-        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> No obligation to buy</div>
-      </div>
-    </div>
-    <div class="cal-embed anim-rev">
-        <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-theme="auto" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
-        <noscript>
-          <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Your browser has JavaScript turned off. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Open the calendar in a new tab →</a></p>
-        </noscript>
-        <script>
-        /* === UTM / Click-ID forwarder al widget de calendario Hapee ===
-           Problema: el iframe lee window.location.search desde su propio origin (beta.hapee.ai),
-           no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al calendario.
-           Fix: tomamos los UTMs del parent URL y los inyectamos en data-hapee-calendar (el loader
-           calendar-embed.js acepta una URL completa y le agrega ?embed=1) ANTES de que monte el iframe.
-           Este script corre síncrono; el loader (async, al final del body) monta después.
-           Persistencia en sessionStorage para sobrevivir navegación interna (hero CTA → calendar). */
-        (function(){
-          var FRAME_ID = 'hapeeCalendar';
-          var STORAGE_KEY = 'hapee_attribution';
-          var TRACK = [
-            'utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id',
-            'utm_source_platform','utm_creative_format','utm_marketing_tactic',
-            'fbclid','gclid','ttclid','msclkid','dclid','twclid','yclid','wbraid','gbraid',
-            'li_fat_id','epik','irclickid','mc_cid','mc_eid'
-          ];
-
-          var iframe = document.getElementById(FRAME_ID);
-          if(!iframe) return;
-          var baseSrc = iframe.getAttribute('data-base-src');
-
-          /* 1) Captura UTMs del URL parent actual */
-          var urlParams = new URLSearchParams(window.location.search);
-          var fromUrl = {};
-          TRACK.forEach(function(k){
-            var v = urlParams.get(k);
-            if(v) fromUrl[k] = v;
-          });
-
-          /* 2) Recupera sessionStorage (last-click sobrevive a navegación interna) */
-          var stored = {};
-          try { stored = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
-
-          /* 3) Si el URL actual trae UTMs, son el nuevo last-click → persistimos */
-          var hasNewUtms = Object.keys(fromUrl).length > 0;
-          var attribution = hasNewUtms ? fromUrl : stored;
-
-          if(hasNewUtms){
-            try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fromUrl)); } catch(e) {}
-          }
-
-          /* 4) Referrer extra (señal adicional de atribución) */
-          if(document.referrer && !attribution.referrer){
-            attribution.referrer = document.referrer;
-          }
-
-          /* 5) Setea la URL que montará el loader (solo si hay atribución; si no, queda el slug) */
-          var qs = new URLSearchParams(attribution).toString();
-          if(qs) iframe.setAttribute('data-hapee-calendar', baseSrc + '?' + qs);
-
-          /* 6) Debug opcional: descomenta para chequear en consola */
-          /* console.log('[Hapee Attribution]', attribution, '\\ncalendar →', iframe.getAttribute('data-hapee-calendar')); */
-        })();
-        </script>
-        <script>
-        /* === Conversión: demo agendada en el widget de calendario Hapee ===
-           El iframe de booking (beta.hapee.ai) avisa al parent vía postMessage
-           con event.data.type === 'zentru_calendar_submitted' cuando la cita queda
-           confirmada. Ahí disparamos 'dg_agendar_demo', el evento clave definido
-           en Analytics (GA4) — Google Ads lo importa desde ahí. Sin send_to:
-           el evento va a todos los destinos configurados en el Google tag. */
-        (function(){
-          var fired = false;
-          var ALLOWED = ['hapee.ai'];
-          window.addEventListener('message', function(e){
-            /* Solo mensajes del widget propio (beta.hapee.ai u otro subdominio).
-               Match exacto de hostname o subdominio — un substring/regex dejaría
-               pasar orígenes tipo https://hapee.ai.evil.com */
-            var host = '';
-            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
-            var allowed = ALLOWED.some(function(d){
-              return host === d || host.slice(-(d.length + 1)) === ('.' + d);
-            });
-            if(!allowed) return;
-            var d = e.data;
-            var isBooking = !!d && typeof d === 'object' && d.type === 'zentru_calendar_submitted';
-            if(!isBooking || fired) return;
-            fired = true; /* una sola conversión por carga de página */
-            if(typeof gtag === 'function'){
-              gtag('event', 'dg_agendar_demo');
-            }
-            /* Meta: el mismo eventID que manda el servidor por la API de Conversiones
-               (apt.<id de la cita>) — Meta deduplica y cuenta UNA reserva. Sin eventID
-               no se dispara: un Schedule sin él se sumaría al del servidor. */
-            if(typeof fbq === 'function' && d.eventId){
-              fbq('track', 'Schedule', {}, { eventID: String(d.eventId) });
-            }
-          });
-        })();
-        </script>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- VIDEO SHOWCASE -->
-<section class="video-section">
-  <div class="ctn">
-    <div class="video-wrap" style="max-width:800px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg)">
-      <video id="hapeeVideo" autoplay muted loop playsinline controls poster="img/video-poster.jpg" style="width:100%;display:block;border-radius:20px" aria-label="Hapee platform demo video">
-        <source src="img/video-hapee.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="stats">
-  <div class="ctn">
-    <div class="stats-grid" id="statsGrid">
-      <div class="stat-item">
-        <div class="stat-n">+<span class="ctr" data-target="90">0</span><span class="sf">K</span></div>
-        <div class="stat-l">Customers Automated</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-n"><span class="ctr" data-target="1.37" data-dec="2">0</span><span class="sf">B</span></div>
-        <div class="stat-l">AI messages per month</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-n"><span class="ctr" data-target="194">0</span><span class="sf">M</span></div>
-        <div class="stat-l">Leads closed</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-n"><span class="ctr" data-target="35">0</span><span class="sf">%</span></div>
-        <div class="stat-l">Higher conversion with AI</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-
-<!-- HAPEE INTERACT — IMMERSIVE -->
-<section class="hapee-interact" id="hapee-chat">
-  <canvas id="hiCanvas"></canvas>
-  <div class="hi-layer">
-    <!-- Section header -->
-    <div class="hi-header">
-      <span class="sl">Try it before you book</span>
-      <h2>Chat with a live <span class="tg">AI Agent</span></h2>
-      <p>Before your demo, try it yourself. Pick an industry and a channel, then write as if you were the customer — this is exactly what you'll see running with your brand, your voice and your data.</p>
-    </div>
-
-    <!-- INDUSTRY SELECTOR — pick a vertical to demo the agent as a fictional brand -->
-    <div class="hi-industries" id="hiIndustries" role="tablist" aria-label="Choose your industry">
-      <span class="hi-ind-label">Industry:</span>
-      <div class="hi-ind-chips">
-        <button class="hi-ind on" data-ind="general" role="tab">Hapee</button>
-        <button class="hi-ind" data-ind="inmobiliaria" role="tab">Real estate</button>
-        <button class="hi-ind" data-ind="salud" role="tab">Healthcare</button>
-        <button class="hi-ind" data-ind="retail" role="tab">Retail</button>
-        <button class="hi-ind" data-ind="automotriz" role="tab">Automotive</button>
-        <button class="hi-ind" data-ind="educacion" role="tab">Education</button>
-        <button class="hi-ind" data-ind="restaurantes" role="tab">Restaurant</button>
-      </div>
-    </div>
-
-    <!-- CHANNEL TOGGLE — WhatsApp / Instagram -->
-    <div class="hi-channels" role="tablist" aria-label="Messaging channel">
-      <button class="hi-channel on" data-ch="wa" role="tab">
-        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.668 5.494l-.999 3.648 3.82-1.003zM17.999 14.587c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-        <span>WhatsApp</span>
-      </button>
-      <button class="hi-channel" data-ch="ig" role="tab">
-        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        <span>Instagram</span>
-      </button>
-    </div>
-
-    <!-- Voice & gender (compact under chat) -->
-    <div class="hi-voice-ctrl">
-      <span class="hi-voice-lbl">Voice:</span>
-      <div class="hi-gender" id="hiGender" title="Agent voice">
-        <button class="on" data-v="f" aria-label="Female voice">♀</button>
-        <button data-v="m" aria-label="Male voice">♂</button>
-      </div>
-    </div>
-
-    <!-- CHAT WIDGET — phone style, swaps WhatsApp / Instagram theme -->
-    <div class="hi-phone wa" id="hiPhone">
-      <!-- Header: avatar + brand + status + action icons -->
-      <div class="hi-phone-header">
-        <button class="hi-ph-back" aria-label="Back" tabindex="-1" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <div class="hi-ph-avatar"><picture style="display:contents"><source type="image/webp" srcset="img/robot-v2-avatar.webp"><img src="img/robot-v2-avatar.png" alt=""></picture></div>
-        <div class="hi-ph-info">
-          <span class="hi-ph-name" id="hiBrandName">Hapee</span>
-          <span class="hi-ph-status" id="hiBrandStatus">online</span>
-        </div>
-        <div class="hi-ph-actions">
-          <button aria-label="Voice call" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></button>
-          <button aria-label="Video call" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
-          <button aria-label="More options" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></button>
-        </div>
-      </div>
-
-      <!-- Messages -->
-      <div class="hi-phone-body" id="hiMessages">
-        <!-- Mensajes se appendean acá dinámicamente -->
-      </div>
-
-      <!-- Suggestions (inside the chat, like WA quick-replies) -->
-      <div class="hi-phone-suggestions" id="hiSuggestions"></div>
-
-      <!-- Input bar styled per channel -->
-      <div class="hi-phone-input">
-        <button class="hi-pi-icon" aria-label="Emoji">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </button>
-        <input type="text" id="hiInput" placeholder="Message" autocomplete="off">
-        <button class="hi-pi-icon hi-pi-attach" aria-label="Attach">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
-        </button>
-        <button class="hi-pi-icon hi-pi-mic" id="hiVoiceBtn" aria-label="Talk by voice">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        </button>
-        <button class="hi-pi-send" id="hiSendBtn" aria-label="Send">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <p class="hi-phone-foot">This is what your customers would see. It works the same with your brand, your data and your tone.</p>
-  </div>
-</section>
-
-<!-- PLATFORM SHOWCASE — see the operator side of Hapee -->
+<!-- QUÉ ES HAPEE — la plataforma por dentro (mockup) -->
 <section class="platform-show" id="plataforma">
   <div class="ps-head">
     <span class="lbl">A frictionless platform</span>
@@ -2526,7 +2321,7 @@ img.hero-robot{height:auto}
             </div>
           </div>
         </div>
-        <span class="ps-live-badge" style="left:158px;right:auto">● Everything under control</span>
+        <span class="ps-live-badge">● Everything under control</span>
       </div>
       <p class="ps-cap"><strong>Home.</strong> The control center: today's KPIs, access to every module and your daily summary — everything is run from here.</p>
     </div>
@@ -3351,71 +3146,9 @@ img.hero-robot{height:auto}
   </div>
 </section>
 
+<!-- Y REEMPLAZA +20 HERRAMIENTAS (absorción) -->
 
-
-
-<!-- CTA FINAL — Demo focused, RICH variant -->
-<section class="demo-cta-final" id="ctafSection">
-  <div class="demo-cta-orb demo-cta-orb-1"></div>
-  <div class="demo-cta-orb demo-cta-orb-2"></div>
-  <div class="demo-cta-orb demo-cta-orb-3"></div>
-  <div class="demo-cta-particles" aria-hidden="true">
-    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-  </div>
-  <div class="demo-cta-grid">
-    <div class="demo-cta-robot-wrap anim-rev">
-      <div class="demo-cta-ring demo-cta-ring-1" aria-hidden="true"></div>
-      <div class="demo-cta-ring demo-cta-ring-2" aria-hidden="true"></div>
-      <div class="demo-cta-robot-glow" aria-hidden="true"></div>
-      <picture style="display:contents"><source type="image/webp" srcset="img/robot-v2.webp"><img src="img/robot-v2.png" alt="Hapee AI Robot — Artificial intelligence assistant" class="demo-cta-robot" loading="lazy"></picture>
-    </div>
-    <div class="demo-cta-content anim-rev">
-      <span class="demo-cta-badge">Your next step</span>
-      <h2>One demo can change<br>your business <em>forever</em></h2>
-      <p>Book your free demo now. Our team shows you Hapee working live, answers your questions and hands you a concrete action plan for your business.</p>
-      <div class="demo-cta-stats">
-        <div class="demo-cta-stat">
-          <span class="demo-cta-stat-n">+90K</span>
-          <span class="demo-cta-stat-l">Active customers</span>
-        </div>
-        <div class="demo-cta-stat">
-          <span class="demo-cta-stat-n">194M</span>
-          <span class="demo-cta-stat-l">Leads closed</span>
-        </div>
-        <div class="demo-cta-stat">
-          <span class="demo-cta-stat-n">+35%</span>
-          <span class="demo-cta-stat-l">More conversion</span>
-        </div>
-      </div>
-      <div class="demo-cta-actions">
-        <a href="#calendario" class="demo-cta-btn" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Book my free demo
-        </a>
-        <p class="demo-cta-note">100% free · Live · No commitment</p>
-        <div class="demo-cta-chips">
-          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Google Meet</span>
-          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> English or Spanish</span>
-          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Expert Hapee team</span>
-          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Concrete plan at the end</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SE CONECTA (red neuronal) + REEMPLAZA (absorción) -->
-<section class="dintg" aria-label="Hapee integrations">
-  <div class="dintg-head">
-    <h2>Connects with what <span class="tgx">you already use</span></h2>
-    <p>WhatsApp, Instagram, email, calendars, e-commerce and payments — all your channels talking to Hapee.</p>
-  </div>
-  <div class="int-stage" id="intStage">
-    <svg class="int-net" id="intNet" aria-hidden="true"></svg>
-    <div class="int-core"><img src="img/logo-hapee.png" alt="Hapee"></div>
-  </div>
-</section>
-<section class="dintg" aria-label="Tools Hapee replaces" style="padding-top:0">
+<section class="dintg dintg-reemplaza" aria-label="Tools Hapee replaces">
   <div class="dintg-head">
     <h2>And replaces <span class="tgx">20+ tools</span></h2>
     <p>CRM, email, automation, community and reporting: everything you pay for separately today, absorbed by a single platform.</p>
@@ -3448,7 +3181,7 @@ html.dark .int-core{background:#161314;border-color:rgba(255,255,255,.08)}
 .ab-core{position:absolute;left:50%;top:50%;translate:-50% -50%;width:124px;height:124px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:32px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;box-shadow:0 18px 60px rgba(250,80,0,.3);z-index:5}
 html.dark .ab-core{background:#161314;border-color:rgba(255,255,255,.1)}
 .ab-core img{width:60%}
-.ab-core em{font-style:normal;font-family:var(--fm,monospace);font-size:.58rem;letter-spacing:1.6px;color:var(--accent);font-weight:700}
+.ab-core em{font-style:normal;font-family:var(--fb);font-size:.58rem;letter-spacing:1.6px;color:var(--accent);font-weight:700}
 .ab-core::before{content:'';position:absolute;inset:-16px;border-radius:42px;border:1.5px dashed rgba(250,80,0,.35);animation:dGira 22s linear infinite}
 .ab-core::after{content:'';position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(circle,rgba(250,80,0,.14),transparent 70%);z-index:-1;animation:dLate 2.6s ease-in-out infinite alternate}
 @keyframes dLate{to{transform:scale(1.25);opacity:.6}}
@@ -3456,7 +3189,7 @@ html.dark .ab-core{background:#161314;border-color:rgba(255,255,255,.1)}
 html.dark .ab-chip{background:#161314;border-color:rgba(255,255,255,.1)}
 .ab-chip i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 @keyframes dViaje{0%{left:var(--sx);top:var(--sy);opacity:0;transform:scale(.9)}12%{opacity:1;transform:scale(1)}70%{opacity:1}100%{left:50%;top:50%;opacity:0;transform:scale(.25)}}
-.ab-cuenta{position:absolute;left:50%;bottom:-4px;translate:-50%;font-family:var(--fm,monospace);font-size:.76rem;letter-spacing:2px;font-weight:700;color:var(--text,#666)}
+.ab-cuenta{position:absolute;left:50%;bottom:-4px;translate:-50%;font-family:var(--fb);font-size:.76rem;letter-spacing:2px;font-weight:700;color:var(--text,#666)}
 .ab-cuenta b{color:var(--accent);font-size:1.05rem}
 @media (prefers-reduced-motion:reduce){.int-node,.int-core::after,.ab-chip,.ab-core::before,.ab-core::after{animation:none}.ab-chip{opacity:1}}
 </style>
@@ -3524,6 +3257,271 @@ html.dark .ab-chip{background:#161314;border-color:rgba(255,255,255,.1)}
   }
 })();
 </script>
+
+<!-- PRUEBA — agente IA en vivo -->
+<section class="hapee-interact" id="hapee-chat">
+  <canvas id="hiCanvas"></canvas>
+  <div class="hi-layer">
+    <!-- Section header -->
+    <div class="hi-header">
+      <span class="sl">Try it before you book</span>
+      <h2>Chat with a live <span class="tg">AI Agent</span></h2>
+      <p>Before your demo, try it yourself. Pick an industry and a channel, then write as if you were the customer — this is exactly what you'll see running with your brand, your voice and your data.</p>
+    </div>
+
+    <!-- INDUSTRY SELECTOR — pick a vertical to demo the agent as a fictional brand -->
+    <div class="hi-industries" id="hiIndustries" role="tablist" aria-label="Choose your industry">
+      <span class="hi-ind-label">Industry:</span>
+      <div class="hi-ind-chips">
+        <button class="hi-ind on" data-ind="general" role="tab">Hapee</button>
+        <button class="hi-ind" data-ind="inmobiliaria" role="tab">Real estate</button>
+        <button class="hi-ind" data-ind="salud" role="tab">Healthcare</button>
+        <button class="hi-ind" data-ind="retail" role="tab">Retail</button>
+        <button class="hi-ind" data-ind="automotriz" role="tab">Automotive</button>
+        <button class="hi-ind" data-ind="educacion" role="tab">Education</button>
+        <button class="hi-ind" data-ind="restaurantes" role="tab">Restaurant</button>
+      </div>
+    </div>
+
+    <!-- CHANNEL TOGGLE — WhatsApp / Instagram -->
+    <div class="hi-channels" role="tablist" aria-label="Messaging channel">
+      <button class="hi-channel on" data-ch="wa" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.668 5.494l-.999 3.648 3.82-1.003zM17.999 14.587c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        <span>WhatsApp</span>
+      </button>
+      <button class="hi-channel" data-ch="ig" role="tab">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <span>Instagram</span>
+      </button>
+    </div>
+
+    <!-- Voice & gender (compact under chat) -->
+    <div class="hi-voice-ctrl">
+      <span class="hi-voice-lbl">Voice:</span>
+      <div class="hi-gender" id="hiGender" title="Agent voice">
+        <button class="on" data-v="f" aria-label="Female voice">♀</button>
+        <button data-v="m" aria-label="Male voice">♂</button>
+      </div>
+    </div>
+
+    <!-- CHAT WIDGET — phone style, swaps WhatsApp / Instagram theme -->
+    <div class="hi-phone wa" id="hiPhone">
+      <!-- Header: avatar + brand + status + action icons -->
+      <div class="hi-phone-header">
+        <button class="hi-ph-back" aria-label="Back" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="hi-ph-avatar"><picture style="display:contents"><source type="image/webp" srcset="img/robot-v2-avatar.webp"><img src="img/robot-v2-avatar.png" alt=""></picture></div>
+        <div class="hi-ph-info">
+          <span class="hi-ph-name" id="hiBrandName">Hapee</span>
+          <span class="hi-ph-status" id="hiBrandStatus">online</span>
+        </div>
+        <div class="hi-ph-actions">
+          <button aria-label="Voice call" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg></button>
+          <button aria-label="Video call" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></button>
+          <button aria-label="More options" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="hi-phone-body" id="hiMessages">
+        <!-- Mensajes se appendean acá dinámicamente -->
+      </div>
+
+      <!-- Suggestions (inside the chat, like WA quick-replies) -->
+      <div class="hi-phone-suggestions" id="hiSuggestions"></div>
+
+      <!-- Input bar styled per channel -->
+      <div class="hi-phone-input">
+        <button class="hi-pi-icon" aria-label="Emoji">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </button>
+        <input type="text" id="hiInput" placeholder="Message" autocomplete="off">
+        <button class="hi-pi-icon hi-pi-attach" aria-label="Attach">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <button class="hi-pi-icon hi-pi-mic" id="hiVoiceBtn" aria-label="Talk by voice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button class="hi-pi-send" id="hiSendBtn" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="hi-phone-foot">This is what your customers would see. It works the same with your brand, your data and your tone.</p>
+  </div>
+</section>
+
+<!-- PRUEBA — cifras -->
+<section class="stats">
+  <div class="ctn">
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-item">
+        <div class="stat-n">+<span class="ctr" data-target="90">0</span><span class="sf">K</span></div>
+        <div class="stat-l">Customers Automated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n"><span class="ctr" data-target="1.37" data-dec="2">0</span><span class="sf">B</span></div>
+        <div class="stat-l">AI messages per month</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n"><span class="ctr" data-target="194">0</span><span class="sf">M</span></div>
+        <div class="stat-l">Leads closed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n"><span class="ctr" data-target="35">0</span><span class="sf">%</span></div>
+        <div class="stat-l">Higher conversion with AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ===================== CALENDAR · CONVERSION MOMENT ===================== -->
+<section class="calendar-section" id="calendario">
+  <div class="ctn">
+    <div class="cal-head anim-rev">
+      <span class="cal-tag">Book your demo</span>
+      <h2>Book your <span class="tg">live demo</span></h2>
+      <p class="cal-sub">Pick the day and time that works best for you. You'll get an email with the Google Meet link and a reminder before the call.</p>
+      <div class="cal-trust anim-rev">
+        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> 100% free</div>
+        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Live, with a specialist</div>
+        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Live platform walkthrough</div>
+        <div class="cal-trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> No obligation to buy</div>
+      </div>
+    </div>
+    <div class="cal-embed anim-rev">
+        <div id="hapeeCalendar" data-hapee-calendar="hapee/demo-1-a-1-hapee" data-theme="auto" data-base-src="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee"></div>
+        <noscript>
+          <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Your browser has JavaScript turned off. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Open the calendar in a new tab →</a></p>
+        </noscript>
+        <script>
+        /* === UTM / Click-ID forwarder al widget de calendario Hapee ===
+           Problema: el iframe lee window.location.search desde su propio origin (beta.hapee.ai),
+           no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al calendario.
+           Fix: tomamos los UTMs del parent URL y los inyectamos en data-hapee-calendar (el loader
+           calendar-embed.js acepta una URL completa y le agrega ?embed=1) ANTES de que monte el iframe.
+           Este script corre síncrono; el loader (async, al final del body) monta después.
+           Persistencia en sessionStorage para sobrevivir navegación interna (hero CTA → calendar). */
+        (function(){
+          var FRAME_ID = 'hapeeCalendar';
+          var STORAGE_KEY = 'hapee_attribution';
+          var TRACK = [
+            'utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_id',
+            'utm_source_platform','utm_creative_format','utm_marketing_tactic',
+            'fbclid','gclid','ttclid','msclkid','dclid','twclid','yclid','wbraid','gbraid',
+            'li_fat_id','epik','irclickid','mc_cid','mc_eid'
+          ];
+
+          var iframe = document.getElementById(FRAME_ID);
+          if(!iframe) return;
+          var baseSrc = iframe.getAttribute('data-base-src');
+
+          /* 1) Captura UTMs del URL parent actual */
+          var urlParams = new URLSearchParams(window.location.search);
+          var fromUrl = {};
+          TRACK.forEach(function(k){
+            var v = urlParams.get(k);
+            if(v) fromUrl[k] = v;
+          });
+
+          /* 2) Recupera sessionStorage (last-click sobrevive a navegación interna) */
+          var stored = {};
+          try { stored = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+          /* 3) Si el URL actual trae UTMs, son el nuevo last-click → persistimos */
+          var hasNewUtms = Object.keys(fromUrl).length > 0;
+          var attribution = hasNewUtms ? fromUrl : stored;
+
+          if(hasNewUtms){
+            try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(fromUrl)); } catch(e) {}
+          }
+
+          /* 4) Referrer extra (señal adicional de atribución) */
+          if(document.referrer && !attribution.referrer){
+            attribution.referrer = document.referrer;
+          }
+
+          /* 5) Setea la URL que montará el loader (solo si hay atribución; si no, queda el slug) */
+          var qs = new URLSearchParams(attribution).toString();
+          if(qs) iframe.setAttribute('data-hapee-calendar', baseSrc + '?' + qs);
+
+          /* 6) Debug opcional: descomenta para chequear en consola */
+          /* console.log('[Hapee Attribution]', attribution, '\\ncalendar →', iframe.getAttribute('data-hapee-calendar')); */
+        })();
+        </script>
+        <script>
+        /* === Conversión: demo agendada en el widget de calendario Hapee ===
+           El iframe de booking (beta.hapee.ai) avisa al parent vía postMessage
+           con event.data.type === 'zentru_calendar_submitted' cuando la cita queda
+           confirmada. Ahí disparamos 'dg_agendar_demo', el evento clave definido
+           en Analytics (GA4) — Google Ads lo importa desde ahí. Sin send_to:
+           el evento va a todos los destinos configurados en el Google tag. */
+        (function(){
+          var fired = false;
+          var ALLOWED = ['hapee.ai'];
+          window.addEventListener('message', function(e){
+            /* Solo mensajes del widget propio (beta.hapee.ai u otro subdominio).
+               Match exacto de hostname o subdominio — un substring/regex dejaría
+               pasar orígenes tipo https://hapee.ai.evil.com */
+            var host = '';
+            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+            var allowed = ALLOWED.some(function(d){
+              return host === d || host.slice(-(d.length + 1)) === ('.' + d);
+            });
+            if(!allowed) return;
+            var d = e.data;
+            var isBooking = !!d && typeof d === 'object' && d.type === 'zentru_calendar_submitted';
+            if(!isBooking || fired) return;
+            fired = true; /* una sola conversión por carga de página */
+            if(typeof gtag === 'function'){
+              gtag('event', 'dg_agendar_demo');
+            }
+            /* Meta: el mismo eventID que manda el servidor por la API de Conversiones
+               (apt.<id de la cita>) — Meta deduplica y cuenta UNA reserva. Sin eventID
+               no se dispara: un Schedule sin él se sumaría al del servidor. */
+            if(typeof fbq === 'function' && d.eventId){
+              fbq('track', 'Schedule', {}, { eventID: String(d.eventId) });
+            }
+          });
+        })();
+        </script>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE — texto + CTA (compacto, sin robot) -->
+<section class="demo-cta-final" id="ctafSection">
+  <div class="demo-cta-orb demo-cta-orb-1"></div>
+  <div class="demo-cta-orb demo-cta-orb-2"></div>
+  <div class="demo-cta-orb demo-cta-orb-3"></div>
+  <div class="demo-cta-particles" aria-hidden="true">
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+  <div class="demo-cta-grid">
+    <div class="demo-cta-content anim-rev">
+      <span class="demo-cta-badge">Your next step</span>
+      <h2>One demo can change<br>your business <em>forever</em></h2>
+      <p>Book your free demo now. Our team shows you Hapee working live, answers your questions and hands you a concrete action plan for your business.</p>
+      <div class="demo-cta-actions">
+        <a href="#calendario" class="demo-cta-btn" onclick="event.preventDefault();document.getElementById('calendario').scrollIntoView({behavior:'smooth',block:'start'})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book my free demo
+        </a>
+        <p class="demo-cta-note">100% free · Live · No commitment</p>
+        <div class="demo-cta-chips">
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Google Meet</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> English or Spanish</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Expert Hapee team</span>
+          <span class="demo-cta-chip"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Concrete plan at the end</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
 
@@ -4788,9 +4786,9 @@ When wrapping up, mention: "This demo is powered by Hapee.ai — AI agents for y
   var footer=document.querySelector('.footer');
   if(!mobile||!pill||!hero||!calendar)return;
 
-  var inHero=true, inCalendar=false, inFooter=false;
+  var inHero=true, inCalendar=false, inFooter=false, inCierre=false;
   function refresh(){
-    var show=!inHero && !inCalendar && !inFooter;
+    var show=!inHero && !inCalendar && !inFooter && !inCierre;
     [mobile,pill].forEach(function(el){
       el.classList.toggle('visible',show);
       el.setAttribute('aria-hidden',show?'false':'true');
@@ -4805,6 +4803,8 @@ When wrapping up, mention: "This demo is powered by Hapee.ai — AI agents for y
   makeObs(hero,function(v){inHero=v});
   makeObs(calendar,function(v){inCalendar=v});
   if(footer)makeObs(footer,function(v){inFooter=v});
+  var cierre=document.getElementById('ctafSection');
+  if(cierre)makeObs(cierre,function(v){inCierre=v});
 })();
 </script>
 
