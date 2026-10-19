@@ -3399,6 +3399,33 @@ html.dark .ab-chip{background:#161314;border-color:rgba(255,255,255,.1)}
           <p style="padding:20px;text-align:center;color:#9CA3AF;font-size:.9rem;">Seu navegador está com o JavaScript desativado. <a href="https://beta.hapee.ai/calendar/book/hapee/demo-1-a-1-hapee" target="_blank" rel="noopener" style="color:#FA5000">Abra o calendário em uma nova aba →</a></p>
         </noscript>
         <script>
+        /* === Página de gracias en el idioma de esta página (2026-10-19) ===
+           Tras agendar, el widget pide navegar a la URL configurada en la app
+           (https://hapee.ai/preparate-demo?...), sin idioma; nginx volvía a decidir por su cuenta y
+           a veces mostraba otro idioma que el del calendario. Este listener se registra ANTES que
+           calendar-embed.js (que es async, al final del body), toma el mensaje y navega a la misma
+           página con el prefijo de idioma de ESTA página. */
+        (function(){
+          var pref = ({en:'/en', pt:'/pt'})[(document.documentElement.lang || 'es').slice(0,2)] || '';
+          window.addEventListener('message', function(e){
+            var d = e.data;
+            if(!d || typeof d !== 'object' || d.type !== 'zentru_calendar_redirect' || !d.url) return;
+            var host = '';
+            try { host = new URL(e.origin).hostname.toLowerCase(); } catch(err) { return; }
+            if(host !== 'hapee.ai' && host.slice(-9) !== '.hapee.ai') return;
+            var u;
+            try { u = new URL(d.url, location.href); } catch(err) { return; }
+            if(u.hostname !== 'hapee.ai' && u.hostname !== location.hostname) return;
+            e.stopImmediatePropagation();
+            var p = u.pathname.replace(/^\/(en|pt)(?=\/|$)/, '');
+            if(pref) p = pref + p;
+            /* español: cookie «es» por 10 minutos solo para esta navegación, así nginx no la manda a /en ni /pt */
+            if(!pref){ try { document.cookie = 'hapee_lang=es;path=/;max-age=600;samesite=lax' + (location.protocol === 'https:' ? ';secure' : ''); } catch(err) {} }
+            location.href = p + u.search + u.hash;
+          });
+        })();
+        </script>
+        <script>
         /* === UTM / Click-ID forwarder al widget de calendario Hapee ===
            Problema: el iframe lee window.location.search desde su propio origin (beta.hapee.ai),
            no del parent (hapee.ai), entonces los UTMs del ad nunca llegaban al calendario.
@@ -3431,6 +3458,13 @@ html.dark .ab-chip{background:#161314;border-color:rgba(255,255,255,.1)}
           /* 2) Recupera sessionStorage (last-click sobrevive a navegación interna) */
           var stored = {};
           try { stored = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+          /* 2b) Sin sesión (otra pestaña, volvió otro día): copia de js/lang.js en localStorage, 30 días */
+          if(!Object.keys(stored).length){
+            try {
+              var lt = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+              if(lt && lt.d && Date.now() - lt.t < 30*864e5) stored = lt.d;
+            } catch(e) {}
+          }
 
           /* 3) Si el URL actual trae UTMs, son el nuevo last-click → persistimos */
           var hasNewUtms = Object.keys(fromUrl).length > 0;

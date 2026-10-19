@@ -17,6 +17,26 @@
    menú móvil). Si la página no tiene ninguno, se monta un botón flotante
    abajo a la izquierda.
    ============================================================ */
+/* ── Atribución (2026-10-19): las UTMs y los click-IDs de la URL de llegada se guardan en
+   CUALQUIER página, no solo en /agenda-tu-demo. Así sobreviven al cambio de idioma y a la
+   navegación interna (home → «Agendar demo»), y el forwarder del calendario las lee de aquí.
+   Misma clave y formato que ese forwarder: sessionStorage `hapee_attribution` = {utm_…: valor}.
+   Copia en localStorage por 30 días para quien vuelve en otra pestaña. Last-click: solo se
+   reescribe cuando la URL trae parámetros de campaña. */
+(function () {
+  var TRACK = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id',
+    'utm_source_platform', 'utm_creative_format', 'utm_marketing_tactic',
+    'fbclid', 'gclid', 'ttclid', 'msclkid', 'dclid', 'twclid', 'yclid', 'wbraid', 'gbraid',
+    'li_fat_id', 'epik', 'irclickid', 'mc_cid', 'mc_eid'];
+  try {
+    var q = new URLSearchParams(location.search), a = {}, n = 0;
+    TRACK.forEach(function (k) { var v = q.get(k); if (v) { a[k] = v; n++; } });
+    if (!n) return;
+    sessionStorage.setItem('hapee_attribution', JSON.stringify(a));
+    localStorage.setItem('hapee_attribution', JSON.stringify({ t: Date.now(), d: a }));
+  } catch (e) { /* almacenamiento bloqueado: el calendario igual lee la URL actual */ }
+})();
+
 (function () {
   'use strict';
 
