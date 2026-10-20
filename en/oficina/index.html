@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="oficina-version" content="v9-realista-20261020-7aedd81c">
+<meta name="oficina-version" content="v9-realista-20261020-c9421263">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hapee HQ · The Office of Your AI Agents</title>
@@ -1791,7 +1791,9 @@ function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];co
 
 /* ══ CHAT CON EL AGENTE ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
-function sistema(ag){return 'You are the '+ag.n+' of Hapee, the all-in-one AI Agents + CRM platform from Grupo Digitals (hapee.ai). Your module is "'+ag.mod+'": '+ag.lema+'. '+ag.d+' You are in Hapee\'s 3D office (Hapee HQ), talking with a visitor. Reply in US English by default, friendly and concrete, in two sentences at most; if the visitor writes in another language, reply in that language. Plans: STARTER $297/mo, PRO $397/mo (most popular), ELITE SETUP USD 3,290 one-time; no commitment, no contracts. If they ask about price or about trying it, invite them to book a demo at hapee.ai/en/agenda-tu-demo. Never mention vendors or third-party technology behind Hapee.';}
+// los demás agentes y sus módulos: sin esto, un agente niega lo que hace otro módulo («¿Atiendes por WhatsApp?» → «No»)
+function equipo(ag){return AGENTES.filter(function(a){return a!==ag;}).map(function(a){return a.n+' ('+a.mod+'): '+a.d;}).join(' · ');}
+function sistema(ag){return 'You are the '+ag.n+' of Hapee, the all-in-one AI Agents + CRM platform from Grupo Digitals (hapee.ai). Your module is "'+ag.mod+'": '+ag.lema+'. '+ag.d+' Your teammates at Hapee HQ cover the rest of the platform: '+equipo(ag)+'. If the visitor asks about something another module handles, confirm that Hapee does it and name the agent who handles it; never say that Hapee does not do something on this list. You are in Hapee\'s 3D office (Hapee HQ), talking with a visitor. Reply in US English by default, friendly and concrete, in two sentences at most; if the visitor writes in another language, reply in that language. Plans: STARTER $297/mo, PRO $397/mo (most popular), ELITE SETUP USD 3,290 one-time; no commitment, no contracts. If they ask about price or about trying it, invite them to book a demo at hapee.ai/en/agenda-tu-demo. Never mention vendors or third-party technology behind Hapee.';}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 // El agente (o holograma, o recepción) con quien se puede hablar más cerca, a menos de `max` m.
 function agenteCercano(max){let md=max,ag=null;

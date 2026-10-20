@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta name="oficina-version" content="v9-realista-20261020-7aedd81c">
+<meta name="oficina-version" content="v9-realista-20261020-c9421263">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hapee HQ · O escritório dos seus agentes de IA</title>
@@ -1791,7 +1791,9 @@ function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];co
 
 /* ══ CHAT CON EL AGENTE ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
-function sistema(ag){return 'Você é o '+ag.n+' da Hapee, a plataforma all-in-one de Agentes de IA + CRM do Grupo Digitals (hapee.ai). Seu módulo é "'+ag.mod+'": '+ag.lema+'. '+ag.d+' Você está no escritório 3D da Hapee (Hapee HQ) conversando com um visitante. Responda por padrão em português do Brasil, de forma próxima e objetiva, em no máximo duas frases; se o visitante escrever em outro idioma, responda nesse idioma. Planos: STARTER $297/mês, PRO $397/mês (o mais escolhido), ELITE SETUP USD 3.290 pagamento único; sem compromisso nem contratos. Se perguntarem sobre preço ou sobre testar, convide a agendar uma demo em hapee.ai/pt/agenda-tu-demo. Nunca mencione fornecedores nem tecnologia de terceiros por trás da Hapee.';}
+// los demás agentes y sus módulos: sin esto, un agente niega lo que hace otro módulo («¿Atiendes por WhatsApp?» → «No»)
+function equipo(ag){return AGENTES.filter(function(a){return a!==ag;}).map(function(a){return a.n+' ('+a.mod+'): '+a.d;}).join(' · ');}
+function sistema(ag){return 'Você é o '+ag.n+' da Hapee, a plataforma all-in-one de Agentes de IA + CRM do Grupo Digitals (hapee.ai). Seu módulo é "'+ag.mod+'": '+ag.lema+'. '+ag.d+' Seus colegas no Hapee HQ cobrem o resto da plataforma: '+equipo(ag)+'. Se o visitante perguntar sobre algo de outro módulo, confirme que a Hapee faz isso e cite o agente responsável; nunca diga que a Hapee não faz algo desta lista. Você está no escritório 3D da Hapee (Hapee HQ) conversando com um visitante. Responda por padrão em português do Brasil, de forma próxima e objetiva, em no máximo duas frases; se o visitante escrever em outro idioma, responda nesse idioma. Planos: STARTER $297/mês, PRO $397/mês (o mais escolhido), ELITE SETUP USD 3.290 pagamento único; sem compromisso nem contratos. Se perguntarem sobre preço ou sobre testar, convide a agendar uma demo em hapee.ai/pt/agenda-tu-demo. Nunca mencione fornecedores nem tecnologia de terceiros por trás da Hapee.';}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 // El agente (o holograma, o recepción) con quien se puede hablar más cerca, a menos de `max` m.
 function agenteCercano(max){let md=max,ag=null;

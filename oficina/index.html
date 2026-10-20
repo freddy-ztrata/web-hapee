@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-CL">
 <head>
-<meta name="oficina-version" content="v9-realista-20261020-7aedd81c">
+<meta name="oficina-version" content="v9-realista-20261020-c9421263">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hapee HQ · La oficina de tus agentes IA</title>
@@ -1791,7 +1791,9 @@ function resolver(r){for(let i=0;i<obstacles.length;i++){const b=obstacles[i];co
 
 /* ══ CHAT CON EL AGENTE ══ */
 const chMsgs=$('#chMsgs'),chIn=$('#chIn'),chChips=$('#chChips');let historial=[];
-function sistema(ag){return 'Eres el '+ag.n+' de Hapee, la plataforma de Agentes IA + CRM all-in-one de Grupo Digitals (hapee.ai). Tu módulo es «'+ag.mod+'»: '+ag.lema+'. '+ag.d+' Estás en la oficina 3D de Hapee (Hapee HQ) hablando con un visitante. Responde en español de Chile, cercano y concreto, en máximo dos frases. Planes: STARTER $297/mes, PRO $397/mes (el más elegido), ELITE SETUP $3.290 pago único; sin compromiso ni contratos. Si preguntan por precio o por probar, invita a agendar una demo en hapee.ai/agenda-tu-demo. Nunca menciones proveedores ni tecnología de terceros detrás de Hapee.';}
+// los demás agentes y sus módulos: sin esto, un agente niega lo que hace otro módulo («¿Atiendes por WhatsApp?» → «No»)
+function equipo(ag){return AGENTES.filter(function(a){return a!==ag;}).map(function(a){return a.n+' ('+a.mod+'): '+a.d;}).join(' · ');}
+function sistema(ag){return 'Eres el '+ag.n+' de Hapee, la plataforma de Agentes IA + CRM all-in-one de Grupo Digitals (hapee.ai). Tu módulo es «'+ag.mod+'»: '+ag.lema+'. '+ag.d+' Tus compañeros en Hapee HQ cubren el resto de la plataforma: '+equipo(ag)+'. Si te preguntan por algo de otro módulo, confirma que Hapee lo hace y menciona al agente que lo atiende; nunca digas que Hapee no hace algo de esta lista. Estás en la oficina 3D de Hapee (Hapee HQ) hablando con un visitante. Responde en español de Chile, cercano y concreto, en máximo dos frases. Planes: STARTER $297/mes, PRO $397/mes (el más elegido), ELITE SETUP $3.290 pago único; sin compromiso ni contratos. Si preguntan por precio o por probar, invita a agendar una demo en hapee.ai/agenda-tu-demo. Nunca menciones proveedores ni tecnología de terceros detrás de Hapee.';}
 function msg(rol,txt){const d=document.createElement('div');d.className='m '+rol;if(txt==null){d.innerHTML='<i></i><i></i><i></i>';}else d.textContent=txt;chMsgs.appendChild(d);chMsgs.scrollTop=chMsgs.scrollHeight;return d;}
 // El agente (o holograma, o recepción) con quien se puede hablar más cerca, a menos de `max` m.
 function agenteCercano(max){let md=max,ag=null;
