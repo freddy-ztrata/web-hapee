@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="oficina-version" content="v9-realista-20261020-aa9ead67">
+<meta name="oficina-version" content="v9-realista-20261020-7aedd81c">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hapee HQ · The Office of Your AI Agents</title>
@@ -1564,7 +1564,7 @@ function arrancaRobots(){estaciones.forEach(coloca);
  compilaComposer();$('#load').textContent='Agents at their desks';}
 const draco=new DRACOLoader();draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/draco/');
 const gltfLoader=new GLTFLoader();gltfLoader.setDRACOLoader(draco);
-gltfLoader.load('assets/rig/hapee-rig-d.glb',gltf=>{RIG=gltf.scene;RIG.traverse(o=>{if(o.isMesh&&o.material){o.material=plasticoRobot(o.material);}});
+gltfLoader.load('assets/rig/hapee-rig-e.glb',gltf=>{RIG=gltf.scene;RIG.traverse(o=>{if(o.isMesh&&o.material){o.material=plasticoRobot(o.material);}});
  CLIP_TALK=gltf.animations[0]||null;window.__rigOk=true;if(capturaSondas.ya){RIG.traverse(o=>{if(o.isMesh&&o.material&&o.material.isMeshStandardMaterial)conEnv(o.material);});sondaAct=-1;eligeSonda(true);}sueltaTarde();arrancaRobots();},
  undefined,()=>{gltfLoader.load('assets/models/hapee-robot.glb',g2=>{robotBase=g2.scene;robotBase.traverse(o=>{if(o.isMesh&&o.material)o.material.envMapIntensity=.9;});robotBase.children.forEach(c=>c.position.y+=.951);arrancaRobots();},undefined,e=>{console.error('robot',e);$('#load').textContent='No robot model; the office opens anyway';});});
 
