@@ -156,13 +156,13 @@
   function soloB(s) { return esc(String(s).replace(/<(?!\/?b>)[^>]+>/g, '')).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>'); }
   function plano(s) { return String(s).replace(/<[^>]+>/g, ''); }
   /* Red de seguridad: el sitio es español neutro con tuteo. Si el modelo se escapa al voseo, se corrige antes de mostrarlo. */
-  var VOS = { 'tenés': 'tienes', 'podés': 'puedes', 'querés': 'quieres', 'sabés': 'sabes', 'hacés': 'haces', 'sos': 'eres', 'vos': 'tú',
-    'necesitás': 'necesitas', 'buscás': 'buscas', 'preferís': 'prefieres', 'venís': 'vienes', 'decís': 'dices', 'pensás': 'piensas',
-    'contame': 'cuéntame', 'decime': 'dime', 'escribime': 'escríbeme', 'avisame': 'avísame', 'mirá': 'mira', 'fijate': 'fíjate',
-    'mandame': 'mándame', 'pasame': 'pásame', 'llamame': 'llámame', 'querías': 'querías', 'estás': 'estás', 'tenías': 'tenías' };
+  var A_TUTEO = { 'ten\u00e9s': 'tienes', 'pod\u00e9s': 'puedes', 'quer\u00e9s': 'quieres', 'sab\u00e9s': 'sabes', 'hac\u00e9s': 'haces', 's\u006fs': 'eres', 'v\u006fs': 'tú',
+    'necesit\u00e1s': 'necesitas', 'busc\u00e1s': 'buscas', 'prefer\u00eds': 'prefieres', 'ven\u00eds': 'vienes', 'dec\u00eds': 'dices', 'pens\u00e1s': 'piensas',
+    'contame': 'cuéntame', 'd\u0065cime': 'dime', 'escribime': 'escríbeme', 'avisame': 'avísame', 'mir\u00e1': 'mira', 'fij\u0061te': 'fíjate',
+    'mandame': 'mándame', 'pasame': 'pásame', 'llamame': 'llámame', 'quer\u00edas': 'querías', 'est\u00e1s': 'estás', 'ten\u00edas': 'tenías' };
   function tuteo(s) {
     return String(s).replace(/[A-Za-zÁÉÍÓÚáéíóúñÑ]+/g, function (w) {
-      var t = VOS[w.toLowerCase()]; if (!t || t === w.toLowerCase()) return w;
+      var t = A_TUTEO[w.toLowerCase()]; if (!t || t === w.toLowerCase()) return w;
       return w[0] === w[0].toUpperCase() ? t[0].toUpperCase() + t.slice(1) : t;
     });
   }
