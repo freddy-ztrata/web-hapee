@@ -155,6 +155,17 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function soloB(s) { return esc(String(s).replace(/<(?!\/?b>)[^>]+>/g, '')).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>'); }
   function plano(s) { return String(s).replace(/<[^>]+>/g, ''); }
+  /* Red de seguridad: el sitio es español neutro con tuteo. Si el modelo se escapa al voseo, se corrige antes de mostrarlo. */
+  var VOS = { 'tenés': 'tienes', 'podés': 'puedes', 'querés': 'quieres', 'sabés': 'sabes', 'hacés': 'haces', 'sos': 'eres', 'vos': 'tú',
+    'necesitás': 'necesitas', 'buscás': 'buscas', 'preferís': 'prefieres', 'venís': 'vienes', 'decís': 'dices', 'pensás': 'piensas',
+    'contame': 'cuéntame', 'decime': 'dime', 'escribime': 'escríbeme', 'avisame': 'avísame', 'mirá': 'mira', 'fijate': 'fíjate',
+    'mandame': 'mándame', 'pasame': 'pásame', 'llamame': 'llámame', 'querías': 'querías', 'estás': 'estás', 'tenías': 'tenías' };
+  function tuteo(s) {
+    return String(s).replace(/[A-Za-zÁÉÍÓÚáéíóúñÑ]+/g, function (w) {
+      var t = VOS[w.toLowerCase()]; if (!t || t === w.toLowerCase()) return w;
+      return w[0] === w[0].toUpperCase() ? t[0].toUpperCase() + t.slice(1) : t;
+    });
+  }
   function ini(n) { var p = String(n).split(/[\s._]+/).filter(Boolean); return ((p[0] || '?')[0] + (p[1] ? p[1][0] : (p[0] || '').slice(1, 2))).toUpperCase(); }
 
   function Widget(raiz) {
@@ -319,7 +330,7 @@
         clearTimeout(to);
         if (!res.ok) throw new Error('api ' + res.status);
         var j = await res.json();
-        r = (j && j.content && j.content[0] && j.content[0].text) || '';
+        r = tuteo((j && j.content && j.content[0] && j.content[0].text) || '');
         if (!r) throw new Error('vacía');
       } catch (e) { r = local(txt); }
       if (tk !== S.run) return;
