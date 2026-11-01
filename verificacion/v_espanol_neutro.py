@@ -79,6 +79,8 @@ CORRECTAS = {
     "josé",  # nombre propio (José Güerere, equipo de Hapee)
     # Cuentas de ejemplo del nuevo home (propuesta-home-v3k9): nombres, comuna y producto
     "nicolás", "machalí", "sofá", "sofás",
+    # Propuestas por cliente (propuestas/): idiomas que enseña Idiomas del Mundo y «mamá» (apoderada en un caso)
+    "japonés", "francés", "mamá",
     # Pronombres, interrogativos y monosilabos
     "qué", "porqué", "sé", "té", "dé", "sí", "él", "mí", "ti", "sólo",
     # Presente/subjuntivo que el tuteo comparte
