@@ -77,6 +77,8 @@ CORRECTAS = {
     "caché",  # sustantivo (memoria caché), no el imperativo de "cachar"
     "panamá", "andrés", "tomás", "mié", "revés",
     "josé",  # nombre propio (José Güerere, equipo de Hapee)
+    # Cuentas de ejemplo del nuevo home (propuesta-home-v3k9): nombres, comuna y producto
+    "nicolás", "machalí", "sofá", "sofás",
     # Pronombres, interrogativos y monosilabos
     "qué", "porqué", "sé", "té", "dé", "sí", "él", "mí", "ti", "sólo",
     # Presente/subjuntivo que el tuteo comparte
@@ -96,7 +98,9 @@ PRETERITO_1A = {"configuré", "necesité", "escribí", "empecé", "conecté",
                 # que hicieron: "Actualicé el pipeline", "Revisé la bandeja".
                 "actualicé", "armé", "arreglé", "dejé", "moví", "publiqué",
                 "reasigné", "respondí", "revisé", "subí", "terminé", "agendé",
-                "avisé", "mandé"}
+                "avisé", "mandé",
+                # El agente de ejemplo del nuevo home: "abrí el cambio con retiro"
+                "abrí"}
 
 # Encliticos de voseo. No hay regex razonable --se parecen a sustantivos-- asi
 # que van por lista y se amplia cuando aparezca uno nuevo.
