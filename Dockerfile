@@ -57,6 +57,8 @@ COPY propuesta-2026-r8x4/ /usr/share/nginx/html/propuesta-2026-r8x4/
 # Nuevo home 2027 (3 opciones + su agenda), OCULTO para revisión: slug ofuscado, noindex,
 # fuera del sitemap y de todo menú. No reemplaza el home. Generador: web-dna/_build/hapee-home.
 COPY propuesta-home-v3k9/ /usr/share/nginx/html/propuesta-home-v3k9/
+# Propuestas comerciales de Hapee por cliente (noindex), generadas con web-dna/_build/hapee-propuesta.
+COPY propuestas/ /usr/share/nginx/html/propuestas/
 COPY pt/ /usr/share/nginx/html/pt/
 # Material para revisores de directorios (video de demostración del plugin).
 COPY review/ /usr/share/nginx/html/review/
