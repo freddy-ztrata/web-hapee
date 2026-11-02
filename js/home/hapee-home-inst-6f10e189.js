@@ -94,15 +94,50 @@
      - Caché por texto (la misma línea no se cobra dos veces) y tope de caracteres por visita; si ElevenLabs falla o se pasa el
        tope, cae a la voz del navegador para que la demo nunca quede muda.
      - Botón de voz (activar/silenciar) y voz femenina/masculina; se recuerdan en este navegador. */
+  /* Días y horas para LEER y para ESCUCHAR: «Mar · 09:00» se ve «Martes · 09:00» y se dice «martes a las 9».
+     (02-11-2026: la voz leía «mar, cero nueve cero cero»; regla: nunca días abreviados, ni en pantalla ni en voz.) */
+  var DIAS = { lun: 'lunes', mar: 'martes', mie: 'miércoles', 'mié': 'miércoles', mier: 'miércoles', 'miér': 'miércoles', jue: 'jueves', vie: 'viernes', sab: 'sábado', 'sáb': 'sábado', dom: 'domingo' };
+  var RE_DIA = '(Lun|Mar|Mi[eé]r?|Jue|Vie|S[aá]b|Dom)\\.?';
+  var RE_DIA_V = '(lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|Lun|Mar|Mi[eé]r?|Jue|Vie|S[aá]b|Dom)\\.?';
+  function diaLargo(a) {
+    var d = DIAS[String(a).toLowerCase().replace(/\.$/, '')]; if (!d) return a;
+    return a[0] === a[0].toUpperCase() ? d[0].toUpperCase() + d.slice(1) : d;
+  }
+  function diasCompletos(t) { return String(t).replace(new RegExp('\\b' + RE_DIA + '(?=\\s*(?:·|,|-)?\\s*\\d)', 'gi'), function (x, d) { return diaLargo(d); }); }
+  function horaVoz(h, m) {
+    h = parseInt(h, 10); m = parseInt(m, 10);
+    return String(h) + (m === 30 ? ' y media' : m === 15 ? ' y cuarto' : m ? ' y ' + m : '');
+  }
+  function laLas(h) { return parseInt(h, 10) === 1 ? 'la' : 'las'; }
+  function paraVoz(t) {
+    var HRS = '(?:\\s*(?:hrs?\\.?|horas))?';
+    return String(t)
+      .replace(new RegExp('(\\d{1,2}):(\\d{2})\\s*(?:a|al|-|–)\\s*(\\d{1,2}):(\\d{2})' + HRS, 'g'), function (x, h1, m1, h2, m2) { return 'de ' + laLas(h1) + ' ' + horaVoz(h1, m1) + ' a ' + laLas(h2) + ' ' + horaVoz(h2, m2); })
+      .replace(new RegExp('\\b' + RE_DIA_V + '\\s*(?:·|,|-)?\\s*(\\d{1,2}):(\\d{2})' + HRS, 'gi'), function (x, d, h, m) { return diaLargo(d) + ' a ' + laLas(h) + ' ' + horaVoz(h, m); })
+      .replace(new RegExp('\\b' + RE_DIA_V + '\\s+(?=\\d)', 'gi'), function (x, d) { return diaLargo(d) + ' '; })
+      .replace(new RegExp('\\b(la|las)\\s+(\\d{1,2}):(\\d{2})' + HRS, 'gi'), function (x, p, h, m) { return p + ' ' + horaVoz(h, m); })
+      .replace(/\b(\d{1,2}):(\d{2})\s*(?:hrs?\.?|horas)/g, function (x, h, m) { return horaVoz(h, m) + ' horas'; })
+      .replace(/\b(\d{1,2}):(\d{2})\b/g, function (x, h, m) { return horaVoz(h, m); })
+      .replace(/\b24\s*\/\s*7\b/g, '24 horas, los 7 días')
+      .replace(/\b1\s*(?:a|:)\s*1\b/g, 'uno a uno')
+      .replace(/(\d)\s*%/g, '$1 por ciento')
+      .replace(/\bN[°º]\s*/gi, 'número ')
+      .replace(/\bhrs?\.?(?=\s|$|[,;])/gi, 'horas')
+      .replace(/\baprox\./gi, 'aproximadamente')
+      .replace(/\bDra\./g, 'doctora').replace(/\bDr\./g, 'doctor')
+      .replace(/\s*[·|→]\s*/g, ', ');
+  }
+
   var VZ = (function () {
     var ID = { f: 'lLsDvdl6OjtZfLJPM2HA', m: '0cheeVA5B3Cv6DGq65cT' };
     function lee(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
     function guarda(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-    var V = { on: lee('hx-voz', '1') === '1', g: lee('hx-voz-g', 'f') === 'm' ? 'm' : 'f', listo: false, gasto: 0, MAX: 6000, cache: {}, au: null, fin: null, subs: [] };
+    var V = { on: lee('hx-voz', '1') === '1', g: lee('hx-voz-g', 'f') === 'm' ? 'm' : 'f', listo: false, gasto: 0, MAX: 6000, cache: {}, au: null, fin: null, subs: [],
+      cola: Promise.resolve(), gen: 0 };
     function avisa() { V.subs.forEach(function (f) { try { f(); } catch (e) {} }); }
     V.limpia = function (t) {
-      return String(t || '').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\*\*/g, '')
-        .replace(/[☀-➿️]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDC00-\uDFFF]/g, '').replace(/\s+/g, ' ').trim();
+      return paraVoz(String(t || '').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\*\*/g, '')
+        .replace(/[☀-➿️]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDC00-\uDFFF]/g, '').replace(/\s+/g, ' ').trim()).replace(/\s+/g, ' ').trim();
     };
     V.activa = function (on) { V.on = !!on; guarda('hx-voz', V.on ? '1' : '0'); if (!V.on) V.calla(); avisa(); };
     V.genero = function (g) { V.g = g === 'm' ? 'm' : 'f'; guarda('hx-voz-g', V.g); V.calla(); avisa(); };
@@ -113,6 +148,7 @@
       avisa();
     };
     V.calla = function () {
+      V.gen++;
       if (V.au) { try { V.au.pause(); } catch (e) {} V.au = null; }
       try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
       var f = V.fin; V.fin = null; if (f) f();
@@ -139,11 +175,18 @@
         u.onend = fin; u.onerror = fin; s.speak(u);
       } catch (e) { fin(); }
     }
-    /* devuelve una promesa que se cumple cuando termina de hablar (o al tiro si la voz está apagada o aún no hubo gesto) */
+    /* devuelve una promesa que se cumple cuando termina de hablar (o al tiro si la voz está apagada o aún no hubo gesto).
+       Las frases van EN COLA (una no corta a la otra); V.calla() interrumpe y descarta lo que esperaba. */
     V.habla = function (texto, alEmpezar) {
       if (!V.on || !V.listo) return Promise.resolve();
       var t = V.limpia(texto); if (!t) return Promise.resolve();
-      V.calla();
+      var g = V.gen;
+      V.trae(t);
+      var p = V.cola.then(function () { if (g !== V.gen || !V.on) return; return decir(t, alEmpezar); });
+      V.cola = p.catch(function () {});
+      return p;
+    };
+    function decir(t, alEmpezar) {
       return new Promise(function (ok) {
         var hecho = false, tope = setTimeout(fin, 9000 + t.length * 95);
         function fin() { if (hecho) return; hecho = true; clearTimeout(tope); if (V.fin === fin) V.fin = null; ok(); }
@@ -175,6 +218,7 @@
         '<span class="hx-vg" role="group" aria-label="Voz del agente"><button type="button" data-g="f" aria-label="Voz femenina">♀</button><button type="button" data-g="m" aria-label="Voz masculina">♂</button></span>' +
         '<button type="button" class="hx-vz" aria-pressed="true"></button>' +
         '<button type="button" class="hx-re" aria-label="Reiniciar la conversación">' + svg('M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5') + '</button></div>' +
+        '<div class="hx-pvf"><button type="button" class="hx-pv">' + svg(IC_VOZ) + '<b>Prueba la voz</b><span>toca y el agente te habla</span></button></div>' +
         '<div class="hx-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
         '<div class="hx-sug" aria-label="Respuestas sugeridas"></div>' +
         '<form class="hx-in" autocomplete="off"><label class="hx-sr" for="' + raiz.id + '-t">Escríbele al agente</label>' +
@@ -195,7 +239,17 @@
       bVoz.innerHTML = svg(VZ.on ? IC_VOZ : IC_MUDO);
       [].forEach.call(gVoz.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-g') === VZ.g ? 'true' : 'false'); });
       raiz.classList.toggle('hx-mudo', !VZ.on);
+      raiz.classList.toggle('hx-pv-off', VZ.listo);
     }
+    /* «Prueba la voz»: activa la voz y dice en voz alta el último mensaje del agente (o un saludo si aún no hay) */
+    var tPv = 0;
+    function pruebaVoz() {
+      tPv = Date.now();
+      VZ.desbloquea(); if (!VZ.on) VZ.activa(true); S.tocado = true;
+      var ags = log.querySelectorAll('.hx-m.ag:not(.hx-typ)'), ult = ags[ags.length - 1];
+      habla(ult ? ult.textContent : 'Hola, soy el agente de inteligencia artificial de ' + DATA.rubros[S.rub].marca + '. Escríbeme o dicta tu pregunta.');
+    }
+    $('.hx-pv').addEventListener('click', function () { if (Date.now() - tPv > 800) pruebaVoz(); });
     VZ.subs.push(pintaVoz); pintaVoz();
     bVoz.addEventListener('click', function () { VZ.desbloquea(); VZ.activa(!VZ.on); });
     gVoz.addEventListener('click', function (e) { var b = e.target.closest('[data-g]'); if (!b) return; VZ.desbloquea(); VZ.genero(b.getAttribute('data-g')); if (!VZ.on) VZ.activa(true); });
@@ -259,11 +313,30 @@
       });
     }
 
+    /* Si la persona elige una hora distinta de la sugerida, la confirmación y las acciones que siguen dicen ESA hora
+       (antes confirmaba siempre la hora por defecto: «elegí martes 09:30» → «listo: martes a las 17:00»). */
+    function partes(s) {
+      var m = String(s).match(/^\s*(?:(lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo|Lun|Mar|Mi[eé]r?|Jue|Vie|S[aá]b|Dom)\.?\s*(?:·|,)?\s*)?(\d{1,2}:\d{2})(?:\s*a\s*(\d{1,2}:\d{2}))?/i);
+      return m ? { d: m[1] ? diaLargo(m[1]).toLowerCase() : '', t1: m[2], t2: m[3] || '' } : null;
+    }
+    function ajusta(txt) {
+      var a = S.cambio.a, b = S.cambio.b, out = String(txt);
+      if (a.d && b.d && a.d !== b.d) out = out.replace(new RegExp(a.d + '(?=\\s+(?:a las\\s+|a la\\s+)?' + a.t1 + ')', 'gi'), function (x) { return x[0] === x[0].toUpperCase() ? b.d[0].toUpperCase() + b.d.slice(1) : b.d; });
+      return out.replace(/\d{1,2}:\d{2}/g, function (t) { return t === a.t1 ? b.t1 : (a.t2 && t === a.t2 && b.t2 ? b.t2 : t); });
+    }
+    function ajustaP(x) {
+      if (!S.cambio) return x;
+      if (typeof x === 'string') return ajusta(x);
+      if (Array.isArray(x)) return x.map(ajustaP);
+      if (x && typeof x === 'object') { var o = {}; for (var q in x) o[q] = ajustaP(x[q]); return o; }
+      return x;
+    }
+
     async function guion(tk) {
       var R = DATA.rubros[S.rub], C = R.canales.filter(function (c) { return c.c === S.ch; })[0] || R.canales[0];
-      S.estado = 'en línea';
+      S.estado = 'en línea'; S.cambio = null;
       for (var i = 0; i < C.pasos.length; i++) {
-        var p = C.pasos[i], k = p[0];
+        var p = ajustaP(C.pasos[i]), k = p[0];
         if (tk !== S.run) return;
         if (k === 'sis') burbuja('hx-dia', esc(p[1]));
         else if (k === 'c') { await sleep(500, tk); burbuja('cl', soloB(p[1])); await sleep(500 + Math.min(1200, plano(p[1]).length * 12), tk); }
@@ -272,12 +345,14 @@
         else if (k === 'acc') { nota(p[1], '<b>' + esc(p[2]) + '</b> · ' + esc(p[3]) + ' <em>Agente IA</em>'); accion(p[1], p[2], p[3]); await sleep(550, tk); }
         else if (k === 'qr') { var j = await opciones(p[1], p[2], tk); burbuja('cl', esc(p[1][j])); await sleep(500, tk); }
         else if (k === 'slots') {
-          var dSl = p[1] + ' ' + p[2].join(', ') + '.'; anticipa(dSl);
+          var hs = p[2].map(diasCompletos);
+          var dSl = p[1].replace(/[?:.]\s*$/, '') + (/\?\s*$/.test(p[1]) ? '? Tengo ' : ': ') + hs.join(', ').replace(/, ([^,]*)$/, ' o $1') + '.'; anticipa(dSl);
           escribiendo(true); await sleep(700, tk); escribiendo(false);
-          burbuja('ag', '<b>' + esc(p[1]) + '</b><span class="hx-sl">' + p[2].map(esc).join(' · ') + '</span>');
+          burbuja('ag', '<b>' + esc(p[1]) + '</b><span class="hx-sl">' + hs.map(esc).join(' · ') + '</span>');
           await habla(dSl, tk); if (tk !== S.run) return;
-          var j2 = await opciones(p[2], p[3], tk, 'hx-op--h');
-          burbuja('cl', esc(j2 === p[3] && p[4] ? p[4] : p[2][j2])); await sleep(500, tk);
+          var j2 = await opciones(hs, p[3], tk, 'hx-op--h');
+          if (j2 !== p[3]) { var pa = partes(p[2][p[3]]), pb = partes(p[2][j2]); S.cambio = pa && pb ? { a: pa, b: pb } : null; }
+          burbuja('cl', esc(j2 === p[3] && p[4] ? p[4] : hs[j2].replace(/\s*·\s*/, ' '))); await sleep(500, tk);
         }
         else if (k === 'ctx') {
           var d = p[1], q = { historia: 'Respondió a una historia', anuncio: 'Llegó desde un anuncio', post: 'Comentó una publicación', comentario: 'Comentó un video' }[d.k] || 'Origen';
@@ -338,6 +413,7 @@
       }
       S.enviados++;
       limpiaSug();
+      VZ.calla();
       burbuja('cl', esc(txt));
       if (S.enviados === 1) accion('crm', 'Creó contacto en el CRM', 'origen ' + CANAL[S.ch][0]);
       S.hist.push({ role: 'user', content: txt });
@@ -351,7 +427,7 @@
         clearTimeout(to);
         if (!res.ok) throw new Error('api ' + res.status);
         var j = await res.json();
-        r = tuteo((j && j.content && j.content[0] && j.content[0].text) || '');
+        r = diasCompletos(tuteo((j && j.content && j.content[0] && j.content[0].text) || ''));
         if (!r) throw new Error('vacía');
       } catch (e) { r = local(txt); }
       if (tk !== S.run) return;
@@ -401,7 +477,11 @@
     chBox.addEventListener('click', function (e) { var b = e.target.closest('[data-c]'); if (b && b.getAttribute('data-c') !== S.ch) { S.tocado = true; S.ch = b.getAttribute('data-c'); arranca(); } });
     $('.hx-re').addEventListener('click', function () { arranca(); });
     form.addEventListener('submit', function (e) { e.preventDefault(); VZ.desbloquea(); var v = inp.value; inp.value = ''; envia(v); });
-    raiz.addEventListener('pointerdown', function () { VZ.desbloquea(); if (!S.tocado) { S.tocado = true; } });
+    raiz.addEventListener('pointerdown', function (e) {
+      /* el botón «Prueba la voz» se pliega al activarse: su acción va en pointerdown para no perder el clic */
+      if (e.target.closest && e.target.closest('.hx-pv') && !raiz.classList.contains('hx-pv-off')) { pruebaVoz(); return; }
+      VZ.desbloquea(); if (!S.tocado) { S.tocado = true; }
+    });
     raiz.addEventListener('keydown', function () { VZ.desbloquea(); });
     /* dictado (como el «Interactúa con Hapee» original): escucha en es-CL y envía al terminar */
     var bMic = $('.hx-mic');
