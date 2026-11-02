@@ -1,3 +1,154 @@
+/* Maqueta de Hapee Pro: pestañas personalizadas + menú lateral cambian de vista; en el inbox, cada hilo abre su chat.
+   Con muchas pestañas la fila se desplaza en horizontal: la activa queda centrada, fundido en el borde que tiene más
+   pestañas (.fl / .fr) y flechas ‹ › en escritorio. */
+(function () {
+  function init(raiz) {
+    var T = {};
+    try { T = JSON.parse(raiz.getAttribute('data-hp')); } catch (x) {}
+    var titulo = raiz.querySelector('[data-titulo]'), ruta = raiz.querySelector('[data-ruta]');
+    var tabs = [].slice.call(raiz.querySelectorAll('.hp-tab'));
+    var lista = raiz.querySelector('.hp-tabs'), caja = raiz.querySelector('.hp-tabsw');
+    function bordes() {
+      if (!lista || !caja) return;
+      var max = lista.scrollWidth - lista.clientWidth;
+      caja.classList.toggle('fl', lista.scrollLeft > 2);
+      caja.classList.toggle('fr', lista.scrollLeft < max - 2);
+    }
+    function centra(t, suave) {
+      if (!lista || !t) return;
+      var lr = lista.getBoundingClientRect(), tr = t.getBoundingClientRect();
+      if (!lr.width) return;
+      var x = lista.scrollLeft + (tr.left - lr.left) - (lr.width - tr.width) / 2;
+      x = Math.max(0, Math.min(x, lista.scrollWidth - lista.clientWidth));
+      if (suave && lista.scrollTo) lista.scrollTo({ left: x, behavior: 'smooth' }); else lista.scrollLeft = x;
+      bordes();
+    }
+    function activa() { for (var i = 0; i < tabs.length; i++) if (tabs[i].getAttribute('aria-selected') === 'true') return tabs[i]; return null; }
+    function ir(v, foco) {
+      var panel = raiz.querySelector('.hp-v[data-vista="' + v + '"]');
+      if (!panel || !T[v]) return;
+      [].forEach.call(raiz.querySelectorAll('.hp-v'), function (p) { p.hidden = p !== panel; });
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-v') === v;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (on && foco) t.focus({ preventScroll: true });
+        if (on) centra(t, true);
+      });
+      [].forEach.call(raiz.querySelectorAll('.ni-it'), function (n) { n.classList.toggle('on', n.getAttribute('data-menu') === T[v][2]); });
+      if (titulo) titulo.textContent = T[v][0];
+      if (ruta) ruta.textContent = T[v][1];
+    }
+    tabs.forEach(function (t) { t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1; });
+    raiz.addEventListener('click', function (ev) {
+      var f = ev.target.closest('.hp-tabs-fl');
+      if (f && lista) {
+        var d = +f.getAttribute('data-dir') || 1;
+        lista.scrollBy ? lista.scrollBy({ left: d * lista.clientWidth * 0.7, behavior: 'smooth' }) : (lista.scrollLeft += d * lista.clientWidth * 0.7);
+        return;
+      }
+      var b = ev.target.closest('[data-v]');
+      if (b && raiz.contains(b)) { ir(b.getAttribute('data-v')); return; }
+      var h = ev.target.closest('[data-hilo]');
+      if (h && raiz.contains(h)) {
+        var i = h.getAttribute('data-hilo');
+        [].forEach.call(raiz.querySelectorAll('[data-hilo]'), function (x) { x.classList.toggle('on', x === h); });
+        [].forEach.call(raiz.querySelectorAll('[data-panel]'), function (p) { p.hidden = p.getAttribute('data-panel') !== i; });
+        [].forEach.call(raiz.querySelectorAll('[data-det]'), function (p) { p.hidden = p.getAttribute('data-det') !== i; });
+      }
+    });
+    if (lista) {
+      lista.addEventListener('keydown', function (ev) {
+        var k = ev.key, i = tabs.indexOf(document.activeElement);
+        if (i < 0 || ['ArrowRight', 'ArrowLeft', 'Home', 'End'].indexOf(k) < 0) return;
+        ev.preventDefault();
+        var j = k === 'Home' ? 0 : k === 'End' ? tabs.length - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        ir(tabs[j].getAttribute('data-v'), true);
+      });
+      lista.addEventListener('scroll', bordes, { passive: true });
+      var ubica = function () { centra(activa(), false); };
+      ubica();
+      window.addEventListener('load', ubica);
+      window.addEventListener('resize', ubica);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(ubica);
+      window.addEventListener('beforeprint', ubica);
+    }
+  }
+  window.HapeeProInit = init;
+  function todo() { [].forEach.call(document.querySelectorAll('[data-hp]'), init); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', todo); else todo();
+})();
+
+/* TEMA-OSCURO v1 · modo oscuro de la maqueta (CSS en mockup.css, mismo marcador).
+   - data-tema="oscuro|claro" en .hp (sin atributo = claro; "auto" en el HTML = sigue prefers-color-scheme).
+   - El botón luna/sol del topbar alterna claro/oscuro en TODAS las maquetas de la página y avisa al padre:
+       parent.postMessage({hapeeMockupTemaCambio: 'oscuro'|'claro'}, '*')
+   - La página padre (iframe del mismo origen) lo controla con:
+       iframe.contentWindow.postMessage({hapeeMockupTema: 'oscuro'|'claro'|'auto'}, '*')
+   - ?tema=oscuro|claro|auto en la URL fija el tema inicial.
+   Al imprimir sale en claro (las reglas oscuras van en @media screen). */
+(function () {
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var auto = false;
+  function raices() { return [].slice.call(document.querySelectorAll('.hp[data-hp]')); }
+  function sinc(r) {
+    var osc = r.getAttribute('data-tema') === 'oscuro';
+    [].forEach.call(r.querySelectorAll('.hp-tema'), function (b) {
+      b.setAttribute('aria-pressed', osc ? 'true' : 'false');
+      b.setAttribute('aria-label', osc ? 'Modo claro' : 'Modo oscuro');
+      b.title = osc ? 'Modo claro' : 'Modo oscuro';
+    });
+  }
+  function fija(r, t, suave) {
+    if (t !== 'oscuro' && t !== 'claro') return;
+    if (r.getAttribute('data-tema') === t) { sinc(r); return; }
+    if (suave) {
+      r.classList.add('hp--trans');
+      clearTimeout(r._hpTemaT);
+      r._hpTemaT = setTimeout(function () { r.classList.remove('hp--trans'); }, 450);
+    }
+    r.setAttribute('data-tema', t);
+    sinc(r);
+  }
+  function aplica(t, suave) {
+    if (t === 'auto') { auto = true; t = mq && mq.matches ? 'oscuro' : 'claro'; } else auto = false;
+    raices().forEach(function (r) { fija(r, t, suave); });
+  }
+  function avisa(t) {
+    try { if (window.parent && window.parent !== window) window.parent.postMessage({ hapeeMockupTemaCambio: t }, '*'); } catch (x) {}
+  }
+  function inicio() {
+    var rs = raices();
+    if (!rs.length) return;
+    var q = null;
+    try { q = new URLSearchParams(location.search).get('tema'); } catch (x) {}
+    if (q === 'oscuro' || q === 'claro' || q === 'auto') aplica(q, false);
+    else if (rs.some(function (r) { return r.getAttribute('data-tema') === 'auto'; })) aplica('auto', false);
+    rs.forEach(function (r) {
+      sinc(r);
+      if (window.MutationObserver) new MutationObserver(function () { sinc(r); }).observe(r, { attributes: true, attributeFilter: ['data-tema'] });
+    });
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest && ev.target.closest('.hp-tema');
+      if (!b) return;
+      var r = b.closest('.hp');
+      var t = r && r.getAttribute('data-tema') === 'oscuro' ? 'claro' : 'oscuro';
+      aplica(t, true);
+      avisa(t);
+    });
+    window.addEventListener('message', function (ev) {
+      if (ev.source !== window.parent && ev.origin !== location.origin) return;
+      var d = ev.data;
+      if (d && typeof d === 'object' && (d.hapeeMockupTema === 'oscuro' || d.hapeeMockupTema === 'claro' || d.hapeeMockupTema === 'auto')) aplica(d.hapeeMockupTema, true);
+    });
+    if (mq) {
+      var cambia = function () { if (auto) aplica('auto', true); };
+      mq.addEventListener ? mq.addEventListener('change', cambia) : mq.addListener && mq.addListener(cambia);
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicio); else inicio();
+})();
+
 /* Ahorro por módulo: recalcula con el número de usuarios (mismo cálculo y formato que ahorro.py). */
 (function () {
   var el = document.getElementById('ahorro-datos');
@@ -317,68 +468,98 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', todo); else todo();
 })();
 
-/* Homes institucionales: une la maqueta (iframe) con el agente nuevo y los recorridos.
-   - Alto del iframe según su contenido (mensajes «hapee-maqueta»).
-   - «hapee:rubro» (desde el agente o desde los chips [data-rubro-set]) → cambia la cuenta de ejemplo del iframe
-     conservando la pestaña abierta.
-   - [data-paso] (botones del recorrido) → abre esa pestaña. «hapee:accion» del agente → abre la pestaña de la acción
-     si la maqueta está a la vista y nadie la tocó hace poco.
-   - [data-capnav] → marca el capítulo visible (opción «Capítulos»). */
+/* Une el widget de agente con la maqueta de Hapee Pro:
+   - «hapee:rubro» → cambia la cuenta de ejemplo de la maqueta (fragmento por rubro, se pide una vez y queda en caché).
+   - [data-rubro-set] (chips fuera del widget) → emiten «hapee:rubro».
+   - «hapee:accion» → si la maqueta está a la vista y nadie la tocó hace poco, abre la pestaña de esa acción (CRM → Pipeline…).
+   - [data-paso="vista"] (recorrido por scroll o botones) → abre esa pestaña.
+   - [data-ir-vista="vista"] (enlaces de módulos) → baja a la maqueta y abre la pestaña. */
 (function () {
   'use strict';
-  var fr = document.querySelector('iframe[data-hmi]');
+  var cont = document.querySelector('[data-hm]');
   var cfg = {};
-  try { cfg = JSON.parse(document.getElementById('hmi-datos').textContent); } catch (e) {}
-  var vista = 'inicio', rub = fr ? fr.getAttribute('data-rubro') : null, tocada = 0, visible = false;
-  function manda(v) { if (fr && fr.contentWindow) fr.contentWindow.postMessage({ type: 'hapee-vista', v: v }, location.origin); }
-  window.addEventListener('message', function (e) {
-    if (!fr || e.origin !== location.origin || e.source !== fr.contentWindow) return;
-    var d = e.data || {};
-    if (d.type === 'hapee-maqueta' && d.h > 100) { fr.style.height = d.h + 'px'; fr.classList.add('ok'); }
-    if (d.type === 'hapee-maqueta-vista') { vista = d.v; marcaPasos(d.v); }
-    if (d.type === 'hapee-maqueta-toque') tocada = Date.now();
-  });
-  function marcaPasos(v) {
-    [].forEach.call(document.querySelectorAll('button[data-paso]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-paso') === v ? 'true' : 'false'); });
+  try { cfg = JSON.parse(document.getElementById('hm-datos').textContent); } catch (e) {}
+  var cache = {}, tocada = 0, actual = cont ? cont.getAttribute('data-rubro') : null;
+  function raiz() { return cont && cont.querySelector('[data-hp]'); }
+  function abre(v) {
+    var r = raiz(); if (!r) return;
+    var t = r.querySelector('.hp-tab[data-v="' + v + '"]') || r.querySelector('.ni-it[data-v="' + v + '"]');
+    if (t && t.getAttribute('aria-selected') !== 'true') t.click();
   }
-  function etiquetas(r) {
-    var R = cfg.rubros && cfg.rubros[r]; if (!R) return;
+  function etiquetas(rub) {
+    var R = cfg.rubros && cfg.rubros[rub]; if (!R) return;
     [].forEach.call(document.querySelectorAll('[data-rubro-marca]'), function (el) { el.textContent = R.marca; });
     [].forEach.call(document.querySelectorAll('[data-rubro-chip]'), function (el) { el.textContent = R.chip; });
-    [].forEach.call(document.querySelectorAll('[data-rubro-set]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-rubro-set') === r ? 'true' : 'false'); });
+    [].forEach.call(document.querySelectorAll('[data-rubro-set]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-rubro-set') === rub ? 'true' : 'false'); });
   }
-  function cambia(r) {
-    etiquetas(r);
-    if (!fr || !cfg.rubros || !cfg.rubros[r] || r === rub) return;
-    rub = r; fr.classList.remove('ok');
-    fr.src = cfg.rubros[r].url + '#v=' + vista;
-    fr.setAttribute('data-rubro', r);
+  function cambia(rub) {
+    if (!cont || !cfg.rubros || !cfg.rubros[rub] || rub === actual) { etiquetas(rub); return; }
+    actual = rub; etiquetas(rub);
+    var r = raiz(), vista = null;
+    if (r) { var on = r.querySelector('.hp-tab[aria-selected="true"]'); vista = on && on.getAttribute('data-v'); }
+    var pon = function (html) {
+      if (actual !== rub) return;
+      cont.classList.add('hm-cambia');
+      setTimeout(function () {
+        cont.innerHTML = html;
+        if (window.HapeeProInit) [].forEach.call(cont.querySelectorAll('[data-hp]'), window.HapeeProInit);
+        if (vista) abre(vista);
+        cont.setAttribute('data-rubro', rub);
+        requestAnimationFrame(function () { cont.classList.remove('hm-cambia'); });
+      }, 160);
+    };
+    if (cache[rub]) return pon(cache[rub]);
+    fetch(cfg.rubros[rub].url).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (h) { cache[rub] = h; pon(h); }).catch(function () {});
+  }
+  if (cont) {
+    cache[actual] = cont.innerHTML;
+    cont.addEventListener('pointerdown', function () { tocada = Date.now(); });
+    cont.addEventListener('keydown', function () { tocada = Date.now(); });
   }
   document.addEventListener('hapee:rubro', function (e) { if (e.detail) cambia(e.detail.rubro); });
+  var pIni = document.querySelector('button[data-paso][aria-pressed="true"]');
+  if (pIni) abre(pIni.getAttribute('data-paso'));
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-rubro-set]');
-    if (b) { document.dispatchEvent(new CustomEvent('hapee:rubro', { detail: { rubro: b.getAttribute('data-rubro-set'), origen: 'chips' } })); return; }
-    var p = e.target.closest && e.target.closest('button[data-paso]');
-    if (p) { vista = p.getAttribute('data-paso'); manda(vista); marcaPasos(vista); tocada = Date.now(); }
+    if (b) { e.preventDefault(); document.dispatchEvent(new CustomEvent('hapee:rubro', { detail: { rubro: b.getAttribute('data-rubro-set'), origen: 'chips' } })); return; }
+    var p = e.target.closest && e.target.closest('[data-paso]');
+    if (p && p.tagName === 'BUTTON') { abre(p.getAttribute('data-paso')); [].forEach.call(document.querySelectorAll('button[data-paso]'), function (x) { x.setAttribute('aria-pressed', x === p ? 'true' : 'false'); }); return; }
+    var iv = e.target.closest && e.target.closest('[data-ir-vista]');
+    if (iv && cont) {
+      e.preventDefault();
+      var dest = document.getElementById(iv.getAttribute('data-ancla') || 'plataforma') || cont;
+      dest.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      abre(iv.getAttribute('data-ir-vista'));
+    }
   });
-  if (fr && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (es) { es.forEach(function (en) { visible = en.intersectionRatio > 0.3; }); }, { threshold: [0, 0.3, 0.6] }).observe(fr);
-  }
   var MAPA = { crm: 'negocios', agenda: 'calendario', tag: 'conversaciones', hum: 'conversaciones', mail: 'email', cotiza: 'negocios', despacho: 'negocios', stock: 'negocios', doc: 'conversaciones' };
+  var visible = false;
+  if (cont && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es.forEach(function (en) { visible = en.intersectionRatio > 0.35; }); }, { threshold: [0, 0.35, 0.6] }).observe(cont);
+  }
   document.addEventListener('hapee:accion', function (e) {
-    if (!fr || fr.getAttribute('data-sync') !== 'on' || !visible || Date.now() - tocada < 10000) return;
-    var v = MAPA[e.detail && e.detail.tipo]; if (v) { vista = v; manda(v); marcaPasos(v); }
+    if (!cont || cont.getAttribute('data-sync') !== 'on' || !visible || Date.now() - tocada < 10000) return;
+    var v = MAPA[e.detail && e.detail.tipo]; if (v) abre(v);
   });
-  /* índice de capítulos */
-  var nav = document.querySelector('[data-capnav]');
-  if (nav && 'IntersectionObserver' in window) {
-    var links = [].slice.call(nav.querySelectorAll('a[href^="#"]'));
+  /* recorrido por scroll: cada [data-paso] que entra al centro abre su pestaña (solo pantallas anchas) */
+  var pasos = document.querySelectorAll('[data-paso]:not(button)');
+  if (pasos.length && 'IntersectionObserver' in window) {
+    var mq = matchMedia('(min-width: 980px)');
     var io = new IntersectionObserver(function (es) {
+      if (!mq.matches) return;
       es.forEach(function (en) {
         if (!en.isIntersecting) return;
-        links.forEach(function (a) { var on = a.getAttribute('href') === '#' + en.target.id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+        [].forEach.call(pasos, function (p) { p.classList.toggle('on', p === en.target); });
+        abre(en.target.getAttribute('data-paso'));
       });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-    links.forEach(function (a) { var t = document.getElementById(a.getAttribute('href').slice(1)); if (t) io.observe(t); });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    [].forEach.call(pasos, function (p) { io.observe(p); });
+  }
+  /* aparición suave de bloques */
+  var rv = document.querySelectorAll('[data-rv]');
+  if (rv.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('rv-on');
+    var io2 = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('rv-in'); io2.unobserve(en.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    [].forEach.call(rv, function (el) { io2.observe(el); });
   }
 })();

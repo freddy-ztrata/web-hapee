@@ -78,6 +78,76 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', todo); else todo();
 })();
 
+/* TEMA-OSCURO v1 · modo oscuro de la maqueta (CSS en mockup.css, mismo marcador).
+   - data-tema="oscuro|claro" en .hp (sin atributo = claro; "auto" en el HTML = sigue prefers-color-scheme).
+   - El botón luna/sol del topbar alterna claro/oscuro en TODAS las maquetas de la página y avisa al padre:
+       parent.postMessage({hapeeMockupTemaCambio: 'oscuro'|'claro'}, '*')
+   - La página padre (iframe del mismo origen) lo controla con:
+       iframe.contentWindow.postMessage({hapeeMockupTema: 'oscuro'|'claro'|'auto'}, '*')
+   - ?tema=oscuro|claro|auto en la URL fija el tema inicial.
+   Al imprimir sale en claro (las reglas oscuras van en @media screen). */
+(function () {
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var auto = false;
+  function raices() { return [].slice.call(document.querySelectorAll('.hp[data-hp]')); }
+  function sinc(r) {
+    var osc = r.getAttribute('data-tema') === 'oscuro';
+    [].forEach.call(r.querySelectorAll('.hp-tema'), function (b) {
+      b.setAttribute('aria-pressed', osc ? 'true' : 'false');
+      b.setAttribute('aria-label', osc ? 'Modo claro' : 'Modo oscuro');
+      b.title = osc ? 'Modo claro' : 'Modo oscuro';
+    });
+  }
+  function fija(r, t, suave) {
+    if (t !== 'oscuro' && t !== 'claro') return;
+    if (r.getAttribute('data-tema') === t) { sinc(r); return; }
+    if (suave) {
+      r.classList.add('hp--trans');
+      clearTimeout(r._hpTemaT);
+      r._hpTemaT = setTimeout(function () { r.classList.remove('hp--trans'); }, 450);
+    }
+    r.setAttribute('data-tema', t);
+    sinc(r);
+  }
+  function aplica(t, suave) {
+    if (t === 'auto') { auto = true; t = mq && mq.matches ? 'oscuro' : 'claro'; } else auto = false;
+    raices().forEach(function (r) { fija(r, t, suave); });
+  }
+  function avisa(t) {
+    try { if (window.parent && window.parent !== window) window.parent.postMessage({ hapeeMockupTemaCambio: t }, '*'); } catch (x) {}
+  }
+  function inicio() {
+    var rs = raices();
+    if (!rs.length) return;
+    var q = null;
+    try { q = new URLSearchParams(location.search).get('tema'); } catch (x) {}
+    if (q === 'oscuro' || q === 'claro' || q === 'auto') aplica(q, false);
+    else if (rs.some(function (r) { return r.getAttribute('data-tema') === 'auto'; })) aplica('auto', false);
+    rs.forEach(function (r) {
+      sinc(r);
+      if (window.MutationObserver) new MutationObserver(function () { sinc(r); }).observe(r, { attributes: true, attributeFilter: ['data-tema'] });
+    });
+    document.addEventListener('click', function (ev) {
+      var b = ev.target.closest && ev.target.closest('.hp-tema');
+      if (!b) return;
+      var r = b.closest('.hp');
+      var t = r && r.getAttribute('data-tema') === 'oscuro' ? 'claro' : 'oscuro';
+      aplica(t, true);
+      avisa(t);
+    });
+    window.addEventListener('message', function (ev) {
+      if (ev.source !== window.parent && ev.origin !== location.origin) return;
+      var d = ev.data;
+      if (d && typeof d === 'object' && (d.hapeeMockupTema === 'oscuro' || d.hapeeMockupTema === 'claro' || d.hapeeMockupTema === 'auto')) aplica(d.hapeeMockupTema, true);
+    });
+    if (mq) {
+      var cambia = function () { if (auto) aplica('auto', true); };
+      mq.addEventListener ? mq.addEventListener('change', cambia) : mq.addListener && mq.addListener(cambia);
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicio); else inicio();
+})();
+
 /* Dentro del iframe de la maqueta: informa su alto al home, abre la pestaña que pida el home
    (mensaje «hapee-vista» o #v=… en la URL) y avisa qué pestaña abrió la persona. Mismo origen. */
 (function () {
