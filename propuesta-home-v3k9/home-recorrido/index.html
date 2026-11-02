@@ -1969,7 +1969,7 @@ img.hero-robot{height:auto}
 @media (prefers-reduced-motion: reduce){.orbit-stage .hr-live{animation:none}}
 </style>
 <link rel="preload" href="/propuesta-home-v3k9/a/plus-jakarta-sans-var-644166bf.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/propuesta-home-v3k9/a/hapee-home-inst-2c5086ae.css">
+<link rel="stylesheet" href="/propuesta-home-v3k9/a/hapee-home-inst-c350071b.css">
 </head>
 <body>
 
@@ -2033,7 +2033,7 @@ img.hero-robot{height:auto}
 </div>
 </header>
 
-<main id="main-content">
+<main id="main-content" data-hn="home-recorrido">
 <section class="hero" role="banner">
   <canvas id="constellationCanvas"></canvas>
   <div class="hero-grid"></div>
@@ -2570,7 +2570,7 @@ img.hero-robot{height:auto}
       </div>
       <div class="fcol">
         <h4>Plataforma</h4>
-        <a href="#features">Funcionalidades</a>
+        <a href="#plataforma">Funcionalidades</a>
         <a href="/planes">Planes</a>
         <a href="#como">Cómo funciona</a>
         <a href="/academia">Academy</a>
@@ -2868,7 +2868,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   // Floating hero particles (subtle)
   const hp=document.getElementById('hp');
-  for(let i=0;i<20;i++){
+  if(hp)for(let i=0;i<20;i++){
     const d=document.createElement('div');
     d.classList.add('p');
     const s=Math.random()*4+2;
@@ -2927,6 +2927,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   (function(){
     const container=document.getElementById('stepsContainer');
     const fill=document.getElementById('stepsFill');
+    if(!container)return;
     const steps=container.querySelectorAll('.step');
     const circles=container.querySelectorAll('.step-n');
     let hasPlayed=false;
