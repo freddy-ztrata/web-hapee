@@ -87,6 +87,83 @@
   }
   function ini(n) { var p = String(n).split(/[\s._]+/).filter(Boolean); return ((p[0] || '?')[0] + (p[1] ? p[1][0] : (p[0] || '').slice(1, 2))).toUpperCase(); }
 
+  /* ── Voz del agente (02-11-2026, pedido de Sebastián: «la voz de ElevenLabs que tenían los agentes antes es clave»).
+     Mismas voces y el mismo proxy del «Interactúa con Hapee» original: /api/tts/<voz> (nginx agrega la llave de ElevenLabs).
+     - Habla cuando la persona ya tocó el widget (el navegador bloquea audio sin gesto; además, nadie paga voz por visitas pasivas).
+     - Cada respuesta del agente (guion y respuestas en vivo) se dice en voz alta; el guion espera a que termine de hablar.
+     - Caché por texto (la misma línea no se cobra dos veces) y tope de caracteres por visita; si ElevenLabs falla o se pasa el
+       tope, cae a la voz del navegador para que la demo nunca quede muda.
+     - Botón de voz (activar/silenciar) y voz femenina/masculina; se recuerdan en este navegador. */
+  var VZ = (function () {
+    var ID = { f: 'lLsDvdl6OjtZfLJPM2HA', m: '0cheeVA5B3Cv6DGq65cT' };
+    function lee(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
+    function guarda(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    var V = { on: lee('hx-voz', '1') === '1', g: lee('hx-voz-g', 'f') === 'm' ? 'm' : 'f', listo: false, gasto: 0, MAX: 6000, cache: {}, au: null, fin: null, subs: [] };
+    function avisa() { V.subs.forEach(function (f) { try { f(); } catch (e) {} }); }
+    V.limpia = function (t) {
+      return String(t || '').replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\*\*/g, '')
+        .replace(/[☀-➿️]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDC00-\uDFFF]/g, '').replace(/\s+/g, ' ').trim();
+    };
+    V.activa = function (on) { V.on = !!on; guarda('hx-voz', V.on ? '1' : '0'); if (!V.on) V.calla(); avisa(); };
+    V.genero = function (g) { V.g = g === 'm' ? 'm' : 'f'; guarda('hx-voz-g', V.g); V.calla(); avisa(); };
+    V.desbloquea = function () {
+      if (V.listo) return; V.listo = true;
+      try { var a = new Audio(); a.muted = true; var p = a.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+      try { if (window.speechSynthesis) speechSynthesis.getVoices(); } catch (e) {}
+      avisa();
+    };
+    V.calla = function () {
+      if (V.au) { try { V.au.pause(); } catch (e) {} V.au = null; }
+      try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+      var f = V.fin; V.fin = null; if (f) f();
+    };
+    V.trae = function (texto) {
+      var t = V.limpia(texto); if (!t) return Promise.resolve(null);
+      var k = V.g + '|' + t; if (V.cache[k]) return V.cache[k];
+      if (V.gasto + t.length > V.MAX) return Promise.resolve(null);
+      V.gasto += t.length;
+      var p = fetch((DATA.tts || '/api/tts/') + ID[V.g], { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: t, model_id: 'eleven_turbo_v2_5', voice_settings: { stability: .5, similarity_boost: .75, style: .3, use_speaker_boost: true }, optimize_streaming_latency: 4 }) })
+        .then(function (r) { if (!r.ok) throw new Error('tts ' + r.status); return r.blob(); })
+        .then(function (b) { if (!b || b.size < 256) throw new Error('tts vacío'); return URL.createObjectURL(b); })
+        .catch(function () { delete V.cache[k]; return null; });
+      V.cache[k] = p; return p;
+    };
+    function nativa(t, fin) {
+      try {
+        var s = window.speechSynthesis; if (!s || !window.SpeechSynthesisUtterance) return fin();
+        s.cancel();
+        var u = new SpeechSynthesisUtterance(t); u.lang = 'es-ES'; u.rate = 1.02; u.pitch = V.g === 'm' ? .9 : 1.08;
+        var vs = (s.getVoices() || []).filter(function (v) { return /^es(-|_|$)/i.test(v.lang) || /espa|spanish/i.test(v.name); });
+        if (vs.length) { var re = V.g === 'm' ? /jorge|diego|carlos|juan|male|hombre/i : /m[óo]nica|paulina|helena|laura|marisol|female|mujer/i; u.voice = vs.filter(function (v) { return re.test(v.name); })[0] || vs[0]; }
+        u.onend = fin; u.onerror = fin; s.speak(u);
+      } catch (e) { fin(); }
+    }
+    /* devuelve una promesa que se cumple cuando termina de hablar (o al tiro si la voz está apagada o aún no hubo gesto) */
+    V.habla = function (texto, alEmpezar) {
+      if (!V.on || !V.listo) return Promise.resolve();
+      var t = V.limpia(texto); if (!t) return Promise.resolve();
+      V.calla();
+      return new Promise(function (ok) {
+        var hecho = false, tope = setTimeout(fin, 9000 + t.length * 95);
+        function fin() { if (hecho) return; hecho = true; clearTimeout(tope); if (V.fin === fin) V.fin = null; ok(); }
+        V.fin = fin;
+        V.trae(t).then(function (url) {
+          if (hecho) return;
+          if (alEmpezar) alEmpezar();
+          if (!url) return nativa(t, fin);
+          var a = new Audio(url); V.au = a;
+          a.onended = fin; a.onerror = function () { if (V.au === a) V.au = null; nativa(t, fin); };
+          var p = a.play(); if (p && p.catch) p.catch(function () { fin(); });
+        });
+      });
+    };
+    return V;
+  })();
+  var IC_VOZ = 'M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14';
+  var IC_MUDO = 'M11 5 6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6';
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
   function Widget(raiz) {
     var S = { rub: raiz.getAttribute('data-rubro') || DATA.orden[0], ch: null, run: 0, tocado: false, libre: false, enviados: 0, hist: [], acc: 0, visible: false, pend: null };
     var LIM = 8;
@@ -95,18 +172,39 @@
       '<div class="hx-cuerpo"><div class="hx-tel">' +
         '<div class="hx-ch" role="tablist" aria-label="Canal"></div>' +
         '<div class="hx-cab"><span class="hx-av" aria-hidden="true"></span><span class="hx-id"><b class="hx-marca"></b><small class="hx-est">en línea</small></span>' +
+        '<span class="hx-vg" role="group" aria-label="Voz del agente"><button type="button" data-g="f" aria-label="Voz femenina">♀</button><button type="button" data-g="m" aria-label="Voz masculina">♂</button></span>' +
+        '<button type="button" class="hx-vz" aria-pressed="true"></button>' +
         '<button type="button" class="hx-re" aria-label="Reiniciar la conversación">' + svg('M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5') + '</button></div>' +
         '<div class="hx-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
         '<div class="hx-sug" aria-label="Respuestas sugeridas"></div>' +
         '<form class="hx-in" autocomplete="off"><label class="hx-sr" for="' + raiz.id + '-t">Escríbele al agente</label>' +
         '<input id="' + raiz.id + '-t" type="text" maxlength="280" placeholder="Escríbele como si fueras cliente…" enterkeyhint="send">' +
+        (SR ? '<button type="button" class="hx-mic" aria-label="Dictar tu mensaje con la voz">' + svg('M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8') + '</button>' : '') +
         '<button type="submit" aria-label="Enviar">' + svg('M22 2 11 13M22 2l-7 20-4-9-9-4z') + '</button></form>' +
       '</div><aside class="hx-acts" aria-label="Lo que hizo el agente"><p class="hx-k">Lo que hizo el agente</p><ol></ol>' +
         '<p class="hx-crm">Todo queda en el CRM de Hapee, con su canal de origen.</p></aside></div>' +
-      '<p class="hx-nota">Cuenta de ejemplo. Escribe tu pregunta: responde la IA con el contexto del rubro.</p>';
+      '<p class="hx-nota">Cuenta de ejemplo. Toca el chat y el agente te habla con voz real; escribe o dicta tu pregunta y responde la IA con el contexto del rubro.</p>';
     var $ = function (s) { return raiz.querySelector(s); };
     var rubBox = $('.hx-rub'), chBox = $('.hx-ch'), log = $('.hx-log'), sug = $('.hx-sug'), form = $('.hx-in'), inp = form.querySelector('input'),
-      acts = $('.hx-acts ol'), est = $('.hx-est'), marca = $('.hx-marca'), av = $('.hx-av');
+      acts = $('.hx-acts ol'), est = $('.hx-est'), marca = $('.hx-marca'), av = $('.hx-av'), bVoz = $('.hx-vz'), gVoz = $('.hx-vg');
+
+    /* voz: botón, género y «hablando…» en el estado */
+    function pintaVoz() {
+      bVoz.setAttribute('aria-pressed', VZ.on ? 'true' : 'false');
+      bVoz.setAttribute('aria-label', VZ.on ? 'Silenciar la voz del agente' : 'Activar la voz del agente');
+      bVoz.innerHTML = svg(VZ.on ? IC_VOZ : IC_MUDO);
+      [].forEach.call(gVoz.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-g') === VZ.g ? 'true' : 'false'); });
+      raiz.classList.toggle('hx-mudo', !VZ.on);
+    }
+    VZ.subs.push(pintaVoz); pintaVoz();
+    bVoz.addEventListener('click', function () { VZ.desbloquea(); VZ.activa(!VZ.on); });
+    gVoz.addEventListener('click', function (e) { var b = e.target.closest('[data-g]'); if (!b) return; VZ.desbloquea(); VZ.genero(b.getAttribute('data-g')); if (!VZ.on) VZ.activa(true); });
+    function habla(texto, tk) {
+      if (!VZ.on || !VZ.listo || (tk != null && tk !== S.run)) return Promise.resolve();
+      return VZ.habla(texto, function () { raiz.classList.add('hx-habla'); est.textContent = 'hablando…'; })
+        .then(function () { raiz.classList.remove('hx-habla'); if (!log.querySelector('.hx-typ')) est.textContent = S.estado || 'en línea'; });
+    }
+    function anticipa(texto) { if (VZ.on && VZ.listo) VZ.trae(texto); }
 
     DATA.orden.forEach(function (r) {
       var R = DATA.rubros[r];
@@ -169,13 +267,15 @@
         if (tk !== S.run) return;
         if (k === 'sis') burbuja('hx-dia', esc(p[1]));
         else if (k === 'c') { await sleep(500, tk); burbuja('cl', soloB(p[1])); await sleep(500 + Math.min(1200, plano(p[1]).length * 12), tk); }
-        else if (k === 'a') { escribiendo(true); await sleep(650 + Math.min(1400, plano(p[1]).length * 14), tk); escribiendo(false); burbuja('ag', soloB(p[1])); await sleep(450, tk); }
+        else if (k === 'a') { anticipa(p[1]); escribiendo(true); await sleep(650 + Math.min(1400, plano(p[1]).length * 14), tk); escribiendo(false); burbuja('ag', soloB(p[1])); await habla(p[1], tk); await sleep(450, tk); }
         else if (k === 'est') { S.estado = p[1] + '…'; est.textContent = S.estado; }
         else if (k === 'acc') { nota(p[1], '<b>' + esc(p[2]) + '</b> · ' + esc(p[3]) + ' <em>Agente IA</em>'); accion(p[1], p[2], p[3]); await sleep(550, tk); }
         else if (k === 'qr') { var j = await opciones(p[1], p[2], tk); burbuja('cl', esc(p[1][j])); await sleep(500, tk); }
         else if (k === 'slots') {
+          var dSl = p[1] + ' ' + p[2].join(', ') + '.'; anticipa(dSl);
           escribiendo(true); await sleep(700, tk); escribiendo(false);
           burbuja('ag', '<b>' + esc(p[1]) + '</b><span class="hx-sl">' + p[2].map(esc).join(' · ') + '</span>');
+          await habla(dSl, tk); if (tk !== S.run) return;
           var j2 = await opciones(p[2], p[3], tk, 'hx-op--h');
           burbuja('cl', esc(j2 === p[3] && p[4] ? p[4] : p[2][j2])); await sleep(500, tk);
         }
@@ -186,14 +286,15 @@
           await sleep(400, tk);
         }
         else if (k === 'card') {
+          var cd = p[1]; anticipa(cd.t);
           escribiendo(true); await sleep(700, tk); escribiendo(false);
-          var cd = p[1];
           burbuja('ag hx-card', '<b>' + esc(cd.t || '') + '</b><small>' + esc(cd.s || '') + '</small>' + (cd.l ? '<span class="hx-tg">' + cd.l.map(function (x) { return '<i>' + esc(x) + '</i>'; }).join('') + '</span>' : '') + (cd.b ? '<span class="hx-cb">' + esc(cd.b) + '</span>' : ''));
+          await habla(cd.t, tk);
           await sleep(500, tk);
         }
         else if (k === 'voz') { await sleep(500, tk); burbuja('cl hx-voz', '<span class="hx-pl" aria-hidden="true"></span><span class="hx-wv" aria-hidden="true"></span><small>' + esc(p[1]) + '</small><em>«' + esc(p[2]) + '»</em>'); await sleep(900, tk); }
         else if (k === 'hum') { nota('hum', '<b>Derivó a ' + esc(p[1]) + '</b> · ' + esc(p[2])); accion('hum', 'Derivó a ' + p[1], p[2]); await sleep(500, tk); }
-        else if (k === 'pub') { burbuja('ag', '<b>Respuesta pública:</b> ' + soloB(p[1])); await sleep(500, tk); }
+        else if (k === 'pub') { burbuja('ag', '<b>Respuesta pública:</b> ' + soloB(p[1])); await habla(p[1], tk); await sleep(500, tk); }
       }
       if (tk === S.run) libre();
     }
@@ -232,6 +333,7 @@
       if (S.enviados >= LIM) {
         burbuja('ag', 'Hasta aquí la demo 🙌 Para verlo con <b>tu negocio</b>, agenda una demo 1 a 1.');
         limpiaSug(); var a = document.createElement('a'); a.className = 'hx-op hx-op--cta'; a.href = DATA.agenda; a.textContent = 'Agendar mi demo →'; sug.appendChild(a);
+        habla('Hasta aquí la demo. Para verlo con tu negocio, agenda una demo uno a uno.');
         return;
       }
       S.enviados++;
@@ -256,6 +358,7 @@
       S.hist.push({ role: 'assistant', content: r });
       escribiendo(false);
       burbuja('ag', esc(r).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'));
+      habla(r, tk);
       if (/agend|hora|visita|test drive|evaluaci|reuni/i.test(txt + ' ' + r) && !S.agendo) { S.agendo = true; accion('agenda', 'Ofreció horas para agendar', 'según la agenda del equipo'); }
       if (S.enviados === LIM) { var a2 = document.createElement('a'); a2.className = 'hx-op hx-op--cta'; a2.href = DATA.agenda; a2.textContent = 'Verlo con mi negocio →'; sug.appendChild(a2); }
     }
@@ -277,6 +380,8 @@
       av.textContent = ini(R.marca); av.style.background = R.color;
     }
     function arranca() {
+      if (VZ.on && VZ.listo) VZ.calla();
+      raiz.classList.remove('hx-habla');
       S.run++; S.libre = false; S.hist = []; S.enviados = 0; S.agendo = false; S.estado = 'en línea';
       log.innerHTML = ''; limpiaSug(); acts.innerHTML = ''; escribiendo(false);
       pinta();
@@ -295,8 +400,27 @@
     rubBox.addEventListener('click', function (e) { var b = e.target.closest('[data-r]'); if (b) { S.tocado = true; rubro(b.getAttribute('data-r')); } });
     chBox.addEventListener('click', function (e) { var b = e.target.closest('[data-c]'); if (b && b.getAttribute('data-c') !== S.ch) { S.tocado = true; S.ch = b.getAttribute('data-c'); arranca(); } });
     $('.hx-re').addEventListener('click', function () { arranca(); });
-    form.addEventListener('submit', function (e) { e.preventDefault(); var v = inp.value; inp.value = ''; envia(v); });
-    raiz.addEventListener('pointerdown', function () { if (!S.tocado) { S.tocado = true; } });
+    form.addEventListener('submit', function (e) { e.preventDefault(); VZ.desbloquea(); var v = inp.value; inp.value = ''; envia(v); });
+    raiz.addEventListener('pointerdown', function () { VZ.desbloquea(); if (!S.tocado) { S.tocado = true; } });
+    raiz.addEventListener('keydown', function () { VZ.desbloquea(); });
+    /* dictado (como el «Interactúa con Hapee» original): escucha en es-CL y envía al terminar */
+    var bMic = $('.hx-mic');
+    if (bMic && SR) {
+      var rec = null, oyendo = false, ph = inp.placeholder;
+      var corta = function () { oyendo = false; raiz.classList.remove('hx-oye'); bMic.setAttribute('aria-pressed', 'false'); inp.placeholder = ph; };
+      bMic.setAttribute('aria-pressed', 'false');
+      bMic.addEventListener('click', function () {
+        VZ.desbloquea();
+        if (oyendo && rec) { try { rec.stop(); } catch (e) {} return; }
+        try {
+          rec = new SR(); rec.lang = 'es-CL'; rec.continuous = false; rec.interimResults = true;
+          rec.onresult = function (e) { var t = ''; for (var i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript; inp.value = t; if (e.results[e.results.length - 1].isFinal) try { rec.stop(); } catch (x) {} };
+          rec.onend = function () { corta(); var v = inp.value.trim(); if (v) { inp.value = ''; envia(v); } };
+          rec.onerror = function () { corta(); };
+          VZ.calla(); rec.start(); oyendo = true; raiz.classList.add('hx-oye'); bMic.setAttribute('aria-pressed', 'true'); inp.placeholder = 'Te escucho…';
+        } catch (e) { corta(); }
+      });
+    }
     [rubBox, chBox].forEach(function (box) {
       box.addEventListener('keydown', function (e) {
         if (['ArrowRight', 'ArrowLeft'].indexOf(e.key) < 0) return;
@@ -311,7 +435,7 @@
       }, { threshold: 0.25 }).observe(raiz);
     } else S.visible = true;
     rubro(S.rub, false);
-    raiz.hapee = { rubro: rubro, envia: envia, estado: S };
+    raiz.hapee = { rubro: rubro, envia: envia, estado: S, voz: VZ };
   }
   function todo() { [].forEach.call(document.querySelectorAll('[data-hx]'), function (r, i) { if (!r.id) r.id = 'hx' + i; Widget(r); }); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', todo); else todo();
