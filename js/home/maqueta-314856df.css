@@ -1,4 +1,4 @@
-@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:200 800;font-display:swap;src:url(/propuesta-home-v3k9/a/plus-jakarta-sans-var-644166bf.woff2) format('woff2')}
+@font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:200 800;font-display:swap;src:url(/js/home/plus-jakarta-sans-var-644166bf.woff2) format('woff2')}
 /* Maqueta de Hapee Pro · lienzo virtual de 1120 px. Escrito en px: build.py convierte cada Npx en calc(N*var(--u)).
    Tokens de hapee-app/app/static/css/glass.css (vidrio sobre mesh, degradado de marca). Tipografía: Plus Jakarta Sans, la única familia del manual de marca. */
 @property --u{syntax:'<length>';inherits:true;initial-value:1px}
@@ -102,7 +102,7 @@ button.ni-it:hover{background:rgba(36,31,27,.06)}
 .tg{display:inline-flex;align-items:center;gap:calc(4*var(--u));font-size:calc(10*var(--u));font-weight:600;padding:calc(2*var(--u)) calc(8*var(--u));border-radius:calc(999*var(--u));background:rgba(36,31,27,.06);color:var(--ink2);white-space:nowrap}
 .btn-s,.btn-p{display:inline-flex;align-items:center;gap:calc(5*var(--u));height:calc(28*var(--u));padding:0 calc(11*var(--u));border-radius:calc(9*var(--u));font-size:calc(11*var(--u));font-weight:700;white-space:nowrap}
 .btn-s{background:rgba(255,255,255,.75);box-shadow:0 0 0 1px var(--line);color:var(--ink2)}
-.btn-s.ia{background:#F0ECF9;color:#7C4DCB;box-shadow:none}.btn-s.ok{background:#0E8A57;color:#fff;box-shadow:none}
+.btn-s.ia{background:#F0ECF9;color:#7C4DCB;box-shadow:none}.btn-s.ok{background:#0B7A4D;color:#fff;box-shadow:none}
 .btn-p{background:var(--hg);color:#fff;box-shadow:0 calc(6*var(--u)) calc(16*var(--u)) -6px rgba(249,115,22,.6)}
 .srch{display:flex;align-items:center;gap:calc(6*var(--u));height:calc(28*var(--u));padding:0 calc(10*var(--u));border-radius:calc(9*var(--u));background:rgba(255,255,255,.75);box-shadow:0 0 0 1px var(--hair);font-size:calc(11*var(--u));color:#A39890;min-width:0;white-space:nowrap;overflow:hidden}
 .seg{display:inline-flex;gap:calc(2*var(--u));padding:calc(2*var(--u));border-radius:calc(9*var(--u));background:var(--tint);font-size:calc(10.5*var(--u));font-weight:600;color:var(--ink3)}
@@ -128,10 +128,11 @@ button.ni-it:hover{background:rgba(36,31,27,.06)}
 .hero p{font-size:calc(12*var(--u));opacity:.92;margin:calc(6*var(--u)) 0 0;max-width:calc(380*var(--u))}
 .hero-cli{height:calc(34*var(--u));width:auto;max-width:calc(150*var(--u));object-fit:contain;margin-left:auto;margin-right:calc(90*var(--u));opacity:.95}
 .hero-bot{position:absolute;right:calc(18*var(--u));bottom:-6px;height:calc(112*var(--u));width:auto}
+.kpi small.k-am{color:#B45309}.kpi small.k-ve{color:#047857}.kpi small.k-vi{color:#6D28D9}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(10*var(--u));flex:none}
 .body2{display:grid;grid-template-columns:1.25fr 1fr;gap:calc(10*var(--u));flex:1;min-height:0}
 .row{display:flex;align-items:center;gap:calc(10*var(--u));padding:calc(7*var(--u)) 0;border-top:1px solid var(--hair)}
-.row .av{background:#999;color:#fff;width:calc(28*var(--u));height:calc(28*var(--u))}
+.row .av{background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),var(--cc,#999);color:#fff;width:calc(28*var(--u));height:calc(28*var(--u))}
 .rt{flex:1;min-width:0;display:flex;flex-direction:column}.rt b{font-size:calc(11.5*var(--u));font-weight:700}.rt span{font-size:calc(10.5*var(--u));color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chan{font-size:calc(9.5*var(--u));font-weight:700;padding:calc(2*var(--u)) calc(8*var(--u));border-radius:calc(999*var(--u));background:rgba(36,31,27,.06);color:var(--ink2)}
 .dt{width:calc(44*var(--u));flex:none;display:flex;flex-direction:column;align-items:center;font-size:calc(10.5*var(--u));color:var(--ink3);padding:calc(4*var(--u)) 0;border-radius:calc(9*var(--u));background:rgba(16,185,129,.10)}
@@ -636,8 +637,8 @@ button.ni-it:hover{background:rgba(36,31,27,.06)}
    Solo en pantalla (@media screen): al imprimir y en el PDF la maqueta sale siempre en claro.
    Los lienzos del cliente (su landing en «web» y su correo en «email») quedan claros a propósito, como en el builder real. */
 @media screen{
-.hp[data-tema="oscuro"]{--ink:#F4EFEB;--ink2:#DBD4CE;--ink3:#C4BCB5;--hair:rgba(244,239,235,.07);--line:rgba(244,239,235,.11);--tint:rgba(244,239,235,.045);
-  --glass:rgba(255,255,255,.06);--acct:#FBA86E;--gsh:0 calc(24*var(--u)) calc(60*var(--u)) -28px rgba(0,0,0,.70),0 calc(2*var(--u)) calc(12*var(--u)) -6px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.09);color-scheme:dark}
+.hp[data-tema="oscuro"]{--ink:#F4EFEB;--ink2:#DBD4CE;--ink3:#D2CBC4;--hair:rgba(244,239,235,.07);--line:rgba(244,239,235,.11);--tint:rgba(244,239,235,.045);
+  --glass:rgba(255,255,255,.06);--acct:#FFC29A;--gsh:0 calc(24*var(--u)) calc(60*var(--u)) -28px rgba(0,0,0,.70),0 calc(2*var(--u)) calc(12*var(--u)) -6px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.09);color-scheme:dark}
 .hp[data-tema="oscuro"] .hp-tema .ico-sol{display:block}.hp[data-tema="oscuro"] .hp-tema .ico-luna{display:none}
 .hp[data-tema="oscuro"] .hp-app{background-color:#0C0B0D;background-image:radial-gradient(70% 80% at 4% -4%,rgba(255,96,58,.30),transparent 55%),
   radial-gradient(80% 95% at 106% 110%,rgba(214,26,110,.50),transparent 58%),radial-gradient(60% 75% at 76% 98%,rgba(150,60,230,.36),transparent 56%),
@@ -648,168 +649,171 @@ button.ni-it:hover{background:rgba(36,31,27,.06)}
 .hp[data-tema="oscuro"] .hp-tab:hover{box-shadow:0 0 0 1px rgba(255,138,91,.75)}
 .hp[data-tema="oscuro"] .hp-tab[aria-selected="true"]{background:var(--hg);color:#fff;box-shadow:0 calc(10*var(--u)) calc(24*var(--u)) -10px rgba(225,29,99,.7)}
 .hp[data-tema="oscuro"] .hp-tabs-fl{background:#1D1A18;color:#F4EFEB;box-shadow:0 calc(6*var(--u)) calc(16*var(--u)) -6px rgba(0,0,0,.6),0 0 0 1px rgba(244,239,235,.18)}
-.hp[data-tema="oscuro"] .hp-tabs-fl:hover{color:#FF8A9A}
+.hp[data-tema="oscuro"] .hp-tabs-fl:hover{color:#FFAAB5}
 .hp[data-tema="oscuro"] .ev{background:color-mix(in srgb,var(--c) 28%,#1D1A18)}
 .hp[data-tema="oscuro"] .ev small{color:color-mix(in srgb,var(--c) 40%,#fff)}
 .hp[data-tema="oscuro"] .wcanvas{background:rgba(255,255,255,.04) radial-gradient(circle,rgba(244,239,235,.16) 1px,transparent calc(1.4*var(--u))) 0 0/calc(16*var(--u)) calc(16*var(--u))}
 .hp[data-tema="oscuro"] .emcv{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))}
-.hp[data-tema="oscuro"] .rds.off{color:#B8AFA7}
+.hp[data-tema="oscuro"] .rds.off{color:#CDC5BE}
 .hp[data-tema="oscuro"] .hp-win{background:#171413;box-shadow:0 calc(40*var(--u)) calc(80*var(--u)) -36px rgba(0,0,0,0.75),0 0 0 1px rgba(244,239,235,0.110)}
 .hp[data-tema="oscuro"] .hp-bar{background:#171413;border-bottom:1px solid rgba(244,239,235,0.080)}
 .hp[data-tema="oscuro"] .hp-url{color:#C4BCB5;background:rgba(255,255,255,.12);box-shadow:0 0 0 1px rgba(244,239,235,0.066)}
-.hp[data-tema="oscuro"] .hp-url span{color:#B8AFA7}
+.hp[data-tema="oscuro"] .hp-url span{color:#CDC5BE}
 .hp[data-tema="oscuro"] .hp-app{background-color:#0C0B0D}
 .hp[data-tema="oscuro"] .side{background:linear-gradient(180deg,rgba(249,115,22,0.208) 0%,transparent 44%),var(--glass)}
-.hp[data-tema="oscuro"] .car{color:#B8AFA7}
-.hp[data-tema="oscuro"] .ni-it .beta{background:rgba(124,58,237,0.192);color:#C4B5FD}
+.hp[data-tema="oscuro"] .car{color:#CDC5BE}
+.hp[data-tema="oscuro"] .ni-it .beta{background:rgba(124,58,237,0.192);color:#DAD0FE}
 .hp[data-tema="oscuro"] button.ni-it:hover{background:rgba(244,239,235,0.069)}
-.hp[data-tema="oscuro"] .ua{background:rgba(249,115,22,0.240);color:#FBA86E}
+.hp[data-tema="oscuro"] .ua{background:rgba(249,115,22,0.240);color:#FFC29A}
 .hp[data-tema="oscuro"] .hp-main{background:rgba(255,255,255,0.066)}
 .hp[data-tema="oscuro"] .hp-top{background:rgba(255,255,255,0.077)}
-.hp[data-tema="oscuro"] .tb kbd{color:#B8AFA7}
+.hp[data-tema="oscuro"] .tb kbd{color:#CDC5BE}
 .hp[data-tema="oscuro"] .tb>i{box-shadow:0 0 0 calc(2*var(--u)) #1D1A18}
 .hp[data-tema="oscuro"] .hp-fab{background:rgba(34,30,28,.92)}
 .hp[data-tema="oscuro"] .av{background:rgba(244,239,235,0.092)}
-.hp[data-tema="oscuro"] .av.lg{background:rgba(249,115,22,0.224);color:#FBA86E}
+.hp[data-tema="oscuro"] .av.lg{background:rgba(249,115,22,0.224);color:#FFC29A}
 .hp[data-tema="oscuro"] .cm{box-shadow:0 0 0 calc(2*var(--u)) #1D1A18}
 .hp[data-tema="oscuro"] .tg{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .btn-s{background:rgba(255,255,255,0.100)}
-.hp[data-tema="oscuro"] .btn-s.ia{background:rgba(139,92,246,.22);color:#C4B5FD}
-.hp[data-tema="oscuro"] .srch{background:rgba(255,255,255,0.100);color:#B8AFA7}
+.hp[data-tema="oscuro"] .btn-s.ia{background:rgba(139,92,246,.22);color:#DAD0FE}
+.hp[data-tema="oscuro"] .srch{background:rgba(255,255,255,0.100);color:#CDC5BE}
 .hp[data-tema="oscuro"] .seg .on{background:rgba(255,255,255,.12);box-shadow:0 1px calc(3*var(--u)) rgba(244,239,235,0.132)}
-.hp[data-tema="oscuro"] .modtabs .on{color:#FDBA74}
+.hp[data-tema="oscuro"] .modtabs .on{color:#FECB98}
 .hp[data-tema="oscuro"] .tbl th{background:rgba(244,239,235,0.040)}
 .hp[data-tema="oscuro"] .mb.in{background:rgba(255,255,255,.12);box-shadow:0 1px calc(2*var(--u)) rgba(244,239,235,0.088),0 0 0 1px var(--hair)}
-.hp[data-tema="oscuro"] .ta{background:rgba(255,255,255,0.104);color:#B8AFA7}
+.hp[data-tema="oscuro"] .ta{background:rgba(255,255,255,0.104);color:#CDC5BE}
 .hp[data-tema="oscuro"] .chan{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .dt{background:rgba(16,185,129,0.160)}
-.hp[data-tema="oscuro"] .dt b{color:#6EE7B7}
+.hp[data-tema="oscuro"] .dt b{color:#8CF0C8}
 .hp[data-tema="oscuro"] .thr{background:rgba(255,255,255,0.068)}
 .hp[data-tema="oscuro"] .th:hover{background:rgba(255,255,255,0.080)}
 .hp[data-tema="oscuro"] .th.on{background:rgba(249,115,22,0.128)}
-.hp[data-tema="oscuro"] .tm{color:#B8AFA7}
-.hp[data-tema="oscuro"] .tm .ai{background:rgba(139,92,246,.22);color:#C4B5FD}
+.hp[data-tema="oscuro"] .tm{color:#CDC5BE}
+.hp[data-tema="oscuro"] .tm .ai{background:rgba(139,92,246,.22);color:#DAD0FE}
 .hp[data-tema="oscuro"] .cvh{background:rgba(255,255,255,0.072)}
 .hp[data-tema="oscuro"] .dia{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .nota{background:rgba(255,255,255,0.096)}
-.hp[data-tema="oscuro"] .nota .ni{color:#C4B5FD}
-.hp[data-tema="oscuro"] .nota em{color:#C4B5FD}
-.hp[data-tema="oscuro"] .comp .ai{color:#C4B5FD}
+.hp[data-tema="oscuro"] .nota .ni{color:#DAD0FE}
+.hp[data-tema="oscuro"] .nota em{color:#DAD0FE}
+.hp[data-tema="oscuro"] .comp .ai{color:#DAD0FE}
 .hp[data-tema="oscuro"] .det{background:rgba(255,255,255,0.068)}
 .hp[data-tema="oscuro"] .det dd{background:rgba(255,255,255,0.100)}
 .hp[data-tema="oscuro"] .segs .on{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .bi{background:rgba(139,92,246,.22);color:#C4B5FD}
-.hp[data-tema="oscuro"] .pr{background:rgba(245,158,11,.18);color:#FCD34D}
-.hp[data-tema="oscuro"] .pe.ok{background:rgba(16,185,129,0.256);color:#6EE7B7}
+.hp[data-tema="oscuro"] .bi{background:rgba(139,92,246,.22);color:#DAD0FE}
+.hp[data-tema="oscuro"] .pr{background:rgba(245,158,11,.18);color:#FDE08A}
+.hp[data-tema="oscuro"] .pe.ok{background:rgba(16,185,129,0.256);color:#8CF0C8}
 .hp[data-tema="oscuro"] .pc{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .faq li{background:rgba(255,255,255,0.096)}
 .hp[data-tema="oscuro"] .kbar .sel{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .kmet .w b{color:#6EE7B7}
+.hp[data-tema="oscuro"] .kmet .w b{color:#8CF0C8}
 .hp[data-tema="oscuro"] .kcol{background:rgba(255,255,255,0.074)}
-.hp[data-tema="oscuro"] .kh span{color:#B8AFA7}
-.hp[data-tema="oscuro"] .kh em{color:#B8AFA7}
+.hp[data-tema="oscuro"] .kh span{color:#CDC5BE}
+.hp[data-tema="oscuro"] .kh em{color:#CDC5BE}
 .hp[data-tema="oscuro"] .kc{background:rgba(255,255,255,0.110);box-shadow:0 1px calc(2*var(--u)) rgba(244,239,235,0.066),0 0 0 1px var(--hair)}
 .hp[data-tema="oscuro"] .kc.won{background:rgba(16,185,129,0.192)}
-.hp[data-tema="oscuro"] .kt i{background:rgba(249,115,22,0.160);color:#FBA86E}
-.hp[data-tema="oscuro"] .kf{color:#B8AFA7}
-.hp[data-tema="oscuro"] .vacio{color:#B8AFA7}
-.hp[data-tema="oscuro"] .hr{color:#B8AFA7}
-.hp[data-tema="oscuro"] .ev{background:color-mix(in srgb,var(--c) 15%,rgba(255,255,255,.12))}
+.hp[data-tema="oscuro"] .kt i{background:rgba(249,115,22,0.160);color:#FFC29A}
+.hp[data-tema="oscuro"] .kf{color:#CDC5BE}
+.hp[data-tema="oscuro"] .vacio{color:#CDC5BE}
+.hp[data-tema="oscuro"] .hr{color:#CDC5BE}
 .hp[data-tema="oscuro"] .pills>span{background:rgba(255,255,255,0.096)}
-.hp[data-tema="oscuro"] .pills>span i{color:#B8AFA7}
+.hp[data-tema="oscuro"] .pills>span i{color:#CDC5BE}
 .hp[data-tema="oscuro"] .mi{background:hsl(var(--h) 70% 60% / .22);color:hsl(var(--h) 85% 78%)}
-.hp[data-tema="oscuro"] .st-p{background:rgba(59,130,246,.20);color:#93C5FD}
+.hp[data-tema="oscuro"] .st-p{background:rgba(59,130,246,.20);color:#B5D7FE}
 .hp[data-tema="oscuro"] .st-b{background:rgba(244,239,235,0.081)}
-.hp[data-tema="oscuro"] .wlist li span{color:#B8AFA7}
+.hp[data-tema="oscuro"] .wlist li span{color:#CDC5BE}
 .hp[data-tema="oscuro"] .wlist li.on{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .wlist .pub{color:#6EE7B7 !important}
-.hp[data-tema="oscuro"] .wcanvas{background:rgba(255,255,255,.45) radial-gradient(circle,rgba(244,239,235,0.161) 1px,transparent calc(1.4*var(--u))) 0 0/calc(16*var(--u)) calc(16*var(--u))}
+.hp[data-tema="oscuro"] .wlist .pub{color:#8CF0C8 !important}
 .hp[data-tema="oscuro"] .wtop{background:rgba(255,255,255,0.088)}
 .hp[data-tema="oscuro"] .wn{background:rgba(255,255,255,.12);box-shadow:0 calc(6*var(--u)) calc(16*var(--u)) -10px rgba(0,0,0,0.75),0 0 0 1px var(--line)}
 .hp[data-tema="oscuro"] .wn:not(:first-child)::before{border-left:calc(2*var(--u)) solid rgba(244,239,235,0.253)}
-.hp[data-tema="oscuro"] .wn.tr small{color:#FF8A5B}
+.hp[data-tema="oscuro"] .wn.tr small{color:#FFAD85}
 .hp[data-tema="oscuro"] .wn.if{background:rgba(139,92,246,.22);box-shadow:0 0 0 1px rgba(196,181,253,.35)}
-.hp[data-tema="oscuro"] .wn.if small{color:#C4B5FD}
+.hp[data-tema="oscuro"] .wn.if small{color:#DAD0FE}
 .hp[data-tema="oscuro"] .wr::before{border-top:calc(2*var(--u)) solid rgba(244,239,235,0.253)}
-.hp[data-tema="oscuro"] .rl.si{background:rgba(16,185,129,0.256);color:#6EE7B7}
+.hp[data-tema="oscuro"] .rl.si{background:rgba(16,185,129,0.256);color:#8CF0C8}
 .hp[data-tema="oscuro"] .rl.no{background:rgba(239,68,68,.18);color:#FCA5A5}
-.hp[data-tema="oscuro"] .rsub small{color:#FDBA74}
-.hp[data-tema="oscuro"] .kick{color:#FDBA74}
+.hp[data-tema="oscuro"] .rsub small{color:#FECB98}
+.hp[data-tema="oscuro"] .kick{color:#FECB98}
 .hp[data-tema="oscuro"] .ol span{background:rgba(244,239,235,0.069)}
-.hp[data-tema="oscuro"] .rtab td{color:#B8AFA7}
+.hp[data-tema="oscuro"] .rtab td{color:#CDC5BE}
 .hp[data-tema="oscuro"] .tbl tr.on td{background:rgba(249,115,22,0.112)}
-.hp[data-tema="oscuro"] .lic{background:rgba(249,115,22,0.192);color:#FBA86E}
-.hp[data-tema="oscuro"] .tg.din{background:rgba(139,92,246,.22);color:#C4B5FD}
+.hp[data-tema="oscuro"] .lic{background:rgba(249,115,22,0.192);color:#FFC29A}
+.hp[data-tema="oscuro"] .tg.din{background:rgba(139,92,246,.22);color:#DAD0FE}
 .hp[data-tema="oscuro"] .emed{background:rgba(255,255,255,0.080)}
 .hp[data-tema="oscuro"] .emtb{background:rgba(255,255,255,0.096)}
 .hp[data-tema="oscuro"] .emtb b{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .emcv{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.2))}
 .hp[data-tema="oscuro"] .emasu{background:rgba(255,255,255,.12)}
 .hp[data-tema="oscuro"] .fp{background:rgba(255,255,255,0.100)}
 .hp[data-tema="oscuro"] .fp i{background:rgba(244,239,235,0.092)}
-.hp[data-tema="oscuro"] .fp+.fp::before{color:#B8AFA7}
+.hp[data-tema="oscuro"] .fp+.fp::before{color:#CDC5BE}
 .hp[data-tema="oscuro"] .wb{background:rgba(255,255,255,0.076)}
 .hp[data-tema="oscuro"] .wbtop{background:rgba(255,255,255,0.104)}
-.hp[data-tema="oscuro"] .wbru{color:#B8AFA7}
+.hp[data-tema="oscuro"] .wbru{color:#CDC5BE}
 .hp[data-tema="oscuro"] .wbpal{background:rgba(255,255,255,0.084)}
 .hp[data-tema="oscuro"] .wbel{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .wbel .ni{color:#FF8A5B}
+.hp[data-tema="oscuro"] .wbel .ni{color:#FFAD85}
 .hp[data-tema="oscuro"] .wbcv{background:repeating-linear-gradient(45deg,rgba(244,239,235,0.029) 0 calc(6*var(--u)),transparent calc(6*var(--u)) calc(12*var(--u)))}
 .hp[data-tema="oscuro"] .wbset{background:rgba(255,255,255,0.084)}
-.hp[data-tema="oscuro"] .wbst span{background:rgba(249,115,22,0.192);color:#FBA86E}
+.hp[data-tema="oscuro"] .wbst span{background:rgba(249,115,22,0.192);color:#FFC29A}
 .hp[data-tema="oscuro"] .wbset dd{background:rgba(255,255,255,.12)}
 .hp[data-tema="oscuro"] .ru-sw{background:linear-gradient(100deg,rgba(16,185,129,0.224),rgba(16,185,129,0.064))}
-.hp[data-tema="oscuro"] .ru-sw .ico{background:rgba(16,185,129,0.256);color:#6EE7B7}
-.hp[data-tema="oscuro"] .ru-sw .est{background:rgba(16,185,129,0.288);color:#6EE7B7}
+.hp[data-tema="oscuro"] .ru-sw .ico{background:rgba(16,185,129,0.256);color:#8CF0C8}
+.hp[data-tema="oscuro"] .ru-sw .est{background:rgba(16,185,129,0.288);color:#8CF0C8}
 .hp[data-tema="oscuro"] .ru-it.on{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .rb-ok{background:rgba(14,138,87,0.224);color:#6EE7B7}
-.hp[data-tema="oscuro"] .rb-pe{background:rgba(214,146,30,0.256);color:#FCD34D}
+.hp[data-tema="oscuro"] .rb-ok{background:rgba(14,138,87,0.224);color:#8CF0C8}
+.hp[data-tema="oscuro"] .rb-pe{background:rgba(214,146,30,0.256);color:#FDE08A}
 .hp[data-tema="oscuro"] .rp{background:rgba(255,255,255,0.096)}
-.hp[data-tema="oscuro"] .rp .ni{color:#FF8A5B}
-.hp[data-tema="oscuro"] .rp.bot{background:rgba(139,92,246,.22);color:#C4B5FD}
-.hp[data-tema="oscuro"] .rp.bot .ni{color:#C4B5FD}
-.hp[data-tema="oscuro"] .rsec h4{color:#FF9A6B}
-.hp[data-tema="oscuro"] .rtag{background:rgba(240,83,30,0.208);color:#FF8A5B}
+.hp[data-tema="oscuro"] .rp .ni{color:#FFAD85}
+.hp[data-tema="oscuro"] .rp.bot{background:rgba(139,92,246,.22);color:#DAD0FE}
+.hp[data-tema="oscuro"] .rp.bot .ni{color:#DAD0FE}
+.hp[data-tema="oscuro"] .rsec h4{color:#FFB48E}
+.hp[data-tema="oscuro"] .rtag{background:rgba(240,83,30,0.208);color:#FFAD85}
 .hp[data-tema="oscuro"] .rtar input:not(:checked)+.bx{background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 calc(1.5*var(--u)) rgba(244,239,235,.42)}
 .hp[data-tema="oscuro"] .rbar{background:rgba(244,239,235,0.115)}
 .hp[data-tema="oscuro"] .rmom{background:rgba(240,83,30,0.128)}
-.hp[data-tema="oscuro"] .rmom .ni{color:#FF8A5B}
-.hp[data-tema="oscuro"] .acs em{color:#F78FB3}
-.hp[data-tema="oscuro"] .ac-done{color:#6EE7B7;background:rgba(14,138,87,0.192)}
-.hp[data-tema="oscuro"] .ac-mid{color:#FF8A5B;background:rgba(240,83,30,0.192)}
-.hp[data-tema="oscuro"] .ac-new{color:#93C5FD;background:rgba(59,130,246,.20)}
-.hp[data-tema="oscuro"] .ac-bor{color:#FCD34D;background:rgba(214,146,30,0.224)}
+.hp[data-tema="oscuro"] .rmom .ni{color:#FFAD85}
+.hp[data-tema="oscuro"] .acs em{color:#FAB3CD}
+.hp[data-tema="oscuro"] .ac-done{color:#8CF0C8;background:rgba(14,138,87,0.192)}
+.hp[data-tema="oscuro"] .ac-mid{color:#FFAD85;background:rgba(240,83,30,0.192)}
+.hp[data-tema="oscuro"] .ac-new{color:#B5D7FE;background:rgba(59,130,246,.20)}
+.hp[data-tema="oscuro"] .ac-bor{color:#FDE08A;background:rgba(214,146,30,0.224)}
 .hp[data-tema="oscuro"] .acpr{background:rgba(244,239,235,.14)}
-.hp[data-tema="oscuro"] .acrk .n{background:rgba(240,83,30,0.208);color:#FF8A5B}
+.hp[data-tema="oscuro"] .acrk .n{background:rgba(240,83,30,0.208);color:#FFAD85}
 .hp[data-tema="oscuro"] .lica{background:rgba(255,255,255,0.100)}
-.hp[data-tema="oscuro"] .lpill{background:rgba(240,83,30,0.192);color:#FF8A5B}
+.hp[data-tema="oscuro"] .lpill{background:rgba(240,83,30,0.192);color:#FFAD85}
 .hp[data-tema="oscuro"] .lpill.gr{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .lbusq{background:rgba(255,255,255,0.088)}
-.hp[data-tema="oscuro"] .ltg{background:rgba(249,115,22,0.160);color:#FBA86E}
-.hp[data-tema="oscuro"] .lkpi.hot b{color:#FF8A9A}
+.hp[data-tema="oscuro"] .ltg{background:rgba(249,115,22,0.160);color:#FFC29A}
+.hp[data-tema="oscuro"] .lkpi.hot b{color:#FFAAB5}
 .hp[data-tema="oscuro"] .lcard.on{background:rgba(255,255,255,.12)}
 .hp[data-tema="oscuro"] .ring{background:conic-gradient(#F0531E calc(var(--p)*1%),rgba(240,83,30,0.224) 0)}
 .hp[data-tema="oscuro"] .ring b{background:#1D1A18}
-.hp[data-tema="oscuro"] .ring.ia b{color:#FF8A5B}
-.hp[data-tema="oscuro"] .ld{background:rgba(214,146,30,0.288);color:#FCD34D}
-.hp[data-tema="oscuro"] .ltag{background:rgba(240,83,30,0.160);color:#FF8A5B}
-.hp[data-tema="oscuro"] .lreq .ob{background:rgba(225,29,99,0.160);color:#F9A8D4}
+.hp[data-tema="oscuro"] .ring.ia b{color:#FFAD85}
+.hp[data-tema="oscuro"] .ld{background:rgba(214,146,30,0.288);color:#FDE08A}
+.hp[data-tema="oscuro"] .ltag{background:rgba(240,83,30,0.160);color:#FFAD85}
+.hp[data-tema="oscuro"] .lreq .ob{background:rgba(225,29,99,0.160);color:#FBC4E2}
 .hp[data-tema="oscuro"] .lreq .op{background:rgba(244,239,235,0.069)}
 .hp[data-tema="oscuro"] .ldoc{background:rgba(255,255,255,.12)}
-.hp[data-tema="oscuro"] .ldoc em{color:#F78FB3}
-.hp[data-tema="oscuro"] .ldoc .ni{color:#FF8A5B}
+.hp[data-tema="oscuro"] .ldoc em{color:#FAB3CD}
+.hp[data-tema="oscuro"] .ldoc .ni{color:#FFAD85}
 .hp[data-tema="oscuro"] .rdc{background:rgba(255,255,255,0.100)}
 .hp[data-tema="oscuro"] .rdia{border:calc(1.5*var(--u)) dashed rgba(240,83,30,0.400);background:rgba(240,83,30,0.080)}
-.hp[data-tema="oscuro"] .rdia b .ni{color:#FF8A5B}
-.hp[data-tema="oscuro"] .rdt td small{color:#B8AFA7}
+.hp[data-tema="oscuro"] .rdia b .ni{color:#FFAD85}
+.hp[data-tema="oscuro"] .rdt td small{color:#CDC5BE}
 .hp[data-tema="oscuro"] .rdp{background:rgba(244,239,235,0.069)}
-.hp[data-tema="oscuro"] .rdp.on{background:rgba(240,83,30,0.192);color:#FF8A5B}
-.hp[data-tema="oscuro"] .rds.on{color:#6EE7B7}
+.hp[data-tema="oscuro"] .rdp.on{background:rgba(240,83,30,0.192);color:#FFAD85}
+.hp[data-tema="oscuro"] .rds.on{color:#8CF0C8}
 .hp[data-tema="oscuro"] .rdlb i{background:rgba(244,239,235,0.069)}
-.hp[data-tema="oscuro"] .rdsem{color:#FF9A6B}
+.hp[data-tema="oscuro"] .rdsem{color:#FFB48E}
 .hp[data-tema="oscuro"] .rdcon{background:linear-gradient(120deg,rgba(240,83,30,0.192),rgba(225,29,99,0.128))}
-.hp[data-tema="oscuro"] .rdcon small,.hp[data-tema="oscuro"] .rdhk{color:#FF8A5B}
-.hp[data-tema="oscuro"] .rdhk{color:#FF9A6B}
-.hp[data-tema="oscuro"] .rdcc span:first-child{color:#FF8A5B}
+.hp[data-tema="oscuro"] .rdcon small,.hp[data-tema="oscuro"] .rdhk{color:#FFAD85}
+.hp[data-tema="oscuro"] .rdhk{color:#FFB48E}
+.hp[data-tema="oscuro"] .rdcc span:first-child{color:#FFAD85}
+.hp[data-tema="oscuro"] .kpi small.k-am{color:#FDE08A}.hp[data-tema="oscuro"] .kpi small.k-ve{color:#8CF0C8}.hp[data-tema="oscuro"] .kpi small.k-vi{color:#DAD0FE}
+.hp[data-tema="oscuro"] .btn-s{background:rgba(255,255,255,.07);color:var(--ink)}
+.hp[data-tema="oscuro"] .wbpal,.hp[data-tema="oscuro"] .wbset{background:transparent}.hp[data-tema="oscuro"] .wbtop{background:rgba(255,255,255,.04)}.hp[data-tema="oscuro"] .wbel{background:rgba(255,255,255,.06)}
+.hp[data-tema="oscuro"] .emtb{background:rgba(255,255,255,.04)}.hp[data-tema="oscuro"] .srch{background:rgba(255,255,255,.06)}.hp[data-tema="oscuro"] .wbpal .srch,.hp[data-tema="oscuro"] .rdia .srch{color:var(--ink2)}
+.hp[data-tema="oscuro"] .wn{background:rgba(255,255,255,.09)}.hp[data-tema="oscuro"] .wtop{background:rgba(255,255,255,.05)}
+.hp[data-tema="oscuro"] .btn-s.ok{background:#0B7A4D;color:#fff}.hp[data-tema="oscuro"] .row .av{background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),var(--cc,#999);color:#fff}.hp[data-tema="oscuro"] .kt i{background:rgba(249,115,22,.12);color:#FFD6BA}.hp[data-tema="oscuro"] .ltag{color:#FFC7AA}.hp[data-tema="oscuro"] .rseg .tg.on,.hp[data-tema="oscuro"] .pills>span.on{background:#F4EFEB;color:#1D1A18}
 }
 /* /TEMA-OSCURO v1 */
