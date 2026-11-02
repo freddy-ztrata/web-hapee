@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-11-01-agenda-real-2350
+ARG CACHE_BUST=2026-11-01-agenda-nueva
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
