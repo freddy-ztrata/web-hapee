@@ -78,7 +78,7 @@ CORRECTAS = {
     "panamá", "andrés", "tomás", "mié", "revés",
     "josé",  # nombre propio (José Güerere, equipo de Hapee)
     # Cuentas de ejemplo del nuevo home (propuesta-home-v3k9): nombres, comuna y producto
-    "nicolás", "machalí", "sofá", "sofás",
+    "nicolás", "machalí", "sofá", "sofás", "inés",
     # Propuestas por cliente (propuestas/): idiomas que enseña Idiomas del Mundo y «mamá» (apoderada en un caso)
     "japonés", "francés", "mamá",
     # Pronombres, interrogativos y monosilabos

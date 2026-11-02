@@ -359,6 +359,14 @@
     [].forEach.call(document.querySelectorAll('[data-rubro-marca]'), function (el) { el.textContent = R.marca; });
     [].forEach.call(document.querySelectorAll('[data-rubro-chip]'), function (el) { el.textContent = R.chip; });
     [].forEach.call(document.querySelectorAll('[data-rubro-set]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-rubro-set') === r ? 'true' : 'false'); });
+    var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    [].forEach.call(document.querySelectorAll('[data-dolores] ol'), function (ol) {
+      if (R.dolores) ol.innerHTML = R.dolores.map(function (d) { return '<li><b>' + esc(d[0]) + '</b><span>Con Hapee: ' + esc(d[1]) + '</span></li>'; }).join('');
+    });
+    var act = document.querySelector('.hn-rub [data-rubro-set="' + r + '"]');
+    if (act && act.scrollIntoView && act.parentNode.scrollWidth > act.parentNode.clientWidth) {
+      var p = act.parentNode; p.scrollTo({ left: act.offsetLeft - (p.clientWidth - act.offsetWidth) / 2, behavior: 'smooth' });
+    }
   }
   function cambia(r) {
     etiquetas(r);

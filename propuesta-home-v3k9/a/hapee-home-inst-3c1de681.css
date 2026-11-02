@@ -325,3 +325,20 @@ html.dark .pd-plan em{color:#FF7A33}
 .pd-pq p{margin:6px 0 0;padding-top:8px;border-top:1px solid var(--card-border);font-weight:700;color:var(--heading)}
 .pd-pq small{display:block;font:800 .7rem var(--fb);letter-spacing:.14em;text-transform:uppercase;color:#D44400}
 @media (min-width:860px){.pd-pq{grid-template-columns:repeat(3,1fr)}}
+
+/* 3 dolores del rubro (bajo la maqueta) */
+.hn-dol{max-width:1040px;margin:22px auto 0}
+.hn-dol-k{text-align:center;font:800 .74rem var(--fb);letter-spacing:.22em;text-transform:uppercase;color:#D44400;margin-bottom:12px}
+html.dark .hn-dol-k{color:#FF7A33}
+.hn-dol ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:10px;counter-reset:d}
+.hn-dol li{counter-increment:d;position:relative;background:var(--card-bg);border-radius:20px;padding:16px 18px 16px 58px;box-shadow:0 0 0 1px var(--card-border),var(--shadow-sm);display:flex;flex-direction:column;gap:4px;animation:hnDol .4s both}
+.hn-dol li::before{content:counter(d,decimal-leading-zero);position:absolute;left:16px;top:16px;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;
+  font:800 .74rem var(--fb);color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-alt))}
+.hn-dol b{color:var(--heading);line-height:1.3}
+.hn-dol span{color:var(--text);font-size:.9rem;line-height:1.5}
+@keyframes hnDol{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hn-dol li{animation:none}}
+@media (min-width:900px){.hn-dol ol{grid-template-columns:repeat(3,1fr)}}
+/* 9 rubros: en móvil, fila desplazable con fundido; en escritorio, en dos filas centradas */
+@media (max-width:759px){.hn-rub{scroll-snap-type:x proximity;-webkit-mask:linear-gradient(90deg,#000 85%,transparent);mask:linear-gradient(90deg,#000 85%,transparent);padding-right:28px}
+  .hn-rub button{scroll-snap-align:start}}
