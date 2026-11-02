@@ -256,7 +256,13 @@ main[data-hn="una-cuenta"] .hero h1{font-size:clamp(2.2rem,9.2vw,3.6rem)}
 .cs-res{font-weight:700;color:var(--heading);line-height:1.35}
 .cs-emp{font-size:.88rem;color:var(--text)}
 .cs-quien{font-size:.8rem;color:var(--text-2,#5F6675)}
-@media (min-width:900px){.cs-lista{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}}
+.cs-cita{margin:6px 0 4px;padding:0 0 0 12px;border-left:2px solid #FA5000;font-size:.9rem;line-height:1.5;color:var(--text)}
+/* videos 16:9 (02-11-2026): sin recorte, y en escritorio 2 columnas para que se vean grandes */
+.cs-con .cs-media{aspect-ratio:16/9}
+.cs-con .cs-media video{object-fit:contain;background:#000}
+.cs-lista:has(.cs-con){grid-auto-columns:min(88%,420px)}
+@media (min-width:900px){.cs-lista{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
+  .cs-lista:has(.cs-con){grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}}
 /* gracias y preparación */
 .pd-hero{padding:110px 0 60px;background:radial-gradient(55% 45% at 90% 0%,rgba(250,80,0,.06),transparent 70%)}
 .pd-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}

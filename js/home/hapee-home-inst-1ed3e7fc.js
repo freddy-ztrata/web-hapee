@@ -516,7 +516,8 @@
         : '<div class="cs-media cs-sin"><b class="cs-cifra">' + esc(c.cifra) + '</b><span class="cs-prox">Video próximamente</span></div>';
       return '<li class="cs-card' + (v ? ' cs-con' : '') + '"><article>' + media + '<div class="cs-txt">' +
         (v ? '<b class="cs-cifra cs-cifra-s">' + esc(c.cifra) + '</b>' : '') +
-        '<p class="cs-res">' + esc(c.resultado) + '</p><p class="cs-emp">' + esc(c.empresa) + '</p>' + (quien ? '<p class="cs-quien">' + quien + '</p>' : '') +
+        '<p class="cs-res">' + esc(c.resultado) + '</p>' + (c.cita ? '<blockquote class="cs-cita">«' + esc(c.cita) + '»</blockquote>' : '') +
+        '<p class="cs-emp">' + esc(c.empresa) + '</p>' + (quien ? '<p class="cs-quien">' + quien + '</p>' : '') +
         '</div></article></li>';
     }).join('');
     raiz.querySelector('.cs-lista').innerHTML = html;

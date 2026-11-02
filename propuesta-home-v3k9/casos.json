@@ -1,11 +1,51 @@
 {
-  "_como_usar": "ÚNICO archivo de datos de la prueba social con video. Se publica en hapee.ai/propuesta-home-v3k9/casos.json y la página lo lee al cargar (si falla, usa la copia incluida al construir). Para poner un video real: en el caso, completar «video» (URL del .mp4, idealmente 720p y menos de 15 MB, alojado en el sitio o en un CDN) y «poster» (imagen 16:9), y si corresponde «persona» y «cargo» con autorización. Para sumar un caso: copiar un objeto del arreglo «casos». Sin «video» la tarjeta se muestra con la cifra y la marca «Video próximamente». REGLA: solo casos reales y verificables; nunca inventar personas, cargos ni cifras. La plantilla vive en web-dna/_build/hapee-home/src/casos.json: build.py la copia SOLO si el archivo publicado no existe, así que lo que edites en el publicado no se pisa.",
-  "titulo": "Resultados de quienes ya trabajan con el grupo detrás de Hapee",
-  "nota": "Casos de Grupo Digitals, el grupo que creó Hapee (cifras del documento comercial de Hapee).",
+  "_como_usar": "ÚNICO archivo de datos de la prueba social con video. Se publica en hapee.ai/propuesta-home-v3k9/casos.json y la página lo lee al cargar (si falla, usa la copia incluida al construir). Para poner un video real: en el caso, completar «video» (URL del .mp4, idealmente 720p y menos de 15 MB, alojado en el sitio o en un CDN) y «poster» (imagen 16:9), y si corresponde «persona» y «cargo» con autorización. Para sumar un caso: copiar un objeto del arreglo «casos». Sin «video» la tarjeta se muestra con la cifra y la marca «Video próximamente». REGLA: solo casos reales y verificables; nunca inventar personas, cargos ni cifras. La plantilla vive en web-dna/_build/hapee-home/src/casos.json: build.py la copia SOLO si el archivo publicado no existe, así que lo que edites en el publicado no se pisa. Campo opcional «cita»: frase textual del video, entre comillas en la tarjeta (solo palabras dichas en el video).",
+  "titulo": "Empresas que ya venden con Hapee",
+  "nota": "Clientes reales de Hapee, en sus propias palabras.",
   "casos": [
-    {"empresa": "Develon · Hyundai", "cifra": "+40%", "resultado": "Crecimiento comercial en 2 años", "persona": "", "cargo": "", "video": "", "poster": "", "fuente": "Grupo Digitals"},
-    {"empresa": "Sacyr", "cifra": "+260%", "resultado": "Engagement y seguidores en 6 meses", "persona": "", "cargo": "", "video": "", "poster": "", "fuente": "Grupo Digitals"},
-    {"empresa": "Heli Forklift", "cifra": "+20%", "resultado": "Crecimiento mensual sostenido en ventas", "persona": "", "cargo": "", "video": "", "poster": "", "fuente": "Grupo Digitals"},
-    {"empresa": "Mundo Med", "cifra": "+30%", "resultado": "Crecimiento anual con full funnel 360°", "persona": "", "cargo": "", "video": "", "poster": "", "fuente": "Grupo Digitals"}
+    {
+      "empresa": "Fiebre de Cumbia · La Fonda",
+      "cifra": "Sold out",
+      "resultado": "Los agentes de IA de Hapee atendieron 24/7 el DM y el WhatsApp del festival.",
+      "cita": "",
+      "persona": "",
+      "cargo": "",
+      "video": "/img/casos/caso-fiebre-de-cumbia-df006034.mp4",
+      "poster": "/img/casos/caso-fiebre-de-cumbia-poster-0add044b.jpg",
+      "fuente": "Video testimonial de Hapee (02-11-2026)"
+    },
+    {
+      "empresa": "La Oferta",
+      "cifra": "Al instante",
+      "resultado": "Respuestas claras, inmediatas y automáticas a sus clientes, con IA.",
+      "cita": "Hapee es un buen camino para nosotros.",
+      "persona": "Óscar Retamal",
+      "cargo": "Gerente Comercial · La Oferta",
+      "video": "/img/casos/caso-la-oferta-edaf6cca.mp4",
+      "poster": "/img/casos/caso-la-oferta-poster-b5cac7e3.jpg",
+      "fuente": "Video testimonial de Hapee (02-11-2026)"
+    },
+    {
+      "empresa": "Acma",
+      "cifra": "Todo en un lugar",
+      "resultado": "Contenido, aprobaciones y prospección en LinkedIn centralizados en Hapee.",
+      "cita": "Con Hapee tengo todo en un solo lugar.",
+      "persona": "Bárbara Albornoz",
+      "cargo": "Jefa de Marketing · Acma",
+      "video": "/img/casos/caso-acma-8c9ea939.mp4",
+      "poster": "/img/casos/caso-acma-poster-33d37bbe.jpg",
+      "fuente": "Video testimonial de Hapee (02-11-2026)"
+    },
+    {
+      "empresa": "HELI Forklift Chile",
+      "cifra": "24/7",
+      "resultado": "Su información integrada al CRM de Hapee y contacto 24/7 con sus clientes.",
+      "cita": "Ha sido bastante fácil poder integrar nuestra información con el CRM.",
+      "persona": "Alain",
+      "cargo": "HELI Forklift Chile",
+      "video": "/img/casos/caso-heli-2aea3d3b.mp4",
+      "poster": "/img/casos/caso-heli-poster-ce33ba47.jpg",
+      "fuente": "Video testimonial de Hapee (02-11-2026)"
+    }
   ]
 }
