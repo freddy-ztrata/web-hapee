@@ -743,6 +743,30 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       <span class="count">06 ARTIGOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
+      <article class="art art-1" data-art="techai26" data-pub="2026-11-04" data-cat="eventos">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/tech-ai-summit-2026-achiag-b2bf1ceb.webp" alt="">
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · Tech AI Summit</div>
+          <h4>O futuro é agêntico: assim vivemos o Tech AI Summit 2026</h4>
+          <p class="art-exc">Estande o dia todo, podcast e workshop Hapee + ACHIAG e o lançamento oficial da ACHIAG, a associação de IA agêntica presidida pelo nosso CEO, Sebastián Figueroa.</p>
+          <div class="art-meta">4 nov 2026 · Eventos · 4 min</div>
+        </div>
+      </article>
+
+      <article class="art art-2" data-art="etm26" data-pub="2026-11-04" data-cat="eventos">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/etm-day-2026-agentic-night-9c86db27.webp" alt="">
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Eventos · EtM Day</div>
+          <h4>Nos vemos no EtM Day: estande da Hapee e Agentic Night</h4>
+          <p class="art-exc">Estande da Hapee de quinta-feira, 19, a sábado, 21 de novembro e, na sexta-feira, 20, a Agentic Night: o after da Hapee x ACHIAG no Vinolia, em Vitacura. Vagas limitadas.</p>
+          <div class="art-meta">4 nov 2026 · Eventos · 3 min</div>
+        </div>
+      </article>
+
       <article class="art art-via" data-art="via" data-pub="2026-08-23" data-cat="eventos">
         <div class="art-art theme-via">
           <span class="glyph tl">Nº 12 / Notícias</span>
@@ -1195,7 +1219,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   })();
 
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={via:'/pt/blog/via-by-hapee-metro.html',radar:'/pt/blog/radar-de-competencia.html',notetaker:'/pt/blog/reuniones-ia-notetaker.html',licitaciones:'/pt/blog/licitaciones-mercado-publico.html',opus5:'/pt/blog/claude-opus-5.html',expo:'/pt/blog/expo-compra-publica-podcast.html',mcp:'/pt/blog/mcp-claude.html',voz:'/pt/blog/voz-elevenlabs.html',aws:'/pt/blog/aws-chile.html',aperol:'/pt/blog/hapee-aperol-lanzamiento.html',gpt:'/pt/blog/gpt-5-5.html',rrss:'/pt/blog/automatiza-rrss.html'};
+  const POST_URLS={techai26:'/pt/blog/tech-ai-summit-2026-achiag.html',etm26:'/pt/blog/etm-day-2026-agentic-night.html',via:'/pt/blog/via-by-hapee-metro.html',radar:'/pt/blog/radar-de-competencia.html',notetaker:'/pt/blog/reuniones-ia-notetaker.html',licitaciones:'/pt/blog/licitaciones-mercado-publico.html',opus5:'/pt/blog/claude-opus-5.html',expo:'/pt/blog/expo-compra-publica-podcast.html',mcp:'/pt/blog/mcp-claude.html',voz:'/pt/blog/voz-elevenlabs.html',aws:'/pt/blog/aws-chile.html',aperol:'/pt/blog/hapee-aperol-lanzamiento.html',gpt:'/pt/blog/gpt-5-5.html',rrss:'/pt/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
