@@ -287,7 +287,7 @@
         }).join('') + '</div></div>' +
         '<div class="sc-card rank" style="position:relative;height:420px"><h6>🏆 Ranking del equipo</h6><div id="rk"></div></div></div></div>',
       run: function () {
-        var people = [['Rocío Segura', 465], ['Camila San Martín', 450], ['José Güerere', 405], ['Sofía Vidal', 395], ['Leidy Salina', 390], ['Jaime León', 375], ['Matías Laporta', 360], ['Giorgina Zanotti', 345], ['Claudia Novoa', 315], ['Sebastián Figueroa', 300]];
+        var people = [['Rocío Segura', 465], ['Camila San Martín', 450], ['Sofía Vidal', 395], ['Leidy Salina', 390], ['Jaime León', 375], ['Matías Laporta', 360], ['Giorgina Zanotti', 345], ['Claudia Novoa', 315], ['Sebastián Figueroa', 300]];
         var rk = R.getElementById('rk');
         people.forEach(function (p, i) { rk.appendChild(h('<div class="rk" data-i="' + i + '" style="top:' + (40 + i * 34) + 'px"><em>' + (i + 1) + '</em>' + p[0] + '<span>' + p[1] + ' pts</span></div>')); });
         reveal($$('.s-aca .co'), 200, 90);
