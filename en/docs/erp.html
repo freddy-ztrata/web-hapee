@@ -96,7 +96,7 @@
     <div class="dv-tabla-wrap">
       <table>
         <tr><th>What you want to do</th><th>Path</th><th>Who does it</th></tr>
-        <tr><td>Load thousands of customers and products</td><td><strong>API + batch</strong></td><td>Your technical team</td></tr>
+        <tr><td>Load thousands of companies, contacts and products</td><td><strong>The API's three batch routes</strong></td><td>Your technical team</td></tr>
         <tr><td>“Deal won → notify the ERP”</td><td><strong>Workflow</strong></td><td>Your sales team, no code</td></tr>
         <tr><td>“The ERP says it was paid”</td><td><strong>Webhook trigger</strong></td><td>One HTTP call, no credential</td></tr>
         <tr><td>Incremental sync without losing anything</td><td><strong>API + webhooks</strong></td><td>Your technical team</td></tr>
@@ -142,7 +142,7 @@
         <tr><td>Queryable delivery log</td><td>In the workflow log</td><td><strong>Yes, with manual redelivery</strong></td></tr>
         <tr><td>A 4xx from your side</td><td>Carries on as if nothing happened</td><td><strong>Retried and logged</strong></td></tr>
         <tr><td>Signature</td><td>Optional secret you configure</td><td><strong>HMAC with timestamp</strong></td></tr>
-        <tr><td>Bulk load</td><td>No</td><td><strong>Up to 100 per call</strong></td></tr>
+        <tr><td>Bulk load</td><td>No</td><td><strong>Companies and contacts: 100. Products: 500. Everything else, one record at a time</strong></td></tr>
         <tr><td>Who sets it up</td><td><strong>The sales team</strong></td><td>The technical team</td></tr>
       </table>
     </div>
@@ -172,7 +172,24 @@
 
     <h2 id="flujo-a">Flow A — Initial load</h2>
 
-    <p>One time only, when connecting. Use <code>POST /{resource}/batch</code> with up to <strong>100 items</strong> per call. The batch <strong>is not aborted</strong> by a bad item: it takes the ones it can and tells you which failed.</p>
+    <p>One time only, when connecting. <strong>There is no <code>POST /{resource}/batch</code>.</strong> The OpenAPI 3.1 contract published at <a href="https://beta.hapee.ai/api/v1/openapi.json">beta.hapee.ai/api/v1/openapi.json</a> has a batch route for exactly three resources, and they do not share a shape or a limit:</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Route</th><th>Limit</th><th>Each item</th><th>200 response</th></tr>
+        <tr><td><code>POST /companies/batch</code></td><td><strong>1 to 100</strong></td><td>Company upsert</td><td><code>LoteResultado</code> schema</td></tr>
+        <tr><td><code>POST /contacts/batch</code></td><td><strong>1 to 100</strong></td><td>Contact upsert</td><td><code>LoteResultado</code> schema</td></tr>
+        <tr><td><code>POST /products/batch</code></td><td><strong>up to 500</strong></td><td>Upsert by <code>sku</code></td><td>No published schema</td></tr>
+      </table>
+    </div>
+
+    <p>Product categories, deals, quotes, custom-object records and every other resource <strong>are loaded one record at a time</strong>, with that resource's <code>POST</code> or <code>upsert</code>. There is no <code>POST /product-categories/batch</code>, no <code>POST /deals/batch</code>, and no batch path built from the resource name.</p>
+
+    <h3>Companies and contacts</h3>
+
+    <p>The body is <code>{ "items": [ … ] }</code>. <code>items</code> is required (<code>minItems: 1</code>, <code>maxItems: 100</code>). Each element is the same body as <code>POST /companies/upsert</code> or <code>POST /contacts/upsert</code>. A field that schema does not recognize is ignored. With a credential already scoped to one subaccount, do not send <code>cliente_id</code>: if it is present and does not match, the API ignores it or returns 404. It is required only for an agency credential, and then it belongs on the batch: each item's <code>cliente_id</code> is replaced by the batch's.</p>
+
+    <p>A bad item <strong>does not abort</strong> the batch. The call still responds <strong>200</strong>. The failed item carries <code>error</code> with the <code>detail</code> the standalone upsert would have returned, and <code>results[].status</code> is that upsert's status code. <code>created: false</code> means it already existed and was updated. Results come back in the same order as <code>items</code>.</p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>curl -X POST https://beta.hapee.ai/api/v1/companies/batch \
@@ -201,15 +218,62 @@
 }</code></pre>
     </div>
 
+    <p><code>POST /contacts/batch</code> uses the same envelope and the same response. What changes is each item: contact fields (<code>external_id</code>, <code>email</code>, <code>first_name</code>, <code>phone</code>, <code>company_id</code>, …). Contact matching is <code>external_id</code>, then <code>rut</code>, then <code>email</code>, then <code>phone</code>. Company matching is <code>external_id</code>, then <code>rut</code>, then <code>email</code>: a phone number does not identify a company. <code>match_by</code> locks a single criterion; if nothing matches, the record is created and matching does not fall through.</p>
+
+    <p>A RUT that fails validation does not fail the call. It shows up inside <code>results</code> like this:</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "index": 1, "ok": false, "status": 422,
+  "error": {
+    "code": "validation_error",
+    "message": "El RUT no es válido.",
+    "details": [{ "field": "rut", "issue": "invalid_check_digit" }]
+  }
+}</code></pre>
+    </div>
+
+    <h3>Errors that reject the whole call</h3>
+
+    <p>On <code>POST /companies/batch</code> and <code>POST /contacts/batch</code> the contract declares these statuses for the call, before any item is processed:</p>
+
+    <ul>
+      <li><code>401</code> — credential missing, invalid or expired.</li>
+      <li><code>403</code> — the credential cannot make this call: permissions, IP or sandbox.</li>
+      <li><code>409</code> — the <code>Idempotency-Key</code> was reused with a different body, or the same key is still in progress. The key is optional, up to 255 characters, with a 24-hour window. The same key and the same body return the original response with <code>Idempotent-Replay: true</code>.</li>
+      <li><code>429</code> — too many calls. Wait for what <code>Retry-After</code> says.</li>
+    </ul>
+
+    <p>Outside 1 to 100 items the body does not match the schema and the batch does not run. An invalid item does not use these statuses: it stays in <code>results[].error</code> and the HTTP status stays 200.</p>
+
+    <h3>Products</h3>
+
+    <p><code>POST /products/batch</code> creates or updates up to <strong>500</strong> products. It matches on <code>sku</code>, required on every item: loading the same SKU again updates instead of duplicating. Each item carries <code>sku</code> and <code>nombre</code>, and may carry <code>descripcion_corta</code>, <code>descripcion_html</code>, <code>imagen_url</code>, <code>unidad</code>, <code>tipo</code>, <code>estado</code> (<code>activo</code> or <code>inactivo</code>), <code>categoria</code> (the name; it is created if it does not exist), <code>precios</code> (<code>{"CLP": {"precio", "precio_min", "costo"}, "USD": {…}}</code>) and <code>campos_custom</code> (key and value; the property is created if it does not exist).</p>
+
+    <p>Fields of <strong>one</strong> item, as the operation text names them. OpenAPI does not publish a request-body schema or a 200 response schema: do not reuse <code>job_id</code> or <code>results[]</code> from companies and contacts.</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "sku": "AND-100",
+  "nombre": "Filtro de aire",
+  "estado": "activo",
+  "categoria": "Repuestos",
+  "precios": { "CLP": { "precio": 12990, "precio_min": 11990, "costo": 8000 } },
+  "campos_custom": { "bodega": "SCL-01" }
+}</code></pre>
+    </div>
+
+    <p>The call-level errors this route does declare are <code>401</code>, <code>403</code>, <code>409</code> and <code>429</code>, with the same meaning. Categories you want to create on their own go one at a time with <code>POST /product-categories</code>.</p>
+
     <h3>Three things that will save you a headache</h3>
 
     <ul>
-      <li><strong>Always send <code>external_id</code></strong> with your ERP's id. It is what makes the load <strong>repeatable without duplicating</strong>: the second run updates instead of creating (<code>"created": false</code>).</li>
-      <li><strong>The <code>job_id</code> lets you re-read the result</strong> with <code>GET /jobs/{id}</code> if you lose the response. A 100-item <code>POST</code> whose result is lost to a network drop can't be blindly repeated; with the job, you look it up.</li>
-      <li><strong>Load companies before contacts</strong>, so you can link them.</li>
+      <li><strong>On companies and contacts, always send <code>external_id</code></strong> with your ERP's id. It is what makes the load <strong>repeatable without duplicating</strong>: the second run updates instead of creating (<code>"created": false</code>). On products the key is <code>sku</code>, not <code>external_id</code>.</li>
+      <li><strong>The <code>job_id</code> on <code>LoteResultado</code> lets you re-read the result</strong> with <code>GET /jobs/{job_id}</code> if you lose the response of a company or contact batch. That route returns the job state and, once it has finished, the per-item result. The <code>POST</code> already includes that result in the 200: the job is the stored copy. <code>GET /jobs</code> lists jobs (<code>status</code> and <code>limit</code>, default 50). The <code>POST /products/batch</code> contract does not publish <code>job_id</code>: do not re-read that call with <code>GET /jobs/{job_id}</code>.</li>
+      <li><strong>Load companies before contacts</strong>, so you can link them with <code>company_id</code> (Hapee's id, not your ERP's).</li>
     </ul>
 
-    <p>Recommended order: <code>companies</code> → <code>product-categories</code> and <code>products</code> → <code>contacts</code>.</p>
+    <p>Recommended order: <code>POST /companies/batch</code>, then one-off categories with <code>POST /product-categories</code> and the catalog with <code>POST /products/batch</code>, and finally <code>POST /contacts/batch</code>.</p>
 
     <h2 id="flujo-b">Flow B — Incremental sync</h2>
 
@@ -417,8 +481,8 @@ curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
     <ul>
       <li><code>GET /me</code> responds and shows the correct subaccount</li>
       <li>The initial load ran <strong>twice</strong> in the sandbox and duplicated nothing</li>
-      <li>Every record has an <code>external_id</code> with your ERP's id</li>
-      <li>The RUTs pass validation (no <code>422</code> in the batch)</li>
+      <li>Companies and contacts have an <code>external_id</code> with your ERP's id; every product has a <code>sku</code></li>
+      <li>RUTs that fail validation land in <code>results[].error</code> of the company or contact batch (the call still responds 200). Fix them before production</li>
       <li>The webhook endpoint <strong>verifies the signature</strong> and rejects an invalid one</li>
       <li>The receiver <strong>deduplicates by the event <code>id</code></strong> (order is not guaranteed and a delivery can repeat)</li>
       <li>Every write sends <code>Idempotency-Key</code></li>
@@ -463,7 +527,7 @@ curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
 
 <footer class="dv-footer">
   <p>Hapee — WM Digital SpA · <a href="/privacy-policy.html">Privacy policy</a> · <a href="/terms.html">Terms</a></p>
-  <p>API v1 · Documentation last updated September 10, 2026</p>
+  <p>API v1 · Documentation last updated November 11, 2026</p>
 </footer>
 
 <script src="/docs/docs.js" defer></script>

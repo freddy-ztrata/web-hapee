@@ -690,7 +690,7 @@ endpoint = r.<span class="t-f">json</span>()  <span class="t-c"># guarda el secr
     ['Cuánto dura la conexión MCP','Conector MCP','/docs/mcp#duracion','1 hora 30 dias 90 dias renovacion token revocar desconectar'],
     ['Detalle técnico OAuth 2.1','Conector MCP','/docs/mcp#tecnico','pkce s256 rfc 9728 8414 7591 7009 8707 streamable http'],
     ['Referencia de la API (OpenAPI 3.1)','Referencia','/docs/referencia','openapi postman insomnia endpoints parametros'],
-    ['Lote: POST /{recurso}/batch','Integrar un ERP','/docs/erp','batch lote 100 items job_id jobs']
+    ['Lote: POST /companies/batch, /contacts/batch y /products/batch','Integrar un ERP','/docs/erp','batch lote 100 items 500 sku job_id jobs empresas contactos productos']
   ];
   function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
   function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
