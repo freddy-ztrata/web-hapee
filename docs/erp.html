@@ -96,7 +96,7 @@
     <div class="dv-tabla-wrap">
       <table>
         <tr><th>Qué quieres hacer</th><th>Camino</th><th>Quién lo hace</th></tr>
-        <tr><td>Cargar miles de clientes y productos</td><td><strong>API + lote</strong></td><td>Tu equipo técnico</td></tr>
+        <tr><td>Cargar miles de empresas, contactos y productos</td><td><strong>Los tres lotes de la API</strong></td><td>Tu equipo técnico</td></tr>
         <tr><td>«Negocio ganado → avisa al ERP»</td><td><strong>Workflow</strong></td><td>Tu equipo comercial, sin código</td></tr>
         <tr><td>«El ERP avisa que se pagó»</td><td><strong>Trigger de webhook</strong></td><td>Una llamada HTTP, sin credencial</td></tr>
         <tr><td>Sync incremental sin perder nada</td><td><strong>API + webhooks</strong></td><td>Tu equipo técnico</td></tr>
@@ -142,7 +142,7 @@
         <tr><td>Registro de entregas consultable</td><td>En el registro del workflow</td><td><strong>Sí, con reenvío manual</strong></td></tr>
         <tr><td>Un 4xx tuyo</td><td>Sigue como si nada</td><td><strong>Se reintenta y queda registrado</strong></td></tr>
         <tr><td>Firma</td><td>Secreto opcional que configuras</td><td><strong>HMAC con marca de tiempo</strong></td></tr>
-        <tr><td>Carga masiva</td><td>No</td><td><strong>Hasta 100 por llamada</strong></td></tr>
+        <tr><td>Carga masiva</td><td>No</td><td><strong>Empresas y contactos: 100. Productos: 500. Lo demás, de a uno</strong></td></tr>
         <tr><td>Quién lo configura</td><td><strong>El equipo comercial</strong></td><td>El equipo técnico</td></tr>
       </table>
     </div>
@@ -172,7 +172,24 @@
 
     <h2 id="flujo-a">Flujo A — Carga inicial</h2>
 
-    <p>Una sola vez, al conectar. Usa <code>POST /{recurso}/batch</code> con hasta <strong>100 items</strong> por llamada. El lote <strong>no se aborta</strong> ante un item malo: entran los que puede y te dice cuáles fallaron.</p>
+    <p>Una sola vez, al conectar. <strong>No existe <code>POST /{recurso}/batch</code>.</strong> El contrato OpenAPI 3.1 publicado en <a href="https://beta.hapee.ai/api/v1/openapi.json">beta.hapee.ai/api/v1/openapi.json</a> tiene lote solo en tres rutas, y no comparten forma ni tope:</p>
+
+    <div class="dv-tabla-wrap">
+      <table>
+        <tr><th>Ruta</th><th>Tope</th><th>Cada item</th><th>Respuesta 200</th></tr>
+        <tr><td><code>POST /companies/batch</code></td><td><strong>1 a 100</strong></td><td>Upsert de empresa</td><td>Esquema <code>LoteResultado</code></td></tr>
+        <tr><td><code>POST /contacts/batch</code></td><td><strong>1 a 100</strong></td><td>Upsert de contacto</td><td>Esquema <code>LoteResultado</code></td></tr>
+        <tr><td><code>POST /products/batch</code></td><td><strong>hasta 500</strong></td><td>Upsert por <code>sku</code></td><td>Sin esquema publicado</td></tr>
+      </table>
+    </div>
+
+    <p>Categorías de producto, negocios, cotizaciones, registros de objetos custom y el resto de los recursos <strong>se cargan de a uno</strong>, con su <code>POST</code> o <code>upsert</code>. No hay <code>POST /product-categories/batch</code>, <code>POST /deals/batch</code> ni un lote con el nombre del recurso.</p>
+
+    <h3>Empresas y contactos</h3>
+
+    <p>El cuerpo es <code>{ "items": [ … ] }</code>. <code>items</code> es obligatorio (<code>minItems: 1</code>, <code>maxItems: 100</code>). Cada elemento es el mismo cuerpo que <code>POST /companies/upsert</code> o <code>POST /contacts/upsert</code>. Un campo que ese esquema no reconoce se ignora. Con una credencial ya acotada a una subcuenta no mandes <code>cliente_id</code>: si viene y no coincide, la API lo ignora o responde 404. Solo es obligatorio con credencial de agencia, y en ese caso va en el lote: el <code>cliente_id</code> de cada item se reemplaza por el del lote.</p>
+
+    <p>Un item malo <strong>no aborta</strong> el lote. La llamada responde <strong>200</strong> igual. El item que falló trae <code>error</code> con el <code>detail</code> que habría devuelto el upsert suelto, y <code>results[].status</code> es el código de ese upsert. <code>created: false</code> significa que ya existía y se actualizó. Los resultados vienen en el mismo orden que <code>items</code>.</p>
 
     <div class="dv-code" data-lang="bash">
 <pre><code>curl -X POST https://beta.hapee.ai/api/v1/companies/batch \
@@ -201,15 +218,62 @@
 }</code></pre>
     </div>
 
+    <p><code>POST /contacts/batch</code> usa el mismo sobre y la misma respuesta. Cambia el cuerpo de cada item: campos de contacto (<code>external_id</code>, <code>email</code>, <code>first_name</code>, <code>phone</code>, <code>company_id</code>, …). El emparejamiento de contactos es <code>external_id</code>, luego <code>rut</code>, luego <code>email</code>, luego <code>phone</code>. El de empresas es <code>external_id</code>, luego <code>rut</code>, luego <code>email</code>: el teléfono no identifica una empresa. <code>match_by</code> deja un solo criterio; si no hay coincidencia, se crea y no se cae al siguiente.</p>
+
+    <p>Un RUT que no valida no tumba la llamada. Queda así dentro de <code>results</code>:</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "index": 1, "ok": false, "status": 422,
+  "error": {
+    "code": "validation_error",
+    "message": "El RUT no es válido.",
+    "details": [{ "field": "rut", "issue": "invalid_check_digit" }]
+  }
+}</code></pre>
+    </div>
+
+    <h3>Errores que rechazan la llamada entera</h3>
+
+    <p>En <code>POST /companies/batch</code> y <code>POST /contacts/batch</code> el contrato declara estos códigos para la llamada, antes de procesar items:</p>
+
+    <ul>
+      <li><code>401</code> — credencial ausente, inválida o vencida.</li>
+      <li><code>403</code> — la credencial no puede hacer la llamada: permisos, IP o sandbox.</li>
+      <li><code>409</code> — la <code>Idempotency-Key</code> se reusó con otro cuerpo, o la misma clave sigue en curso. La clave es opcional, de hasta 255 caracteres, con ventana de 24 horas. La misma clave y el mismo cuerpo devuelven la respuesta original con <code>Idempotent-Replay: true</code>.</li>
+      <li><code>429</code> — demasiadas llamadas. Espera lo que dice <code>Retry-After</code>.</li>
+    </ul>
+
+    <p>Fuera de 1 a 100 items el cuerpo no cumple el esquema y el lote no corre. Un item inválido no usa estos códigos: queda en <code>results[].error</code> y el HTTP sigue siendo 200.</p>
+
+    <h3>Productos</h3>
+
+    <p><code>POST /products/batch</code> crea o actualiza hasta <strong>500</strong> productos. Empareja por <code>sku</code>, obligatorio en cada uno: volver a cargar el mismo SKU actualiza en vez de duplicar. Cada item lleva <code>sku</code> y <code>nombre</code>, y puede llevar <code>descripcion_corta</code>, <code>descripcion_html</code>, <code>imagen_url</code>, <code>unidad</code>, <code>tipo</code>, <code>estado</code> (<code>activo</code> o <code>inactivo</code>), <code>categoria</code> (el nombre; se crea si no existe), <code>precios</code> (<code>{"CLP": {"precio", "precio_min", "costo"}, "USD": {…}}</code>) y <code>campos_custom</code> (clave y valor; la propiedad se crea si no existe).</p>
+
+    <p>Campos de <strong>un</strong> item, como los nombra el texto de la operación. El OpenAPI no publica el esquema del cuerpo ni el de la respuesta 200: no reutilices <code>job_id</code> ni <code>results[]</code> de empresas y contactos.</p>
+
+    <div class="dv-code" data-lang="json">
+<pre><code>{
+  "sku": "AND-100",
+  "nombre": "Filtro de aire",
+  "estado": "activo",
+  "categoria": "Repuestos",
+  "precios": { "CLP": { "precio": 12990, "precio_min": 11990, "costo": 8000 } },
+  "campos_custom": { "bodega": "SCL-01" }
+}</code></pre>
+    </div>
+
+    <p>Los errores de llamada que esta ruta sí declara son <code>401</code>, <code>403</code>, <code>409</code> y <code>429</code>, con el mismo significado. Las categorías que quieras crear aparte van de a una con <code>POST /product-categories</code>.</p>
+
     <h3>Tres cosas que te ahorran un dolor de cabeza</h3>
 
     <ul>
-      <li><strong>Manda siempre <code>external_id</code></strong> con el id de tu ERP. Es lo que hace que la carga se pueda <strong>repetir sin duplicar</strong>: la segunda corrida actualiza en vez de crear (<code>"created": false</code>).</li>
-      <li><strong>El <code>job_id</code> te deja releer el resultado</strong> con <code>GET /jobs/{id}</code> si pierdes la respuesta. Un <code>POST</code> de 100 items cuyo resultado se pierde por un corte no se puede repetir a ciegas; con el job, se consulta.</li>
-      <li><strong>Carga empresas antes que contactos</strong>, para poder asociarlos.</li>
+      <li><strong>En empresas y contactos manda siempre <code>external_id</code></strong> con el id de tu ERP. Es lo que hace que la carga se pueda <strong>repetir sin duplicar</strong>: la segunda corrida actualiza en vez de crear (<code>"created": false</code>). En productos la llave es el <code>sku</code>, no <code>external_id</code>.</li>
+      <li><strong>El <code>job_id</code> de <code>LoteResultado</code> deja releer el resultado</strong> con <code>GET /jobs/{job_id}</code> si pierdes la respuesta del lote de empresas o contactos. Esa ruta devuelve el estado del trabajo y, cuando terminó, el resultado por item. El <code>POST</code> ya trae ese resultado en el 200: el job es la copia guardada. <code>GET /jobs</code> lista trabajos (<code>status</code> y <code>limit</code>, 50 por defecto). El contrato de <code>POST /products/batch</code> no publica <code>job_id</code>: no lo releas con <code>GET /jobs/{job_id}</code>.</li>
+      <li><strong>Carga empresas antes que contactos</strong>, para poder asociarlos con <code>company_id</code> (el id de Hapee, no el de tu ERP).</li>
     </ul>
 
-    <p>Orden recomendado: <code>companies</code> → <code>product-categories</code> y <code>products</code> → <code>contacts</code>.</p>
+    <p>Orden recomendado: <code>POST /companies/batch</code>, después las categorías sueltas con <code>POST /product-categories</code> y el catálogo con <code>POST /products/batch</code>, y al final <code>POST /contacts/batch</code>.</p>
 
     <h2 id="flujo-b">Flujo B — Sincronización incremental</h2>
 
@@ -417,8 +481,8 @@ curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
     <ul>
       <li><code>GET /me</code> responde y muestra la subcuenta correcta</li>
       <li>La carga inicial corrió <strong>dos veces</strong> en sandbox y no duplicó nada</li>
-      <li>Todos los registros tienen <code>external_id</code> con el id de tu ERP</li>
-      <li>Los RUT pasan la validación (sin <code>422</code> en el lote)</li>
+      <li>Empresas y contactos tienen <code>external_id</code> con el id de tu ERP; cada producto tiene <code>sku</code></li>
+      <li>Los RUT que no validan quedan en <code>results[].error</code> del lote de empresas o contactos (la llamada responde 200 igual). Corrígelos antes de producción</li>
       <li>El endpoint de webhook <strong>verifica la firma</strong> y rechaza una firma inválida</li>
       <li>El receptor <strong>deduplica por el <code>id</code> del evento</strong> (el orden no está garantizado y una entrega puede repetirse)</li>
       <li>Toda escritura manda <code>Idempotency-Key</code></li>
@@ -463,7 +527,7 @@ curl -X POST https://beta.hapee.ai/api/v1/workflows/44/enroll \
 
 <footer class="dv-footer">
   <p>Hapee — WM Digital SpA · <a href="/politica-privacidad.html">Política de privacidad</a> · <a href="/terminos.html">Términos</a></p>
-  <p>API v1 · Documentación actualizada al 10 de septiembre de 2026</p>
+  <p>API v1 · Documentación actualizada al 11 de noviembre de 2026</p>
 </footer>
 
 <script src="/docs/docs.js" defer></script>
