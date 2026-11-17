@@ -24,7 +24,9 @@
       r.mods[m.n] = {ref: ref, desde: desde};
       r.ref += ref; r.desde += desde;
     });
-    r.neto = r.ref - D.pro; r.anual = r.neto * 12; r.neto_desde = r.desde - D.pro; r.neto_of = r.ref - D.of;
+    /* Hapee Pro: precio del plan + usuarios por sobre los incluidos (uinc) a uext c/u. */
+    r.hapee = D.pro + Math.max(0, u - (D.uinc || u)) * (D.uext || 0);
+    r.neto = r.ref - r.hapee; r.anual = r.neto * 12; r.neto_desde = r.desde - r.hapee;
     return r;
   }
   function pinta() {

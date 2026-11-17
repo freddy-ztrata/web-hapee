@@ -113,11 +113,13 @@ All Spanish public copy (HTML text, JS strings, code comments inside docs exampl
 
 ## Plans & pricing facts (keep consistent across HTML and the chatbot prompt)
 
-- 3 plans: **STARTER $297/mo**, **PRO $397/mo** (badge "El más elegido", animated beam border), **ELITE SETUP USD 3,290 one-time** (matches `planes.html`, `index.html` FAQ/JSON-LD and the old `$2,990` figure is wrong — confirmed by the owner 2026-09-14).
-- Starter: 2 usuarios y 2.000 contactos; incluye módulos de Email Marketing, **Licitaciones (Mercado Público)** y **Academia**. Pro: usuarios y contactos ilimitados; Licitaciones amplía a **Mercado Público y Entidades privadas**.
+- Pricing since **2026-11-17** (owner's document, Nov 2026; USD + IVA, AI/WhatsApp/email/voice usage paid separately from the wallet): **ESENCIAL $147/mo** (US$1,470/yr), **PRO $247/mo** (US$2,470/yr, badge "Recomendado"/"Recommended", animated beam border), **SCALE $447/mo** (US$4,470/yr). Annual = "2 meses gratis". Extra user: US$29 / US$25 / US$19 per month.
+- Esencial: 2 usuarios, 2.500 contactos, 1 agente de IA de chat, US$5 de IA/mes, alertas de licitaciones, academia interna. Pro: 5 usuarios, 15.000 contactos, agentes de IA ilimitados, US$15 de IA/mes, licitaciones completas y Academia pública, kickoff 60 min. Scale: 15 usuarios, contactos ilimitados, voz y telefonía, US$40 de IA/mes, licitaciones privadas + regla de obra, CSM mensual.
+- Implementation (separate from the plan): **Kickstart** included · **Implementación Guiada US$690** (free with an annual Pro or Scale plan) · **Elite Setup US$2,490** one-time or 3 × US$890 — a fixed price: never write "desde US$2.490", and never publish the US$1,990 annual-plan Elite price. The old Starter $297 / Pro $397 / Elite $3,290 figures are retired.
+- `index.html`, `agenda-tu-demo.html` and `preparate-demo.html` (es) are generated: the pricing there was edited in the generated HTML on 2026-11-17, so the generator (`~/Sites/web-dna/_build/hapee-home`) must be updated too or the next promotion reverts it. The savings calculator (`#ahorro-datos` + `js/home/hapee-home-inst-*.js`) prices Hapee Pro as `pro` + (`u` − `uinc`) × `uext`.
 - **No free trial.** Never write "14 días gratis", "prueba gratis", "Empezar 14 días gratis", "Cancela antes del día 14", or any variant.
 - **No money-back guarantee.** Never write "garantía de devolución", "30 días de garantía", "reembolso completo", or promise refunds. Payments are non-refundable per `terminos.html` section 5.
-- CTAs on all plans (Starter, Pro, Elite) say **"Seleccionar plan"**. No trial or guarantee microcopy under the buttons.
+- CTAs on all plans (Esencial, Pro, Scale) say **"Seleccionar plan"**. No trial or guarantee microcopy under the buttons.
 - Canonical trust copy: *"Sin compromiso, sin contratos. Cancelas cuando quieras."*
 - The system prompt for the in-page AI chat lives in `index.html` (~line 4765, `SYSTEM_PROMPT_BASE` + `INDUSTRIES.general`). Keep it aligned with pricing changes and the "no trial / no guarantee" facts above.
 - Orphan CSS classes `.pc-trial` and `.pc-guarantee` remain in `index.html` and `agenda-tu-demo.html` — dead but harmless. Don't re-introduce them.
