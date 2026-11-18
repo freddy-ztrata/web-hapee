@@ -120,8 +120,6 @@
     w.appendChild(bar);
 
     var t = el('div', 'p27x-t'); t.setAttribute('role', 'table');
-    // Columna destacada: una capa detrás de las celdas, de arriba abajo.
-    if (popI >= 0) { var hl = el('div', 'p27x-hl'); hl.style.setProperty('--c', popI); hl.setAttribute('aria-hidden', 'true'); t.appendChild(hl); }
 
     var head = el('div', 'p27x-row p27x-head'); head.setAttribute('role', 'row');
     head.appendChild(el('div', 'p27x-lbl p27x-corner'));
@@ -192,12 +190,6 @@
     t.appendChild(foot);
     w.appendChild(t);
 
-    // Columna bajo el puntero: se ilumina entera.
-    t.addEventListener('pointerover', function (e) {
-      var c = e.target.closest && e.target.closest('[data-c]');
-      t.dataset.hc = c ? c.dataset.c : '';
-    });
-    t.addEventListener('pointerleave', function () { t.dataset.hc = ''; });
     var par = opts.par || [0, 1];
     elegir(w, par[0], par[1]);
     return w;
