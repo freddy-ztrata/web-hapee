@@ -80,7 +80,7 @@
   function num(n) { return Number(n).toLocaleString(LOC, {maximumFractionDigits: 0}); }
 
   // ---------- Lectura de un plan de la API ----------
-  var RE_SOP = /soporte|support|suporte|kickoff|\bcsm\b/i;
+  var RE_SOP = /soporte|support|suporte|kickoff|\bcsm\b|ejecutivo de cuenta|account manager|gerente de conta/i;
   var RE_ACAD = /academ/i;
   function leerPlan(pl) {
     var d = {mods: [], inc: [], ia: null, sop: [], acad: null};
@@ -310,12 +310,12 @@
       });
       return acc.length ? acc.join(' · ') : NO;
     });
-    var entSop = (T27.ent_feats || []).filter(function (t) { return /\bsla\b|\bcsm\b/i.test(t); });
+    var entSop = (T27.ent_feats || []).filter(function (t) { return /\bsla\b|\bcsm\b|ejecutivo de cuenta|account manager|gerente de conta/i.test(t); });
     sop.push(entSop.length ? entSop.join(' · ') : SI);
     inc.push(fila(TX.soporte, sop));
 
     // Solo Enterprise
-    var ent = (T27.ent_feats || []).slice(1).filter(function (t) { return !/\bsla\b|\bcsm\b/i.test(t); })
+    var ent = (T27.ent_feats || []).slice(1).filter(function (t) { return !/\bsla\b|\bcsm\b|ejecutivo de cuenta|account manager|gerente de conta/i.test(t); })
       .map(function (t) { return fila(t, datos.map(function () { return NO; }).concat([SI])); });
 
     var grupos = [{tit: TX.basico, filas: ess}, {tit: TX.mods, filas: mods}, {tit: TX.inc, filas: inc}, {tit: TX.ent, filas: ent}];
