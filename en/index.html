@@ -885,6 +885,10 @@ html.dark .pc-guarantee{background:linear-gradient(90deg,rgba(250,80,0,.12),rgba
 .pc .btn{width:100%;margin-top:auto}
 .pricing-note{text-align:center;margin-top:36px;font-size:.95rem;color:var(--text)}
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+.pgrid.g4{grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1280px){.pgrid.g4{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}}
+@media(max-width:700px){.pgrid.g4{grid-template-columns:1fr;max-width:420px}}
+.pc .pc-val.pc-txt{font-size:2.3rem;letter-spacing:-.02em}
 
 /* =========================================================
    PRICING · GLASSMORPHISM · liquid glass 2026 (refs gla1/2/3)
@@ -3720,7 +3724,7 @@ img.hero-robot{height:auto}
       <h2 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;margin-bottom:16px">Invest in your <span class="tg">growth</span></h2>
       <p>Choose the plan that fits your needs. No commitment, no contracts. Cancel anytime.</p>
     </div>
-    <div class="pgrid">
+    <div class="pgrid g4">
       <!-- ESENCIAL -->
       <article class="pc" aria-label="Esencial plan">
         <div class="pc-name">ESENCIAL</div>
@@ -3783,7 +3787,7 @@ img.hero-robot{height:auto}
         <ul class="pc-feats">
           <li class="inc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in PRO, plus:</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 15 users and unlimited contacts</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Voice agents and telephony</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Voice agents and telephony (usage from your wallet)</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> USD 40 of AI included every month</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Notetaker and Competitor Radar</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Private tenders + construction-project rule</li>
@@ -3793,6 +3797,27 @@ img.hero-robot{height:auto}
         </ul>
         <div class="pc-ideal">Ideal for: large sales teams. Extra user: USD 19/month.</div>
         <a href="/en/planes" class="btn bo">Select plan</a>
+      </article>
+
+      <!-- ENTERPRISE -->
+      <article class="pc" aria-label="Plan Enterprise">
+        <div class="pc-name">ENTERPRISE</div>
+        <div class="pc-desc">For companies with several teams, brands or countries that need tailored terms.</div>
+        <div class="pc-price">
+          <span class="pc-val pc-txt">Custom</span>
+        </div>
+        <div class="pc-per">Pricing based on users and volume</div>
+        <ul class="pc-feats">
+          <li class="inc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Everything in SCALE, plus:</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom users and contacts</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Several brands, countries or subaccounts</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Integrations with your ERP or current CRM</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Elite implementation included</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Service level agreement (SLA)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Dedicated CSM</li>
+        </ul>
+        <div class="pc-ideal">Ideal for: mid-size and large companies.</div>
+        <a href="/en/planes#enterprise" class="btn bo">Talk to sales</a>
       </article>
     </div>
     <p class="pricing-note">Prices in USD plus VAT. AI, WhatsApp, email and voice usage is paid separately from your wallet. No commitment, no contracts. Cancel anytime.</p>
@@ -4693,7 +4718,7 @@ Key information:
 - Public tender alerts (Mercado Público, Chile's public procurement marketplace) and internal academy from ESENCIAL; full public tenders and public Academy on PRO; private tenders on SCALE
 - WhatsApp Business API included in every plan
 - Native MCP connection with Anthropic's Claude (the only one in LATAM)
-Plans (USD plus VAT; AI, WhatsApp, email and voice usage is paid separately from the wallet): ESENCIAL 147 USD/month or 1,470 USD/year (2 users, 2,500 contacts, 1 AI chat agent, 5 USD of AI included per month) · PRO 247 USD/month or 2,470 USD/year, the recommended one (5 users, 15,000 contacts, unlimited AI agents, 15 USD of AI per month, email marketing, websites, funnels and quotes) · SCALE 447 USD/month or 4,470 USD/year (15 users, unlimited contacts, voice agents and telephony, 40 USD of AI per month, monthly CSM). Extra user: 29, 25 or 19 USD per month depending on the plan. Implementation: Kickstart included · Guided Implementation 690 USD (free with an annual Pro or Scale plan) · ELITE SETUP 2,490 USD one-time or 3 installments of 890 USD.
+Plans (USD plus VAT; AI, WhatsApp, email and voice usage is paid separately from the wallet): ESENCIAL 147 USD/month or 1,470 USD/year (2 users, 2,500 contacts, 1 AI chat agent, 5 USD of AI included per month) · PRO 247 USD/month or 2,470 USD/year, the recommended one (5 users, 15,000 contacts, unlimited AI agents, 15 USD of AI per month, email marketing, websites, funnels and quotes) · SCALE 447 USD/month or 4,470 USD/year (15 users, unlimited contacts, voice agents and telephony, 40 USD of AI per month, monthly CSM). Extra user: 29, 25 or 19 USD per month depending on the plan. Implementation: Kickstart included · Guided Implementation 690 USD (free with an annual Pro or Scale plan) · ELITE SETUP 2,490 USD one-time or 3 installments of 890 USD. · ENTERPRISE custom (more than 15 users, several brands or countries, integrations, SLA): quoted by sales at hapee.ai/en/planes#enterprise.
 Elite is a one-time payment for a turnkey implementation. Hapee does not offer any trial period, and payments are final (see the Terms of Service).
 Plans are purchased directly at hapee.ai/en/planes — online card payment and instant account activation.
 To book a demo: hapee.ai/en/agenda-tu-demo`

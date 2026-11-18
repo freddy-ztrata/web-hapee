@@ -543,6 +543,32 @@ html.dark .modal .lgl{background:#141414}
 .msec{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:15px;font-size:.75rem;color:var(--text-2)}
 
 @media(max-width:1024px){.pgrid{grid-template-columns:1fr;max-width:420px}}
+/* Pricing 2027: 4 planes + implementación con otro diseño + Enterprise */
+.pgrid.g4{grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1280px){.pgrid.g4{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}}
+@media(max-width:700px){.pgrid.g4{grid-template-columns:1fr;max-width:420px}}
+.pc .pc-val.pc-txt{font-size:2.3rem;letter-spacing:-.02em}
+.impl{margin-top:80px}
+.impl-head{text-align:center;max-width:680px;margin:0 auto 26px}
+.impl-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--heading);margin:8px 0 10px;line-height:1.15}
+.impl-head p{color:var(--text-2);font-size:1rem;line-height:1.55;margin:0}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin:0 auto}
+@media(max-width:1024px){.igrid{grid-template-columns:1fr;max-width:560px}}
+.ic{border:1.5px dashed var(--card-border);border-radius:18px;padding:20px 22px;background:var(--bg-alt);display:flex;flex-direction:column;gap:10px}
+html.dark .ic{background:#121212}
+.ic.inc{border-style:solid;border-color:rgba(250,80,0,.28)}
+.ic-tag{align-self:flex-start;font-size:.64rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;background:rgba(250,80,0,.1);padding:3px 10px;border-radius:999px}
+.ic-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ic-name{font-size:1.05rem;font-weight:800;color:var(--heading)}
+.ic-price{font-size:1.35rem;font-weight:800;color:var(--accent);white-space:nowrap}
+.ic-price small{font-size:.72rem;font-weight:600;color:var(--text-2);margin-left:4px}
+.ic-desc{font-size:.88rem;color:var(--text-2);line-height:1.5}
+.ic ul{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:6px}
+.ic li{font-size:.86rem;color:var(--text-2);line-height:1.45;padding-left:16px;position:relative}
+.ic li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.ic .btn{margin-top:auto;align-self:stretch}
+.ent-sec{margin:80px auto 0;max-width:760px;scroll-margin-top:90px}
+
 </style>
 <!-- Meta Pixel (conjunto de datos 955108270238616). Se declara en la política de
      privacidad (§2.9 y §13). El Schedule de la reserva lo dispara agenda-tu-demo con el
@@ -616,6 +642,15 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
 
     <div class="pgrid" id="pgrid" hidden></div>
     <p class="pricing-note" id="note" hidden>Sin compromiso, sin contratos, cancelas cuando quieras.</p>
+    <div class="impl" id="impl" hidden>
+      <div class="impl-head"><span class="sl">Implementación</span><h2>Elige cómo <span class="tg">partir</span></h2><p>Pagos únicos, aparte de tu plan mensual. Todos los planes traen el Kickstart incluido.</p></div>
+      <div class="igrid" id="igrid"></div>
+    </div>
+    <div class="ent-sec" id="enterprise">
+      <div class="impl-head"><span class="sl">Enterprise</span><h2>Hablemos de tu <span class="tg">empresa</span></h2><p>Más de 15 usuarios, varias marcas o países, integraciones o requisitos de seguridad: armamos una propuesta a tu medida.</p></div>
+      <div data-zentru-form="hapee/hapee-enterprise-contactar-a-ventas" data-mode="inline"></div>
+      <script src="https://beta.hapee.ai/static/form-embed.js" defer></script>
+    </div>
   </div>
 </section>
 
@@ -750,10 +785,62 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
     return svg;
   }
 
+  var T27 = {"ent_desc": "Para empresas con varios equipos, marcas o países que necesitan condiciones a medida.", "ent_precio": "A medida", "ent_per": "Precio según usuarios y volumen", "ent_bullet": "Todo lo de Scale, más:", "ent_feats": ["Usuarios y contactos a medida", "Varias marcas, países o subcuentas", "Integraciones con tu ERP o CRM actual", "Implementación Elite incluida", "Acuerdo de nivel de servicio (SLA)", "Facturación y condiciones a medida", "CSM dedicado"], "ent_ideal": "Ideal para: empresas medianas y grandes.", "ent_btn": "Hablar con ventas", "kick_desc": "Para partir por tu cuenta, con guía.", "kick_precio": "Incluido", "kick_per": "en todos los planes", "kick_feats": ["Academia de implementación en video", "Plantillas listas por rubro", "Kickoff de 60 min (Pro y Scale)"], "unico": "Pago único", "comprar": "Comprar"};
+  function liCheck(txt, inc){
+    var li = document.createElement('li'); if (inc) li.className = 'inc';
+    li.appendChild(checkIcon()); li.appendChild(document.createTextNode(' ' + txt)); return li;
+  }
+  function cardEnterprise(){
+    var card = document.createElement('article'); card.className = 'pc pc-ent';
+    var name = document.createElement('div'); name.className = 'pc-name'; name.textContent = 'ENTERPRISE'; card.appendChild(name);
+    var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = T27.ent_desc; card.appendChild(desc);
+    var pr = document.createElement('div'); pr.className = 'pc-price';
+    var val = document.createElement('span'); val.className = 'pc-val pc-txt'; val.textContent = T27.ent_precio;
+    pr.appendChild(val); card.appendChild(pr);
+    var per = document.createElement('div'); per.className = 'pc-per'; per.textContent = T27.ent_per; card.appendChild(per);
+    var ul = document.createElement('ul'); ul.className = 'pc-feats';
+    ul.appendChild(liCheck(T27.ent_bullet, true));
+    T27.ent_feats.forEach(function(f){ ul.appendChild(liCheck(f)); });
+    card.appendChild(ul);
+    var ideal = document.createElement('div'); ideal.className = 'pc-ideal'; ideal.textContent = T27.ent_ideal; card.appendChild(ideal);
+    var a = document.createElement('a'); a.className = 'btn bo'; a.href = '#enterprise'; a.textContent = T27.ent_btn;
+    card.appendChild(a);
+    return card;
+  }
+  function cardImpl(o){
+    var c = document.createElement('article'); c.className = 'ic' + (o.incluido ? ' inc' : '');
+    var tag = document.createElement('span'); tag.className = 'ic-tag'; tag.textContent = o.tag; c.appendChild(tag);
+    var top = document.createElement('div'); top.className = 'ic-top';
+    var n = document.createElement('div'); n.className = 'ic-name'; n.textContent = o.nombre; top.appendChild(n);
+    var p = document.createElement('div'); p.className = 'ic-price'; p.textContent = o.precio;
+    if (o.per) { var sm = document.createElement('small'); sm.textContent = o.per; p.appendChild(sm); }
+    top.appendChild(p); c.appendChild(top);
+    if (o.desc) { var d = document.createElement('div'); d.className = 'ic-desc'; d.textContent = o.desc; c.appendChild(d); }
+    var ul = document.createElement('ul');
+    (o.feats || []).forEach(function(f){
+      var t = String(f); if (/^ideal para|^ideal for/i.test(t.trim())) return;
+      var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
+    });
+    c.appendChild(ul);
+    if (o.plan) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'btn bo'; b.textContent = T27.comprar;
+      b.addEventListener('click', function(){ abrirModal(o.plan); }); c.appendChild(b);
+    }
+    return c;
+  }
   function render(){
-    var grid = $('pgrid'); grid.innerHTML = '';
+    var grid = $('pgrid'); grid.innerHTML = ''; grid.classList.add('g4');
+    var igrid = $('igrid'); igrid.innerHTML = '';
+    igrid.appendChild(cardImpl({nombre: 'Kickstart', tag: T27.kick_per, precio: T27.kick_precio,
+                                desc: T27.kick_desc, feats: T27.kick_feats, incluido: true}));
     planes.forEach(function(pl){
       var esUnico = pl.tipo === 'pago_unico';
+      if (esUnico) {
+        igrid.appendChild(cardImpl({nombre: pl.nombre, tag: T27.unico, desc: pl.descripcion,
+          precio: '$' + Number(pl.precio_mensual).toLocaleString('es-CL', {maximumFractionDigits: 0}),
+          per: (pl.moneda || 'USD'), feats: pl.features, plan: pl}));
+        return;
+      }
       var esAnual = intervalo === 'anual' && pl.precio_anual && !esUnico;
       var precio = esAnual ? pl.precio_anual : pl.precio_mensual;
       var card = document.createElement('article');
@@ -804,7 +891,8 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       host.appendChild(btn);
       grid.appendChild(card);
     });
-    grid.hidden = false; $('note').hidden = false; $('faq').hidden = false;
+    grid.appendChild(cardEnterprise());
+    grid.hidden = false; $('note').hidden = false; $('faq').hidden = false; $('impl').hidden = false;
     $('estado').style.display = 'none';
   }
 
