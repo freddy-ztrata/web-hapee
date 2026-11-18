@@ -584,6 +584,7 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></noscript>
+<link rel="stylesheet" href="/js/pricing/p27.css?v=1">
 </head>
 <body>
 
@@ -745,6 +746,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
   </div>
 </div>
 
+<script src="/js/pricing/p27.js?v=1"></script>
 <script>
 (function(){
   var qs = new URLSearchParams(location.search);
@@ -787,6 +789,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
   }
 
   var T27 = {"ent_desc": "Para empresas con varios equipos, marcas o países que necesitan condiciones a medida.", "ent_precio": "A medida", "ent_per": "Precio según usuarios y volumen", "ent_bullet": "Todo lo de Scale, más:", "ent_feats": ["Usuarios y contactos a medida", "Varias marcas, países o subcuentas", "Integraciones con tu ERP o CRM actual", "Implementación Elite incluida", "Acuerdo de nivel de servicio (SLA)", "Facturación y condiciones a medida", "CSM dedicado"], "ent_ideal": "Ideal para: empresas medianas y grandes.", "ent_btn": "Hablar con ventas", "kick_desc": "Para partir por tu cuenta, con guía.", "kick_precio": "Incluido", "kick_per": "en todos los planes", "kick_feats": ["Academia de implementación en video", "Plantillas listas por rubro", "Kickoff de 60 min (Pro y Scale)"], "unico": "Pago único", "comprar": "Comprar"};
+  var P27X = {"gratis_txt": "Gratis con plan anual Pro o Scale", "cuotas_txt": "o 3 cuotas de US$890 · US$1.990 con plan anual", "desc": {}};
   function liCheck(txt, inc){
     var li = document.createElement('li'); if (inc) li.className = 'inc';
     li.appendChild(checkIcon()); li.appendChild(document.createTextNode(' ' + txt)); return li;
@@ -816,10 +819,14 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
     var p = document.createElement('div'); p.className = 'ic-price'; p.textContent = o.precio;
     if (o.per) { var sm = document.createElement('small'); sm.textContent = o.per; p.appendChild(sm); }
     top.appendChild(p); c.appendChild(top);
+    var rg = (o.plan && o.plan.reglas) || {};
+    if (rg.gratis_con_plan_anual) { var gs = document.createElement('span'); gs.className = 'ic-gratis'; gs.textContent = P27X.gratis_txt; c.appendChild(gs); }
+    if (rg.cuotas) { var cs = document.createElement('div'); cs.className = 'ic-sub'; cs.textContent = P27X.cuotas_txt; c.appendChild(cs); }
     if (o.desc) { var d = document.createElement('div'); d.className = 'ic-desc'; d.textContent = o.desc; c.appendChild(d); }
     var ul = document.createElement('ul');
     (o.feats || []).forEach(function(f){
       var t = String(f); if (/^ideal para|^ideal for/i.test(t.trim())) return;
+      if (rg.gratis_con_plan_anual && /gratis|free|grátis/i.test(t)) return;
       var li = document.createElement('li'); li.textContent = t; ul.appendChild(li);
     });
     c.appendChild(ul);
@@ -837,7 +844,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
     planes.forEach(function(pl){
       var esUnico = pl.tipo === 'pago_unico';
       if (esUnico) {
-        igrid.appendChild(cardImpl({nombre: pl.nombre, tag: T27.unico, desc: pl.descripcion,
+        igrid.appendChild(cardImpl({nombre: pl.nombre, tag: T27.unico, desc: P27X.desc[pl.slug] || pl.descripcion,
           precio: '$' + Number(pl.precio_mensual).toLocaleString('es-CL', {maximumFractionDigits: 0}),
           per: (pl.moneda || 'USD'), feats: pl.features, plan: pl}));
         return;
@@ -853,7 +860,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
         host = document.createElement('div'); host.className = 'pc-inner'; card.appendChild(host);
       }
       var name = document.createElement('div'); name.className = 'pc-name'; name.textContent = (pl.nombre || '').toUpperCase(); host.appendChild(name);
-      var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = pl.descripcion || ''; host.appendChild(desc);
+      var desc = document.createElement('div'); desc.className = 'pc-desc'; desc.textContent = P27X.desc[pl.slug] || pl.descripcion || ''; host.appendChild(desc);
       var pr = document.createElement('div'); pr.className = 'pc-price';
       var cur = document.createElement('span'); cur.className = 'pc-cur'; cur.textContent = '$';
       var val = document.createElement('span'); val.className = 'pc-val'; val.textContent = Number(precio).toLocaleString('es-CL', {maximumFractionDigits: 0});
@@ -893,6 +900,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       grid.appendChild(card);
     });
     grid.appendChild(cardEnterprise());
+    if (window.HapeePricing27) { HapeePricing27.planes(grid); HapeePricing27.implementacion(igrid); }
     grid.hidden = false; $('note').hidden = false; $('faq').hidden = false; $('impl').hidden = false;
     $('estado').style.display = 'none';
   }

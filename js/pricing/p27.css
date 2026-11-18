@@ -1,0 +1,198 @@
+/* Pricing 2027 · presentación (ver p27.js). Todo va bajo .p27 para ganarle
+   a los estilos de vidrio que ya traen las páginas sin tocarlos. */
+
+/* ---------- Grilla de planes: 3 columnas anchas ---------- */
+.p27 .pgrid.p27-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:1180px;margin:0 auto;align-items:stretch;padding-top:14px}
+.p27 .pc.p27-card{padding:34px 30px 30px;display:flex;flex-direction:column}
+.p27 .pc.pop.p27-card{padding:0}
+.p27 .pc.pop .pc-inner{padding:34px 30px 30px}
+.p27 .pc-name{font-size:.82rem;letter-spacing:.18em;font-weight:800;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.p27 .pc-desc{font-size:.98rem;line-height:1.55;color:var(--text);min-height:3.1em;margin-bottom:22px}
+.p27 .pc-price{margin-bottom:6px;align-items:flex-start;gap:4px}
+.p27 .pc-cur{font-size:1.5rem;margin-top:.35em;font-weight:800}
+.p27 .pc-val{font-size:4.1rem;letter-spacing:-.04em;font-variant-numeric:tabular-nums;
+  background:linear-gradient(135deg,var(--heading) 30%,#6b3a2a 120%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html.dark .p27 .pc-val{background:linear-gradient(135deg,#fff 30%,#ffb08a 120%);-webkit-background-clip:text;background-clip:text}
+.p27 .pc.pop .pc-val{background:linear-gradient(120deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text}
+.p27 .pc-per{font-size:.86rem;line-height:1.5;margin-bottom:20px;color:var(--text-2)}
+
+/* Cifras: usuarios · contactos · IA */
+.p27-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 18px}
+.p27-stat{border-radius:14px;padding:11px 8px 10px;text-align:center;
+  background:rgba(255,255,255,.55);border:1px solid rgba(250,80,0,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+html.dark .p27-stat{background:rgba(255,255,255,.04);border-color:rgba(250,80,0,.18);box-shadow:none}
+.p27-stat b{display:block;font-family:var(--fd);font-size:1.18rem;font-weight:800;color:var(--heading);line-height:1.1;white-space:nowrap}
+.p27-stat span{display:block;font-size:.72rem;color:var(--text-2);margin-top:3px;line-height:1.25}
+.p27 .pc.pop .p27-stat{border-color:rgba(250,80,0,.3);background:linear-gradient(160deg,rgba(255,240,230,.85),rgba(255,255,255,.55))}
+html.dark .p27 .pc.pop .p27-stat{background:linear-gradient(160deg,rgba(250,80,0,.12),rgba(255,255,255,.03))}
+
+.p27 .p27-card .btn{width:100%;margin:0 0 22px;position:relative;z-index:2}
+.p27 .p27-card .pc-ideal{margin:auto 0 0;padding-top:16px;font-size:.84rem;line-height:1.5;font-weight:600;color:var(--text-2);border-top:1px dashed rgba(0,0,0,.1)}
+html.dark .p27 .p27-card .pc-ideal{border-color:rgba(255,255,255,.1)}
+
+/* Cuerpo: lo que agrega + detalle */
+.p27-body{position:relative;z-index:2;display:flex;flex-direction:column;gap:14px;padding-bottom:18px}
+.p27-lbl{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin-bottom:9px}
+.p27-lbl.p27-mas{color:var(--accent);letter-spacing:.06em;text-transform:none;font-size:.9rem;margin:0}
+.p27-list{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.p27-list li{display:flex;gap:10px;align-items:flex-start;font-size:.93rem;line-height:1.45;color:var(--text)}
+.p27-list svg{flex:0 0 18px;width:18px;height:18px;padding:3px;border-radius:50%;margin-top:1px;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent-alt));box-shadow:0 3px 8px rgba(250,80,0,.25)}
+.p27-chips{display:flex;flex-wrap:wrap;gap:6px}
+.p27-chip{font-size:.8rem;font-weight:600;line-height:1.2;padding:6px 11px;border-radius:999px;color:var(--heading);
+  background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.18)}
+html.dark .p27-chip{background:rgba(250,80,0,.12);border-color:rgba(250,80,0,.25)}
+.p27-secs{display:flex;flex-direction:column;gap:16px}
+.p27-all{border-top:1px solid rgba(0,0,0,.07);padding-top:12px}
+html.dark .p27-all{border-color:rgba(255,255,255,.08)}
+.p27-all summary{cursor:pointer;list-style:none;font-size:.86rem;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:6px;min-height:32px}
+.p27-all summary::-webkit-details-marker{display:none}
+.p27-all summary::after{content:'';width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .25s}
+.p27-all[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.p27-all[open] .p27-secs{margin-top:12px;animation:p27abre .3s ease}
+@keyframes p27abre{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* Luz que sigue al puntero */
+.p27-spot{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;opacity:0;transition:opacity .35s;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0),rgba(250,80,0,.13),transparent 45%)}
+.p27-card:hover .p27-spot,.p27-ent:hover .p27-spot,.p27-ic:hover .p27-spot{opacity:1}
+.p27 .pc.pop .p27-spot{inset:2px;border-radius:20px}
+.p27 .pc.pop{transform:translateY(-12px)}
+.p27 .pc.pop:hover{transform:translateY(-18px)}
+
+/* Entrada escalonada */
+.p27-in{opacity:0;transform:translateY(26px);transition:opacity .7s ease var(--d,0ms),transform .8s cubic-bezier(.2,.7,.15,1) var(--d,0ms)}
+.p27-in.p27-vis{opacity:1;transform:none}
+.p27 .pc.pop.p27-in.p27-vis{transform:translateY(-12px)}
+
+/* ---------- Enterprise: franja ancha ---------- */
+.p27-ent{position:relative;overflow:hidden;isolation:isolate;max-width:1180px;margin:28px auto 0;border-radius:26px;
+  display:grid;grid-template-columns:1.05fr 1.5fr .9fr;gap:30px;align-items:center;padding:30px 34px;
+  background:linear-gradient(120deg,#17100d 0%,#231310 55%,#2b0f19 100%);color:#f3e9e2;
+  box-shadow:0 30px 70px -24px rgba(60,20,10,.55);border:1px solid rgba(255,255,255,.08)}
+.p27-ent::before{content:'';position:absolute;inset:-40%;z-index:-1;opacity:.55;
+  background:conic-gradient(from var(--beam-a,0deg) at 80% 50%,transparent 0 60%,rgba(250,80,0,.45) 75%,rgba(205,35,73,.4) 85%,transparent 100%);
+  animation:beam 9s linear infinite;filter:blur(40px)}
+.p27-ent .p27-spot{background:radial-gradient(500px circle at var(--mx,50%) var(--my,0),rgba(255,140,80,.16),transparent 45%)}
+.p27-ent-tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.18em;padding:5px 12px;border-radius:999px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#ffb48f}
+.p27-ent-precio{font-family:var(--fd);font-size:2.4rem;font-weight:800;letter-spacing:-.03em;color:#fff;margin:12px 0 6px;line-height:1}
+.p27-ent-desc{font-size:.92rem;line-height:1.55;color:rgba(243,233,226,.75);margin:0}
+.p27-ent-med,.p27-ent-der,.p27-ent-izq{position:relative;z-index:2}
+.p27-ent .p27-lbl{color:#ffb48f;letter-spacing:.04em;text-transform:none;font-size:.88rem}
+.p27-ent .p27-list li{color:rgba(243,233,226,.92);font-size:.9rem}
+.p27-dos{grid-template-columns:1fr 1fr;column-gap:18px}
+.p27-ent-der .btn{width:100%}
+.p27-ent-per{font-size:.8rem;color:rgba(243,233,226,.6);text-align:center;margin-top:10px}
+
+/* ---------- Pestañas del teléfono (ocultas en escritorio) ---------- */
+.p27-tabs{display:none}
+
+@media(max-width:1100px){
+  .p27 .pgrid.p27-grid{gap:16px}
+  .p27 .pc.p27-card,.p27 .pc.pop .pc-inner{padding:28px 22px 24px}
+  .p27 .pc-val{font-size:3.5rem}
+  .p27-ent{grid-template-columns:1fr 1.4fr;gap:24px}
+  .p27-ent-der{grid-column:1/-1;display:flex;align-items:center;gap:16px}
+  .p27-ent-der .btn{width:auto;flex:0 0 auto}
+  .p27-ent-per{margin:0;text-align:left}
+}
+
+/* Teléfono y tablet angosta: carrusel con pestañas */
+@media(max-width:860px){
+  .p27-tabs{display:flex;gap:4px;margin:0 auto 6px;padding:4px;border-radius:999px;width:max-content;max-width:100%;
+    background:rgba(255,255,255,.6);border:1px solid rgba(250,80,0,.15);box-shadow:0 6px 20px -8px rgba(120,60,30,.25);
+    position:relative;z-index:5;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+  html.dark .p27-tabs{background:rgba(30,20,20,.6);border-color:rgba(250,80,0,.2)}
+  .p27-tab{border:0;background:transparent;font:700 .9rem var(--fb,inherit);color:var(--text-2);padding:9px 18px;border-radius:999px;cursor:pointer;min-height:40px;transition:background .25s,color .25s}
+  .p27-tab.on{background:linear-gradient(135deg,var(--accent),var(--accent-alt));color:#fff;box-shadow:0 4px 12px rgba(250,80,0,.3)}
+  .p27 .pgrid.p27-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;max-width:none;
+    margin:0 -16px;padding:26px 7vw 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .p27 .pgrid.p27-grid::-webkit-scrollbar{display:none}
+  .p27 .pgrid.p27-grid > .pc{flex:0 0 86%;max-width:400px;scroll-snap-align:center;scroll-snap-stop:always}
+  .p27 .pc.pop,.p27 .pc.pop:hover,.p27 .pc.pop.p27-in.p27-vis{transform:none}
+  .p27 .pc:hover{transform:none}
+  .p27 .pc.pop::before{inset:-2px;filter:blur(10px)}
+  .p27-in{transform:translateY(16px)}
+  .p27-ent{grid-template-columns:1fr;gap:18px;padding:26px 22px;margin-top:14px}
+  .p27-ent-der{flex-direction:column;align-items:stretch}
+  .p27-ent-der .btn{width:100%}
+  .p27-ent-per{text-align:center}
+  .p27-dos{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+  .p27-stat b{font-size:1.02rem}
+  .p27 .pc-val{font-size:3.1rem}
+}
+
+
+/* Base de implementación (el home no la trae inline; /planes sí, y es la misma) */
+.impl{margin-top:72px}
+.impl-head{text-align:center;max-width:680px;margin:0 auto 26px}
+.impl-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;color:var(--heading);margin:8px 0 10px;line-height:1.15}
+.impl-head p{color:var(--text-2);font-size:1rem;line-height:1.55;margin:0}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1080px;margin:0 auto}
+@media(max-width:1024px){.igrid{grid-template-columns:1fr;max-width:560px}}
+.ic{border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:10px}
+.ic-tag{align-self:flex-start;font-size:.64rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;background:rgba(250,80,0,.1);padding:3px 10px;border-radius:999px}
+.ic-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ic-name{font-size:1.05rem;font-weight:800;color:var(--heading)}
+.ic-price{font-size:1.35rem;font-weight:800;color:var(--accent);white-space:nowrap}
+.ic-price small{font-size:.72rem;font-weight:600;color:var(--text-2);margin-left:4px}
+.ic-desc{font-size:.88rem;color:var(--text-2);line-height:1.5}
+.ic ul{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:6px}
+.ic li{font-size:.86rem;color:var(--text-2);line-height:1.45;padding-left:16px;position:relative}
+.ic li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.ic .btn{margin-top:auto;align-self:stretch}
+
+/* ---------- Implementación: escalera de tres niveles ---------- */
+.p27-impl.igrid{gap:20px;max-width:1180px;align-items:stretch;position:relative}
+.p27-ic.ic{position:relative;overflow:hidden;isolation:isolate;border:1px solid rgba(250,80,0,.16);border-radius:24px;padding:26px 26px 24px;gap:12px;
+  background:linear-gradient(165deg,rgba(255,255,255,.78),rgba(255,247,240,.55));box-shadow:0 18px 40px -22px rgba(120,60,30,.35);
+  transition:transform .5s cubic-bezier(.2,.7,.15,1),box-shadow .5s}
+.p27-ic.ic:hover{transform:translateY(-6px);box-shadow:0 28px 60px -24px rgba(120,60,30,.45)}
+html.dark .p27-ic.ic{background:linear-gradient(165deg,rgba(40,25,25,.6),rgba(20,14,14,.5));border-color:rgba(250,80,0,.18)}
+.p27-ic .p27-num{position:absolute;right:16px;top:4px;z-index:-1;font-family:var(--fd);font-size:5.4rem;font-weight:800;line-height:1;letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(250,80,0,.18)}
+.p27-ic .ic-name{font-size:1.25rem}
+.p27-ic .ic-price{font-size:1.6rem;font-family:var(--fd);letter-spacing:-.02em}
+.p27-ic .ic-desc{font-size:.92rem;color:var(--text)}
+.p27-ic ul{gap:8px}
+.p27-ic li{font-size:.9rem;color:var(--text)}
+.p27-lvl{display:flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;color:var(--text-2)}
+.p27-bar{display:inline-flex;gap:4px}
+.p27-bar i{width:22px;height:6px;border-radius:4px;background:rgba(0,0,0,.1)}
+html.dark .p27-bar i{background:rgba(255,255,255,.12)}
+.p27-bar i.on{background:linear-gradient(90deg,var(--accent),var(--accent-alt))}
+.p27-ic .ic-sub{font-size:.82rem;font-weight:700;color:var(--accent);margin-top:-6px}
+.p27-ic .ic-gratis{align-self:flex-start;font-size:.74rem;font-weight:800;color:#0f7a43;background:rgba(16,160,90,.12);border:1px solid rgba(16,160,90,.3);padding:4px 10px;border-radius:999px}
+html.dark .p27-ic .ic-gratis{color:#5fe0a0}
+/* Nivel 3 (Elite): versión premium oscura */
+.p27-ic.lv3.ic{background:linear-gradient(150deg,#1a110e 0%,#26130f 60%,#2d0f1b 100%);border-color:rgba(255,160,110,.25);color:#f3e9e2;
+  box-shadow:0 28px 60px -24px rgba(60,20,10,.6)}
+.p27-ic.lv3 .ic-name,.p27-ic.lv3 .ic-price{color:#fff}
+.p27-ic.lv3 .ic-desc,.p27-ic.lv3 li,.p27-ic.lv3 .p27-lvl{color:rgba(243,233,226,.85)}
+.p27-ic.lv3 .ic-price small{color:rgba(243,233,226,.6)}
+.p27-ic.lv3 .ic-sub{color:#ffb48f}
+.p27-ic.lv3 .p27-bar i{background:rgba(255,255,255,.15)}
+.p27-ic.lv3 .p27-bar i.on{background:linear-gradient(90deg,#ffb48f,var(--accent))}
+.p27-ic.lv3 .p27-num{-webkit-text-stroke-color:rgba(255,180,140,.22)}
+.p27-ic.lv3 .ic-tag{background:rgba(255,180,140,.14);color:#ffb48f}
+.p27-ic.lv3 .btn.bo{border-color:rgba(255,180,140,.5);color:#fff}
+.p27-ic.lv3::before{content:'';position:absolute;inset:-50%;z-index:-2;opacity:.5;
+  background:conic-gradient(from var(--beam-a,0deg),transparent 0 70%,rgba(250,80,0,.5) 85%,transparent 100%);animation:beam 8s linear infinite;filter:blur(36px)}
+.p27-ic.lv3 .p27-spot{background:radial-gradient(420px circle at var(--mx,50%) var(--my,0),rgba(255,150,90,.18),transparent 45%)}
+.p27-ic > *:not(.p27-num):not(.p27-spot){position:relative;z-index:2}
+@media(max-width:1024px){.p27-impl.igrid{max-width:560px}}
+
+@media(prefers-reduced-motion:reduce){
+  .p27-ent::before,.p27-ic.lv3::before{animation:none}
+  .p27-in{opacity:1;transform:none;transition:none}
+}
+/* Ajustes tras revisar en pantalla */
+.p27 .pc-desc{min-height:4.65em}
+.p27-ic .ic-top{flex-direction:column;align-items:flex-start;gap:6px}
+.p27-ic .ic-price{font-size:2rem;line-height:1}
+.p27-ent-med .p27-list{gap:10px}
+@media(max-width:860px){.p27 .pc-desc{min-height:0}}
+html.dark .p27-bar i.on{background:linear-gradient(90deg,var(--accent),var(--accent-alt))}
