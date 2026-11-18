@@ -12,7 +12,7 @@
   var TX = {
     es: {
       cmp_sl: 'Compara', cmp_h: 'Todo lo que trae', cmp_hg: 'cada plan', cmp_p: 'Revisa módulo por módulo qué incluye cada plan.',
-      dif: 'Solo diferencias', par: 'Toca un nombre para cambiar la comparación', basico: 'Lo esencial', usuarios: 'Usuarios', contactos: 'Contactos', ia: 'IA incluida al mes',
+      dif: 'Solo diferencias', par: 'Toca un nombre para cambiar la comparación', basico: 'Lo esencial', usuarios: 'Usuarios', contactos: 'Contactos', ia: 'Créditos Hapee al mes',
       mods: 'Módulos', inc: 'Incluye', soporte: 'Soporte', academia: 'Academia', ent: 'Solo Enterprise',
       medida: 'A medida', ilim: 'Ilimitados', mes: '/mes', anio: '/año', pop: 'El más elegido', recom: 'Recomendada', servicio: 'El servicio', elegir: 'Elegir',
       icmp_sl: 'Compara', icmp_h: '¿Qué implementación', icmp_hg: 'te conviene?', icmp_p: 'De hacerlo tú con guía a que lo dejemos todo listo.',
@@ -26,7 +26,7 @@
     },
     en: {
       cmp_sl: 'Compare', cmp_h: 'Everything in', cmp_hg: 'each plan', cmp_p: 'Check module by module what each plan includes.',
-      dif: 'Only differences', par: 'Tap a name to change what you compare', basico: 'The essentials', usuarios: 'Users', contactos: 'Contacts', ia: 'AI included per month',
+      dif: 'Only differences', par: 'Tap a name to change what you compare', basico: 'The essentials', usuarios: 'Users', contactos: 'Contacts', ia: 'Hapee Credits per month',
       mods: 'Modules', inc: 'Includes', soporte: 'Support', academia: 'Academy', ent: 'Enterprise only',
       medida: 'Custom', ilim: 'Unlimited', mes: '/mo', anio: '/yr', pop: 'Most popular', recom: 'Recommended', servicio: 'The service', elegir: 'Choose',
       icmp_sl: 'Compare', icmp_h: 'Which implementation', icmp_hg: 'fits you?', icmp_p: 'From doing it yourself with guidance to us getting everything ready.',
@@ -40,7 +40,7 @@
     },
     pt: {
       cmp_sl: 'Compare', cmp_h: 'Tudo o que traz', cmp_hg: 'cada plano', cmp_p: 'Veja módulo por módulo o que cada plano inclui.',
-      dif: 'Só diferenças', par: 'Toque em um nome para mudar a comparação', basico: 'O essencial', usuarios: 'Usuários', contactos: 'Contatos', ia: 'IA incluída por mês',
+      dif: 'Só diferenças', par: 'Toque em um nome para mudar a comparação', basico: 'O essencial', usuarios: 'Usuários', contactos: 'Contatos', ia: 'Créditos Hapee por mês',
       mods: 'Módulos', inc: 'Inclui', soporte: 'Suporte', academia: 'Academia', ent: 'Só Enterprise',
       medida: 'Sob medida', ilim: 'Ilimitados', mes: '/mês', anio: '/ano', pop: 'O mais escolhido', recom: 'Recomendada', servicio: 'O serviço', elegir: 'Escolher',
       icmp_sl: 'Compare', icmp_h: 'Qual implementação', icmp_hg: 'combina com você?', icmp_p: 'De fazer você mesmo com orientação a deixarmos tudo pronto.',
@@ -91,7 +91,7 @@
       if (i === 0 && /\d|ilimit|unlimit/i.test(t) && !/:\s*$/.test(t)) return;   // «5 usuarios y …»
       if (/:\s*$/.test(t)) { sec = /^(incluye|includes|inclui)/i.test(t) ? 'inc' : 'mods'; return; }
       var ia = t.match(/US\$\s?([\d.,]+)/);
-      if (ia && /\b(IA|AI)\b/.test(t)) { d.ia = 'US$' + ia[1]; return; }
+      if (ia && /\b(IA|AI|Cr[ée]ditos|Credits)\b/i.test(t)) { d.ia = 'US$' + ia[1]; return; }
       if (RE_ACAD.test(t)) { d.acad = cap(t.replace(/academ(ia|y)\s*/i, '').trim() || t); return; }
       if (RE_SOP.test(t)) { d.sop.push(t); return; }
       (sec === 'inc' ? d.inc : d.mods).push(t);

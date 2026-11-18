@@ -11,15 +11,15 @@
   var L = (document.documentElement.lang || 'es').slice(0, 2);
   var TX = {
     es: {mas: 'Todo lo de {p}, más:', todo: 'Ver todo lo que incluye', menos: 'Ocultar detalle',
-         ia: 'de IA al mes', mods: 'Módulos', inc: 'Incluye', ilim: 'Ilimitados',
+         ia: 'Créditos Hapee/mes', mods: 'Módulos', inc: 'Incluye', ilim: 'Ilimitados',
          niveles: ['Lo haces tú, con guía', 'Lo hacemos contigo', 'Lo hacemos por ti'],
          nivel: 'Nivel de acompañamiento', planes: 'Planes', desliza: 'Desliza para comparar'},
     en: {mas: 'Everything in {p}, plus:', todo: 'See everything included', menos: 'Hide details',
-         ia: 'of AI per month', mods: 'Modules', inc: 'Includes', ilim: 'Unlimited',
+         ia: 'Hapee Credits/mo', mods: 'Modules', inc: 'Includes', ilim: 'Unlimited',
          niveles: ['You do it, with guidance', 'We do it with you', 'We do it for you'],
          nivel: 'Level of support', planes: 'Plans', desliza: 'Swipe to compare'},
     pt: {mas: 'Tudo do {p}, mais:', todo: 'Ver tudo o que inclui', menos: 'Ocultar detalhes',
-         ia: 'de IA por mês', mods: 'Módulos', inc: 'Inclui', ilim: 'Ilimitados',
+         ia: 'Créditos Hapee/mês', mods: 'Módulos', inc: 'Inclui', ilim: 'Ilimitados',
          niveles: ['Você faz, com orientação', 'Fazemos com você', 'Fazemos por você'],
          nivel: 'Nível de acompanhamento', planes: 'Planos', desliza: 'Deslize para comparar'}
   }[L] || null;
@@ -75,7 +75,7 @@
     for (var i = 0; i < lis.length; i++) {
       var t = textoLi(lis[i]);
       if (i === 0 && !d.stats) { var c = cifras(t); if (c) { d.stats = c; continue; } }
-      var ia = t.match(/US\$\s?([\d.,]+)\s.*\b(IA|AI)\b/);
+      var ia = t.match(/US\$\s?([\d.,]+)\s.*\b(IA|AI|Cr[ée]ditos|Credits)\b/i);
       if (ia && !d.ia) { d.ia = 'US$' + ia[1]; continue; }
       if (lis[i].classList.contains('inc') || /:\s*$/.test(t)) {
         if (sec.items.length || sec.tit) d.secs.push(sec);
