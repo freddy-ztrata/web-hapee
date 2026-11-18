@@ -721,6 +721,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       <label for="f-cupon">Discount code</label>
       <input id="f-cupon" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="Optional">
       <div id="m-addon"></div>
+      <div id="m-cuotas"></div>
       <div class="lglbox">
         <label class="lgl" for="f-acepta-terminos">
           <input type="checkbox" id="f-acepta-terminos" required aria-required="true">
@@ -922,26 +923,56 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       : money(p.precio_mensual) + ' ' + (p.moneda || 'USD') + '/Month';
   }
 
-  function resumenModal(){
-    if (!sel) return;
-    var esUnico = sel.tipo === 'pago_unico';
-    var base;
-    if (esUnico) {
-      base = sel.nombre + ' · ' + money(sel.precio_mensual) + ' ' + (sel.moneda || 'USD') + ' (one-time)';
+  var TC = {"unico": " (one-time)", "gratis": "Free with an annual plan", "gratis_res": "US$0 (free with an annual plan)", "cuotas": "Pay in {n} monthly installments of {monto}", "cuotas_anual": "Pay in {n} monthly installments (with an annual plan, you'll see the final amount at checkout)", "cuotas_tag": "Payment option", "cuotas_res": "{n} installments of {monto}", "cuotas_res_anual": "in {n} installments"};
+  // Carrito actual → {plan, unico}: la suscripción y el pago único elegidos.
+  function carrito(){
+    if (!sel) return {plan: null, unico: null};
+    if (sel.tipo === 'pago_unico') {
       var pc = document.querySelector('#m-addon .plan-chk:checked');
-      if (pc) {
-        var pp = planes.find(function(p){ return p.slug === pc.value; });
-        if (pp) base = pp.nombre + ' · ' + precioPlanTxt(pp) + '  +  ' + base;
-      }
-    } else {
-      base = sel.nombre + ' · ' + precioPlanTxt(sel);
-      var chk = document.querySelector('#m-addon .addon-chk:checked');
-      if (chk) {
-        var u = planes.find(function(p){ return p.slug === chk.value; });
-        if (u) base += '  +  ' + u.nombre + ' · ' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + ' (one-time)';
-      }
+      return {unico: sel, plan: pc ? planes.find(function(p){ return p.slug === pc.value; }) : null};
     }
-    $('m-plan').textContent = base;
+    var ac = document.querySelector('#m-addon .addon-chk:checked');
+    return {plan: sel, unico: ac ? planes.find(function(p){ return p.slug === ac.value; }) : null};
+  }
+  function esAnual(p){ return !!(p && intervalo === 'anual' && p.precio_anual); }
+  // Reglas que publica la API (el servidor decide el precio; esto solo lo muestra).
+  function gratisCon(u, p){
+    var g = u && u.reglas && u.reglas.gratis_con_plan_anual;
+    return !!(g && p && esAnual(p) && (!g.length || g.indexOf(p.slug) >= 0));
+  }
+  function cuotasDe(u){ return (u && u.reglas && u.reglas.cuotas) || null; }
+  function txtUnico(u, p){
+    if (gratisCon(u, p)) return u.nombre + ' · ' + TC.gratis_res;
+    var cu = cuotasDe(u), box = $('f-cuotas');
+    if (cu && box && box.checked) {
+      return u.nombre + ' · ' + (esAnual(p) ? TC.cuotas_res_anual.replace('{n}', cu.n)
+        : TC.cuotas_res.replace('{n}', cu.n).replace('{monto}', 'US$' + money(cu.monto)));
+    }
+    return u.nombre + ' · ' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD') + TC.unico;
+  }
+  function pintarCuotas(){
+    var box = $('m-cuotas'), c = carrito(), cu = cuotasDe(c.unico);
+    var previo = $('f-cuotas') && $('f-cuotas').checked;
+    box.innerHTML = '';
+    if (!cu || gratisCon(c.unico, c.plan)) return;
+    var lbl = document.createElement('label'); lbl.className = 'addon' + (previo ? ' on' : '');
+    var chk = document.createElement('input'); chk.type = 'checkbox'; chk.id = 'f-cuotas'; chk.checked = !!previo;
+    chk.addEventListener('change', function(){ lbl.classList.toggle('on', chk.checked); resumenModal(true); });
+    var body = document.createElement('span'); body.className = 'abody';
+    var tag = document.createElement('span'); tag.className = 'at'; tag.textContent = TC.cuotas_tag;
+    var an = document.createElement('span'); an.className = 'an'; an.style.display = 'block';
+    an.textContent = (esAnual(c.plan) ? TC.cuotas_anual : TC.cuotas)
+      .replace('{n}', cu.n).replace('{monto}', 'US$' + money(cu.monto));
+    body.appendChild(tag); body.appendChild(an);
+    lbl.appendChild(chk); lbl.appendChild(body); box.appendChild(lbl);
+  }
+  function resumenModal(sinRepintar){
+    if (!sel) return;
+    if (!sinRepintar) pintarCuotas();
+    var c = carrito(), partes = [];
+    if (c.plan) partes.push(c.plan.nombre + ' · ' + precioPlanTxt(c.plan));
+    if (c.unico) partes.push(txtUnico(c.unico, c.plan));
+    $('m-plan').textContent = partes.join('  +  ');
   }
 
   // ===== Consentimiento legal (obligatorio) ================================
@@ -1087,7 +1118,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
     // Complementos del carrito (regla: 0-1 suscripción + 0-1 pago único):
     // - comprando una SUSCRIPCIÓN → ofrecer los pagos únicos como addon;
     // - comprando un PAGO ÚNICO → ofrecer elegir UN plan (opcional).
-    var addonBox = $('m-addon'); addonBox.innerHTML = '';
+    var addonBox = $('m-addon'); addonBox.innerHTML = ''; $('m-cuotas').innerHTML = '';
     function cardComplemento(u, clase, tagTxt, precioTxt){
       var lbl = document.createElement('label');
       lbl.className = 'addon';
@@ -1118,8 +1149,9 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
     if (!esUnico) {
       planes.filter(function(p){ return p.tipo === 'pago_unico' && p.slug !== pl.slug; })
         .forEach(function(u){
+          var gratis = gratisCon(u, pl);
           cardComplemento(u, 'addon-chk', 'One-time · optional',
-            '+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD'));
+            gratis ? TC.gratis : '+' + money(u.precio_mensual) + ' ' + (u.moneda || 'USD'));
         });
     } else {
       planes.filter(function(p){ return p.tipo !== 'pago_unico'; })
@@ -1177,6 +1209,7 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       empresa: $('f-empresa').value.trim(),
       telefono: $('f-telefono').value.trim(),
       promo_code: $('f-cupon').value.trim() || undefined,
+      pago_en_cuotas: ($('f-cuotas') && $('f-cuotas').checked) ? true : undefined,
       idioma: 'es',
       preview: preview || undefined,
       utm: utm(),
