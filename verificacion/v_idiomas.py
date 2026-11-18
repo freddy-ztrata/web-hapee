@@ -63,7 +63,8 @@ def paginas_espanol():
         # propuestas/ son propuestas comerciales por cliente (noindex), solo en
         # el idioma del cliente (generador web-dna/_build/hapee-propuesta).
         # js/ son recursos: los .html de js/home/ son la maqueta de Hapee Pro que el home muestra en un iframe, no páginas.
-        if d in ("en", "pt", "propuestas", "js") or d.startswith("propuesta-"):
+        # etm/ es la app offline del stand de ETM Day (noindex), solo en español de Chile.
+        if d in ("en", "pt", "propuestas", "js", "etm") or d.startswith("propuesta-"):
             continue
         out += sorted(glob.glob(d + "/**/*.html", recursive=True))
     return out

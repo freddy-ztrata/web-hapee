@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-11-18-p27cmp
+ARG CACHE_BUST=2026-11-18-etm1
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -66,6 +66,8 @@ COPY img/ /usr/share/nginx/html/img/
 # Hapee HQ: la oficina 3D de los agentes (three.js + GLB del robot), servida en /oficina
 COPY oficina/ /usr/share/nginx/html/oficina/
 COPY via/ /usr/share/nginx/html/via/
+# App offline (PWA) del stand de Hapee en ETM Day: /etm/ (noindex, fuera del sitemap y de todo menu).
+COPY etm/ /usr/share/nginx/html/etm/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml

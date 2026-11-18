@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Hapee · ETM Day</title>
+<meta name="description" content="Diagnóstico express de Hapee para el stand de ETM Day.">
+<meta name="theme-color" content="#0B0B10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hapee ETM">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css?v=1">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="barra">
+    <img class="logo" id="logo" src="img/logo-hapee-blanco.svg" alt="Hapee" draggable="false">
+    <div class="pasos" id="pasos" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </header>
+
+  <!-- 1 · Reposo -->
+  <section class="pantalla reposo activa" data-p="reposo">
+    <div class="centro">
+      <p class="sobre">Diagnóstico express · 30 segundos</p>
+      <h1 class="titular">¿Cuántos clientes se te <span class="grad">enfrían</span> por responder tarde?</h1>
+      <button class="btn btn-grad btn-xl" data-ir="p1">Regístrate y gira la ruleta 🎡</button>
+      <p class="nota">3 preguntas · Un toque cada una</p>
+    </div>
+  </section>
+
+  <!-- 2-4 · Preguntas (se llenan desde app.js) -->
+  <section class="pantalla pregunta" data-p="p1"></section>
+  <section class="pantalla pregunta" data-p="p2"></section>
+  <section class="pantalla pregunta" data-p="p3"></section>
+
+  <!-- 5 · Resultado -->
+  <section class="pantalla resultado" data-p="resultado">
+    <div class="centro">
+      <p class="sobre">Tu nivel de riesgo</p>
+      <div class="medidor" id="medidor"><span id="nivel">ALTO</span></div>
+      <p class="mensaje" id="mensaje"></p>
+      <button class="btn btn-grad btn-xl" data-ir="registro">Regístrate y gira la ruleta 🎡</button>
+    </div>
+  </section>
+
+  <!-- 6 · Registro -->
+  <section class="pantalla registro" data-p="registro">
+    <form class="form" id="form" novalidate autocomplete="off">
+      <h2 class="h2">Último paso: tus datos</h2>
+      <p class="nota izq">Así te contactamos y quedas habilitado para la ruleta.</p>
+      <div class="campos">
+        <label class="campo"><span>Nombre</span>
+          <input name="nombre" type="text" autocapitalize="words" autocomplete="off" enterkeyhint="next" maxlength="80" required>
+          <em class="error" data-err="nombre"></em></label>
+        <label class="campo"><span>WhatsApp</span>
+          <input name="whatsapp" type="tel" inputmode="tel" autocomplete="off" enterkeyhint="next" maxlength="22" required>
+          <em class="error" data-err="whatsapp"></em></label>
+        <label class="campo"><span>Empresa</span>
+          <input name="empresa" type="text" autocapitalize="words" autocomplete="off" enterkeyhint="next" maxlength="80" required>
+          <em class="error" data-err="empresa"></em></label>
+        <label class="campo"><span>Cargo</span>
+          <input name="cargo" type="text" autocapitalize="sentences" autocomplete="off" enterkeyhint="next" maxlength="80" required>
+          <em class="error" data-err="cargo"></em></label>
+        <label class="campo ancho"><span>Email <small>(opcional)</small></span>
+          <input name="email" type="email" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" enterkeyhint="done" maxlength="120">
+          <em class="error" data-err="email"></em></label>
+      </div>
+      <label class="consent">
+        <input name="consent" type="checkbox" required>
+        <span class="caja" aria-hidden="true"></span>
+        <span class="txt">Acepto que Hapee y Grupo Digitals me contacten y traten mis datos para fines comerciales</span>
+      </label>
+      <em class="error" data-err="consent"></em>
+      <button class="btn btn-grad btn-xl" type="submit">Listo, quiero girar la ruleta 🎡</button>
+    </form>
+  </section>
+
+  <!-- 7 · Listo -->
+  <section class="pantalla listo" data-p="listo">
+    <div class="centro">
+      <h1 class="titular chico">¡Listo, <span id="listo-nombre"></span>!</h1>
+      <p class="habilitado">Estás habilitado para girar la ruleta 🎉</p>
+      <div class="numero" id="numero">#A-001</div>
+      <p class="mensaje">Muestra esta pantalla en el stand de Hapee.</p>
+      <button class="btn btn-claro btn-xl" data-ir="reposo">Siguiente persona</button>
+    </div>
+  </section>
+
+  <!-- Admin · PIN -->
+  <section class="pantalla pin" data-p="pin">
+    <div class="centro">
+      <h2 class="h2">Administración</h2>
+      <p class="nota">Ingresa el PIN</p>
+      <div class="puntos" id="pin-puntos"><i></i><i></i><i></i><i></i></div>
+      <div class="teclado" id="teclado"></div>
+      <button class="btn btn-borde" data-ir="reposo">Volver</button>
+    </div>
+  </section>
+
+  <!-- Admin · Panel -->
+  <section class="pantalla admin" data-p="admin">
+    <div class="panel">
+      <div class="panel-top">
+        <h2 class="h2">Panel · Tablet <span id="ad-tablet">A</span></h2>
+        <button class="btn btn-borde btn-chico" data-ir="reposo">Salir</button>
+      </div>
+
+      <div class="cifras">
+        <div><b id="ad-hoy">0</b><span>registros hoy</span></div>
+        <div><b id="ad-total">0</b><span>en esta tablet</span></div>
+        <div><b id="ad-prox">#A-001</b><span>próximo número</span></div>
+      </div>
+      <p class="estado" id="ad-estado">Revisando modo offline…</p>
+
+      <div class="bloque">
+        <h3>Exportar</h3>
+        <p class="nota izq" id="ad-export-estado"></p>
+        <div class="fila-btns">
+          <button class="btn btn-grad" id="ad-csv">Exportar CSV</button>
+          <button class="btn btn-borde" id="ad-compartir" hidden>Compartir CSV</button>
+          <button class="btn btn-borde" id="ad-ver">Ver / copiar CSV</button>
+        </div>
+        <div class="csv-caja" id="csv-caja" hidden>
+          <textarea id="csv-texto" readonly rows="8"></textarea>
+          <button class="btn btn-borde btn-chico" id="ad-copiar">Copiar al portapapeles</button>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <div class="bloque-top">
+          <h3>Registros</h3>
+          <div class="seg" id="ad-filtro">
+            <button class="on" data-f="hoy">Hoy</button><button data-f="todos">Todos</button>
+          </div>
+        </div>
+        <div class="lista" id="ad-lista"></div>
+      </div>
+
+      <div class="bloque">
+        <h3>Configuración</h3>
+        <div class="ajustes">
+          <label class="campo"><span>Letra de esta tablet</span>
+            <input id="cfg-tablet" type="text" maxlength="2" autocapitalize="characters"></label>
+          <label class="campo"><span>PIN (4 dígitos)</span>
+            <input id="cfg-pin" type="text" inputmode="numeric" maxlength="4" pattern="[0-9]{4}"></label>
+          <label class="campo ancho"><span>Premios de la ruleta (uno por línea)</span>
+            <textarea id="cfg-premios" rows="5"></textarea></label>
+        </div>
+        <div class="fila-btns">
+          <button class="btn btn-claro" id="cfg-guardar">Guardar configuración</button>
+          <button class="btn btn-borde" id="cfg-contador">Reiniciar numeración</button>
+        </div>
+        <p class="nota izq" id="cfg-msg"></p>
+      </div>
+
+      <div class="bloque peligro">
+        <h3>Borrar todo</h3>
+        <p class="nota izq" id="ad-borrar-nota">Solo se activa después de exportar.</p>
+        <button class="btn btn-peligro" id="ad-borrar" disabled>Borrar todo</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-caja">
+      <p class="modal-txt" id="modal-txt"></p>
+      <div class="fila-btns">
+        <button class="btn btn-borde" id="modal-no">Cancelar</button>
+        <button class="btn btn-peligro" id="modal-si">Sí</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="aviso" id="aviso" hidden></div>
+  <div class="carga-logo" id="carga-logo" aria-hidden="true"></div>
+</div>
+<script src="app.js?v=1"></script>
+</body>
+</html>
