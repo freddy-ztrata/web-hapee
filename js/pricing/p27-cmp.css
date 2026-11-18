@@ -1,0 +1,149 @@
+/* Pricing 2027 · comparadores de /planes (ver p27-cmp.js). */
+
+/* overflow:hidden de la sección vuelve a .pricing un contenedor de scroll y la
+   cabecera pegajosa no se pega a la ventana; clip recorta igual sin eso. */
+section.pricing{overflow:clip}
+
+.p27x-sec{max-width:1180px;margin:88px auto 0;scroll-margin-top:90px}
+.p27x-sec .impl-head{margin-bottom:22px}
+#comparar-impl{max-width:1080px;margin-top:64px}
+
+.p27x{--lw:minmax(230px,1.35fr);--hc:rgba(250,80,0,.06);position:relative}
+.p27x-bar{display:flex;justify-content:flex-end;margin:0 0 12px;min-height:8px}
+
+/* Interruptor «Solo diferencias» */
+.p27x-sw{display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none;font-size:.88rem;font-weight:600;color:var(--text-2);
+  padding:8px 14px 8px 10px;border-radius:999px;background:rgba(255,255,255,.6);border:1px solid rgba(250,80,0,.15);backdrop-filter:blur(10px)}
+html.dark .p27x-sw{background:rgba(255,255,255,.05)}
+.p27x-sw input{position:absolute;opacity:0;pointer-events:none}
+.p27x-sw-k{position:relative;width:38px;height:22px;border-radius:999px;background:rgba(0,0,0,.14);transition:background .25s}
+html.dark .p27x-sw-k{background:rgba(255,255,255,.16)}
+.p27x-sw-k::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.p27x-sw input:checked + .p27x-sw-k{background:linear-gradient(120deg,var(--accent),var(--accent-alt))}
+.p27x-sw input:checked + .p27x-sw-k::after{transform:translateX(16px)}
+.p27x-sw input:focus-visible + .p27x-sw-k{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Tabla: cada fila es su propia grilla con el mismo molde (así la cabecera se pega). */
+.p27x-t{position:relative;border-radius:26px;padding:0 0 10px;isolation:isolate;
+  background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 30px 80px -30px rgba(120,40,10,.28),0 2px 0 rgba(255,255,255,.7) inset;backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4)}
+html.dark .p27x-t{background:rgba(22,18,20,.72);border-color:rgba(255,255,255,.08);box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.p27x-row{display:grid;grid-template-columns:var(--lw) repeat(var(--n),minmax(0,1fr));align-items:stretch;position:relative;z-index:1}
+.p27x-lbl{padding:14px 22px;font-size:.93rem;line-height:1.4;color:var(--text);display:flex;align-items:center}
+.p27x-cell{padding:14px 10px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.88rem;line-height:1.35;color:var(--text);position:relative;transition:background .2s}
+
+/* Columna destacada: franja con borde degradado detrás de las celdas */
+.p27x-hl{position:absolute;z-index:0;top:-14px;bottom:-1px;pointer-events:none;border-radius:22px;
+  left:calc(var(--lwpx,0px) + (100% - var(--lwpx,0px)) / var(--n) * var(--c));width:calc((100% - var(--lwpx,0px)) / var(--n));
+  background:linear-gradient(180deg,rgba(250,80,0,.10),rgba(255,140,90,.05) 40%,rgba(250,80,0,.08));
+  box-shadow:0 0 0 1.5px rgba(250,80,0,.35),0 24px 60px -20px rgba(250,80,0,.45)}
+html.dark .p27x-hl{background:linear-gradient(180deg,rgba(250,80,0,.18),rgba(250,80,0,.05) 40%,rgba(250,80,0,.12))}
+.p27x-hl::before{content:'';position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;
+  background:conic-gradient(from var(--beam-a,0deg),transparent 0 70%,var(--accent) 80%,#ffb08a 86%,transparent 92%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:beam 6s linear infinite}
+
+/* Cabecera pegajosa */
+.p27x-head{position:sticky;top:70px;z-index:5;border-radius:26px 26px 0 0}
+.p27x-head::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;
+  background:rgba(255,250,247,.86);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
+  border-bottom:1px solid rgba(250,80,0,.12);box-shadow:0 12px 24px -18px rgba(120,40,10,.35)}
+html.dark .p27x-head::before{background:rgba(20,16,18,.9);border-color:rgba(255,255,255,.08)}
+.p27x-corner{padding:0}
+.p27x-ch{flex-direction:column;gap:3px;padding:30px 8px 16px}
+.p27x-cn{font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.p27x-cp{font-family:var(--fd);font-size:1.75rem;font-weight:800;color:var(--heading);letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+.p27x-cp small{font-family:var(--fb);font-size:.72rem;font-weight:600;color:var(--text-2);letter-spacing:0;margin-left:2px}
+.p27x-ch.pop .p27x-cp{background:linear-gradient(120deg,var(--accent),var(--accent-alt));-webkit-background-clip:text;background-clip:text;color:transparent}
+.p27x-cnota{font-size:.72rem;line-height:1.3;color:var(--text-2);max-width:200px}
+.p27x-pop{position:absolute;top:6px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:#fff;padding:5px 11px;border-radius:999px;background:linear-gradient(120deg,var(--accent),var(--accent-alt));box-shadow:0 6px 16px -4px rgba(250,80,0,.55)}
+
+/* Grupos */
+.p27x-g{border-top:1px solid rgba(0,0,0,.06)}
+html.dark .p27x-g{border-color:rgba(255,255,255,.06)}
+.p27x-gh{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:10px;cursor:pointer;position:relative;z-index:2;
+  padding:20px 22px 8px;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--heading)}
+.p27x-gh:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:10px}
+.p27x-chev{width:8px;height:8px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg) translateY(-2px);transition:transform .3s}
+.p27x-g.cerrado .p27x-chev{transform:rotate(-45deg)}
+.p27x-g.cerrado .p27x-gb{display:none}
+
+.p27x-g .p27x-row + .p27x-row{border-top:1px dashed rgba(0,0,0,.06)}
+html.dark .p27x-g .p27x-row + .p27x-row{border-color:rgba(255,255,255,.06)}
+.p27x-g .p27x-row::before{content:'';position:absolute;inset:0 8px;border-radius:12px;z-index:-1;opacity:0;transition:opacity .2s;
+  background:linear-gradient(90deg,rgba(250,80,0,.07),rgba(250,80,0,.02) 60%,transparent)}
+.p27x-g .p27x-row:hover::before{opacity:1}
+
+/* Columna bajo el puntero */
+.p27x-t[data-hc="0"] .p27x-cell[data-c="0"],.p27x-t[data-hc="1"] .p27x-cell[data-c="1"],
+.p27x-t[data-hc="2"] .p27x-cell[data-c="2"],.p27x-t[data-hc="3"] .p27x-cell[data-c="3"]{background:var(--hc)}
+.p27x-t[data-hc] .p27x-cell.pop{background:transparent}
+
+/* Valores */
+.p27x-ok{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-alt));box-shadow:0 4px 10px -2px rgba(250,80,0,.45);transform:scale(.4);opacity:0;
+  transition:transform .5s cubic-bezier(.3,1.6,.5,1) var(--d,0ms),opacity .3s var(--d,0ms)}
+.p27x-ok svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;
+  transition:stroke-dashoffset .45s ease calc(var(--d,0ms) + 200ms)}
+.p27x-no{color:rgba(0,0,0,.22);font-weight:700}
+html.dark .p27x-no{color:rgba(255,255,255,.22)}
+.p27x-v{font-weight:600;color:var(--heading)}
+.p27x-planes .p27x-g:first-of-type .p27x-v{font-family:var(--fd);font-size:1.05rem;font-weight:800;font-variant-numeric:tabular-nums}
+
+/* Entrada: filas y checks al aparecer el grupo */
+.p27x .p27x-g .p27x-row,.p27x .p27x-head,.p27x .p27x-foot{opacity:0;transform:translateY(14px);transition:opacity .55s ease var(--d,0ms),transform .55s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}
+.p27x .p27x-on .p27x-row,.p27x .p27x-on.p27x-head,.p27x .p27x-on.p27x-foot,
+.p27x.p27x-vis .p27x-row,.p27x.p27x-vis .p27x-head,.p27x.p27x-vis .p27x-foot{opacity:1;transform:none}
+.p27x .p27x-on .p27x-ok,.p27x.p27x-vis .p27x-ok{transform:scale(1);opacity:1}
+.p27x .p27x-on .p27x-ok svg,.p27x.p27x-vis .p27x-ok svg{stroke-dashoffset:0}
+.p27x.p27x-vis .p27x-row,.p27x.p27x-vis .p27x-ok,.p27x.p27x-vis .p27x-ok svg{transition:none}
+/* La cabecera pegajosa no puede tener transform (dejaría de pegarse) */
+.p27x .p27x-head{transform:none}
+
+/* Solo diferencias */
+.p27x-dif .p27x-row.p27x-igual{display:none}
+.p27x-dif .p27x-g:not(:has(.p27x-row:not(.p27x-igual))){display:none}
+
+/* Pie con botones */
+.p27x-foot{border-top:1px solid rgba(0,0,0,.06)}
+html.dark .p27x-foot{border-color:rgba(255,255,255,.06)}
+.p27x-foot .p27x-cell{padding:18px 10px 12px}
+.p27x-foot .btn{width:100%;max-width:190px;padding:11px 14px;font-size:.86rem}
+
+/* Implementación: textos más largos, columnas un poco más anchas */
+.p27x-impl{--lw:minmax(210px,1.1fr)}
+.p27x-impl .p27x-v{font-weight:500;font-size:.86rem;color:var(--text)}
+.p27x-impl .p27x-g:first-of-type .p27x-row:first-child .p27x-v{font-weight:700;color:var(--heading)}
+
+@media (prefers-reduced-motion: reduce){
+  .p27x *,.p27x *::before{transition:none!important;animation:none!important}
+  .p27x .p27x-row,.p27x .p27x-head,.p27x .p27x-foot{opacity:1;transform:none}
+  .p27x .p27x-ok{transform:none;opacity:1}.p27x .p27x-ok svg{stroke-dashoffset:0}
+}
+
+/* ---------- Teléfono / tablet angosta: etiqueta arriba, valores abajo ---------- */
+@media (max-width:820px){
+  .p27x-sec{margin-top:64px}
+  .p27x-bar{justify-content:center}
+  .p27x-t{border-radius:20px;margin:0 -6px}
+  .p27x-row{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+  .p27x-lbl{grid-column:1/-1;padding:14px 14px 2px;font-size:.86rem;font-weight:600;color:var(--heading);justify-content:center;text-align:center}
+  .p27x-corner,.p27x-foot > .p27x-lbl{display:none}
+  .p27x-cell{padding:8px 4px 14px;font-size:.78rem}
+  .p27x-head{top:60px;border-radius:20px 20px 0 0}
+  .p27x-ch{padding:22px 3px 10px}
+  .p27x-cn{font-size:.62rem;letter-spacing:.08em}
+  .p27x-cp{font-size:1.08rem}
+  .p27x-cp small{display:block;margin:2px 0 0;font-size:.6rem}
+  .p27x-cnota{display:none}
+  .p27x-pop{font-size:.5rem;padding:2px 6px;top:5px;letter-spacing:.04em}
+  .p27x-hl{top:-9px;border-radius:16px}
+  .p27x-gh{padding:18px 14px 6px;justify-content:center}
+  .p27x-ok{width:20px;height:20px}.p27x-ok svg{width:12px;height:12px}
+  .p27x-planes .p27x-g:first-of-type .p27x-v{font-size:.9rem}
+  .p27x-impl .p27x-v{font-size:.74rem}
+  .p27x-foot .p27x-cell{padding:14px 3px 8px}
+  .p27x-foot .btn{padding:9px 4px;font-size:.72rem;border-radius:12px}
+  .p27x-g .p27x-row::before{inset:0 4px}
+}
