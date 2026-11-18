@@ -12,7 +12,7 @@
   var TX = {
     es: {
       cmp_sl: 'Compara', cmp_h: 'Todo lo que trae', cmp_hg: 'cada plan', cmp_p: 'Revisa módulo por módulo qué incluye cada plan.',
-      dif: 'Solo diferencias', basico: 'Lo esencial', usuarios: 'Usuarios', contactos: 'Contactos', ia: 'IA incluida al mes',
+      dif: 'Solo diferencias', par: 'Toca un nombre para cambiar la comparación', basico: 'Lo esencial', usuarios: 'Usuarios', contactos: 'Contactos', ia: 'IA incluida al mes',
       mods: 'Módulos', inc: 'Incluye', soporte: 'Soporte', academia: 'Academia', ent: 'Solo Enterprise',
       medida: 'A medida', ilim: 'Ilimitados', mes: '/mes', anio: '/año', pop: 'El más elegido', recom: 'Recomendada', servicio: 'El servicio', elegir: 'Elegir',
       icmp_sl: 'Compara', icmp_h: '¿Qué implementación', icmp_hg: 'te conviene?', icmp_p: 'De hacerlo tú con guía a que lo dejemos todo listo.',
@@ -26,7 +26,7 @@
     },
     en: {
       cmp_sl: 'Compare', cmp_h: 'Everything in', cmp_hg: 'each plan', cmp_p: 'Check module by module what each plan includes.',
-      dif: 'Only differences', basico: 'The essentials', usuarios: 'Users', contactos: 'Contacts', ia: 'AI included per month',
+      dif: 'Only differences', par: 'Tap a name to change what you compare', basico: 'The essentials', usuarios: 'Users', contactos: 'Contacts', ia: 'AI included per month',
       mods: 'Modules', inc: 'Includes', soporte: 'Support', academia: 'Academy', ent: 'Enterprise only',
       medida: 'Custom', ilim: 'Unlimited', mes: '/mo', anio: '/yr', pop: 'Most popular', recom: 'Recommended', servicio: 'The service', elegir: 'Choose',
       icmp_sl: 'Compare', icmp_h: 'Which implementation', icmp_hg: 'fits you?', icmp_p: 'From doing it yourself with guidance to us getting everything ready.',
@@ -40,7 +40,7 @@
     },
     pt: {
       cmp_sl: 'Compare', cmp_h: 'Tudo o que traz', cmp_hg: 'cada plano', cmp_p: 'Veja módulo por módulo o que cada plano inclui.',
-      dif: 'Só diferenças', basico: 'O essencial', usuarios: 'Usuários', contactos: 'Contatos', ia: 'IA incluída por mês',
+      dif: 'Só diferenças', par: 'Toque em um nome para mudar a comparação', basico: 'O essencial', usuarios: 'Usuários', contactos: 'Contatos', ia: 'IA incluída por mês',
       mods: 'Módulos', inc: 'Inclui', soporte: 'Suporte', academia: 'Academia', ent: 'Só Enterprise',
       medida: 'Sob medida', ilim: 'Ilimitados', mes: '/mês', anio: '/ano', pop: 'O mais escolhido', recom: 'Recomendada', servicio: 'O serviço', elegir: 'Escolher',
       icmp_sl: 'Compare', icmp_h: 'Qual implementação', icmp_hg: 'combina com você?', icmp_p: 'De fazer você mesmo com orientação a deixarmos tudo pronto.',
@@ -109,6 +109,7 @@
     var popI = -1; cols.forEach(function (c, i) { if (c.pop) popI = i; });
 
     var bar = el('div', 'p27x-bar');
+    bar.appendChild(el('span', 'p27x-hint', TX.par));
     if (opts.diferencias) {
       var sw = el('label', 'p27x-sw');
       var cb = el('input'); cb.type = 'checkbox';
@@ -132,6 +133,16 @@
       if (c.per) pr.appendChild(el('small', null, c.per));
       h.appendChild(pr);
       if (c.nota) h.appendChild(el('div', 'p27x-cnota', c.nota));
+      // En el teléfono se comparan dos columnas; tocar el nombre cambia cuál.
+      var sel = el('select', 'p27x-sel'); sel.setAttribute('aria-label', TX.par);
+      cols.forEach(function (o, j) { var op = el('option', null, o.nombre); op.value = j; sel.appendChild(op); });
+      sel.value = i;
+      sel.addEventListener('change', function () {
+        var nuevo = +sel.value, a = +w.dataset.a, b = +w.dataset.b;
+        if (h.classList.contains('sa')) { if (nuevo === b) b = a; a = nuevo; } else { if (nuevo === a) a = b; b = nuevo; }
+        elegir(w, a, b);
+      });
+      h.appendChild(sel);
       head.appendChild(h);
     });
     t.appendChild(head);
@@ -155,7 +166,7 @@
         var lb = el('div', 'p27x-lbl', f.lbl); lb.setAttribute('role', 'rowheader'); r.appendChild(lb);
         f.vals.forEach(function (v, i) {
           var c = el('div', 'p27x-cell' + (i === popI ? ' pop' : '')); c.setAttribute('role', 'cell'); c.dataset.c = i;
-          c.dataset.col = cols[i].nombre;
+          c.dataset.k = claves[i];
           if (v === SI) { var k = el('span', 'p27x-ok'); k.appendChild(svgCheck()); k.setAttribute('aria-label', '✓'); c.appendChild(k); }
           else if (v === NO) { var x = el('span', 'p27x-no', '—'); x.setAttribute('aria-label', '—'); c.appendChild(x); }
           else c.appendChild(el('span', 'p27x-v', v));
@@ -187,7 +198,23 @@
       t.dataset.hc = c ? c.dataset.c : '';
     });
     t.addEventListener('pointerleave', function () { t.dataset.hc = ''; });
+    var par = opts.par || [0, 1];
+    elegir(w, par[0], par[1]);
     return w;
+  }
+
+  // Marca las dos columnas que se ven en el teléfono y qué filas quedan iguales entre ellas.
+  function elegir(w, a, b) {
+    w.dataset.a = a; w.dataset.b = b;
+    w.querySelectorAll('.p27x-cell').forEach(function (c) {
+      var i = +c.dataset.c;
+      c.classList.toggle('sa', i === a); c.classList.toggle('sb', i === b);
+      var sel = c.querySelector('.p27x-sel'); if (sel) sel.value = i;
+    });
+    w.querySelectorAll('.p27x-g .p27x-row').forEach(function (r) {
+      var ka = r.querySelector('.sa'), kb = r.querySelector('.sb');
+      r.classList.toggle('p27x-igual2', !!(ka && kb && ka.dataset.k === kb.dataset.k));
+    });
   }
 
   function entrada(w) {
@@ -220,6 +247,7 @@
       w.classList.add('p27x-vis');
       if (dif) { w.classList.add('p27x-dif'); w.querySelector('.p27x-sw input').checked = true; }
       w.querySelectorAll('.p27x-g').forEach(function (g, i) { if (cerrados[i]) g.classList.add('cerrado'); });
+      elegir(w, +viejo.dataset.a, +viejo.dataset.b);
       s.replaceChild(w, viejo);
     } else { s.appendChild(w); entrada(w); }
     medir(w);
@@ -299,7 +327,8 @@
       .map(function (t) { return fila(t, datos.map(function () { return NO; }).concat([SI])); });
 
     var grupos = [{tit: TX.basico, filas: ess}, {tit: TX.mods, filas: mods}, {tit: TX.inc, filas: inc}, {tit: TX.ent, filas: ent}];
-    var w = tabla(cols, grupos, {diferencias: true, cls: 'p27x-planes'});
+    var popP = Math.max(0, subs.map(function (p) { return !!p.destacado; }).indexOf(true));
+    var w = tabla(cols, grupos, {diferencias: true, cls: 'p27x-planes', par: popP > 0 ? [popP - 1, popP] : [0, 1]});
     var s = seccion('comparar', TX.cmp_sl, TX.cmp_h, TX.cmp_hg, TX.cmp_p);
     var ancla = document.getElementById('note') || document.getElementById('pgrid');
     if (!s.parentNode && ancla) ancla.parentNode.insertBefore(s, ancla.nextSibling);
@@ -339,7 +368,7 @@
         f(TX.capacita, NO, NO, SI)
       ]}
     ];
-    var w = tabla(cols, grupos, {cls: 'p27x-impl', pop: TX.recom});
+    var w = tabla(cols, grupos, {cls: 'p27x-impl', pop: TX.recom, par: [1, 2]});
     var s = seccion('comparar-impl', TX.icmp_sl, TX.icmp_h, TX.icmp_hg, TX.icmp_p);
     var ig = document.getElementById('igrid');
     if (!s.parentNode && ig) ig.parentNode.insertBefore(s, ig.nextSibling);
