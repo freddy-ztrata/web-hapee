@@ -240,7 +240,7 @@
     ok = err(f, 'whatsapp', !wa ? 'Revisa tu WhatsApp: +56 9 y 8 dígitos' : '') && ok;
     ok = err(f, 'empresa', !t('empresa') ? 'Escribe tu empresa' : '') && ok;
     ok = err(f, 'cargo', !t('cargo') ? 'Escribe tu cargo' : '') && ok;
-    ok = err(f, 'email', email && !RE_EMAIL.test(email) ? 'Revisa tu email (o déjalo en blanco)' : '') && ok;
+    ok = err(f, 'email', !email ? 'Escribe tu email' : !RE_EMAIL.test(email) ? 'Revisa tu email' : '') && ok;
     ok = err(f, 'consent', !f.consent.checked ? 'Para participar debes aceptar' : '') && ok;
     if (!ok) { var m = $('.mal', f); if (m) m.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
     guardando = true;

@@ -1,11 +1,11 @@
 /* Hapee · ETM Day — service worker. Precarga todo y responde desde la caché (cache-first).
    Para publicar cambios: sube VERSION (y el ?v= de index.html si cambiaste app.css/app.js). */
-var VERSION = 'hapee-etm-v1';
+var VERSION = 'hapee-etm-v2';
 var ARCHIVOS = [
   './',
   './index.html',
   './app.css?v=1',
-  './app.js?v=1',
+  './app.js?v=2',
   './manifest.webmanifest',
   './fonts/plus-jakarta-sans.woff2',
   './img/logo-hapee-blanco.svg',
