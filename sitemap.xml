@@ -145,6 +145,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://hapee.ai/blog/ganamos-demo-day-metro-2026.html</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hapee.ai/docs/</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -338,6 +344,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://hapee.ai/en/blog/ganamos-demo-day-metro-2026.html</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://hapee.ai/en/docs/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -529,6 +541,12 @@
     <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hapee.ai/pt/blog/ganamos-demo-day-metro-2026.html</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://hapee.ai/pt/docs/</loc>

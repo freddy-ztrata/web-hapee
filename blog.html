@@ -443,6 +443,7 @@ html.dark .wire-track::after{background:linear-gradient(-90deg,#0a0a0c,transpare
 
 /* THEME: VÍA BY HAPEE · METRO — hito full-width, oscuro con línea de red */
 .art-via{grid-column:1/-1}
+.art-win{grid-column:1/-1}.art-win .art-art{min-height:380px}.art-win h4{font-size:clamp(1.6rem,2.8vw,2.2rem);max-width:36ch}.art-win .art-exc{max-width:78ch}@media(max-width:768px){.art-win .art-art{min-height:240px}.art-win h4{font-size:1.55rem}}
 .art-via .art-art{min-height:300px}
 .art-via h4{font-size:clamp(1.6rem,2.8vw,2.2rem);max-width:36ch}
 .art-via .art-exc{max-width:78ch}
@@ -742,6 +743,18 @@ src="https://www.facebook.com/tr?id=955108270238616&ev=PageView&noscript=1"/></n
       <span class="count">06 ARTÍCULOS</span>
     </div>
     <div class="mag-grid" id="magGrid">
+      <article class="art art-win" data-art="metro26" data-pub="2026-11-23" data-cat="eventos">
+        <div class="art-art theme-rrss">
+          <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/demo-day-metro-2026-pitch-69389706.webp" alt="" style="object-position:50% 38%">
+        </div>
+        <div class="art-body">
+          <div class="art-tag">Noticias · Vía by Hapee</div>
+          <h4>Ganamos el Demo Day Metro 2026 con Vía by Hapee</h4>
+          <p class="art-exc">Metro de Santiago eligió a Vía by Hapee, nuestro asistente de viaje con IA para el pasajero, entre los ganadores del Demo Day Metro 2026. Qué es, qué ajustamos en las mentorías y qué viene con Metro.</p>
+          <div class="art-meta">23 Nov 2026 · Noticias · 4 min</div>
+        </div>
+      </article>
+
       <article class="art art-1" data-art="techai26" data-pub="2026-11-04" data-cat="eventos">
         <div class="art-art theme-rrss">
           <img class="hero-bg" loading="lazy" decoding="async" src="img/blog/tech-ai-summit-2026-podcast-811a95d5.webp" alt="" style="object-position:50% 45%">
@@ -1218,7 +1231,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   })();
 
   // data-art → URL real (sub-páginas con share buttons)
-  const POST_URLS={techai26:'/blog/tech-ai-summit-2026-achiag.html',etm26:'/blog/etm-day-2026-agentic-night.html',via:'/blog/via-by-hapee-metro.html',radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
+  const POST_URLS={metro26:'/blog/ganamos-demo-day-metro-2026.html',techai26:'/blog/tech-ai-summit-2026-achiag.html',etm26:'/blog/etm-day-2026-agentic-night.html',via:'/blog/via-by-hapee-metro.html',radar:'/blog/radar-de-competencia.html',notetaker:'/blog/reuniones-ia-notetaker.html',licitaciones:'/blog/licitaciones-mercado-publico.html',opus5:'/blog/claude-opus-5.html',expo:'/blog/expo-compra-publica-podcast.html',mcp:'/blog/mcp-claude.html',voz:'/blog/voz-elevenlabs.html',aws:'/blog/aws-chile.html',aperol:'/blog/hapee-aperol-lanzamiento.html',gpt:'/blog/gpt-5-5.html',rrss:'/blog/automatiza-rrss.html'};
   document.querySelectorAll('[data-art]').forEach(el=>{
     el.style.cursor='pointer';
     el.addEventListener('click',e=>{
