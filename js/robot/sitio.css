@@ -1,0 +1,19 @@
+/* Hapee · botón de acceso a la plataforma (25-11-2026, pedido de Sebastián: «más relevancia al login, botón naranjo»).
+   Lo marca /js/robot/login.js (clase .hx-login) en todas las páginas; lo inyecta robot_recorrido.py.
+   Naranja de marca #FA5000 con texto #080808: 5,9:1 (AA). En hover #D44400 con texto blanco: 4,5:1 (AA).
+   Se distingue de los CTA: ícono de persona, relleno sólido y sin sombra de brillo (el «Ver planes» lleva degradado). */
+a.hx-login{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:0 16px 0 13px!important;
+  border-radius:100px!important;background:#FA5000!important;color:#080808!important;font-family:'Plus Jakarta Sans',system-ui,sans-serif!important;
+  font-weight:800!important;font-size:14px!important;line-height:1!important;letter-spacing:0!important;text-decoration:none!important;white-space:nowrap;
+  border:0!important;box-shadow:none!important;opacity:1!important;transition:background .2s ease,color .2s ease}
+a.hx-login::before,a.hx-login::after{display:none!important}
+a.hx-login:hover,a.hx-login:focus-visible{background:#D44400!important;color:#fff!important}
+a.hx-login:focus-visible{outline:2px solid #080808;outline-offset:2px}
+a.hx-login svg{width:16px;height:16px;flex:none}
+/* copia visible en la barra del celular (sin abrir el menú) */
+a.hx-login.hx-login-m{display:none!important;min-height:44px;padding:0 14px 0 11px!important;margin-left:auto!important;margin-right:6px;font-size:14px!important}
+html.hx-login-movil a.hx-login.hx-login-m{display:inline-flex!important}
+@media (max-width:374px){a.hx-login.hx-login-m{padding:0 12px 0 10px!important;font-size:13px!important;gap:5px}a.hx-login.hx-login-m svg{width:14px;height:14px}}
+/* dentro del menú móvil / hoja: pastilla a lo ancho */
+.mmenu a.hx-login,.mm a.hx-login,[class*="drawer"] a.hx-login{width:100%;min-height:48px;margin:6px 0;font-size:16px!important}
+@media (max-width:760px){a.hx-login{min-height:44px}}
