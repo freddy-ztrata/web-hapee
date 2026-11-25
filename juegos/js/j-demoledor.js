@@ -26,7 +26,7 @@ export async function crear(x) {
   const texBloque = (txt, c1, c2) => { const c = document.createElement('canvas'); c.width = c.height = 128; const d = c.getContext('2d'); const gr = d.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, c1); gr.addColorStop(1, c2); d.fillStyle = gr; d.fillRect(0, 0, 128, 128); d.strokeStyle = 'rgba(0,0,0,.35)'; d.lineWidth = 8; d.strokeRect(4, 4, 120, 120); if (txt) { d.fillStyle = 'rgba(255,241,232,.85)'; d.font = '800 26px "Plus Jakarta Sans",sans-serif'; d.textAlign = 'center'; d.textBaseline = 'middle'; d.fillText(txt, 64, 66); } const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; };
   const mB = [new THREE.MeshStandardMaterial({ map: texBloque('SPAM', '#8a1424', '#4a0a12'), roughness: .5 }), new THREE.MeshStandardMaterial({ map: texBloque('', '#5a4a52', '#2a1e24'), roughness: .6 }), new THREE.MeshStandardMaterial({ map: texBloque('CLICK', '#a01830', '#5a0c18'), roughness: .5 })];
   const hold = new THREE.Group(); S.add(hold); hold.add(bot.g); bot.g.scale.setScalar(1.1); bot.g.position.set(0, -.6, 0);
-  let cuerpos = [], botsS = [], nivel = 0, tiros = 4, pts = 0, eliminados = 0, bloquesCaidos = 0, t = 0, termino = false, estado = 'apunta', vuelo = 0, quieto = 0, aim = null, proyectil = null, mejorTiro = 0, tiroPts = 0;
+  let xTorre = 15, cuerpos = [], botsS = [], nivel = 0, tiros = 4, pts = 0, eliminados = 0, bloquesCaidos = 0, t = 0, termino = false, estado = 'apunta', vuelo = 0, quieto = 0, aim = null, proyectil = null, mejorTiro = 0, tiroPts = 0;
   const DUR = 100;
   function bloque(px, py, w, h, d = 1.2, mat = 0, masa = 1) {
     const b = new C.Body({ mass: masa * w * h, shape: new C.Box(new C.Vec3(w / 2, h / 2, d / 2)), position: new C.Vec3(px, py, 0) }); b.sleepSpeedLimit = .3;
@@ -55,7 +55,7 @@ export async function crear(x) {
   function limpiaNivel() { for (const o of cuerpos) { mundo.removeBody(o.b); S.remove(o.m); } for (const o of botsS) { mundo.removeBody(o.b); S.remove(o.m); } cuerpos = []; botsS = []; }
   function arma(n) {
     limpiaNivel(); tiros = 4;
-    const x0 = 15 + n * 2;
+    const x0 = W.w / W.h < .8 ? 10 + n : 15 + n * 2; xTorre = x0;
     if (n === 0) { // dos torres con puente
       for (const tx of [x0, x0 + 4]) { bloque(tx - .7, 1.2, .5, 2.4, 1.2, 1); bloque(tx + .7, 1.2, .5, 2.4, 1.2, 1); bloque(tx, 2.65, 2.2, .5, 1.2, 0); bloque(tx - .6, 3.65, .5, 1.5, 1.2, 1); bloque(tx + .6, 3.65, .5, 1.5, 1.2, 1); bloque(tx, 4.6, 1.8, .4, 1.2, 2); botSpam(tx, 3.4); botSpam(tx, 5.3); }
       bloque(x0 + 2, 5.1, 4.6, .3, 1.2, 1, .5);
@@ -146,11 +146,11 @@ export async function crear(x) {
       // cámara: lado, sigue al robot en vuelo
       const vert = W.w / W.h < .8;
       cam.fov = vert ? 68 : 48;
-      const centroTorre = 17 + nivel * 2 + 2.4;
+      const centroTorre = xTorre + 2.4;
       let cx, cy, cz;
-      if (estado === 'vuela' && proyectil) { cx = lerp(proyectil.position.x, centroTorre, .35); cy = Math.max(4, proyectil.position.y * .6 + 3); cz = vert ? 22 : 18; }
-      else if (aim || estado === 'apunta') { cx = vert ? centroTorre * .45 : centroTorre * .5; cy = vert ? 5.5 : 5; cz = vert ? 27 : 21; }
-      else { cx = centroTorre * .7; cy = 5; cz = vert ? 24 : 19; }
+      if (estado === 'vuela' && proyectil) { cx = cl(lerp(proyectil.position.x, centroTorre, .45), 3, centroTorre + 2); cy = cl(proyectil.position.y * .5 + 3.5, 4.5, 9); cz = vert ? 21 : 18; }
+      else if (aim || estado === 'apunta') { cx = centroTorre * (vert ? .66 : .5); cy = vert ? 4.8 : 5; cz = vert ? 24 : 21; }
+      else { cx = centroTorre * .65; cy = 5; cz = vert ? 21 : 19; }
       camPos.lerp(new THREE.Vector3(cx, cy, cz), cl(dtR * 3, 0, 1)); if (!this._c) { camPos.set(cx, cy, cz); this._c = true; }
       cam.position.copy(camPos); camMira.set(camPos.x, cy - 1.2, 0); cam.lookAt(camMira);
       k.render(dtR, gg => {
