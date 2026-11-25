@@ -376,7 +376,7 @@ async function empezar(i) {
   $('#hub').classList.add('fuera'); $('#b-salir').hidden = false;
   boc.classList.remove('on');
   let mod;
-  try { mod = await import(`./j-${j.id}.js?v=2`); } catch (e) { console.error(e); modo = 'hub'; $('#hub').classList.remove('fuera'); return; }
+  try { mod = await import(`./j-${j.id}.js?v=3`); } catch (e) { console.error(e); modo = 'hub'; $('#hub').classList.remove('fuera'); return; }
   H.scene.remove(bot.g);
   bot.g.position.set(0, 0, 0); bot.g.rotation.set(0, 0, 0); bot.g.scale.setScalar(1);
   ptsReal = ptsMostrados = 0; hud.pts.textContent = '0'; hud.combo.textContent = ''; hud.extra.textContent = '';
