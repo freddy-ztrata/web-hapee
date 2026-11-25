@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18308791323"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18308791323');
+  gtag('config', 'G-9RFLY7C3XE');
+</script>
+<title>Hapee Arcade · 6 juegos con el robot de Hapee</title>
+<meta name="description" content="Seis juegos con el robot de Hapee: responde leads antes de que se enfríen, califícalos, arma tu pipeline, llena tu agenda, reactiva tu base y corre la Ruta Hapee. Gratis, en el navegador.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://hapee.ai/juegos/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hapee.ai/juegos/">
+<meta property="og:title" content="Hapee Arcade · ¿Le ganas al robot?">
+<meta property="og:description" content="Seis juegos con el robot de Hapee. Responde, califica, agenda y reactiva leads contra el reloj.">
+<meta property="og:image" content="https://hapee.ai/juegos/img/og-arcade.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0507">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/js/home/plus-jakarta-sans-var-644166bf.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/robot-v2.webp" as="image">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(/js/home/plus-jakarta-sans-var-644166bf.woff2) format("woff2");font-weight:200 800;font-display:swap}
+:root{--nar:#FA5000;--bur:#CD2349;--ros:#FF3D7F;--cre:#FFF1E8;--tin:#0B0507;--vio:#1A0A10;--ok:#2BD67B;--g:linear-gradient(90deg,#FA5000,#CD2349);
+  --sl:env(safe-area-inset-left,0px);--sr:env(safe-area-inset-right,0px);--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--tin);color:var(--cre);font-family:"Plus Jakarta Sans",system-ui,sans-serif;overflow:hidden;overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--nar);outline-offset:3px}
+#gl,#c2d,#toque{position:fixed;inset:0;width:100%;height:100%;display:block}
+#c2d{z-index:1}#gl{z-index:2;pointer-events:none}#toque{z-index:3}
+.capa{position:fixed;z-index:5;pointer-events:none}
+.capa>*{pointer-events:auto}
+/* ── portada / carga ── */
+#carga{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:radial-gradient(120% 80% at 50% 60%,#3A0A16 0,#0B0507 70%);transition:opacity .6s,visibility .6s}
+#carga.fuera{opacity:0;visibility:hidden}
+#carga .c-in{display:grid;justify-items:center;gap:18px;text-align:center;padding:24px}
+#carga img.rb{width:min(42vw,190px);height:auto;filter:drop-shadow(0 20px 50px rgba(250,80,0,.45));animation:flota 3s ease-in-out infinite}
+#carga .barra{width:180px;height:4px;border-radius:9px;background:rgba(255,255,255,.12);overflow:hidden}
+#carga .barra i{display:block;height:100%;width:30%;background:var(--g);border-radius:9px;transition:width .3s}
+#carga p{margin:0;font-weight:600;font-size:14px;opacity:.75;letter-spacing:.02em}
+@keyframes flota{50%{transform:translateY(-10px)}}
+/* ── barra superior ── */
+#top{top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(var(--st) + 14px) calc(var(--sr) + 16px) 0 calc(var(--sl) + 16px)}
+#top .marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+#top .marca img{display:block;height:26px;width:auto;min-width:80px;object-fit:contain;flex-shrink:0}
+#top .marca span{font-weight:800;font-size:12px;letter-spacing:.22em;color:var(--nar);border-left:1px solid rgba(255,255,255,.22);padding-left:12px}
+#top .acc{display:flex;gap:8px}
+.ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.ico svg{width:20px;height:20px}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:99px;font-weight:700;font-size:14px;background:var(--g);color:#fff;text-decoration:none;box-shadow:0 10px 30px rgba(250,80,0,.35)}
+/* ── hub ── */
+#hub{left:0;right:0;bottom:0;padding:0 calc(var(--sr) + 16px) calc(var(--sb) + 18px) calc(var(--sl) + 16px);display:grid;gap:14px;justify-items:center;transition:opacity .4s,transform .5s}
+#hub.fuera{opacity:0;transform:translateY(30px);pointer-events:none}
+#hub.fuera>*{pointer-events:none}
+#hub .titulo{position:fixed;top:calc(var(--st) + 70px);left:0;right:0;text-align:center;pointer-events:none;padding:0 16px}
+#hub .titulo h1{margin:0;font-weight:800;font-size:clamp(40px,9vw,112px);line-height:.88;letter-spacing:-.045em;text-wrap:balance}
+#hub .titulo h1 em{font-style:normal;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+#hub .titulo p{margin:10px auto 0;max-width:34ch;font-size:clamp(14px,1.6vw,17px);line-height:1.45;opacity:.78;font-weight:500}
+.ficha{width:min(560px,100%);display:grid;gap:10px;padding:18px 18px 16px;border-radius:22px;background:linear-gradient(180deg,rgba(30,10,16,.72),rgba(14,5,8,.86));border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.ficha .fila{display:flex;align-items:center;gap:12px}
+.ficha .num{font-weight:800;font-size:12px;letter-spacing:.18em;color:var(--nar)}
+.ficha h2{margin:0;font-size:clamp(26px,5vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.ficha .desc{margin:0;font-size:15px;line-height:1.45;opacity:.85}
+.ficha .ensena{margin:0;font-size:13px;line-height:1.45;color:#FFC9A8;font-weight:600}
+.ficha .ensena b{color:var(--cre)}
+.ficha .pie{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:4px}
+.ficha .rec{font-size:13px;opacity:.7;font-weight:600}
+.jugar{height:54px;padding:0 28px;border-radius:99px;background:var(--g);color:#fff;font-weight:800;font-size:17px;letter-spacing:.01em;box-shadow:0 14px 40px rgba(250,80,0,.45),inset 0 1px 0 rgba(255,255,255,.35);display:inline-flex;align-items:center;gap:10px;transition:transform .15s}
+.jugar:active{transform:scale(.96)}
+.jugar svg{width:18px;height:18px}
+.nav{display:flex;align-items:center;gap:14px}
+.puntos{display:flex;gap:2px}
+.puntos button{width:28px;height:44px;display:grid;place-items:center}
+.puntos button i{width:8px;height:8px;border-radius:9px;background:rgba(255,255,255,.3);transition:all .3s}
+.puntos button[aria-current="true"] i{width:26px;background:var(--nar)}
+/* ── bocadillo del robot ── */
+#bocadillo{position:fixed;z-index:6;max-width:min(300px,70vw);padding:12px 16px;border-radius:18px 18px 18px 4px;background:var(--cre);color:#2a0d14;font-weight:700;font-size:15px;line-height:1.35;box-shadow:0 16px 40px rgba(0,0,0,.35);opacity:0;transform:translateY(8px) scale(.96);transition:opacity .25s,transform .25s;pointer-events:none}
+#bocadillo.on{opacity:1;transform:none}
+/* ── HUD de juego ── */
+#hud{top:0;left:0;right:0;padding:calc(var(--st) + 12px) calc(var(--sr) + 14px) 0 calc(var(--sl) + 14px);display:none;align-items:flex-start;justify-content:space-between;gap:10px}
+#hud.on{display:flex}
+#hud .bloque{display:grid;gap:2px;min-width:0}
+#hud .lbl{font-size:11px;font-weight:700;letter-spacing:.16em;opacity:.65}
+#hud .pts{font-size:clamp(30px,6vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+#hud .combo{font-size:14px;font-weight:800;color:var(--nar);min-height:18px}
+#hud .reloj{width:min(220px,34vw);display:grid;gap:6px;justify-items:center;padding-top:6px}
+#hud .reloj .t{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+#hud .reloj .b{width:100%;height:6px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden}
+#hud .reloj .b i{display:block;height:100%;background:var(--g);border-radius:9px;transform-origin:left}
+#hud .der{display:flex;gap:8px}
+#aviso{position:fixed;z-index:6;left:50%;top:38%;transform:translate(-50%,-50%);font-weight:800;font-size:clamp(28px,7vw,64px);letter-spacing:-.03em;text-align:center;pointer-events:none;opacity:0;text-shadow:0 8px 40px rgba(250,80,0,.6);white-space:nowrap}
+#aviso.on{animation:aviso 1.2s ease-out}
+@keyframes aviso{0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-70%) scale(.96)}}
+/* ── tarjetas modales (intro, pausa, resultado) ── */
+.modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:calc(var(--st) + 16px) calc(var(--sr) + 16px) calc(var(--sb) + 16px) calc(var(--sl) + 16px);background:rgba(8,3,5,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;overflow-y:auto;touch-action:pan-y}
+.modal.on{opacity:1}
+.modal .tarj{width:min(520px,100%);display:grid;gap:14px;padding:24px 22px 22px;border-radius:26px;background:linear-gradient(180deg,#1E0A11,#0E0508);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.6);transform:translateY(16px) scale(.98);transition:transform .35s cubic-bezier(.2,.9,.25,1.2)}
+.modal.on .tarj{transform:none}
+.tarj .kick{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--nar)}
+.tarj h3{margin:0;font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.035em;line-height:.98}
+.tarj p{margin:0;font-size:15px;line-height:1.5;opacity:.86}
+.tarj .como{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.tarj .como li{display:flex;gap:10px;font-size:15px;line-height:1.4}
+.tarj .como li b{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:rgba(250,80,0,.16);color:var(--nar);display:grid;place-items:center;font-size:12px}
+.tarj .leccion{padding:14px;border-radius:16px;background:rgba(250,80,0,.08);border:1px solid rgba(250,80,0,.25);font-size:14px;line-height:1.5}
+.tarj .leccion b{color:#FFB48A}
+.tarj .acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.tarj .acciones .jugar{flex:1 1 200px;justify-content:center}
+.sec{white-space:nowrap;height:54px;padding:0 20px;border-radius:99px;border:1px solid rgba(255,255,255,.2);font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:1 1 140px;text-decoration:none}
+.res-pts{font-size:clamp(64px,16vw,104px);font-weight:800;letter-spacing:-.05em;line-height:.9;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.res-sub{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:700}
+.chip{padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.08);font-size:13px;font-weight:700}
+.chip.nar{background:rgba(250,80,0,.18);color:#FFB48A}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stats div{padding:12px 10px;border-radius:14px;background:rgba(255,255,255,.05);display:grid;gap:2px;min-width:0}
+.stats b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.stats span{font-size:12px;opacity:.7;line-height:1.3}
+.ilus{font-size:12px;opacity:.6;font-style:italic}
+.top5{display:grid;gap:4px;margin:0;padding:0;list-style:none;font-size:14px;font-variant-numeric:tabular-nums}
+.top5 li{display:flex;justify-content:space-between;padding:6px 12px;border-radius:10px;background:rgba(255,255,255,.04)}
+.top5 li.yo{background:rgba(250,80,0,.18);font-weight:800}
+.cta-demo{display:grid;gap:10px;padding:16px;border-radius:18px;background:linear-gradient(135deg,rgba(250,80,0,.22),rgba(205,35,73,.22));border:1px solid rgba(250,80,0,.35)}
+.cta-demo b{font-size:17px;line-height:1.3}
+#cuenta{position:fixed;inset:0;z-index:15;display:grid;place-items:center;pointer-events:none;font-weight:800;font-size:min(40vw,260px);letter-spacing:-.06em}
+#cuenta span{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent;animation:cuenta .7s ease-out both}
+@keyframes cuenta{0%{opacity:0;transform:scale(1.8)}30%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.7)}}
+/* ── hoja del calendario de demo ── */
+#hoja-demo{position:fixed;inset:0;z-index:30;display:grid;align-items:end;justify-items:center;background:rgba(5,2,3,.6);opacity:0;transition:opacity .3s;touch-action:pan-y}
+#hoja-demo.on{opacity:1}
+#hoja-demo .h-in{width:min(760px,100%);max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#FFF;color:#1a0b10;border-radius:26px 26px 0 0;padding:18px 16px calc(var(--sb) + 16px);transform:translateY(40px);transition:transform .35s cubic-bezier(.2,.9,.25,1)}
+#hoja-demo.on .h-in{transform:none}
+#hoja-demo .h-cab{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 10px}
+#hoja-demo .h-cab b{font-size:20px;font-weight:800;letter-spacing:-.02em}
+#hoja-demo .h-cab p{margin:2px 0 0;font-size:14px;opacity:.7}
+#hoja-demo .ico{background:#f3ece8;border-color:#eadcd5;color:#1a0b10}
+html.hoja-abierta #toque{pointer-events:none}
+html.jugando #top{display:none}
+@media (max-width:430px){#top .marca span{display:none}.pill{padding:0 14px;font-size:13px}}
+@media (min-width:900px){
+  #hub{grid-template-columns:1fr auto;align-items:end;justify-items:stretch;padding-left:calc(var(--sl) + 40px);padding-right:calc(var(--sr) + 40px);padding-bottom:calc(var(--sb) + 36px)}
+  #hub .titulo{text-align:left;left:40px;right:auto;top:calc(var(--st) + 110px);padding:0}
+  #hub .titulo p{margin-left:0}
+  .ficha{width:440px}
+  .nav{justify-self:end}
+  #hoja-demo{align-items:center}
+  #hoja-demo .h-in{border-radius:26px;max-height:88vh}
+}
+@media (max-height:640px) and (max-width:899px){#hub .titulo p{display:none}#hub .titulo{top:calc(var(--st) + 62px)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<canvas id="c2d" aria-hidden="true"></canvas>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="toque" aria-hidden="true"></div>
+
+<div id="carga" role="status">
+  <div class="c-in">
+    <picture><source srcset="/img/robot-v2.webp" type="image/webp"><img class="rb" src="/img/robot-v2.png" alt="El robot de Hapee" width="435" height="800"></picture>
+    <div class="barra"><i id="carga-b"></i></div>
+    <p id="carga-t">Encendiendo el arcade</p>
+  </div>
+</div>
+
+<header id="top" class="capa">
+  <a class="marca" href="/" aria-label="Ir a hapee.ai"><img src="/img/logo-hapee.png" alt="Hapee" width="300" height="94"><span>ARCADE</span></a>
+  <div class="acc">
+    <button class="ico" id="b-sonido" type="button" aria-label="Silenciar sonido" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path class="on" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+    <button class="ico" id="b-salir" type="button" aria-label="Volver al arcade" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button class="pill" id="b-demo-top" type="button">Agenda tu demo</button>
+  </div>
+</header>
+
+<section id="hub" class="capa" aria-label="Elige un juego">
+  <div class="titulo">
+    <h1>Hapee <em>Arcade</em></h1>
+    <p>Seis juegos con el robot de Hapee. Cada uno es un pedazo real de cómo vendes con IA.</p>
+  </div>
+  <article class="ficha" id="ficha" aria-live="polite">
+    <div class="fila"><span class="num" id="f-num">JUEGO 01 / 06</span></div>
+    <h2 id="f-nom">Cero Visto</h2>
+    <p class="desc" id="f-desc"></p>
+    <p class="ensena" id="f-ens"></p>
+    <div class="pie">
+      <span class="rec" id="f-rec">Sin récord todavía</span>
+      <button class="jugar" id="b-jugar" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Jugar</button>
+    </div>
+  </article>
+  <div class="nav">
+    <button class="ico" id="b-ant" type="button" aria-label="Juego anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
+    <div class="puntos" id="puntos" role="tablist" aria-label="Juegos"></div>
+    <button class="ico" id="b-sig" type="button" aria-label="Juego siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  </div>
+</section>
+
+<div id="bocadillo" aria-live="polite"></div>
+
+<div id="hud" class="capa" aria-live="off">
+  <div class="bloque"><span class="lbl">PUNTOS</span><span class="pts" id="h-pts">0</span><span class="combo" id="h-combo"></span></div>
+  <div class="reloj"><span class="t" id="h-t">60</span><span class="b"><i id="h-b"></i></span><span class="lbl" id="h-extra"></span></div>
+  <div class="der"><button class="ico" id="b-pausa" type="button" aria-label="Pausar"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg></button></div>
+</div>
+<div id="aviso"></div>
+<div id="cuenta" aria-hidden="true"></div>
+
+<div class="modal" id="modal" hidden><div class="tarj" id="tarj" role="dialog" aria-modal="true" aria-labelledby="m-tit"></div></div>
+
+<div id="hoja-demo" hidden>
+  <div class="h-in" role="dialog" aria-modal="true" aria-labelledby="hd-t">
+    <div class="h-cab"><div><b id="hd-t">Agenda tu demo en vivo</b><p>Elige día y hora. Te llega el link de Google Meet por email.</p></div><button class="ico" id="b-cierra-demo" type="button" aria-label="Cerrar calendario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div id="hapeeCalendar" data-theme="light"></div>
+  </div>
+</div>
+
+<noscript><p style="position:fixed;inset:auto 16px 16px;z-index:50;background:#fff;color:#000;padding:16px;border-radius:12px">El arcade necesita JavaScript. <a href="/agenda-tu-demo">Agenda tu demo</a></p></noscript>
+<script type="module" src="/juegos/js/app.js?v=1"></script>
+</body>
+</html>

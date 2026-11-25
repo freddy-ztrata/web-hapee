@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-11-23-metro1
+ARG CACHE_BUST=2026-11-24-arcade1
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -68,6 +68,8 @@ COPY oficina/ /usr/share/nginx/html/oficina/
 COPY via/ /usr/share/nginx/html/via/
 # App offline (PWA) del stand de Hapee en ETM Day: /etm/ (noindex, fuera del sitemap y de todo menu).
 COPY etm/ /usr/share/nginx/html/etm/
+# Hapee Arcade (2026-11-24): hub 3D + 6 juegos en /juegos/
+COPY juegos/ /usr/share/nginx/html/juegos/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
