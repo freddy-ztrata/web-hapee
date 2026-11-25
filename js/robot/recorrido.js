@@ -303,7 +303,7 @@ async function arrancar() {
     const prev = E.spotK ? SP.find(c => c.k === E.spotK) : null;
     const cur = prev && !prev.malo && ys(prev) >= V.nav + h + 24 && ys(prev) <= V.h - 10 ? prev : null;  // cambia de hueco ANTES de llegar a la barra
     let sp = cur;
-    if (!sp) { let best = 1e9; for (const c of SP) { if (c.malo || !(P[c.i] && P[c.i].vista)) continue; const y = ys(c); if (y < lo || y > (c.lado > 0 ? hi - 90 : hi)) continue; const d = Math.abs(y - ideal); if (d < best) { best = d; sp = c; } } }
+    if (!sp) { let best = 1e9; for (const c of SP) { if (c.malo || !(P[c.i] && P[c.i].vista)) continue; const y = ys(c); if (y < lo || y > hi - (document.querySelector('.hl-sw') || c.lado > 0 ? 90 : 0)) continue; const d = Math.abs(y - ideal); if (d < best) { best = d; sp = c; } } }
     // sin hueco a la vista: se esconde, pero sigue pegado a su último hueco (no se queda fijo con el texto pasándole por debajo)
     if (!sp) return { p: E.pq || P[0], X: { x: prev ? prev.x : E.x, y: prev ? ys(prev) : E.y, h, cara: 0, oculto: 1, fijo: 1 }, key: 'nada' };
     E.spot = sp; E.spotK = sp.k; const p = P[sp.i]; E.pq = p;
@@ -487,13 +487,14 @@ async function arrancar() {
       E.fuerza = lerp(E.fuerza, fuerza, 1 - Math.exp(-dt * 12));
       const dx = E.x - ox, vel = Math.abs(E.vx), enReposo = E.fase === 'reposo';
       // visibilidad: escondido si su lugar de reposo choca por ambos lados; casi transparente si al moverse pasa sobre algo
-      let opT = enReposo && X.oculto ? 0 : 1;
+      let opT = (enReposo || !X.fijo) && X.oculto ? 0 : 1;  // en escritorio, si el destino no admite robot (pie ya pasado), se va desvaneciendo en el camino
       if (E.fase === 'salta') opT = E.vis;
       // escritorio con paradas a medida: si en su lugar de reposo hay texto o un enlace (p. ej. el pie al final), se esconde
       if (!V.huecos && enReposo && p.tipo !== 'hero') { if (fr % 10 === 0) E.toca = tocaAlgo(E.x, E.y, E.h); if (E.toca) opT = 0; } else E.toca = false;
       const htm = document.documentElement;
       if (htm.classList.contains('menu-open') || document.body.style.overflow === 'hidden') opT = 0;
-      if (fr % 6 === 0) { const wa = document.getElementById('hapee-wa-fab'); E.wa = false; if (wa) { const r = wa.getBoundingClientRect(); E.wa = r.width && r.right > E.x - E.h * .3 && r.left < E.x + E.h * .3 && r.bottom > E.y - E.h && r.top < E.y; } }
+      // botones flotantes fijos (WhatsApp, selector de idioma flotante): si el robot pasa por debajo, se esconde
+      if (fr % 6 === 0) { E.wa = false; for (const f of document.querySelectorAll('#hapee-wa-fab, .hl-sw')) { const r = f.getBoundingClientRect(); if (r.width && getComputedStyle(f).position === 'fixed' && r.right > E.x - E.h * .32 && r.left < E.x + E.h * .32 && r.bottom > E.y - E.h && r.top < E.y) { E.wa = true; break; } } }
       if (E.wa) opT = 0;
       // fuera de la pantalla (la sección siguió de largo): nada que mostrar
       if (X.fijo && enReposo && (E.y - E.h < V.nav + 10 || E.y > V.h - 4)) opT = 0;
