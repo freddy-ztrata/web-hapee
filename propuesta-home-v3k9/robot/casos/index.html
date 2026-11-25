@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Hapee · casos de éxito</title>
+<meta name="description" content="Hapee recorre una galería y te muestra a sus clientes contando, en sus propias palabras, cómo les va.">
+<link rel="icon" href="/img/favicon.png">
+<style>
+@font-face{font-family:'Plus Jakarta Sans';src:url('/js/home/plus-jakarta-sans-var-644166bf.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+:root{--ng:#FA5000;--mg:#CD2349;--os:#080808;--bg:#F5F3F0}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#080808;color:#F5F3F0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;overflow:hidden}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block}
+.capa{position:fixed;inset:0;pointer-events:none}
+.tit{position:absolute;left:0;right:0;top:12%;text-align:center;padding:0 24px;opacity:0}
+.tit small{display:block;font-weight:800;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#FA5000;margin-bottom:14px}
+.tit h1{margin:0;font-weight:800;font-size:clamp(40px,7vw,92px);line-height:.95;letter-spacing:-.025em}
+.tit p{margin:16px auto 0;max-width:520px;font-size:clamp(16px,1.6vw,19px);line-height:1.45;color:rgba(245,243,240,.78)}
+.ficha{position:absolute;left:5%;top:7%;max-width:min(560px,90%);opacity:0;transform:translateY(14px)}
+.ficha .emp{display:inline-block;font-weight:800;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#fff;padding:8px 13px;border-radius:999px;background:linear-gradient(135deg,#FA5000,#CD2349)}
+.ficha .quien{margin-top:10px;font-weight:700;font-size:15px;color:rgba(245,243,240,.82)}
+.sub{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(900px,90%);text-align:center;font-weight:800;font-size:clamp(20px,2.5vw,34px);line-height:1.18;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.9);opacity:0}
+.fin{position:absolute;left:0;right:0;bottom:14%;text-align:center;padding:0 24px;opacity:0}
+.fin h2{margin:0;font-weight:800;font-size:clamp(34px,5.4vw,72px);line-height:.95;letter-spacing:-.025em}
+.fin a,.fin .pill{display:inline-flex;align-items:center;justify-content:center;margin-top:22px;min-height:52px;padding:0 30px;border-radius:999px;color:#fff;text-decoration:none;font-weight:800;font-size:17px;background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:0 14px 40px rgba(250,80,0,.35);pointer-events:auto}
+.fin .web{display:block;margin-top:14px;font-weight:700;font-size:15px;color:rgba(245,243,240,.7)}
+.inicio{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;background:radial-gradient(80% 60% at 50% 45%,rgba(250,80,0,.16),rgba(8,8,8,0) 70%),#080808;z-index:5;transition:opacity .5s ease}
+.inicio.fuera{opacity:0;pointer-events:none}
+.inicio img{width:150px;height:auto}
+.inicio h1{margin:0;font-weight:800;font-size:clamp(30px,5vw,54px);line-height:.98;letter-spacing:-.025em;max-width:720px}
+.inicio p{margin:0;max-width:460px;color:rgba(245,243,240,.75);font-size:16px;line-height:1.5}
+.inicio button{min-height:54px;padding:0 30px;border:0;border-radius:999px;color:#fff;font:800 17px 'Plus Jakarta Sans',system-ui,sans-serif;background:linear-gradient(135deg,#FA5000,#CD2349);cursor:pointer;box-shadow:0 14px 40px rgba(250,80,0,.35)}
+.inicio button:disabled{opacity:.6;cursor:wait}
+.inicio .nota{font-size:13px;color:rgba(245,243,240,.5)}
+.ctrl{position:fixed;right:14px;top:14px;z-index:6;display:none;gap:6px}
+.ctrl button{min-width:44px;min-height:44px;border-radius:999px;border:1px solid rgba(245,243,240,.25);background:rgba(8,8,8,.6);color:#F5F3F0;font:700 13px 'Plus Jakarta Sans',system-ui,sans-serif;padding:0 14px;cursor:pointer}
+.ctrl a.bv{display:inline-flex;align-items:center;min-height:44px;border-radius:999px;border:1px solid rgba(245,243,240,.25);background:rgba(8,8,8,.6);color:#F5F3F0;font:700 13px 'Plus Jakarta Sans',system-ui,sans-serif;padding:0 14px;text-decoration:none}
+.rend .inicio,.rend .ctrl{display:none!important}
+@media(min-aspect-ratio:1/1){.fin{left:auto;right:6%;width:min(520px,46%);bottom:24%;text-align:left}.fin .web{margin-left:4px}}
+@media(max-aspect-ratio:1/1){.fin h2{font-size:clamp(30px,8vw,56px)}.ficha{left:6%;right:6%;top:6%}.sub{bottom:8%;font-size:clamp(22px,5.4vw,40px)}.tit{top:9%}.fin{bottom:4%}}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="capa">
+  <div class="tit" id="tit"><small>Casos de éxito</small><h1>Hapee te muestra<br>a sus clientes</h1><p>Clientes reales de Hapee, en sus propias palabras.</p></div>
+  <div class="ficha" id="ficha"><span class="emp" id="emp"></span><div class="quien" id="quien"></div></div>
+  <div class="sub" id="sub" aria-live="polite"></div>
+  <div class="fin" id="fin"><h2>¿Tu empresa es la próxima?</h2><a href="/agenda-tu-demo?utm_source=hapee-showcase" id="cta">Agenda tu demo</a><span class="web">hapee.ai</span></div>
+</div>
+<div class="inicio" id="inicio">
+  <img src="/img/logo-hapee.png" alt="Hapee">
+  <h1>Te muestro a nuestros clientes</h1>
+  <p>Un recorrido corto por la galería de casos de éxito de Hapee. Tiene sonido.</p>
+  <button id="go" disabled>Cargando…</button>
+  <span class="nota">Menos de un minuto · los testimonios son reales</span>
+</div>
+<div class="ctrl" id="ctrl"><button id="otra">Ver de nuevo</button><a class="bv" href="vid/hapee-casos-9x16-1905b8b0.mp4" download>Video 9:16</a><a class="bv" href="vid/hapee-casos-16x9-96472404.mp4" download>Video 16:9</a></div>
+<script type="module" src="/propuesta-home-v3k9/robot/casos/casos.js?v=1"></script>
+</body>
+</html>
