@@ -222,7 +222,9 @@ async function arrancar() {
       for (const [l, x] of opciones) { if (l > 0 && !V.movil && x > V.w - 110 - mw) continue; if (libre(x, y)) { lado = l; xx = x; break; } }
       if (!lado) continue;
       // conserva la clave del hueco equivalente de la medición anterior (si no, cada re-medición «movería» el destino)
-      const eq = (viejos || []).find(v => v.lado === lado && Math.abs(v.y - y) < 90 && !out.some(o => o.k === v.k));
+      // el más cercano dentro de 220 px (si algo arriba creció, todo lo de abajo se corre: sigue siendo el mismo hueco)
+      let eq = null;
+      for (const v of viejos || []) if (v.lado === lado && Math.abs(v.y - y) < 220 && !out.some(o => o.k === v.k) && (!eq || Math.abs(v.y - y) < Math.abs(eq.y - y))) eq = v;
       const k = eq ? eq.k : iStop + ':' + Math.round(y) + ':' + lado;
       out.push({ k, x: xx, y, lado, i: iStop, primero: !out.length, malo: MALOS.has(k), obs: obs.filter(o => o[3] > y - h - 160 && o[1] < y + 160) });
       ult = y;
