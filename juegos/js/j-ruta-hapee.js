@@ -1,7 +1,7 @@
 // Juego 06 · Ruta Hapee — corre con el robot: junta leads, esquiva lo que Hapee reemplaza.
 const ALTOS = ['PLANILLA', '5 APPS', 'COPIAR Y PEGAR', 'CORREO PERDIDO'];
 const BAJOS = ['POST-IT', 'RESPUESTA TARDE', 'VISTO'];
-import { cieloTex } from './comun.js?v=1';
+import { cieloTex } from './comun.js?v=2';
 export async function crear(x) {
   const { THREE, R, K, bot, W, sfx, vibra, rnd, cl, lerp, g } = x;
   const S = new THREE.Scene(); S.environment = K.env;
@@ -41,7 +41,7 @@ export async function crear(x) {
   // escudo del agente
   const escudo = new THREE.Mesh(new THREE.SphereGeometry(.95, 32, 20), new THREE.MeshBasicMaterial({ color: 0x2bd67b, transparent: true, opacity: .18, depthWrite: false })); escudo.visible = false; S.add(escudo);
   bot.g.position.set(0, 0, 0); bot.g.rotation.y = Math.PI; bot.g.scale.setScalar(1); S.add(bot.g); bot.pose('corre');
-  let objs = [], vel = 12, dist = 0, pts = 0, leads = 0, racha = 0, mejorR = 0, vidas = 3, inv = 0, lane = 1, lx = 0, y = 0, vy = 0, iman = 0, escudoT = 0, termino = false, t = 0, prox = 18, golpes = 0, textos = [];
+  let sac = 0, lentoT = 0, objs = [], vel = 12, dist = 0, pts = 0, leads = 0, racha = 0, mejorR = 0, vidas = 3, inv = 0, lane = 1, lx = 0, y = 0, vy = 0, iman = 0, escudoT = 0, termino = false, t = 0, prox = 18, golpes = 0, textos = [];
   const DUR = 90;
   function crea(tipo, l, z, etq) {
     let m;
@@ -66,7 +66,7 @@ export async function crear(x) {
   function golpe(o) {
     if (escudoT > 0) { escudoT = 0; escudo.visible = false; o.vivo = false; S.remove(o.m); sfx.boom(); x.aviso('¡EL AGENTE TE CUBRIÓ!'); vibra(30); return; }
     if (inv > 0) return;
-    vidas--; golpes++; inv = 1.4; racha = 0; x.combo(0); vel = Math.max(12, vel * .8); sfx.mal(); vibra([60, 40, 60]);
+    sac = 1; vidas--; golpes++; inv = 1.4; racha = 0; x.combo(0); vel = Math.max(12, vel * .8); sfx.mal(); vibra([60, 40, 60]);
     x.dice(o.tipo === 'alto' ? `¡Chocamos con «${o.etq || 'eso'}»! Hapee reemplaza eso.` : '¡Tropezamos! Salta los bajos.', 1600);
     if (vidas <= 0) fin(false);
   }
@@ -86,6 +86,7 @@ export async function crear(x) {
     tecla(e) { if (e.key === 'ArrowLeft' || e.key === 'a') mover(-1); if (e.key === 'ArrowRight' || e.key === 'd') mover(1); if (e.key === 'ArrowUp' || e.key === 'w' || e.key === ' ') salta(); },
     limpia() { S.remove(bot.g); },
     paso(dt, T) {
+      const dtR = dt; if (lentoT > 0) { lentoT -= dt; dt *= .35; } sac = Math.max(0, sac - dtR * 2.5);
       if (dt > 0 && !termino) {
         t += dt; x.tiempo(DUR - t, DUR); x.extra(vidasTxt());
         vel = Math.min(30, vel + dt * .22); dist += vel * dt;
@@ -109,8 +110,8 @@ export async function crear(x) {
           const dz = Math.abs(o.m.position.z), mismo = Math.abs(o.m.position.x - lx) < .7;
           if (dz < .55 && mismo) {
             if (o.tipo === 'lead') { if (Math.abs(o.m.position.y - (y + .9)) < 1) { o.vivo = false; S.remove(o.m); leads++; racha++; mejorR = Math.max(mejorR, racha); const pp = 50 * (1 + Math.min(4, Math.floor(racha / 5))); pts += pp; x.pts(pts); x.combo(racha >= 5 ? racha : 0); sfx.bien(Math.min(10, racha % 11)); vibra(6); textos.push({ p: o.m.position.clone(), txt: '+' + pp, t: 0 }); if (racha % 20 === 0) { x.aviso('RACHA ×' + racha); bot.pose('celebra', .8); setTimeout(() => !termino && bot.pose('corre'), 800); } } }
-            else if (o.tipo === 'workflow') { o.vivo = false; S.remove(o.m); iman = 6; sfx.power(); x.aviso('WORKFLOW: IMÁN DE LEADS'); x.dice('Un workflow trabaja por ti: los leads llegan solos.', 1800); }
-            else if (o.tipo === 'agente') { o.vivo = false; S.remove(o.m); escudoT = 8; escudo.visible = true; sfx.power(); x.aviso('AGENTE IA: ESCUDO'); }
+            else if (o.tipo === 'workflow') { o.vivo = false; S.remove(o.m); iman = 6; lentoT = .45; sac = .3; sfx.power(); x.aviso('WORKFLOW: IMÁN DE LEADS'); x.dice('Un workflow trabaja por ti: los leads llegan solos.', 1800); }
+            else if (o.tipo === 'agente') { o.vivo = false; S.remove(o.m); escudoT = 8; lentoT = .45; sac = .3; escudo.visible = true; sfx.power(); x.aviso('AGENTE IA: ESCUDO'); }
             else if (o.tipo === 'bajo') { if (y < .55) golpe(o); }
             else if (o.tipo === 'alto') golpe(o);
           }
@@ -124,7 +125,7 @@ export async function crear(x) {
       bot.update(T, dt);
       // cámara que sigue con un poco de retraso
       const asp = W.w / W.h; cam.aspect = asp; cam.fov = asp < .8 ? 72 : 58;
-      cam.position.set(lx * .55, 1.95 + y * .3, asp < .8 ? 3.7 : 3.6); cam.lookAt(lx * .3, 1.05, -7); cam.updateProjectionMatrix();
+      cam.position.set(lx * .55, 1.95 + y * .3, asp < .8 ? 3.7 : 3.6); cam.lookAt(lx * .3, 1.05, -7); if (sac > 0) { cam.position.x += (Math.random() - .5) * sac * .4; cam.position.y += (Math.random() - .5) * sac * .4; } cam.updateProjectionMatrix();
       R.render(S, cam);
       g.setTransform(W.dpr, 0, 0, W.dpr, 0, 0); g.clearRect(0, 0, W.w, W.h);
       for (const tx of textos) tx.t += dt; textos = textos.filter(tx => tx.t < .8);

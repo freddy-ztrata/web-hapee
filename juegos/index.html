@@ -145,6 +145,9 @@ a{color:inherit}
 #hoja-demo .ico{background:#f3ece8;border-color:#eadcd5;color:#1a0b10}
 html.hoja-abierta #toque{pointer-events:none}
 html.jugando #top{display:none}
+#hub .titulo{transition:opacity .5s}
+html.paseando #hub .titulo{opacity:0}
+@media (max-width:899px){.ficha .desc,.ficha .ensena{display:none}.ficha{gap:6px;padding:14px 16px}.ficha h2{font-size:28px}}
 @media (max-width:430px){#top .marca span{display:none}.pill{padding:0 14px;font-size:13px}}
 @media (min-width:900px){
   #hub{grid-template-columns:1fr auto;align-items:end;justify-items:stretch;padding-left:calc(var(--sl) + 40px);padding-right:calc(var(--sr) + 40px);padding-bottom:calc(var(--sb) + 36px)}
@@ -224,6 +227,6 @@ html.jugando #top{display:none}
 </div>
 
 <noscript><p style="position:fixed;inset:auto 16px 16px;z-index:50;background:#fff;color:#000;padding:16px;border-radius:12px">El arcade necesita JavaScript. <a href="/agenda-tu-demo">Agenda tu demo</a></p></noscript>
-<script type="module" src="/juegos/js/app.js?v=1"></script>
+<script type="module" src="/juegos/js/app.js?v=2"></script>
 </body>
 </html>
