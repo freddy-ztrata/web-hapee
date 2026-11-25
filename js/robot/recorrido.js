@@ -85,24 +85,27 @@ async function arrancar() {
   });
 
   const K = await kit(), { THREE } = K;
-  const V = { w: innerWidth, h: innerHeight, k: 1, movil: innerWidth < 760, pr: 1 };
+  const TACTIL = matchMedia('(pointer:coarse)').matches;
+  const esMovil = () => innerWidth < 760 || (TACTIL && innerHeight < 520);
+  const V = { w: innerWidth, h: innerHeight, k: 1, movil: esMovil(), pr: 1, nav: 0 };
   const R = renderer(K, cv);
   const S = new THREE.Scene(); luces(K, S);
   const cam = new THREE.PerspectiveCamera(30, 1, .1, 60); cam.position.set(0, 0, 10);
   const bot = await robot(K); S.add(bot.g);
   // compila los shaders sin bloquear (KHR_parallel_shader_compile) antes del primer cuadro
   try { if (R.compileAsync) await R.compileAsync(S, cam); } catch (e) {}
-  const part = particulas(K, V.movil ? 260 : 600); S.add(part.pts);
+  const part = particulas(K, V.movil || TACTIL ? 260 : 600); S.add(part.pts);
   const jet = propulsores(K, bot, part);
   let sombra = null;
-  if (!V.movil) {
+  if (!V.movil && !TACTIL) {
     sombra = new THREE.Mesh(new THREE.CircleGeometry(.5, 32), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: .22, depthWrite: false }));
     sombra.rotation.x = -Math.PI / 2 + .35; S.add(sombra);
   }
   let calidad = 1;
   function medir() {
-    V.w = innerWidth; V.h = innerHeight; V.movil = V.w < 760;
-    V.pr = Math.min(V.movil ? 1.25 : 1.5, devicePixelRatio || 1) * calidad;
+    V.w = innerWidth; V.h = innerHeight; V.movil = esMovil();
+    const nv = document.querySelector('.nav'); V.nav = nv ? Math.max(0, nv.getBoundingClientRect().bottom) : 0;
+    V.pr = Math.min(V.movil || TACTIL ? 1.25 : 1.5, devicePixelRatio || 1) * calidad;
     R.setPixelRatio(V.pr); R.setSize(V.w, V.h, false);
     cv.style.width = V.w + 'px'; cv.style.height = V.h + 'px';
     cam.aspect = V.w / V.h; cam.updateProjectionMatrix();
@@ -122,25 +125,89 @@ async function arrancar() {
       const ancla = d.tipo === 'hero' ? top + r.height * .5 : d.tipo === 'pie' ? top : top + Math.min(r.height * .38, V.h * .42);
       if (!d.tipo) lado = d.lado || -lado;
       const cont = el.querySelector('.ctn,.container,.wrap,.inner,[class*="container"]') || el;
-      out.push({ ...d, el, ancla: d === PARADAS[0] && !d.tipo ? 0 : ancla, lado, margen: Math.max(0, cont.getBoundingClientRect().left) });
+      const q = { ...d, el, ancla: d === PARADAS[0] && !d.tipo ? 0 : ancla, lado, margen: Math.max(0, cont.getBoundingClientRect().left) };
+      if (V.movil && d.tipo !== 'hero') { const vj = P.find(x => x.el === el); q.spots = lugaresLibres(el, out.length, vj && vj.spots); q.vista = !!(vj && vj.vista); }
+      out.push(q);
     }
     out.sort((a, b) => a.ancla - b.ancla);
+    out.forEach((q, i) => (q.spots || []).forEach(sp => (sp.i = i)));
+    SP = V.movil ? out.flatMap(q => q.spots || []) : [];
+    out.forEach((q, i) => (q.spots || []).forEach(sp => { sp.i = i; sp.malo = MALOS.has(sp.k); }));
+    out.forEach(q => { if (!q.__io) { q.__io = 1; ioS.observe(q.el); } });
     const maxF = document.documentElement.scrollHeight - V.h * .5 - 2;
     for (let i = out.length - 1; i >= 0; i--) { const tope = i === out.length - 1 ? maxF : out[i + 1].ancla - 40; if (out[i].ancla > tope) out[i].ancla = tope; }
     P = out;
   }
 
-  const ALTO = () => V.movil ? Math.min(104, V.h * .13) : Math.min(240, V.h * .26);
+  const ALTO = () => V.movil ? Math.min(88, V.h * .11, V.w * .22) : Math.min(240, V.h * .26);
+
+  // ── celular: lugar libre por sección ──
+  // Obstáculos = líneas de texto reales (Range.getClientRects), imágenes y todo lo PROHIBIDO, en coordenadas de documento.
+  // El robot se para en un hueco donde no toca nada, completo (sin recortes) y del lado izquierdo si se puede (a la
+  // derecha está el botón de WhatsApp); el lugar viaja con la página, así que el texto no le pasa por debajo.
+  function obstaculos(raiz) {
+    const sy = scrollY, out = [];
+    const tw = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, { acceptNode: n => /\S/.test(n.nodeValue) ? 1 : 2 });
+    const rg = document.createRange();
+    for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+      const pe = n.parentElement; if (!pe || pe.closest('script,style,noscript')) continue;
+      rg.selectNodeContents(n);
+      for (const r of rg.getClientRects()) if (r.width > 1 && r.height > 1) out.push([r.left - 6, r.top + sy - 6, r.right + 6, r.bottom + sy + 6]);
+    }
+    // obstáculos = texto, enlaces y botones, campos, iframes y videos (puede pararse sobre fondos e imágenes decorativas)
+    raiz.querySelectorAll(PROHIBIDO + ', a, label, [role=button], [role=tab], select').forEach(e => {
+      const r = e.getBoundingClientRect(); if (r.width > 4 && r.height > 4) out.push([r.left - 8, r.top + sy - 8, r.right + 8, r.bottom + sy + 8]);
+    });
+    // logos, insignias e íconos (imágenes chicas): también obstáculos; las imágenes grandes de fondo no
+    raiz.querySelectorAll('img, svg, picture, video').forEach(e => {
+      const r = e.getBoundingClientRect(); if (r.width > 4 && r.height > 4 && r.width < V.w * .6) out.push([r.left - 6, r.top + sy - 6, r.right + 6, r.bottom + sy + 6]);
+    });
+    // ventanas con contenido que cambia solo (chat de ejemplo, listas que se desplazan): cuentan enteras como obstáculo
+    raiz.querySelectorAll('div,ul,ol,section').forEach(e => {
+      if (e.clientHeight < 80) return;
+      const cs = getComputedStyle(e);
+      if (!/(auto|scroll)/.test(cs.overflowY) && !/(auto|scroll)/.test(cs.overflowX)) return;
+      const r = e.getBoundingClientRect(); out.push([r.left - 8, r.top + sy - 8, r.right + 8, r.bottom + sy + 8]);
+    });
+    return out;
+  }
+  // todos los huecos de la sección donde el robot cabe completo sin tocar nada, separados ~media pantalla
+  function lugaresLibres(el, iStop, viejos) {
+    const r = el.getBoundingClientRect(), top = r.top + scrollY, bot = r.bottom + scrollY;
+    const h = ALTO(), mw = h * .36;
+    const obs = obstaculos(el);
+    // 30 px libres sobre la cabeza: el aterrizaje baja desde ahí
+    const libre = (x, y) => { const a = x - mw, b = x + mw, c = y - h - 30, d = y; for (const o of obs) if (o[2] > a && o[0] < b && o[3] > c && o[1] < d) return false; return true; };
+    const out = [];
+    let ult = -1e9;
+    for (let y = top + h + 14; y <= bot - 6; y += 10) {
+      if (y - ult < V.h * .42) continue;
+      let lado = 0;
+      if (libre(mw + 6, y)) lado = -1; else if (libre(V.w - mw - 6, y)) lado = 1;  // izquierda primero: a la derecha está WhatsApp
+      if (!lado) continue;
+      // conserva la clave del hueco equivalente de la medición anterior (si no, cada re-medición «movería» el destino)
+      const eq = (viejos || []).find(v => v.lado === lado && Math.abs(v.y - y) < 90 && !out.some(o => o.k === v.k));
+      const k = eq ? eq.k : iStop + ':' + Math.round(y) + ':' + lado;
+      out.push({ k, x: lado < 0 ? mw + 6 : V.w - mw - 6, y, lado, i: iStop, primero: !out.length, malo: MALOS.has(k), obs: obs.filter(o => o[3] > y - h - 160 && o[1] < y + 160) });
+      ult = y;
+    }
+    return out;
+  }
   const PISO = () => V.h - (V.movil ? 82 : 26);   // en celular, por encima del botón flotante de WhatsApp
   function reposo(p) {
     if (p.tipo === 'pie') {
       const r = p.el.getBoundingClientRect(), h = ALTO();
       // de pie sobre el borde superior del pie de página; si ese borde ya salió por arriba, en el piso
-      return { x: V.movil ? h * .5 : V.w * .8, y: r.top > h + 90 ? Math.min(r.top + 2, PISO()) : PISO(), h, cara: V.movil ? .35 : -.35 };
+      if (V.movil) return p.spot ? { x: p.spot.x, y: p.spot.y - scrollY, h, cara: p.spot.lado < 0 ? .5 : -.5, fijo: 1 } : { x: E.x, y: E.y, h, cara: 0, oculto: 1, fijo: 1 };
+      return { x: V.w * .8, y: r.top > h + 90 ? Math.min(r.top + 2, PISO()) : PISO(), h, cara: -.35 };
     }
     if (p.tipo === 'hero') {
       const r = p.el.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.bottom - r.height * .015, h: Math.max(60, r.height * .97), cara: 0 };
+    }
+    if (V.movil) {
+      if (!p.spot) return { x: E.x || V.w / 2, y: E.y || V.h * .8, h: ALTO(), cara: 0, oculto: 1, fijo: 1 };
+      return { x: p.spot.x, y: p.spot.y - scrollY, h: ALTO(), cara: p.spot.lado < 0 ? .6 : -.6, fijo: 1 };
     }
     const h = ALTO(), wR = h * .62;
     let x;
@@ -167,7 +234,7 @@ async function arrancar() {
   }
   // decide dónde reposa: su lado, el lado opuesto o escondido
   function ubicar(X, p) {
-    if (p.tipo === 'hero') return X;
+    if (p.tipo === 'hero' || X.fijo) return X;
     if (!choca(X.x, X.y, X.h)) return X;
     const Y = { ...X, x: V.w - X.x, cara: -X.cara };
     if (!choca(Y.x, Y.y, Y.h)) return Y;
@@ -177,6 +244,34 @@ async function arrancar() {
   const E = { x: 0, y: 0, h: 100, yaw: 0, fuerza: 0, tBot: 0, enVuelo: false, burbI: -1, mouseX: .5, mouseY: .5, posePara: -1, vx: 0, vy: 0, bank: 0, op: 1, fiesta: 0 };
   addEventListener('pointermove', e => { E.mouseX = e.clientX / V.w; E.mouseY = e.clientY / V.h; }, { passive: true });
 
+  let SP = [];
+  const MALOS = new Set();   // huecos que resultaron ocupados (contenido animado): no se vuelven a usar
+  const ioS = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting || !V.movil) return;
+    const q = P.find(x => x.el === e.target); if (!q || q.tipo === 'hero') return;
+    clearTimeout(q.__t); q.__t = setTimeout(() => {
+      const i = P.indexOf(q); if (i < 0) return;
+      q.spots = lugaresLibres(q.el, i, q.spots); q.vista = true;  // medida ya con la sección en pantalla (animaciones de entrada terminadas)
+      SP = P.flatMap(x => x.spots || []);
+
+    }, 1000);
+  }), { rootMargin: '-12% 0px' });
+  function objetivoMovil() {
+    // hero: mientras el robot del hero esté a la vista, ahí
+    const h0 = P[0] && P[0].tipo === 'hero' ? P[0] : null;
+    if (h0) { const r = h0.el.getBoundingClientRect(); if (r.bottom - r.height * .45 > V.nav) return { p: h0, X: reposo(h0), key: h0 }; }
+    const h = ALTO(), lo = V.nav + h + 12, hi = V.h - 26, ideal = V.h * .7;
+    const ys = sp => sp.y - scrollY;
+    // identidad estable por clave: re-medir (animaciones, ResizeObserver) no debe reiniciar el viaje
+    const prev = E.spotK ? SP.find(c => c.k === E.spotK) : null;
+    const cur = prev && !prev.malo && ys(prev) >= V.nav + h + 24 && ys(prev) <= V.h - 10 ? prev : null;  // cambia de hueco ANTES de llegar a la barra
+    let sp = cur;
+    if (!sp) { let best = 1e9; for (const c of SP) { if (c.malo || !(P[c.i] && P[c.i].vista)) continue; const y = ys(c); if (y < lo || y > (c.lado > 0 ? hi - 90 : hi)) continue; const d = Math.abs(y - ideal); if (d < best) { best = d; sp = c; } } }
+    // sin hueco a la vista: se esconde, pero sigue pegado a su último hueco (no se queda fijo con el texto pasándole por debajo)
+    if (!sp) return { p: E.pq || P[0], X: { x: prev ? prev.x : E.x, y: prev ? ys(prev) : E.y, h, cara: 0, oculto: 1, fijo: 1 }, key: 'nada' };
+    E.spot = sp; E.spotK = sp.k; const p = P[sp.i]; E.pq = p;
+    return { p, X: { x: sp.x, y: ys(sp), h, cara: sp.lado < 0 ? .6 : -.6, fijo: 1 }, key: sp.k, spot: sp };
+  }
   let cacheU = { t: -1 };
   function objetivo(fr) {
     if (!P.length) return null;
@@ -191,20 +286,44 @@ async function arrancar() {
     B = { ...B, x: cacheU.B.x, cara: cacheU.B.cara, oculto: cacheU.B.oculto };
     return { a, b, A, B, u, v: ss((u - .42) / .48) };
   }
-  let ultMed = 0;
   addEventListener('resize', () => medir());
-  new ResizeObserver(() => { if (performance.now() - ultMed > 400) { ultMed = performance.now(); medirParadas(); } }).observe(document.body);
+  let tMed = 0;
+  let ultMedida = 0;
+  new ResizeObserver(() => {
+    if (tMed) return;
+    tMed = setTimeout(() => { tMed = 0; ultMedida = performance.now(); medirParadas(); }, Math.max(0, 500 - (performance.now() - ultMedida)));
+  }).observe(document.body);
+  addEventListener('load', () => setTimeout(medirParadas, 300), { once: true });
 
   function mundo(px, py) { return [(px - V.w / 2) * V.k, (V.h / 2 - py) * V.k]; }
 
-  function globo(p, enReposo, visible) {
+  function globo(p, enReposo, visible, spot) {
     const idx = P.indexOf(p);
     const txt = E.fiesta > 0 ? '¡Listo! Nos vemos en la demo.' : p.burb;
-    const mostrar = visible && (E.fiesta > 0 || (enReposo && p.burb));
+    const mostrar = visible && (E.fiesta > 0 || (enReposo && p.burb && !(V.movil && p.tipo === 'hero')));
     const clave = E.fiesta > 0 ? 'fiesta' : idx;
     if (mostrar && E.burbI !== clave) {
       burb.innerHTML = txt + (p.cta && !E.fiesta ? `<br><a href="${p.cta[1]}">${p.cta[0]}</a>` : '');
-      burb.classList.toggle('cta', !!p.cta && !E.fiesta); E.burbI = clave;
+      burb.classList.toggle('cta', !!p.cta && !E.fiesta); E.burbI = clave; E.bp = null;
+    }
+    if (V.movil && !E.fiesta && p.tipo !== 'hero') {
+      if (!mostrar || !spot || !spot.primero) { burb.classList.remove('on'); return; }
+      // celular: el lugar del globo se decide una vez por parada contra los mismos obstáculos (no tapa texto ni botones)
+      if (!E.bp || E.bp.k !== spot.k) E.bp = { k: spot.k, pos: lugarGlobo(spot) };
+      const g = E.bp.pos;
+      if (!g || E.op < .6) { burb.classList.remove('on'); return; }
+      burb.classList.toggle('der', g.der);
+      const gb = g.bot - scrollY, gh = burb.offsetHeight || 40;
+      if (gb - gh < V.nav + 6 || gb > V.h - 8) { burb.classList.remove('on'); return; }  // nunca bajo la barra ni cortado abajo
+      burb.style.left = g.cx + 'px'; burb.style.top = gb + 'px';
+      if (fr % 20 === 10 && burb.classList.contains('on')) {
+        const r = burb.getBoundingClientRect(); let mal = false; burb.style.pointerEvents = 'none';
+        for (const fx of [.03, .25, .5, .75, .97]) for (const fy of [.1, .5, .9]) { if (tocaAlgo(r.left + r.width * fx, r.top + r.height * fy + 1, 2)) { mal = true; break; } }
+        burb.style.pointerEvents = '';
+        if (mal) { E.bp.pos = null; burb.classList.remove('on'); return; }
+      }
+      burb.classList.add('on');
+      return;
     }
     burb.classList.toggle('on', !!mostrar);
     if (mostrar) {
@@ -219,6 +338,48 @@ async function arrancar() {
     }
   }
 
+  function tocaAlgo(x, y, h) {
+    const mw = h * .34;
+    for (const fx of [-1, -.5, 0, .5, 1]) for (const fy of [.04, .2, .36, .52, .68, .84, .98]) {
+      const px = x + fx * mw, py = y - fy * h;
+      if (px < 0 || py < 0 || px > V.w || py > V.h) continue;
+      const el = document.elementFromPoint(px, py);
+      if (el && el.closest && el.closest('.hx-burb')) continue;
+      if (el && el.closest && el.closest(PROHIBIDO + ', a, label, [role=button], [role=tab]')) return true;
+      if (el && /^(IMG|svg|path|PICTURE)$/i.test(el.tagName)) { const q = (el.closest('svg') || el).getBoundingClientRect(); if (q.width < V.w * .6) return true; }
+      // texto bajo el punto: nodos de texto directos de los elementos apilados ahí (no depende de caretRangeFromPoint)
+      const pila = document.elementsFromPoint(px, py);
+      for (let j = 0; j < Math.min(5, pila.length); j++) {
+        const e = pila[j]; if (e === cv || e.closest('.hx-burb')) continue;
+        for (const n of e.childNodes) {
+          if (n.nodeType !== 3 || !/\S/.test(n.nodeValue)) continue;
+          const rg = document.createRange(); rg.selectNodeContents(n);
+          for (const r of rg.getClientRects()) if (px >= r.left - 3 && px <= r.right + 3 && py >= r.top - 3 && py <= r.bottom + 3) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function lugarGlobo(sp) {
+    const bw = burb.offsetWidth || 180, bh = burb.offsetHeight || 40, h = ALTO(), mw = h * .36;
+    const izq = sp.lado < 0;
+    const cands = [
+      // encima de la cabeza, cargado hacia el centro
+      { cx: izq ? sp.x - mw + bw / 2 : sp.x + mw - bw / 2, bot: sp.y - h - 6, der: !izq },
+      // al lado de la cabeza, hacia el centro
+      { cx: izq ? sp.x + mw + 8 + bw / 2 : sp.x - mw - 8 - bw / 2, bot: sp.y - h * .45, der: !izq }
+    ];
+    for (const c of cands) {
+      c.cx = cl(c.cx, bw / 2 + 8, V.w - bw / 2 - 8);
+      const a = c.cx - bw / 2 - 4, b = c.cx + bw / 2 + 4, t0 = c.bot - bh - 4, t1 = c.bot + 4;
+      let ok = true;
+      for (const o of sp.obs) if (o[2] > a && o[0] < b && o[3] > t0 && o[1] < t1) { ok = false; break; }
+      if (ok) return c;
+    }
+    return null;
+  }
+
   // celebra cuando el calendario avisa que la cita quedó agendada (mismo mensaje que usa la conversión de la página)
   addEventListener('message', ev => {
     const d = ev.data;
@@ -226,8 +387,11 @@ async function arrancar() {
   });
 
   let t = 0, prev = performance.now(), primero = true, fr = 0, vivo = true, lentos = 0, muestras = 0;
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && vivo) { prev = performance.now(); requestAnimationFrame(loop); } });
-  window.__hx = { E, bot, P: () => P, pag: PAG, perf: { lentos: 0, cuadros: 0 } };
+  let enCurso = false;
+  const reanudar = () => { if (vivo && !document.hidden && !enCurso) { enCurso = true; prev = performance.now(); requestAnimationFrame(loop); } };
+  document.addEventListener('visibilitychange', reanudar);
+  addEventListener('pageshow', e => { if (e.persisted) { primero = true; E.fase = 'reposo'; medirParadas(); reanudar(); } });
+  window.__hx = { E, bot, P: () => P, SP: () => SP, pag: PAG, perf: { lentos: 0, cuadros: 0 } };
 
   function apagar() { // el equipo no da: se va y el hero recupera su robot
     vivo = false; burb.remove(); document.documentElement.classList.remove('hx-on');
@@ -236,30 +400,37 @@ async function arrancar() {
   }
 
   function loop(now) {
-    if (!vivo || document.hidden) return;
+    if (!vivo || document.hidden) { enCurso = false; return; }
     const dtR = (now - prev) / 1000; prev = now;
     const dt = Math.min(.05, dtR); t += dt; fr++;
     // vigía de rendimiento: si los cuadros pasan de 45 ms, baja la resolución; si sigue, se apaga
     if (fr > 30) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
     if (muestras === 180) { if (lentos > 90) { if (calidad > .7) { calidad = .7; medir(); muestras = lentos = 0; } else return apagar(); } else muestras = lentos = 0; }
-    const o = objetivo(fr);
-    if (o) {
+    const o = !P.length ? null : V.movil ? objetivoMovil() : objetivo(fr);
+    if (o && o.p) {
       // Destino = la parada más cercana al foco. El viaje es POR TIEMPO (no por scroll): despega, vuela en arco,
       // aterriza un poco antes y camina los últimos pasos. Así nunca queda flotando a media pantalla sobre el texto.
-      const p = o.u >= .5 ? o.b : o.a, X = o.u >= .5 ? o.B : o.A, idx = P.indexOf(p);
-      if (primero) { E.x = X.x; E.y = X.y; E.h = X.h; E.dest = p; E.fase = 'reposo'; primero = false; }
-      if (E.dest !== p) {
+      const p = o.p || (o.u >= .5 ? o.b : o.a), X = o.X || (o.u >= .5 ? o.B : o.A), idx = P.indexOf(p), clave = o.key || p;
+      if (primero) { E.x = X.x; E.y = X.y; E.h = X.h; E.dest = clave; E.fase = 'reposo'; primero = false; }
+      if (E.dest !== clave && !(clave === 'nada')) {
         const d = Math.hypot(X.x - E.x, X.y - E.y);
-        E.dest = p; E.t0 = t; E.sx = E.x; E.sy = E.y; E.sh = E.h;
+        E.dest = clave; E.t0 = t; E.sx = E.x; E.sy = E.y; E.sh = E.h; E.syDoc = E.y + scrollY;
         const anclado = !!p.tipo;  // hero/pie: aterriza justo ahí, sin caminar
         E.camina = !anclado && Math.abs(X.y - E.y) < 24 && d < X.h * 1.6;
-        E.fase = E.camina ? 'camina' : 'vuela';
+        E.fase = V.movil ? 'salta' : E.camina ? 'camina' : 'vuela';
         E.dur = E.camina ? d / (X.h * 1.7) : cl(.75 + d / 1500, .8, 1.5);
-        E.dentro = anclado ? 0 : (X.x < V.w / 2 ? 1 : -1) * X.h * .75; // aterriza hacia el centro y camina a su sitio
+        E.dentro = anclado || X.fijo ? 0 : (X.x < V.w / 2 ? 1 : -1) * X.h * .75; // aterriza hacia el centro y camina a su sitio
         E.alto = Math.min(V.h * .32, 80 + d * .28);
       }
       let tx = X.x, ty = X.y, th = X.h, fuerza = 0, camina = false;
-      if (E.fase === 'vuela') {
+      if (E.fase === 'salta') {
+        // celular: no cruza el contenido. Despega en su sitio desvaneciéndose y aterriza en el nuevo hueco apareciendo
+        const v = (t - E.t0) / .85;
+        if (v < .4) { const e = ss(v / .4); tx = E.sx; ty = E.syDoc - scrollY - 22 * e; /* el despegue viaja con la página */ th = E.sh; fuerza = .95; E.vis = 1 - e; }
+        else { const u2 = cl((v - .4) / .6, 0, 1); ty = X.y - 26 * (1 - io(u2)); fuerza = .95 * (1 - ss((u2 - .72) / .28)); E.vis = ss(u2 / .55); }
+        if (v >= 1) { E.fase = 'reposo'; E.vis = 1; jet.polvo(th * V.k); }
+        E.vis = Math.min(E.vis, cl((ty - th - V.nav) / 30, 0, 1), cl((V.h - ty + 10) / 30, 0, 1));  // nunca bajo la barra ni cortado abajo
+      } else if (E.fase === 'vuela') {
         const v = cl((t - E.t0) / E.dur, 0, 1), e = io(v);
         const lx = X.x + E.dentro;
         tx = lerp(E.sx, lx, e); ty = lerp(E.sy, X.y, e) - Math.sin(Math.PI * v) * E.alto; th = lerp(E.sh, X.h, e) * (1 + (V.movil ? .1 : .22) * Math.sin(Math.PI * v));
@@ -270,17 +441,27 @@ async function arrancar() {
         tx = lerp(E.sx, X.x, v); ty = X.y; camina = v < 1;
         if (v >= 1) E.fase = 'reposo';
       }
-      { const m = th * (V.movil && E.fase === 'reposo' ? .1 : .38); tx = cl(tx, m, V.w - m); ty = Math.max(ty, th * 1.05 + 10); }
-      const kf = 1 - Math.exp(-dt * (E.fase === 'reposo' ? 10 : 30)), ox = E.x, oy = E.y;
+      { const m = th * .38; tx = cl(tx, m, V.w - m); if (!X.fijo || (E.fase !== 'reposo' && E.fase !== 'salta')) ty = Math.max(ty, V.nav + th * 1.04 + 6); }
+      const pegado = E.fase === 'salta' || (E.fase === 'reposo' && (X.fijo || p.tipo === 'hero')); // en reposo viaja con la página, sin retraso
+      const kf = pegado ? 1 : 1 - Math.exp(-dt * (E.fase === 'reposo' ? 10 : 30)), ox = E.x, oy = E.y;
       E.x = lerp(E.x, tx, kf); E.y = lerp(E.y, ty, kf); E.h = lerp(E.h, th, 1 - Math.exp(-dt * 10));
       E.vx = (E.x - ox) / Math.max(dt, 1e-3); E.vy = (E.y - oy) / Math.max(dt, 1e-3);
       E.fuerza = lerp(E.fuerza, fuerza, 1 - Math.exp(-dt * 12));
       const dx = E.x - ox, vel = Math.abs(E.vx), enReposo = E.fase === 'reposo';
       // visibilidad: escondido si su lugar de reposo choca por ambos lados; casi transparente si al moverse pasa sobre algo
       let opT = enReposo && X.oculto ? 0 : 1;
+      if (E.fase === 'salta') opT = E.vis;
+      const htm = document.documentElement;
+      if (htm.classList.contains('menu-open') || document.body.style.overflow === 'hidden') opT = 0;
+      if (fr % 6 === 0) { const wa = document.getElementById('hapee-wa-fab'); E.wa = false; if (wa) { const r = wa.getBoundingClientRect(); E.wa = r.width && r.right > E.x - E.h * .3 && r.left < E.x + E.h * .3 && r.bottom > E.y - E.h && r.top < E.y; } }
+      if (E.wa) opT = 0;
+      // fuera de la pantalla (la sección siguió de largo): nada que mostrar
+      if (X.fijo && enReposo && (E.y - E.h < V.nav + 10 || E.y > V.h - 4)) opT = 0;
+      // celular, en reposo: cada ~1/3 s comprueba que de verdad no toca texto ni botones; si toca, busca otro lugar
+      if (V.movil && o.spot && enReposo && fr % 20 === 0 && E.op > .5 && tocaAlgo(E.x, E.y, E.h)) { o.spot.malo = true; MALOS.add(o.spot.k); E.spotK = null; E.bp = null; }
       if (!enReposo && fr % 3 === 0) E.pasa = choca(E.x, E.y, E.h);
-      if (!enReposo && E.pasa) opT = .22;
-      E.op = lerp(E.op, opT, 1 - Math.exp(-dt * 8));
+      if (!enReposo && E.pasa && E.fase !== 'salta') opT = Math.min(opT, .22);
+      E.op = E.fase === 'salta' ? opT : lerp(E.op, opT, 1 - Math.exp(-dt * (opT < E.op ? 22 : 8)));  // se esconde rápido, aparece suave
       cv.style.opacity = E.op < .99 ? E.op.toFixed(2) : '';
 
       // pose
@@ -311,9 +492,9 @@ async function arrancar() {
       }
       jet.paso(t, dt, E.fuerza, esc, { x: E.vx * V.k, y: -E.vy * V.k });
       const vuela = E.fuerza > .3;
-      if (E.enVuelo && !vuela) jet.polvo(esc);
+      if (E.enVuelo && !vuela && !V.movil) jet.polvo(esc);
       E.enVuelo = vuela;
-      globo(p, enReposo, opT === 1 && E.op > .6);
+      globo(p, enReposo, opT === 1 && E.op > .6, o.spot);
     }
     part.paso(dt);
     // en celular, quieto y sin propulsores, basta con 30 cuadros por segundo
@@ -323,6 +504,7 @@ async function arrancar() {
   }
 
   medir();
+  enCurso = true;
   requestAnimationFrame(n => { prev = n; loop(n); document.documentElement.classList.add('hx-on'); });
 }
 
