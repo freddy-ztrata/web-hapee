@@ -303,7 +303,7 @@ async function arrancar() {
     const prev = E.spotK ? SP.find(c => c.k === E.spotK) : null;
     const cur = prev && !prev.malo && ys(prev) >= V.nav + h + 24 && ys(prev) <= V.h - 10 ? prev : null;  // cambia de hueco ANTES de llegar a la barra
     let sp = cur;
-    if (!sp) { let best = 1e9; for (const c of SP) { if (c.malo || !(P[c.i] && P[c.i].vista)) continue; const y = ys(c); if (y < lo || y > hi - (document.querySelector('.hl-sw') || c.lado > 0 ? 90 : 0)) continue; const d = Math.abs(y - ideal); if (d < best) { best = d; sp = c; } } }
+    if (!sp) { let best = 1e9; for (const c of SP) { if (c.malo || !(P[c.i] && P[c.i].vista)) continue; const y = ys(c); if (y < lo || y > hi - (document.querySelector('.hl-sw') || c.lado > 0 ? 90 : 0)) continue; const d = Math.abs(y - ideal); if (d < best) { if (tocaAlgo(c.x, y, h)) { c.malo = true; MALOS.add(c.k); continue; } best = d; sp = c; } } }  // antes de saltar, comprueba en vivo que el hueco siga libre
     // sin hueco a la vista: se esconde, pero sigue pegado a su último hueco (no se queda fijo con el texto pasándole por debajo)
     if (!sp) return { p: E.pq || P[0], X: { x: prev ? prev.x : E.x, y: prev ? ys(prev) : E.y, h, cara: 0, oculto: 1, fijo: 1 }, key: 'nada' };
     E.spot = sp; E.spotK = sp.k; const p = P[sp.i]; E.pq = p;
