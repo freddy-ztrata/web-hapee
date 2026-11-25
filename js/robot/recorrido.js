@@ -327,9 +327,12 @@ async function arrancar() {
 }
 
 function cuandoListo(fn) {
+  // arranca con la primera interacción o ~2 s después de que el DOM está listo (no espera el «load» completo:
+  // en el home el video y las maquetas lo retrasan mucho y el robot no aparecía)
   let ya = false; const go = () => { if (ya) return; ya = true; fn(); };
-  const pronto = () => { ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(e => addEventListener(e, go, { once: true, passive: true })); setTimeout(go, 1500); };
-  if (document.readyState === 'complete') pronto(); else addEventListener('load', pronto, { once: true });
+  ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(e => addEventListener(e, go, { once: true, passive: true }));
+  const idle = () => setTimeout(() => (window.requestIdleCallback ? requestIdleCallback(go, { timeout: 1500 }) : go()), 1800);
+  if (document.readyState === 'loading') addEventListener('DOMContentLoaded', idle, { once: true }); else idle();
 }
 
 const APAGADO = new URLSearchParams(location.search).get('hx') === '0'; // ?hx=0 = la página sin el robot (comparar, soporte)
