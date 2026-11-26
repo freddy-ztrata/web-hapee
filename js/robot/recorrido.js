@@ -392,8 +392,9 @@ async function arrancar() {
   function tocaAlgo(x, y, h) {
     const mw = h * .34;
     const filas = Math.max(2, Math.ceil(h / 11));  // una muestra cada ~11 px: ninguna línea de texto pasa entre dos filas
-    for (const fx of [-1.05, -.7, -.35, 0, .35, .7, 1.05]) for (let fi = 0; fi <= filas; fi++) {  // 7 columnas: también las esquinas
-      const px = x + fx * mw, py = y - 2 - (h - 4) * fi / filas;
+    for (const fx of [-1.05, -.7, -.35, 0, .35, .7, 1.05]) for (let fi = -1; fi <= filas; fi++) {  // 7 columnas: también las esquinas
+      // fi = -1: 4 px bajo los pies (la caja de línea de un título sobresale del elemento y elementsFromPoint no la ve)
+      const px = x + fx * mw, py = fi < 0 ? y + 4 : y - 2 - (h - 4) * fi / filas;
       if (px < 0 || py < 0 || px > V.w || py > V.h) continue;
       const el = document.elementFromPoint(px, py);
       if (el && el.closest && el.closest('.hx-burb')) continue;
