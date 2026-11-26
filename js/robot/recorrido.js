@@ -113,7 +113,7 @@ async function arrancar() {
   }
   let calidad = 1;
   function medir() {
-    V.w = innerWidth; V.h = innerHeight; V.movil = esMovil(); V.huecos = V.movil || GEN;  // huecos libres: celular y páginas genéricas
+    V.w = innerWidth; V.h = innerHeight; V.movil = esMovil(); V.huecos = V.movil || GEN || V.w < 1400;  // huecos libres: celular, tabletas/pantallas angostas (márgenes chicos) y páginas genéricas
     const nv = document.querySelector('.nav'); V.nav = nv ? Math.max(0, nv.getBoundingClientRect().bottom) : 0;
     V.pr = Math.min(V.movil || TACTIL ? 1.25 : 1.5, devicePixelRatio || 1) * calidad;
     R.setPixelRatio(V.pr); R.setSize(V.w, V.h, false);
@@ -171,7 +171,7 @@ async function arrancar() {
     P = out;
   }
 
-  const ALTO = () => V.movil ? Math.min(88, V.h * .11, V.w * .22) : GEN ? Math.min(170, V.h * .2) : Math.min(240, V.h * .26);
+  const ALTO = () => V.movil ? Math.min(88, V.h * .11, V.w * .22) : V.huecos ? Math.min(170, V.h * .2) : Math.min(240, V.h * .26);
 
   // ── celular: lugar libre por sección ──
   // Obstáculos = líneas de texto reales (Range.getClientRects), imágenes y todo lo PROHIBIDO, en coordenadas de documento.
@@ -242,7 +242,7 @@ async function arrancar() {
     }
     if (p.tipo === 'hero') {
       const r = p.el.getBoundingClientRect();
-      return { x: r.left + r.width / 2, y: r.bottom - r.height * .015, h: Math.max(60, r.height * .97), cara: 0 };
+      return { x: r.left + r.width / 2, y: r.bottom - r.height * .015, h: Math.max(60, r.height * .9), cara: 0 };  // un poco más chico que la imagen: no roza las etiquetas del anillo
     }
     if (V.movil) {
       if (!p.spot) return { x: E.x || V.w / 2, y: E.y || V.h * .8, h: ALTO(), cara: 0, oculto: 1, fijo: 1 };
@@ -355,7 +355,7 @@ async function arrancar() {
       const gb = g.bot - scrollY, gh = burb.offsetHeight || 40;
       if (gb - gh < V.nav + 6 || gb > V.h - 8) { burb.classList.remove('on'); return; }  // nunca bajo la barra ni cortado abajo
       burb.style.setProperty('--bx', g.cx + 'px'); burb.style.setProperty('--by', gb + 'px');  // con transform: moverlo no es un salto de diseño (CLS)
-      if (fr % 8 === 4 && burb.classList.contains('on')) {
+      if (fr % 8 === 4 && (E.cambio || fr % 64 === 4) && burb.classList.contains('on')) {
         const r = burb.getBoundingClientRect(); let mal = false; burb.style.pointerEvents = 'none';
         for (const fx of [.03, .25, .5, .75, .97]) for (const fy of [.1, .5, .9]) { if (tocaAlgo(r.left + r.width * fx, r.top + r.height * fy + 1, 2)) { mal = true; break; } }
         burb.style.pointerEvents = '';
@@ -380,7 +380,7 @@ async function arrancar() {
   function tocaAlgo(x, y, h) {
     const mw = h * .34;
     const filas = Math.max(2, Math.ceil(h / 11));  // una muestra cada ~11 px: ninguna línea de texto pasa entre dos filas
-    for (const fx of [-1, -.5, 0, .5, 1]) for (let fi = 0; fi <= filas; fi++) {
+    for (const fx of [-1.05, -.7, -.35, 0, .35, .7, 1.05]) for (let fi = 0; fi <= filas; fi++) {  // 7 columnas: también las esquinas
       const px = x + fx * mw, py = y - 2 - (h - 4) * fi / filas;
       if (px < 0 || py < 0 || px > V.w || py > V.h) continue;
       const el = document.elementFromPoint(px, py);
@@ -449,6 +449,8 @@ async function arrancar() {
     if (!vivo || document.hidden) { enCurso = false; return; }
     const dtR = (now - prev) / 1000; prev = now;
     const dt = Math.min(.05, dtR); t += dt; fr++;
+    if (scrollY !== E.ultSY || innerWidth !== E.ultW) { E.ultSY = scrollY; E.ultW = innerWidth; E.cambio = 1; E.quietoDesde = t; }
+    const revisar = E.cambio || fr % 60 === 0;
     // vigía de rendimiento: si los cuadros pasan de 45 ms, baja la resolución; si sigue, se apaga
     if (fr > 30 && !E.escPrev) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
     if (muestras === 180) { if (lentos > 90) { if (calidad > .7) { calidad = .7; medir(); muestras = lentos = 0; } else return apagar(); } else muestras = lentos = 0; }
@@ -498,7 +500,7 @@ async function arrancar() {
       let opT = (enReposo || !X.fijo) && X.oculto ? 0 : 1;  // en escritorio, si el destino no admite robot (pie ya pasado), se va desvaneciendo en el camino
       if (E.fase === 'salta') opT = E.vis;
       // escritorio con paradas a medida: si en su lugar de reposo hay texto o un enlace (p. ej. el pie al final), se esconde
-      if (!V.huecos && enReposo && p.tipo !== 'hero') { if (fr % 10 === 0) E.toca = tocaAlgo(E.x, E.y, E.h); if (E.toca) opT = 0; } else E.toca = false;
+      if (!V.huecos && enReposo && p.tipo !== 'hero') { if (fr % 10 === 0 && revisar) E.toca = tocaAlgo(E.x, E.y, E.h); if (E.toca) opT = 0; } else E.toca = false;
       const htm = document.documentElement;
       if (htm.classList.contains('menu-open') || document.body.style.overflow === 'hidden') opT = 0;
       // botones flotantes fijos (WhatsApp, selector de idioma flotante): si el robot pasa por debajo, se esconde
@@ -507,7 +509,7 @@ async function arrancar() {
       // fuera de la pantalla (la sección siguió de largo): nada que mostrar
       if (X.fijo && enReposo && (E.y - E.h < V.nav + 10 || E.y > V.h - 4)) opT = 0;
       // celular, en reposo: cada ~1/3 s comprueba que de verdad no toca texto ni botones; si toca, busca otro lugar
-      if (V.huecos && o.spot && enReposo && fr % 20 === 0 && E.op > .5 && tocaAlgo(E.x, E.y, E.h)) { o.spot.malo = true; MALOS.add(o.spot.k); E.spotK = null; E.bp = null; }
+      if (V.huecos && o.spot && enReposo && fr % 20 === 0 && revisar && E.op > .5 && tocaAlgo(E.x, E.y, E.h)) { o.spot.malo = true; MALOS.add(o.spot.k); E.spotK = null; E.bp = null; }
       if (!enReposo && fr % 3 === 0) E.pasa = choca(E.x, E.y, E.h);
       if (!enReposo && E.pasa && E.fase !== 'salta') opT = Math.min(opT, .22);
       E.op = E.fase === 'salta' ? opT : lerp(E.op, opT, 1 - Math.exp(-dt * (opT < E.op ? 22 : 8)));  // se esconde rápido, aparece suave
@@ -549,9 +551,12 @@ async function arrancar() {
     // batería: quieto y sin propulsores basta con 30 cuadros por segundo (en todo equipo); escondido no se dibuja y el
     // bucle pasa a ~8 vueltas por segundo (solo para notar el scroll y volver a aparecer)
     const quietoTotal = E.fuerza < .05 && Math.abs(E.vx) < 2 && Math.abs(E.vy) < 2;
+    if (fr % 10 === 9) E.cambio = 0;  // la marca de «algo cambió» dura un ciclo de revisiones
+    if (!quietoTotal) E.quietoDesde = t;
+    const dormido = quietoTotal && t - (E.quietoDesde || 0) > 1.5 && !(E.fiesta > 0);  // quieto hace rato: 20 cuadros por segundo
     const escondido = E.op < .01 && E.fase === 'reposo' && E.fuerza < .02;
     if (escondido) { if (!E.limpio) { R.clear(); E.limpio = true; } }
-    else { E.limpio = false; if (!quietoTotal || fr % 2 === 0) R.render(S, cam); }
+    else { E.limpio = false; if (!quietoTotal || fr % (dormido ? 3 : 2) === 0) R.render(S, cam); }
     E.escPrev = escondido;  // el vigía de rendimiento no cuenta las vueltas lentas a propósito
     if (escondido) setTimeout(() => requestAnimationFrame(loop), 110);
     else requestAnimationFrame(loop);
