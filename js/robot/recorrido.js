@@ -461,7 +461,7 @@ async function arrancar() {
     if (!vivo || document.hidden) { enCurso = false; return; }
     const dtR = (now - prev) / 1000; prev = now;
     const dt = Math.min(.05, dtR); t += dt; fr++;
-    if (scrollY !== E.ultSY || innerWidth !== E.ultW) { E.ultSY = scrollY; E.ultW = innerWidth; E.cambio = 1; E.quietoDesde = t; }
+    if (scrollY !== E.ultSY || innerWidth !== E.ultW) { E.ultSY = scrollY; E.ultW = innerWidth; E.cambio = 1; }
     const revisar = E.cambio || fr % 60 === 0;
     // vigía de rendimiento: si los cuadros pasan de 45 ms, baja la resolución; si sigue, se apaga
     if (fr > 30 && !E.escPrev) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
@@ -560,31 +560,37 @@ async function arrancar() {
       globo(p, enReposo, opT === 1 && E.op > .6, o.spot);
     }
     part.paso(dt);
-    // batería: quieto y sin propulsores basta con 30 cuadros por segundo (en todo equipo); escondido no se dibuja y el
-    // bucle pasa a ~8 vueltas por segundo (solo para notar el scroll y volver a aparecer)
-    const quietoTotal = E.fuerza < .05 && Math.abs(E.vx) < 2 && Math.abs(E.vy) < 2;
+    // A la vista se dibuja SIEMPRE a la tasa del monitor (levitación y propulsores fluidos; v11 bajaba a 20-30 cps en reposo
+    // y en la primera carga se veía trabado). El ahorro va por otro lado: escondido/fuera de pantalla no se dibuja y el bucle
+    // pasa a ~8 vueltas por segundo (solo para notar el scroll y volver a aparecer); pestaña oculta = bucle detenido;
+    // las revisiones caras (toques, huecos) solo corren cuando cambió el scroll o cada 60 cuadros.
     if (fr % 10 === 9) E.cambio = 0;  // la marca de «algo cambió» dura un ciclo de revisiones
-    if (!quietoTotal) E.quietoDesde = t;
-    const dormido = quietoTotal && t - (E.quietoDesde || 0) > 1.5 && !(E.fiesta > 0);  // quieto hace rato: 20 cuadros por segundo
     const escondido = E.op < .01 && E.fase === 'reposo' && E.fuerza < .02;
     if (escondido) { if (!E.limpio) { R.clear(); E.limpio = true; } }
-    else { E.limpio = false; if (!quietoTotal || fr % (dormido ? 3 : 2) === 0) R.render(S, cam); }
+    else { E.limpio = false; R.render(S, cam); }
     E.escPrev = escondido;  // el vigía de rendimiento no cuenta las vueltas lentas a propósito
     if (escondido) setTimeout(() => requestAnimationFrame(loop), 110);
     else requestAnimationFrame(loop);
+    if (E.alAparecer && !escondido) { E.alAparecer(); if (document.documentElement.classList.contains('hx-on')) E.alAparecer = null; }
   }
 
   medir();
+  // calentamiento invisible (el lienzo sigue en opacidad 0 hasta «hx-on»): el primer dibujo sube geometrías, texturas y
+  // programas a la GPU y es el más caro; así el primer cuadro VISIBLE ya es uno normal, sin tirón ni cuadro congelado
+  try { R.render(S, cam); } catch (e) {}
   enCurso = true;
-  requestAnimationFrame(n => { prev = n; loop(n); document.documentElement.classList.add('hx-on'); });
+  let cuadrosVivos = 0;
+  E.alAparecer = () => { if (++cuadrosVivos === 2) document.documentElement.classList.add('hx-on'); };
+  requestAnimationFrame(n => { prev = n; loop(n); });
 }
 
 function cuandoListo(fn) {
-  // arranca con la primera interacción o ~2 s después de que el DOM está listo (no espera el «load» completo:
+  // arranca con la primera interacción o ~0,2-0,7 s después de que el DOM está listo (no espera el «load» completo:
   // en el home el video y las maquetas lo retrasan mucho y el robot no aparecía)
   let ya = false; const go = () => { if (ya) return; ya = true; fn(); };
   ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(e => addEventListener(e, go, { once: true, passive: true }));
-  const idle = () => setTimeout(() => (window.requestIdleCallback ? requestIdleCallback(go, { timeout: 1500 }) : go()), 1800);
+  // v13: antes esperaba 1,8 s + hasta 1,5 s de ocio y el robot del hero se veía «pegado» hasta el primer scroll
+  const idle = () => setTimeout(() => (window.requestIdleCallback ? requestIdleCallback(go, { timeout: 500 }) : go()), 200);
   if (document.readyState === 'loading') addEventListener('DOMContentLoaded', idle, { once: true }); else idle();
 }
 
