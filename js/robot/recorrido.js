@@ -595,4 +595,8 @@ function cuandoListo(fn) {
 }
 
 const APAGADO = new URLSearchParams(location.search).get('hx') === '0'; // ?hx=0 = la página sin el robot (comparar, soporte)
-if ((PARADAS.length || GEN) && !APAGADO && !REDUCE && !MODESTO && webglOk()) cuandoListo(() => arrancar().catch(e => { console.warn('[hx] robot', e); document.documentElement.classList.remove('hx-on'); }));
+// v13: three.js y el robot se piden YA (solo si el robot va a salir), en paralelo con la espera de arranque; antes se pedían
+// recién al arrancar y en celular lento el robot tardaba varios segundos más en aparecer
+const SALE = (PARADAS.length || GEN) && !APAGADO && !REDUCE && !MODESTO && webglOk();
+if (SALE) kit().catch(() => {});
+if (SALE) cuandoListo(() => arrancar().catch(e => { console.warn('[hx] robot', e); document.documentElement.classList.remove('hx-on'); }));
