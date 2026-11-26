@@ -72,9 +72,9 @@ html.hx-on #hx-robo{opacity:1}
 html.hx-on .hero img.hero-robot,html.hx-on .hero .hr-live{opacity:0!important;transition:opacity .35s ease .15s}
 .hx-burb{position:fixed;left:0;top:0;z-index:61;width:max-content;max-width:230px;padding:11px 15px;border-radius:16px 16px 16px 4px;background:#fff;color:#1a1a1a;
  font:700 14px/1.3 'Plus Jakarta Sans',system-ui,sans-serif;box-shadow:0 12px 34px rgba(8,8,8,.18);pointer-events:none;opacity:0;
- transform:translate(-50%,-100%) translateY(8px) scale(.96);transition:opacity .25s ease,transform .25s ease;will-change:transform}
+ transform:translate3d(var(--bx,0px),var(--by,0px),0) translate(-50%,-100%);transition:opacity .25s ease;will-change:transform}
 .hx-burb.der{border-radius:16px 16px 4px 16px}
-.hx-burb.on{opacity:1;transform:translate(-50%,-100%) translateY(0) scale(1)}
+.hx-burb.on{opacity:1;transform:translate3d(var(--bx,0px),var(--by,0px),0) translate(-50%,-100%)}
 .hx-burb.on.cta{pointer-events:auto}
 .hx-burb a{display:inline-block;margin-top:8px;padding:8px 14px;border-radius:999px;color:#fff;text-decoration:none;font-weight:800;font-size:13px;
  background:linear-gradient(135deg,#FA5000,#CD2349);min-height:36px;line-height:20px}
@@ -354,7 +354,7 @@ async function arrancar() {
       burb.classList.toggle('der', g.der);
       const gb = g.bot - scrollY, gh = burb.offsetHeight || 40;
       if (gb - gh < V.nav + 6 || gb > V.h - 8) { burb.classList.remove('on'); return; }  // nunca bajo la barra ni cortado abajo
-      burb.style.left = g.cx + 'px'; burb.style.top = gb + 'px';
+      burb.style.setProperty('--bx', g.cx + 'px'); burb.style.setProperty('--by', gb + 'px');  // con transform: moverlo no es un salto de diseño (CLS)
       if (fr % 8 === 4 && burb.classList.contains('on')) {
         const r = burb.getBoundingClientRect(); let mal = false; burb.style.pointerEvents = 'none';
         for (const fx of [.03, .25, .5, .75, .97]) for (const fy of [.1, .5, .9]) { if (tocaAlgo(r.left + r.width * fx, r.top + r.height * fy + 1, 2)) { mal = true; break; } }
@@ -373,7 +373,7 @@ async function arrancar() {
       // el globo tampoco puede tapar algo prohibido: si choca, no se muestra
       const r0 = { l: bx - bw / 2, r: bx + bw / 2, t: by - bh, b: by };
       for (const el of visibles) { if (burb.contains(el)) continue; const r = el.getBoundingClientRect(); if (r.width && r.right > r0.l && r.left < r0.r && r.bottom > r0.t && r.top < r0.b) { burb.classList.remove('on'); return; } }
-      burb.style.left = bx + 'px'; burb.style.top = by + 'px';
+      burb.style.setProperty('--bx', bx + 'px'); burb.style.setProperty('--by', by + 'px');
     }
   }
 
