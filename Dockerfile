@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-11-25-robot-recorrido
+ARG CACHE_BUST=2026-11-26-servicio-scale
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
