@@ -355,7 +355,7 @@ async function arrancar() {
       const gb = g.bot - scrollY, gh = burb.offsetHeight || 40;
       if (gb - gh < V.nav + 6 || gb > V.h - 8) { burb.classList.remove('on'); return; }  // nunca bajo la barra ni cortado abajo
       burb.style.left = g.cx + 'px'; burb.style.top = gb + 'px';
-      if (fr % 20 === 10 && burb.classList.contains('on')) {
+      if (fr % 8 === 4 && burb.classList.contains('on')) {
         const r = burb.getBoundingClientRect(); let mal = false; burb.style.pointerEvents = 'none';
         for (const fx of [.03, .25, .5, .75, .97]) for (const fy of [.1, .5, .9]) { if (tocaAlgo(r.left + r.width * fx, r.top + r.height * fy + 1, 2)) { mal = true; break; } }
         burb.style.pointerEvents = '';
@@ -415,6 +415,12 @@ async function arrancar() {
       const a = c.cx - bw / 2 - 4, b = c.cx + bw / 2 + 4, t0 = c.bot - bh - 4, t1 = c.bot + 4;
       let ok = true;
       for (const o of sp.obs) if (o[2] > a && o[0] < b && o[3] > t0 && o[1] < t1) { ok = false; break; }
+      // y en vivo (lo medido puede haber cambiado: tarjetas que cargan después, imágenes)
+      if (ok) {
+        const top = t0 + 4 - scrollY; burb.style.pointerEvents = 'none';
+        for (const fx of [.03, .25, .5, .75, .97]) { for (const fy of [.1, .5, .9]) { const px = a + 4 + (bw) * fx, py = top + bh * fy; if (py > 0 && py < V.h && tocaAlgo(px, py, 2)) { ok = false; break; } } if (!ok) break; }
+        burb.style.pointerEvents = '';
+      }
       if (ok) return c;
     }
     return null;
@@ -444,7 +450,7 @@ async function arrancar() {
     const dtR = (now - prev) / 1000; prev = now;
     const dt = Math.min(.05, dtR); t += dt; fr++;
     // vigía de rendimiento: si los cuadros pasan de 45 ms, baja la resolución; si sigue, se apaga
-    if (fr > 30) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
+    if (fr > 30 && !E.escPrev) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
     if (muestras === 180) { if (lentos > 90) { if (calidad > .7) { calidad = .7; medir(); muestras = lentos = 0; } else return apagar(); } else muestras = lentos = 0; }
     const o = !P.length ? null : V.huecos ? objetivoMovil() : objetivo(fr);
     if (o && (o.p || o.a)) {
@@ -540,10 +546,15 @@ async function arrancar() {
       globo(p, enReposo, opT === 1 && E.op > .6, o.spot);
     }
     part.paso(dt);
-    // en celular, quieto y sin propulsores, basta con 30 cuadros por segundo
-    const quietoTotal = V.movil && E.fuerza < .05 && Math.abs(E.vx) < 2 && Math.abs(E.vy) < 2;
-    if (!quietoTotal || fr % 2 === 0) R.render(S, cam);
-    requestAnimationFrame(loop);
+    // batería: quieto y sin propulsores basta con 30 cuadros por segundo (en todo equipo); escondido no se dibuja y el
+    // bucle pasa a ~8 vueltas por segundo (solo para notar el scroll y volver a aparecer)
+    const quietoTotal = E.fuerza < .05 && Math.abs(E.vx) < 2 && Math.abs(E.vy) < 2;
+    const escondido = E.op < .01 && E.fase === 'reposo' && E.fuerza < .02;
+    if (escondido) { if (!E.limpio) { R.clear(); E.limpio = true; } }
+    else { E.limpio = false; if (!quietoTotal || fr % 2 === 0) R.render(S, cam); }
+    E.escPrev = escondido;  // el vigía de rendimiento no cuenta las vueltas lentas a propósito
+    if (escondido) setTimeout(() => requestAnimationFrame(loop), 110);
+    else requestAnimationFrame(loop);
   }
 
   medir();
