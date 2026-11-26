@@ -232,6 +232,15 @@ async function arrancar() {
     return out;
   }
   const PISO = () => V.h - (V.movil ? 82 : 26);   // en celular, por encima del botón flotante de WhatsApp
+  // botones flotantes fijos visibles (WhatsApp, selector de idioma, píldora «Reservar mi demo»); se re-miden cada ~100 ms
+  const FLOT = '#hapee-wa-fab, .hl-sw, .demo-floating-pill, .demo-sticky-cta';
+  let flotT = -1, flotL = [];
+  const flotantes = () => {
+    const t = performance.now(); if (t - flotT < 100) return flotL; flotT = t;
+    flotL = [];
+    for (const f of document.querySelectorAll(FLOT)) { const r = f.getBoundingClientRect(); if (!r.width || !r.height) continue; const c = getComputedStyle(f); if (c.position === 'fixed' && c.visibility !== 'hidden' && +c.opacity > .1) flotL.push({ f, r }); }
+    return flotL;
+  };
   function reposo(p) {
     if (p.tipo === 'pie') {
       const r = p.el.getBoundingClientRect(), h = ALTO();
@@ -241,8 +250,11 @@ async function arrancar() {
       return { x: V.w * .8, y: r.top > h + 90 ? Math.min(r.top + 2, PISO()) : PISO(), h, cara: -.35, oculto: r.top > h + 90 ? 0 : 1 };
     }
     if (p.tipo === 'hero') {
-      const r = p.el.getBoundingClientRect();
-      return { x: r.left + r.width / 2, y: r.bottom - r.height * .015, h: Math.max(60, r.height * .9), cara: 0 };  // un poco más chico que la imagen: no roza las etiquetas del anillo
+      const r = p.el.getBoundingClientRect(), x = r.left + r.width / 2;
+      let y = r.bottom - r.height * .015, h = Math.max(60, r.height * .9);  // un poco más chico que la imagen: no roza las etiquetas del anillo
+      // un botón flotante fijo (p. ej. «Reservar mi demo» abajo a la derecha) que cae sobre el robot: el robot se achica por encima
+      for (const f of flotantes()) { const b = f.r; if (b.right > x - h * .32 && b.left < x + h * .32 && b.top < y && b.bottom > y - h) { const y2 = b.top - 8; h = Math.max(60, h - (y - y2)); y = y2; } }
+      return { x, y, h, cara: 0 };
     }
     if (V.movil) {
       if (!p.spot) return { x: E.x || V.w / 2, y: E.y || V.h * .8, h: ALTO(), cara: 0, oculto: 1, fijo: 1 };
@@ -504,7 +516,7 @@ async function arrancar() {
       const htm = document.documentElement;
       if (htm.classList.contains('menu-open') || document.body.style.overflow === 'hidden') opT = 0;
       // botones flotantes fijos (WhatsApp, selector de idioma flotante): si el robot pasa por debajo, se esconde
-      if (fr % 6 === 0) { E.wa = false; for (const f of document.querySelectorAll('#hapee-wa-fab, .hl-sw')) { const r = f.getBoundingClientRect(); if (r.width && getComputedStyle(f).position === 'fixed' && r.right > E.x - E.h * .32 && r.left < E.x + E.h * .32 && r.bottom > E.y - E.h && r.top < E.y) { E.wa = true; break; } } }
+      if (fr % 6 === 0) { E.wa = false; for (const { r } of flotantes()) { if (r.right > E.x - E.h * .32 && r.left < E.x + E.h * .32 && r.bottom > E.y - E.h && r.top < E.y) { E.wa = true; break; } } }
       if (E.wa) opT = 0;
       // fuera de la pantalla (la sección siguió de largo): nada que mostrar
       if (X.fijo && enReposo && (E.y - E.h < V.nav + 10 || E.y > V.h - 4)) opT = 0;
