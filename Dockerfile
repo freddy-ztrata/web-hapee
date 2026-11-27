@@ -66,6 +66,9 @@ COPY img/ /usr/share/nginx/html/img/
 # Hapee HQ: la oficina 3D de los agentes (three.js + GLB del robot), servida en /oficina
 COPY oficina/ /usr/share/nginx/html/oficina/
 COPY via/ /usr/share/nginx/html/via/
+# Hapee Events (2026-11-27): landing para organizadores de eventos en /events/ (solo español).
+# Generada con web-dna/_build/hapee-home/events/build_events.py a partir de /agenda-tu-demo (mismo calendario).
+COPY events/ /usr/share/nginx/html/events/
 # App offline (PWA) del stand de Hapee en ETM Day: /etm/ (noindex, fuera del sitemap y de todo menu).
 COPY etm/ /usr/share/nginx/html/etm/
 # Hapee Arcade (2026-11-24): hub 3D + 6 juegos en /juegos/

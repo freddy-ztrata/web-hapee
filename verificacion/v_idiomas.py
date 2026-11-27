@@ -57,6 +57,8 @@ def paginas_espanol():
     sueltas = re.findall(r"^COPY ([a-z0-9._-]+\.html) ", docker, re.M)
     dirs = re.findall(r"^COPY ([a-z0-9._-]+)/ ", docker, re.M)
     out = [p for p in sueltas if p not in NO_TRADUCIR]
+    # events/ es la landing de Hapee Events (2026-11-27), solo en español por ahora.
+    dirs = [d for d in dirs if d != "events"]
     for d in dirs:
         # en/pt son las traducciones; propuesta-* son borradores internos
         # ocultos (noindex) que se revisan en español antes de aprobarse;
