@@ -2197,6 +2197,18 @@ html.dark .v-sis{background:rgba(255,255,255,.08)}
 html.dark .v-calbox{background:#0f0f0f}
 .v-calbox.bf-foco{box-shadow:0 0 0 3px #FA5000,var(--v-sombra)}
 @media(min-width:1000px){.v-cal-g{grid-template-columns:.8fr 1.2fr;gap:64px;align-items:start}.v-cal-txt{position:sticky;top:120px}}
+
+/* ── VIDEO «Mira cómo funciona» ── */
+.v-vid{margin:0 auto;position:relative;border-radius:24px;overflow:hidden;background:#080808;box-shadow:var(--v-sombra);aspect-ratio:16/9;max-width:1120px}
+.v-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;display:block}
+.v-son{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:0 16px;border:0;border-radius:999px;background:rgba(8,8,8,.62);color:#fff;font:700 .88rem/1 'Plus Jakarta Sans',-apple-system,sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.v-son svg{width:20px;height:20px;flex:none}
+.v-son svg:nth-of-type(2),.v-son[aria-pressed="true"] svg:nth-of-type(1){display:none}
+.v-son[aria-pressed="true"] svg:nth-of-type(2){display:block}
+.v-son[aria-pressed="true"]{background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:none}
+.v-son:hover{background:rgba(8,8,8,.8)}.v-son[aria-pressed="true"]:hover{filter:brightness(1.08)}
+.v-son:focus-visible{outline:3px solid #FFB08A;outline-offset:3px}
+@media(max-width:420px){.v-son span{display:none}.v-son{padding:0;justify-content:center}}
 </style>
 <script>document.documentElement.classList.add("v-js")</script>
 <link rel="stylesheet" href="/js/robot/sitio.css?v=16" data-hx-sitio>
@@ -2316,6 +2328,12 @@ html.bf-sc .bf-cta{height:28px}
 </div>
 </div><script type="application/json" id="v-guion">[{"q": "Hola, ¿quedan entradas para el sábado?", "r": "Hola. Sí, para el sábado 14 quedan entradas generales y VIP. La general vale $25.000 y la VIP $48.000. Te dejo el enlace para comprarlas.", "t": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6z\"/><path d=\"M14 5v14\"/><\/svg>Comprar entradas · sábado 14", "l": "Envió el enlace de compra y dejó el contacto en el CRM."}, {"q": "¿A qué hora abren las puertas?", "r": "Las puertas abren a las 16:00 y el primer show parte a las 17:30. El cierre es a las 23:00. ¿Quieres que te lo recuerde el día anterior?", "t": "", "l": "Programó un recordatorio para el día anterior."}, {"q": "¿Cómo llego y dónde estaciono?", "r": "El acceso principal está en Av. Los Aromos 1200. Hay estacionamiento por el acceso norte y la estación de Metro más cercana queda a 8 minutos a pie.", "t": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.800-7 11-7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/><\/svg>Ver mapa de accesos", "l": "Compartió el mapa de accesos."}, {"q": "Quiero un stand para mi marca", "r": "Con gusto. ¿De qué rubro es tu marca y qué metraje buscas? Con eso le paso tu solicitud al equipo comercial hoy mismo.", "t": "", "l": "Calificó a un expositor y avisó al equipo comercial."}]</script></section>
 <div class="v-franja"><div class="v-ctn"><ul><li><small>Agente de IA de</small><b>Fiebre de Cumbia</b></li><li><small>Agente de IA de</small><b>Logistec</b></li><li><small>En 2027, agente de IA de</small><b>IA Summit Chile e IA Fest Chile</b></li><li><small>Demo Day Metro 2026</small><b>Vía by Hapee, entre los ganadores</b></li></ul></div></div>
+<section class="v-sec" id="video"><div class="v-ctn">
+<div class="v-head v-rv"><span class="v-k">Mira cómo funciona</span><h2>Hapee Events, <span class="v-gr">en un minuto.</span></h2>
+<p>El agente de IA oficial de tu evento: lo que hace antes, durante y después.</p></div>
+<figure class="v-vid v-rv"><video data-v-video muted loop playsinline preload="none" width="1920" height="1080" poster="/img/events/hapee-events-16x9-4f22c914.jpg" aria-label="Video explicativo de Hapee Events"><source src="/img/events/hapee-events-16x9-c1fcf186.mp4" type="video/mp4"></video>
+<button type="button" class="v-son" data-v-son aria-pressed="false" aria-label="Activar el sonido del video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v4h3l5 4V6l-5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10v4h3l5 4V6l-5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg><span>Activar sonido</span></button></figure>
+</div></section>
 <section class="v-sec v-alt" id="recorrido"><div class="v-ctn">
 <div class="v-head v-rv"><span class="v-k">El recorrido</span><h2>Un mismo agente, <span class="v-gr">los tres momentos del evento.</span></h2>
 <p>La conversación con cada asistente parte semanas antes y sigue después del cierre. El agente la lleva completa, con el historial de cada persona.</p></div>
@@ -3956,6 +3974,35 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
       b.hidden = true; ev('events_caso_sonido');
     });
   });
+
+  /* video explicador: silenciado y en bucle SOLO mientras se ve; botón de sonido de 48 px.
+     Con movimiento reducido o sin IntersectionObserver: sin autoplay, con controles. */
+  (function () {
+    var v = $('video[data-v-video]'), b = $('[data-v-son]');
+    if (!v) return;
+    var visto = false, reportado = false;
+    function toca() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    function pinta() {
+      if (!b) return;
+      b.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
+      b.setAttribute('aria-label', v.muted ? 'Activar el sonido del video' : 'Silenciar el video');
+      $('span', b).textContent = v.muted ? 'Activar sonido' : 'Silenciar';
+    }
+    v.muted = true; v.defaultMuted = true;
+    if (b) b.addEventListener('click', function () {
+      var activar = v.muted;
+      v.muted = !activar; pinta();
+      if (activar) { if (v.ended || v.currentTime > v.duration - 0.5) v.currentTime = 0; toca(); ev('events_video_sonido'); }
+    });
+    v.addEventListener('volumechange', pinta);
+    v.addEventListener('play', function () { if (!reportado) { reportado = true; ev('events_video_play'); } });
+    if (!IO || RED) { v.setAttribute('controls', ''); return; }
+    new IntersectionObserver(function (es) {
+      visto = es[0].isIntersecting;
+      if (visto && !d.hidden) toca(); else if (!v.paused) v.pause();
+    }, { threshold: 0.35 }).observe(v);
+    d.addEventListener('visibilitychange', function () { if (d.hidden) { if (!v.paused) v.pause(); } else if (visto) toca(); });
+  })();
 
   /* medición de los CTA */
   $$('a[data-ubic]').forEach(function (a) {
