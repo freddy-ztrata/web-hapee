@@ -2254,6 +2254,13 @@ html.dark .e-tipeo{background:#123d26}
 .e-pos-i svg{width:24px;height:24px;margin-left:3px}
 .e-pos b{font-size:clamp(1.2rem,3.6vw,1.6rem);font-weight:800;letter-spacing:-.02em}
 .e-pos span{font-size:.84rem;opacity:.8}
+.e-son{position:absolute;right:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:0 16px;border:0;border-radius:999px;background:rgba(8,8,8,.62);color:#fff;font:700 .88rem/1 'Plus Jakarta Sans',-apple-system,sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.e-son svg{width:20px;height:20px;flex:none}
+.e-son[aria-pressed="true"]{background:linear-gradient(135deg,#FA5000,#CD2349);box-shadow:none}
+.e-son:hover{background:rgba(8,8,8,.8)}.e-son[aria-pressed="true"]:hover{filter:brightness(1.08)}
+.e-son:focus-visible{outline:3px solid #FFB08A;outline-offset:3px}
+@media(max-width:420px){.e-vid.e-h .e-son span{display:none}.e-vid.e-h .e-son{padding:0;justify-content:center}}
+.e-vid.con-video figcaption{display:none}
 .e-vid figcaption{position:absolute;left:14px;top:14px;z-index:2;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(0,0,0,.45);color:#fff}
 
 /* ── FAQ ── */
@@ -2465,7 +2472,7 @@ html.bf-sc .bf-cta{height:28px}
 <section class="e-sec" id="video"><div class="e-ctn">
 <div class="e-head e-rv"><span class="e-k">Mira cómo funciona</span><h2>Hapee EDU, <span class="e-gr">en video.</span></h2>
 <p>El recorrido completo: de la consulta a la matrícula, la fidelización y la vuelta al ciclo.</p></div>
-<div class="e-vids"><figure class="e-vid e-h e-rv" data-e-video="" data-e-poster="" data-formato="16x9" aria-label="Video explicativo de Hapee EDU en formato horizontal"><figcaption>Horizontal · 16:9</figcaption><div class="e-pos"><span class="e-pos-i"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><b>Video en camino</b><span>El recorrido de Hapee EDU, muy pronto aquí.</span></div></figure><figure class="e-vid e-v e-rv" data-e-video="" data-e-poster="" data-formato="9x16" aria-label="Video explicativo de Hapee EDU en formato vertical"><figcaption>Vertical · 9:16</figcaption><div class="e-pos"><span class="e-pos-i"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><b>Video en camino</b><span>El recorrido de Hapee EDU, muy pronto aquí.</span></div></figure></div>
+<div class="e-vids"><figure class="e-vid e-h e-rv" data-e-video="/img/edu/hapee-edu-16x9-b08b3b00.mp4" data-e-poster="/img/edu/hapee-edu-16x9-404eaa9f.jpg" data-formato="16x9" aria-label="Video explicativo de Hapee EDU en formato horizontal"><figcaption>Horizontal · 16:9</figcaption><div class="e-pos"><span class="e-pos-i"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><b>Video en camino</b><span>El recorrido de Hapee EDU, muy pronto aquí.</span></div></figure><figure class="e-vid e-v e-rv" data-e-video="/img/edu/hapee-edu-9x16-e6c19fb4.mp4" data-e-poster="/img/edu/hapee-edu-9x16-257bdf0d.jpg" data-formato="9x16" aria-label="Video explicativo de Hapee EDU en formato vertical"><figcaption>Vertical · 9:16</figcaption><div class="e-pos"><span class="e-pos-i"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><b>Video en camino</b><span>El recorrido de Hapee EDU, muy pronto aquí.</span></div></figure></div>
 </div></section>
 <section class="e-sec e-alt" id="preguntas"><div class="e-ctn">
 <div class="e-head e-c e-rv"><span class="e-k">Preguntas frecuentes</span><h2>Lo que suelen <span class="e-gr">preguntarnos.</span></h2></div>
@@ -4139,18 +4146,56 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
   /* ── línea del año de nutrición ── */
   (function () { var a = $('[data-e-anio]'); vista(a, function (v) { if (v) a.style.setProperty('--a', 1); }, 0.3); })();
 
-  /* ── videos del explicador: si el HTML trae data-e-video, se monta el reproductor; si no, queda el póster «Video en camino» ── */
-  $$('[data-e-video]').forEach(function (f) {
-    var src = f.getAttribute('data-e-video'); if (!src) return;
-    var v = d.createElement('video');
-    v.controls = true; v.playsInline = true; v.preload = 'none';
-    var po = f.getAttribute('data-e-poster'); if (po) v.poster = po;
-    v.setAttribute('aria-label', f.getAttribute('aria-label') || 'Video de Hapee EDU');
-    var s = d.createElement('source'); s.src = src; s.type = 'video/mp4'; v.appendChild(s);
-    var pos = $('.e-pos', f); if (pos) pos.remove();
-    f.appendChild(v);
-    v.addEventListener('play', function () { try { if (typeof gtag === 'function') gtag('event', 'edu_video_play', { formato: f.getAttribute('data-formato') || '' }); } catch (e) {} });
-  });
+  /* ── videos del explicador: autoplay silenciado en bucle SOLO mientras se ve; botón de sonido de 48 px.
+     Si el HTML no trae data-e-video, queda el póster «Video en camino». Con movimiento reducido: sin autoplay, con controles. ── */
+  (function () {
+    var vids = [];
+    var ICO_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>';
+    var ICO_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+    function pintaBoton(b, v) {
+      b.innerHTML = (v.muted ? ICO_OFF + '<span>Activar sonido</span>' : ICO_ON + '<span>Silenciar</span>');
+      b.setAttribute('aria-pressed', v.muted ? 'false' : 'true');
+    }
+    $$('[data-e-video]').forEach(function (f) {
+      var src = f.getAttribute('data-e-video'); if (!src) return;
+      var v = d.createElement('video');
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', ''); v.playsInline = true; v.setAttribute('playsinline', '');
+      v.loop = true; v.preload = 'none';
+      if (RED) v.controls = true;   /* sin atributo autoplay: arranca play() solo cuando el video está en pantalla */
+      var po = f.getAttribute('data-e-poster'); if (po) v.poster = po;
+      v.setAttribute('aria-label', f.getAttribute('aria-label') || 'Video de Hapee EDU');
+      var s = d.createElement('source'); s.src = src; s.type = 'video/mp4'; v.appendChild(s);
+      var pos = $('.e-pos', f); if (pos) pos.remove();
+      f.appendChild(v); f.classList.add('con-video');
+      var b = d.createElement('button'); b.type = 'button'; b.className = 'e-son'; pintaBoton(b, v); f.appendChild(b);
+      var item = { v: v, b: b, f: f, visto: false };
+      vids.push(item);
+      b.addEventListener('click', function () {
+        var activar = v.muted;
+        vids.forEach(function (o) { if (o !== item && !o.v.muted) { o.v.muted = true; pintaBoton(o.b, o.v); } });
+        v.muted = !activar; pintaBoton(b, v);
+        if (activar) {
+          if (v.ended || v.currentTime > v.duration - 0.5) v.currentTime = 0;
+          var p = v.play(); if (p && p.catch) p.catch(function () {});
+          try { if (typeof gtag === 'function') gtag('event', 'edu_video_sonido', { formato: f.getAttribute('data-formato') || '' }); } catch (e) {}
+        }
+      });
+      var reportado = false;
+      v.addEventListener('play', function () {
+        if (reportado) return; reportado = true;
+        try { if (typeof gtag === 'function') gtag('event', 'edu_video_play', { formato: f.getAttribute('data-formato') || '' }); } catch (e) {}
+      });
+      if (RED) return;
+      vista(f, function (en) {
+        item.visto = en;
+        if (en && !d.hidden) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else if (!v.paused) v.pause();
+      }, 0.35);
+    });
+    d.addEventListener('visibilitychange', function () {
+      vids.forEach(function (o) { if (d.hidden) { if (!o.v.paused) o.v.pause(); } else if (o.visto && !RED) { var p = o.v.play(); if (p && p.catch) p.catch(function () {}); } });
+    });
+  })();
 
   /* ── clics a la agenda (medición) ── */
   d.addEventListener('click', function (e) {
