@@ -2161,10 +2161,48 @@ img.hero-robot{height:auto}
 <link rel="preload" href="/js/home/plus-jakarta-sans-var-644166bf.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/js/home/hapee-home-inst-8dca7b57.css">
 <link rel="stylesheet" href="/js/robot/sitio.css?v=15" data-hx-sitio>
+<style data-bf>
+html{--bf-h:48px;--bf-hc:44px;--bf-cur:var(--bf-h)}
+html.bf-sc{--bf-cur:var(--bf-hc)}
+@media(max-width:700px){html{--bf-h:58px;--bf-hc:50px}}
+html.bf-off,html.bf-cerrando{--bf-h:0px;--bf-hc:0px}
+body{padding-top:var(--bf-h)}
+html.bf-cerrando body{transition:padding-top .38s cubic-bezier(.4,0,.2,1)}
+.nav{transform:translateY(var(--bf-cur))}
+html.bf-off .bf{display:none}
+.bf{position:fixed;top:0;left:0;right:0;z-index:1001;height:var(--bf-cur);display:flex;align-items:center;background:#0a0a0a;color:#fff;font-family:'Plus Jakarta Sans',-apple-system,sans-serif;overflow:hidden;box-shadow:inset 0 -1px 0 rgba(250,80,0,.5);transition:height .3s cubic-bezier(.4,0,.2,1),opacity .3s ease}
+html.bf-cerrando .bf{opacity:0}
+.bf::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.13) 50%,transparent 62%);transform:translateX(-100%);animation:bfBrillo 6s ease-in-out 1.5s infinite}
+@keyframes bfBrillo{0%{transform:translateX(-100%)}24%,100%{transform:translateX(100%)}}
+.bf-go{flex:1;min-width:0;height:100%;display:flex;align-items:center;justify-content:center;gap:14px;padding:0 6px 0 16px;color:#fff !important;text-decoration:none;font-size:.9rem;line-height:1.3;font-weight:600;letter-spacing:0}
+.bf-txt{min-width:0}
+.bf-tag{color:#FA5000;font-weight:800}
+.bf-sep{opacity:.5;margin:0 .5em}
+.bf-cta{flex-shrink:0;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 14px;border-radius:999px;background:linear-gradient(135deg,#FA5000,#CD2349);color:#fff;font-weight:700;font-size:.84rem;white-space:nowrap;animation:bfPulso 2.8s ease-in-out infinite;transition:height .3s,filter .2s}
+.bf-cta svg{width:14px;height:14px;transition:transform .2s}
+.bf-cta-m{display:none}
+@keyframes bfPulso{0%,100%{box-shadow:0 0 0 0 rgba(250,80,0,.55)}60%{box-shadow:0 0 0 8px rgba(250,80,0,0)}}
+html.bf-sc .bf-cta{height:28px}
+.bf-go:hover .bf-cta{filter:brightness(1.1)}
+.bf-go:hover .bf-cta svg{transform:translateX(2px)}
+.bf-go:focus-visible{outline:2px solid #FA5000;outline-offset:-3px}
+.bf-x{flex-shrink:0;width:44px;height:44px;margin-right:4px;display:grid;place-items:center;background:none;border:0;padding:0;color:rgba(255,255,255,.72);cursor:pointer;border-radius:10px}
+.bf-x:hover{color:#fff;background:rgba(255,255,255,.08)}
+.bf-x:focus-visible{outline:2px solid #FA5000;outline-offset:-4px}
+.bf-x svg{width:18px;height:18px}
+@media(max-width:700px){.bf-go{justify-content:space-between;gap:10px;padding-left:14px;font-size:.8rem;line-height:1.3}.bf-d{display:none}.bf-cta{height:30px;padding:0 12px;font-size:.78rem}.bf-cta-d{display:none}.bf-cta-m{display:inline}}
+@media(max-width:360px){.bf-go{font-size:.74rem;padding-left:12px}}
+.bf-flash{outline:3px solid #FA5000 !important;outline-offset:6px;border-radius:16px;animation:bfFlash 1.8s ease-out}
+@keyframes bfFlash{0%{box-shadow:0 0 0 0 rgba(250,80,0,.45)}100%{box-shadow:0 0 0 24px rgba(250,80,0,0)}}
+[data-bf-dest]:focus{outline:none}
+@media(prefers-reduced-motion:reduce){.bf::after{display:none}.bf-cta,.bf-flash{animation:none}.bf,.bf-cta,html.bf-cerrando body{transition:none}}
+</style>
+<script data-bf>try{if(sessionStorage.getItem('hx_bf_cerrada')==='1')document.documentElement.classList.add('bf-off')}catch(e){}</script>
 </head>
 <body>
 
 <a href="#main-content" class="skip-link">Saltar al contenido</a>
+<!--bf-topbar--><div class="bf" id="bf-bar" role="region" aria-label="Black Friday en Hapee"><a class="bf-go" href="#calendario"><span class="bf-txt"><strong class="bf-tag">Black Friday<span class="bf-d"> en Hapee</span></strong><span class="bf-sep" aria-hidden="true">·</span>50&nbsp;% off en tu implementación + 1&nbsp;mes gratis</span><span class="bf-cta"><span class="bf-cta-d">Agenda tu demo</span><span class="bf-cta-m">Agendar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><button class="bf-x" type="button" aria-label="Cerrar aviso de Black Friday"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><!--/bf-topbar-->
 
 <!-- NAV — mismo menú que el home (index.html); mantener ambos sincronizados -->
 <header>
@@ -3766,5 +3804,35 @@ Al cerrar, menciona: "Este demo está powered by Hapee.ai — agentes IA para tu
 <script src="https://beta.hapee.ai/static/calendar-embed.js" async></script>
 <script src="/js/robot/login.js?v=15" defer data-hx-sitio></script>
 <script type="module" src="/js/robot/recorrido.js?p=agenda&amp;v=15" data-hx-recorrido></script>
+<script data-bf>
+(function(){
+  var d=document,h=d.documentElement,bar=d.getElementById('bf-bar');if(!bar)return;
+  var KEY='hx_bf_cerrada',red=function(){return matchMedia('(prefers-reduced-motion: reduce)').matches};
+  var sc=function(){h.classList.toggle('bf-sc',(window.scrollY||0)>40)};
+  addEventListener('scroll',sc,{passive:true});sc();
+  bar.querySelector('.bf-go').addEventListener('click',function(e){
+    var t=d.querySelector('.cal-embed')||d.getElementById('calendario');if(!t)return;
+    e.preventDefault();
+    try{if(typeof gtag==='function')gtag('event','bf_topbar_click',{promo:'black_friday',page_language:h.lang||''});else if(window.dataLayer)dataLayer.push({event:'bf_topbar_click'})}catch(_){}
+    try{if(typeof fbq==='function')fbq('trackCustom','bf_topbar_click',{promo:'black_friday'})}catch(_){}
+    var nav=d.getElementById('nav'),cs=getComputedStyle(h);
+    var off=(parseFloat(cs.getPropertyValue('--bf-hc'))||0)+(nav?nav.offsetHeight-(nav.classList.contains('sc')?0:12):64)+16;
+    var ir=function(b){scrollTo({top:Math.max(0,t.getBoundingClientRect().top+(window.scrollY||0)-off),behavior:b})};
+    ir(red()?'auto':'smooth');
+    setTimeout(function(){var r=t.getBoundingClientRect();if(r.top<off-24||r.top>innerHeight*.6)ir('auto')},1400);  /* si otro scroll cortó el suave, llega igual */
+    if(!t.hasAttribute('tabindex'))t.setAttribute('tabindex','-1');
+    t.setAttribute('data-bf-dest','');
+    try{t.focus({preventScroll:true})}catch(_){}
+    t.classList.remove('bf-flash');void t.offsetWidth;t.classList.add('bf-flash');
+    clearTimeout(t._bf);t._bf=setTimeout(function(){t.classList.remove('bf-flash')},2400);
+  });
+  bar.querySelector('.bf-x').addEventListener('click',function(e){
+    try{sessionStorage.setItem(KEY,'1')}catch(_){}
+    var tecla=e.detail===0,fin=function(){h.classList.add('bf-off');h.classList.remove('bf-cerrando');if(tecla){var a=d.querySelector('#nav a');if(a)a.focus({preventScroll:true})}};
+    if(red()){fin();return}
+    h.classList.add('bf-cerrando');setTimeout(fin,420);
+  });
+})();
+</script>
 </body>
 </html>
