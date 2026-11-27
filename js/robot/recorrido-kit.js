@@ -1,7 +1,7 @@
 // Hapee · kit del robot del recorrido (home y agenda), copia de propuesta-home-v3k9/robot/robokit.js (25-11-2026).
 // Reusa el robot del arcade (/juegos/js/bot.js → /js/robot/robot.js) y le suma propulsores:
 // llamas en las suelas, luz naranja, estela de partículas y polvo al aterrizar.
-import { cargarThree, crearBot } from './recorrido-bot.js?v=1';
+import { cargarThree, crearBot } from './recorrido-bot.js?v=2';
 
 export async function kit() {
   const K = await cargarThree();
@@ -45,12 +45,16 @@ export function particulas(K, n = 700) {
     v[i * 3] = vx; v[i * 3 + 1] = vy; v[i * 3 + 2] = vz;
     vida[i] = life; ini[i] = life; tam0[i] = size; gr[i] = grav;
     col[i * 3] = tipo ? .75 : 1; col[i * 3 + 1] = tipo ? .7 : .9; col[i * 3 + 2] = tipo ? .68 : .6;
-    tam[i] = size; alf[i] = 1; geo.userData['t' + i] = tipo;
+    tam[i] = size; alf[i] = 1; geo.userData['t' + i] = tipo; vivas++;
   }
+  let vivas = 0;
   function paso(dt) {
+    // v16: sin partículas vivas no recorre ni re-sube los 4 búferes (antes: cada cuadro, aunque el robot estuviera quieto)
+    if (!vivas) return;
+    vivas = 0;
     for (let i = 0; i < n; i++) {
       if (vida[i] <= 0) { if (alf[i] !== 0) { alf[i] = 0; tam[i] = 0; } continue; }
-      vida[i] -= dt;
+      vida[i] -= dt; vivas++;
       const u = 1 - Math.max(0, vida[i]) / ini[i];
       pos[i * 3] += v[i * 3] * dt; pos[i * 3 + 1] += v[i * 3 + 1] * dt; pos[i * 3 + 2] += v[i * 3 + 2] * dt;
       v[i * 3 + 1] -= gr[i] * dt; v[i * 3] *= .97; v[i * 3 + 2] *= .97;
@@ -65,7 +69,7 @@ export function particulas(K, n = 700) {
     geo.attributes.position.needsUpdate = true; geo.attributes.color.needsUpdate = true;
     geo.attributes.tam.needsUpdate = true; geo.attributes.alf.needsUpdate = true;
   }
-  function limpia() { vida.fill(0); }
+  function limpia() { vida.fill(0); vivas = 1; }
   return { pts, emite, paso, mat, limpia };
 }
 
@@ -91,15 +95,15 @@ export function propulsores(K, bot, part) {
   const wp = new THREE.Vector3(), wv = new THREE.Vector3();
   let acc = 0;
   // fuerza ∈ [0,1]; escala = tamaño del robot en mundo (para partículas)
-  function paso(t, dt, fuerza, escala, vel) {
+  function paso(t, dt, fuerza, escala, vel, liviano) {
     const f = Math.max(0, fuerza);
     for (let i = 0; i < 2; i++) {
       const p = llamas[i], fl = 1 + .18 * Math.sin(t * 47 + i * 2.1) + .1 * Math.sin(t * 83 + i);
       p.visible = f > .02;
       p.scale.set(.6 + .5 * f, Math.max(.001, f * fl), .6 + .5 * f);
     }
-    luz.intensity = f * 3.2 * (1 + .15 * Math.sin(t * 40));
-    if (!part || f < .05) return;
+    luz.intensity = liviano ? 0 : f * 3.2 * (1 + .15 * Math.sin(t * 40));
+    if (!part || f < .05 || liviano) return;
     acc += dt * (60 + 240 * f);
     while (acc > 1) {
       acc -= 1;
@@ -113,7 +117,7 @@ export function propulsores(K, bot, part) {
     }
   }
   function polvo(escala) {
-    if (!part) return;
+    if (!part || !part.pts.visible) return;
     bot.g.getWorldPosition(wp);
     for (let i = 0; i < 26; i++) {
       const a = Math.random() * Math.PI * 2, s = (.5 + Math.random() * .8) * escala;

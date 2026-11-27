@@ -7,11 +7,12 @@ export const CDN = 'https://cdn.jsdelivr.net/npm/three@0.160.0';
 let cache = null;
 export function cargarThree() {
   if (!cache) cache = (async () => {
-    const THREE = await import(`${CDN}/+esm`);
-    const [{ RoundedBoxGeometry }, { RoomEnvironment }, { load }] = await Promise.all([
+    // v16: las cuatro descargas en paralelo (antes three.js primero y el resto después: en 3G, ~1 s más de latencias en serie)
+    const [THREE, { RoundedBoxGeometry }, { RoomEnvironment }, { load }] = await Promise.all([
+      import(`${CDN}/+esm`),
       import(`${CDN}/examples/jsm/geometries/RoundedBoxGeometry.js/+esm`),
       import(`${CDN}/examples/jsm/environments/RoomEnvironment.js/+esm`),
-      import('/js/robot/recorrido-robot.js?v=1')
+      import('/js/robot/recorrido-robot.js?v=2')
     ]);
     return { THREE, RoundedBoxGeometry, RoomEnvironment, load };
   })();

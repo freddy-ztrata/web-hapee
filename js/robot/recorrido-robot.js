@@ -32,7 +32,7 @@ function hitT(S, ox, oy, oz, dx, dy, dz) {
   const F = S.F; let lo = 0, hi = 8;
   if (F(ox, oy, oz) >= 1) return 0;
   for (let k = 0; k < 40 && F(ox + dx * hi, oy + dy * hi, oz + dz * hi) < 1; k++) hi *= 2;
-  for (let i = 0; i < 34; i++) { const m = (lo + hi) * .5; if (F(ox + dx * m, oy + dy * m, oz + dz * m) < 1) lo = m; else hi = m; }
+  for (let i = 0; i < 22; i++) { const m = (lo + hi) * .5; if (F(ox + dx * m, oy + dy * m, oz + dz * m) < 1) lo = m; else hi = m; }  // v16: 22 (antes 34): error ~1e-4 sobre 737, invisible; construye ~1/3 más rápido
   return (lo + hi) * .5;
 }
 function gradN(S, x, y, z) {
@@ -89,7 +89,7 @@ function rowsWithGroove(n, ths, wDeg) {
 function polarHit(f, cu, cv, a) {
   const ca = Math.cos(a), sa = Math.sin(a); let lo = 0, hi = 4;
   while (f(cu + ca * hi, cv + sa * hi) < 0) hi *= 2;
-  for (let i = 0; i < 40; i++) { const m = (lo + hi) * .5; if (f(cu + ca * m, cv + sa * m) < 0) lo = m; else hi = m; }
+  for (let i = 0; i < 24; i++) { const m = (lo + hi) * .5; if (f(cu + ca * m, cv + sa * m) < 0) lo = m; else hi = m; }  // v16: 24 (antes 40)
   const r = (lo + hi) * .5; return [cu + ca * r, cv + sa * r];
 }
 function nrm2(f, u, v) { const e = .01, gx = f(u + e, v) - f(u - e, v), gy = f(u, v + e) - f(u, v - e), l = Math.hypot(gx, gy) || 1; return [gx / l, gy / l]; }
@@ -208,7 +208,7 @@ function table(fn, a, b, n = 256) {
 // carta sagital: arco S (>0 hacia adelante) en el que la superficie alcanza la altura y (en x = X)
 function sOfY(S, R0, X, y) {
   const at = th => { const d = [0, Math.cos(th), Math.sin(th)], t = hitT(S, X - S.c[0], 0, 0, ...d); return d[1] * t + S.c[1]; };
-  let lo = 0, hi = Math.PI * .75; for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (at(m) > y) lo = m; else hi = m; }
+  let lo = 0, hi = Math.PI * .75; for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (at(m) > y) lo = m; else hi = m; }
   return R0 * (lo + hi) / 2;
 }
 const lathe = (pts, rads, segs = 64) => new T.LatheGeometry(fillet(pts, rads).map(([r, y]) => new T.Vector2(Math.max(r, 0), y)), segs);
@@ -248,7 +248,11 @@ function add(nd, geo, mat) {
 }
 
 // ── fuente de la marca para «hapee» ──
-async function loadFont() {
+// v16: la fuente se pide al cargar el módulo (en paralelo con three.js), no al empezar a construir el robot:
+// antes la construcción esperaba la descarga (en 3G, ~2 s de latencias) antes de empezar.
+let fontP = null;
+function loadFont() { return fontP || (fontP = loadFont0()); }
+async function loadFont0() {
   const fam = 'HapeeBotPoppins';
   try {
     const ff = new FontFace(fam, 'url(https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFd2JQEk.woff2) format("woff2")', { weight: '600' });
@@ -259,9 +263,10 @@ async function loadFont() {
 
 // pantalla del pecho: degradado de marca + «hapee»
 function screenTexture(fontStack, aspect) {
-  // 1024 px de ancho (antes 1536): igual de nítido al tamaño en pantalla y mucho más barato de re-subir
-  // cuando la pantalla se anima (puntos / barras).
-  const W = 1024, Hh = Math.round(W / aspect), cv = document.createElement('canvas'); cv.width = W; cv.height = Hh;
+  // v16 (recorrido): 384 px de ancho (el robot del recorrido mide ≤ ~600 px de alto: la pantalla ocupa ≤ ~160 px).
+  // Con 1024 px, en las poses «piensa» (puntos) y «habla» (barras) se re-subían ~3,7 MB + mipmaps a la GPU 20 veces por
+  // segundo mientras el robot estaba quieto: en celular eso traba la levitación.
+  const W = 384, Hh = Math.round(W / aspect), cv = document.createElement('canvas'); cv.width = W; cv.height = Hh;
   const bg = document.createElement('canvas'); bg.width = W; bg.height = Hh;
   const b = bg.getContext('2d');
   const lg = b.createLinearGradient(0, 0, W, Hh * .55);
@@ -283,7 +288,7 @@ function screenTexture(fontStack, aspect) {
     g.fillText('hapee', W / 2, Hh * y);
   };
   const pill = (x, y, w, h) => { const r = Math.min(w, h) / 2; g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); g.fill(); };
-  const tx = new T.CanvasTexture(cv); tx.colorSpace = T.SRGBColorSpace; tx.anisotropy = 8;
+  const tx = new T.CanvasTexture(cv); tx.colorSpace = T.SRGBColorSpace; tx.anisotropy = 4;
   let mode = 'logo', last = -1;
   function draw(t, level) {
     g.drawImage(bg, 0, 0);
@@ -341,11 +346,113 @@ function visorGlow(shapes) {
   const tx = new T.CanvasTexture(cv); tx.colorSpace = T.SRGBColorSpace; return tx;
 }
 
+loadFont();
+
+// ───────────────────── geometría pre-hecha (v16) ─────────────────────
+// Construir el robot en código toma ~0,7 s de CPU en escritorio y varios segundos en un celular modesto, en cada página.
+// Se guarda una vez (generador: ~/Sites/web-dna/_build/hapee-home/robot/geo-robot.mjs) en un binario gzip que se pide al
+// cargar este módulo (en paralelo con three.js) y se arma en ~decenas de ms. Si falta (sin DecompressionStream, red, versión
+// distinta), se construye en código como siempre. Al cambiar la construcción del robot: volver a correr el generador.
+const GEO = '/js/robot/recorrido-robot-geo.bin?v=3ed61566af';
+let geoP = null;
+function pedirGeo() {
+  if (geoP) return geoP;
+  geoP = (async () => {
+    if (typeof DecompressionStream === 'undefined' || /[?&]geo=0/.test(location.search)) return null;
+    const r = await fetch(GEO); if (!r.ok) return null;
+    return await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  })().catch(() => null);
+  return geoP;
+}
+const ENC = { position: 'q', uv: 'q', normal: 'n', color: 'c' };
+export function serializar(rig, matKey) {
+  const { root } = rig, nodos = [], idx = new Map(), geos = [], gIdx = new Map(), partes = [];
+  let off = 0;
+  const pon = (ta) => { const al = ta.BYTES_PER_ELEMENT; off = Math.ceil(off / 4) * 4; const o = off; partes.push([o, ta]); off += ta.byteLength; return o; };
+  root.traverse(o => {
+    idx.set(o, nodos.length);
+    const n = { p: o.parent && idx.has(o.parent) ? idx.get(o.parent) : -1, n: o.name || '', pv: o.userData.pivot || null,
+      t: o.position.toArray(), r: [o.rotation.x, o.rotation.y, o.rotation.z, o.rotation.order], s: o.scale.toArray() };
+    if (o.isMesh) {
+      n.m = Array.isArray(o.material) ? o.material.map(matKey) : matKey(o.material);
+      if (!gIdx.has(o.geometry)) {
+        const g = o.geometry, G = { a: {}, gr: g.groups.map(x => [x.start, x.count, x.materialIndex]) };
+        for (const [nom, at] of Object.entries(g.attributes)) {
+          const a = at.array, c = at.count, k = at.itemSize, e = ENC[nom] || 'f';
+          if (e === 'q') {
+            const mn = [], mx = [];
+            for (let j = 0; j < k; j++) { let lo = Infinity, hi = -Infinity; for (let i = 0; i < c; i++) { const v = a[i * k + j]; if (v < lo) lo = v; if (v > hi) hi = v; } mn.push(lo); mx.push(hi); }
+            const q = new Uint16Array(c * k), prev = new Array(k).fill(0);
+            for (let i = 0; i < c; i++) for (let j = 0; j < k; j++) { const sp = mx[j] - mn[j] || 1, v = Math.round((a[i * k + j] - mn[j]) / sp * 65535); q[i * k + j] = (v - prev[j]) & 65535; prev[j] = v; }
+            G.a[nom] = [pon(q), c, k, 'q', mn, mx];
+          } else if (e === 'n') {
+            const q = new Int8Array(c * k); for (let i = 0; i < c * k; i++) q[i] = Math.round(Math.max(-1, Math.min(1, a[i])) * 127);
+            G.a[nom] = [pon(q), c, k, 'n'];
+          } else if (e === 'c') {
+            const q = new Uint8Array(c * k); for (let i = 0; i < c * k; i++) q[i] = Math.round(Math.max(0, Math.min(1, a[i])) * 255);
+            G.a[nom] = [pon(q), c, k, 'c'];
+          } else G.a[nom] = [pon(new Float32Array(a)), c, k, 'f'];
+        }
+        if (g.index) {
+          const ia = g.index.array, n2 = ia.length;
+          if (g.attributes.position.count <= 65535) { const q = new Uint16Array(n2); let pr = 0; for (let i = 0; i < n2; i++) { q[i] = (ia[i] - pr) & 65535; pr = ia[i]; } G.i = [pon(q), n2, 'd']; }
+          else G.i = [pon(new Uint32Array(ia)), n2, 'u'];
+        }
+        gIdx.set(o.geometry, geos.length); geos.push(G);
+      }
+      n.g = gIdx.get(o.geometry);
+    }
+    nodos.push(n);
+  });
+  const brazo = A => ({ sh: idx.get(A.sh), el: idx.get(A.el), wr: idx.get(A.wr), j: A.joints.map(([o, r]) => [idx.get(o), r]) });
+  const cab = JSON.stringify({ v: 1, nodos, geos, rig: { hips: idx.get(rig.hips), torso: idx.get(rig.torsoN), head: idx.get(rig.headN), arms: { '-1': brazo(rig.arms[-1]), '1': brazo(rig.arms[1]) } } });
+  const cb = new TextEncoder().encode(cab), base = Math.ceil((8 + cb.length) / 4) * 4, out = new Uint8Array(base + off);
+  new DataView(out.buffer).setUint32(0, 0x48585247, true); new DataView(out.buffer).setUint32(4, cb.length, true);
+  out.set(cb, 8);
+  for (const [o, ta] of partes) out.set(new Uint8Array(ta.buffer, ta.byteOffset, ta.byteLength), base + o);
+  return out;
+}
+function desdeGeo(buf, mats) {
+  const dv = new DataView(buf); if (dv.getUint32(0, true) !== 0x48585247) return null;
+  const n = dv.getUint32(4, true), cab = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 8, n))), base = Math.ceil((8 + n) / 4) * 4;
+  if (cab.v !== 1) return null;
+  const geos = cab.geos.map(G => {
+    const g = new T.BufferGeometry();
+    for (const [nom, [o, c, k, e, mn, mx]] of Object.entries(G.a)) {
+      const out = new Float32Array(c * k);
+      if (e === 'q') { const q = new Uint16Array(buf, base + o, c * k), prev = new Array(k).fill(0), sc = mn.map((v, j) => (mx[j] - v || 1) / 65535);
+        for (let i = 0; i < c; i++) for (let j = 0; j < k; j++) { const v = (prev[j] + q[i * k + j]) & 65535; prev[j] = v; out[i * k + j] = mn[j] + v * sc[j]; } }
+      else if (e === 'n') { const q = new Int8Array(buf, base + o, c * k); for (let i = 0; i < c; i++) { const x = q[i * 3] / 127, y = q[i * 3 + 1] / 127, z = q[i * 3 + 2] / 127, l = Math.hypot(x, y, z) || 1; out[i * 3] = x / l; out[i * 3 + 1] = y / l; out[i * 3 + 2] = z / l; } }
+      else if (e === 'c') { const q = new Uint8Array(buf, base + o, c * k); for (let i = 0; i < c * k; i++) out[i] = q[i] / 255; }
+      else out.set(new Float32Array(buf.slice(base + o, base + o + c * k * 4)));
+      g.setAttribute(nom, new T.BufferAttribute(out, k));
+    }
+    if (G.i) { const [o, c, e] = G.i;
+      if (e === 'd') { const q = new Uint16Array(buf, base + o, c), ia = new Uint16Array(c); let pr = 0; for (let i = 0; i < c; i++) { pr = (pr + q[i]) & 65535; ia[i] = pr; } g.setIndex(new T.BufferAttribute(ia, 1)); }
+      else g.setIndex(new T.BufferAttribute(new Uint32Array(buf.slice(base + o, base + o + c * 4)), 1)); }
+    for (const [s, c, m] of G.gr) g.addGroup(s, c, m);
+    return g;
+  });
+  const objs = [];
+  for (const d of cab.nodos) {
+    const o = d.g != null ? new T.Mesh(geos[d.g], Array.isArray(d.m) ? d.m.map(k => mats[k]) : mats[d.m]) : new T.Group();
+    if (o.isMesh) o.frustumCulled = false;
+    o.name = d.n; if (d.pv) o.userData.pivot = d.pv;
+    o.position.fromArray(d.t); o.rotation.set(d.r[0], d.r[1], d.r[2], d.r[3]); o.scale.fromArray(d.s);
+    if (d.p >= 0) objs[d.p].add(o);
+    objs.push(o);
+  }
+  const R = cab.rig, brazo = A => ({ sh: objs[A.sh], el: objs[A.el], wr: objs[A.wr], joints: A.j.map(([i, r]) => [objs[i], r]) });
+  return { root: objs[0], hips: objs[R.hips], torsoN: objs[R.torso], headN: objs[R.head], arms: { [-1]: brazo(R.arms['-1']), 1: brazo(R.arms['1']) } };
+}
+pedirGeo();
+
 // ───────────────────────── modelo ─────────────────────────
 export async function load(THREE, addons = {}) {
   T = THREE;
   RoundedBoxGeometry = addons.RoundedBoxGeometry || (await import('three/addons/geometries/RoundedBoxGeometry.js')).RoundedBoxGeometry;
   const fontStack = await loadFont();
+  const geoBuf = addons.sinGeo ? null : await pedirGeo();
   const phys = (color, o = {}) => new T.MeshPhysicalMaterial({ color, roughness: .3, metalness: 0, clearcoat: .6, clearcoatRoughness: .16, ...o });
   const M = {
     white: phys('#f4e4dd'),
@@ -357,6 +464,23 @@ export async function load(THREE, addons = {}) {
     face: new T.MeshBasicMaterial({ color: '#fff4e2', toneMapped: false }),
     boot: phys('#ffffff', { vertexColors: true }),
   };
+  // ojos y sonrisa (también dibujan el brillo del visor, que se necesita con o sin geometría pre-hecha)
+  const eyeF = cx => (u, v) => (Math.hypot((u - cx) / 15, (v - 561) / 22.5) - 1) * 15;
+  const smileF = (u, v) => smax((Math.hypot(u / 26.5, (v - 518) / 17.5) - 1) * 17.5, v - (517.5 + .006 * u * u), 4);
+  M.visor.emissive = new T.Color('#ffffff'); M.visor.emissiveIntensity = 1;
+  M.visor.emissiveMap = visorGlow([[eyeF(-62), [-62, 561]], [eyeF(62), [62, 561]], [(u, v) => smileF(u, v) + 1.5, [0, 510]]]);
+  const screen = screenTexture(fontStack, 154 / 136);
+  const screenMat = new T.MeshPhysicalMaterial({ color: '#000', emissive: '#fff', emissiveMap: screen.texture, roughness: .32, specularIntensity: .5, clearcoat: .55, clearcoatRoughness: .22, toneMapped: false });
+  screen.material = screenMat;
+  const mats = { ...M, screen: screenMat };
+  const matKey = m => Object.keys(mats).find(k => mats[k] === m);
+  let rig = null;
+  try { rig = geoBuf && desdeGeo(geoBuf, mats); } catch (e) { rig = null; }
+  const deGeo = !!rig;
+  if (!rig) rig = await construir();
+  const { root, hips, torsoN, headN, arms } = rig;
+
+  async function construir() {
 
   const root = new T.Group(); root.userData.pivot = [0, 0, 0];
   const hips = node(root, [0, 172, 0]);
@@ -377,11 +501,7 @@ export async function load(THREE, addons = {}) {
   add(headN, decal(helmet, FC, visorF(2), null, [0, 556], { t: 1.6, rb: 1.2, nb: 2, ni: 9, N: 120, uv: [-131, 469, 131, 643] }), M.visor);
   add(headN, decal(helmet, FC, visorF(14), visorF(-1.5), [0, 556], { t: 4.2, rb: 3.2, blend: 9, rbIn: 3.4, nb: 5, ni: 3, N: 100 }), M.white);
   // ojos y sonrisa
-  const eyeF = cx => (u, v) => (Math.hypot((u - cx) / 15, (v - 561) / 22.5) - 1) * 15;
   for (const cx of [-62, 62]) add(headN, decal(helmet, FC, eyeF(cx), null, [cx, 561], { t: 2.3, rb: .5, nb: 1, ni: 3, N: 56, skirt: .5 }), M.face);
-  const smileF = (u, v) => smax((Math.hypot(u / 26.5, (v - 518) / 17.5) - 1) * 17.5, v - (517.5 + .006 * u * u), 4);
-  M.visor.emissive = new T.Color('#ffffff'); M.visor.emissiveIntensity = 1;
-  M.visor.emissiveMap = visorGlow([[eyeF(-62), [-62, 561]], [eyeF(62), [62, 561]], [(u, v) => smileF(u, v) + 1.5, [0, 510]]]);
   add(headN, decal(helmet, FC, smileF, null, [0, 510], { t: 2.3, rb: .5, nb: 1, ni: 3, N: 72, skirt: .5 }), M.face);
 
   await pausa();
@@ -445,9 +565,6 @@ export async function load(THREE, addons = {}) {
   await pausa();
   add(torsoN, decal(torso, TF, shieldF, screenF(0), [0, 316], { t: 7, rb: 3.6, rbIn: 3.6, nb: 4, ni: 4, N: 112 }), M.white);
   const scr = decal(torso, TF, screenF(3), null, [0, 316], { t: 3.6, rb: 1, nb: 1, ni: 7, N: 96, uv: [-77, 248, 77, 384] });
-  const screen = screenTexture(fontStack, 154 / 136);
-  const screenMat = new T.MeshPhysicalMaterial({ color: '#000', emissive: '#fff', emissiveMap: screen.texture, roughness: .32, specularIntensity: .5, clearcoat: .55, clearcoatRoughness: .22, toneMapped: false });
-  screen.material = screenMat;
   add(torsoN, scr, screenMat);
   await pausa();
   // canesú naranja alrededor del cuello (delante y detrás)
@@ -541,6 +658,8 @@ export async function load(THREE, addons = {}) {
   for (const sd of [-1, 1]) { legs[sd].hp.rotation.z = sd * .085; legs[sd].ft.rotation.z = -sd * .085; }
   root.scale.setScalar(1 / H);
   root.traverse(o => { if (o.isMesh) o.frustumCulled = false; });
+  return { root, hips, torsoN, headN, arms };
+  }
 
   function animate(t, opt = {}) {
     const w = clamp(opt.wave || 0, 0, 1), we = w * w * (3 - 2 * w), calm = 1 - .6 * we;
@@ -577,5 +696,5 @@ export async function load(THREE, addons = {}) {
     }
   }
   animate(0, { wave: 0 });
-  return { root, animate, parts: { head: headN, torso: torsoN, hips }, screen };
+  return { root, animate, parts: { head: headN, torso: torsoN, hips }, screen, geo: deGeo, serializar: () => serializar(rig, matKey) };
 }

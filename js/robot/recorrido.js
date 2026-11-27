@@ -7,7 +7,7 @@
 // se esconde; mientras se mueve, si pasa sobre algo de eso se vuelve casi transparente.
 // Sin nada con prefers-reduced-motion, sin WebGL, Save-Data o equipo modesto. Si el equipo no da, baja la resolución
 // y, si aun así no da, se apaga solo (el hero vuelve a su robot de siempre).
-import { kit, renderer, robot, particulas, propulsores, luces } from './recorrido-kit.js?v=1';
+import { kit, renderer, robot, particulas, propulsores, luces } from './recorrido-kit.js?v=2';
 
 const PAG = new URL(import.meta.url).searchParams.get('p') || 'home';
 const GEN = PAG === 'gen';   // páginas sin paradas a medida: tramos de ~1 pantalla entre el encabezado y el pie
@@ -69,6 +69,8 @@ function estilo() {
   s.textContent = `
 #hx-robo{position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:60;opacity:0;transition:opacity .5s ease}
 html.hx-on #hx-robo{opacity:1}
+#hx-robo.doc{position:absolute;will-change:transform}
+.hx-burb.doc{position:absolute}
 html.hx-on .hero img.hero-robot,html.hx-on .hero .hr-live{opacity:0!important;transition:opacity .35s ease .15s}
 .hx-burb{position:fixed;left:0;top:0;z-index:61;width:max-content;max-width:230px;padding:11px 15px;border-radius:16px 16px 16px 4px;background:#fff;color:#1a1a1a;
  font:700 14px/1.3 'Plus Jakarta Sans',system-ui,sans-serif;box-shadow:0 12px 34px rgba(8,8,8,.18);pointer-events:none;opacity:0;
@@ -84,7 +86,8 @@ html.dark .hx-burb{background:#1a1a1a;color:#F5F3F0}
 }
 
 async function arrancar() {
-  estilo();
+  const mk = n => { try { performance.mark('hx-' + n); } catch (e) {} };
+  mk('arranca'); estilo();
   const cv = document.createElement('canvas'); cv.id = 'hx-robo'; cv.setAttribute('aria-hidden', 'true'); document.body.appendChild(cv);
   const burb = document.createElement('div'); burb.className = 'hx-burb'; burb.setAttribute('aria-live', 'polite'); document.body.appendChild(burb);
   burb.addEventListener('click', e => {
@@ -94,16 +97,14 @@ async function arrancar() {
     try { window.gtag && gtag('event', 'robot_globo_cta', { pagina: PAG, destino: h }); } catch (er) {}
   });
 
-  const K = await kit(), { THREE } = K;
+  const K = await kit(), { THREE } = K; mk('kit');
   const TACTIL = matchMedia('(pointer:coarse)').matches;
   const esMovil = () => innerWidth < 760 || (TACTIL && innerHeight < 520);
-  const V = { w: innerWidth, h: innerHeight, k: 1, movil: esMovil(), pr: 1, nav: 0 };
-  const R = renderer(K, cv);
+  const V = { w: innerWidth, h: innerHeight, ch: 0, k: 1, movil: esMovil(), pr: 1, nav: 0 };
+  const R = renderer(K, cv); mk('renderer');
   const S = new THREE.Scene(); luces(K, S);
   const cam = new THREE.PerspectiveCamera(30, 1, .1, 60); cam.position.set(0, 0, 10);
-  const bot = await robot(K); S.add(bot.g);
-  // compila los shaders sin bloquear (KHR_parallel_shader_compile) antes del primer cuadro
-  try { if (R.compileAsync) await R.compileAsync(S, cam); } catch (e) {}
+  const bot = await robot(K); S.add(bot.g); mk('robot');
   const part = particulas(K, V.movil || TACTIL ? 260 : 600); S.add(part.pts);
   const jet = propulsores(K, bot, part);
   let sombra = null;
@@ -111,17 +112,66 @@ async function arrancar() {
     sombra = new THREE.Mesh(new THREE.CircleGeometry(.5, 32), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: .22, depthWrite: false }));
     sombra.rotation.x = -Math.PI / 2 + .35; S.add(sombra);
   }
+  // compila los shaders sin bloquear (KHR_parallel_shader_compile) antes del primer cuadro.
+  // v16: DESPUÉS de sumar propulsores, partículas y sombra. Antes se compilaba sin la luz de los propulsores (PointLight):
+  // esa luz cambia el programa de TODOS los materiales del robot, así que el «calentamiento» los recompilaba de forma
+  // síncrona (tarea larga justo antes de aparecer).
+  try { if (R.compileAsync) await R.compileAsync(S, cam); } catch (e) {}
+  mk('compila');
   let calidad = 1;
-  function medir() {
-    V.w = innerWidth; V.h = innerHeight; V.movil = esMovil(); V.huecos = V.movil || GEN || V.w < 1400;  // huecos libres: celular, tabletas/pantallas angostas (márgenes chicos) y páginas genéricas
+  // caja del lienzo en modo documento (ver medir): ~2,4 × 1,9 veces el alto del robot, pies al 74 %, medidas en pasos de
+  // 16 px (cambiar el tamaño del lienzo cuesta: solo al cambiar de escalón), nunca fuera del ancho ni del alto del documento
+  // (si sobresaliera, la página ganaría scroll horizontal o crecería). La cámara recorta la misma vista que tendría a
+  // pantalla completa (setViewOffset): el robot se ve idéntico.
+  const B = { w: -1, h: -1, x: null, y: null };
+  function caja() {
+    const hb = Math.max(E.h || 0, 40), cw = V.cw || V.w;
+    const bw = Math.min(cw, Math.ceil(hb * 2.4 / 16) * 16), bh = Math.ceil(hb * 1.9 / 16) * 16;
+    const sx = cl(Math.round(E.x - bw / 2), 0, Math.max(0, cw - bw));
+    let dy = Math.round(E.y + scrollY - V.org.y - bh * .74);
+    if (V.doch) dy = Math.min(dy, V.doch - V.org.y - bh);
+    dy = Math.max(0, dy);
+    if (bw !== B.w || bh !== B.h) { B.w = bw; B.h = bh; R.setSize(bw, bh, false); cv.style.width = bw + 'px'; cv.style.height = bh + 'px'; }
+    const dx = Math.round(sx - V.org.x);
+    if (dx !== B.x || dy !== B.y) { B.x = dx; B.y = dy; cv.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)'; }
+    cam.setViewOffset(V.w, V.ch, sx, dy + V.org.y - scrollY, bw, bh);
+  }
+  // v16: el lienzo (V.ch) puede ser más alto que la ventana (V.h). En el celular la barra de direcciones cambia el alto
+  // de la ventana al hacer scroll (iOS/Android disparan «resize»): antes eso re-dimensionaba el lienzo (buffer nuevo,
+  // un cuadro en blanco) y re-medía TODOS los huecos (~100-160 ms con CPU 4x) justo al empezar a hacer scroll. Ahora
+  // un cambio solo de alto que cabe en el lienzo actualiza V.h y nada más (los huecos están en coordenadas de documento).
+  function medir(forzar) {
+    const w = innerWidth, h = innerHeight;
+    const soloAlto = !forzar && V.ch && w === V.w && h <= V.ch && h > V.ch * .6;
+    const cambioAncho = V.ch && w !== V.w;
+    V.w = w; V.h = h;
     const nv = document.querySelector('.nav'); V.nav = nv ? Math.max(0, nv.getBoundingClientRect().bottom) : 0;
-    V.pr = Math.min(V.movil || TACTIL ? 1.25 : 1.5, devicePixelRatio || 1) * calidad;
-    R.setPixelRatio(V.pr); R.setSize(V.w, V.h, false);
-    cv.style.width = V.w + 'px'; cv.style.height = V.h + 'px';
-    cam.aspect = V.w / V.h; cam.updateProjectionMatrix();
-    V.k = 2 * 10 * Math.tan(15 * Math.PI / 180) / V.h;
-    part.mat.uniforms.esc.value = V.h * V.pr * .5;
+    if (soloAlto) return;
+    V.movil = esMovil(); V.huecos = V.movil || GEN || V.w < 1400;  // huecos libres: celular, tabletas/pantallas angostas (márgenes chicos) y páginas genéricas
+    // en táctiles, alto del lienzo = el mayor alto que puede tomar la ventana (barra escondida): un solo buffer para siempre
+    V.ch = TACTIL ? Math.round(Math.max(h, Math.min((screen && screen.height) || h, h * 1.35))) : h;
+    // v16: con huecos libres (celular, páginas genéricas, < 1400 px) el robot siempre está anclado a un lugar del DOCUMENTO.
+    // Antes se dibujaba en un lienzo FIJO a pantalla completa y se re-posicionaba en cada cuadro leyendo scrollY: el scroll
+    // del celular corre en otro hilo, así que el robot iba un cuadro atrás del texto (temblaba al hacer scroll) y, mientras
+    // la página tenía una tarea larga (cargando), se quedaba quieto en la pantalla y el texto le pasaba por encima.
+    // Ahora el lienzo es una caja chica alrededor del robot, con position:absolute en el documento: el navegador lo
+    // desplaza junto con la página (sin JS, aunque el hilo principal esté ocupado) y pinta ~10 veces menos píxeles.
+    V.doc = V.huecos;
+    V.pr = Math.min(V.doc ? 1.5 : V.movil || TACTIL ? 1.25 : 1.5, devicePixelRatio || 1) * calidad;
+    R.setPixelRatio(V.pr);
+    cv.classList.toggle('doc', V.doc); burb.classList.toggle('doc', V.doc);
+    cam.aspect = V.w / V.ch;
+    if (V.doc) {
+      B.w = B.h = -1; B.x = B.y = null; cv.style.transform = 'translate3d(0px,0px,0)';
+      const r = cv.getBoundingClientRect(); V.org = { x: r.left, y: r.top + scrollY }; V.cw = document.documentElement.clientWidth || V.w;
+      caja();
+    } else { cam.clearViewOffset(); cv.style.transform = ''; R.setSize(V.w, V.ch, false); cv.style.width = V.w + 'px'; cv.style.height = V.ch + 'px'; }
+    cam.updateProjectionMatrix();
+    V.k = 2 * 10 * Math.tan(15 * Math.PI / 180) / V.ch;
+    part.mat.uniforms.esc.value = V.ch * V.pr * .5;
     medirParadas();
+    // giro del teléfono / cambio de ancho: todo se re-ubica; en vez de verlo cruzar la pantalla, desaparece y reaparece en su sitio nuevo
+    if (cambioAncho) { E.op = 0; cv.style.opacity = '0'; primero = true; E.spotK = null; E.bp = null; burb.classList.remove('on'); }
   }
 
   // ── paradas ──
@@ -143,6 +193,7 @@ async function arrancar() {
   }
   function medirParadas() {
     const out = []; let lado = 1; cacheObs = null;
+    if (V.doc) { const d0 = cv.style.display; cv.style.display = 'none'; V.doch = document.documentElement.scrollHeight; cv.style.display = d0; }
     const lista = GEN ? paradasGen() : PARADAS;
     const contGen = GEN ? (document.querySelector('main .ctn, main .container, article, .post, main, .ctn, .container') || document.body) : null;
     V.margenGen = contGen ? Math.max(0, contGen.getBoundingClientRect().left) : 0;
@@ -171,7 +222,7 @@ async function arrancar() {
     P = out;
   }
 
-  const ALTO = () => V.movil ? Math.min(88, V.h * .11, V.w * .22) : V.huecos ? Math.min(170, V.h * .2) : Math.min(240, V.h * .26);
+  const ALTO = () => V.movil ? Math.min(88, V.ch * .11, V.w * .22) : V.huecos ? Math.min(170, V.ch * .2) : Math.min(240, V.ch * .26);  // con el alto del lienzo: la barra del navegador no cambia su tamaño
 
   // ── celular: lugar libre por sección ──
   // Obstáculos = líneas de texto reales (Range.getClientRects), imágenes y todo lo PROHIBIDO, en coordenadas de documento.
@@ -212,9 +263,16 @@ async function arrancar() {
     // 30 px libres sobre la cabeza: el aterrizaje baja desde ahí
     const libre = (x, y) => { const a = x - mw, b = x + mw, c = y - h - 30, d = y; for (const o of obs) if (o[2] > a && o[0] < b && o[3] > c && o[1] < d) return false; return true; };
     const out = [];
-    let ult = -1e9;
+    // v16: un hueco ya conocido que sigue libre se conserva TAL CUAL (misma x, y y clave). Antes cada re-medición (1 s después
+    // de entrar la sección, ResizeObserver) volvía a barrer desde arriba y la clave vieja quedaba en una «y» 40-100 px distinta:
+    // el robot, parado y a la vista, saltaba dentro de la página (medido en en/ y pt/ 390 tras cada scroll).
+    for (const v of viejos || []) {
+      if (v.malo || MALOS.has(v.k) || v.y < top + h + 14 || v.y > bot - 6 || !libre(v.x, v.y)) continue;
+      if (out.some(o => Math.abs(o.y - v.y) < V.h * .42)) continue;
+      out.push({ k: v.k, x: v.x, y: v.y, lado: v.lado, i: iStop, malo: false, obs: obs.filter(o => o[3] > v.y - h - 160 && o[1] < v.y + 160) });
+    }
     for (let y = top + h + 14; y <= bot - 6; y += 10) {
-      if (y - ult < V.h * .42) continue;
+      if (out.some(o => Math.abs(o.y - y) < V.h * .42)) continue;
       let lado = 0, xx = 0;
       const mg = V.margenGen || 0, opciones = [];
       if (!V.movil && mg > mw * 2 + 16) opciones.push([-1, mg / 2], [1, V.w - mg / 2]);
@@ -226,9 +284,9 @@ async function arrancar() {
       let eq = null;
       for (const v of viejos || []) if (v.lado === lado && Math.abs(v.y - y) < 220 && !out.some(o => o.k === v.k) && (!eq || Math.abs(v.y - y) < Math.abs(eq.y - y))) eq = v;
       const k = eq ? eq.k : iStop + ':' + Math.round(y) + ':' + lado;
-      out.push({ k, x: xx, y, lado, i: iStop, primero: !out.length, malo: MALOS.has(k), obs: obs.filter(o => o[3] > y - h - 160 && o[1] < y + 160) });
-      ult = y;
+      out.push({ k, x: xx, y, lado, i: iStop, malo: MALOS.has(k), obs: obs.filter(o => o[3] > y - h - 160 && o[1] < y + 160) });
     }
+    out.sort((p, q) => p.y - q.y); out.forEach((o, j) => (o.primero = j === 0));
     return out;
   }
   const PISO = () => V.h - (V.movil ? 82 : 26);   // en celular, por encima del botón flotante de WhatsApp
@@ -310,7 +368,7 @@ async function arrancar() {
   function objetivoMovil() {
     // hero: mientras el robot del hero esté a la vista, ahí
     const h0 = P[0] && P[0].tipo === 'hero' ? P[0] : null;
-    if (h0) { const r = h0.el.getBoundingClientRect(); if (r.bottom - r.height * .45 > V.nav) return { p: h0, X: reposo(h0), key: h0 }; }
+    if (h0) { const r = h0.el.getBoundingClientRect(); if (r.bottom - r.height * .45 > V.nav) return { p: h0, X: reposo(h0), key: 'hero' }; }
     const h = ALTO(), lo = V.nav + h + 12, hi = V.h - 26, ideal = V.h * .7;
     const ys = sp => sp.y - scrollY;
     // identidad estable por clave: re-medir (animaciones, ResizeObserver) no debe reiniciar el viaje
@@ -346,7 +404,7 @@ async function arrancar() {
   }).observe(document.body);
   addEventListener('load', () => setTimeout(medirParadas, 300), { once: true });
 
-  function mundo(px, py) { return [(px - V.w / 2) * V.k, (V.h / 2 - py) * V.k]; }
+  function mundo(px, py) { return [(px - V.w / 2) * V.k, (V.ch / 2 - py) * V.k]; }
 
   function globo(p, enReposo, visible, spot) {
     const idx = P.indexOf(p);
@@ -366,7 +424,9 @@ async function arrancar() {
       burb.classList.toggle('der', g.der);
       const gb = g.bot - scrollY, gh = burb.offsetHeight || 40;
       if (gb - gh < V.nav + 6 || gb > V.h - 8) { burb.classList.remove('on'); return; }  // nunca bajo la barra ni cortado abajo
-      burb.style.setProperty('--bx', g.cx + 'px'); burb.style.setProperty('--by', gb + 'px');  // con transform: moverlo no es un salto de diseño (CLS)
+      // con transform: moverlo no es un salto de diseño (CLS). En modo documento, coordenadas de documento: viaja con la página sin JS
+      if (V.doc) { burb.style.setProperty('--bx', (g.cx - V.org.x) + 'px'); burb.style.setProperty('--by', (g.bot - V.org.y) + 'px'); }
+      else { burb.style.setProperty('--bx', g.cx + 'px'); burb.style.setProperty('--by', gb + 'px'); }
       if (fr % 8 === 4 && (E.cambio || fr % 64 === 4) && burb.classList.contains('on')) {
         const r = burb.getBoundingClientRect(); let mal = false; burb.style.pointerEvents = 'none';
         for (const fx of [.03, .25, .5, .75, .97]) for (const fy of [.1, .5, .9]) { if (tocaAlgo(r.left + r.width * fx, r.top + r.height * fy + 1, 2)) { mal = true; break; } }
@@ -445,12 +505,12 @@ async function arrancar() {
     if (d && typeof d === 'object' && d.type === 'zentru_calendar_submitted') { E.fiesta = 4; bot.pose('celebra', 3.5); for (let i = 0; i < 3; i++) setTimeout(() => jet.polvo(E.h * V.k), i * 250); }
   });
 
-  let t = 0, prev = performance.now(), primero = true, fr = 0, vivo = true, lentos = 0, muestras = 0;
+  let t = 0, prev = performance.now(), primero = true, fr = 0, vivo = true, lentos = 0, muestras = 0, LIVIANO = false;
   let enCurso = false;
   const reanudar = () => { if (vivo && !document.hidden && !enCurso) { enCurso = true; prev = performance.now(); requestAnimationFrame(loop); } };
   document.addEventListener('visibilitychange', reanudar);
   addEventListener('pageshow', e => { if (e.persisted) { primero = true; E.fase = 'reposo'; medirParadas(); reanudar(); } });
-  window.__hx = { E, bot, P: () => P, SP: () => SP, pag: PAG, perf: { lentos: 0, cuadros: 0 }, toca: (x, y, h) => tocaAlgo(x, y, h) };
+  window.__hx = { E, bot, P: () => P, SP: () => SP, pag: PAG, perf: { lentos: 0, cuadros: 0, ms: [] }, toca: (x, y, h) => tocaAlgo(x, y, h) };
 
   function apagar() { // el equipo no da: se va y el hero recupera su robot
     vivo = false; burb.remove(); document.documentElement.classList.remove('hx-on');
@@ -460,19 +520,35 @@ async function arrancar() {
 
   function loop(now) {
     if (!vivo || document.hidden) { enCurso = false; return; }
+    const l0 = performance.now();
     const dtR = (now - prev) / 1000; prev = now;
     const dt = Math.min(.05, dtR); t += dt; fr++;
     if (scrollY !== E.ultSY || innerWidth !== E.ultW) { E.ultSY = scrollY; E.ultW = innerWidth; E.cambio = 1; }
     const revisar = E.cambio || fr % 60 === 0;
     // vigía de rendimiento: si los cuadros pasan de 45 ms, baja la resolución; si sigue, se apaga
-    if (fr > 30 && !E.escPrev) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
-    if (muestras === 180) { if (lentos > 90) { if (calidad > .7) { calidad = .7; medir(); muestras = lentos = 0; } else return apagar(); } else muestras = lentos = 0; }
+    // v16: solo cuenta con la página ya cargada (o 8 s después de arrancar) y no cuenta los cuadros de > 250 ms: esos son
+    // tareas largas de la PÁGINA (scripts, videos, widgets que cargan), no el costo del robot. Antes, en celular, la carga de
+    // la página bastaba para bajarle la calidad o apagarlo. Escalera: calidad 1 → .75 → .55 + modo liviano (sin estela ni
+    // luz de propulsores) → apagado; así un equipo modesto ve un robot más simple pero fluido, nunca uno trabado.
+    if (fr > 30 && !E.escPrev && dtR < .25 && (document.readyState === 'complete' || t > 8)) { muestras++; window.__hx.perf.cuadros = muestras; if (dtR > .045) { lentos++; window.__hx.perf.lentos++; } }
+    if (muestras === 180) {
+      if (lentos > 90) {
+        if (calidad > .75) { calidad = .75; medir(true); }
+        else if (calidad > .55) { calidad = .55; LIVIANO = true; part.limpia(); part.pts.visible = false; medir(true); }
+        else return apagar();
+        window.__hx.perf.calidad = calidad;
+      }
+      muestras = lentos = 0;
+    }
     const o = !P.length ? null : V.huecos ? objetivoMovil() : objetivo(fr);
     if (o && (o.p || o.a)) {
       // Destino = la parada más cercana al foco. El viaje es POR TIEMPO (no por scroll): despega, vuela en arco,
       // aterriza un poco antes y camina los últimos pasos. Así nunca queda flotando a media pantalla sobre el texto.
-      const p = o.p || (o.u >= .5 ? o.b : o.a), X = o.X || (o.u >= .5 ? o.B : o.A), idx = P.indexOf(p), clave = o.key || p;
-      if (primero) { E.x = X.x; E.y = X.y; E.h = X.h; E.dest = clave; E.fase = 'reposo'; primero = false; }
+      const p = o.p || (o.u >= .5 ? o.b : o.a), X = o.X || (o.u >= .5 ? o.B : o.A), idx = P.indexOf(p), clave = o.key || p.k || p.sel || idx;
+      // v16: clave de TEXTO. Antes era el objeto de la parada, y cada re-medición (carga de imágenes, ResizeObserver, «load»)
+      // crea objetos nuevos: el robot creía que tenía destino nuevo y despegaba hacia su mismo lugar. Medido en el home 1440:
+      // justo al aparecer en el hero hacía un vuelo-rebote (crecía 20 %, propulsores, casi transparente) ~0,8 s.
+      if (primero) { E.x = X.x; E.y = X.y; E.h = X.h; E.dest = clave; E.fase = 'reposo'; primero = false; if (X.oculto) E.op = 0; }  // v16: si arranca escondido no se asoma 2-3 cuadros
       if (E.dest !== clave && !(clave === 'nada')) {
         const d = Math.hypot(X.x - E.x, X.y - E.y);
         E.dest = clave; E.t0 = t; E.sx = E.x; E.sy = E.y; E.sh = E.h; E.syDoc = E.y + scrollY;
@@ -504,6 +580,10 @@ async function arrancar() {
       }
       { const m = th * .38; tx = cl(tx, m, V.w - m); if (!X.fijo || (E.fase !== 'reposo' && E.fase !== 'salta')) ty = Math.max(ty, V.nav + th * 1.04 + 6); }
       const pegado = E.fase === 'salta' || (E.fase === 'reposo' && (X.fijo || p.tipo === 'hero')); // en reposo viaja con la página, sin retraso
+      // v16: en reposo, si su sitio se muda lejos (cambio de lado por un choque, re-medición), antes cruzaba la pantalla
+      // deslizándose mientras se desvanecía (~300 px en un cuadro, medido en el home 1440). Ahora se esconde quieto, se muda y reaparece.
+      let muda = false;
+      if (E.fase === 'reposo' && !pegado && Math.abs(tx - E.x) > th * .5) { muda = true; if (E.op > .04) { tx = E.x; ty = E.y; } else { E.x = tx; E.y = ty; } }
       const kf = pegado ? 1 : 1 - Math.exp(-dt * (E.fase === 'reposo' ? 10 : 30)), ox = E.x, oy = E.y;
       E.x = lerp(E.x, tx, kf); E.y = lerp(E.y, ty, kf); E.h = lerp(E.h, th, 1 - Math.exp(-dt * 10));
       E.vx = (E.x - ox) / Math.max(dt, 1e-3); E.vy = (E.y - oy) / Math.max(dt, 1e-3);
@@ -512,6 +592,7 @@ async function arrancar() {
       // visibilidad: escondido si su lugar de reposo choca por ambos lados; casi transparente si al moverse pasa sobre algo
       let opT = (enReposo || !X.fijo) && X.oculto ? 0 : 1;  // en escritorio, si el destino no admite robot (pie ya pasado), se va desvaneciendo en el camino
       if (E.fase === 'salta') opT = E.vis;
+      if (muda) opT = 0;
       // escritorio con paradas a medida: si en su lugar de reposo hay texto o un enlace (p. ej. el pie al final), se esconde
       if (!V.huecos && enReposo && p.tipo !== 'hero') { if (fr % 10 === 0 && revisar) E.toca = tocaAlgo(E.x, E.y, E.h); if (E.toca) opT = 0; } else E.toca = false;
       const htm = document.documentElement;
@@ -549,12 +630,13 @@ async function arrancar() {
       bot.g.position.set(wx, wy, 0); bot.g.scale.setScalar(esc);
       bot.g.rotation.set(E.fuerza > .2 ? cl(vel / 2600, 0, .3) : 0, E.yaw, E.bank);
       bot.update(E.tBot, dt);
-      if (sombra) {
+      if (sombra && V.doc) sombra.visible = false;
+      else if (sombra) {
         const altura = Math.max(0, PISO() - E.y), [sx, sy] = mundo(E.x, PISO());
         sombra.visible = E.y > V.h * .4; sombra.position.set(sx, sy, -.2); sombra.scale.setScalar(esc * .42 * (1 - Math.min(.6, altura / 500)));
         sombra.material.opacity = .2 * (1 - Math.min(1, altura / 400));
       }
-      jet.paso(t, dt, E.fuerza, esc, { x: E.vx * V.k, y: -E.vy * V.k });
+      jet.paso(t, dt, E.fuerza, esc, { x: E.vx * V.k, y: -E.vy * V.k }, LIVIANO);
       const vuela = E.fuerza > .3;
       if (E.enVuelo && !vuela && !V.huecos) jet.polvo(esc);
       E.enVuelo = vuela;
@@ -567,8 +649,10 @@ async function arrancar() {
     // las revisiones caras (toques, huecos) solo corren cuando cambió el scroll o cada 60 cuadros.
     if (fr % 10 === 9) E.cambio = 0;  // la marca de «algo cambió» dura un ciclo de revisiones
     const escondido = E.op < .01 && E.fase === 'reposo' && E.fuerza < .02;
+    const l1 = performance.now();
     if (escondido) { if (!E.limpio) { R.clear(); E.limpio = true; } }
-    else { E.limpio = false; R.render(S, cam); }
+    else { E.limpio = false; if (V.doc) caja(); R.render(S, cam); }
+    { const pm = window.__hx.perf.ms; if (pm.length < 4000) pm.push([Math.round(l0), +(l1 - l0).toFixed(1), +(performance.now() - l1).toFixed(1), escondido ? 0 : 1]); }
     E.escPrev = escondido;  // el vigía de rendimiento no cuenta las vueltas lentas a propósito
     if (escondido) setTimeout(() => requestAnimationFrame(loop), 110);
     else requestAnimationFrame(loop);
@@ -579,9 +663,10 @@ async function arrancar() {
   // calentamiento invisible (el lienzo sigue en opacidad 0 hasta «hx-on»): el primer dibujo sube geometrías, texturas y
   // programas a la GPU y es el más caro; así el primer cuadro VISIBLE ya es uno normal, sin tirón ni cuadro congelado
   try { R.render(S, cam); } catch (e) {}
+  mk('calienta');
   enCurso = true;
   let cuadrosVivos = 0;
-  E.alAparecer = () => { if (++cuadrosVivos === 2) document.documentElement.classList.add('hx-on'); };
+  E.alAparecer = () => { if (++cuadrosVivos === 2) { document.documentElement.classList.add('hx-on'); mk('on'); } };
   requestAnimationFrame(n => { prev = n; loop(n); });
 }
 
