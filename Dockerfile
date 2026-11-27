@@ -1,5 +1,5 @@
 FROM nginx:alpine
-ARG CACHE_BUST=2026-11-27-robot-v16
+ARG CACHE_BUST=2026-11-27-edu
 COPY index.html /usr/share/nginx/html/index.html
 COPY favicon.ico apple-touch-icon.png /usr/share/nginx/html/
 COPY comparativa.html /usr/share/nginx/html/comparativa.html
@@ -70,6 +70,9 @@ COPY via/ /usr/share/nginx/html/via/
 COPY etm/ /usr/share/nginx/html/etm/
 # Hapee Arcade (2026-11-24): hub 3D + 6 juegos en /juegos/
 COPY juegos/ /usr/share/nginx/html/juegos/
+# Hapee EDU (2026-11-27): landing para instituciones educativas en /edu/ (solo español por ahora).
+# Generada con web-dna/_build/hapee-home/edu/build_edu.py a partir de /agenda-tu-demo (mismo calendario).
+COPY edu/ /usr/share/nginx/html/edu/
 COPY js/ /usr/share/nginx/html/js/
 COPY robots.txt /usr/share/nginx/html/robots.txt
 COPY sitemap.xml /usr/share/nginx/html/sitemap.xml

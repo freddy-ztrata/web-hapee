@@ -64,7 +64,8 @@ def paginas_espanol():
         # el idioma del cliente (generador web-dna/_build/hapee-propuesta).
         # js/ son recursos: los .html de js/home/ son la maqueta de Hapee Pro que el home muestra en un iframe, no páginas.
         # etm/ es la app offline del stand de ETM Day (noindex), solo en español de Chile.
-        if d in ("en", "pt", "propuestas", "js", "etm") or d.startswith("propuesta-"):
+        # edu/ es la landing de Hapee EDU (2026-11-27), solo en español por ahora.
+        if d in ("en", "pt", "propuestas", "js", "etm", "edu") or d.startswith("propuesta-"):
             continue
         out += sorted(glob.glob(d + "/**/*.html", recursive=True))
     return out
