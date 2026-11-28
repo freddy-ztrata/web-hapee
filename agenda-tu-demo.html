@@ -2349,6 +2349,20 @@ html.bf-sc .bf-cta{height:28px}
           /* console.log('[Hapee Attribution]', attribution, '\\ncalendar →', iframe.getAttribute('data-hapee-calendar')); */
         })();
         </script>
+<!--agenda-primer-dia--><script>
+        /* === Calendario: abrir en el primer día con horarios (27-11-2026) ===
+           `primer_dia=1` le pide al widget de Hapee que abra en el mes del primer horario libre, con ese día
+           elegido y, en celular, los próximos días arriba. Va después del forwarder de UTMs y antes de que
+           calendar-embed.js monte el iframe. Se quita con agenda_primer_dia.py --rollback (web-dna). */
+        (function(){
+          var el = document.getElementById('hapeeCalendar');
+          if(!el) return;
+          var p = el.getAttribute('data-hapee-calendar') || '';
+          if(!p || /[?&]primer_dia=/.test(p)) return;
+          if(!/^https?:\/\//.test(p)) p = el.getAttribute('data-base-src') || ('https://beta.hapee.ai/calendar/book/' + p.replace(/^\/+/, ''));
+          el.setAttribute('data-hapee-calendar', p + (p.indexOf('?') < 0 ? '?' : '&') + 'primer_dia=1');
+        })();
+        </script><!--/agenda-primer-dia-->
         <script>
         /* === Conversión: demo agendada en el widget de calendario Hapee ===
            El iframe de booking (beta.hapee.ai) avisa al parent vía postMessage
